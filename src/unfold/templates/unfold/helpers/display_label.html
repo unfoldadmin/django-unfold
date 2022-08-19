@@ -1,0 +1,37 @@
+{% if label %}
+    {% if label|length > 1 %}
+        {% for item in label %}
+            <span class="border font-semibold leading-none mr-2 px-2 py-1 rounded-md shadow-sm text-xxs uppercase last:mr-0
+                {% if label_type == 'info' %}
+                    bg-blue-50 border-blue-200 text-blue-500
+                {% elif label_type == 'danger' %}
+                    bg-red-50 border-red-200 text-red-500
+                {% elif label_type == 'warning' %}
+                    bg-orange-50 border-orange-200 text-orange-500
+                {% elif label_type == 'success' %}
+                    bg-green-50 border-green-200 text-green-500
+                {% else %}
+                    bg-white text-gray-400
+                {% endif %}
+        ">
+                {{ item }}
+            </span>
+        {% endfor %}
+    {% else %}
+        <span class="border font-semibold leading-none mr-2 px-2 py-1 rounded-md shadow-sm text-xxs uppercase last:mr-0
+            {% if label_type == 'info' %}
+                bg-blue-50 border-blue-200 text-blue-500
+            {% elif label_type == 'danger' %}
+                bg-red-50 border-red-200 text-red-500
+            {% elif label_type == 'warning' %}
+                bg-orange-50 border-orange-200 text-orange-500
+            {% elif label_type == 'success' %}
+                bg-green-50 border-green-200 text-green-500
+            {% else %}
+                bg-white text-gray-400
+            {% endif %}
+    ">
+            {{ label }}
+        </span>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,92 @@
+{% extends 'unfold/layouts/skeleton.html' %}
+
+{% load i18n unfold %}
+
+{% block base %}
+    <div id="page" class="flex min-h-screen">
+        {% if not is_popup and is_nav_sidebar_enabled %}
+            {% block nav-sidebar %}
+                {% include "admin/nav_sidebar.html" %}
+            {% endblock %}
+        {% endif %}
+
+        <div id="main" class="flex-grow">
+            {% if not is_popup %}
+                {% block header %}
+                    <div class="border-b mb-6 px-4 py-4 lg:px-12">
+                        <div class="container mx-auto">
+                            <div id="header-inner" class="flex items-center">
+                                <div class="flex items-center w-full">
+                                    {% block usertools %}
+                                        {% if has_permission %}
+                                            {% block welcome-msg %}
+                                                {% include 'unfold/helpers/welcomemsg.html' %}
+                                            {% endblock %}
+
+                                            {% block userlinks %}
+                                                {% include 'unfold/helpers/userlinks.html' %}
+                                            {% endblock %}
+                                        {% endif %}
+                                    {% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% endif %}
+
+            {% if not is_popup %}
+                {% spaceless %}
+                    {% block breadcrumbs %}
+                        <div class="px-4 lg:px-12">
+                            <div class="container mb-12 mx-auto -my-3">
+                                <ul class="flex">
+                                    {% url 'admin:index' as link %}
+                                    {% trans 'Home' as name %}
+                                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
+                                    {% block custom_breadcrumbs %}{% endblock %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endblock %}
+                {% endspaceless %}
+            {% endif %}
+
+            {% block messages %}
+                {% if messages %}
+                    <div class="px-4 lg:px-12">
+                        <ul class="container mx-auto">
+                            {% for message in messages %}
+                                <li class="mb-3 px-3 py-3 rounded-md text-sm last:mb-8 {% if message.tags == 'success' %}bg-green-100 text-green-600{% elif message.tags == 'warning' %}bg-yellow-100 text-yellow-600 {% elif message.tags == 'error' %} bg-red-100 text-red-600{% else %}bg-gray-100 text-gray-700{% endif %}">
+                                    {{ message|capfirst }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endblock messages %}
+
+            <div class="px-4 pb-12 lg:px-12">
+                <div id="content" class="container mx-auto {% block coltype %}colM{% endblock %}">
+                    {% if cl %}
+                        {% tab_list cl.opts %}
+                    {% elif opts %}
+                        <div class="mb-8">
+                            {% tab_list opts %}
+                        </div>
+                    {% endif %}
+
+                    {% block content %}
+                        {% block object-tools %}{% endblock %}
+
+                        {{ content }}
+                    {% endblock %}
+
+                    {% block sidebar %}{% endblock %}
+                </div>
+            </div>
+
+            {% block footer %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

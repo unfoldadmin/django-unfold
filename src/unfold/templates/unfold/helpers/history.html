@@ -1,0 +1,45 @@
+{% load i18n log %}
+
+{% get_admin_log 10 as admin_log for_user user %}
+
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2 class="mb-4 font-semibold text-gray-700 text-sm">
+            {% translate 'Recent actions' %}
+        </h2>
+
+        {% if not admin_log %}
+            <p>
+                {% translate 'None available' %}
+            </p>
+        {% else %}
+            <ul class="actionlist bg-gray-50 rounded-md p-3">
+                {% for entry in admin_log %}
+                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} bg-white mb-4 p-3 rounded-md shadow-sm last:mb-0">
+                        <div class="mb-3 text-gray-500 overflow-hidden text-ellipsis text-sm whitespace-nowrap">
+                            {% if entry.is_deletion or not entry.get_admin_url %}
+                                {{ entry.object_repr }}
+                            {% else %}
+                                <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                            {% endif %}
+                        </div>
+
+                        <div class="border-gray-100 border-t flex pt-3 text-gray-500 text-sm">
+                            <div>
+                                {% if entry.content_type %}
+                                    {% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}
+                                {% else %}
+                                    {% translate 'Unknown content' %}
+                                {% endif %}
+                            </div>
+
+                            <div class="ml-auto">
+                                {{ entry.action_time }}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>

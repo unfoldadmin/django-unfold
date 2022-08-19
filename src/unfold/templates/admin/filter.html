@@ -1,0 +1,29 @@
+{% load i18n unfold %}
+
+<div class="mb-6">
+    <h3 class="font-medium mb-4 text-sm">
+        {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
+    </h3>
+
+    {% if spec|class_name == "BooleanFieldListFilter" %}
+        <ul class="border-l-4 flex pl-4 py-2 text-gray-500 text-sm">
+            {% for choice in choices %}
+                <li class="{% if choice.selected %}font-medium text-primary-600 underline{% endif %} pr-4">
+                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
+                        {{ choice.display }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <ul class="border-l-4 flex flex-col pl-4 py-4 text-gray-500 text-sm">
+            {% for choice in choices %}
+                <li class="{% if choice.selected %}font-medium text-primary-600 underline{% endif %} mb-4 last:mb-0">
+                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
+                        {{ choice.display }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

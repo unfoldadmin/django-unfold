@@ -1,0 +1,29 @@
+{% extends 'unfold/layouts/skeleton.html' %}
+
+{% load i18n %}
+
+{% block base %}
+    <div class="flex min-h-screen">
+        {% if not is_popup and is_nav_sidebar_enabled %}
+            {% block nav-sidebar %}
+                {% include "admin/nav_sidebar.html" %}
+            {% endblock %}
+        {% endif %}
+
+        <div id="main" class="shadow flex-grow">
+            <div class="p-4 lg:p-12">
+                <div id="content" class="container mx-auto {% block coltype %}colM{% endblock %}">
+                    {% block content %}
+                        {% block object-tools %}{% endblock %}
+
+                        {{ content }}
+                    {% endblock %}
+
+                    {% block sidebar %}{% endblock %}
+                </div>
+            </div>
+
+            {% block footer %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% load i18n %}
+
+{% if result_hidden_fields %}
+    <div class="hiddenfields">
+        {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+    </div>
+{% endif %}
+
+{% if results %}
+    <table id="result_list" class="border-spacing-none border-separate text-gray-700 w-full lg:border lg:rounded-md lg:shadow-sm">
+        <thead class="hidden lg:table-header-group">
+            <tr>
+                {% for header in result_headers %}
+                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm {% if "action-toggle" in header.text and forloop.counter == 1 %}w-10{% endif %}" scope="col"{{ header.class_attrib }}>
+                        <div class="flex items-center">
+                            <div class="text">
+                                {% if header.sortable %}
+                                    <a href="{{ header.url_primary }}">
+                                        {{ header.text|capfirst }}
+                                    </a>
+                                {% else %}
+                                    <span>{{ header.text|capfirst }}</span>
+                                {% endif %}
+                            </div>
+
+                            {% if header.sortable %}
+                                {% if header.sort_priority > 0 %}
+                                    <div class="sortoptions flex items-center ml-2">
+                                        <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
+                                            {% if header.ascending %}
+                                                <span class="block material-icons">arrow_circle_down</span>
+                                            {% else %}
+                                                <span class="block material-icons">arrow_circle_up</span>
+                                            {% endif %}
+                                        </a>
+
+                                        <a class="sortremove flex items-center leading-none ml-1 text-gray-400 hover:text-red-700" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                            <span class="block material-icons">cancel</span>
+                                        </a>
+                                    </div>
+
+                                    {% if num_sorted_fields > 1 %}
+                                        <span class="sortpriority font-medium ml-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
+                                            {{ header.sort_priority }}
+                                        </span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for result in results %}
+                {% if result.form and result.form.non_field_errors %}
+                    <tr>
+                        <td class="text-left" colspan="{{ result|length }}">
+                            {{ result.form.non_field_errors }}
+                        </td>
+                    </tr>
+                {% endif %}
+
+                <tr class="{% cycle '' 'bg-gray-50' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none">
+                    {% for item in result %}
+                        {{ item }}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

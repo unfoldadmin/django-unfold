@@ -1,0 +1,13 @@
+{% if results %}
+<ul class="absolute bg-white border left-0 mt-12 right-0 rounded top-0 shadow-sm text-sm">
+    {% for app in results %}
+        {% for model in app.models %}
+            <li>
+                <a href="{{ model.admin_url }}" class="block group overflow-hidden px-3 py-2 text-gray-500 text-ellipsis whitespace-nowrap hover:bg-gray-100 hover:text-gray-700">
+                    {{ app.name }} <i class="align-text-top material-icons md-18 text-gray-300 group-hover:text-gray-400">arrow_right_alt</i> {{ model.name }}
+                </a>
+            </li>
+        {% endfor %}
+    {% endfor %}
+</ul>
+{% endif %}

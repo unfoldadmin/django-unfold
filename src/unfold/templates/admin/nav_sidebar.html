@@ -1,0 +1,26 @@
+<div class="relative z-30">
+    <div class="desktop-navigation">
+        <input type="checkbox" id="show-sidebar" class="hidden peer" {% if request.session.toggle_sidebar == True %} checked{% endif %}/>
+
+        <label for="show-sidebar"
+               hx-get="{% url "admin:toggle_sidebar" %}"
+               hx-swap="none"
+               class="absolute block bg-white border cursor-pointer hidden flex h-6 items-center -mr-14 ml-auto justify-center left-68 ml-1 rounded-full text-gray-500 top-5 w-6 z-50 xl:flex peer-checked:left-4 peer-checked:rotate-180">
+            <span class="material-icons md-16">
+                first_page
+            </span>
+        </label>
+
+        <div class="hidden ml-0 peer-checked:-ml-72 xl:block">
+            {% include "unfold/helpers/navigation.html" with navigation_id="desktop-navigation" %}
+        </div>
+    </div>
+
+    <div class="mobile-navigation">
+        <input type="checkbox" id="show-sidebar-mobile" class="hidden peer" />
+
+        <div class="fixed -ml-72 peer-checked:ml-0 xl:hidden">
+            {% include "unfold/helpers/navigation.html" with navigation_id="mobile-navigation"  %}
+        </div>
+    </div>
+</div>

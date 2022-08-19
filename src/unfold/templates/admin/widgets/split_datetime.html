@@ -1,0 +1,21 @@
+<div class="datetime flex flex-col md:flex-row">
+    <div class="flex flex-wrap items-center">
+        <div class="mr-2 text-gray-500 text-sm">
+            {{ date_label }}
+        </div>
+
+        {% with widget=widget.subwidgets.0 %}
+            {% include widget.template_name %}
+        {% endwith %}
+    </div>
+
+    <div class="flex flex-wrap items-center mt-3 md:ml-4 md:mt-0">
+        <div class="mr-2 text-gray-500 text-sm">
+            {{ time_label }}
+        </div>
+
+        {% with widget=widget.subwidgets.1 %}
+            {% include widget.template_name %}
+        {% endwith %}
+    </div>
+</div>

@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<div class="relative min-w-sidebar transition-width w-sidebar z-30">
+    <nav id="nav-sidebar" class="bg-gray-50 border-r flex flex-col fixed max-h-screen min-h-screen min-w-sidebar transition-width w-sidebar">
+        <div class="border-b mb-5 py-3">
+            <div class="flex font-medium h-10 items-center px-6">
+                {% if logo %}
+                    <img src="{{ logo }}" alt="{% trans "Home" %}"/>
+                {% elif branding %}
+                    {% include 'unfold/helpers/site_icon.html' %}
+
+                    {{ branding }}
+                {% endif %}
+
+                <label for="show-sidebar-mobile"
+                       class="absolute bottom-0 bg-gray-700 flex cursor-pointer flex items-center mb-2 -mr-16 ml-auto justify-center px-2 py-1 right-0 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden">
+                    {% trans "Menu" %}
+                </label>
+            </div>
+        </div>
+
+        {% include "unfold/helpers/search.html" %}
+
+        {% if sidebar_navigation|length > 0 %}
+            {% include "unfold/helpers/app_list.html" with app_list=available_apps %}
+        {% else %}
+            {% include "admin/app_list.html" with app_list=available_apps show_changelinks=False %}
+        {% endif %}
+    </nav>
+</div>

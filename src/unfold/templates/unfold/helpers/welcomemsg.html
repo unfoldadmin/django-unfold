@@ -1,0 +1,23 @@
+{% load i18n %}
+
+<div class="flex-grow font-medium min-w-0 mr-3">
+    <h1 class="overflow-hidden text-ellipsis text-sm whitespace-nowrap xl:text-base">
+        {% if content_title %}
+            {{ pretitle }}
+
+            {{ content_title }}
+
+            {% if cl and cl.full_result_count != cl.result_count %}
+                <span class="ml-2 text-gray-500 text-sm">
+                    {% blocktranslate count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktranslate %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktranslate with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktranslate %}{% else %}{% translate "Show all" %}{% endif %}</a>)
+                </span>
+            {% endif %}
+
+            {% if content_subtitle %}
+                {{ content_subtitle }}
+            {% endif %}
+        {% else %}
+            {% translate 'Welcome,' %} <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+        {% endif %}
+    </h1>
+</div>

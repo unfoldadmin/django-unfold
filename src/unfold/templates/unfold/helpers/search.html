@@ -1,0 +1,23 @@
+{% load i18n %}
+{% if sidebar_show_search %}
+    <div class="mb-5 mx-3 relative">
+        <div class="bg-white border flex items-center overflow-hidden rounded-md shadow-sm focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600">
+            <span class="material-icons md-18 pl-3 text-gray-400">manage_search</span>
+
+            <input type="search"
+                   id="nav-filter"
+                   name="s"
+                   hx-get="{% url "admin:search" %}"
+                   hx-trigger="keyup changed delay:500ms, search"
+                   hx-target="#search-results"
+                   hx-indicator=".htmx-indicator"
+                   class="flex-grow font-medium overflow-hidden pl-2 pr-3 py-2 text-gray-500 text-sm focus:outline-none"
+                   placeholder="{% translate 'Search apps and models...' %}" aria-label="{% translate 'Filter navigation items' %}" />
+            <div class="absolute htmx-indicator mt-0.5 opacity-0 right-2 top-2">
+                <i class="animate-spin material-icons md-18 text-gray-300">sync</i>
+            </div>
+        </div>
+
+        <div id="search-results"></div>
+    </div>
+{% endif %}

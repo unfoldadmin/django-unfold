@@ -1,0 +1,33 @@
+{% if show %}
+    <div class="xfull mb-4">
+        <ul class="toplinks flex -mx-2 text-gray-500 text-sm">
+            {% block date-hierarchy-toplinks %}
+                {% block date-hierarchy-back %}
+                    {% if back %}
+                        <li class="date-back px-2">
+                            <a href="{{ back.link }}" class="flex items-center hover:text-primary-600">
+                                <span class="material-icons md-16 mr-2 text-gray-400">arrow_back</span> {{ back.title }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endblock %}
+
+                {% block date-hierarchy-choices %}
+                    {% for choice in choices %}
+                        <li class="px-2">
+                            {% if choice.link %}
+                                <a href="{{ choice.link }}" class="hover:text-primary-600">
+                            {% endif %}
+
+                            {{ choice.title }}
+
+                            {% if choice.link %}
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                {% endblock %}
+            {% endblock %}
+        </ul>
+    </div>
+{% endif %}

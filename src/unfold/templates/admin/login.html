@@ -1,0 +1,126 @@
+{% extends 'unfold/layouts/skeleton.html' %}
+
+{% load i18n static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login bg-gray-50{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}
+    {{ title }} | {{ site_title }}
+{% endblock %}
+
+{% block base %}
+    <div class="flex min-h-screen">
+        <div class="flex items-center justify-center mx-auto px-4 w-full xl:px-72 2xl:px-96">
+            <div class="w-full sm:w-96">
+                <h1 class="font-semibold mb-10">
+                    <span class="block text-gray-700">{% trans 'Welcome back to' %}</span>
+                    <span class="block text-primary-600 text-xl">{{ site_title }}</span>
+                </h1>
+
+                {% if form.errors and not form.non_field_errors %}
+                    <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm">
+                        {% if form.errors.items|length == 1 %}
+                            {% translate "Please correct the error below." %}
+                        {% else %}
+                            {% translate "Please correct the errors below." %}
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm">
+                        {% blocktranslate trimmed %}
+                            You are authenticated as {{ username }}, but are not authorized to
+                            access this page. Would you like to login to a different account?
+                        {% endblocktranslate %}
+                    </p>
+                {% endif %}
+
+                <form action="{{ app_path }}" method="post" id="login-form">
+                    {% csrf_token %}
+
+                    <div class="flex flex-col mb-6">
+                        {{ form.username.errors }}
+
+                        <label for="{{ form.username.id_for_label }}" class="mb-2 font-semibold text-sm text-gray-900">
+                            {{ form.username.label }}
+
+                            {% if form.username.field.required %}
+                                <span class="text-red-600">*</span>
+                            {% endif %}
+                        </label>
+
+                        {{ form.username }}
+                    </div>
+
+                    <div class="flex flex-col mb-10">
+                        {{ form.password.errors }}
+
+                        <label for="{{ form.password.id_for_label }}" class="mb-2 font-semibold text-sm text-gray-900">
+                            {{ form.password.label }}
+
+                            {% if form.password.field.required %}
+                                <span class="text-red-600">*</span>
+                            {% endif %}
+                        </label>
+
+                        {{ form.password }}
+                        <input type="hidden" name="next" value="{{ next }}">
+                    </div>
+
+                    {% url 'admin_password_reset' as password_reset_url %}
+
+                    {% if password_reset_url %}
+                        <div class="password-reset-link">
+                            <a href="{{ password_reset_url }}">
+                                {% translate 'Forgotten your password or username?' %}
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    <div class="submit-row">
+                        <button type="submit" class="bg-primary-600 block border border-transparent font-semibold py-2 rounded-md text-sm text-white w-full">
+                            {% translate 'Log in' %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {% if site_url %}
+                <div class="absolute left-0 ml-4 mt-4 top-0">
+                    <a href="{{ site_url }}" class="flex font-medium items-center text-sm text-primary-600">
+                        <i class="material-icons mr-2">arrow_back</i> {% trans 'Return to site' %}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if image %}
+            <div class="bg-cover flex-grow max-w-3xl" style="background-image: url('{{ image }}')">
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

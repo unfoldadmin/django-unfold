@@ -1,0 +1,151 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list unfold_list %}
+
+{% block extrastyle %}
+  {{ block.super }}
+
+{#  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">#}
+
+  {% if cl.formset %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+  {% endif %}
+
+  {% if cl.formset or action_form %}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+  {% endif %}
+  {{ media.css }}
+
+  {% if not actions_on_top and not actions_on_bottom %}
+    <style>
+      #changelist table thead th:first-child {width: inherit}
+    </style>
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ media.js }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+        <div class="px-4 lg:px-12">
+            <div class="container mb-6 mx-auto -my-3 lg:mb-12">
+                <ul class="flex">
+                    {% url 'admin:index' as link %}
+                    {% trans 'Home' as name %}
+                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
+
+                    {% url 'admin:app_list' app_label=cl.opts.app_label as link %}
+                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=cl.opts.app_config.verbose_name %}
+
+                    {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=cl.opts.verbose_name_plural|capfirst %}
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+{% endif %}
+
+{% block coltype %}{% endblock %}
+
+{% block nav-global-side %}
+    {% block object-tools %}
+        <ul class="object-tools ml-4">
+            {% block object-tools-items %}
+                {% change_list_object_tools %}
+            {% endblock %}
+        </ul>
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+        {% if cl.formset and cl.formset.errors %}
+            <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm">
+                {% if cl.formset.total_error_count == 1 %}
+                    {% translate "Please correct the error below." %}
+                {% else %}
+                    {% translate "Please correct the errors below." %}
+                {% endif %}
+            </p>
+
+            {{ cl.formset.non_form_errors }}
+        {% endif %}
+
+        <div class="flex -mx-4 module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+            <div class="changelist-form-container flex-grow px-4">
+                {% block date_hierarchy %}
+                    {% if cl.date_hierarchy %}
+                        {% date_hierarchy cl %}
+                    {% endif %}
+                {% endblock %}
+
+                <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+                    {% csrf_token %}
+
+                    {% if cl.formset %}
+                        <div>{{ cl.formset.management_form }}</div>
+                    {% endif %}
+
+                    {% block result_list %}
+                        {% if action_form and actions_on_top and cl.show_admin_actions %}
+                            <div class="bg-gray-50 flex flex-col mb-4 p-3 rounded-md md:flex-row">
+                                {% block search %}
+                                    {% search_form cl %}
+                                {% endblock %}
+
+                                {% admin_actions %}
+
+                                {% block filters %}
+                                    {% if cl.has_filters %}
+                                        <label for="show-filters" id="changelist-filter-open" class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white text-gray-500{% endif %} border cursor-pointer flex font-medium h-9 items-center mt-3 px-3 py-2 rounded-md shadow-sm text-sm md:ml-auto md:mt-0 lg:mt-0">
+                                            {% trans 'Filters' %}
+
+                                            <span class="material-icons md-18 ml-auto -mr-1 pl-4 {% if cl.has_active_filters %}text-white{% else %}text-gray-400{% endif %}">filter_list</span>
+                                        </label>
+                                    {% endif %}
+                                {% endblock %}
+                            </div>
+                        {% endif %}
+
+                        {% unfold_result_list cl %}
+
+                        {% block pagination %}
+                            {% pagination cl %}
+                        {% endblock %}
+                    {% endblock %}
+                </form>
+
+                {% if cl.has_filters %}
+                    <input type="checkbox" id="show-filters" class="hidden peer" />
+
+                    <div id="changelist-filter" class="bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50 peer-checked:flex">
+                        <label for="show-filters" id="changelist-filter-close" class="flex-grow"></label>
+
+                        <div class="bg-white flex mr-4 my-4 rounded shadow-sm w-96">
+                            <div class="flex-grow h-full overflow-auto" data-simplebar>
+                                <h3 class="border-b flex font-medium mb-6 px-8 py-4 text-sm">
+                                    {% trans 'Filter results' %}
+
+                                    {% if cl.has_active_filters %}
+                                        <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-auto text-sm text-red-600 underline">
+                                            {% translate "Clear all filters" %}
+                                        </a>
+                                    {% endif %}
+                                </h3>
+
+                                <div class="px-8">
+                                    {% for spec in cl.filter_specs %}
+                                        {% admin_list_filter cl spec %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

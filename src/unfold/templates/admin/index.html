@@ -1,0 +1,27 @@
+{% extends 'admin/base.html' %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Django administration') }}
+        </a>
+    </h1>
+{% endblock %}
+
+{% block content %}
+    <div class="flex -mx-4">
+        <div class="px-4 w-8/12">
+            {% include "unfold/helpers/app_list_default.html" %}
+        </div>
+
+        <div class="px-4 w-4/12">
+            {% include "unfold/helpers/history.html" %}
+        </div>
+    </div>
+{% endblock %}

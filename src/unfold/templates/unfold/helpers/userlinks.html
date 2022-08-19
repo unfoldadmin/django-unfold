@@ -1,0 +1,39 @@
+{% load i18n static %}
+
+<div class="flex items-center ml-auto">
+    <div class="flex group items-center relative">
+
+        {% include 'unfold/helpers/avatar.html' with initials=request.user.get_initials|default:'<i class="material-icons text-gray-400">person</i>' image=request.user.get_photo %}
+
+        <input type="checkbox" class="hidden peer" id="show-userlinks" />
+
+        <div class="absolute bg-white border flex-col hidden leading-none py-1 right-0 rounded-md shadow-lg text-sm text-gray-500 top-10 w-48 peer-checked:flex">
+            {% if nav_global %}
+                {{ nav_global }}
+
+                <div class="bg-gray-100 h-px my-1"></div>
+            {% endif %}
+
+            {% if site_url %}
+                <a href="{{ site_url }}" class="mx-1 px-3 py-2 rounded-md hover:bg-gray-100">
+                    {% translate 'View site' %}
+                </a>
+            {% endif %}
+
+            {% if user.has_usable_password %}
+                <a href="{% url 'admin:password_change' %}" class="mx-1 px-3 py-2 rounded-md hover:bg-gray-100">
+                    {% translate 'Change password' %}
+                </a>
+            {% endif %}
+
+            <div class="bg-gray-100 h-px my-1"></div>
+            <a href="{% url 'admin:logout' %}" class="mx-1 px-3 py-2 text-red-500 rounded-md hover:bg-gray-100">
+                {% translate 'Log out' %}
+            </a>
+        </div>
+    </div>
+
+    {% if nav_global_side %}
+        {{ nav_global_side }}
+    {% endif %}
+</div>

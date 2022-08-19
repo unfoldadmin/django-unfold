@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="flex items-center ">
+    <div class="block bg-red-500 mr-3 rounded-full h-1 w-1{% if value %} bg-green-500 {% else %} bg-red-500 {% endif %}"></div>
+
+    <span>
+        {% if value == '' %}
+            {% trans 'Unknown' %}
+        {% elif value %}
+            {% trans 'True' %}
+        {% else %}
+            {% trans 'False' %}
+        {% endif %}
+    </span>
+</div>

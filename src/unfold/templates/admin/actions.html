@@ -1,0 +1,56 @@
+{% load i18n %}
+
+<div class="actions flex flex-col md:flex-row md:items-center">
+    {% block actions %}
+        <div class="bg-white border flex shadow-sm rounded-md focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600">
+            {% block actions-form %}
+                {% for field in action_form %}
+                    {% if field.label %}
+                        <label>
+                            {{ field.label }}
+                    {% endif %}
+
+                    {{ field }}
+
+                    {% if field.label %}
+                        </label>
+                    {% endif %}
+                {% endfor %}
+            {% endblock %}
+
+            {% block actions-submit %}
+                <button type="submit" class="flex items-center h-9 ml-auto px-2 text-gray-400 focus:outline-none" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+                    <span class="material-icons md-18">arrow_forward</span>
+                </button>
+            {% endblock %}
+        </div>
+
+        {% block actions-counter %}
+            {% if actions_selection_counter %}
+                <div class="hidden md:block">
+                    <span class="action-counter ml-4 text-sm text-gray-500" data-actions-icnt="{{ cl.result_list|length }}">
+                        {{ selection_note }}
+                    </span>
+
+                    {% if cl.result_count != cl.result_list|length %}
+                        <span class="all hidden ml-4 text-gray-500 text-sm">
+                            {{ selection_note_all }}
+                        </span>
+
+                        <span class="question hidden ml-4 text-primary-600 text-sm underline">
+                            <a href="#" title="{% translate "Click here to select the objects across all pages" %}">
+                                {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
+                            </a>
+                        </span>
+
+                        <span class="clear hidden ml-4 text-sm text-red-600 underline">
+                            <a href="#">
+                                {% translate "Clear selection" %}
+                            </a>
+                        </span>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endblock %}
+</div>

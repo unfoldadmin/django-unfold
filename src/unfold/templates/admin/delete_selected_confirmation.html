@@ -1,0 +1,101 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n admin_urls static %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ media }}
+    <script src="{% static 'admin/js/cancel.js' %}" async></script>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation delete-selected-confirmation{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="px-12">
+        <div class="container mb-12 mx-auto -my-3">
+            <ul class="flex">
+                {% url 'admin:index' as link %}
+                {% trans 'Home' as name %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
+
+                {% url 'admin:app_list' app_label=opts.app_label as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
+
+                {% url opts|admin_urlname:'changelist' as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.verbose_name_plural|capfirst %}
+
+                {% url opts|admin_urlname:'changelist' as link %}
+                {% translate 'Delete multiple objects' as name %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=name %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% if perms_lacking %}
+        <p class="font-medium p-4">
+            {% blocktranslate %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}
+        </p>
+
+        <div class="border-t p-4">
+            <ul class="leading-relaxed text-gray-500 text-sm">
+                {% for obj in perms_lacking %}
+                    <li>{{ obj }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% elif protected %}
+        <div class="border rounded-md shadow-sm">
+            <p class="font-medium p-4">
+                {% blocktranslate %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktranslate %}
+            </p>
+
+            <div class="border-t p-4">
+                <ul class="leading-relaxed text-gray-500 text-sm">
+                    {% for obj in protected %}
+                        <li>{{ obj }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <div class="border rounded-md shadow-sm">
+            <p class="font-medium p-4">
+                {% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktranslate %}
+            </p>
+
+            {% include "admin/includes/object_delete_summary.html" %}
+
+            <div class="border-t p-4">
+                <h2 class="font-medium mb-2 text-sm">
+                    {% translate "Objects" %}
+                </h2>
+
+                {% for deletable_object in deletable_objects %}
+                    <ul class="leading-relaxed text-gray-500 text-sm">
+                        {{ deletable_object|unordered_list }}
+                    </ul>
+                {% endfor %}
+            </div>
+
+            <form method="post" class="border-t px-4 py-3">
+                {% csrf_token %}
+
+                <div class="flex items-center">
+                    {% for obj in queryset %}
+                        <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
+                    {% endfor %}
+
+                    <input type="hidden" name="action" value="delete_selected">
+                    <input type="hidden" name="post" value="yes">
+
+                    <a href="#" class="button cancel-link text-sm text-gray-500 underline">
+                        {% translate "No, take me back" %}
+                    </a>
+
+                    <input type="submit" value="{% translate 'Yes, I’m sure' %}" class="bg-red-600 font-medium ml-auto px-3 py-2 rounded-md text-sm text-white">
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

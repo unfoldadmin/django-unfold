@@ -1,0 +1,20 @@
+{% if actions %}
+    <div class="group leading-none relative">
+        <i class="cursor-pointer material-icons md-18 text-gray-500 group-hover:text-primary-600">more_horiz</i>
+
+        <ul class="absolute bg-white border flex flex-col hidden py-1 right-0 rounded-md shadow-lg text-gray-500 text-sm z-50 w-48 group-hover:flex">
+            {% for action in actions %}
+                <li>
+                    <a href="{{ action.path }}" class="block leading-none mx-1 px-3 py-2 rounded-md whitespace-nowrap hover:bg-gray-100"
+                        {% for attr_name, attr_value in action.attrs.items %}
+                            {{ attr_name }}="{{ attr_value }}"
+                        {% endfor %}
+                    >
+                        {{ action.title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+

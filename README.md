@@ -1,0 +1,401 @@
+![Screenshot](https://github.com/remastr/django-unfold/raw/main/screenshot.jpg)
+
+## Unfold Django Admin Theme
+
+Unfold is a new theme for Django Admin incorporating some most common practises for building full-fledged admin areas.
+
+- **Visual**: provides new user interface based on Tailwind CSS framework
+- **Sidebar:** simplifies definition of custom sidebar navigation
+- **Configuration:** most of the basic options can be changed in settings.py
+- **Dependencies:** completely based only on `django.contrib.admin`
+- **Filters:** custom widgets for filters (e.g. numeric filter)
+- **Actions:** multiple ways how to define actions within different parts of admin
+
+## Table of Contents
+
+- [Unfold Django Admin Theme](#unfold-django-admin-theme)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Decorators](#decorators)
+  - [@display](#display)
+- [Actions](#actions)
+- [User Admin Form](#user-admin-form)
+- [Adding Custom Styles and Scripts](#adding-custom-styles-and-scripts)
+- [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet)
+- [Custom Admin Dashboard](#custom-admin-dashboard)
+- [Unfold Development](#unfold-development)
+  - [Poetry Configuration](#poetry-configuration)
+  - [Compiling Tailwind](#compiling-tailwind)
+
+## Installation
+
+The installation process is minimal. Everything what is needed after installation is to put new application at the beginning of **INSTALLED_APPS**. Default admin configuration in urls.py can stay as it is and there are no changes required.
+
+```python
+# settings.py
+
+INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.numeric_filters",  # optional
+    "django.contrib.admin",  # required
+]
+```
+
+In case you need installation command below are the versions for `pip` and `poetry` which needs to be executed in shell.
+
+```bash
+pip install django-unfold
+poetry add django-unfold
+```
+
+Just for an example below is the minimal admin configuration in terms of adding Unfold into URL paths.
+
+```python
+# urls.py
+
+from django.contrib import admin
+from django.urls import path
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    # Other URL paths
+]
+```
+
+## Configuration
+
+```python
+# settings.py
+
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
+UNFOLD = {
+    "SITE_TITLE": None,
+    "SITE_HEADER": None,
+    "SITE_URL": "/",
+    "SITE_ICON": lambda request: static("logo.svg"),
+    "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
+    "LOGIN": {
+        "image": lambda r: static("sample/login-bg.jpg"),
+        "redirect_after": lambda r: reverse_lazy("admin:APP_MODEL_changelist"),
+    },
+    "STYLES": [
+        lambda request: static("css/style.css"),
+    ],
+    "SCRIPTS": [
+        lambda request: static("js/script.js"),
+    ],
+    "COLORS": {
+        "primary": {
+            "50": "#FAF5FF",
+            "100": "#F3E8FF",
+            "200": "#E9D5FF",
+            "300": "#D8B4FE",
+            "400": "#C084FC",
+            "500": "#A855F7",
+            "600": "#9333EA",
+            "700": "#7E22CE",
+            "800": "#6B21A8",
+            "900": "#581C87",
+        },
+    },
+    "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {
+                "en": "🇬🇧",
+                "fr": "🇫🇷",
+                "nl": "🇧🇪",
+            },
+        },
+    },
+    "SIDEBAR": {
+        "show_search": False,  # Search in applications and models names
+        "show_all_applications": False,  # Dropdown with all applications and models
+        "navigation": [
+            {
+                "title": _("Navigation"),
+                "separator": True,  # Top border
+                "items": [
+                    {
+                        "title": _("Dashboard"),
+                        "icon": "dashboard",
+                        "link": reverse_lazy("admin:index"),
+                        "badge": "sample_app.badge_callback",
+                    },
+                    {
+                        "title": _("Users"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:users_user_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
+    "TABS": [
+        {
+            "models": [
+                "app_label.model_name_in_lowercase",
+            ],
+            "items": [
+                {
+                    "title": _("Your custom title"),
+                    "link": reverse_lazy("admin:app_label_model_name_changelist"),
+                },
+            ],
+        },
+    ],
+}
+
+
+def dashboard_callback(request, context):
+    """
+    Callback to prepare custom variables for index template which is used as dashboard
+    template. It can be overridden in application by creating custom admin/index.html.
+    """
+    context.update(
+        {
+            "sample": "example",  # this will be injected into templates/admin/index.html
+        }
+    )
+    return context
+
+
+def badge_callback(request):
+    return 3
+```
+
+## Decorators
+
+### @display
+
+Unfold introduces it's own `unfold.decorators.display` decorator. By default it has exactly same behavior as native `django.contrib.admin.decorators.display` but it adds same customizations which helps to extends default logic.
+
+`@display(label=True, mappings={"value1": "success"})` displays a result as a label. This option fits for different types of statuses. `mappings` parameter is a dict responsible for displaying labels in different colors at the moment these color combinations are supported: success(green), info(blue), danger(red) and warning(orange).
+
+`@display(header=True)` displays in results list two information in one table cell. Good example is when we want to display customer information, first line is going to be customer's name and right below the name display corresponding email address. Method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`.
+
+```python
+# models.py
+
+from django.db.models import TextChoices
+from django.utils.translation import gettext_lazy as _
+
+from unfold.admin import ModelAdmin
+from unfold.decorators import display
+
+
+class UserStatus(TextChoices):
+    ACTIVE = "ACTIVE", _("Active")
+    PENDING = "PENDING", _("Pending")
+    INACTIVE = "INACTIVE", _("Inactive")
+    CANCELLED = "CANCELLED", _("Cancelled")
+
+
+class UserAdmin(ModelAdmin):
+    list_display = [
+        "display_as_two_line_heading",
+        "show_status",
+        "show_status_with_custom_label",
+    ]
+
+    @display(
+        description=_("Status"),
+        ordering="status",
+        label=True,
+        mapping={
+            UserStatus.ACTIVE: "success",
+            UserStatus.PENDING: "info",
+            UserStatus.INACTIVE: "warning",
+            UserStatus.CANCELLED: "danger",
+        },
+    )
+    def show_status(self, obj):
+        return obj.status
+
+    @display(description=_("Status with label"), ordering="status", label=True)
+    def show_status_with_custom_label(self, obj):
+        return obj.status, obj.get_status_display()
+
+    @display(header=True)
+    def display_as_two_line_heading(self, obj):
+        return "First main heading", "Smaller additional description"
+```
+
+## Actions
+
+Currently in Django admin it is possible to define one type of action for objects via **actions** attribute in ModelAdmin class. Action is then visible in the select dropdown. Theme introduces several other ways how to add different types of actions. Currently theme supports:
+
+- **Global** actions displayed at the top of results list
+- **Row** action displayed per row in results list
+- **Detail** action displayed when viewing object detail
+- **Submit line** action displayed near object detail subtmit button
+
+Compared to Django action decorator, you can specify 2 more arguments:
+- `url_path`: Action path name
+- `attrs`: Dictionary of the additional attributes added to the `<a>` element.
+
+```python
+# admin.py
+
+from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
+from unfold.decorators import action
+
+
+class UserAdmin(ModelAdmin):
+    actions_list = ["changelist_global_action"]
+    actions_row = ["changelist_row_action"]
+    actions_detail = ["change_detail_action"]
+    actions_submit_line = ["submit_line_action"]
+
+    @action(description=_("Submit"))
+    def submit_line_action(self, obj):
+        pass
+
+    @action(description=_("Global"), url_path="global-action")
+    def changelist_global_action(self, request):
+        pass
+
+    @action(description=_("Row"), url_path="row-action")
+    def changelist_row_action(self, request, object_id):
+        pass
+
+    @action(description=_("Detail"), url_path="detail-action")
+    def change_detail_action(self, request, object_id):
+        pass
+
+    @action(
+        description=_("Detail"),
+        url_path="site-preview",
+        attrs={"id": "preview", "target": "_blank"},
+    )
+    def site_preview(self, request, object_id):
+        pass
+```
+
+## User Admin Form
+
+User's admin in Django is little bit specific as it contains several forms which are requiring custom styling. All of these forms has been inherited and accordingly adjusted. In user admin class it is needed to use these inherited form classes to enable custom styling matching rest of the website.
+
+```python
+# models.py
+
+from django.contrib.admin import register
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
+from unfold.admin import ModelAdmin
+from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
+
+
+@register(User)
+class UserAdmin(BaseUserAdmin, ModelAdmin):
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
+```
+
+## Adding Custom Styles and Scripts
+
+To add new custom styles, for example for custom dashboard, it is possible to load them via **STYLES** key in **UNFOLD** dict. This key accepts a list of strings or lambda functions which will be loaded on all pages. JavaScript files can be loaded by using similar apprach, but **SCRIPTS** is used.
+
+```python
+# settings.py
+
+from django.templatetags.static import static
+
+UNFOLD = {
+    "STYLES": [
+        lambda request: static("css/style.css"),
+    ],
+    "SCRIPTS": [
+        lambda request: static("js/script.js"),
+    ],
+}
+```
+
+## Project Level Tailwind Stylesheet
+
+When creating custom dashboard or adding custom components, it is needed to add own styles. Adding custom styles is described above. Most of the time, it is supposed that new elements are going to match with the rest of the administration panel. First of all, create tailwind.config.js in your application. Below is located minimal configuration for this file.
+
+```javascript
+// tailwind.config.js
+
+module.exports = {
+    content: [
+        "./your_project/**/*.{html,py,js}"
+    ],
+    // In case custom colors are defined in UNFOLD["COLORS"]
+    colors: {
+        primary: {
+            100: "var(--color-primary-100)",
+            200: "var(--color-primary-200)",
+            300: "var(--color-primary-300)",
+            400: "var(--color-primary-400)",
+            500: "var(--color-primary-500)",
+            600: "var(--color-primary-600)",
+            700: "var(--color-primary-700)",
+            800: "var(--color-primary-800)",
+            900: "var(--color-primary-900)"
+        }
+    }
+}
+```
+
+Once the configuration file is set, it is possible to compile new styles which can be loaded into admin by using **STYLES** key in **UNFOLD** dict.
+
+```bash
+npx tailwindcss  -o your_project/static/css/styles.css --watch --minify
+```
+
+## Custom Admin Dashboard
+
+The most common thing which needs to be adjusted for each project in admin is the dashboard. By default Unfold does not provide any dashboard components. The default dashboard experience with list of all applications and models is kept with proper styling matching rest of the components but thats it. Anyway, Unfold was created that creation of custom dashboard will be streamlined.
+
+Create `templates/admin/index.html` in your project and paste the base template below into it. By default, all your custom styles here are not compiled because CSS classes are located in your specific project. Here it is needed to set up the Tailwind for your project and all requried instructions are located in [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet) chapter.
+
+```
+{% extends 'unfold/layouts/base_simple.html' %}
+
+{% load cache humanize i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block content %}
+    Start creating your own Tailwind components here
+{% endblock %}
+```
+
+Note: In case that it is needed to pass custom variables into dashboard tamplate, check **DASHOARD_CALLBACK** in **UNFOLD** dict.
+
+## Unfold Development
+
+### Poetry Configuration
+
+To add a new feature or fix the easiest approach is to use django-unfold in combination with Poetry. The process looks like:
+
+- Install django-unfold via `poetry add django-unfold`
+- After that it is needed to git clone the repository somewhere on local computer.
+- Edit *pyproject.toml* and update django-unfold line `django-unfold = { path = "../django-unfold", develop = true}`
+- Lock and update via `poetry lock && poetry update`
+
+### Compiling Tailwind
+
+At the moment project contains package.json with all dependencies required to compile new CSS file. Tailwind configuration file is set to check all html, js and py files for Tailwind's classeses occurrences.
+
+```bash
+npm install
+npx tailwindcss -i styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify
+```
+
+Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
+
+None: most of the custom styles localted in style.css are created via `@apply some-tailwind-class;`.

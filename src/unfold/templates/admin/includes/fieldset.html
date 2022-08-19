@@ -1,0 +1,61 @@
+<fieldset class="module {{ fieldset.classes }}">
+    {% if fieldset.name %}
+        <h2 class="bg-gray-100 font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4">
+            {{ fieldset.name }}
+        </h2>
+    {% endif %}
+
+    {% if fieldset.description %}
+        <div class="description">
+            {{ fieldset.description|safe }}
+        </div>
+    {% endif %}
+
+    <div class="aligned border mb-8 rounded-md pt-3 px-3 shadow-sm">
+        {% for line in fieldset %}
+            <div class="block {% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+                {% for field in line %}
+                    <div class="flex {% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}" {% if not line.fields|length_is:'1' %} class="fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="checkbox-row"{% endif %}>
+                        {% if not line.fields|length_is:'1' and not field.is_readonly %}
+                            {{ field.errors }}
+                        {% endif %}
+
+                        {% if field.is_checkbox %}
+                            <div class="flex flex-row items-center">
+                                {{ field.field }}{{ field.label_tag }}
+                            </div>
+                        {% else %}
+                            <div class="{% if row %} w-48{% endif %}">
+                                {{ field.label_tag }}
+                            </div>
+
+                            {% if field.is_readonly %}
+                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm">
+                                    {% if field.contents %}
+                                        {{ field.contents }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                {{ field.field }}
+                            {% endif %}
+                        {% endif %}
+
+                        {% if line.errors and line.fields|length_is:'1' %}
+                            <span class="mt-1 text-red-600 text-sm">
+                                {{ line.errors }}
+                            </span>
+                        {% endif %}
+
+                        {% if field.field.help_text %}
+                            <div class="leading-relaxed mt-2 text-gray-500 text-xs">
+                                {{ field.field.help_text|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</fieldset>

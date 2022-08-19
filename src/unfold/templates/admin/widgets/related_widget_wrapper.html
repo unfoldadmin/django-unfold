@@ -1,0 +1,46 @@
+{% load i18n static %}
+
+<div class="flex-col flex-col-reverse items-center related-widget-wrapper w-full">
+    <div class="flex flex-col md:flex-row">
+        {{ rendered_widget }}
+
+        {% block links %}
+            {% spaceless %}
+                {% if not is_hidden %}
+                    <div class="mt-3 md:mt-0">
+                        {% if can_add_related or can_change_related or can_delete_related %}
+                            <div class="border cursor-pointer flex font-medium rounded-md shadow-sm text-sm text-gray-500 md:ml-4">
+                                {% if can_change_related %}
+                                    <a class="related-widget-wrapper-link change-related block border-r flex-grow px-3 py-2 text-center hover:text-primary-600"
+                                        id="change_id_{{ name }}"
+                                        data-href-template="{{ change_related_template_url }}?{{ url_params }}"
+                                        title="{% blocktranslate %}Change selected {{ model }}{% endblocktranslate %}">
+                                        {% translate 'Change' %}
+                                    </a>
+                                {% endif %}
+
+                                {% if can_add_related %}
+                                    <a class="related-widget-wrapper-link add-related block flex-grow px-3 py-2 text-center{% if can_delete_related %} border-r{% endif %} hover:text-primary-600"
+                                       id="add_id_{{ name }}"
+                                        href="{{ add_related_url }}?{{ url_params }}"
+                                        title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
+                                        {% translate 'Add' %}
+                                    </a>
+                                {% endif %}
+
+                                {% if can_delete_related %}
+                                    <a class="related-widget-wrapper-link delete-related change-related block flex-grow px-3 py-2 text-center text-red-600"
+                                       id="delete_id_{{ name }}"
+                                        data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
+                                        title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
+                                        {% translate 'Delete' %}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endspaceless %}
+        {% endblock %}
+    </div>
+</div>

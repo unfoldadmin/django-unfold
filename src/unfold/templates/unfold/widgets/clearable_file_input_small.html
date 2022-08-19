@@ -1,0 +1,34 @@
+{% load i18n static %}
+
+<div class="flex flex-row">
+    <div class="border flex items-center overflow-hidden rounded-md shadow-sm text-sm max-w-2xl">
+        {% if widget.is_initial and not widget.required %}
+            <div class="bg-gray-50 border-r flex flex-none items-center self-stretch px-3">
+                <label for="{{ widget.checkbox_id }}" class="flex items-center">
+                    <input type="checkbox" class="form-check-input" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
+
+                    <span class="ml-2 text-gray-500">
+                        {{ widget.clear_checkbox_label }}
+                    </span>
+                </label>
+            </div>
+        {% endif %}
+
+        <input type="text" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white flex-grow font-medium px-3 py-2 text-ellipsis {% if widget.value %}text-gray-500{% else %}text-gray-300{% endif %}">
+
+        <div class="flex flex-none items-center leading-none self-stretch">
+            <input id="{{ widget.name }}" type="{{ widget.type }}" name="{{ widget.name }}" class="hidden" {% include "django/forms/widgets/attrs.html" %} />
+
+            <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3">
+                <i class="material-icons">file_upload</i>
+            </label>
+        </div>
+    </div>
+
+    {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
+        <div class="border rounded-md ml-3 overflow-hidden shadow-sm">
+            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-gray-50 bg-no-repeat block h-9 w-9" style="background-image: url('{{ widget.value.url }}'), url('{% static 'unfold/img/not-found.jpg' %}')">
+            </a>
+        </div>
+    {% endif %}
+</div>

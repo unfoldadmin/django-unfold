@@ -1,0 +1,468 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+html {
+  --color-primary-100: theme('colors.purple.100');
+  --color-primary-200: theme('colors.purple.200');
+  --color-primary-300: theme('colors.purple.300');
+  --color-primary-400: theme('colors.purple.400');
+  --color-primary-500: theme('colors.purple.500');
+  --color-primary-600: theme('colors.purple.600');
+  --color-primary-700: theme('colors.purple.700');
+  --color-primary-800: theme('colors.purple.800');
+  --color-primary-900: theme('colors.purple.900');
+}
+
+/*******************************************************
+ Classes
+ *******************************************************/
+.column-fill-auto {
+  column-fill: auto;
+}
+
+@layer utilities {
+  .border-spacing-none {
+    border-spacing: 0;
+  }
+
+  .material-icons {
+    font-family: 'Material Icons Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+    display: inline-block;
+    /*line-height: 1;*/
+    text-transform: none;
+    letter-spacing: normal;
+    direction: ltr;
+    word-wrap: normal;
+    white-space: nowrap;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+  }
+
+  .scrollable-top {
+    @apply relative;
+  }
+
+  .scrollable-top:after {
+      @apply absolute bg-gradient-to-t from-gray-100 h-4 left-0 right-0 -top-4;
+      content: '';
+  }
+}
+
+.asteriskField {
+  @apply text-red-600;
+}
+
+/*******************************************************
+ Icons
+ *******************************************************/
+.md-16 {
+  font-size: 16px;
+}
+
+/*******************************************************
+ Forms
+ *******************************************************/
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right .5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5rem 1.5rem;
+}
+
+select:after {
+  content: '';
+  display: block;
+}
+
+#page input[type=checkbox] {
+  @apply appearance-none bg-white block border border-gray-300 cursor-pointer h-4 relative rounded w-4;
+}
+
+#page input[type=checkbox]:hover {
+  @apply border-gray-400;
+}
+
+#page input[type=checkbox]:checked {
+  @apply bg-primary-600 border-primary-600 text-white;
+
+}
+
+#page input[type=checkbox]:checked:after {
+  @apply absolute block flex font-bold h-4 items-center justify-center -left-px text-white text-xs w-4 -top-px;
+
+  content: 'done';
+  font-family: 'Material Icons Outlined';
+}
+
+#page input[type=checkbox].hidden {
+  display: none;
+}
+
+.block.errors input {
+  @apply border-red-600;
+}
+
+/*******************************************************
+ Table
+ *******************************************************/
+table select {
+  @apply appearance-none bg-no-repeat border block cursor-pointer font-medium px-3 py-2 pr-5 rounded-md shadow-sm text-gray-500;
+
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgb(156, 163, 175)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 10l5 5 5-5H7z"/></svg>');
+  background-size: 1.125rem 1.125rem;
+  background-position: right .5rem center;
+}
+
+table select:focus {
+  @apply border-primary-600;
+}
+
+table tr.selected {
+  @apply bg-yellow-50;
+}
+
+/*******************************************************
+ Datetime
+ *******************************************************/
+.datetimeshortcuts {
+  @apply flex flex-row-reverse items-center -ml-8 text-0 text-gray-400;
+}
+
+.datetimeshortcuts a {
+  @apply text-0 hover:text-primary-600;
+}
+
+.datetimeshortcuts a:first-child:after {
+  @apply bg-white border h-9.5 material-icons ml-2 py-2 rounded shadow-sm text-center text-gray-300 w-9.5 hover:text-primary-600;
+  content: 'timer';
+}
+
+.date-icon:after {
+  @apply bg-white border h-9.5 material-icons ml-10 py-2 rounded shadow-sm text-center text-gray-300 w-9.5 hover:text-primary-600;
+  content: 'edit';
+}
+
+.clock-icon:after {
+  @apply bg-white border h-9.5 material-icons ml-10 py-2 rounded shadow-sm text-center text-gray-300 w-9.5 hover:text-primary-600;
+  content: 'edit';
+}
+
+.timezonewarning {
+  @apply mt-2 text-gray-500 text-xs w-full;
+}
+
+/*******************************************************
+ Selector
+ *******************************************************/
+.selector {
+  @apply flex items-center w-full max-w-2xl;
+}
+
+.selector select {
+  @apply bg-none flex-grow;
+}
+
+.selector option {
+  @apply px-3 text-gray-500 text-sm;
+}
+
+.selector-chosen,
+.selector-available {
+  @apply border flex flex-col rounded-md self-stretch shadow-sm w-96;
+  /*width: 600px;*/
+}
+
+.selector-chosen h2,
+.selector-available h2 {
+  @apply border-b mb-3 py-2 px-3 text-sm text-gray-500;
+}
+
+.selector-filter {
+  @apply flex;
+}
+.selector-filter input {
+  @apply bg-gray-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded-md text-gray-500 text-sm focus:outline-none;
+}
+
+.selector-chooseall,
+.selector-clearall {
+  @apply block border-t py-2 text-center text-sm text-primary-600 underline;
+}
+
+.selector-clearall {
+  @apply text-red-600;
+}
+
+.selector-chooser {
+  @apply flex flex-col px-4 text-0;
+}
+
+.selector-chooser li {
+  @apply py-1 text-center;
+}
+
+.selector-add:after,
+.selector-remove:after {
+  @apply inline-block material-icons text-gray-400 w-5;
+}
+
+.selector-add:after {
+  content: 'arrow_forward';
+}
+
+.selector-remove:after {
+  content: 'arrow_backward';
+}
+
+/*******************************************************
+ Inlines
+ *******************************************************/
+.empty-form {
+  @apply hidden;
+}
+
+.add-row {
+  @apply align-middle bg-gray-50 text-left px-3 py-5 font-normal text-right text-sm;
+}
+
+[data-inline-type="stacked"] .add-row {
+  @apply border-t overflow-hidden;
+}
+
+.add-row td {
+  @apply px-3 py-4;
+}
+
+.add-row a {
+  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center text-gray-500 text-sm lg:float-right;
+}
+
+h3 .delete label {
+  @apply text-gray-500;
+}
+
+h3 .inline-deletelink {
+  @apply leading-none text-red-600 text-sm underline;
+}
+
+h3 span:nth-child(3) {
+  @apply ml-auto;
+}
+
+/*******************************************************
+ Autocomplete
+ *******************************************************/
+.select2.select2-container {
+  @apply border max-w-2xl rounded-md shadow-sm w-full;
+
+  width: 100% !important;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--single {
+  @apply h-auto;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__rendered {
+    @apply font-medium h-9 px-3 py-2 text-gray-500 text-sm;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear {
+  @apply mr-6;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow {
+  height: 1.5rem;
+  right: .5rem;
+  top: .435rem;
+  width: 1.5rem;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow b {
+  @apply bg-center bg-no-repeat border-b-0 h-6 left-0 m-0 top-0 w-6;
+
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-size: 1.5rem 1.5rem;
+  border: 0;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-search--dropdown {
+  @apply flex px-3 py-2;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-search--dropdown .select2-search__field {
+  @apply bg-gray-50 border border-gray-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm w-auto;
+}
+
+.select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--above  {
+  @apply rounded-t-none;
+}
+
+.select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--below  {
+  @apply rounded-b-none;
+}
+
+.select2-container.select2-container--open .select2-dropdown {
+  @apply border border-gray-200 pb-2 shadow-sm;
+}
+
+.select2-container.select2-container--open .select2-dropdown--below {
+  @apply rounded-t-none rounded-b-md;
+}
+
+.select2-container.select2-container--open .select2-dropdown--above {
+  @apply rounded-b-none rounded-t-md;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-results__option {
+  @apply block px-3 py-2 text-gray-500 text-sm;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected]  {
+  @apply text-primary-600;
+}
+
+/*******************************************************
+ Collapsed
+ *******************************************************/
+fieldset.collapsed > div {
+    display: none;
+}
+
+fieldset.collapsed h2, fieldset.collapsed {
+    @apply block;
+}
+
+fieldset.collapsed .collapse-toggle {
+    @apply inline;
+}
+
+/*******************************************************
+ Calendar
+ *******************************************************/
+.calendarbox {
+  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm z-50;
+}
+
+.calendar caption {
+  @apply font-medium mb-3 py-3 text-gray-700;
+}
+
+.calendar table {
+  @apply mb-3 w-full;
+}
+
+.calendar table th {
+  @apply font-medium text-center text-gray-700 text-xs;
+}
+
+.calendar table td {
+  @apply h-10 p-1 text-center w-10;
+}
+
+.calendar table td a {
+  @apply block flex h-full items-center justify-center rounded-full w-full;
+}
+
+.calendar table td a:hover {
+  @apply bg-gray-100 text-gray-700;
+}
+
+.calendar table td.today a {
+  @apply bg-primary-600 font-medium  text-white;
+}
+
+.calendar-shortcuts {
+  @apply flex flex-row justify-center mb-3 px-1 rounded-b-md text-0;
+}
+
+.calendar-shortcuts a {
+  @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-gray-500 text-xs w-1/3;
+}
+
+.calendar-cancel {
+  @apply block border-t py-2 text-center text-xs text-red-600 underline;
+}
+
+.calendarnav-previous {
+  @apply absolute block ml-2 mt-2 left-0 text-0 top-0;
+}
+
+.calendarnav-next:after,
+.calendarnav-previous:after {
+  @apply border flex h-7 items-center justify-center material-icons rounded-full text-gray-400 w-7 hover:border-primary-600 hover:text-primary-600;
+
+  content: 'navigate_before';
+  display: flex;
+}
+
+.calendarnav-next {
+  @apply absolute block mr-2 mt-2 right-0 text-0 top-0;
+}
+
+.calendarnav-next:after {
+  content: 'navigate_next';
+  display: flex;
+}
+
+/*******************************************************
+ Timepicker
+ *******************************************************/
+.clockbox {
+  @apply bg-white border rounded-md shadow-sm text-sm;
+}
+
+.clockbox h2 {
+  @apply font-medium px-3 py-2 text-gray-700;
+}
+.clockbox .timelist {
+  @apply pb-2 px-3 text-gray-500;
+}
+
+.clockbox .timelist li {
+  @apply block pb-1;
+}
+.clockbox .timelist li:hover {
+  @apply text-primary-600;
+}
+
+/*******************************************************
+ Errors
+ *******************************************************/
+.errorlist li {
+  @apply bg-red-100 text-red-600 p-3 rounded-md text-sm;
+}
+
+fieldset > .errorlist li {
+  @apply mb-3;
+}
+
+td > .errorlist li {
+  @apply mt-3 mx-3;
+}
+
+/*******************************************************
+ Misc
+ *******************************************************/
+.field-actions_holder {
+  @apply w-0;
+}
+
+.htmx-swapping:before {
+  @apply absolute bg-white bottom-0 left-0 opacity-80 transition-all right-0 top-0;
+  content: '';
+}
+
+.htmx-swapping:after {
+  @apply absolute animate-spin h-4 inset-1/2 material-icons md-16 text-gray-400 w-4;
+
+  content: 'sync';
+}

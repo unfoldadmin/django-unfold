@@ -1,0 +1,61 @@
+{% load i18n admin_urls %}
+
+<div {% if not is_popup %}id="submit-row"{% endif %} class="relative z-20 {% if not is_popup %} mt-20 lg:mt-8{% endif %}">
+    <div class="{% if not is_popup %}bottom-0 fixed left-0 right-0 xl:left-72{% endif %}">
+        <div class="bg-white {% if not is_popup %}border-t px-4 py-4 scrollable-top lg:px-12{% endif %}">
+            <div class="container flex flex-col-reverse items-center mx-auto lg:flex-row-reverse">
+                {% block submit-row %}
+                    {% if show_save %}
+                        <button type="submit" name="_save" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md text-sm text-white w-full lg:w-auto">
+                            {% translate 'Save' %}
+                        </button>
+                    {% endif %}
+
+                    {% for action in actions_submit_line %}
+                        <button type="submit" name="{{ action.action_name }}" class="border font-medium mb-3 px-3 py-2 rounded-md text-sm text-gray-500 w-full hover:bg-gray-50 lg:mb-0 lg:mr-3 lg:w-auto">
+                            {{ action.description }}
+                        </button>
+                    {% endfor %}
+
+                    {% if show_save_and_continue %}
+                        <button type="submit" name="_continue" class="border font-medium hidden mb-3 px-3 py-2 rounded-md text-sm text-gray-500 w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto">
+                            {% if can_change %}
+                                {% translate 'Save and continue editing' %}
+                            {% else %}
+                                {% translate 'Save and view' %}
+                            {% endif %}
+                        </button>
+                    {% endif %}
+
+                    {% if show_close %}
+                        <a href="{% url opts|admin_urlname:'changelist' %}" class="closelink">
+                            {% translate 'Close' %}
+                        </a>
+                    {% endif %}
+
+                    {% if show_save_and_add_another %}
+                        <button type="submit" name="_addanother" class="border font-medium hidden mb-3 px-3 py-2 rounded-md text-sm text-gray-500 w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto">
+                            {% translate 'Save and add another' %}
+                        </button>
+                    {% endif %}
+
+                    {% if show_save_as_new %}
+                        <button type="submit" name="_saveasnew" class="border font-medium mb-3 px-3 py-2 rounded-md text-sm text-gray-500 w-full hover:bg-gray-50 lg:mb-0 lg:mr-3">
+                            {% translate 'Save as new' %}
+                        </button>
+                    {% endif %}
+
+                    {% if show_delete_link and original %}
+                        {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+
+                        <p class="deletelink-box mr-auto w-full lg:w-auto">
+                            <a href="{% add_preserved_filters delete_url %}" class="block border border-red-500 font-medium mb-3 px-3 py-2 rounded-md text-center text-sm text-red-500 whitespace-nowrap lg:mb-0 lg:mr-3">
+                                {% translate "Delete" %} {{ opts.verbose_name }}
+                            </a>
+                        </p>
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>

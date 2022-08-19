@@ -1,0 +1,66 @@
+{% load i18n static unfold %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+
+{% capture as branding silent %}{% block branding %}{% endblock %}{% endcapture %}
+{% capture as pretitle silent %}{% block pretitle %}{% endblock %}{% endcapture %}
+{% capture as content_title silent %}{% block content_title %}{% if title %}{{ title }}{% endif %}{% endblock %}{% endcapture %}
+{% capture as content_subtitle silent %}{% block content_subtitle %}{% if subtitle %}{{ subtitle }}{% endif %}{% endblock %}{% endcapture %}
+{% capture as nav_global silent %}{% block nav-global %}{% endblock %}{% endcapture %}
+{% capture as nav_global_side silent %}{% block nav-global-side %}{% endblock %}{% endcapture %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    {% for style in styles %}
+        <link href="{{ style }}" rel="stylesheet">
+    {% endfor %}
+
+    <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
+
+    <script src="{% static 'unfold/js/simplebar.js' %}"></script>
+    <script src="{% static 'unfold/js/htmx.js' %}"></script>
+    <script src="{% static 'unfold/js/app.js' %}"></script>
+
+    {% for script in scripts %}
+        <script src="{{ script }}"></script>
+    {% endfor %}
+
+    {% block extrastyle %}{% endblock %}
+
+    {% block extrahead %}{% endblock %}
+
+    {% block responsive %}
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    {% endblock %}
+
+    {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE">
+    {% endblock %}
+
+    {% if colors %}
+        <style>
+            html {
+                {% for name, weights in colors.items %}
+                    {% for weight, value in weights.items %}
+                        --color-{{ name }}-{{ weight }}: {{ value }};
+                    {% endfor %}
+                {% endfor %}
+            }
+        </style>
+    {% endif %}
+</head>
+
+<body class="antialiased font-sans {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
+    {% block base %}{% endblock %}
+</body>
+
+</html>
