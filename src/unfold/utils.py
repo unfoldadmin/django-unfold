@@ -31,6 +31,7 @@ def display_for_header(value, empty_value_display):
 
 def display_for_label(value, empty_value_display, label):
     label_type = None
+    multiple = False
 
     if isinstance(label, dict):
         if isinstance(value, tuple):
@@ -38,6 +39,8 @@ def display_for_label(value, empty_value_display, label):
             value = value[1]
         elif value in label:
             label_type = label[value]
+    elif isinstance(label, (label, tuple)):
+        multiple = True
 
     return mark_safe(
         render_to_string(
@@ -45,6 +48,7 @@ def display_for_label(value, empty_value_display, label):
             {
                 "label": value,
                 "label_type": label_type,
+                "multiple": multiple,
             },
         )
     )

@@ -1,5 +1,5 @@
 {% if label %}
-    {% if label|length > 1 %}
+    {% if multiple %}
         {% for item in label %}
             <span class="border font-semibold leading-none mr-2 px-2 py-1 rounded-md shadow-sm text-xxs uppercase last:mr-0
                 {% if label_type == 'info' %}
