@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.1.1"
+version = "0.1.2"
 description = "Clean & minimal Django admin theme based on Tailwind CSS"
 license = "MIT"
+readme = "README.md"
 authors = []
 homepage = "https://github.com/remastr/django-unfold"
 repository = "https://github.com/remastr/django-unfold"
