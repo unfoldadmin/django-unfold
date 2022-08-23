@@ -35,8 +35,11 @@ def display_for_label(value, empty_value_display, label):
 
     if isinstance(label, dict):
         if isinstance(value, tuple):
-            label_type = label[value[0]]
-            value = value[1]
+            try:
+                label_type = label[value[0]]
+                value = value[1]
+            except KeyError:
+                value = value[0]
         elif value in label:
             label_type = label[value]
     elif isinstance(label, (label, tuple)):
