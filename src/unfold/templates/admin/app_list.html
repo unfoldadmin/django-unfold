@@ -27,7 +27,7 @@
                                         {% endif %}
 
                                         {% if model.admin_url %}
-                                            <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}" class="block flex items-center -mx-3 px-3 py-3 rounded-md {% if model.active %}bg-gray-100 font-semibold text-primary-600{% else %}text-gray-500 hover:text-gray-700{% endif %}"{% endif %}>
+                                            <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}" class="block flex items-center -mx-3 px-3 py-3 rounded-md {% if model.active %}bg-gray-100 font-semibold text-primary-600{% else %}text-gray-500 hover:text-gray-700{% endif %}">
                                                 {% if model.icon %}
                                                     <span class="material-icons md-18 mr-3">{{ model.icon }}</span>
                                                 {% endif %}
