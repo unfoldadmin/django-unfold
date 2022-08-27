@@ -134,25 +134,37 @@ table tr.selected {
  Datetime
  *******************************************************/
 .datetimeshortcuts {
-  @apply flex flex-row-reverse items-center -ml-8 text-0 text-gray-400;
+  @apply flex flex-row-reverse items-center text-0 text-gray-400;
 }
 
 .datetimeshortcuts a {
-  @apply text-0 hover:text-primary-600;
+  @apply text-0 text-gray-300 transition hover:text-primary-600;
+}
+
+.datetimeshortcuts a:first-child {
+  @apply ml-2;
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply bg-white border h-9.5 material-icons ml-2 py-2 rounded shadow-sm text-center text-gray-300 w-9.5 hover:text-primary-600;
+  @apply bg-white border h-9.5 material-icons py-2 rounded shadow-sm text-center w-9.5 hover:bg-primary-200 hover:text-primary-600;
   content: 'timer';
 }
 
+.date-icon {
+  @apply block h-9.5 ml-2 w-9.5;
+}
+
 .date-icon:after {
-  @apply bg-white border h-9.5 material-icons ml-10 py-2 rounded shadow-sm text-center text-gray-300 w-9.5 hover:text-primary-600;
+  @apply bg-white border h-9.5 material-icons py-2 rounded shadow-sm text-center w-9.5 hover:text-primary-600;
   content: 'edit';
 }
 
+.clock-icon {
+  @apply block h-9.5 ml-2 w-9.5;
+}
+
 .clock-icon:after {
-  @apply bg-white border h-9.5 material-icons ml-10 py-2 rounded shadow-sm text-center text-gray-300 w-9.5 hover:text-primary-600;
+  @apply bg-white border h-9.5 material-icons py-2 rounded shadow-sm text-center w-9.5 hover:text-primary-600;
   content: 'edit';
 }
 
@@ -164,21 +176,20 @@ table tr.selected {
  Selector
  *******************************************************/
 .selector {
-  @apply flex items-center w-full max-w-2xl;
+  @apply flex flex-col items-center order-first md:flex-row;
 }
 
 .selector select {
-  @apply bg-none flex-grow;
+  @apply bg-none flex-grow w-full;
 }
 
 .selector option {
-  @apply px-3 text-gray-500 text-sm;
+  @apply px-3 text-gray-500 text-sm truncate;
 }
 
 .selector-chosen,
 .selector-available {
-  @apply border flex flex-col rounded-md self-stretch shadow-sm w-96;
-  /*width: 600px;*/
+  @apply border flex flex-col flex-grow rounded-md self-stretch shadow-sm md:w-72 lg:w-96;
 }
 
 .selector-chosen h2,
@@ -203,7 +214,7 @@ table tr.selected {
 }
 
 .selector-chooser {
-  @apply flex flex-col px-4 text-0;
+  @apply flex flex-col my-4 text-0 w-14;
 }
 
 .selector-chooser li {

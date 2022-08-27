@@ -1,59 +1,60 @@
 {% load i18n %}
 
 {% if app_list %}
-    {% for app in app_list %}
-        <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
-            <ol class="px-6">
-                {% if app.models and not app.hidden %}
-                    <li>
-                        {% if app.name %}
-                            <a href="{{ app.app_url }}" class="block font-semibold mb-2 mt-4 text-gray-700 text-sm" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
-                                {{ app.name }}
-                            </a>
-                        {% endif %}
+    <div class="overflow-auto">
+        {% for app in app_list %}
+            <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
+                <ol class="px-6">
+                    {% if app.models and not app.hidden %}
+                        <li>
+                            {% if app.name %}
+                                <a href="{{ app.app_url }}" class="block font-semibold mb-2 mt-4 text-gray-700 text-sm" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
+                                    {{ app.name }}
+                                </a>
+                            {% endif %}
 
-                        <ol>
-                            {% for model in app.models %}
-                                {% if not model.hidden %}
-                                    {% if model.separator %}
-                                        <li class="border-t my-2"></li>
-                                    {% endif %}
-
-                                    <li class="model-{{ model.object_name|lower }}{% if model.active %} current-model{% endif %}">
-                                        {% if model.header %}
-                                            <h3 class="font-medium my-3 text-gray-900 text-sm">
-                                                {{ model.header }}
-                                            </h3>
+                            <ol>
+                                {% for model in app.models %}
+                                    {% if not model.hidden %}
+                                        {% if model.separator %}
+                                            <li class="border-t my-2"></li>
                                         {% endif %}
+                                        <li class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path|urlencode %} current-model{% endif %}">
+                                            {% if model.header %}
+                                                <h3 class="font-medium my-3 text-gray-900 text-sm">
+                                                    {{ model.header }}
+                                                </h3>
+                                            {% endif %}
 
-                                        {% if model.admin_url %}
-                                            <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}" class="block flex items-center -mx-3 px-3 py-3 rounded-md {% if model.active %}bg-gray-100 font-semibold text-primary-600{% else %}text-gray-500 hover:text-gray-700{% endif %}">
-                                                {% if model.icon %}
-                                                    <span class="material-icons md-18 mr-3">{{ model.icon }}</span>
-                                                {% endif %}
+                                            {% if model.admin_url %}
+                                                <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}" class="block flex items-center -mx-3 px-3 py-3 rounded-md {% if model.admin_url in request.path|urlencode %}bg-gray-100 font-semibold text-primary-600{% else %}text-gray-500 hover:text-gray-700{% endif %}">
+                                                    {% if model.icon %}
+                                                        <span class="material-icons md-18 mr-3">{{ model.icon }}</span>
+                                                    {% endif %}
 
-                                                <span class="text-sm">
-                                                    {{ model.name }}
-                                                </span>
-
-                                                {% if model.badge %}
-                                                    <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">
-                                                        {{ model.badge }}
+                                                    <span class="text-sm">
+                                                        {{ model.name }}
                                                     </span>
-                                                {% endif %}
-                                            </a>
-                                        {% else %}
-                                            {{ model.name }}
-                                        {% endif %}
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ol>
-                    </li>
-                {% endif %}
-            </ol>
-        </div>
-    {% endfor %}
+
+                                                    {% if model.badge %}
+                                                        <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">
+                                                            {{ model.badge }}
+                                                        </span>
+                                                    {% endif %}
+                                                </a>
+                                            {% else %}
+                                                {{ model.name }}
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ol>
+                        </li>
+                    {% endif %}
+                </ol>
+            </div>
+        {% endfor %}
+    </div>
 {% else %}
     <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
 {% endif %}

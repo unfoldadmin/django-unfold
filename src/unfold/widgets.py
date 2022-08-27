@@ -111,7 +111,7 @@ class UnfoldAdminImageSmallFieldWidget(AdminFileWidget):
 class UnfoldAdminDateWidget(AdminDateWidget):
     def __init__(self, attrs=None, format=None):
         attrs = {
-            "class": "vDateField w-36 " + " ".join(INPUT_CLASSES),
+            "class": "vDateField w-36 lg:w-60 " + " ".join(INPUT_CLASSES),
             "size": "10",
             **(attrs or {}),
         }
@@ -133,7 +133,7 @@ class UnfoldAdminSingleDateWidget(AdminDateWidget):
 class UnfoldAdminTimeWidget(AdminTimeWidget):
     def __init__(self, attrs=None, format=None):
         attrs = {
-            "class": "vTimeField w-36 " + " ".join(INPUT_CLASSES),
+            "class": "vTimeField w-36 lg:w-60 " + " ".join(INPUT_CLASSES),
             "size": "8",
             **(attrs or {}),
         }
@@ -145,7 +145,7 @@ class UnfoldAdminSingleTimeWidget(AdminTimeWidget):
 
     def __init__(self, attrs=None, format=None):
         attrs = {
-            "class": "vTimeField w-36 " + " ".join(INPUT_CLASSES),
+            "class": "vTimeField w-36 lg:w-60 " + " ".join(INPUT_CLASSES),
             "size": "8",
             **(attrs or {}),
         }
