@@ -63,7 +63,7 @@ TEXTAREA_EXPANDABLE_CLASSES = [
     "h-full",
 ]
 
-SELECT_CLASSES = [*BASE_INPUT_CLASSES, "max-w-2xl", "appearance-none"]
+SELECT_CLASSES = [*BASE_INPUT_CLASSES, "bg-none", "max-w-2xl", "appearance-none"]
 
 
 class UnfoldAdminTextInputWidget(AdminTextInputWidget):
