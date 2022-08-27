@@ -230,9 +230,6 @@ class ModelAdminMixin:
 
         if isinstance(form_field.widget, SelectMultiple):
             form_field.widget.attrs["class"] = " ".join(SELECT_CLASSES)
-            # form_field.widget = forms.SelectMultiple(
-            #     attrs={"class": " ".join(SELECT_CLASSES)}
-            # )
 
         return form_field
 
