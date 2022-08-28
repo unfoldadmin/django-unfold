@@ -18,6 +18,7 @@ from django.db.models.fields.related import (
     OneToOneField,
 )
 from django.forms.utils import flatatt
+from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
@@ -218,6 +219,20 @@ class ModelAdminMixin:
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if "widget" not in kwargs:
+            if db_field.name in self.raw_id_fields:
+                kwargs["widget"] = forms.TextInput(
+                    attrs={"class": " ".join(INPUT_CLASSES)}
+                )
+
+        form_field = super().formfield_for_manytomany(db_field, request, **kwargs)
+
+        if isinstance(form_field.widget, SelectMultiple):
+            form_field.widget.attrs["class"] = " ".join(SELECT_CLASSES)
+
+        return form_field
+
     def formfield_for_nullboolean_field(self, db_field, request, **kwargs):
         if "widget" not in kwargs:
             kwargs["widget"] = forms.NullBooleanSelect(
@@ -316,7 +331,11 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         ]
 
         return (
-            custom_urls + action_row_urls + actions_list_urls + action_detail_urls + urls
+            custom_urls
+            + action_row_urls
+            + actions_list_urls
+            + action_detail_urls
+            + urls
         )
 
     def _path_from_custom_url(self, custom_url):
