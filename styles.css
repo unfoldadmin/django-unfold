@@ -71,15 +71,15 @@ html {
 /*******************************************************
  Forms
  *******************************************************/
-select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right .5rem center;
+select:not([class*="bg-none"]):not([multiple]) {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3e%3cpath fill='#6B7280' d='M24 31.4 11.3 18.7l2.85-2.8L24 25.8l9.85-9.85 2.85 2.8Z'/%3e%3c/svg%3e");
+  background-position: right .70rem center;
   background-repeat: no-repeat;
-  background-size: 1.5rem 1.5rem;
+  background-size: 1.125rem 1.125rem;
 }
 
 select:after {
-  content: '';
+  content: 'asdasd';
   display: block;
 }
 
@@ -276,22 +276,26 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear {
-  @apply mr-6;
+  @apply flex items-center mr-5 h-9 -mt-2 text-0;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear:after {
+  @apply material-icons text-gray-500;
+  content: "close";
+  font-size: 14px;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow {
-  height: 1.5rem;
-  right: .5rem;
-  top: .435rem;
-  width: 1.5rem;
+  @apply flex h-9 items-center mr-2 -mt-px;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow:after {
+  @apply left-0 leading-none m-0 material-icons text-gray-500 text-lg;
+  content: "expand_more";
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow b {
-  @apply bg-center bg-no-repeat border-b-0 h-6 left-0 m-0 top-0 w-6;
-
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  background-size: 1.5rem 1.5rem;
-  border: 0;
+  @apply hidden;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-search--dropdown {
@@ -328,6 +332,28 @@ h3 span:nth-child(3) {
 
 .select2-container.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected]  {
   @apply text-primary-600;
+}
+
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice {
+  @apply bg-gray-100 flex font-medium h-7 items-center px-2 text-sm text-gray-500;
+}
+
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove {
+  @apply text-0;
+}
+
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove:hover {
+  @apply hover:text-gray-600;
+}
+
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove:after {
+  @apply material-icons text-gray-400;
+  content: "close";
+  font-size: 14px;
+}
+
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-search--inline .select2-search__field {
+  @apply h-7 text-gray-500 text-sm;
 }
 
 /*******************************************************
