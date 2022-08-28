@@ -121,7 +121,7 @@ UNFOLD = {
                 "items": [
                     {
                         "title": _("Dashboard"),
-                        "icon": "dashboard",
+                        "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
                         "link": reverse_lazy("admin:index"),
                         "badge": "sample_app.badge_callback",
                     },
