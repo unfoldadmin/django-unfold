@@ -42,7 +42,8 @@ def display_for_label(value, empty_value_display, label):
                 value = value[0]
         elif value in label:
             label_type = label[value]
-    elif isinstance(label, (label, tuple)):
+
+    if isinstance(value, tuple) or isinstance(value, list):
         multiple = True
 
     return mark_safe(
