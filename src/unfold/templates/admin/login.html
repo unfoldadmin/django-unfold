@@ -25,7 +25,7 @@
 
 {% block base %}
     <div class="flex min-h-screen">
-        <div class="flex items-center justify-center mx-auto px-4 w-full xl:px-72 2xl:px-96">
+        <div class="flex flex-grow items-center justify-center mx-auto px-4">
             <div class="w-full sm:w-96">
                 <h1 class="font-semibold mb-10">
                     <span class="block text-gray-700">{% trans 'Welcome back to' %}</span>
@@ -119,7 +119,7 @@
         </div>
 
         {% if image %}
-            <div class="bg-cover flex-grow max-w-3xl" style="background-image: url('{{ image }}')">
+            <div class="bg-cover flex-grow hidden max-w-3xl xl:max-w-4xl xl:block" style="background-image: url('{{ image }}')">
             </div>
         {% endif %}
     </div>
