@@ -1,7 +1,7 @@
 {{ cl.opts.app_label }}
 
 {% if tab_list or actions_list %}
-    <div class="flex flex-col mb-2 text-gray-500 text-sm w-full sm:border-b sm:border-l-0 sm:flex-row">
+    <div class="flex items-start flex-col mb-2 text-gray-500 text-sm w-full sm:border-b sm:border-l-0 sm:flex-row sm:items-center sm:justify-end">
         {% if tab_list %}
             <ul class="border rounded-md flex flex-col w-full sm:flex-row sm:border-b-0 sm:border-t-0 sm:border-l-0 sm:border-r-0">
                 {% for item in tab_list %}
@@ -15,7 +15,7 @@
         {% endif %}
 
         {% if actions_list %}
-            <ul class="border flex mr-auto mb-4 mt-2 rounded-md shadow-sm sm:mb-0 sm:mt-0 sm:ml-auto sm:self-center">
+            <ul class="border flex mb-4 mt-2 rounded-md shadow-sm sm:mb-2 sm:mt-0">
                 {% for action in actions_list %}
                     <li class="border-r last:border-0">
                         <a href="{{ action.path }}" class="block px-4 py-2 whitespace-nowrap hover:text-gray-700">
