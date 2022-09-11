@@ -233,7 +233,7 @@ Currently in Django admin it is possible to define one type of action for object
 - **Global** actions displayed at the top of results list
 - **Row** action displayed per row in results list
 - **Detail** action displayed when viewing object detail
-- **Submit line** action displayed near object detail subtmit button
+- **Submit line** action displayed near object detail submit button
 
 Compared to Django action decorator, you can specify 2 more arguments:
 - `url_path`: Action path name
