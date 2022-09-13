@@ -228,6 +228,10 @@ class ModelAdminMixin:
 
         form_field = super().formfield_for_manytomany(db_field, request, **kwargs)
 
+        # If M2M uses intermediary model, form_field will be None
+        if not form_field:
+            return None
+
         if isinstance(form_field.widget, SelectMultiple):
             form_field.widget.attrs["class"] = " ".join(SELECT_CLASSES)
 
