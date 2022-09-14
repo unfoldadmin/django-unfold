@@ -6,7 +6,7 @@ from django.core.validators import EMPTY_VALUES
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
-from django.urls import path, reverse_lazy
+from django.urls import path, reverse_lazy, reverse
 from django.utils.module_loading import import_string
 
 from .settings import get_config
@@ -151,6 +151,20 @@ class UnfoldAdminSite(AdminSite):
             extra_context.update({REDIRECT_FIELD_NAME: redirect_field_name})
 
         return super().login(request, extra_context)
+
+    def password_change(self, request, extra_context=None):
+        from .forms import AdminOwnPasswordChangeForm
+        from django.contrib.auth.views import PasswordChangeView
+        url = reverse('admin:password_change_done', current_app=self.name)
+        defaults = {
+            'form_class': AdminOwnPasswordChangeForm,
+            'success_url': url,
+            'extra_context': {**self.each_context(request), **(extra_context or {})},
+        }
+        if self.password_change_template is not None:
+            defaults['template_name'] = self.password_change_template
+        request.current_app = self.name
+        return PasswordChangeView.as_view(**defaults)(request)
 
     def get_sidebar_list(self, request):
         navigation = get_config()["SIDEBAR"].get("navigation")
