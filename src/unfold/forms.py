@@ -3,6 +3,9 @@ from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
+from django.contrib.admin.forms import (
+    AdminPasswordChangeForm as BaseAdminOwnPasswordChangeForm
+)
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.utils.translation import gettext_lazy as _
@@ -66,3 +69,12 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
 
         self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
         self.fields["password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+
+
+class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(kwargs.pop('user'), *args, **kwargs)
+
+        self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+        self.fields["new_password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+        self.fields["new_password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
