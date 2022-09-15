@@ -60,7 +60,11 @@
             {% if actions_detail %}
                 <div class="bg-gray-50 flex justify-end mb-4 p-3 rounded-md">
                     {% for action in actions_detail %}
-                        <a href="{{ action.path }}" class="bg-white text-gray-500 border cursor-pointer flex font-medium items-center px-3 py-2 mr-3 rounded-md shadow-sm text-sm">
+                        <a href="{{ action.path }}" class="bg-white text-gray-500 border cursor-pointer flex font-medium items-center px-3 py-2 mr-3 rounded-md shadow-sm text-sm"
+                            {% for attr_name, attr_value in action.attrs.items %}
+                                {{ attr_name }}="{{ attr_value }}"
+                            {% endfor %}
+                        >
                             {{ action.title }}
                         </a>
                     {% endfor %}

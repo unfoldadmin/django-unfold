@@ -384,6 +384,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                 actions.append(
                     {
                         "title": action["description"],
+                        "attrs": action["method"].attrs,
                         "path": reverse(
                             f"admin:{action['action_name']}", args=(object_id,)
                         ),
@@ -407,6 +408,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         actions = [
             {
                 "title": action["description"],
+                "attrs": action["method"].attrs,
                 "path": reverse(f"admin:{action['action_name']}"),
             }
             for action in self.get_actions_list()
