@@ -380,6 +380,16 @@ Note: In case that it is needed to pass custom variables into dashboard tamplate
 
 ## Unfold Development
 
+### Pre-commit
+
+Before adding any source code, it is recommended to have pre-commit installed on your local computer to check for all potential issues when comitting the code.
+
+```bash
+pip install pre-commit
+pre-commit install
+pre-commit install --hook-type commit-msg
+```
+
 ### Poetry Configuration
 
 To add a new feature or fix the easiest approach is to use django-unfold in combination with Poetry. The process looks like:
