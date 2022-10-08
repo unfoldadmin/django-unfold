@@ -27,6 +27,7 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
 - [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet)
 - [Custom Admin Dashboard](#custom-admin-dashboard)
 - [Unfold Development](#unfold-development)
+  - [Pre-commit](#pre-commit)
   - [Poetry Configuration](#poetry-configuration)
   - [Compiling Tailwind](#compiling-tailwind)
 
@@ -38,7 +39,7 @@ The installation process is minimal. Everything what is needed after installatio
 # settings.py
 
 INSTALLED_APPS = [
-    "unfold",
+    "unfold",  # before django.contrib.admin
     "unfold.contrib.numeric_filters",  # optional
     "django.contrib.admin",  # required
 ]
@@ -233,7 +234,7 @@ Currently in Django admin it is possible to define one type of action for object
 - **Global** actions displayed at the top of results list
 - **Row** action displayed per row in results list
 - **Detail** action displayed when viewing object detail
-- **Submit line** action displayed near object detail subtmit button
+- **Submit line** action displayed near object detail submit button
 
 Compared to Django action decorator, you can specify 2 more arguments:
 - `url_path`: Action path name
