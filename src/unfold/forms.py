@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.admin.forms import AdminAuthenticationForm
+from django.contrib.admin.forms import (
+    AdminPasswordChangeForm as BaseAdminOwnPasswordChangeForm,
+)
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
-)
-from django.contrib.admin.forms import (
-    AdminPasswordChangeForm as BaseAdminOwnPasswordChangeForm
 )
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
@@ -73,7 +73,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
     def __init__(self, *args, **kwargs):
-        super().__init__(kwargs.pop('user'), *args, **kwargs)
+        super().__init__(kwargs.pop("user"), *args, **kwargs)
 
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
         self.fields["new_password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)

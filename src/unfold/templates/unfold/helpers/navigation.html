@@ -7,7 +7,7 @@
                 {% if logo %}
                     <img src="{{ logo }}" alt="{% trans "Home" %}"/>
                 {% elif branding %}
-                    {% include 'unfold/helpers/site_icon.html' %}
+                    {% include "unfold/helpers/site_icon.html" %}
 
                     {{ branding }}
                 {% endif %}
