@@ -1,4 +1,6 @@
-def action(function=None, *, permissions=None, description=None, url_path=None, attrs=None):
+def action(
+    function=None, *, permissions=None, description=None, url_path=None, attrs=None
+):
     def decorator(func):
         if permissions is not None:
             func.allowed_permissions = permissions
