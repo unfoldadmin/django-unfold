@@ -19,6 +19,7 @@ def tab_list(context, opts):
         context={
             "tab_list": tabs,
             "actions_list": context.get("actions_list"),
+            "is_popup": context.get("is_popup"),
         },
     )
 

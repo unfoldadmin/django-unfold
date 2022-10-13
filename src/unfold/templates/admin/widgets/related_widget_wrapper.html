@@ -1,44 +1,52 @@
 {% load i18n static %}
 
-<div class="flex-col flex-col-reverse items-center related-widget-wrapper w-full">
-    <div class="flex flex-col md:flex-row">
+<div class="flex-col flex-col-reverse items-center w-full">
+    <div class="related-widget-wrapper"{% if not model_has_limit_choices_to %} data-model-ref="{{ model }}"{% endif %}>
         {{ rendered_widget }}
 
         {% block links %}
             {% spaceless %}
                 {% if not is_hidden %}
-                    <div class="mt-3 md:mt-0">
-                        {% if can_add_related or can_change_related or can_delete_related %}
-                            <div class="border cursor-pointer flex font-medium rounded-md shadow-sm text-sm text-gray-500 md:ml-4">
-                                {% if can_change_related %}
-                                    <a class="related-widget-wrapper-link change-related block border-r flex-grow px-3 py-2 text-center hover:text-primary-600"
-                                        id="change_id_{{ name }}"
-                                        data-href-template="{{ change_related_template_url }}?{{ url_params }}"
-                                        title="{% blocktranslate %}Change selected {{ model }}{% endblocktranslate %}">
-                                        {% translate 'Change' %}
-                                    </a>
-                                {% endif %}
-
-                                {% if can_add_related %}
-                                    <a class="related-widget-wrapper-link add-related block flex-grow px-3 py-2 text-center{% if can_delete_related %} border-r{% endif %} hover:text-primary-600"
-                                       id="add_id_{{ name }}"
-                                        href="{{ add_related_url }}?{{ url_params }}"
-                                        title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
-                                        {% translate 'Add' %}
-                                    </a>
-                                {% endif %}
-
-                                {% if can_delete_related %}
-                                    <a class="related-widget-wrapper-link delete-related change-related block flex-grow px-3 py-2 text-center text-red-600"
-                                       id="delete_id_{{ name }}"
-                                        data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
-                                        title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
-                                        {% translate 'Delete' %}
-                                    </a>
-                                {% endif %}
-                            </div>
+                    {% if can_add_related or can_change_related or can_delete_related or can_view_related%}
+                        {% if can_change_related %}
+                            <a class="related-widget-wrapper-link change-related cursor-pointer ml-4 text-gray-500 text-sm hover:text-primary-600"
+                                id="change_id_{{ name }}"
+                                data-popup="yes"
+                                data-href-template="{{ change_related_template_url }}?{{ url_params }}"
+                                title="{% blocktranslate %}Change selected {{ model }}{% endblocktranslate %}">
+                                {% translate 'Change' %}
+                            </a>
                         {% endif %}
-                    </div>
+
+                        {% if can_add_related %}
+                            <a class="related-widget-wrapper-link add-related cursor-pointer ml-4 text-gray-500 text-sm hover:text-primary-600"
+                               data-popup="yes"
+                               id="add_id_{{ name }}"
+                                href="{{ add_related_url }}?{{ url_params }}"
+                                title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
+                                {% translate 'Add' %}
+                            </a>
+                        {% endif %}
+
+                        {% if can_view_related %}
+                            <a class="related-widget-wrapper-link view-related cursor-pointer ml-4 text-gray-500 text-sm hover:text-primary-600"
+                               id="view_id_{{ name }}"
+                               data-href-template="{{ change_related_template_url }}?{{ view_related_url_params }}"
+                               title="{% blocktranslate %}View selected {{ model }}{% endblocktranslate %}">
+                                {% translate 'View' %}
+                            </a>
+                        {% endif %}
+
+                        {% if can_delete_related %}
+                            <a class="related-widget-wrapper-link delete-related cursor-pointer ml-4 text-red-500 text-sm hover:text-red-600"
+                               id="delete_id_{{ name }}"
+                                data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
+                                data-popup="yes"
+                                title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
+                                {% translate 'Delete' %}
+                            </a>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             {% endspaceless %}
         {% endblock %}

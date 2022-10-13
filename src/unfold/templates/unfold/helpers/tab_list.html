@@ -1,29 +1,29 @@
-{{ cl.opts.app_label }}
+{% if not is_popup %}
+    {% if tab_list or actions_list %}
+        <div class="flex items-start flex-col mb-2 text-gray-500 text-sm w-full sm:border-b sm:border-l-0 sm:flex-row sm:items-center sm:justify-end">
+            {% if tab_list %}
+                <ul class="border rounded-md flex flex-col w-full sm:flex-row sm:border-b-0 sm:border-t-0 sm:border-l-0 sm:border-r-0">
+                    {% for item in tab_list %}
+                        <li class="border-b last:border-b-0 sm:border-b-0 sm:mr-8">
+                            <a href="{{ item.link }}" class="block  px-3 py-2{% if item.link|stringformat:"s" in request.path %} border-b sm:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600{% else %} hover:text-gray-700{% endif %}  sm:py-4 sm:px-0">
+                                {{ item.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-{% if tab_list or actions_list %}
-    <div class="flex items-start flex-col mb-2 text-gray-500 text-sm w-full sm:border-b sm:border-l-0 sm:flex-row sm:items-center sm:justify-end">
-        {% if tab_list %}
-            <ul class="border rounded-md flex flex-col w-full sm:flex-row sm:border-b-0 sm:border-t-0 sm:border-l-0 sm:border-r-0">
-                {% for item in tab_list %}
-                    <li class="border-b last:border-b-0 sm:border-b-0 sm:mr-8">
-                        <a href="{{ item.link }}" class="block  px-3 py-2{% if item.link|stringformat:"s" in request.path %} border-b sm:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600{% else %} hover:text-gray-700{% endif %}  sm:py-4 sm:px-0">
-                            {{ item.title }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-        {% if actions_list %}
-            <ul class="border flex mb-4 mt-2 rounded-md shadow-sm sm:mb-2 sm:mt-0">
-                {% for action in actions_list %}
-                    <li class="border-r last:border-0">
-                        <a href="{{ action.path }}" class="block px-4 py-2 whitespace-nowrap hover:text-gray-700">
-                            {{ action.title }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
+            {% if actions_list %}
+                <ul class="border flex mb-4 mt-2 rounded-md shadow-sm sm:mb-2 sm:mt-0">
+                    {% for action in actions_list %}
+                        <li class="border-r last:border-0">
+                            <a href="{{ action.path }}" class="block px-4 py-2 whitespace-nowrap hover:text-gray-700">
+                                {{ action.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endif %}
