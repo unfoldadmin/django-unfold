@@ -1,21 +1,25 @@
-<div class="datetime flex flex-col md:flex-row">
-    <div class="flex flex-wrap items-center max-w-sm lg:max-w-96">
-        <div class="mr-2 text-gray-500 text-sm">
+<div class="datetime flex flex-col max-w-2xl lg:flex-row">
+    <div class="flex flex-col flex-wrap">
+        <div class="mb-1 text-gray-500 text-sm">
             {{ date_label }}
         </div>
 
         {% with widget=widget.subwidgets.0 %}
-            {% include widget.template_name %}
+            <div class="flex flex-row">
+                {% include widget.template_name %}
+            </div>
         {% endwith %}
     </div>
 
-    <div class="flex flex-wrap items-center max-w-sm mt-3 md:mt-0 lg:ml-14">
-        <div class="mr-2 text-gray-500 text-sm">
+    <div class="flex flex-col flex-wrap lg:ml-auto mt-3 md:mt-0">
+        <div class="mb-1 text-gray-500 text-sm">
             {{ time_label }}
         </div>
 
         {% with widget=widget.subwidgets.1 %}
-            {% include widget.template_name %}
+            <div class="flex flex-row">
+                {% include widget.template_name %}
+            </div>
         {% endwith %}
     </div>
 </div>

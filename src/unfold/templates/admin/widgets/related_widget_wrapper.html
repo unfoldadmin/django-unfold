@@ -9,7 +9,7 @@
                 {% if not is_hidden %}
                     {% if can_add_related or can_change_related or can_delete_related or can_view_related%}
                         {% if can_change_related %}
-                            <a class="related-widget-wrapper-link change-related cursor-pointer ml-4 text-gray-500 text-sm hover:text-primary-600"
+                            <a class="related-widget-wrapper-link change-related cursor-pointer lg:ml-4 text-gray-500 text-sm hover:text-primary-600"
                                 id="change_id_{{ name }}"
                                 data-popup="yes"
                                 data-href-template="{{ change_related_template_url }}?{{ url_params }}"

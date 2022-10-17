@@ -17,7 +17,7 @@
 
             <div>
                 {% if not inline_admin_formset.has_add_permission and inline_admin_formset.forms|length_is:0 %}
-                    <p class="mb-8 text-gray-500 text-sm">
+                    <p class="mb-6 text-gray-500 text-sm">
                         {% trans "No records found." %}
                     </p>
                 {% else %}
@@ -56,12 +56,12 @@
 
                                 {% if inline_admin_form.original or inline_admin_form.show_url %}
                                     <tr>
-                                        <td class="original align-middle border-t font-normal px-3 pt-3 text-left text-sm whitespace-nowrap" colspan="10">
+                                        <td class="original" colspan="10">
                                             {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                                <p class="flex items-center leading-none text-gray-500">
+                                                <p class="align-middle flex font-normal items-center leading-none px-3 text-gray-500 text-left text-sm whitespace-nowrap">
                                                     {% if inline_admin_form.original %}
                                                         {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} text-gray-500 text-xs">
+                                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} mt-3 text-gray-500 text-xs">
                                                                 {{ inline_admin_form.original }}
                                                             </a>
                                                         {% endif %}
@@ -70,7 +70,7 @@
                                                     {% endif %}
 
                                                     {% if inline_admin_form.show_url %}
-                                                        <a href="{{ inline_admin_form.absolute_url }}" class="ml-1">
+                                                        <a href="{{ inline_admin_form.absolute_url }}" class="ml-1 mt-3">
                                                             <i class="material-icons h-4 md-16 text-gray-400">launch</i>
                                                         </a>
                                                     {% endif %}
@@ -88,7 +88,7 @@
                                     </tr>
                                 {% endif %}
 
-                                <tr class="form-row {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+                                <tr class="lg:border-b-0 form-row {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
                                     {% spaceless %}
                                         {% for fieldset in inline_admin_form %}
                                             {% for line in fieldset %}
@@ -101,43 +101,47 @@
                                         {% endfor %}
                                     {% endspaceless %}
 
-                                    {% for fieldset in inline_admin_form %}
-                                        {% for line in fieldset %}
-                                            {% for field in line %}
-                                                {% if field.is_readonly or not field.field.is_hidden %}
-                                                    <td{% if field.field.name %} class="field-{{ field.field.name }}{% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} border-b flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell"{% endif %} data-label="{{ field.field.label }}">
-                                                        {% if field.is_readonly %}
-                                                            <p class="text-gray-500 py-2">
-                                                                {{ field.contents }}
-                                                            </p>
-                                                        {% else %}
-                                                            {{ field.field }}
+                                    {% with is_last_row=forloop.last %}
+                                        {% for fieldset in inline_admin_form %}
+                                            {% for line in fieldset %}
+                                                {% with is_last_col=forloop.last %}
+                                                    {% for field in line %}
+                                                        {% if field.is_readonly or not field.field.is_hidden %}
+                                                            <td{% if field.field.name %} class="field-{{ field.field.name }}{% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell"{% endif %} data-label="{{ field.field.label }}">
+                                                                {% if field.is_readonly %}
+                                                                    <p class="bg-gray-50 border font-medium px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm">
+                                                                        {{ field.contents }}
+                                                                    </p>
+                                                                {% else %}
+                                                                    {{ field.field }}
 
-                                                            {% if field.field.errors|length > 0 %}
-                                                                <div class="mt-1 ext-sm text-red-600">
-                                                                    {% for error in field.field.errors %}
-                                                                        {{ error }}
-                                                                    {% endfor %}
-                                                                </div>
-                                                            {% endif %}
+                                                                    {% if field.field.errors|length > 0 %}
+                                                                        <div class="mt-1 ext-sm text-red-600">
+                                                                            {% for error in field.field.errors %}
+                                                                                {{ error }}
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </td>
                                                         {% endif %}
-                                                    </td>
-                                                {% endif %}
+                                                    {% endfor %}
+                                                {% endwith %}
                                             {% endfor %}
                                         {% endfor %}
-                                    {% endfor %}
 
-                                    {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                        <td class="
-                                            delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} align-middle text-left font-normal px-3 text-sm text-red-600
-                                            border-b flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-sm lg:table-cell lg:underline lg:w-px
-                                            "
-                                            data-label="{% trans "Remove" %}">
-                                            {% if inline_admin_form.original %}
-                                                {{ inline_admin_form.deletion_field.field }}
-                                            {% endif %}
-                                        </td>
-                                    {% endif %}
+                                        {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
+                                            <td class="
+                                                delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} align-middle text-left font-normal px-3 text-sm text-red-600
+                                                border-b flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-sm lg:table-cell lg:underline lg:w-px
+                                                "
+                                                data-label="{% trans "Remove" %}">
+                                                {% if inline_admin_form.original %}
+                                                    {{ inline_admin_form.deletion_field.field }}
+                                                {% endif %}
+                                            </td>
+                                        {% endif %}
+                                    {% endwith %}
                                 </tr>
                             {% endfor %}
                         </tbody>
