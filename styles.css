@@ -79,7 +79,7 @@ select:not([class*="bg-none"]):not([multiple]) {
 }
 
 select:after {
-  content: 'asdasd';
+  content: '';
   display: block;
 }
 
