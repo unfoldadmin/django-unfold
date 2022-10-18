@@ -66,6 +66,18 @@ urlpatterns = [
 ]
 ```
 
+After installation, it is required that admin classes are going to inherit from custom `ModelAdmin` available in `unfold.admin`.
+
+```python
+from django.contrib import admin
+from unfold.admin import ModelAdmin
+
+
+@admin.register(MyModel)
+class CustomAdminClass(ModelAdmin):
+    pass
+```
+
 ## Configuration
 
 ```python
