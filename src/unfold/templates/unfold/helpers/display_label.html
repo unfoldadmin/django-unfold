@@ -1,7 +1,7 @@
 {% if label %}
     {% if multiple %}
         {% for item in label %}
-            <span class="border font-semibold leading-none mr-2 px-2 py-1 rounded-md shadow-sm text-xxs uppercase last:mr-0
+            <span class="border font-semibold leading-none mr-2 px-2 py-1 rounded-md shadow-sm text-xxs uppercase whitespace-nowrap last:mr-0
                 {% if label_type == 'info' %}
                     bg-blue-50 border-blue-200 text-blue-500
                 {% elif label_type == 'danger' %}
@@ -18,7 +18,7 @@
             </span>
         {% endfor %}
     {% else %}
-        <span class="border font-semibold leading-none mr-2 px-2 py-1 rounded-md shadow-sm text-xxs uppercase last:mr-0
+        <span class="border font-semibold leading-none mr-2 px-2 py-1 rounded-md shadow-sm text-xxs uppercase whitespace-nowrap last:mr-0
             {% if label_type == 'info' %}
                 bg-blue-50 border-blue-200 text-blue-500
             {% elif label_type == 'danger' %}
