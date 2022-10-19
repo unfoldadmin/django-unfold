@@ -493,6 +493,9 @@ td > .errorlist li {
   @apply w-0;
 }
 
+/*******************************************************
+ Htmx
+ *******************************************************/
 .htmx-swapping:before {
   @apply absolute bg-white bottom-0 left-0 opacity-80 transition-all right-0 top-0;
   content: '';
@@ -500,6 +503,46 @@ td > .errorlist li {
 
 .htmx-swapping:after {
   @apply absolute animate-spin h-4 inset-1/2 material-icons md-16 text-gray-400 w-4;
-
   content: 'sync';
+}
+
+/*******************************************************
+ Filters
+ *******************************************************/
+#changelist-filter .admin-numeric-filter-slider .noUi-handle {
+    @apply bg-white border border-gray-200 cursor-pointer h-4 -right-4 rounded-full shadow-sm w-4;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle-upper {
+    @apply right-0;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle:after {
+    content: none;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-handle:before {
+    content: none;
+}
+
+#changelist-filter .admin-numeric-filter-slider.noUi-target {
+  @apply bg-gray-200 border-0 h-1 shadow-none;
+}
+
+#changelist-filter .admin-numeric-filter-slider .noUi-connect {
+  @apply bg-primary-600 border-0 h-1;
+}
+
+#changelist-filter .admin-numeric-filter-slider-tooltips {
+    @apply flex flex-row font-medium mb-5 space-x-4 text-gray-500 text-sm;
+}
+
+#changelist-filter .admin-numeric-filter-slider-tooltip-to,
+#changelist-filter .admin-numeric-filter-slider-tooltip-from {
+  @apply border cursor-not-allowed flex flex-grow flex-row items-center rounded-md shadow-sm px-3 py-2 w-full
+}
+
+#changelist-filter .admin-numeric-filter-slider-tooltip-from {
+    @apply mr-auto;
+
 }

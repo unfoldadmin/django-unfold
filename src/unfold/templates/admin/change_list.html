@@ -124,10 +124,10 @@
                     <div id="changelist-filter" class="bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50 peer-checked:flex">
                         <label for="show-filters" id="changelist-filter-close" class="flex-grow"></label>
 
-                        <div class="bg-white flex mr-4 my-4 rounded shadow-sm w-96">
-                            <div class="flex-grow h-full overflow-auto" data-simplebar>
+                        <div class="bg-white flex mr-4 my-4 overflow-hidden rounded shadow-sm w-96">
+                            <div class="flex-grow h-full overflow-auto relative" data-simplebar>
                                 <h3 class="border-b flex font-medium mb-6 px-8 py-4 text-sm">
-                                    {% trans 'Filter results' %}
+                                    {% trans "Filter results" %}
 
                                     {% if cl.has_active_filters %}
                                         <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-auto text-sm text-red-600 underline">
@@ -136,10 +136,24 @@
                                     {% endif %}
                                 </h3>
 
-                                <div class="px-8">
+                                <div class="px-8{% if cl.model_admin.list_filter_submit %} pb-16{% endif %}">
+                                    {% if cl.model_admin.list_filter_submit %}
+                                        <form method="get">
+                                    {% endif %}
+
+
                                     {% for spec in cl.filter_specs %}
                                         {% admin_list_filter cl spec %}
                                     {% endfor %}
+
+                                    {% if cl.model_admin.list_filter_submit %}
+                                            <div class="bg-gray-50 bg-white border-gray-200 border-t bottom-4 fixed px-8 py-3 right-5 rounded-b w-96">
+                                                <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md self-end text-sm text-white w-full">
+                                                    {% trans "Apply Filters" %}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
