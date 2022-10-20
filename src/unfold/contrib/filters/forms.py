@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from unfold.widgets import INPUT_CLASSES
+from ...widgets import INPUT_CLASSES
 
 
 class SingleNumericForm(forms.Form):
