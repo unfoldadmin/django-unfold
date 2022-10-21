@@ -130,10 +130,14 @@
                                     {% trans "Filter results" %}
 
                                     {% if cl.has_active_filters %}
-                                        <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-auto text-sm text-red-600 underline">
+                                        <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-3 text-sm text-red-600 underline">
                                             {% translate "Clear all filters" %}
                                         </a>
                                     {% endif %}
+
+                                    <label class="cursor-pointer material-icons md-18 ml-auto pl-4 text-gray-400 hover:text-gray-700" for="show-filters">
+                                        close
+                                    </label>
                                 </h3>
 
                                 <div class="px-8{% if cl.model_admin.list_filter_submit %} pb-16{% endif %}">
