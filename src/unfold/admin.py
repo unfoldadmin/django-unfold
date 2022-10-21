@@ -279,7 +279,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def get_actions_row(self):
         return [self.get_unfold_action(action) for action in self.actions_row or []]
 
-    def get_actions_submit_line(self, obj=None):
+    def get_actions_submit_line(self):
         return [
             self.get_unfold_action(action) for action in self.actions_submit_line or []
         ]
@@ -371,7 +371,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         )
 
     def get_list_display(self, request):
-        if len(self.actions_row) > 0:
+        if len(self.get_actions_row()) > 0:
             return super().get_list_display(request) + ("actions_holder",)
         return super().get_list_display(request)
 
@@ -392,10 +392,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                     }
                 )
 
-        obj = self.get_object(request, object_id)
         extra_context.update(
             {
-                "actions_submit_line": self.get_actions_submit_line(obj),
+                "actions_submit_line": self.get_actions_submit_line(),
                 "actions_detail": actions,
             }
         )
@@ -436,13 +435,13 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        for action in self.actions_submit_line:
+        for action in self.get_actions_submit_line():
             action_attrs = self.get_unfold_action(action)
 
             if action_attrs["action_name"] not in request.POST:
                 continue
 
-            action_attrs["method"](obj)
+            action_attrs["method"](request, obj)
 
     def _get_instance_method(self, method_name):
         try:

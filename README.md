@@ -268,7 +268,7 @@ class UserAdmin(ModelAdmin):
     actions_submit_line = ["submit_line_action"]
 
     @action(description=_("Submit"))
-    def submit_line_action(self, obj):
+    def submit_line_action(self, request, obj):
         pass
 
     @action(description=_("Global"), url_path="global-action")
