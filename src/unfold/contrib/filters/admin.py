@@ -7,7 +7,7 @@ from .forms import RangeNumericForm, SingleNumericForm, SliderNumericForm
 
 class NumericFilterModelAdmin(admin.ModelAdmin):
     class Media:
-        css = {"all": ("js/nouislider.min.css",)}
+        css = {"all": ("css/nouislider.min.css",)}
         js = (
             "js/wNumb.min.js",
             "js/nouislider.min.js",
@@ -15,12 +15,26 @@ class NumericFilterModelAdmin(admin.ModelAdmin):
         )
 
 
-class SingleNumericMixin:
+class SingleNumericFilter(admin.FieldListFilter):
     request = None
     parameter_name = None
-    template = "admin/filter_numeric_single.html"
+    template = "unfold/filters/filters_numeric_single.html"
 
-    def prefill_used_parameters(self, params):
+    def __init__(self, field, request, params, model, model_admin, field_path):
+        super().__init__(field, request, params, model, model_admin, field_path)
+
+        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
+            raise TypeError(
+                "Class {} is not supported for {}.".format(
+                    type(self.field), self.__class__.__name__
+                )
+            )
+
+        self.request = request
+
+        if self.parameter_name is None:
+            self.parameter_name = self.field_path
+
         if self.parameter_name in params:
             value = params.pop(self.parameter_name)
             self.used_parameters[self.parameter_name] = value
@@ -47,48 +61,31 @@ class SingleNumericMixin:
         )
 
 
-class SingleNumericFilter(SingleNumericMixin, admin.SimpleListFilter):
-    def __init__(self, request, params, model, model_admin):
-        super().__init__(request, params, model, model_admin)
+class RangeNumericFilter(admin.FieldListFilter):
+    request = None
+    parameter_name = None
+    template = "unfold/filters/filters_numeric_range.html"
 
-        self.request = request
-        if not self.parameter_name:
-            raise ValueError("Parameter name cannot be None")
-
-        self.prefill_used_parameters(params)
-
-    def lookups(self, request, model_admin):
-        return (("dummy", "dummy"),)
-
-
-class SingleFieldNumericFilter(SingleNumericMixin, admin.FieldListFilter):
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError(
-                f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
+                "Class {} is not supported for {}.".format(
+                    type(self.field), self.__class__.__name__
+                )
             )
 
         self.request = request
         if self.parameter_name is None:
             self.parameter_name = self.field_path
 
-        self.prefill_used_parameters(params)
-
-
-class RangeNumericMixin:
-    request = None
-    parameter_name = None
-    template = "admin/filter_numeric_range.html"
-
-    def init_used_parameters(self, params):
         if self.parameter_name + "_from" in params:
-            value = params.pop(self.parameter_name + "_from")
-            self.used_parameters[self.parameter_name + "_from"] = value
+            value = params.pop(self.field_path + "_from")
+            self.used_parameters[self.field_path + "_from"] = value
 
         if self.parameter_name + "_to" in params:
-            value = params.pop(self.parameter_name + "_to")
-            self.used_parameters[self.parameter_name + "_to"] = value
+            value = params.pop(self.field_path + "_to")
+            self.used_parameters[self.field_path + "_to"] = value
 
     def queryset(self, request, queryset):
         filters = {}
@@ -145,39 +142,11 @@ class RangeNumericMixin:
         )
 
 
-class RangeNumericFilter(RangeNumericMixin, admin.SimpleListFilter):
-    def __init__(self, request, params, model, model_admin):
-        super().__init__(request, params, model, model_admin)
-        if not self.parameter_name:
-            raise ValueError("Parameter name cannot be None")
-
-        self.request = request
-        self.init_used_parameters(params)
-
-    def lookups(self, request, model_admin):
-        return (("dummy", "dummy"),)
-
-
-class RangeFieldNumericFilter(RangeNumericMixin, admin.FieldListFilter):
-    def __init__(self, field, request, params, model, model_admin, field_path):
-        super().__init__(field, request, params, model, model_admin, field_path)
-        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
-            raise TypeError(
-                f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
-            )
-
-        self.request = request
-        if self.parameter_name is None:
-            self.parameter_name = self.field_path
-
-        self.init_used_parameters(params)
-
-
 class SliderNumericFilter(RangeNumericFilter):
     MAX_DECIMALS = 7
     STEP = None
 
-    template = "admin/filter_numeric_slider.html"
+    template = "unfold/filters/filters_numeric_slider.html"
     field = None
 
     def __init__(self, field, request, params, model, model_admin, field_path):

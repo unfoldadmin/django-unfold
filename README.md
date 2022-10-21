@@ -22,6 +22,7 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
 - [Decorators](#decorators)
   - [@display](#display)
 - [Actions](#actions)
+- [Filters](#filters)
 - [User Admin Form](#user-admin-form)
 - [Adding Custom Styles and Scripts](#adding-custom-styles-and-scripts)
 - [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet)
@@ -40,7 +41,7 @@ The installation process is minimal. Everything what is needed after installatio
 
 INSTALLED_APPS = [
     "unfold",  # before django.contrib.admin
-    "unfold.contrib.numeric_filters",  # optional
+    "unfold.contrib.filters",  # optional
     "django.contrib.admin",  # required
 ]
 ```
@@ -291,9 +292,45 @@ class UserAdmin(ModelAdmin):
         pass
 ```
 
+## Filters
+
+By default, Django admin handles all filters as regular HTML links pointing at the same URL with different query parameters. This approach is for basic filtering more than enough. In the case of more advanced filtering by incorporating input fields, it is not going to work.
+
+Currently, Unfold implements numeric filters inside `unfold.contrib.filters` application. In order to use these filters, it is required to add this application into `INSTALLED_APPS` in `settings.py` right after `unfold` application.
+
+```python
+# admin.py
+
+from django.contrib import admin
+from unfold.contrib.admin import (
+    NumericFilterModelAdmin,
+    RangeNumericFilter,
+    SingleNumericFilter,
+    SliderNumericFilter,
+)
+
+from .models import YourModel
+
+
+class CustomSliderNumericFilter(SliderNumericFilter):
+    MAX_DECIMALS = 2
+    STEP = 10
+
+
+@admin.register(YourModel)
+class YourModelAdmin(NumericFilterModelAdmin):
+    list_filter = (
+        ("field_A", SingleNumericFilter),  # Single field search, __gte lookup
+        ("field_B", RangeNumericFilter),  # Range search, __gte and __lte lookup
+        ("field_C", SliderNumericFilter),  # Same as range above but with slider
+        ("field_D", CustomSliderNumericFilter),  # Filter with custom attributes
+    )
+    list_filter_submit = True  # Display submit button
+```
+
 ## User Admin Form
 
-User's admin in Django is little bit specific as it contains several forms which are requiring custom styling. All of these forms has been inherited and accordingly adjusted. In user admin class it is needed to use these inherited form classes to enable custom styling matching rest of the website.
+User's admin in Django is specific as it contains several forms which are requiring custom styling. All of these forms has been inherited and accordingly adjusted. In user admin class it is needed to use these inherited form classes to enable custom styling matching rest of the website.
 
 ```python
 # models.py

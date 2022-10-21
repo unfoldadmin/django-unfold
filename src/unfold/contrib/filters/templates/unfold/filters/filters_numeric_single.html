@@ -1,9 +1,9 @@
 {% load i18n %}
 
 {% with choices.0 as choice %}
-    <form class="flex flex-col" method="get">
+    <div class="flex flex-col mb-6">
         {% for k, v in choice.request.GET.items %}
-            {% if not k == choice.parameter_name|add:'_from' and not k == choice.parameter_name|add:'_to' %}
+            {% if not k == choice.parameter_name %}
                 <input type="hidden" name="{{ k }}" value="{{ v }}">
             {% endif %}
         {% endfor %}
@@ -11,6 +11,5 @@
         <h3 class="font-medium mb-4 text-sm">{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
 
         {{ choice.form.as_p }}
-        <button type="submit" class="self-end bg-primary-600 border border-transparent font-medium px-3 py-2 rounded-md text-sm text-white">{% trans 'Apply' %}</button>
-    </form>
+    </div>
 {% endwith %}

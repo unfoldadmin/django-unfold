@@ -2,35 +2,37 @@
 {% load l10n %}
 
 {% with choices.0 as choice %}
-    <form method="get" class="admin-numeric-filter-wrapper">
+    <div class="admin-numeric-filter-wrapper mb-6">
+        {{ choice.form.media }}
+
         {% for k, v in choice.request.GET.items %}
             {% if not k == choice.parameter_name|add:'_from' and not k == choice.parameter_name|add:'_to' %}
                 <input type="hidden" name="{{ k }}" value="{{ v }}">
             {% endif %}
         {% endfor %}
 
-        <h3 class="font-medium mb-4 text-sm">{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
+        <h3 class="font-medium mb-4 text-sm">
+            {% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}
+        </h3>
 
         {% if choice.min is not None and choice.max is not None and choice.step %}
             <div class="admin-numeric-filter-slider-tooltips">
                 <span class="admin-numeric-filter-slider-tooltip-from">{{ choice.value_from }}</span>
                 <span class="admin-numeric-filter-slider-tooltip-to">{{ choice.value_to }}</span>
-            </div><!-- /.admin-numeric-filter-slider-tooltips -->
+            </div>
 
             <div class="admin-numeric-filter-slider" data-min="{{ choice.min|unlocalize }}" data-max="{{ choice.max|unlocalize }}" data-decimals="{{ choice.decimals }}" data-step="{{ choice.step|unlocalize }}">
-            </div><!-- /.admin-numeric-filter-slider -->
+            </div>
 
             <div class="admin-numeric-filter-wrapper-group hidden">
                 {{ choice.form.as_p }}
-            </div><!-- /.filter-numeric-filter-wrapper-group -->
-
-            <button type="submit" class="submit">{% trans 'Apply' %}</button>
+            </div>
         {% else %}
             <div class="admin-numeric-filter-slider-error">
                 <p>
-                    {% trans 'No enough data.' %}
+                    {% trans 'Not enough data.' %}
                 </p>
-            </div><!-- /.admin-numeric-filter-slider-error -->
+            </div>
         {% endif %}
-    </form>
+    </div>
 {% endwith %}

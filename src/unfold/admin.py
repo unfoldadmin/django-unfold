@@ -260,6 +260,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     actions_submit_line = ()
     custom_urls = ()
     add_fieldsets = ()
+    list_filter_submit = False
 
     def __init__(self, model, admin_site):
         super().__init__(model, admin_site)

@@ -1,6 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from ...widgets import INPUT_CLASSES
+
 
 class SingleNumericForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -11,11 +13,7 @@ class SingleNumericForm(forms.Form):
             label="",
             required=False,
             widget=forms.NumberInput(
-                attrs={
-                    "placeholder": _("Value"),
-                    "class": "border bg-white font-medium mb-2 px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm \
-                    w-full focus:ring focus:ring-primary-300 focus:border-primary-600 focus:outline-none",
-                }
+                attrs={"placeholder": _("Value"), "class": " ".join(INPUT_CLASSES)}
             ),
         )
 
@@ -31,22 +29,14 @@ class RangeNumericForm(forms.Form):
             label="",
             required=False,
             widget=forms.NumberInput(
-                attrs={
-                    "placeholder": _("From"),
-                    "class": "border bg-white font-medium px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm w-full \
-                    focus:ring focus:ring-primary-300 focus:border-primary-600 focus:outline-none",
-                }
+                attrs={"placeholder": _("From"), "class": " ".join(INPUT_CLASSES)}
             ),
         )
         self.fields[self.name + "_to"] = forms.FloatField(
             label="",
             required=False,
             widget=forms.NumberInput(
-                attrs={
-                    "placeholder": _("To"),
-                    "class": "border bg-white font-medium my-2 px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm \
-                    w-full focus:ring focus:ring-primary-300 focus:border-primary-600 focus:outline-none",
-                }
+                attrs={"placeholder": _("To"), "class": " ".join(INPUT_CLASSES)}
             ),
         )
 
