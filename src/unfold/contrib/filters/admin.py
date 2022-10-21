@@ -22,6 +22,7 @@ class SingleNumericFilter(admin.FieldListFilter):
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
+
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError(
                 "Class {} is not supported for {}.".format(
@@ -30,9 +31,10 @@ class SingleNumericFilter(admin.FieldListFilter):
             )
 
         self.request = request
-        if self.parameter_name is None:
 
+        if self.parameter_name is None:
             self.parameter_name = self.field_path
+
         if self.parameter_name in params:
             value = params.pop(self.parameter_name)
             self.used_parameters[self.parameter_name] = value
