@@ -325,10 +325,7 @@ class YourModelAdmin(ModelAdmin):
         ("field_A", SingleNumericFilter),  # Numeric single field search, __gte lookup
         ("field_B", RangeNumericFilter),  # Numeric range search, __gte and __lte lookup
         ("field_C", SliderNumericFilter),  # Numeric range filter but with slider
-        (
-            "field_D",
-            CustomSliderNumericFilter,
-        ),  # Numeric slider filter with custom attributes
+        ("field_D", CustomSliderNumericFilter),  # Numeric filter with custom attributes
         ("field_E", RangeDateFilter),  # Date filter
         ("field_F", RangeDateTimeFilter),  # Datetime filter
     )
