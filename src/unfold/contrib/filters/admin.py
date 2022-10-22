@@ -1,18 +1,23 @@
 from django.contrib import admin
+from django.core.validators import EMPTY_VALUES
 from django.db.models import Max, Min
-from django.db.models.fields import AutoField, DecimalField, FloatField, IntegerField
+from django.db.models.fields import (
+    AutoField,
+    DateField,
+    DateTimeField,
+    DecimalField,
+    FloatField,
+    IntegerField,
+)
+from django.utils.dateparse import parse_datetime
 
-from .forms import RangeNumericForm, SingleNumericForm, SliderNumericForm
-
-
-class NumericFilterModelAdmin(admin.ModelAdmin):
-    class Media:
-        css = {"all": ("css/nouislider.min.css",)}
-        js = (
-            "js/wNumb.min.js",
-            "js/nouislider.min.js",
-            "js/admin-numeric-filter.js",
-        )
+from .forms import (
+    RangeDateForm,
+    RangeDateTimeForm,
+    RangeNumericForm,
+    SingleNumericForm,
+    SliderNumericForm,
+)
 
 
 class SingleNumericFilter(admin.FieldListFilter):
@@ -148,6 +153,7 @@ class SliderNumericFilter(RangeNumericFilter):
 
     template = "unfold/filters/filters_numeric_slider.html"
     field = None
+    form_class = SliderNumericForm
 
     def __init__(self, field, request, params, model, model_admin, field_path):
         super().__init__(field, request, params, model, model_admin, field_path)
@@ -187,7 +193,7 @@ class SliderNumericFilter(RangeNumericFilter):
                 "value_to": self.used_parameters.get(
                     self.parameter_name + "_to", max_value
                 ),
-                "form": SliderNumericForm(
+                "form": self.form_class(
                     name=self.parameter_name,
                     data={
                         self.parameter_name
@@ -206,3 +212,190 @@ class SliderNumericFilter(RangeNumericFilter):
     def _get_min_step(self, precision):
         result_format = f"{{:.{precision - 1}f}}"
         return float(result_format.format(0) + "1")
+
+
+class RangeDateFilter(admin.FieldListFilter):
+    request = None
+    parameter_name = None
+    form_class = RangeDateForm
+    template = "unfold/filters/filters_date_range.html"
+
+    def __init__(self, field, request, params, model, model_admin, field_path):
+        super().__init__(field, request, params, model, model_admin, field_path)
+        if not isinstance(field, DateField):
+            raise TypeError(
+                "Class {} is not supported for {}.".format(
+                    type(self.field), self.__class__.__name__
+                )
+            )
+
+        self.request = request
+        if self.parameter_name is None:
+            self.parameter_name = self.field_path
+
+        if self.parameter_name + "_from" in params:
+            value = params.pop(self.field_path + "_from")
+            self.used_parameters[self.field_path + "_from"] = value
+
+        if self.parameter_name + "_to" in params:
+            value = params.pop(self.field_path + "_to")
+            self.used_parameters[self.field_path + "_to"] = value
+
+    def queryset(self, request, queryset):
+        filters = {}
+
+        value_from = self.used_parameters.get(self.parameter_name + "_from", None)
+        if value_from not in EMPTY_VALUES:
+            filters.update(
+                {
+                    self.parameter_name
+                    + "__gte": self.used_parameters.get(
+                        self.parameter_name + "_from", None
+                    ),
+                }
+            )
+
+        value_to = self.used_parameters.get(self.parameter_name + "_to", None)
+        if value_to not in EMPTY_VALUES:
+            filters.update(
+                {
+                    self.parameter_name
+                    + "__lte": self.used_parameters.get(
+                        self.parameter_name + "_to", None
+                    ),
+                }
+            )
+
+        return queryset.filter(**filters)
+
+    def expected_parameters(self):
+        return [
+            f"{self.parameter_name}_from",
+            f"{self.parameter_name}_to",
+        ]
+
+    def choices(self, changelist):
+        return (
+            {
+                "request": self.request,
+                "parameter_name": self.parameter_name,
+                "form": self.form_class(
+                    name=self.parameter_name,
+                    data={
+                        self.parameter_name
+                        + "_from": self.used_parameters.get(
+                            self.parameter_name + "_from", None
+                        ),
+                        self.parameter_name
+                        + "_to": self.used_parameters.get(
+                            self.parameter_name + "_to", None
+                        ),
+                    },
+                ),
+            },
+        )
+
+
+class RangeDateTimeFilter(admin.FieldListFilter):
+    request = None
+    parameter_name = None
+    template = "unfold/filters/filters_datetime_range.html"
+    form_class = RangeDateTimeForm
+
+    def __init__(self, field, request, params, model, model_admin, field_path):
+        super().__init__(field, request, params, model, model_admin, field_path)
+        if not isinstance(field, DateTimeField):
+            raise TypeError(
+                "Class {} is not supported for {}.".format(
+                    type(self.field), self.__class__.__name__
+                )
+            )
+
+        self.request = request
+        if self.parameter_name is None:
+            self.parameter_name = self.field_path
+
+        if self.parameter_name + "_from_0" in params:
+            value = params.pop(self.field_path + "_from_0")
+            self.used_parameters[self.field_path + "_from_0"] = value
+
+        if self.parameter_name + "_from_1" in params:
+            value = params.pop(self.field_path + "_from_1")
+            self.used_parameters[self.field_path + "_from_1"] = value
+
+        if self.parameter_name + "_to_0" in params:
+            value = params.pop(self.field_path + "_to_0")
+            self.used_parameters[self.field_path + "_to_0"] = value
+
+        if self.parameter_name + "_to_1" in params:
+            value = params.pop(self.field_path + "_to_1")
+            self.used_parameters[self.field_path + "_to_1"] = value
+
+    def expected_parameters(self):
+        return [
+            f"{self.parameter_name}_from_0",
+            f"{self.parameter_name}_from_1",
+            f"{self.parameter_name}_to_0",
+            f"{self.parameter_name}_to_1",
+        ]
+
+    def queryset(self, request, queryset):
+        filters = {}
+
+        date_value_from = self.used_parameters.get(
+            self.parameter_name + "_from_0", None
+        )
+        time_value_from = self.used_parameters.get(
+            self.parameter_name + "_from_1", None
+        )
+        date_value_to = self.used_parameters.get(self.parameter_name + "_to_0", None)
+        time_value_to = self.used_parameters.get(self.parameter_name + "_to_1", None)
+
+        if date_value_from not in EMPTY_VALUES and time_value_from not in EMPTY_VALUES:
+            filters.update(
+                {
+                    f"{self.parameter_name}__gte": parse_datetime(
+                        f"{date_value_from}T{time_value_from}"
+                    ),
+                }
+            )
+
+        if date_value_to not in EMPTY_VALUES and time_value_to not in EMPTY_VALUES:
+            filters.update(
+                {
+                    f"{self.parameter_name}__lte": parse_datetime(
+                        f"{date_value_to}T{time_value_to}"
+                    ),
+                }
+            )
+
+        return queryset.filter(**filters)
+
+    def choices(self, changelist):
+        return (
+            {
+                "request": self.request,
+                "parameter_name": self.parameter_name,
+                "form": self.form_class(
+                    name=self.parameter_name,
+                    data={
+                        self.parameter_name
+                        + "_from_0": self.used_parameters.get(
+                            self.parameter_name + "_from_0", None
+                        ),
+                        self.parameter_name
+                        + "_from_1": self.used_parameters.get(
+                            self.parameter_name + "_from_1", None
+                        ),
+                        self.parameter_name
+                        + "_to_0": self.used_parameters.get(
+                            self.parameter_name + "_to_0", None
+                        ),
+                        self.parameter_name
+                        + "_to_1": self.used_parameters.get(
+                            self.parameter_name + "_to_1", None
+                        ),
+                    },
+                ),
+            },
+        )

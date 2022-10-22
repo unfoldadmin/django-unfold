@@ -47,7 +47,7 @@ from .widgets import (
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminSingleDateWidget,
     UnfoldAdminSingleTimeWidget,
-    UnfoldAdminSplitDateTime,
+    UnfoldAdminSplitDateTimeWidget,
     UnfoldAdminTextareaWidget,
     UnfoldAdminTextInputWidget,
     UnfoldAdminUUIDInputWidget,
@@ -58,7 +58,7 @@ checkbox = forms.CheckboxInput({"class": "action-select"}, lambda value: False)
 FORMFIELD_OVERRIDES = {
     models.DateTimeField: {
         "form_class": forms.SplitDateTimeField,
-        "widget": UnfoldAdminSplitDateTime,
+        "widget": UnfoldAdminSplitDateTimeWidget,
     },
     models.DateField: {"widget": UnfoldAdminSingleDateWidget},
     models.TimeField: {"widget": UnfoldAdminSingleTimeWidget},
@@ -264,6 +264,22 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
     def __init__(self, model, admin_site):
         super().__init__(model, admin_site)
+
+    @property
+    def media(self):
+        media = super().media
+        additional_media = forms.Media()
+
+        for filter in self.list_filter:
+            if not isinstance(filter, (tuple, list)):
+                continue
+
+            if hasattr(filter[1], "form_class") and hasattr(
+                filter[1].form_class, "Media"
+            ):
+                additional_media += forms.Media(filter[1].form_class.Media)
+
+        return media + additional_media
 
     def get_fieldsets(self, request, obj=None):
         if not obj and self.add_fieldsets:
