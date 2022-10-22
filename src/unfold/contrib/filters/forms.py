@@ -70,7 +70,7 @@ class RangeDateForm(forms.Form):
             widget=forms.DateInput(
                 attrs={
                     "placeholder": _("From"),
-                    "class": "vDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
                 }
             ),
         )
@@ -80,7 +80,7 @@ class RangeDateForm(forms.Form):
             widget=forms.DateInput(
                 attrs={
                     "placeholder": _("To"),
-                    "class": "vDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
                 }
             ),
         )
