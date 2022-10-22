@@ -35,11 +35,11 @@
             }
 
             for (const inp of document.getElementsByTagName('input')) {
-                if (inp.type === 'text' && inp.classList.contains('vTimeField')) {
+                if (inp.type === 'text' && inp.classList.contains('vCustomTimeField')) {
                     DateTimeShortcuts.addClock(inp);
                     DateTimeShortcuts.addTimezoneWarning(inp);
                 }
-                else if (inp.type === 'text' && inp.classList.contains('vDateField')) {
+                else if (inp.type === 'text' && inp.classList.contains('vCustomDateField')) {
                     DateTimeShortcuts.addCalendar(inp);
                     DateTimeShortcuts.addTimezoneWarning(inp);
                 }

@@ -106,12 +106,12 @@ class RangeDateTimeForm(forms.Form):
                 date_label="",
                 date_attrs={
                     "placeholder": _("Date from"),
-                    "class": "vDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
                 },
                 time_label="",
                 time_attrs={
                     "placeholder": _("Time"),
-                    "class": "vTimeField " + " ".join(INPUT_CLASSES),
+                    "class": "vCustomTimeField " + " ".join(INPUT_CLASSES),
                 },
             ),
         )
@@ -122,12 +122,12 @@ class RangeDateTimeForm(forms.Form):
                 date_label="",
                 date_attrs={
                     "placeholder": _("Date to"),
-                    "class": "vDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
                 },
                 time_label="",
                 time_attrs={
                     "placeholder": _("Time"),
-                    "class": "vTimeField " + " ".join(INPUT_CLASSES),
+                    "class": "vCustomTimeField " + " ".join(INPUT_CLASSES),
                 },
             ),
         )
