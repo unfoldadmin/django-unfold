@@ -3,14 +3,6 @@
 
 {% with choices.0 as choice %}
     <div class="admin-numeric-filter-wrapper mb-6">
-        {{ choice.form.media }}
-
-        {% for k, v in choice.request.GET.items %}
-            {% if not k == choice.parameter_name|add:'_from' and not k == choice.parameter_name|add:'_to' %}
-                <input type="hidden" name="{{ k }}" value="{{ v }}">
-            {% endif %}
-        {% endfor %}
-
         <h3 class="font-medium mb-4 text-sm">
             {% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}
         </h3>

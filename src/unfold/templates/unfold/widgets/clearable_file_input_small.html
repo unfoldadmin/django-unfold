@@ -26,8 +26,12 @@
     </div>
 
     {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
-        <div class="border rounded-md ml-3 overflow-hidden shadow-sm">
-            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-gray-50 bg-no-repeat block h-9 w-9" style="background-image: url('{{ widget.value.url }}'), url('{% static 'unfold/img/not-found.jpg' %}')">
+        <div class="bg-gray-50 border h-9 ml-3 overflow-hidden relative rounded-md shadow-sm w-9">
+            <div class="absolute block flex font-medium h-full items-center left-0 justify-center text-gray-400 top-0 w-full z-10">
+                ?
+            </div>
+
+            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-no-repeat block h-9 relative w-9 z-20" style="background-image: url('{{ widget.value.url }}')">
             </a>
         </div>
     {% endif %}

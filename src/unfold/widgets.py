@@ -11,6 +11,7 @@ from django.contrib.admin.widgets import (
     AdminUUIDInputWidget,
 )
 from django.forms import MultiWidget, NullBooleanSelect, NumberInput
+from django.utils.translation import gettext_lazy as _
 
 LABEL_CLASSES = [
     "block",
@@ -171,10 +172,46 @@ class UnfoldAdminTextareaWidget(AdminTextareaWidget):
         )
 
 
-class UnfoldAdminSplitDateTime(AdminSplitDateTime):
+class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
     def __init__(self, attrs=None):
         widgets = [UnfoldAdminDateWidget, UnfoldAdminTimeWidget]
         MultiWidget.__init__(self, widgets, attrs)
+
+
+class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
+    template_name = "unfold/widgets/split_datetime_vertical.html"
+
+    def __init__(
+        self,
+        attrs=None,
+        date_attrs=None,
+        time_attrs=None,
+        date_label=None,
+        time_label=None,
+    ):
+        self.date_label = date_label
+        self.time_label = time_label
+
+        widgets = [
+            UnfoldAdminDateWidget(attrs=date_attrs),
+            UnfoldAdminTimeWidget(attrs=time_attrs),
+        ]
+        MultiWidget.__init__(self, widgets, attrs)
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+
+        if self.date_label is not None:
+            context["date_label"] = self.date_label
+        else:
+            context["date_label"] = _("Date")
+
+        if self.time_label is not None:
+            context["time_label"] = self.time_label
+        else:
+            context["time_label"] = _("Time")
+
+        return context
 
 
 class UnfoldAdminIntegerFieldWidget(AdminIntegerFieldWidget):

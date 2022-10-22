@@ -302,14 +302,16 @@ Currently, Unfold implements numeric filters inside `unfold.contrib.filters` app
 # admin.py
 
 from django.contrib import admin
+from django.contrib.auth.models import User
+
+from unfold.admin import ModelAdmin
 from unfold.contrib.admin import (
-    NumericFilterModelAdmin,
     RangeNumericFilter,
     SingleNumericFilter,
     SliderNumericFilter,
+    RangeDateFilter,
+    RangeDateTimeFilter,
 )
-
-from .models import YourModel
 
 
 class CustomSliderNumericFilter(SliderNumericFilter):
@@ -317,15 +319,16 @@ class CustomSliderNumericFilter(SliderNumericFilter):
     STEP = 10
 
 
-@admin.register(YourModel)
-class YourModelAdmin(NumericFilterModelAdmin):
+@admin.register(User)
+class YourModelAdmin(ModelAdmin):
     list_filter = (
-        ("field_A", SingleNumericFilter),  # Single field search, __gte lookup
-        ("field_B", RangeNumericFilter),  # Range search, __gte and __lte lookup
-        ("field_C", SliderNumericFilter),  # Same as range above but with slider
-        ("field_D", CustomSliderNumericFilter),  # Filter with custom attributes
+        ("field_A", SingleNumericFilter),  # Numeric single field search, __gte lookup
+        ("field_B", RangeNumericFilter),  # Numeric range search, __gte and __lte lookup
+        ("field_C", SliderNumericFilter),  # Numeric range filter but with slider
+        ("field_D", CustomSliderNumericFilter),  # Numeric filter with custom attributes
+        ("field_E", RangeDateFilter),  # Date filter
+        ("field_F", RangeDateTimeFilter),  # Datetime filter
     )
-    list_filter_submit = True  # Display submit button
 ```
 
 ## User Admin Form
@@ -336,6 +339,7 @@ User's admin in Django is specific as it contains several forms which are requir
 # models.py
 
 from django.contrib.admin import register
+from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from unfold.admin import ModelAdmin
