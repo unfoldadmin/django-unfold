@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     Array.from(document.getElementsByClassName('admin-numeric-filter-slider')).forEach(function(slider) {
+        if (Array.from(slider.classList).includes("noUi-target")) {
+            return;
+        }
+
         var from = parseFloat(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[0].value);
         var to = parseFloat(slider.closest('.admin-numeric-filter-wrapper').querySelectorAll('.admin-numeric-filter-wrapper-group input')[1].value);
 

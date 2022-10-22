@@ -303,7 +303,6 @@ Currently, Unfold implements numeric filters inside `unfold.contrib.filters` app
 
 from django.contrib import admin
 from unfold.contrib.admin import (
-    NumericFilterModelAdmin,
     RangeNumericFilter,
     SingleNumericFilter,
     SliderNumericFilter,

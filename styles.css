@@ -386,7 +386,7 @@ fieldset.collapsed .collapse-toggle {
  Calendar
  *******************************************************/
 .calendarbox {
-  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm z-50;
+  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm w-80 z-50;
 }
 
 .calendar caption {
@@ -426,7 +426,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .calendar-cancel {
-  @apply block border-t py-2 text-center text-xs text-red-600 underline;
+  @apply bg-gray-50 block border-t py-2 text-center text-xs text-red-600 underline;
 }
 
 .calendarnav-previous {

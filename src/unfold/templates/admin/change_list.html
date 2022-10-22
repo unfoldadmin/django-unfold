@@ -101,7 +101,7 @@
                                 {% block filters %}
                                     {% if cl.has_filters %}
                                         <label for="show-filters" id="changelist-filter-open" class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white text-gray-500{% endif %} border cursor-pointer flex font-medium h-9 items-center mt-3 px-3 py-2 rounded-md shadow-sm text-sm md:ml-auto md:mt-0 lg:mt-0">
-                                            {% trans 'Filters' %}
+                                            {% trans "Filters" %}
 
                                             <span class="material-icons md-18 ml-auto -mr-1 pl-4 {% if cl.has_active_filters %}text-white{% else %}text-gray-400{% endif %}">filter_list</span>
                                         </label>
@@ -143,6 +143,12 @@
                                 <div class="px-8{% if cl.model_admin.list_filter_submit %} pb-16{% endif %}">
                                     {% if cl.model_admin.list_filter_submit %}
                                         <form method="get">
+
+                                        {% for k, v in request.GET.items %}
+                                            {% if not k == choice.parameter_name|add:'_from' and not k == choice.parameter_name|add:'_to' %}
+                                                <input type="hidden" name="{{ k }}" value="{{ v }}">
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endif %}
 
 
