@@ -245,7 +245,7 @@ class RangeDateFilter(admin.FieldListFilter):
         filters = {}
 
         value_from = self.used_parameters.get(self.parameter_name + "_from", None)
-        if value_from is not None and value_from != "":
+        if value_from not in EMPTY_VALUES:
             filters.update(
                 {
                     self.parameter_name
@@ -256,7 +256,7 @@ class RangeDateFilter(admin.FieldListFilter):
             )
 
         value_to = self.used_parameters.get(self.parameter_name + "_to", None)
-        if value_to is not None and value_to != "":
+        if value_to not in EMPTY_VALUES:
             filters.update(
                 {
                     self.parameter_name
