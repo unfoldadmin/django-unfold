@@ -351,22 +351,23 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         date_value_to = self.used_parameters.get(self.parameter_name + "_to_0", None)
         time_value_to = self.used_parameters.get(self.parameter_name + "_to_1", None)
 
-        if (
-            date_value_from in EMPTY_VALUES
-            or time_value_from in EMPTY_VALUES
-            or date_value_to in EMPTY_VALUES
-            or time_value_to in EMPTY_VALUES
-        ):
-            return queryset
+        if date_value_from not in EMPTY_VALUES and time_value_from not in EMPTY_VALUES:
+            filters.update(
+                {
+                    f"{self.parameter_name}__gte": parse_datetime(
+                        f"{date_value_from}T{time_value_from}"
+                    ),
+                }
+            )
 
-        filters.update(
-            {
-                f"{self.parameter_name}__range": (
-                    parse_datetime(f"{date_value_from}T{time_value_from}"),
-                    parse_datetime(f"{date_value_to}T{time_value_to}"),
-                )
-            }
-        )
+        if date_value_to not in EMPTY_VALUES and time_value_to not in EMPTY_VALUES:
+            filters.update(
+                {
+                    f"{self.parameter_name}__lte": parse_datetime(
+                        f"{date_value_to}T{time_value_to}"
+                    ),
+                }
+            )
 
         return queryset.filter(**filters)
 
