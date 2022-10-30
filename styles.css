@@ -107,10 +107,6 @@ select:after {
   display: none;
 }
 
-.block.errors input {
-  @apply border-red-600;
-}
-
 /*******************************************************
  Table
  *******************************************************/
@@ -474,17 +470,21 @@ fieldset.collapsed .collapse-toggle {
 /*******************************************************
  Errors
  *******************************************************/
-.errorlist li {
-  @apply bg-red-100 text-red-600 p-3 rounded-md text-sm;
-}
+/*.errorlist li {*/
+/*  @apply bg-red-100 text-red-600 p-3 rounded-md text-sm;*/
+/*}*/
 
-fieldset > .errorlist li {
-  @apply mb-3;
-}
+/*fieldset > .errorlist li {*/
+/*  @apply mb-3;*/
+/*}*/
 
-td > .errorlist li {
-  @apply mt-3 mx-3;
-}
+/*td > .errorlist li {*/
+/*  @apply mt-3 mx-3;*/
+/*}*/
+
+/*.block.errors input {*/
+/*  @apply border-red-600;*/
+/*}*/
 
 /*******************************************************
  Misc
