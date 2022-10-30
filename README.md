@@ -460,6 +460,8 @@ At the moment project contains package.json with all dependencies required to co
 ```bash
 npm install
 npx tailwindcss -i styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify
+
+npm run watch
 ```
 
 Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
