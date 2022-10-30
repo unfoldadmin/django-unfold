@@ -36,6 +36,8 @@ BASE_INPUT_CLASSES = [
     "focus:ring-primary-300",
     "focus:border-primary-600",
     "focus:outline-none",
+    "group-[.errors]:border-red-600",
+    "group-[.errors]:focus:ring-red-200",
 ]
 
 INPUT_CLASSES = [*BASE_INPUT_CLASSES, "max-w-2xl"]
