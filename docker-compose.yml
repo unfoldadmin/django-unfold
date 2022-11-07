@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  tailwindcss:
+    build: .
+    restart: on-failure
+    tty: true
+    volumes:
+      - ./:/app
+    command: bash -c "npm install && npm run watch"
