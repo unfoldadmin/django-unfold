@@ -7,13 +7,18 @@
 
         <input type="checkbox" class="hidden peer" id="show-userlinks" />
 
-        <div class="absolute bg-white border flex-col hidden leading-none py-1 right-0 rounded-md shadow-lg text-sm text-gray-500 top-10 w-48 peer-checked:flex">
+        <div class="absolute bg-white border flex-col hidden leading-none py-1 right-0 rounded-md shadow-lg text-sm text-gray-500 top-10 min-w-[12rem] max-w-[18rem] peer-checked:flex">
             {% if nav_global %}
                 {{ nav_global }}
 
                 <div class="bg-gray-100 h-px my-1"></div>
             {% endif %}
 
+            <a href="/" class="truncate mx-1 px-3 py-2 rounded-md hover:bg-gray-100">
+                {{ user.email }}
+            </a>
+
+            <div class="bg-gray-100 h-px my-1"></div>
             {% if site_url %}
                 <a href="{{ site_url }}" class="mx-1 px-3 py-2 rounded-md hover:bg-gray-100">
                     {% translate 'View site' %}
