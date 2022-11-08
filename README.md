@@ -463,11 +463,11 @@ npx tailwindcss -i styles.css -o src/unfold/static/unfold/css/styles.css --watch
 
 npm run watch
 ```
-
-or with Docker and Docker Compose just type
+Or with Docker
 
 ```bash
-docker-compose up
+docker build -t tailwind ./ && \
+docker run --rm -it --init -v  $(pwd):/app tailwind
 ```
 
 Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
