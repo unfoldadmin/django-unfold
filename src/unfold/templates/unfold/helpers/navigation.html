@@ -18,8 +18,9 @@
           {% trans "Menu" %}
         </label>
       </div>
-      <div class="flex font-small text-sm h-10 items-center px-6 pt-1 pb-3">
-        <a href="/" class="rounded-md hover:bg-gray-100">
+
+      <div class="flex font-small text-sm text-gray-400 h-10 items-center px-6 pt-1 pb-3">
+        <a href="{% url 'admin:index' %}" class="truncate rounded-md hover:bg-gray-100">
           {{ user.email }}
         </a>
       </div>
