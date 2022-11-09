@@ -5,7 +5,7 @@
 
         {% include 'unfold/helpers/avatar.html' with initials=request.user.get_initials|default:'<i class="material-icons text-gray-400">person</i>' image=request.user.get_photo %}
 
-        <input type="checkbox" class="hidden peer" id="show-userlinks"/>
+        <input type="checkbox" class="hidden peer" id="show-userlinks" />
 
         <div class="absolute bg-white border flex-col hidden leading-none py-1 right-0 rounded-md shadow-lg text-sm text-gray-500 top-10 min-w-[12rem] max-w-[18rem] peer-checked:flex">
             {% if nav_global %}

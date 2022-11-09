@@ -4,7 +4,7 @@
     <div class="overflow-auto">
         {% for group in sidebar_navigation %}
             {% if group.separator %}
-                <hr class="border-t my-2"/>
+                <hr class="border-t my-2" />
             {% endif %}
 
             {% if group.title %}
@@ -40,55 +40,43 @@
         {% endfor %}
     </div>
 
-    <div class="flex justify-between items-center w-full py-3 px-6 mt-auto">
-        <div class="flex justify-center items-center font-medium h-10 items-center truncate">
-            <div>
-                <i class="material-icons text-gray-400">person</i>
-            </div>
-            <div class="flex justify-start flex-col items-start ml-4">
-                <p class="cursor-pointer text-sm leading-5 text-gray-500">{{ user.first_name }} {{ user.last_name }}</p>
-                <p class="cursor-pointer text-xxs leading-3 text-gray-400">{{ user.email }}</p>
+    {% if sidebar_show_all_applications %}
+        <label for="show-{{ navigation_id }}" class="cursor-pointer flex items-center mt-auto px-6 py-3 text-gray-500 text-sm hover:text-gray-700">
+            <span class="material-icons md-18 mr-3">
+                apps
+            </span>
+
+            <span>
+                {% trans "All applications" %}
+            </span>
+        </label>
+
+        <input type="checkbox" id="show-{{ navigation_id }}" class="hidden peer" />
+
+        <div class="absolute bottom-0 hidden left-72 right-0 top-0 z-50 peer-checked:block">
+            <label class="absolute bg-gray-900 bg-opacity-80 bottom-0 left-0 right-0 top-0 z-10 w-screen" for="show-{{ navigation_id }}"></label>
+
+            <div class="bg-white flex flex-col h-full overflow-auto py-5 px-8 relative text-sm w-80 z-20" data-simplebar>
+                {% for app in app_list %}
+                    <div class="mb-6 last:mb-0">
+                        <h3 class="mb-4 font-medium overflow-hidden text-ellipsis whitespace-nowrap">
+                            {{ app.name }}
+                        </h3>
+
+                        <ul>
+                            {% for model in app.models %}
+                                <li class="block mb-4 last:mb-0">
+                                    <a href="{{ model.admin_url }}" class="block overflow-hidden text-ellipsis text-gray-500 whitespace-nowrap hover:text-gray-700">
+                                        {{ model.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-
-        {% if sidebar_show_all_applications %}
-            <label for="show-{{ navigation_id }}"
-                   class="cursor-pointer flex items-center text-gray-500 text-sm hover:text-gray-700">
-                <span class="material-icons md-18 mr-3">
-                    apps
-                </span>
-            </label>
-
-            <input type="checkbox" id="show-{{ navigation_id }}" class="hidden peer"/>
-
-            <div class="absolute bottom-0 hidden left-72 right-0 top-0 z-50 peer-checked:block">
-                <label class="absolute bg-gray-900 bg-opacity-80 bottom-0 left-0 right-0 top-0 z-10 w-screen"
-                       for="show-{{ navigation_id }}"></label>
-
-                <div class="bg-white flex flex-col h-full overflow-auto py-5 px-8 relative text-sm w-80 z-20"
-                     data-simplebar>
-                    {% for app in app_list %}
-                        <div class="mb-6 last:mb-0">
-                            <h3 class="mb-4 font-medium overflow-hidden text-ellipsis whitespace-nowrap">
-                                {{ app.name }}
-                            </h3>
-
-                            <ul>
-                                {% for model in app.models %}
-                                    <li class="block mb-4 last:mb-0">
-                                        <a href="{{ model.admin_url }}"
-                                           class="block overflow-hidden text-ellipsis text-gray-500 whitespace-nowrap hover:text-gray-700">
-                                            {{ model.name }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-    </div>
+    {% endif %}
 {% else %}
     <p>{% translate "You don’t have permission to view or edit anything." %}</p>
 {% endif %}
