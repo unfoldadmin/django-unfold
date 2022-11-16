@@ -5,21 +5,28 @@
 
         {% include 'unfold/helpers/avatar.html' with initials=request.user.get_initials|default:'<i class="material-icons text-gray-400">person</i>' image=request.user.get_photo %}
 
-        <input type="checkbox" class="hidden peer" id="show-userlinks" />
+        <input type="checkbox" class="hidden peer" id="show-userlinks"/>
 
         <div class="absolute bg-white border flex-col hidden leading-none py-1 right-0 rounded-md shadow-lg text-sm text-gray-500 top-10 min-w-[12rem] max-w-[18rem] peer-checked:flex">
+            {% if user.first_name or user.last_name or user.email %}
+                <div class="cursor-pointer flex flex-col items-start justify-start mx-4 truncate">
+                    {% if user.first_name or user.last_name %}
+                        <p class="font-semibold text-sm leading-5 text-gray-500">{{ user.first_name }} {{ user.last_name }}</p>
+                        <p class="text-xxs leading-3 text-gray-400">{{ user.email }}</p>
+                    {% else %}
+                        <p class="font-semibold text-sm leading-5 text-gray-500">{{ user.email }}</p>
+                    {% endif %}
+                </div>
+                <div class="bg-gray-100 h-px my-1"></div>
+            {% endif %}
+
             {% if nav_global %}
                 {{ nav_global }}
 
                 <div class="bg-gray-100 h-px my-1"></div>
             {% endif %}
 
-            <div class="truncate flex justify-start flex-col items-start mx-4 ">
-                <p class="cursor-pointer text-sm leading-5 text-gray-500">{{ user.first_name }} {{ user.last_name }}</p>
-                <p class="cursor-pointer text-xxs leading-3 text-gray-400">{{ user.email }}</p>
-            </div>
 
-            <div class="bg-gray-100 h-px my-1"></div>
             {% if site_url %}
                 <a href="{{ site_url }}" class="mx-1 px-3 py-2 rounded-md hover:bg-gray-100">
                     {% translate 'View site' %}
