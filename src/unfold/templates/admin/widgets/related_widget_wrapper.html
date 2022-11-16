@@ -1,7 +1,7 @@
 {% load i18n static %}
 
 <div class="flex-col flex-col-reverse items-center w-full">
-    <div class="related-widget-wrapper"{% if not model_has_limit_choices_to %} data-model-ref="{{ model }}"{% endif %}>
+    <div class="flex flex-row related-widget-wrapper"{% if not model_has_limit_choices_to %} data-model-ref="{{ model }}"{% endif %}>
         {{ rendered_widget }}
 
         {% block links %}
@@ -9,41 +9,41 @@
                 {% if not is_hidden %}
                     {% if can_add_related or can_change_related or can_delete_related or can_view_related%}
                         {% if can_change_related %}
-                            <a class="related-widget-wrapper-link change-related cursor-pointer lg:ml-4 text-gray-500 text-sm hover:text-primary-600"
-                                id="change_id_{{ name }}"
-                                data-popup="yes"
-                                data-href-template="{{ change_related_template_url }}?{{ url_params }}"
-                                title="{% blocktranslate %}Change selected {{ model }}{% endblocktranslate %}">
-                                {% translate 'Change' %}
+                            <a class="related-widget-wrapper-link change-related block border cursor-pointer flex items-center h-9.5 justify-center rounded shadow-sm text-gray-300 w-9.5 lg:ml-2 text-sm hover:text-primary-600"
+                               id="change_id_{{ name }}"
+                               data-popup="yes"
+                               data-href-template="{{ change_related_template_url }}?{{ url_params }}"
+                               title="{% blocktranslate %}Change selected {{ model }}{% endblocktranslate %}">
+                                <i class="material-icons-outlined text-lg">edit</i>
                             </a>
                         {% endif %}
 
                         {% if can_add_related %}
-                            <a class="related-widget-wrapper-link add-related cursor-pointer ml-4 text-gray-500 text-sm hover:text-primary-600"
+                            <a class="related-widget-wrapper-link add-related block border cursor-pointer flex items-center h-9.5 justify-center rounded shadow-sm text-gray-300 w-9.5 lg:ml-2 text-sm hover:text-primary-600"
                                data-popup="yes"
                                id="add_id_{{ name }}"
                                 href="{{ add_related_url }}?{{ url_params }}"
                                 title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
-                                {% translate 'Add' %}
+                                <i class="material-icons-outlined text-lg">add</i>
                             </a>
                         {% endif %}
 
                         {% if can_view_related %}
-                            <a class="related-widget-wrapper-link view-related cursor-pointer ml-4 text-gray-500 text-sm hover:text-primary-600"
+                            <a class="related-widget-wrapper-link view-related block border cursor-pointer flex items-center h-9.5 justify-center rounded shadow-sm text-gray-300 w-9.5 lg:ml-2 text-sm hover:text-primary-600"
                                id="view_id_{{ name }}"
                                data-href-template="{{ change_related_template_url }}?{{ view_related_url_params }}"
                                title="{% blocktranslate %}View selected {{ model }}{% endblocktranslate %}">
-                                {% translate 'View' %}
+                                <i class="material-icons-outlined text-lg">visibility</i>
                             </a>
                         {% endif %}
 
                         {% if can_delete_related %}
-                            <a class="related-widget-wrapper-link delete-related cursor-pointer ml-4 text-red-500 text-sm hover:text-red-600"
+                            <a class="related-widget-wrapper-link delete-related  block border cursor-pointer flex items-center h-9.5 justify-center rounded shadow-sm text-gray-300 w-9.5 lg:ml-2 text-sm hover:text-red-600"
                                id="delete_id_{{ name }}"
                                 data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
                                 data-popup="yes"
                                 title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
-                                {% translate 'Delete' %}
+                                <i class="material-icons-outlined text-lg">delete</i>
                             </a>
                         {% endif %}
                     {% endif %}
