@@ -1,9 +1,9 @@
 {% load i18n %}
 
 <div class="relative min-w-sidebar transition-width w-sidebar z-30">
-    <nav id="nav-sidebar" class="bg-gray-50 border-r flex flex-col fixed max-h-screen min-h-screen min-w-sidebar transition-width w-sidebar">
-        <div class="border-b mb-5 py-3">
-            <div class="flex font-medium h-10 items-center px-6">
+    <nav id="nav-sidebar" class="bg-gray-50 border-r flex flex-col fixed max-h-screen min-h-screen min-w-sidebar transition-width w-sidebar dark:bg-white/[.02] dark:border-gray-800">
+        <div class="border-b mb-5 py-3 dark:border-gray-800">
+            <div class="flex font-medium h-10 items-center px-6 text-gray-700 dark:text-gray-200">
                 {% if logo %}
                     <img src="{{ logo }}" alt="{% trans "Home" %}"/>
                 {% elif branding %}

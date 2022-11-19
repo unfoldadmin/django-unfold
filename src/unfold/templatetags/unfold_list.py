@@ -27,7 +27,7 @@ from ..utils import (
 
 register = Library()
 
-LINK_CLASSES = ["text-gray-700"]
+LINK_CLASSES = ["text-gray-700 dark:text-gray-200"]
 
 
 def items_for_result(cl, result, form):
@@ -63,9 +63,12 @@ def items_for_result(cl, result, form):
             "before:content-[attr(data-label)]",
             "before:mr-auto",
             "before:text-gray-500",
+            "dark:before:text-gray-400",
             "lg:before:hidden",
             "lg:py-3",
             "lg:table-cell",
+            "dark:border-gray-800",
+            "dark:text-gray-400",
         ]
 
         try:
@@ -92,9 +95,11 @@ def items_for_result(cl, result, form):
                         "before:content-[attr(data-label)]",
                         "before:mr-auto",
                         "before:text-gray-500",
+                        "dark:before:text-gray-400",
                         "lg:before:hidden",
                         "lg:border-t",
                         "lg:table-cell",
+                        "dark:border-gray-800",
                     ]
                 boolean = getattr(attr, "boolean", False)
                 label = getattr(attr, "label", False)

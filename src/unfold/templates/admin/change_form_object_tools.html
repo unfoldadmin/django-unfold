@@ -3,12 +3,12 @@
 {% block object-tools-items %}
     {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
 
-    <a href="{% add_preserved_filters history_url %}" class="historylink mx-1 px-3 py-2 rounded-md hover:bg-gray-100">
+    <a href="{% add_preserved_filters history_url %}" class="historylink mx-1 px-3 py-2 rounded-md transition-all hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-200">
         {% trans 'History' %}
     </a>
 
     {% if has_absolute_url %}
-        <a href="{{ absolute_url }}" class="viewsitelink mx-1 px-3 py-2 rounded-md hover:bg-gray-100">
+        <a href="{{ absolute_url }}" class="viewsitelink mx-1 px-3 py-2 rounded-md transition-all hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-200">
             {% trans 'View on site' %}
         </a>
     {% endif %}

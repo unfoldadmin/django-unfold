@@ -59,7 +59,7 @@
     {% endif %}
 </head>
 
-<body class="antialiased font-sans {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
+<body class="antialiased bg-white font-sans text-gray-400 dark:bg-gray-900 dark:text-gray-200 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}">
     {% block base %}{% endblock %}
 </body>
 

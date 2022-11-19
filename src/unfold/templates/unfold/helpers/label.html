@@ -1,0 +1,7 @@
+<label for="{{ field.id_for_label }}" class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">
+    {{ field.label }}
+
+    {% if field.field.required %}
+        <span class="text-red-600">*</span>
+    {% endif %}
+</label>

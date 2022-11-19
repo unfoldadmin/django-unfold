@@ -19,6 +19,14 @@ LABEL_CLASSES = [
     "mb-2",
     "text-gray-900",
     "text-sm",
+    "dark:text-gray-200",
+]
+
+CHECKBOX_LABEL_CLASSES = [
+    "ml-2",
+    "text-sm",
+    "text-gray-900",
+    "dark:text-gray-200",
 ]
 
 BASE_INPUT_CLASSES = [
@@ -38,6 +46,12 @@ BASE_INPUT_CLASSES = [
     "focus:outline-none",
     "group-[.errors]:border-red-600",
     "group-[.errors]:focus:ring-red-200",
+    "dark:bg-gray-900",
+    "dark:border-gray-700",
+    "dark:text-gray-400",
+    "dark:focus:ring-primary-600/30",
+    "dark:group-[.errors]:border-red-500",
+    "dark:group-[.errors]:focus:ring-red-600/40",
 ]
 
 INPUT_CLASSES = [*BASE_INPUT_CLASSES, "max-w-2xl"]
@@ -66,7 +80,7 @@ TEXTAREA_EXPANDABLE_CLASSES = [
     "h-full",
 ]
 
-SELECT_CLASSES = [*BASE_INPUT_CLASSES, "max-w-2xl", "appearance-none"]
+SELECT_CLASSES = [*BASE_INPUT_CLASSES, "pr-8", "max-w-2xl", "appearance-none"]
 
 
 class UnfoldAdminTextInputWidget(AdminTextInputWidget):

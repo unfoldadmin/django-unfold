@@ -2,7 +2,7 @@
 
 <div class="actions flex flex-col md:flex-row md:items-center">
     {% block actions %}
-        <div class="bg-white border flex shadow-sm rounded-md focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600">
+        <div class="flex">
             {% block actions-form %}
                 {% for field in action_form %}
                     {% if field.label %}
@@ -19,8 +19,8 @@
             {% endblock %}
 
             {% block actions-submit %}
-                <button type="submit" class="flex items-center h-9 ml-auto px-2 text-gray-400 focus:outline-none" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
-                    <span class="material-icons md-18">arrow_forward</span>
+                <button type="submit" class="bg-white border flex items-center h-9.5 ml-1 px-2 rounded shadow-sm text-gray-400 transition-all w-9.5 hover:text-primary-600 focus:outline-none dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+                    <span class="material-icons md-18">chevron_right</span>
                 </button>
             {% endblock %}
         </div>
@@ -28,7 +28,7 @@
         {% block actions-counter %}
             {% if actions_selection_counter %}
                 <div class="hidden md:block">
-                    <span class="action-counter ml-4 text-sm text-gray-500" data-actions-icnt="{{ cl.result_list|length }}">
+                    <span class="action-counter ml-4 text-sm text-gray-500 dark:text-gray-400" data-actions-icnt="{{ cl.result_list|length }}">
                         {{ selection_note }}
                     </span>
 
