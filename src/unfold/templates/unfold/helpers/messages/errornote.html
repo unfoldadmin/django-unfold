@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% if errors %}
+    <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm dark:bg-red-500/20 dark:border-red-500/20 dark:text-red-500">
+        {% if errors.items|length == 1 %}
+            {% translate "Please correct the error below." %}
+        {% else %}
+            {% translate "Please correct the errors below." %}
+        {% endif %}
+    </p>
+{% endif %}

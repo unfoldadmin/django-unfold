@@ -7,7 +7,7 @@
 {% endif %}
 
 {% if results %}
-    <table id="result_list" class="border-spacing-none border-separate text-gray-700 w-full lg:border lg:rounded-md lg:shadow-sm">
+    <table id="result_list" class="border-spacing-none border-separate text-gray-700 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
         <thead class="hidden lg:table-header-group">
             <tr>
                 {% for header in result_headers %}
@@ -26,7 +26,7 @@
                             {% if header.sortable %}
                                 {% if header.sort_priority > 0 %}
                                     <div class="sortoptions flex items-center ml-2">
-                                        <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
+                                        <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
                                             {% if header.ascending %}
                                                 <span class="block material-icons">arrow_circle_down</span>
                                             {% else %}
@@ -34,7 +34,7 @@
                                             {% endif %}
                                         </a>
 
-                                        <a class="sortremove flex items-center leading-none ml-1 text-gray-400 hover:text-red-700" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                        <a class="sortremove flex items-center leading-none ml-1 text-gray-400 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
                                             <span class="block material-icons">cancel</span>
                                         </a>
                                     </div>
@@ -62,7 +62,7 @@
                     </tr>
                 {% endif %}
 
-                <tr class="{% cycle '' 'bg-gray-50' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none">
+                <tr class="{% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
                     {% for item in result %}
                         {{ item }}
                     {% endfor %}

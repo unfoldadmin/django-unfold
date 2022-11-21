@@ -34,6 +34,7 @@ from .forms import ActionForm
 from .settings import get_config
 from .utils import display_for_field
 from .widgets import (
+    CHECKBOX_LABEL_CLASSES,
     INPUT_CLASSES,
     LABEL_CLASSES,
     SELECT_CLASSES,
@@ -102,7 +103,7 @@ class UnfoldAdminField(helpers.AdminField):
         contents = conditional_escape(self.field.label)
 
         if self.is_checkbox:
-            classes.append(" ".join(["ml-2", "text-sm", "text-gray-900"]))
+            classes.append(" ".join(CHECKBOX_LABEL_CLASSES))
         else:
             classes.append(" ".join(LABEL_CLASSES))
 

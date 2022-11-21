@@ -2,7 +2,7 @@
 
 <div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="stacked" data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
     <fieldset class="module {{ inline_admin_formset.classes }}">
-        <h2 class="bg-gray-100 font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4">
+        <h2 class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-gray-200">
             {% if inline_admin_formset.formset.max_num == 1 %}
                 {{ inline_admin_formset.opts.verbose_name|capfirst }}
             {% else %}
@@ -13,10 +13,10 @@
         {{ inline_admin_formset.formset.management_form }}
         {{ inline_admin_formset.formset.non_form_errors }}
 
-        <div class="border mb-6 overflow-hidden rounded-md shadow-sm text-gray-700 w-full">
+        <div class="border mb-6 overflow-hidden rounded-md shadow-sm text-gray-700 w-full dark:border-gray-800">
             {% for inline_admin_form in inline_admin_formset %}
                 <div class="inline-related{% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
-                    <h3 class="border-b {% if not forloop.first %}border-t{% endif %} flex font-medium items-center mb-3 px-3 py-2 text-gray-400 text-sm">
+                    <h3 class="border-b {% if not forloop.first %}border-t{% endif %} flex font-medium items-center mb-3 px-3 py-2 text-gray-400 text-sm dark:border-gray-800">
                         <span class="mr-2">
                             {{ inline_admin_formset.opts.verbose_name|capfirst }}:
                         </span>

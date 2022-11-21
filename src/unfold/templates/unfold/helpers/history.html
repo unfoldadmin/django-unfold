@@ -4,19 +4,19 @@
 
 <div id="content-related">
     <div class="module" id="recent-actions-module">
-        <h2 class="mb-4 font-semibold text-gray-700 text-sm">
+        <h2 class="mb-4 font-semibold text-gray-700 text-sm dark:text-gray-200">
             {% translate 'Recent actions' %}
         </h2>
 
         {% if not admin_log %}
-            <p>
+            <p class="dark:text-gray-400">
                 {% translate 'None available' %}
             </p>
         {% else %}
-            <ul class="actionlist bg-gray-50 rounded-md p-3">
+            <ul class="actionlist bg-gray-50 rounded-md p-3 dark:bg-gray-800">
                 {% for entry in admin_log %}
-                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} bg-white mb-4 p-3 rounded-md shadow-sm last:mb-0">
-                        <div class="mb-3 text-gray-500 overflow-hidden text-ellipsis text-sm whitespace-nowrap">
+                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} bg-white mb-4 p-3 rounded-md shadow-sm last:mb-0 dark:bg-gray-900">
+                        <div class="mb-3 text-gray-500 overflow-hidden text-ellipsis text-sm whitespace-nowrap dark:text-gray-200">
                             {% if entry.is_deletion or not entry.get_admin_url %}
                                 {{ entry.object_repr }}
                             {% else %}
@@ -24,7 +24,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="border-gray-100 border-t flex pt-3 text-gray-500 text-sm">
+                        <div class="border-gray-100 border-t flex pt-3 text-gray-500 text-sm dark:border-gray-800 dark:text-gray-400">
                             <div>
                                 {% if entry.content_type %}
                                     {% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}

@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% if errors or error%}
+    <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm dark:bg-red-500/20 dark:border-red-500/20 dark:text-red-500">
+        {% if error %}
+            {{ error }}
+        {% else %}
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        {% endif %}
+    </p>
+{% endif %}

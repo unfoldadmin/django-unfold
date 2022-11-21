@@ -1,6 +1,6 @@
 {% load unfold_list i18n %}
 
-<div class="bg-gray-50 flex my-4 items-center p-3 rounded-md text-sm text-gray-700">
+<div class="bg-gray-50 flex my-4 items-center p-3 rounded-md text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-300">
     {% if pagination_required %}
         {% for i in page_range %}
             <div class="{% if forloop.last %}pr-2{% else %}pr-4{% endif %}">

@@ -106,16 +106,16 @@ UNFOLD = {
     ],
     "COLORS": {
         "primary": {
-            "50": "#FAF5FF",
-            "100": "#F3E8FF",
-            "200": "#E9D5FF",
-            "300": "#D8B4FE",
-            "400": "#C084FC",
-            "500": "#A855F7",
-            "600": "#9333EA",
-            "700": "#7E22CE",
-            "800": "#6B21A8",
-            "900": "#581C87",
+            "50": "250 245 255",
+            "100": "243 232 255",
+            "200": "233 213 255",
+            "300": "216 180 254",
+            "400": "192 132 252",
+            "500": "168 85 247",
+            "600": "147 51 234",
+            "700": "126 34 206",
+            "800": "107 33 168",
+            "900": "88 28 135",
         },
     },
     "EXTENSIONS": {
@@ -321,6 +321,7 @@ class CustomSliderNumericFilter(SliderNumericFilter):
 
 @admin.register(User)
 class YourModelAdmin(ModelAdmin):
+    list_filter_submit = True  # Submit button at the bottom of the filter
     list_filter = (
         ("field_A", SingleNumericFilter),  # Numeric single field search, __gte lookup
         ("field_B", RangeNumericFilter),  # Numeric range search, __gte and __lte lookup
@@ -386,15 +387,15 @@ module.exports = {
     // In case custom colors are defined in UNFOLD["COLORS"]
     colors: {
         primary: {
-            100: "var(--color-primary-100)",
-            200: "var(--color-primary-200)",
-            300: "var(--color-primary-300)",
-            400: "var(--color-primary-400)",
-            500: "var(--color-primary-500)",
-            600: "var(--color-primary-600)",
-            700: "var(--color-primary-700)",
-            800: "var(--color-primary-800)",
-            900: "var(--color-primary-900)"
+          100: "rgb(var(--color-primary-100) / <alpha-value>)",
+          200: "rgb(var(--color-primary-200) / <alpha-value>)",
+          300: "rgb(var(--color-primary-300) / <alpha-value>)",
+          400: "rgb(var(--color-primary-400) / <alpha-value>)",
+          500: "rgb(var(--color-primary-500) / <alpha-value>)",
+          600: "rgb(var(--color-primary-600) / <alpha-value>)",
+          700: "rgb(var(--color-primary-700) / <alpha-value>)",
+          800: "rgb(var(--color-primary-800) / <alpha-value>)",
+          900: "rgb(var(--color-primary-900) / <alpha-value>)"
         }
     }
 }

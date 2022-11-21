@@ -4,8 +4,6 @@
 {% block extrastyle %}
   {{ block.super }}
 
-{#  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">#}
-
   {% if cl.formset %}
     <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
   {% endif %}
@@ -63,13 +61,7 @@
 {% block content %}
     <div id="content-main">
         {% if cl.formset and cl.formset.errors %}
-            <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm">
-                {% if cl.formset.total_error_count == 1 %}
-                    {% translate "Please correct the error below." %}
-                {% else %}
-                    {% translate "Please correct the errors below." %}
-                {% endif %}
-            </p>
+            {% include "unfold/helpers/messages/errornote.html" with errors=cl.formset.errors %}
 
             {{ cl.formset.non_form_errors }}
         {% endif %}
@@ -91,7 +83,7 @@
 
                     {% block result_list %}
                         {% if action_form and actions_on_top and cl.show_admin_actions %}
-                            <div class="bg-gray-50 flex flex-col mb-4 p-3 rounded-md md:flex-row">
+                            <div class="bg-gray-50 flex flex-col mb-4 p-3 rounded-md md:flex-row dark:bg-gray-800">
                                 {% block search %}
                                     {% search_form cl %}
                                 {% endblock %}
@@ -100,10 +92,10 @@
 
                                 {% block filters %}
                                     {% if cl.has_filters %}
-                                        <label for="show-filters" id="changelist-filter-open" class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white text-gray-500{% endif %} border cursor-pointer flex font-medium h-9 items-center mt-3 px-3 py-2 rounded-md shadow-sm text-sm md:ml-auto md:mt-0 lg:mt-0">
+                                        <label for="show-filters" id="changelist-filter-open" class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white text-gray-500 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400{% endif %} border cursor-pointer flex font-medium h-9 items-center mt-3 px-3 py-2 rounded-md shadow-sm text-sm md:ml-auto md:mt-0 lg:mt-0">
                                             {% trans "Filters" %}
 
-                                            <span class="material-icons md-18 ml-auto -mr-1 pl-4 {% if cl.has_active_filters %}text-white{% else %}text-gray-400{% endif %}">filter_list</span>
+                                            <span class="material-icons md-18 ml-auto -mr-1 pl-4 {% if cl.has_active_filters %}text-white{% else %}text-gray-400 dark:text-gray-500{% endif %}">filter_list</span>
                                         </label>
                                     {% endif %}
                                 {% endblock %}
@@ -121,21 +113,21 @@
                 {% if cl.has_filters %}
                     <input type="checkbox" id="show-filters" class="hidden peer" />
 
-                    <div id="changelist-filter" class="bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50 peer-checked:flex">
+                    <div id="changelist-filter" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50 peer-checked:flex">
                         <label for="show-filters" id="changelist-filter-close" class="flex-grow"></label>
 
-                        <div class="bg-white flex mr-4 my-4 overflow-hidden rounded shadow-sm w-96">
+                        <div class="bg-white flex mr-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800">
                             <div class="flex-grow h-full overflow-auto relative" data-simplebar>
-                                <h3 class="border-b flex font-medium mb-6 px-8 py-4 text-sm">
+                                <h3 class="border-b flex font-medium mb-6 px-8 py-4 text-sm dark:text-gray-200 dark:border-gray-700">
                                     {% trans "Filter results" %}
 
                                     {% if cl.has_active_filters %}
-                                        <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-3 text-sm text-red-600 underline">
+                                        <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-3 text-sm text-red-600 underline dark:text-red-500">
                                             {% translate "Clear all filters" %}
                                         </a>
                                     {% endif %}
 
-                                    <label class="cursor-pointer material-icons md-18 ml-auto pl-4 text-gray-400 hover:text-gray-700" for="show-filters">
+                                    <label class="cursor-pointer material-icons md-18 ml-auto pl-4 text-gray-400 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" for="show-filters">
                                         close
                                     </label>
                                 </h3>
@@ -157,7 +149,7 @@
                                     {% endfor %}
 
                                     {% if cl.model_admin.list_filter_submit %}
-                                            <div class="bg-gray-50 bg-white border-gray-200 border-t bottom-4 fixed px-8 py-3 right-5 rounded-b w-96">
+                                            <div class="bg-gray-50 bg-white border-gray-200 border-t bottom-4 fixed px-8 py-3 right-4 rounded-b w-96 dark:bg-gray-700 dark:border-gray-600">
                                                 <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md self-end text-sm text-white w-full">
                                                     {% trans "Apply Filters" %}
                                                 </button>

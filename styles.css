@@ -47,12 +47,8 @@ html {
     font-feature-settings: 'liga';
   }
 
-  .scrollable-top {
-    @apply relative;
-  }
-
   .scrollable-top:after {
-      @apply absolute bg-gradient-to-t from-gray-100 h-4 left-0 right-0 -top-4;
+      @apply absolute bg-gradient-to-t from-gray-100 h-4 left-0 right-0 -top-4 dark:bg-none;
       content: '';
   }
 }
@@ -84,7 +80,7 @@ select:after {
 }
 
 #page input[type=checkbox] {
-  @apply appearance-none bg-white block border border-gray-300 cursor-pointer h-4 relative rounded w-4;
+  @apply appearance-none bg-white block border border-gray-300 cursor-pointer h-4 relative rounded w-4 dark:bg-gray-700 dark:border-gray-500;
 }
 
 #page input[type=checkbox]:hover {
@@ -123,7 +119,7 @@ table select:focus {
 }
 
 table tr.selected {
-  @apply bg-yellow-50;
+  @apply bg-yellow-50 dark:bg-white/[.06];
 }
 
 /*******************************************************
@@ -134,34 +130,46 @@ table tr.selected {
 }
 
 .datetimeshortcuts a {
-  @apply text-0 text-gray-300 transition hover:text-primary-600;
+  @apply text-0 text-gray-300 transition hover:text-primary-500;
 }
 
 .datetimeshortcuts a:first-child {
-  @apply ml-2;
+  @apply ml-2 hover:text-primary-500 dark:text-gray-500;
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply bg-white border h-9.5 material-icons py-2 rounded shadow-sm text-center w-9.5 hover:bg-primary-200 hover:text-primary-600;
+  @apply bg-white border flex h-9.5 items-center justify-center leading-none material-icons py-2 rounded shadow-sm text-base text-center w-9.5 hover:bg-primary-200 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
   content: 'timer';
 }
 
+.datetimeshortcuts a:first-child:after {
+  @apply flex;
+}
+
 .date-icon {
-  @apply block h-9.5 ml-2 w-9.5;
+  @apply block h-9.5 ml-2 transition-all w-9.5 hover:text-primary-500 dark:text-gray-500;
 }
 
 .date-icon:after {
-  @apply bg-white border h-9.5 material-icons py-2 rounded shadow-sm text-center w-9.5 hover:text-primary-600;
+  @apply bg-white border h-9.5 items-center justify-center leading-none material-icons py-2 rounded shadow-sm text-base text-center w-9.5 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
   content: 'edit';
+}
+
+.date-icon:after {
+  @apply flex;
 }
 
 .clock-icon {
-  @apply block h-9.5 ml-2 w-9.5;
+  @apply block h-9.5 ml-2 w-9.5 hover:text-primary-500 dark:text-gray-500;
 }
 
 .clock-icon:after {
-  @apply bg-white border h-9.5 material-icons py-2 rounded shadow-sm text-center w-9.5 hover:text-primary-600;
+  @apply bg-white border h-9.5 items-center justify-center material-icons py-2 rounded shadow-sm text-base text-center transition-all w-9.5 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
   content: 'edit';
+}
+
+.clock-icon:after {
+  @apply flex;
 }
 
 .timezonewarning {
@@ -176,37 +184,37 @@ table tr.selected {
 }
 
 .selector select {
-  @apply bg-none flex-grow w-full;
+  @apply bg-none flex-grow w-full dark:bg-gray-900;
 }
 
 .selector option {
-  @apply px-3 text-gray-500 text-sm truncate;
+  @apply px-3 text-gray-500 text-sm truncate dark:text-gray-400;
 }
 
 .selector-chosen,
 .selector-available {
-  @apply border flex flex-col flex-grow rounded-md self-stretch shadow-sm md:w-72 lg:w-96;
+  @apply border flex flex-col flex-grow rounded-md self-stretch shadow-sm md:w-72 lg:w-96 dark:border-gray-700;
 }
 
 .selector-chosen h2,
 .selector-available h2 {
-  @apply border-b mb-3 py-2 px-3 text-sm text-gray-500;
+  @apply border-b mb-3 py-2 px-3 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-200;
 }
 
 .selector-filter {
   @apply flex;
 }
 .selector-filter input {
-  @apply bg-gray-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded-md text-gray-500 text-sm focus:outline-none;
+  @apply bg-gray-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded-md text-gray-500 text-sm focus:outline-none dark:bg-gray-800 dark:text-gray-400;
 }
 
 .selector-chooseall,
 .selector-clearall {
-  @apply block border-t py-2 text-center text-sm text-primary-600 underline;
+  @apply block border-t py-2 text-center text-sm text-primary-500 underline dark:border-gray-700;
 }
 
 .selector-clearall {
-  @apply text-red-600;
+  @apply text-red-600 dark:text-red-500;
 }
 
 .selector-chooser {
@@ -238,11 +246,11 @@ table tr.selected {
 }
 
 .add-row {
-  @apply align-middle bg-gray-50 text-left px-3 py-5 font-normal text-right text-sm;
+  @apply align-middle bg-gray-50 text-left px-3 py-5 font-normal text-right text-sm dark:bg-gray-900;
 }
 
 [data-inline-type="stacked"] .add-row {
-  @apply border-t overflow-hidden;
+  @apply border-t overflow-hidden dark:border-gray-800;
 }
 
 .add-row td {
@@ -250,7 +258,7 @@ table tr.selected {
 }
 
 .add-row a {
-  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center text-gray-500 text-sm lg:float-right;
+  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center text-gray-500 text-sm transition-all lg:float-right dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
 }
 
 h3 .delete label {
@@ -269,7 +277,7 @@ h3 span:nth-child(3) {
  Autocomplete
  *******************************************************/
 .select2.select2-container {
-  @apply border max-w-2xl rounded-md shadow-sm w-full;
+  @apply border max-w-2xl rounded-md shadow-sm w-full dark:border-gray-700;
 
   width: 100% !important;
 }
@@ -279,7 +287,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__rendered {
-    @apply font-medium h-9 px-3 py-2 text-gray-500 text-sm;
+    @apply font-medium h-9 px-3 py-2 text-gray-500 text-sm dark:text-gray-400;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear {
@@ -310,7 +318,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-search--dropdown .select2-search__field {
-  @apply bg-gray-50 border border-gray-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm w-auto;
+  @apply bg-gray-50 border border-gray-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm w-auto dark:bg-gray-800 dark:border-gray-800 dark:text-gray-400;
 }
 
 .select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--above  {
@@ -322,7 +330,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--open .select2-dropdown {
-  @apply border border-gray-200 pb-2 shadow-sm;
+  @apply border border-gray-200 pb-2 shadow-sm dark:bg-gray-900 dark:border-gray-700;
 }
 
 .select2-container.select2-container--open .select2-dropdown--below {
@@ -334,27 +342,24 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-results__option {
-  @apply block px-3 py-2 text-gray-500 text-sm;
+  @apply block px-3 py-2 text-gray-500 text-sm transition-all dark:text-gray-400;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected]  {
-  @apply text-primary-600;
+  @apply text-primary-500;
 }
 
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice {
-  @apply bg-gray-100 flex font-medium h-7 items-center px-2 text-sm text-gray-500;
+  @apply bg-gray-100 flex font-medium h-7 items-center px-2 text-sm text-gray-500 transition-all dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-200;
 }
 
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove {
-  @apply text-0;
-}
-
-.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove:hover {
-  @apply hover:text-gray-600;
+  @apply text-0 hover:text-gray-600 dark:hover:text-gray-200;
 }
 
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove:after {
-  @apply material-icons text-gray-400;
+  @apply material-icons;
+
   content: "close";
   font-size: 14px;
 }
@@ -382,11 +387,11 @@ fieldset.collapsed .collapse-toggle {
  Calendar
  *******************************************************/
 .calendarbox {
-  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm w-80 z-50;
+  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm w-80 z-50 dark:bg-gray-800 dark:border-gray-700;
 }
 
 .calendar caption {
-  @apply font-medium mb-3 py-3 text-gray-700;
+  @apply font-medium mb-3 py-3 text-gray-700 dark:text-gray-200;
 }
 
 .calendar table {
@@ -394,7 +399,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .calendar table th {
-  @apply font-medium text-center text-gray-700 text-xs;
+  @apply font-medium text-center text-gray-700 text-xs dark:text-gray-200;
 }
 
 .calendar table td {
@@ -402,7 +407,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .calendar table td a {
-  @apply block flex h-full items-center justify-center rounded-full w-full;
+  @apply block flex h-8 items-center justify-center rounded-full transition-all w-8 dark:text-gray-400;
 }
 
 .calendar table td a:hover {
@@ -418,11 +423,11 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .calendar-shortcuts a {
-  @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-gray-500 text-xs w-1/3;
+  @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-gray-500 text-xs transition-all w-1/3 dark:border-gray-700 dark:hover:border-gray-600 dark:text-gray-400 dark:hover:text-gray-200;
 }
 
 .calendar-cancel {
-  @apply bg-gray-50 block border-t py-2 text-center text-xs text-red-600 underline;
+  @apply block border-t py-2 text-center text-xs text-red-600 underline dark:border-gray-700 dark:text-red-500;
 }
 
 .calendarnav-previous {
@@ -431,10 +436,15 @@ fieldset.collapsed .collapse-toggle {
 
 .calendarnav-next:after,
 .calendarnav-previous:after {
-  @apply border flex h-7 items-center justify-center material-icons rounded-full text-gray-400 w-7 hover:border-primary-600 hover:text-primary-600;
+  @apply border flex h-7 items-center justify-center material-icons rounded-full text-gray-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-800;
 
   content: 'navigate_before';
   display: flex;
+}
+
+.calendarnav-next:hover:after,
+.calendarnav-previous:hover:after {
+  @apply dark:border-gray-600 dark:text-gray-200;
 }
 
 .calendarnav-next {
@@ -450,41 +460,22 @@ fieldset.collapsed .collapse-toggle {
  Timepicker
  *******************************************************/
 .clockbox {
-  @apply bg-white border rounded-md shadow-sm text-sm;
+  @apply bg-white border rounded-md shadow-sm text-sm dark:bg-gray-800 dark:border-gray-700 z-50;
 }
 
 .clockbox h2 {
-  @apply font-medium px-3 py-2 text-gray-700;
+  @apply font-medium px-3 py-2 text-gray-700 dark:text-gray-200;
 }
 .clockbox .timelist {
-  @apply pb-2 px-3 text-gray-500;
+  @apply pb-2 px-3 text-gray-500 dark:text-gray-400;
 }
 
 .clockbox .timelist li {
-  @apply block pb-1;
+  @apply block pb-1 transition-all;
 }
 .clockbox .timelist li:hover {
-  @apply text-primary-600;
+  @apply text-primary-500;
 }
-
-/*******************************************************
- Errors
- *******************************************************/
-/*.errorlist li {*/
-/*  @apply bg-red-100 text-red-600 p-3 rounded-md text-sm;*/
-/*}*/
-
-/*fieldset > .errorlist li {*/
-/*  @apply mb-3;*/
-/*}*/
-
-/*td > .errorlist li {*/
-/*  @apply mt-3 mx-3;*/
-/*}*/
-
-/*.block.errors input {*/
-/*  @apply border-red-600;*/
-/*}*/
 
 /*******************************************************
  Misc
@@ -510,7 +501,7 @@ fieldset.collapsed .collapse-toggle {
  Filters
  *******************************************************/
 #changelist-filter .admin-numeric-filter-slider .noUi-handle {
-    @apply bg-white border border-gray-200 cursor-pointer h-4 -right-4 rounded-full shadow-sm w-4;
+    @apply bg-white border border-gray-200 cursor-pointer h-4 -right-4 rounded-full shadow-sm w-4 dark:bg-gray-200 dark:border-gray-200;
 }
 
 #changelist-filter .admin-numeric-filter-slider .noUi-handle-upper {
@@ -526,7 +517,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 #changelist-filter .admin-numeric-filter-slider.noUi-target {
-  @apply bg-gray-200 border-0 h-1 shadow-none;
+  @apply bg-gray-200 border-0 h-1 shadow-none dark:bg-gray-600;
 }
 
 #changelist-filter .admin-numeric-filter-slider .noUi-connect {
@@ -535,14 +526,4 @@ fieldset.collapsed .collapse-toggle {
 
 #changelist-filter .admin-numeric-filter-slider-tooltips {
     @apply flex flex-row font-medium mb-5 space-x-4 text-gray-500 text-sm;
-}
-
-#changelist-filter .admin-numeric-filter-slider-tooltip-to,
-#changelist-filter .admin-numeric-filter-slider-tooltip-from {
-  @apply border cursor-not-allowed flex flex-grow flex-row items-center rounded-md shadow-sm px-3 py-2 w-full
-}
-
-#changelist-filter .admin-numeric-filter-slider-tooltip-from {
-    @apply mr-auto;
-
 }

@@ -32,13 +32,13 @@
 
 {% block content %}
     {% if perms_lacking %}
-        <div class="border rounded-md shadow-sm">
-            <p class="font-medium p-4">
+        <div class="border rounded-md shadow-sm dark:border-gray-800">
+            <p class="font-medium p-4 text-sm">
                 {% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}
             </p>
 
-            <div class="border-t p-4">
-                <ul class="leading-relaxed text-gray-500 text-sm">
+            <div class="border-t p-4 dark:border-gray-800">
+                <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-400">
                     {% for obj in perms_lacking %}
                         <li>
                             {{ obj }}
@@ -48,13 +48,13 @@
             </div>
         </div>
     {% elif protected %}
-        <div class="border rounded-md shadow-sm">
-            <p class="font-medium p-4">
+        <div class="border rounded-md shadow-sm dark:border-gray-800">
+            <p class="font-medium p-4 text-sm">
                 {% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would require deleting the following protected related objects:{% endblocktranslate %}
             </p>
 
-            <div class="border-t p-4">
-                <ul class="leading-relaxed text-gray-500 text-sm">
+            <div class="border-t p-4 dark:border-gray-800">
+                <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-400">
                     {% for obj in protected %}
                         <li>
                             {{ obj }}
@@ -64,24 +64,24 @@
             </div>
         </div>
     {% else %}
-        <div class="border rounded-md shadow-sm">
-            <p class="font-medium p-4">
+        <div class="border rounded-md shadow-sm dark:border-gray-800">
+            <p class="font-medium p-4 text-sm">
                 {% blocktranslate with escaped_object=object %}Are you sure you want to delete the {{ object_name }} "{{ escaped_object }}"? All of the following related items will be deleted:{% endblocktranslate %}
             </p>
 
             {% include "admin/includes/object_delete_summary.html" %}
 
-            <div class="border-t p-4">
+            <div class="border-t p-4 dark:border-gray-800">
                 <h2 class="font-medium mb-2 text-sm">
                     {% translate "Objects" %}
                 </h2>
 
-                <ul class="leading-relaxed text-gray-500 text-sm">
+                <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-400">
                      {{ deleted_objects|unordered_list }}
                 </ul>
             </div>
 
-            <form method="post" class="border-t px-4 py-3">
+            <form method="post" class="border-t px-4 py-3 dark:border-gray-800">
                 {% csrf_token %}
 
                 <div class="flex items-center">
@@ -95,11 +95,11 @@
                         <input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">
                     {% endif %}
 
-                    <a href="#" class="button cancel-link text-sm text-gray-500 underline">
+                    <a href="#" class="button cancel-link text-sm text-gray-500 underline dark:text-gray-400">
                         {% translate "No, take me back" %}
                     </a>
 
-                    <input type="submit" value="{% translate 'Yes, I’m sure' %}" class="bg-red-600 font-medium ml-auto px-3 py-2 rounded-md text-sm text-white">
+                    <input type="submit" value="{% translate 'Yes, I’m sure' %}" class="bg-red-600 cursor-pointer font-medium ml-auto px-3 py-2 rounded-md text-sm text-white dark:bg-red-500/20 dark:text-red-500">
                 </div>
             </form>
         </div>

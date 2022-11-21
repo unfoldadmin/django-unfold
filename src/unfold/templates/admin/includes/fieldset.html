@@ -1,6 +1,6 @@
 <fieldset class="module {{ fieldset.classes }}">
     {% if fieldset.name %}
-        <h2 class="bg-gray-100 font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4">
+        <h2 class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-gray-200">
             {{ fieldset.name }}
         </h2>
     {% endif %}
@@ -11,7 +11,7 @@
         </div>
     {% endif %}
 
-    <div class="aligned border mb-8 rounded-md pt-3 px-3 shadow-sm">
+    <div class="aligned border mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
         {% for line in fieldset %}
             <div class="block {% if line.fields|length_is:'1' and line.errors %} group errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
                 {% for field in line %}
@@ -30,7 +30,7 @@
                             </div>
 
                             {% if field.is_readonly %}
-                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm">
+                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                                     {% if field.contents %}
                                         {{ field.contents }}
                                     {% else %}
@@ -43,13 +43,13 @@
                         {% endif %}
 
                         {% if line.errors and line.fields|length_is:'1' %}
-                            <span class="mt-1 text-red-600 text-sm">
+                            <span class="mt-1 text-red-600 text-sm dark:text-red-500">
                                 {{ line.errors }}
                             </span>
                         {% endif %}
 
                         {% if field.field.help_text %}
-                            <div class="leading-relaxed mt-2 text-gray-500 text-xs">
+                            <div class="leading-relaxed mt-2 text-gray-500 text-xs dark:text-gray-400">
                                 {{ field.field.help_text|safe }}
                             </div>
                         {% endif %}

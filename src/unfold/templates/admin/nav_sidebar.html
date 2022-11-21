@@ -2,10 +2,7 @@
     <div class="desktop-navigation">
         <input type="checkbox" id="show-sidebar" class="hidden peer" {% if request.session.toggle_sidebar == True %} checked{% endif %}/>
 
-        <label for="show-sidebar"
-               hx-get="{% url "admin:toggle_sidebar" %}"
-               hx-swap="none"
-               class="absolute block bg-white border cursor-pointer hidden flex h-6 items-center -mr-14 ml-auto justify-center left-68 ml-1 rounded-full text-gray-500 top-5 w-6 z-50 xl:flex peer-checked:left-4 peer-checked:rotate-180">
+        <label for="show-sidebar" hx-get="{% url "admin:toggle_sidebar" %}" hx-swap="none" class="absolute block bg-white border cursor-pointer hidden flex h-6 items-center -mr-3 ml-auto justify-center right-0 rounded-full text-gray-500 top-5 w-6 z-50 xl:flex peer-checked:-mr-8 peer-checked:rotate-180 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200">
             <span class="material-icons md-16">
                 first_page
             </span>
