@@ -9,8 +9,13 @@
 
         {% if choice.min is not None and choice.max is not None and choice.step %}
             <div class="admin-numeric-filter-slider-tooltips">
-                <span class="admin-numeric-filter-slider-tooltip-from">{{ choice.value_from }}</span>
-                <span class="admin-numeric-filter-slider-tooltip-to">{{ choice.value_to }}</span>
+                <span class="admin-numeric-filter-slider-tooltip-from border cursor-not-allowed flex flex-grow flex-row items-center mr-auto rounded-md shadow-sm px-3 py-2 w-full dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
+                    {{ choice.value_from }}
+                </span>
+
+                <span class="admin-numeric-filter-slider-tooltip-to border cursor-not-allowed flex flex-grow flex-row items-center rounded-md shadow-sm px-3 py-2 w-full dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
+                    {{ choice.value_to }}
+                </span>
             </div>
 
             <div class="admin-numeric-filter-slider" data-min="{{ choice.min|unlocalize }}" data-max="{{ choice.max|unlocalize }}" data-decimals="{{ choice.decimals }}" data-step="{{ choice.step|unlocalize }}">
@@ -20,7 +25,7 @@
                 {{ choice.form.as_p }}
             </div>
         {% else %}
-            <div class="admin-numeric-filter-slider-error">
+            <div class="admin-numeric-filter-slider-error dark:text-gray-400">
                 <p>
                     {% trans 'Not enough data.' %}
                 </p>

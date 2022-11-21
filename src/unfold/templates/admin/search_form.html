@@ -3,11 +3,11 @@
 {% if cl.search_fields %}
     <div id="toolbar" class="mb-3 md:mb-0 md:mr-4">
         <div>
-            <div class="bg-white border flex rounded-md overflow-hidden shadow-sm focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600">
-                <input class="font-medium h-9 px-3 text-gray-500 text-sm w-40 lg:w-60 focus:outline-none" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" autofocus placeholder="{% trans 'Type to search' %}" />
+            <div class="bg-white border flex rounded-md overflow-hidden shadow-sm focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-gray-900 dark:border-gray-700 dark:focus-within:ring-primary-600/30">
+                <input class="font-medium h-9 px-3 text-gray-500 text-sm w-40 lg:w-60 focus:outline-none dark:bg-gray-900 dark:text-gray-400" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" autofocus placeholder="{% trans 'Type to search' %}" />
 
                 <button type="submit" class="flex items-center ml-auto px-2 focus:outline-none" id="searchbar-submit">
-                    <span class="material-icons md-18 text-gray-400">search</span>
+                    <span class="material-icons md-18 text-gray-400 dark:text-gray-500">search</span>
                 </button>
             </div>
 

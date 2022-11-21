@@ -5,7 +5,7 @@
         {{ inline_admin_formset.formset.management_form }}
 
         <fieldset class="module {{ inline_admin_formset.classes }}">
-            <h2 class="bg-gray-100 font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4">
+            <h2 class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-gray-200">
                 {% if inline_admin_formset.formset.max_num == 1 %}
                     {{ inline_admin_formset.opts.verbose_name|capfirst }}
                 {% else %}
@@ -17,16 +17,16 @@
 
             <div>
                 {% if not inline_admin_formset.has_add_permission and inline_admin_formset.forms|length_is:0 %}
-                    <p class="mb-6 text-gray-500 text-sm">
+                    <p class="mb-6 text-gray-500 text-sm dark:text-gray-400">
                         {% trans "No records found." %}
                     </p>
                 {% else %}
-                    <table class="border border-spacing-none border-separate mb-6 rounded-md shadow-sm text-gray-700 w-full">
+                    <table class="border border-spacing-none border-separate mb-6 rounded-md shadow-sm text-gray-700 w-full dark:border-gray-800">
                         <thead class="hidden lg:table-header-group">
                             <tr>
                                 {% for field in inline_admin_formset.fields %}
                                     {% if not field.widget.is_hidden %}
-                                        <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                                        <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b font-medium px-3 py-2 text-left text-gray-400 text-sm dark:border-gray-800">
                                             {{ field.label|capfirst }}
 
                                             {% if field.help_text %}
@@ -37,7 +37,7 @@
                                 {% endfor %}
 
                                 {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                    <th class="align-middle border-b font-medium px-3 py-2 text-left text-gray-400 text-sm lg:w-px">
+                                    <th class="align-middle border-b font-medium px-3 py-2 text-left text-gray-400 text-sm lg:w-px dark:border-gray-800">
                                         {% translate "Delete?" %}
                                     </th>
                                 {% endif %}
@@ -107,7 +107,7 @@
                                                 {% with is_last_col=forloop.last %}
                                                     {% for field in line %}
                                                         {% if field.is_readonly or not field.field.is_hidden %}
-                                                            <td{% if field.field.name %} class="field-{{ field.field.name }}{% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell"{% endif %} data-label="{{ field.field.label }}">
+                                                            <td{% if field.field.name %} class="field-{{ field.field.name }}{% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800"{% endif %} data-label="{{ field.field.label }}">
                                                                 {% if field.is_readonly %}
                                                                     <p class="bg-gray-50 border font-medium px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm">
                                                                         {{ field.contents }}
@@ -116,7 +116,7 @@
                                                                     {{ field.field }}
 
                                                                     {% if field.field.errors|length > 0 %}
-                                                                        <div class="mt-1 text-red-600 text-sm">
+                                                                        <div class="mt-1 text-red-600 text-sm dark:text-red-500">
                                                                             {% for error in field.field.errors %}
                                                                                 {{ error }}
                                                                             {% endfor %}
@@ -133,7 +133,7 @@
                                         {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
                                             <td class="
                                                 delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} align-middle text-left font-normal px-3 text-sm text-red-600
-                                                border-b flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-sm lg:table-cell lg:underline lg:w-px
+                                                border-b flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-sm lg:table-cell lg:underline lg:w-px dark:border-gray-800
                                                 "
                                                 data-label="{% trans "Remove" %}">
                                                 {% if inline_admin_form.original %}

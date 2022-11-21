@@ -82,14 +82,9 @@
                     <input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">
                 {% endif %}
 
+
                 {% if errors %}
-                    <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm">
-                        {% if errors|length == 1 %}
-                            {% translate "Please correct the error below." %}
-                        {% else %}
-                            {% translate "Please correct the errors below." %}
-                        {% endif %}
-                    </p>
+                    {% include "unfold/helpers/messages/errornote.html" with errors=errors %}
 
                     {{ adminform.form.non_field_errors }}
                 {% endif %}
