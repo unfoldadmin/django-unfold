@@ -319,6 +319,11 @@ class CustomSliderNumericFilter(SliderNumericFilter):
     STEP = 10
 
 
+class CustomRangeNumericListFilter(RangeNumericListFilter):
+    parameter_name = "items_count"
+    title = _("items")
+
+
 @admin.register(User)
 class YourModelAdmin(ModelAdmin):
     list_filter_submit = True  # Submit button at the bottom of the filter
@@ -329,7 +334,17 @@ class YourModelAdmin(ModelAdmin):
         ("field_D", CustomSliderNumericFilter),  # Numeric filter with custom attributes
         ("field_E", RangeDateFilter),  # Date filter
         ("field_F", RangeDateTimeFilter),  # Datetime filter
+        CustomRangeNumericListFilter,  # Numeric range search not restricted to a model field
     )
+
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset()
+            .annotate(
+                items_count=Count("item", distinct=True)
+            )
+        )
 ```
 
 ## User Admin Form
