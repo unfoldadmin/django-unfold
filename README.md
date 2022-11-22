@@ -322,7 +322,7 @@ class CustomSliderNumericFilter(SliderNumericFilter):
 
 class CustomRangeNumericListFilter(RangeNumericListFilter):
     parameter_name = "items_count"
-    title = _("items")
+    title = "items"
 
 
 @admin.register(User)
