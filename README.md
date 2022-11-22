@@ -305,7 +305,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 
 from unfold.admin import ModelAdmin
-from unfold.contrib.admin import (
+from unfold.contrib.filters.admin import (
     RangeNumericFilter,
     SingleNumericFilter,
     SliderNumericFilter,
