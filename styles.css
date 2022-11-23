@@ -375,6 +375,10 @@ fieldset.collapsed > div {
     display: none;
 }
 
+fieldset.collapse {
+    @apply visible;
+}
+
 fieldset.collapsed h2, fieldset.collapsed {
     @apply block;
 }

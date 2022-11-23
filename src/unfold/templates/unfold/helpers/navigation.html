@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="relative min-w-sidebar transition-width w-sidebar z-30">
-    <nav id="nav-sidebar" class="bg-gray-50 border-r flex flex-col fixed max-h-screen min-h-screen min-w-sidebar transition-width w-sidebar dark:bg-white/[.02] dark:border-gray-800">
+    <nav id="nav-sidebar" class="bg-gray-50 border-r flex flex-col fixed max-h-screen min-h-screen min-w-sidebar transition-width w-sidebar dark:bg-gray-900 dark:border-gray-800">
         <div class="border-b mb-5 py-3 dark:border-gray-800">
             <div class="flex font-medium h-10 items-center px-6 text-gray-700 dark:text-gray-200">
                 {% if logo %}
@@ -11,11 +11,6 @@
 
                     {{ branding }}
                 {% endif %}
-
-                <label for="show-sidebar-mobile"
-                       class="absolute bottom-0 bg-gray-700 flex cursor-pointer flex items-center mb-2 -mr-16 ml-auto justify-center px-2 py-1 right-0 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden">
-                    {% trans "Menu" %}
-                </label>
             </div>
         </div>
 

@@ -8,6 +8,7 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
 
 - **Visual**: provides new user interface based on Tailwind CSS framework
 - **Sidebar:** simplifies definition of custom sidebar navigation
+- **Dark mode:** supports both light and dark mode versions
 - **Configuration:** most of the basic options can be changed in settings.py
 - **Dependencies:** completely based only on `django.contrib.admin`
 - **Filters:** custom widgets for filters (e.g. numeric filter)

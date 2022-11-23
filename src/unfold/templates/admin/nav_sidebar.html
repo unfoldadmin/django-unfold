@@ -1,23 +1,23 @@
-<div class="relative z-30">
-    <div class="desktop-navigation">
-        <input type="checkbox" id="show-sidebar" class="hidden peer" {% if request.session.toggle_sidebar == True %} checked{% endif %}/>
+{% load i18n %}
 
-        <label for="show-sidebar" hx-get="{% url "admin:toggle_sidebar" %}" hx-swap="none" class="absolute block bg-white border cursor-pointer hidden flex h-6 items-center -mr-3 ml-auto justify-center right-0 rounded-full text-gray-500 top-5 w-6 z-50 xl:flex peer-checked:-mr-8 peer-checked:rotate-180 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200">
-            <span class="material-icons md-16">
-                first_page
-            </span>
-        </label>
-
-        <div class="hidden ml-0 peer-checked:-ml-72 xl:block">
-            {% include "unfold/helpers/navigation.html" with navigation_id="desktop-navigation" %}
-        </div>
+<div class="relative z-50">
+    <div @click="sidebarDesktopOpen = !sidebarDesktopOpen"
+         hx-get="{% url "admin:toggle_sidebar" %}"
+         hx-swap="none"
+         class="block bg-white border cursor-pointer fixed flex h-6 hidden items-center justify-center rounded-full text-gray-500 top-5 -translate-x-1/2 w-6 z-50 xl:flex dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
+         :class="{'ml-6 rotate-180': !sidebarDesktopOpen, 'ml-72': sidebarDesktopOpen}">
+        <span class="material-icons md-16">
+            first_page
+        </span>
     </div>
 
-    <div class="mobile-navigation">
-        <input type="checkbox" id="show-sidebar-mobile" class="hidden peer" />
+    <div @click="sidebarMobileOpen = !sidebarMobileOpen"
+         class="fixed bottom-0 bg-gray-700 flex cursor-pointer flex items-center left-0 mb-2 ml-2 justify-center px-2 py-1 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden"
+        :class="{'ml-72 -translate-x-1/2': sidebarMobileOpen}">
+        {% trans "Menu" %}
+    </div>
 
-        <div class="fixed -ml-72 peer-checked:ml-0 xl:hidden">
-            {% include "unfold/helpers/navigation.html" with navigation_id="mobile-navigation"  %}
-        </div>
+    <div :class="{'xl:block': sidebarDesktopOpen, 'xl:hidden': !sidebarDesktopOpen, 'max-xl:fixed': sidebarMobileOpen, 'hidden': !sidebarMobileOpen }">
+        {% include "unfold/helpers/navigation.html" %}
     </div>
 </div>
