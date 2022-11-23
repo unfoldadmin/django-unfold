@@ -4,7 +4,6 @@ from django.contrib.admin import AdminSite
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.validators import EMPTY_VALUES
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse, reverse_lazy
 from django.utils.module_loading import import_string
@@ -214,9 +213,6 @@ class UnfoldAdminSite(AdminSite):
             results.append(group)
 
         return results
-
-    def app_index(self, request, app_label, extra_context=None):
-        return redirect("admin:index")
 
     def _get_value(self, instance, *args):
         if instance is None:
