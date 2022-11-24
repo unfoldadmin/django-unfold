@@ -180,7 +180,7 @@ table tr.selected {
  Selector
  *******************************************************/
 .selector {
-  @apply flex flex-col items-center order-first md:flex-row;
+  @apply flex flex-col items-center md:flex-row;
 }
 
 .selector select {
