@@ -168,7 +168,7 @@ class UnfoldAdminSite(AdminSite):
         return PasswordChangeView.as_view(**defaults)(request)
 
     def get_sidebar_list(self, request):
-        navigation = get_config()["SIDEBAR"].get("navigation")
+        navigation = get_config()["SIDEBAR"].get("navigation", [])
         results = []
 
         def _get_is_active(link):
