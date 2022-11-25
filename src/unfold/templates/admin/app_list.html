@@ -16,9 +16,6 @@
                             <ol>
                                 {% for model in app.models %}
                                     {% if not model.hidden %}
-                                        {% if model.separator %}
-                                            <li class="border-t my-2"></li>
-                                        {% endif %}
                                         <li class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path|urlencode %} current-model{% endif %}">
                                             {% if model.header %}
                                                 <h3 class="font-medium my-3 text-gray-900 text-sm dark:text-gray-200">
@@ -27,7 +24,8 @@
                                             {% endif %}
 
                                             {% if model.admin_url %}
-                                                <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}" class="block border border-transparent flex items-center -mx-3 px-3 py-3 rounded-md transition-all {% if model.admin_url in request.path|urlencode %}bg-gray-100 font-semibold text-primary-500 dark:border dark:border-gray-800 dark:bg-white/[.02]{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200{% endif %}">
+                                                <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}"
+                                                   class="block border border-transparent flex h-11 items-center -mx-3 px-3 py-2 rounded-md transition-all {% if model.admin_url in request.path|urlencode %}bg-gray-100 font-semibold text-primary-500 dark:border dark:border-gray-800 dark:bg-white/[.02]{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200{% endif %}">
                                                     {% if model.icon %}
                                                         <span class="material-icons md-18 mr-3">{{ model.icon }}</span>
                                                     {% endif %}
