@@ -452,9 +452,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        for action in self.get_actions_submit_line():
-            action_attrs = self.get_unfold_action(action)
-
+        for action_attrs in self.get_actions_submit_line():
             if action_attrs["action_name"] not in request.POST:
                 continue
 
@@ -470,6 +468,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         if not callable(method):
             raise UnfoldException(f"{method_name} is not callable")
+
         return method
 
     def get_action_choices(self, request, default_choices=BLANK_CHOICE_DASH):
