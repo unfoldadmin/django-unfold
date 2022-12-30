@@ -20,6 +20,8 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
 - [Table of Contents](#table-of-contents)
 - [Installation](#installation)
 - [Configuration](#configuration)
+  - [Available settings.py options](#available-settingspy-options)
+  - [Available unfold.admin.ModelAdmin options](#available-unfoldadminmodeladmin-options)
 - [Decorators](#decorators)
   - [@display](#display)
 - [Actions](#actions)
@@ -82,6 +84,7 @@ class CustomAdminClass(ModelAdmin):
 
 ## Configuration
 
+### Available settings.py options
 ```python
 # settings.py
 
@@ -182,6 +185,31 @@ def dashboard_callback(request, context):
 
 def badge_callback(request):
     return 3
+```
+
+### Available unfold.admin.ModelAdmin options
+
+```python
+from django.contrib import admin
+from unfold.admin import ModelAdmin
+
+
+@admin.register(MyModel)
+class CustomAdminClass(ModelAdmin):
+    # Preprocess content of readonly fields before render
+    readonly_preprocess_fields = {
+        "model_field_name": "html.unescape",
+        "other_field_name": lambda content: content.strip(),
+    }
+
+    # Display submit button in filters
+    list_filter_submit = False
+
+    # Custom actions
+    actions_list = []  # Displayed above the results list
+    actions_row = []  # Displayed in a table row in results list
+    actions_detail = []  # Displayed at the top of for in object detail
+    actions_submit_line = []  # Displayed near save in object detail
 ```
 
 ## Decorators
@@ -340,13 +368,7 @@ class YourModelAdmin(ModelAdmin):
     )
 
     def get_queryset(self, request):
-        return (
-            super()
-            .get_queryset()
-            .annotate(
-                items_count=Count("item", distinct=True)
-            )
-        )
+        return super().get_queryset().annotate(items_count=Count("item", distinct=True))
 ```
 
 ## User Admin Form
