@@ -282,6 +282,10 @@ h3 span:nth-child(3) {
   width: 100% !important;
 }
 
+.errors .select2.select2-container {
+  @apply border-red-600;
+}
+
 .select2-container.select2-container--admin-autocomplete .select2-selection--single {
   @apply h-auto;
 }
