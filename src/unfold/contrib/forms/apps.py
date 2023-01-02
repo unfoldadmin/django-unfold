@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class DefaultAppConfig(AppConfig):
-    name = "unfold.contrib.fields"
+    name = "unfold.contrib.forms"

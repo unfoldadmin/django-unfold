@@ -44,7 +44,8 @@ The installation process is minimal. Everything what is needed after installatio
 
 INSTALLED_APPS = [
     "unfold",  # before django.contrib.admin
-    "unfold.contrib.filters",  # optional
+    "unfold.contrib.filters",  # optional, if special filters are needed
+    "unfold.contrib.forms",  # optional, if special form elements are needed
     "django.contrib.admin",  # required
 ]
 ```
@@ -190,8 +191,11 @@ def badge_callback(request):
 ### Available unfold.admin.ModelAdmin options
 
 ```python
+from django import models
 from django.contrib import admin
+
 from unfold.admin import ModelAdmin
+from unfold.contrib.forms.widgets import WysiwygWidget
 
 
 @admin.register(MyModel)
@@ -210,6 +214,10 @@ class CustomAdminClass(ModelAdmin):
     actions_row = []  # Displayed in a table row in results list
     actions_detail = []  # Displayed at the top of for in object detail
     actions_submit_line = []  # Displayed near save in object detail
+
+    formfield_overrides = {
+        models.TextField: WysiwygWidget,
+    }
 ```
 
 ## Decorators
