@@ -28,23 +28,20 @@ html {
     border-spacing: 0;
   }
 
-  .material-icons {
-    font-family: 'Material Icons Outlined';
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
     font-weight: normal;
     font-style: normal;
     font-size: 18px;
-    display: inline-block;
-    /*line-height: 1;*/
-    text-transform: none;
+    line-height: 1;
     letter-spacing: normal;
-    direction: ltr;
-    word-wrap: normal;
+    text-transform: none;
+    display: inline-block;
     white-space: nowrap;
-
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    word-wrap: normal;
+    direction: ltr;
+    -moz-font-feature-settings: 'liga';
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'liga';
   }
 
   .scrollable-top:after {
@@ -62,6 +59,10 @@ html {
  *******************************************************/
 .md-16 {
   font-size: 16px;
+}
+
+.md-18 {
+  font-size: 18px;
 }
 
 /*******************************************************
@@ -92,11 +93,11 @@ select:after {
 
 }
 
-#page input[type=checkbox]:checked:after {
-  @apply absolute block flex font-bold h-4 items-center justify-center -left-px text-white text-xs w-4 -top-px;
+#page input[type=checkbox]:after {
+  @apply absolute flex h-4 items-center justify-center leading-none -ml-px -mt-px text-white transition-colors text-sm w-4;
 
-  content: 'done';
-  font-family: 'Material Icons Outlined';
+  content: "done";
+  font-family: "Material Symbols Outlined";
 }
 
 #page input[type=checkbox].hidden {
@@ -138,7 +139,7 @@ table tr.selected {
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply bg-white border flex h-9.5 items-center justify-center leading-none material-icons py-2 rounded shadow-sm text-base text-center w-9.5 hover:bg-primary-200 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
+  @apply bg-white border flex h-9.5 items-center justify-center leading-none material-symbols-outlined py-2 rounded shadow-sm text-base text-center w-9.5 hover:bg-primary-200 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
   content: 'timer';
 }
 
@@ -151,7 +152,7 @@ table tr.selected {
 }
 
 .date-icon:after {
-  @apply bg-white border h-9.5 items-center justify-center leading-none material-icons py-2 rounded shadow-sm text-base text-center w-9.5 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
+  @apply bg-white border h-9.5 items-center justify-center leading-none material-symbols-outlined py-2 rounded shadow-sm text-base text-center w-9.5 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
   content: 'edit';
 }
 
@@ -164,7 +165,7 @@ table tr.selected {
 }
 
 .clock-icon:after {
-  @apply bg-white border h-9.5 items-center justify-center material-icons py-2 rounded shadow-sm text-base text-center transition-all w-9.5 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
+  @apply bg-white border h-9.5 items-center justify-center material-symbols-outlined py-2 rounded shadow-sm text-base text-center transition-all w-9.5 hover:text-primary-500 dark:bg-gray-900 dark:border-gray-700;
   content: 'edit';
 }
 
@@ -227,7 +228,7 @@ table tr.selected {
 
 .selector-add:after,
 .selector-remove:after {
-  @apply inline-block material-icons text-gray-400 w-5;
+  @apply inline-block material-symbols-outlined text-gray-400 w-5;
 }
 
 .selector-add:after {
@@ -299,7 +300,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear:after {
-  @apply material-icons text-gray-500;
+  @apply material-symbols-outlined text-gray-500;
   content: "close";
   font-size: 14px;
 }
@@ -309,7 +310,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow:after {
-  @apply left-0 leading-none m-0 material-icons text-gray-500 text-lg;
+  @apply left-0 leading-none m-0 material-symbols-outlined text-gray-500 text-lg;
   content: "expand_more";
 }
 
@@ -362,7 +363,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove:after {
-  @apply material-icons;
+  @apply material-symbols-outlined;
 
   content: "close";
   font-size: 14px;
@@ -444,7 +445,7 @@ fieldset.collapsed .collapse-toggle {
 
 .calendarnav-next:after,
 .calendarnav-previous:after {
-  @apply border flex h-7 items-center justify-center material-icons rounded-full text-gray-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-800;
+  @apply border flex h-7 items-center justify-center material-symbols-outlined rounded-full text-gray-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-800;
 
   content: 'navigate_before';
   display: flex;
@@ -501,7 +502,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .htmx-swapping:after {
-  @apply absolute animate-spin h-4 inset-1/2 material-icons md-16 text-gray-400 w-4;
+  @apply absolute animate-spin h-4 inset-1/2 material-symbols-outlined md-16 text-gray-400 w-4;
   content: 'sync';
 }
 
@@ -534,4 +535,15 @@ fieldset.collapsed .collapse-toggle {
 
 #changelist-filter .admin-numeric-filter-slider-tooltips {
     @apply flex flex-row font-medium mb-5 space-x-4 text-gray-500 text-sm;
+}
+
+/*******************************************************
+ Trix
+ *******************************************************/
+trix-toolbar[id^="trix-toolbar-"] {
+  @apply sticky top-0 dark:bg-gray-900;
+}
+
+.trix-active {
+  @apply text-primary-600;
 }
