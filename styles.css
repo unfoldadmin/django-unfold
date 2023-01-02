@@ -540,7 +540,7 @@ fieldset.collapsed .collapse-toggle {
 /*******************************************************
  Trix
  *******************************************************/
-#trix-toolbar-1 {
+trix-toolbar[id^="trix-toolbar-"] {
   @apply sticky top-0 dark:bg-gray-900;
 }
 
