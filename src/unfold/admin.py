@@ -154,7 +154,15 @@ helpers.AdminReadonlyField = UnfoldAdminReadonlyField
 
 
 class ModelAdminMixin:
-    formfield_overrides = FORMFIELD_OVERRIDES
+    def __init__(self, model, admin_site):
+        overrides = copy.deepcopy(FORMFIELD_OVERRIDES)
+
+        for k, v in self.formfield_overrides.items():
+            overrides.setdefault(k, {}).update(v)
+
+        self.formfield_overrides = overrides
+
+        super().__init__(model, admin_site)
 
     def formfield_for_choice_field(self, db_field, request: HttpRequest, **kwargs):
         # Overrides widget for CharFields which have choices attribute
@@ -227,9 +235,6 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     add_fieldsets = ()
     list_filter_submit = False
     readonly_preprocess_fields = {}
-
-    def __init__(self, model, admin_site):
-        super().__init__(model, admin_site)
 
     @property
     def media(self):

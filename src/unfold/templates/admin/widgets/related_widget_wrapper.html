@@ -14,7 +14,7 @@
                                data-popup="yes"
                                data-href-template="{{ change_related_template_url }}?{{ url_params }}"
                                title="{% blocktranslate %}Change selected {{ model }}{% endblocktranslate %}">
-                                <i class="material-icons-outlined text-base">edit</i>
+                                <span class="material-symbols-outlined text-base">edit</span>
                             </a>
                         {% endif %}
 
@@ -24,7 +24,7 @@
                                id="add_id_{{ name }}"
                                 href="{{ add_related_url }}?{{ url_params }}"
                                 title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
-                                <i class="material-icons-outlined text-base">add</i>
+                                <span class="material-symbols-outlined text-base">add</span>
                             </a>
                         {% endif %}
 
@@ -33,7 +33,7 @@
                                id="view_id_{{ name }}"
                                data-href-template="{{ change_related_template_url }}?{{ view_related_url_params }}"
                                title="{% blocktranslate %}View selected {{ model }}{% endblocktranslate %}">
-                                <i class="material-icons-outlined text-base">visibility</i>
+                                <span class="material-symbols-outlined text-base">visibility</span>
                             </a>
                         {% endif %}
 
@@ -43,7 +43,7 @@
                                 data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
                                 data-popup="yes"
                                 title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
-                                <i class="material-icons-outlined text-base">delete</i>
+                                <span class="material-symbols-outlined text-base">delete</span>
                             </a>
                         {% endif %}
                     {% endif %}
