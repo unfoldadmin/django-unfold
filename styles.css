@@ -88,16 +88,19 @@ select:after {
   @apply border-gray-400;
 }
 
-#page input[type=checkbox]:checked {
-  @apply bg-primary-600 border-primary-600 text-white;
-
-}
-
 #page input[type=checkbox]:after {
-  @apply absolute flex h-4 items-center justify-center leading-none -ml-px -mt-px text-white transition-colors text-sm w-4;
+  @apply absolute flex h-4 items-center justify-center leading-none -ml-px -mt-px text-white transition-all text-sm w-4 dark:text-gray-700;
 
   content: "done";
   font-family: "Material Symbols Outlined";
+}
+
+#page input[type=checkbox]:checked {
+  @apply bg-primary-600 border-primary-600 transition-all;
+}
+
+#page input[type=checkbox]:checked:after {
+  @apply text-white;
 }
 
 #page input[type=checkbox].hidden {
