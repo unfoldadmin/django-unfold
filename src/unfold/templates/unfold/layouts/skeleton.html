@@ -17,7 +17,7 @@
     <title>{% block title %}{% endblock %}</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,500,0,0" rel="stylesheet"/>
 
     {% for style in styles %}
         <link href="{{ style }}" rel="stylesheet">
@@ -27,7 +27,7 @@
     <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
 
     <script src="{% static 'unfold/js/simplebar.js' %}"></script>
-    <script src="{% static 'unfold/js/alpine.js' %}"></script>
+    <script src="{% static 'unfold/js/alpine.js' %}" defer></script>
     <script src="{% static 'unfold/js/htmx.js' %}"></script>
     <script src="{% static 'unfold/js/app.js' %}"></script>
 

@@ -28,14 +28,14 @@
                                     <div class="sortoptions flex items-center ml-2">
                                         <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
                                             {% if header.ascending %}
-                                                <span class="block material-icons">arrow_circle_down</span>
+                                                <span class="block material-symbols-outlined">arrow_circle_down</span>
                                             {% else %}
-                                                <span class="block material-icons">arrow_circle_up</span>
+                                                <span class="block material-symbols-outlined">arrow_circle_up</span>
                                             {% endif %}
                                         </a>
 
                                         <a class="sortremove flex items-center leading-none ml-1 text-gray-400 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
-                                            <span class="block material-icons">cancel</span>
+                                            <span class="block material-symbols-outlined">cancel</span>
                                         </a>
                                     </div>
 

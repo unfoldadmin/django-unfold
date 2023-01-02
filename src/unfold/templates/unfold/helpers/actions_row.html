@@ -1,6 +1,6 @@
 {% if actions %}
     <div class="group leading-none relative" x-data="{ openActionsId{{ instance.pk }}: false }">
-        <i class="cursor-pointer material-icons md-18 text-gray-400 transition-colors group-hover:text-primary-600 dark:text-gray-400" @click="openActionsId{{ instance.pk }} = !openActionsId{{ instance.pk }}">more_horiz</i>
+        <span class="cursor-pointer material-symbols-outlined md-18 text-gray-400 transition-colors group-hover:text-primary-600 dark:text-gray-400" @click="openActionsId{{ instance.pk }} = !openActionsId{{ instance.pk }}">more_horiz</span>
 
         <nav class="absolute bg-white border flex flex-col leading-none py-1 right-0 rounded-md shadow-lg text-gray-500 text-sm z-50 w-48 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" x-show="openActionsId{{ instance.pk }}" @click.outside="openActionsId{{ instance.pk }} = false">
             {% for action in actions %}

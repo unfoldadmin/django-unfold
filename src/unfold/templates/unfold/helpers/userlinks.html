@@ -3,7 +3,7 @@
 <div class="flex items-center ml-auto">
     <div class="flex group items-center relative" x-data="{ openUserLinks: false }">
         <div  @click="openUserLinks = !openUserLinks">
-            {% include 'unfold/helpers/avatar.html' with initials=request.user.get_initials|default:'<i class="material-icons text-gray-400">person</i>' image=request.user.get_photo %}
+            {% include 'unfold/helpers/avatar.html' with initials=request.user.get_initials|default:'<i class="material-symbols-outlined text-gray-400">person</i>' image=request.user.get_photo %}
         </div>
 
         <nav class="absolute bg-white border flex flex-col leading-none py-1 right-0 rounded-md shadow-lg text-sm text-gray-500 top-10 w-48 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" x-show="openUserLinks" @click.outside="openUserLinks = false">
