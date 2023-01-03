@@ -464,7 +464,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
 class TabularInline(ModelAdminMixin, BaseTabularInline):
     formfield_overrides = FORMFIELD_OVERRIDES_INLINE
+    readonly_preprocess_fields = {}
 
 
 class StackedInline(ModelAdminMixin, BaseStackedInline):
     formfield_overrides = FORMFIELD_OVERRIDES_INLINE
+    readonly_preprocess_fields = {}
