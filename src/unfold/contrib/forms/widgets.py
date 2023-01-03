@@ -1,5 +1,23 @@
 from django.forms import Widget
 
+from unfold.widgets import PROSE_CLASSES
+
+WYSIWYG_CLASSES = [
+    *PROSE_CLASSES,
+    "border",
+    "border-gray-200",
+    "border-t-0",
+    "max-w-none",
+    "p-4",
+    "rounded-b-md",
+    "rounded-t-none",
+    "text-gray-500",
+    "w-full",
+    "focus:outline-none",
+    "dark:border-gray-700",
+    "dark:text-gray-400",
+]
+
 
 class WysiwygWidget(Widget):
     template_name = "unfold/forms/wysiwyg.html"
@@ -9,4 +27,13 @@ class WysiwygWidget(Widget):
         js = (
             "unfold/forms/js/trix.js",
             "unfold/forms/js/trix.config.js",
+        )
+
+    def __init__(self, attrs=None):
+        super().__init__(attrs)
+
+        self.attrs.update(
+            {
+                "class": " ".join(WYSIWYG_CLASSES),
+            }
         )
