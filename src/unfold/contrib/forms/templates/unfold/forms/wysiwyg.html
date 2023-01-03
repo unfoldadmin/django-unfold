@@ -3,7 +3,5 @@
 <input type="hidden" name="{{ widget.name }}" id="wysiwyg-{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value }}"{% endif %}>
 
 <div class="max-w-4xl relative">
-    <trix-editor input="wysiwyg-{{ widget.name }}" class="border border-gray-200 border-t-0 max-w-none p-4 prose prose-sm prose-blockquote:not-italic prose-headings:font-medium prose-a:text-primary-600 prose-headings:text-gray-700 prose-strong:text-gray-700 rounded-b-md rounded-t-none text-gray-500 w-full focus:outline-none dark:border-gray-700 dark:prose-blockquote:border-gray-700 dark:prose-blockquote:text-gray-200 dark:prose-headings:text-gray-200 dark:prose-strong:text-gray-200 dark:text-gray-400">
-
-    </trix-editor>
+    <trix-editor input="wysiwyg-{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %}></trix-editor>
 </div>

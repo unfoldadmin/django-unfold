@@ -82,6 +82,22 @@ TEXTAREA_EXPANDABLE_CLASSES = [
 
 SELECT_CLASSES = [*BASE_INPUT_CLASSES, "pr-8", "max-w-2xl", "appearance-none"]
 
+PROSE_CLASSES = [
+    "font-normal",
+    "prose-sm",
+    "prose-blockquote:not-italic",
+    "prose-headings:font-medium",
+    "prose-a:text-primary-600",
+    "prose-a:underline",
+    "prose-headings:font-medium",
+    "prose-headings:text-gray-700",
+    "prose-strong:text-gray-700",
+    "dark:prose-blockquote:border-gray-700",
+    "dark:prose-blockquote:text-gray-200",
+    "dark:prose-headings:text-gray-200",
+    "dark:prose-strong:text-gray-200",
+]
+
 
 class UnfoldAdminTextInputWidget(AdminTextInputWidget):
     def __init__(self, attrs=None):
