@@ -84,11 +84,8 @@
                 {% endif %}
 
 
-                {% if errors %}
-                    {% include "unfold/helpers/messages/errornote.html" with errors=errors %}
-
-                    {{ adminform.form.non_field_errors }}
-                {% endif %}
+                {% include "unfold/helpers/messages/errornote.html" with errors=errors %}
+                {% include "unfold/helpers/messages/error.html" with errors=adminform.form.non_field_errors %}
 
                 {% block field_sets %}
                     {% for fieldset in adminform %}

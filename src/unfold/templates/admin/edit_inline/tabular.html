@@ -49,7 +49,7 @@
                                 {% if inline_admin_form.form.non_field_errors %}
                                     <tr class="row-form-errors">
                                         <td colspan="{{ inline_admin_form|cell_count }}">
-                                            {{ inline_admin_form.form.non_field_errors }}
+                                            {% include "unfold/helpers/messages/inline_error.html" with errors=inline_admin_form.form.non_field_errors %}
                                         </td>
                                     </tr>
                                 {% endif %}

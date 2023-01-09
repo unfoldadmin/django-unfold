@@ -48,9 +48,7 @@
                         {% endif %}
                     </h3>
 
-                    {% if inline_admin_form.form.non_field_errors %}
-                        {{ inline_admin_form.form.non_field_errors }}
-                    {% endif %}
+                    {% include "unfold/helpers/messages/inline_error.html" with errors=inline_admin_form.form.non_field_errors additional_mb=True %}
 
                     {% for fieldset in inline_admin_form %}
                         <div class="px-3 -mb-5">
