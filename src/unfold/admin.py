@@ -6,14 +6,22 @@ from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
+from django.contrib.admin.utils import lookup_field
 from django.contrib.postgres.fields import ArrayField, IntegerRangeField
 from django.contrib.postgres.search import SearchVectorField
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import BLANK_CHOICE_DASH
+from django.db.models import (
+    BLANK_CHOICE_DASH,
+    ForeignObjectRel,
+    ManyToManyRel,
+    OneToOneField,
+)
 from django.forms.utils import flatatt
 from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest
 from django.shortcuts import redirect
+from django.template.defaultfilters import linebreaksbr
 from django.template.loader import render_to_string
 from django.urls import path, reverse
 from django.utils.html import conditional_escape, format_html
@@ -21,6 +29,8 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
+
+from unfold.utils import display_for_field
 
 from .exceptions import UnfoldException
 from .forms import ActionForm
@@ -137,8 +147,54 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         )
 
     def contents(self):
-        contents = super().contents()
+        contents = self._get_contents()
 
+        self._preprocess_field(contents)
+
+        return contents
+
+    def _get_contents(self):
+        from django.contrib.admin.templatetags.admin_list import _boolean_icon
+
+        field, obj, model_admin = (
+            self.field["field"],
+            self.form.instance,
+            self.model_admin,
+        )
+        try:
+            f, attr, value = lookup_field(field, obj, model_admin)
+        except (AttributeError, ValueError, ObjectDoesNotExist):
+            result_repr = self.empty_value_display
+        else:
+            if field in self.form.fields:
+                widget = self.form[field].field.widget
+                # This isn't elegant but suffices for contrib.auth's
+                # ReadOnlyPasswordHashWidget.
+                if getattr(widget, "read_only", False):
+                    return widget.render(field, value)
+            if f is None:
+                if getattr(attr, "boolean", False):
+                    result_repr = _boolean_icon(value)
+                else:
+                    if hasattr(value, "__html__"):
+                        result_repr = value
+                    else:
+                        result_repr = linebreaksbr(value)
+            else:
+                if isinstance(f.remote_field, ManyToManyRel) and value is not None:
+                    result_repr = ", ".join(map(str, value.all()))
+                elif (
+                    isinstance(f.remote_field, (ForeignObjectRel, OneToOneField))
+                    and value is not None
+                ):
+                    result_repr = self.get_admin_url(f.remote_field, value)
+                else:
+                    result_repr = display_for_field(value, f, self.empty_value_display)
+                    return conditional_escape(result_repr)
+                result_repr = linebreaksbr(result_repr)
+        return conditional_escape(result_repr)
+
+    def _preprocess_field(self, contents):
         if self.field["field"] in self.model_admin.readonly_preprocess_fields:
             func = self.model_admin.readonly_preprocess_fields[self.field["field"]]
 
