@@ -29,7 +29,6 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
-
 from unfold.utils import display_for_field
 
 from .exceptions import UnfoldException
@@ -487,10 +486,10 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def _get_instance_method(self, method_name):
         try:
             method = getattr(self, method_name)
-        except AttributeError:
+        except AttributeError as e:
             raise UnfoldException(
                 f"Method {method_name} specified does not exist on current object"
-            )
+            ) from e
 
         if not callable(method):
             raise UnfoldException(f"{method_name} is not callable")
