@@ -2,11 +2,11 @@
 
 <div class="flex items-center ml-auto">
     <div class="flex group items-center relative" x-data="{ openUserLinks: false }">
-        <div  @click="openUserLinks = !openUserLinks">
+        <div @click="openUserLinks = !openUserLinks">
             {% include 'unfold/helpers/avatar.html' with initials=request.user.get_initials|default:'<i class="material-symbols-outlined text-gray-400">person</i>' image=request.user.get_photo %}
         </div>
 
-        <nav class="absolute bg-white border flex flex-col leading-none overflow-hidden py-1 right-0 rounded shadow-lg text-sm text-gray-500 top-10 w-52 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" x-show="openUserLinks" @click.outside="openUserLinks = false">
+        <nav class="absolute bg-white border flex flex-col leading-none overflow-hidden py-1 right-0 rounded shadow-lg text-sm text-gray-500 top-10 w-52 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" x-cloak x-show="openUserLinks" @click.outside="openUserLinks = false">
             <div class="border-b border-gray-100 flex flex-row flex-shrink-0 items-start justify-start mb-1 pb-1 dark:border-gray-700">
                 <span class="block mx-1 px-3 py-2 truncate">
                     {% firstof user.get_short_name user.get_username %}
