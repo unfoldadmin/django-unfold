@@ -1,0 +1,25 @@
+{% extends "unfold/layouts/skeleton.html" %}
+
+{% load i18n %}
+
+{% block base %}
+    <div class="flex min-h-screen">
+        <div class="flex flex-grow items-center justify-center mx-auto px-4">
+            <div class="w-full sm:w-96">
+                <h1 class="font-semibold mb-4 text-xl">
+                    <span class="block leading-relaxed text-gray-700 dark:text-gray-200">
+                        {% trans "You have been successfully logged out from the administration" %}
+                    </span>
+                </h1>
+
+                <p class="mb-10 text-gray-500 dark:text-gray-400">
+                    {% translate "Thanks for spending some quality time with the web site today." %}
+                </p>
+
+                <a href="{% url "admin:index" %}" class="bg-primary-600 block border border-transparent font-semibold py-2 rounded-md text-sm text-center text-white w-full">
+                    {% translate "Log in again" %}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
