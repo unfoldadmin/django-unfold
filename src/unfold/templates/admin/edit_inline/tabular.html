@@ -47,9 +47,9 @@
                         <tbody>
                             {% for inline_admin_form in inline_admin_formset %}
                                 {% if inline_admin_form.form.non_field_errors %}
-                                    <tr class="row-form-errors">
+                                    <tr class="row-form-errors group inline-tabular">
                                         <td colspan="{{ inline_admin_form|cell_count }}">
-                                            {{ inline_admin_form.form.non_field_errors }}
+                                            {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
                                         </td>
                                     </tr>
                                 {% endif %}
