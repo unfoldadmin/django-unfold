@@ -29,15 +29,22 @@ classifiers = [
 [tool.black]
 target-version = ["py38", "py39"]
 
-[tool.isort]
-profile = "black"
-
-[[tool.mypy.overrides]]
-module = "tests.*"
-allow_untyped_defs = true
-
-[tool.pycln]
-all = true
+[tool.ruff]
+fix = true
+line-length = 88
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B905",  # zip() without strict=True
+    "C901",  # too complex
+]
 
 [tool.poetry.dependencies]
 python = ">=3.8"

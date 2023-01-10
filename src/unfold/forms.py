@@ -1,5 +1,7 @@
 from django import forms
-from django.contrib.admin.forms import AdminAuthenticationForm
+from django.contrib.admin.forms import (
+    AdminAuthenticationForm,
+)
 from django.contrib.admin.forms import (
     AdminPasswordChangeForm as BaseAdminOwnPasswordChangeForm,
 )
