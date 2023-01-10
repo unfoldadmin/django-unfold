@@ -133,13 +133,13 @@
                                         {% endfor %}
 
                                         {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                            <td class="
-                                                delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} align-middle text-left font-normal px-3 text-sm text-red-600
-                                                border-b flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-sm lg:table-cell lg:underline lg:w-px dark:border-gray-800
-                                                "
-                                                data-label="{% trans "Remove" %}">
+                                            <td class="delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left font-normal px-3 text-sm text-red-600 border-b flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:underline lg:w-px dark:border-gray-800" data-label="{% trans "Remove" %}">
                                                 {% if inline_admin_form.original %}
-                                                    {{ inline_admin_form.deletion_field.field }}
+                                                    <div class="flex flex-row lg:mt-3">
+                                                        <div class="ml-auto">
+                                                            {{ inline_admin_form.deletion_field.field }}
+                                                        </div>
+                                                    </div>
                                                 {% endif %}
                                             </td>
                                         {% endif %}

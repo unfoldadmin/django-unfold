@@ -273,8 +273,12 @@ h3 .delete label {
   @apply text-gray-500;
 }
 
-h3 .inline-deletelink {
-  @apply leading-none text-red-600 text-sm underline;
+.inline-deletelink {
+  @apply block leading-none text-red-600 text-sm underline dark:text-red-500;
+}
+
+td .inline-deletelink {
+  @apply block lg:mt-2.5;
 }
 
 h3 span:nth-child(3) {
