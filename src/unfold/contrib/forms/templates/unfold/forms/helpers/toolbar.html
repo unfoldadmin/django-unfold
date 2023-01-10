@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <template id="trix-toolbar">
-    <div class="bg-gray-50 flex flex-row border px-3 py-2 relative rounded-t-md shadow-sm w-full dark:bg-white/[.02] dark:border-gray-700">
+    <div class="bg-gray-50 flex flex-row border group-[.errors]:border-t-red-600 group-[.errors]:border-x-red-600 px-3 py-2 relative rounded-t-md shadow-sm w-full dark:bg-white/[.02] dark:border-gray-700 dark:group-[.errors]:border-t-red-500 dark:group-[.errors]:border-x-red-500">
         <div data-trix-button-group="text-tools" class="bg-white border border-md flex flex-row mr-4 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
             {% spaceless %}
                 <button type="button" data-trix-attribute="p" data-trix-key="p" title="{% trans "Paragraph" %}" tabindex="-1" class="border-r cursor-pointer flex items-center h-8 justify-center transition-colors w-8 hover:text-primary-600 dark:border-gray-700">

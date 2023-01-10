@@ -7,6 +7,7 @@ WYSIWYG_CLASSES = [
     "border",
     "border-gray-200",
     "border-t-0",
+    "group-[.errors]:border-red-600",
     "max-w-none",
     "p-4",
     "rounded-b-md",
@@ -16,6 +17,7 @@ WYSIWYG_CLASSES = [
     "focus:outline-none",
     "dark:border-gray-700",
     "dark:text-gray-400",
+    "dark:group-[.errors]:border-red-500",
 ]
 
 
