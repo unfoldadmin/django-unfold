@@ -91,6 +91,8 @@ PROSE_CLASSES = [
     "prose-a:underline",
     "prose-headings:font-medium",
     "prose-headings:text-gray-700",
+    "prose-ol:list-decimal",
+    "prose-ul:list-disc",
     "prose-strong:text-gray-700",
     "dark:prose-blockquote:border-gray-700",
     "dark:prose-blockquote:text-gray-200",
