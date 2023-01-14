@@ -9,41 +9,41 @@
                 {% if not is_hidden %}
                     {% if can_add_related or can_change_related or can_delete_related or can_view_related%}
                         {% if can_change_related %}
-                            <a class="related-widget-wrapper-link change-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-300 text-sm transition-colors w-9.5 hover:text-primary-600 dark:border-gray-700 dark:text-gray-500"
+                            <a class="related-widget-wrapper-link change-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-400 text-sm transition-colors w-9.5 hover:text-primary-600 dark:border-gray-700 dark:text-gray-500 dark:hover:text-primary-600"
                                id="change_id_{{ name }}"
                                data-popup="yes"
                                data-href-template="{{ change_related_template_url }}?{{ url_params }}"
                                title="{% blocktranslate %}Change selected {{ model }}{% endblocktranslate %}">
-                                <span class="material-symbols-outlined text-base">edit</span>
+                                <span class="material-symbols-outlined text-sm">edit</span>
                             </a>
                         {% endif %}
 
                         {% if can_add_related %}
-                            <a class="related-widget-wrapper-link add-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-300 text-sm transition-colors w-9.5 hover:text-primary-600 dark:border-gray-700 dark:text-gray-500"
+                            <a class="related-widget-wrapper-link add-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-400 text-sm transition-colors w-9.5 hover:text-primary-600 dark:border-gray-700 dark:text-gray-500 dark:hover:text-primary-600"
                                data-popup="yes"
                                id="add_id_{{ name }}"
                                 href="{{ add_related_url }}?{{ url_params }}"
                                 title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
-                                <span class="material-symbols-outlined text-base">add</span>
+                                <span class="material-symbols-outlined text-sm">add</span>
                             </a>
                         {% endif %}
 
                         {% if can_view_related %}
-                            <a class="related-widget-wrapper-link view-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-300 text-sm transition-colors w-9.5 hover:text-primary-600 dark:border-gray-700 dark:text-gray-500"
+                            <a class="related-widget-wrapper-link view-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-400 text-sm transition-colors w-9.5 hover:text-primary-600 dark:border-gray-700 dark:text-gray-500 dark:hover:text-primary-600"
                                id="view_id_{{ name }}"
                                data-href-template="{{ change_related_template_url }}?{{ view_related_url_params }}"
                                title="{% blocktranslate %}View selected {{ model }}{% endblocktranslate %}">
-                                <span class="material-symbols-outlined text-base">visibility</span>
+                                <span class="material-symbols-outlined text-sm">visibility</span>
                             </a>
                         {% endif %}
 
                         {% if can_delete_related %}
-                            <a class="related-widget-wrapper-link delete-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-300 text-sm transition-colors w-9.5 hover:text-primary-600 dark:border-gray-700 dark:text-gray-500"
+                            <a class="related-widget-wrapper-link delete-related block border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm transition-colors w-9.5 dark:border-gray-700 dark:text-red-500"
                                id="delete_id_{{ name }}"
                                 data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
                                 data-popup="yes"
                                 title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
-                                <span class="material-symbols-outlined text-base">delete</span>
+                                <span class="material-symbols-outlined text-sm">delete</span>
                             </a>
                         {% endif %}
                     {% endif %}

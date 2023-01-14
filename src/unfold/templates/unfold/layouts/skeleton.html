@@ -11,7 +11,7 @@
 {% capture as nav_global_side silent %}{% block nav-global-side %}{% endblock %}{% endcapture %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}">
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" x-data="{ theme: $persist({'value': 'auto'}).as('theme') }" x-bind:class="theme.value && theme.value" x-cloak>
 
 <head>
     <title>{% block title %}{% endblock %}</title>
@@ -27,6 +27,7 @@
     <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
 
     <script src="{% static 'unfold/js/simplebar.js' %}"></script>
+    <script src="{% static 'unfold/js/alpine.persist.js' %}" defer></script>
     <script src="{% static 'unfold/js/alpine.js' %}" defer></script>
     <script src="{% static 'unfold/js/htmx.js' %}"></script>
     <script src="{% static 'unfold/js/app.js' %}"></script>
