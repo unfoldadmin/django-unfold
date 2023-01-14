@@ -2,10 +2,12 @@
 
 {% block object-tools-items %}
     {% if has_add_permission %}
-        <li>
-            {% url cl.opts|admin_urlname:'add' as add_url %}
+        <li class="flex flex-row items-center">
+            {% url cl.opts|admin_urlname:"add" as add_url %}
 
-            <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 block flex items-center h-10 justify-center -my-1 rounded-full w-10" title="{% blocktranslate with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktranslate %}">
+            <span class="block bg-gray-200 h-5 mr-4 w-px dark:bg-gray-700"></span>
+
+            <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 block flex items-center h-9 justify-center -my-1 rounded-full w-9" title="{% blocktranslate with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktranslate %}">
                 <span class="material-symbols-outlined text-white">add</span>
             </a>
         </li>
