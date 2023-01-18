@@ -16,7 +16,7 @@
         <div class="border mb-6 overflow-hidden rounded-md shadow-sm text-gray-700 w-full dark:border-gray-800">
             {% for inline_admin_form in inline_admin_formset %}
                 <div class="inline-related group inline-stacked {% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
-                    <h3 class="border-b {% if not forloop.first %}border-t{% endif %} flex font-medium items-center mb-3 px-3 py-2 text-gray-400 text-sm dark:border-gray-800">
+                    <h3 class="border-b {% if not forloop.first %}border-t{% endif %} border-gray-200 flex font-medium items-center mb-3 px-3 py-2 text-gray-400 text-sm dark:border-gray-800">
                         <span class="mr-2">
                             {{ inline_admin_formset.opts.verbose_name|capfirst }}:
                         </span>

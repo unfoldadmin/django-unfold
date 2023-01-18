@@ -37,7 +37,7 @@
             {% blocktranslate %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}
         </p>
 
-        <div class="border-t p-4 dark:border-gray-800">
+        <div class="border-t border-gray-200 p-4 dark:border-gray-800">
             <ul class="leading-relaxed text-gray-500 text-sm dark:border-gray-800 dark:text-gray-400">
                 {% for obj in perms_lacking %}
                     <li>{{ obj }}</li>
@@ -45,12 +45,12 @@
             </ul>
         </div>
     {% elif protected %}
-        <div class="border rounded-md shadow-sm dark:border-gray-800">
+        <div class="border border-gray-200 rounded-md shadow-sm dark:border-gray-800">
             <p class="font-medium p-4 text-sm">
                 {% blocktranslate %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktranslate %}
             </p>
 
-            <div class="border-t p-4 dark:border-gray-800">
+            <div class="border-t border-gray-200 p-4 dark:border-gray-800">
                 <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-400">
                     {% for obj in protected %}
                         <li>{{ obj }}</li>
@@ -59,14 +59,14 @@
             </div>
         </div>
     {% else %}
-        <div class="border rounded-md shadow-sm dark:border-gray-800">
+        <div class="border border-gray-200 rounded-md shadow-sm dark:border-gray-800">
             <p class="font-medium p-4 text-sm">
                 {% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktranslate %}
             </p>
 
             {% include "admin/includes/object_delete_summary.html" %}
 
-            <div class="border-t p-4 dark:border-gray-800">
+            <div class="border-t border-gray-200 p-4 dark:border-gray-800">
                 <h2 class="font-medium mb-2 text-sm">
                     {% translate "Objects" %}
                 </h2>
@@ -78,7 +78,7 @@
                 {% endfor %}
             </div>
 
-            <form method="post" class="border-t px-4 py-3 dark:border-gray-800">
+            <form method="post" class="border-t border-gray-200 px-4 py-3 dark:border-gray-800">
                 {% csrf_token %}
 
                 <div class="flex items-center">

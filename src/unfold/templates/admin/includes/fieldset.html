@@ -11,7 +11,7 @@
         </div>
     {% endif %}
 
-    <div class="aligned border mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+    <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
         {% for line in fieldset %}
             <div class="block {% if line.fields|length_is:'1' and line.errors %} group errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
                 {% for field in line %}

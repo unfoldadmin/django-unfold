@@ -258,7 +258,7 @@ table tr.selected {
 }
 
 [data-inline-type="stacked"] .add-row {
-  @apply border-t overflow-hidden dark:border-gray-800;
+  @apply border-t border-gray-200 overflow-hidden dark:border-gray-800;
 }
 
 .add-row td {

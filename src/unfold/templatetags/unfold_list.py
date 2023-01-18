@@ -53,6 +53,7 @@ def items_for_result(cl, result, form):
             "align-middle",
             "flex",
             "border-t",
+            "border-gray-200",
             "font-normal",
             "px-3",
             "py-2",
@@ -68,7 +69,6 @@ def items_for_result(cl, result, form):
             "lg:py-3",
             "lg:table-cell",
             "dark:border-gray-800",
-            "dark:text-gray-400",
         ]
 
         try:
@@ -95,11 +95,12 @@ def items_for_result(cl, result, form):
                         "before:content-[attr(data-label)]",
                         "before:mr-auto",
                         "before:text-gray-500",
-                        "dark:before:text-gray-400",
                         "lg:before:hidden",
                         "lg:border-t",
+                        "lg:border-gray-200",
                         "lg:table-cell",
-                        "dark:border-gray-800",
+                        "dark:before:text-gray-400",
+                        "dark:lg:border-gray-800",
                     ]
                 boolean = getattr(attr, "boolean", False)
                 label = getattr(attr, "label", False)
