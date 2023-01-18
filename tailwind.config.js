@@ -3,6 +3,7 @@ module.exports = {
     "./src/**/*.{html,py,js}",
   ],
   media: false,
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -53,7 +54,6 @@ module.exports = {
       textColor: ["hover"]
     }
   },
-  darkMode: "class",
   plugins: [
       require('@tailwindcss/typography'),
   ]
