@@ -1,0 +1,9 @@
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li class="mb-3 px-3 py-3 rounded-md text-sm last:mb-8 {% if message.tags == 'success' %}bg-green-100 text-green-600 dark:bg-green-500/20 dark:border-green-500/10{% elif message.tags == 'warning' %}bg-amber-100 text-amber-600 dark:bg-amber-600/20 dark:border-amber-600/10 {% elif message.tags == 'error' %} bg-red-100 text-red-600 dark:bg--500/20 dark:border-red-500/10{% else %}bg-gray-100 text-gray-700{% endif %}">
+                {{ message|capfirst }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

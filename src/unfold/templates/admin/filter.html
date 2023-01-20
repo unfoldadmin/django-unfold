@@ -6,20 +6,20 @@
     </h3>
 
     {% if spec|class_name == "BooleanFieldListFilter" %}
-        <ul class="border-l-4 flex pl-4 py-2 text-gray-500 text-sm dark:border-gray-700">
+        <ul class="border-l-4 border-gray-200 flex pl-4 py-2 text-gray-500 text-sm dark:border-gray-700">
             {% for choice in choices %}
-                <li class="{% if choice.selected %}font-medium text-primary-500 underline{% else %}dark:text-gray-400 dark:hover:text-gray-200{% endif %} pr-4">
-                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="transition-all">
+                <li class="{% if choice.selected %}font-medium text-primary-600 underline{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200{% endif %} pr-4">
+                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
                         {{ choice.display }}
                     </a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <ul class="border-l-4 flex flex-col pl-4 py-4 text-gray-500 text-sm dark:border-gray-700">
+        <ul class="border-l-4 border-gray-200 flex flex-col pl-4 py-4 text-gray-500 text-sm dark:border-gray-700">
             {% for choice in choices %}
-                <li class="mb-4 transition-colors hover:text-gray-700 last:mb-0 {% if choice.selected %}font-medium text-primary-500 underline {% else %}dark:text-gray-400 dark:hover:text-gray-200{% endif %}">
-                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="transition-all">
+                <li class="mb-4 last:mb-0 {% if choice.selected %}font-medium text-primary-600 underline {% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200{% endif %}">
+                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
                         {{ choice.display }}
                     </a>
                 </li>

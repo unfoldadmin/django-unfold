@@ -19,7 +19,7 @@
             {% endblock %}
 
             {% block actions-submit %}
-                <button type="submit" class="bg-white border flex items-center h-9.5 ml-1 px-2 rounded shadow-sm text-gray-400 w-9.5 hover:text-primary-600 focus:outline-none dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500 dark:hover:text-primary-600" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+                <button type="submit" class="bg-white border flex items-center h-9.5 ml-1 px-2 rounded shadow-sm text-gray-400 w-9.5 hover:text-gray-700 focus:outline-none dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
                     <span class="material-symbols-outlined md-18">chevron_right</span>
                 </button>
             {% endblock %}
