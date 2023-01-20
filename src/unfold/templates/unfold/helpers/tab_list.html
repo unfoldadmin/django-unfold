@@ -5,7 +5,7 @@
                 <ul class="border rounded-md flex flex-col w-full md:flex-row md:border-b-0 md:border-t-0 md:border-l-0 md:border-r-0 dark:border-gray-800">
                     {% for item in tab_list %}
                         <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-gray-800">
-                            <a href="{{ item.link }}" class="block px-3 py-2 transition-colors{% if item.link|stringformat:"s" in request.path %} border-b md:border-primary-600 dark:md:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600{% else %} hover:text-gray-700 dark:hover:text-gray-200{% endif %} md:py-4 md:px-0 dark:border-gray-800">
+                            <a href="{{ item.link }}" class="block px-3 py-2 {% if item.link|stringformat:"s" in request.path %} border-b md:border-primary-600 dark:md:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600{% else %} hover:text-gray-700 dark:hover:text-gray-200{% endif %} md:py-4 md:px-0 dark:border-gray-800">
                                 {{ item.title }}
                             </a>
                         </li>
@@ -17,7 +17,7 @@
                 <ul class="border flex mb-4 mt-2 rounded-md shadow-sm md:mb-2 md:mt-0 dark:border-gray-700 max-md:w-full">
                     {% for action in actions_list %}
                         <li class="border-r flex-grow text-center last:border-0 dark:border-gray-700">
-                            <a href="{{ action.path }}" class="block px-4 py-2 transition-colors whitespace-nowrap hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200">
+                            <a href="{{ action.path }}" class="block px-4 py-2 text-gray-500 whitespace-nowrap hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200">
                                 {{ action.title }}
                             </a>
                         </li>

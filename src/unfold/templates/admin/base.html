@@ -53,17 +53,11 @@
             {% endif %}
 
             {% block messages %}
-                {% if messages %}
-                    <div class="px-4 lg:px-12">
-                        <ul class="container mx-auto">
-                            {% for message in messages %}
-                                <li class="mb-3 px-3 py-3 rounded-md text-sm last:mb-8 {% if message.tags == 'success' %}bg-green-100 text-green-600 dark:bg-green-500/20 dark:border-green-500/10{% elif message.tags == 'warning' %}bg-orange-200 text-orange-500 dark:bg-orange-500/20 dark:border-orange-500/10 {% elif message.tags == 'error' %} bg-red-100 text-red-600 dark:bg-red-500/20 dark:border-red-500/10{% else %}bg-gray-100 text-gray-700{% endif %}">
-                                    {{ message|capfirst }}
-                                </li>
-                            {% endfor %}
-                        </ul>
+                <div class="px-4 lg:px-12">
+                    <div class="container mx-auto">
+                        {% include "unfold/helpers/messages.html" %}
                     </div>
-                {% endif %}
+                </div>
             {% endblock messages %}
 
             <div class="px-4 pb-12 lg:px-12">

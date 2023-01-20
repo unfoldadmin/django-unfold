@@ -18,7 +18,7 @@ from .widgets import BASE_INPUT_CLASSES, INPUT_CLASSES, SELECT_CLASSES
 class ActionForm(forms.Form):
     action = forms.ChoiceField(
         label="",
-        widget=forms.Select({"class": " ".join([*SELECT_CLASSES, "w-60"])}),
+        widget=forms.Select({"class": " ".join([*SELECT_CLASSES, "w-72"])}),
     )
 
     select_across = forms.BooleanField(
@@ -52,7 +52,7 @@ class UserChangeForm(BaseUserChangeForm):
         self.fields["password"].help_text = _(
             "Raw passwords are not stored, so there is no way to see this "
             "user’s password, but you can change the password using "
-            '<a href="{}" class="text-primary-500 underline whitespace-nowrap">this form</a>.'
+            '<a href="{}" class="text-primary-600 underline whitespace-nowrap">this form</a>.'
         )
 
         password = self.fields.get("password")
