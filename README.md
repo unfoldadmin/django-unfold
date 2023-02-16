@@ -251,7 +251,6 @@ Unfold introduces it's own `unfold.decorators.display` decorator. By default it 
 
 `@display(header=True)` displays in results list two information in one table cell. Good example is when we want to display customer information, first line is going to be customer's name and right below the name display corresponding email address. Method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`.
 
-
 ```python
 # models.py
 
