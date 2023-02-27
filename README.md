@@ -156,6 +156,7 @@ UNFOLD = {
     "SIDEBAR": {
         "show_search": False,  # Search in applications and models names
         "show_all_applications": False,  # Dropdown with all applications and models
+        "default_permission": "sample_app.permission_callback",  # Decide who can see sidebar items (default True)
         "navigation": [
             {
                 "title": _("Navigation"),
@@ -166,6 +167,7 @@ UNFOLD = {
                         "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
                         "link": reverse_lazy("admin:index"),
                         "badge": "sample_app.badge_callback",
+                        "permission": "sample_app.permission_callback",  # Override permission for a specific item
                     },
                     {
                         "title": _("Users"),
@@ -207,6 +209,10 @@ def dashboard_callback(request, context):
 
 def badge_callback(request):
     return 3
+
+
+def permission_callback(request):
+    return True
 ```
 
 ### Available unfold.admin.ModelAdmin options

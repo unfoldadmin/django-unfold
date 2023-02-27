@@ -182,7 +182,19 @@ class UnfoldAdminSite(AdminSite):
 
             return False
 
+        def _filter_by_permission(item):
+            if "permission" in item:
+                return import_string(item["permission"])(request)
+
+            if default_permission := get_config()["SIDEBAR"].get("default_permission"):
+                return import_string(default_permission)(request)
+
+            return True
+
         for group in navigation:
+            group["items"] = [
+                item for item in group["items"] if _filter_by_permission(item)
+            ]
             for item in group["items"]:
                 item["active"] = False
                 item["active"] = _get_is_active(item["link"])
@@ -210,7 +222,8 @@ class UnfoldAdminSite(AdminSite):
                     except ImportError:
                         pass
 
-            results.append(group)
+            if group["items"]:
+                results.append(group)
 
         return results
 
