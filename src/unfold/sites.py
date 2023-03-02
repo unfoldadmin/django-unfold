@@ -1,3 +1,4 @@
+from copy import deepcopy
 from http import HTTPStatus
 
 from django.contrib.admin import AdminSite
@@ -168,7 +169,7 @@ class UnfoldAdminSite(AdminSite):
         return PasswordChangeView.as_view(**defaults)(request)
 
     def get_sidebar_list(self, request):
-        navigation = get_config()["SIDEBAR"].get("navigation", [])
+        navigation = deepcopy(get_config()["SIDEBAR"].get("navigation", []))
         results = []
 
         def _get_is_active(link):
