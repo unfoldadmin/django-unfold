@@ -182,13 +182,20 @@ UNFOLD = {
         {
             "models": [
                 "app_label.model_name_in_lowercase",
+                "app_label.model_name2_in_lowercase",
             ],
             "items": [
                 {
                     "title": _("Your custom title"),
                     "link": reverse_lazy("admin:app_label_model_name_changelist"),
                 },
+                {
+                    "title": _("Tab 2 with permission"),
+                    "link": reverse_lazy("admin:app_label_model_name_2_changelist"),
+                    "permission": "sample_app.permission_callback",
+                },
             ],
+            "default_permission": "sample_app.permission_callback",
         },
     ],
 }

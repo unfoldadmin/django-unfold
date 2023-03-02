@@ -50,7 +50,7 @@ class UnfoldAdminSite(AdminSite):
                 "logo": self._get_value(get_config()["SIDEBAR"].get("logo"), request),
                 "colors": get_config()["COLORS"],
                 "icon": self._get_value(get_config()["SITE_ICON"], request),
-                "tab_list": get_config()["TABS"],
+                "tab_list": self.get_tab_list(request),
                 "styles": [
                     self._get_value(style, request) for style in get_config()["STYLES"]
                 ],
@@ -227,6 +227,27 @@ class UnfoldAdminSite(AdminSite):
                 results.append(group)
 
         return results
+
+    def get_tab_list(self, request):
+        def _filter_by_permission(item, default_permission=None):
+            if "permission" in item:
+                return import_string(item["permission"])(request)
+
+            if default_permission:
+                return import_string(default_permission)(request)
+
+            return True
+
+        def _filter_tab_items(tab_set):
+            default_permission = tab_set.get("default_permission")
+            tab_set['items'] = [
+                item for item in tab_set['items'] if _filter_by_permission(item, default_permission)
+            ]
+            return tab_set
+
+        return [
+            _filter_tab_items(tab_set) for tab_set in deepcopy(get_config()["TABS"])
+        ]
 
     def _get_value(self, instance, *args):
         if instance is None:
