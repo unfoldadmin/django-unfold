@@ -183,18 +183,18 @@ class UnfoldAdminSite(AdminSite):
 
             return False
 
-        def _filter_by_permission(item):
-            if "permission" in item:
-                return import_string(item["permission"])(request)
+        def _filter_by_visibility(item):
+            if "visibility_callback" in item:
+                return import_string(item["visibility_callback"])(request)
 
-            if default_permission := get_config()["SIDEBAR"].get("default_permission"):
-                return import_string(default_permission)(request)
+            if default_visibility_cb := get_config()["SIDEBAR"].get("default_visibility_callback"):
+                return import_string(default_visibility_cb)(request)
 
             return True
 
         for group in navigation:
             group["items"] = [
-                item for item in group["items"] if _filter_by_permission(item)
+                item for item in group["items"] if _filter_by_visibility(item)
             ]
             for item in group["items"]:
                 item["active"] = False
@@ -229,19 +229,19 @@ class UnfoldAdminSite(AdminSite):
         return results
 
     def get_tab_list(self, request):
-        def _filter_by_permission(item, default_permission=None):
-            if "permission" in item:
-                return import_string(item["permission"])(request)
+        def _filter_by_visibility(item, default_visibility_cb=None):
+            if "visibility_callback" in item:
+                return import_string(item["visibility_callback"])(request)
 
-            if default_permission:
-                return import_string(default_permission)(request)
+            if default_visibility_cb:
+                return import_string(default_visibility_cb)(request)
 
             return True
 
         def _filter_tab_items(tab_set):
-            default_permission = tab_set.get("default_permission")
+            default_visibility_cb = tab_set.get("default_visibility_callback")
             tab_set['items'] = [
-                item for item in tab_set['items'] if _filter_by_permission(item, default_permission)
+                item for item in tab_set['items'] if _filter_by_visibility(item, default_visibility_cb)
             ]
             return tab_set
 
