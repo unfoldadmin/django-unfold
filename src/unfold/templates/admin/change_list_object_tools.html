@@ -7,8 +7,8 @@
 
             <span class="block bg-gray-200 h-5 mr-4 w-px dark:bg-gray-700"></span>
 
-            <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 block flex items-center h-9 justify-center -my-1 rounded-full w-9" title="{% blocktranslate with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktranslate %}">
-                <span class="material-symbols-outlined text-white">add</span>
+            <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 block flex items-center h-9 justify-center -my-1 rounded-full w-9 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="{% blocktranslate with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktranslate %}">
+                <span class="material-symbols-outline">add</span>
             </a>
         </li>
     {% endif %}
