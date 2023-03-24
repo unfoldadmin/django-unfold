@@ -67,6 +67,7 @@ FORMFIELD_OVERRIDES = {
     models.EmailField: {"widget": UnfoldAdminEmailInputWidget},
     models.CharField: {"widget": UnfoldAdminTextInputWidget},
     models.URLField: {"widget": UnfoldAdminTextInputWidget},
+    models.GenericIPAddressField: {"widget": UnfoldAdminTextInputWidget},
     models.UUIDField: {"widget": UnfoldAdminUUIDInputWidget},
     models.TextField: {"widget": UnfoldAdminTextareaWidget},
     models.NullBooleanField: {"widget": UnfoldAdminNullBooleanSelectWidget},
