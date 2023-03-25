@@ -7,8 +7,6 @@ from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
 from django.contrib.admin.utils import lookup_field
-from django.contrib.postgres.fields import ArrayField, IntegerRangeField
-from django.contrib.postgres.search import SearchVectorField
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import (
@@ -55,6 +53,14 @@ from .widgets import (
     UnfoldAdminUUIDInputWidget,
 )
 
+try:
+    from django.contrib.postgres.fields import ArrayField, IntegerRangeField
+    from django.contrib.postgres.search import SearchVectorField
+
+    HAS_PSYCOPG = True
+except ImportError:
+    HAS_PSYCOPG = False
+
 checkbox = forms.CheckboxInput({"class": "action-select"}, lambda value: False)
 
 FORMFIELD_OVERRIDES = {
@@ -77,10 +83,16 @@ FORMFIELD_OVERRIDES = {
     models.FloatField: {"widget": UnfoldAdminDecimalFieldWidget},
     models.ImageField: {"widget": UnfoldAdminImageFieldWidget},
     models.JSONField: {"widget": UnfoldAdminTextareaWidget},
-    ArrayField: {"widget": UnfoldAdminTextareaWidget},
-    SearchVectorField: {"widget": UnfoldAdminTextareaWidget},
-    IntegerRangeField: {"widget": UnfoldAdminIntegerRangeWidget},
 }
+
+if HAS_PSYCOPG:
+    FORMFIELD_OVERRIDES.update(
+        {
+            ArrayField: {"widget": UnfoldAdminTextareaWidget},
+            SearchVectorField: {"widget": UnfoldAdminTextareaWidget},
+            IntegerRangeField: {"widget": UnfoldAdminIntegerRangeWidget},
+        }
+    )
 
 FORMFIELD_OVERRIDES_INLINE = copy.deepcopy(FORMFIELD_OVERRIDES)
 
