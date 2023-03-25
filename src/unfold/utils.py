@@ -5,6 +5,7 @@ import json
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils import formats, timezone
+from django.utils.hashable import make_hashable
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
@@ -79,10 +80,16 @@ def display_for_value(value, empty_value_display, boolean=False):
 
 def display_for_field(value, field, empty_value_display):
     if getattr(field, "flatchoices", None):
-        return dict(field.flatchoices).get(value, empty_value_display)
+        try:
+            return dict(field.flatchoices).get(value, empty_value_display)
+        except TypeError:
+            # Allow list-like choices.
+            flatchoices = make_hashable(field.flatchoices)
+            value = make_hashable(value)
+            return dict(flatchoices).get(value, empty_value_display)
     elif isinstance(field, models.BooleanField):
         return _boolean_icon(value)
-    elif value is None:
+    elif value is None or value == "":
         return empty_value_display
     elif isinstance(field, models.DateTimeField):
         return formats.localize(timezone.template_localtime(value))
