@@ -13,6 +13,7 @@ from .settings import get_config
 
 class UnfoldAdminSite(AdminSite):
     default_site = "unfold.admin.UnfoldAdminSite"
+    settings_name = "UNFOLD"
 
     def __init__(self, name="admin"):
         from .forms import AuthenticationForm
@@ -20,14 +21,14 @@ class UnfoldAdminSite(AdminSite):
         super().__init__(name)
 
         self.login_form = AuthenticationForm
-        if get_config()["SITE_TITLE"]:
-            self.site_title = get_config()["SITE_TITLE"]
+        if get_config(self.settings_name)["SITE_TITLE"]:
+            self.site_title = get_config(self.settings_name)["SITE_TITLE"]
 
-        if get_config()["SITE_HEADER"]:
-            self.site_header = get_config()["SITE_HEADER"]
+        if get_config(self.settings_name)["SITE_HEADER"]:
+            self.site_header = get_config(self.settings_name)["SITE_HEADER"]
 
-        if get_config()["SITE_URL"]:
-            self.site_url = get_config()["SITE_URL"]
+        if get_config(self.settings_name)["SITE_URL"]:
+            self.site_url = get_config(self.settings_name)["SITE_URL"]
 
     def get_urls(self):
         urlpatterns = [
@@ -46,21 +47,28 @@ class UnfoldAdminSite(AdminSite):
 
         context.update(
             {
-                "logo": self._get_value(get_config()["SIDEBAR"].get("logo"), request),
-                "colors": get_config()["COLORS"],
-                "icon": self._get_value(get_config()["SITE_ICON"], request),
-                "tab_list": get_config()["TABS"],
+                "logo": self._get_value(
+                    get_config(self.settings_name)["SIDEBAR"].get("logo"), request
+                ),
+                "colors": get_config(self.settings_name)["COLORS"],
+                "icon": self._get_value(
+                    get_config(self.settings_name)["SITE_ICON"], request
+                ),
+                "tab_list": get_config(self.settings_name)["TABS"],
                 "styles": [
-                    self._get_value(style, request) for style in get_config()["STYLES"]
+                    self._get_value(style, request)
+                    for style in get_config(self.settings_name)["STYLES"]
                 ],
                 "scripts": [
                     self._get_value(script, request)
-                    for script in get_config()["SCRIPTS"]
+                    for script in get_config(self.settings_name)["SCRIPTS"]
                 ],
-                "sidebar_show_all_applications": get_config()["SIDEBAR"].get(
-                    "show_all_applications"
+                "sidebar_show_all_applications": get_config(self.settings_name)[
+                    "SIDEBAR"
+                ].get("show_all_applications"),
+                "sidebar_show_search": get_config(self.settings_name)["SIDEBAR"].get(
+                    "show_search"
                 ),
-                "sidebar_show_search": get_config()["SIDEBAR"].get("show_search"),
                 "sidebar_navigation": self.get_sidebar_list(request)
                 if self.has_permission(request)
                 else [],
@@ -81,7 +89,7 @@ class UnfoldAdminSite(AdminSite):
             **(extra_context or {}),
         }
 
-        dashboard_callback = get_config()["DASHBOARD_CALLBACK"]
+        dashboard_callback = get_config(self.settings_name)["DASHBOARD_CALLBACK"]
 
         if isinstance(dashboard_callback, str):
             context = import_string(dashboard_callback)(request, context)
@@ -133,10 +141,12 @@ class UnfoldAdminSite(AdminSite):
 
     def login(self, request, extra_context=None):
         extra_context = {} if extra_context is None else extra_context
-        image = self._get_value(get_config()["LOGIN"].get("image"), request)
+        image = self._get_value(
+            get_config(self.settings_name)["LOGIN"].get("image"), request
+        )
 
         redirect_field_name = self._get_value(
-            get_config()["LOGIN"].get("redirect_after"), request
+            get_config(self.settings_name)["LOGIN"].get("redirect_after"), request
         )
 
         if image not in EMPTY_VALUES:
@@ -168,7 +178,7 @@ class UnfoldAdminSite(AdminSite):
         return PasswordChangeView.as_view(**defaults)(request)
 
     def get_sidebar_list(self, request):
-        navigation = get_config()["SIDEBAR"].get("navigation", [])
+        navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
         results = []
 
         def _get_is_active(link):
@@ -187,7 +197,7 @@ class UnfoldAdminSite(AdminSite):
                 item["active"] = False
                 item["active"] = _get_is_active(item["link"])
 
-                for tab in get_config()["TABS"]:
+                for tab in get_config(self.settings_name)["TABS"]:
                     has_primary_link = False
                     has_tab_link_active = False
 

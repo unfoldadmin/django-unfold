@@ -39,5 +39,8 @@ CONFIG_DEFAULTS = {
 
 
 @lru_cache
-def get_config():
-    return {**CONFIG_DEFAULTS, **getattr(settings, "UNFOLD", {})}
+def get_config(settings_name=None):
+    if settings_name is None:
+        settings_name = "UNFOLD"
+
+    return {**CONFIG_DEFAULTS, **getattr(settings, settings_name, {})}

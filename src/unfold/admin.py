@@ -107,6 +107,7 @@ class UnfoldAdminField(helpers.AdminField):
     def label_tag(self):
         classes = []
 
+        # TODO load config from current AdminSite (override Fieldline.__iter__ method)
         for lang, flag in get_config()["EXTENSIONS"]["modeltranslation"][
             "flags"
         ].items():
