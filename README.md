@@ -25,6 +25,10 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
 - [Decorators](#decorators)
   - [@display](#display)
 - [Actions](#actions)
+  - [Overview](#actions-overview)
+  - [Custom unfold @action decorator](#custom-unfold-action-decorator)
+  - [Action handler functions](#action-handler-functions)
+  - [Action examples](#action-examples)
 - [Filters](#filters)
 - [User Admin Form](#user-admin-form)
 - [Adding Custom Styles and Scripts](#adding-custom-styles-and-scripts)
@@ -353,8 +357,6 @@ For actions with intermediate steps, it is recommended to use handler function o
 view. This view can be extended from base Unfold view, to have unified experience.
 
 ### Action examples
-
-Action templates with docstrings:
 
 ```python
 # admin.py
