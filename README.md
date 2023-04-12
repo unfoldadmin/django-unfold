@@ -317,7 +317,7 @@ List actions overview:
 ![List actions](public/list_actions.jpg)
 
 Detail actions overview:
-![Detail actions](public/detail_actions.jpg)
+![detail_actions](public/detail_actions.jpg)
 
 Unfold also uses custom `@action` decorator, supporting 2 more parameters in comparison to base `@action` decorator:
 - `url_path`: Action path name
@@ -326,7 +326,9 @@ Unfold also uses custom `@action` decorator, supporting 2 more parameters in com
 ```python
 # admin.py
 
+from django.db.models import Model
 from django.utils.translation import gettext_lazy as _
+from django.http import HttpRequest
 from unfold.admin import ModelAdmin
 from unfold.decorators import action
 
@@ -338,27 +340,26 @@ class UserAdmin(ModelAdmin):
     actions_submit_line = ["submit_line_action"]
 
     @action(description=_("Submit"))
-    def submit_line_action(self, request, obj):
+    def submit_line_action(self, request: HttpRequest, obj: Model):
+        """
+        If instance is modified in any way, it also needs to be saved, since this handler is invoked
+        after instance is saved.
+        :param request:
+        :param obj: Model instance that was manipulated, with changes already persisted to database
+        :return: None, this handler should not return anything
+        """
         pass
 
     @action(description=_("Global"), url_path="global-action")
-    def changelist_global_action(self, request):
+    def changelist_global_action(self, request: HttpRequest):
         pass
 
     @action(description=_("Row"), url_path="row-action")
-    def changelist_row_action(self, request, object_id):
+    def changelist_row_action(self, request: HttpRequest, object_id: int):
         pass
 
     @action(description=_("Detail"), url_path="detail-action")
-    def change_detail_action(self, request, object_id):
-        pass
-
-    @action(
-        description=_("Detail"),
-        url_path="site-preview",
-        attrs={"id": "preview", "target": "_blank"},
-    )
-    def site_preview(self, request, object_id):
+    def change_detail_action(self, request: HttpRequest, object_id: int):
         pass
 ```
 
