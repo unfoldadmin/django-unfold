@@ -299,15 +299,27 @@ class UserAdmin(ModelAdmin):
 ```
 
 ## Actions
+ 
+It is highly recommended to read the base [Django actions documentation](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/actions/) before reading this section, since Unfold actions are derived from Django actions.
 
-Currently in Django admin it is possible to define one type of action for objects via **actions** attribute in ModelAdmin class. Action is then visible in the select dropdown. Theme introduces several other ways how to add different types of actions. Currently theme supports:
+Besides traditional actions selected from dropdown, Unfold supports several other types of actions. Following table
+gives overview of all available actions together with their recommended usage:
 
-- **Global** actions displayed at the top of results list
-- **Row** action displayed per row in results list
-- **Detail** action displayed when viewing object detail
-- **Submit line** action displayed near object detail submit button
+| Type of action | Appearance                               | Usage                                                                                      | Examples of usage                      |
+|----------------|------------------------------------------|--------------------------------------------------------------------------------------------|----------------------------------------|
+| Default        | List view - top of listing (in dropdown) | Actions, where you want to select specific subset of instances to perform this action upon | Bulk deleting, bulk activation         |
+| Global         | List view - top of listing (as buttons)  | General actions for model, without selecting specific instances                            | Import, export                         |
+| Row            | List view - in each row                  | Action for one specific instance, executable from listing                                  | Activation, sync with external service |
+| Detail         | Detail view - top of detail              | Action for one specific instance, executable from detail                                   | Activation, sync with external service |
+| Submit line    | Detail view - near submit button         | Action performed during form submit (instance save)                                        | Publishing article together with save  |
 
-Compared to Django action decorator, you can specify 2 more arguments:
+List actions overview:
+![List actions](public/list_actions.jpg)
+
+Detail actions overview:
+![Detail actions](public/detail_actions.jpg)
+
+Unfold also uses custom `@action` decorator, supporting 2 more parameters in comparison to base `@action` decorator:
 - `url_path`: Action path name
 - `attrs`: Dictionary of the additional attributes added to the `<a>` element.
 
