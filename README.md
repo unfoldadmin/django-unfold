@@ -340,7 +340,7 @@ For default actions, follow official Django admin documentation.
 #### For submit row action
 
 Submit row actions work a bit differently when compared to other custom Unfold actions.
-Each of this action first invokes form save (same as if you hit `Save` button in detail) and then lets you
+These actions first invoke form save (same as if you hit `Save` button) and then lets you
 perform additional logic on already saved instance.
 
 #### For global, row and detail action
@@ -355,6 +355,8 @@ the action was triggered from.
 
 For actions with intermediate steps, it is recommended to use handler function only to redirect to custom URL with custom
 view. This view can be extended from base Unfold view, to have unified experience.
+
+If that's confusing, there are examples for both these actions in next section.
 
 ### Action examples
 
@@ -373,6 +375,7 @@ from unfold.decorators import action
 
 class User(Model):
     pass
+
 
 @register(User)
 class UserAdmin(ModelAdmin):
@@ -401,7 +404,8 @@ class UserAdmin(ModelAdmin):
         :param request:
         :return: View, as described in section above
         """
-        # This is example of action redirecting to custom page, where the action will be handled (with intermediate steps)
+        # This is example of action redirecting to custom page, where the action will be handled 
+        # (with intermediate steps)
         return redirect(
           reverse_lazy("view-where-import-will-be-handled")
         )
@@ -424,7 +428,8 @@ class UserAdmin(ModelAdmin):
         :param object_id: ID of instance that this action was invoked for
         :return: View, as described in section above
         """
-        # This is example of action that handled whole logic inside handler function and redirects back to object detail
+        # This is example of action that handled whole logic inside handler 
+        # function and redirects back to object detail
         user = User.objects.get(pk=object_id)
         user.block()
         return redirect(
