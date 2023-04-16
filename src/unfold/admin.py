@@ -428,7 +428,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
     def get_list_display(self, request):
         if len(self.get_actions_row()) > 0:
-            return super().get_list_display(request) + ("actions_holder",)
+            return [*super().get_list_display(request), "actions_holder"]
         return super().get_list_display(request)
 
     def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
