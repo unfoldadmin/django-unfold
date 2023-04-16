@@ -54,6 +54,9 @@ class UnfoldAdminSite(AdminSite):
                 "icon": self._get_value(
                     get_config(self.settings_name)["SITE_ICON"], request
                 ),
+                "symbol": self._get_value(
+                    get_config(self.settings_name)["SITE_SYMBOL"], request
+                ),
                 "tab_list": get_config(self.settings_name)["TABS"],
                 "styles": [
                     self._get_value(style, request)
