@@ -1,8 +1,10 @@
 {% load i18n static %}
 
-<div class="flex-col flex-col-reverse items-center w-full">
+<div class="flex-col items-center w-full">
     <div class="flex flex-row related-widget-wrapper"{% if not model_has_limit_choices_to %} data-model-ref="{{ model }}"{% endif %}>
-        {{ rendered_widget }}
+        <div>
+            {{ rendered_widget }}
+        </div>
 
         {% block links %}
             {% spaceless %}
