@@ -119,6 +119,7 @@ UNFOLD = {
     "SITE_HEADER": None,
     "SITE_URL": "/",
     "SITE_ICON": lambda request: static("logo.svg"),
+    "SITE_SYMBOL": "speed",  # symbol from icon set
     "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
     "LOGIN": {
         "image": lambda r: static("sample/login-bg.jpg"),
