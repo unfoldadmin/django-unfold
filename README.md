@@ -25,9 +25,11 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
 - [Decorators](#decorators)
   - [@display](#display)
 - [Actions](#actions)
-  - [Overview](#actions-overview)
+  - [Actions overview](#actions-overview)
   - [Custom unfold @action decorator](#custom-unfold-action-decorator)
   - [Action handler functions](#action-handler-functions)
+    - [For submit row action](#for-submit-row-action)
+    - [For global, row and detail action](#for-global-row-and-detail-action)
   - [Action examples](#action-examples)
 - [Filters](#filters)
 - [User Admin Form](#user-admin-form)
@@ -319,12 +321,6 @@ gives overview of all available actions together with their recommended usage:
 | Detail         | Detail view - top of detail              | Action for one specific instance, executable from detail                                   | Activation, sync with external service |
 | Submit line    | Detail view - near submit button         | Action performed during form submit (instance save)                                        | Publishing article together with save  |
 
-List actions overview:
-![List actions](public/list_actions.jpg)
-
-Detail actions overview:
-![detail_actions](public/detail_actions.jpg)
-
 ### Custom unfold @action decorator
 
 Unfold also uses custom `@action` decorator, supporting 2 more parameters in comparison to base `@action` decorator:
@@ -346,11 +342,11 @@ perform additional logic on already saved instance.
 #### For global, row and detail action
 
 All these actions are based on custom URLs generated for each of them. Handler function for these views is
-basically function based view. 
+basically function based view.
 
 For actions without intermediate steps, you can write all the logic inside handler directly. Request and object ID
 are both passed to these action handler functions, so you are free to fetch the instance from database and perform any
-operations with it. In the end, it is recommended to return redirect back to either detail or listing, based on where 
+operations with it. In the end, it is recommended to return redirect back to either detail or listing, based on where
 the action was triggered from.
 
 For actions with intermediate steps, it is recommended to use handler function only to redirect to custom URL with custom
@@ -387,7 +383,7 @@ class UserAdmin(ModelAdmin):
     @action(description=_("Save & Activate"))
     def submit_line_action_activate(self, request: HttpRequest, obj: User):
         """
-        If instance is modified in any way, it also needs to be saved, 
+        If instance is modified in any way, it also needs to be saved,
         since this handler is invoked after instance is saved.
         :param request:
         :param obj: Model instance that was manipulated, with changes already saved to database
@@ -404,7 +400,7 @@ class UserAdmin(ModelAdmin):
         :param request:
         :return: View, as described in section above
         """
-        # This is example of action redirecting to custom page, where the action will be handled 
+        # This is example of action redirecting to custom page, where the action will be handled
         # (with intermediate steps)
         return redirect(
           reverse_lazy("view-where-import-will-be-handled")
@@ -428,7 +424,7 @@ class UserAdmin(ModelAdmin):
         :param object_id: ID of instance that this action was invoked for
         :return: View, as described in section above
         """
-        # This is example of action that handled whole logic inside handler 
+        # This is example of action that handled whole logic inside handler
         # function and redirects back to object detail
         user = User.objects.get(pk=object_id)
         user.block()
