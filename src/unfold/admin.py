@@ -1,6 +1,6 @@
 import copy
 from functools import update_wrapper
-from typing import List
+from typing import Callable, List
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -477,6 +477,11 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         return super().changelist_view(request, extra_context)
 
     def get_unfold_action(self, action: str) -> UnfoldAction:
+        """
+        Converts action name to UnfoldAction
+        :param action:
+        :return:
+        """
         method = self._get_instance_method(action)
 
         return UnfoldAction(
@@ -487,7 +492,14 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         )
 
     @staticmethod
-    def _get_action_url(func, name):
+    def _get_action_url(func: Callable, name: str) -> str:
+        """
+        Returns action URL if it was specified in @action decorator.
+        If it was not, name of the action is returned.
+        :param func:
+        :param name:
+        :return:
+        """
         return getattr(func, "url_path", name)
 
     def save_model(self, request, obj, form, change):
@@ -499,7 +511,13 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
             action_attrs["method"](request, obj)
 
-    def _get_instance_method(self, method_name):
+    def _get_instance_method(self, method_name: str) -> Callable:
+        """
+        Searches for method on self instance based on method_name and returns it if it exists.
+        If it does not exist or is not callable, it raises UnfoldException
+        :param method_name: Name of the method to search for
+        :return: method from self instance
+        """
         try:
             method = getattr(self, method_name)
         except AttributeError as e:
