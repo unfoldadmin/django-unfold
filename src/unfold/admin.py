@@ -1,5 +1,6 @@
 import copy
 from functools import update_wrapper
+from typing import List
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -29,6 +30,7 @@ from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from unfold.utils import display_for_field
 
+from .dto import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config
@@ -326,16 +328,16 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
 
-    def get_actions_list(self):
+    def get_actions_list(self) -> List[UnfoldAction]:
         return [self.get_unfold_action(action) for action in self.actions_list or []]
 
-    def get_actions_detail(self):
+    def get_actions_detail(self) -> List[UnfoldAction]:
         return [self.get_unfold_action(action) for action in self.actions_detail or []]
 
-    def get_actions_row(self):
+    def get_actions_row(self) -> List[UnfoldAction]:
         return [self.get_unfold_action(action) for action in self.actions_row or []]
 
-    def get_actions_submit_line(self):
+    def get_actions_submit_line(self) -> List[UnfoldAction]:
         return [
             self.get_unfold_action(action) for action in self.actions_submit_line or []
         ]
@@ -366,27 +368,27 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         actions_list_urls = [
             path(
-                action["path"],
-                wrap(action["method"]),
-                name=action["action_name"],
+                action.path,
+                wrap(action.method),
+                name=action.action_name,
             )
             for action in self.get_actions_list()
         ]
 
         action_detail_urls = [
             path(
-                f"<path:object_id>/{action['path']}/",
-                wrap(action["method"]),
-                name=action["action_name"],
+                f"<path:object_id>/{action.path}/",
+                wrap(action.method),
+                name=action.action_name,
             )
             for action in self.get_actions_detail()
         ]
 
         action_row_urls = [
             path(
-                f"<path:object_id>/{action['path']}",
-                wrap(action["method"]),
-                name=action["action_name"],
+                f"<path:object_id>/{action.path}",
+                wrap(action.method),
+                name=action.action_name,
             )
             for action in self.get_actions_row()
         ]
@@ -412,9 +414,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def actions_holder(self, instance):
         actions = [
             {
-                "title": action["description"],
-                "attrs": action["method"].attrs,
-                "path": reverse(f"admin:{action['action_name']}", args=(instance.pk,)),
+                "title": action.description,
+                "attrs": action.method.attrs,
+                "path": reverse(f"admin:{action.action_name}", args=(instance.pk,)),
             }
             for action in self.get_actions_row()
         ]
@@ -440,10 +442,10 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             for action in self.get_actions_detail():
                 actions.append(
                     {
-                        "title": action["description"],
-                        "attrs": action["method"].attrs,
+                        "title": action.description,
+                        "attrs": action.method.attrs,
                         "path": reverse(
-                            f"admin:{action['action_name']}", args=(object_id,)
+                            f"admin:{action.action_name}", args=(object_id,)
                         ),
                     }
                 )
@@ -463,9 +465,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         actions = [
             {
-                "title": action["description"],
-                "attrs": action["method"].attrs,
-                "path": reverse(f"admin:{action['action_name']}"),
+                "title": action.description,
+                "attrs": action.method.attrs,
+                "path": reverse(f"admin:{action.action_name}"),
             }
             for action in self.get_actions_list()
         ]
@@ -474,15 +476,15 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         return super().changelist_view(request, extra_context)
 
-    def get_unfold_action(self, action):
+    def get_unfold_action(self, action: str) -> UnfoldAction:
         method = self._get_instance_method(action)
 
-        return {
-            "action_name": f"{self.model._meta.app_label}_{self.model._meta.model_name}_{action}",
-            "method": method,
-            "description": self._get_action_description(method, action),
-            "path": self._get_action_url(method, action),
-        }
+        return UnfoldAction(
+            action_name=f"{self.model._meta.app_label}_{self.model._meta.model_name}_{action}",
+            method=method,
+            description=self._get_action_description(method, action),
+            path=self._get_action_url(method, action),
+        )
 
     @staticmethod
     def _get_action_url(func, name):
