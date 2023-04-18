@@ -338,30 +338,30 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return [self.get_unfold_action(action) for action in self.actions_list or []]
 
-    def get_actions_detail(self)-> List[UnfoldAction]:
+    def get_actions_detail(self) -> List[UnfoldAction]:
         # TODO filter actions
         return self._get_base_actions_detail()
 
-    def _get_base_actions_detail(self)-> List[UnfoldAction]:
+    def _get_base_actions_detail(self) -> List[UnfoldAction]:
         """
         Returns all available detail actions, prior to any filtering
         """
         return [self.get_unfold_action(action) for action in self.actions_detail or []]
 
-    def get_actions_row(self)-> List[UnfoldAction]:
+    def get_actions_row(self) -> List[UnfoldAction]:
         # TODO filter actions
         return self._get_base_actions_row()
 
-    def _get_base_actions_row(self)-> List[UnfoldAction]:
+    def _get_base_actions_row(self) -> List[UnfoldAction]:
         """
         Returns all available row actions, prior to any filtering
         """
         return [self.get_unfold_action(action) for action in self.actions_row or []]
 
-    def get_actions_submit_line(self)-> List[UnfoldAction]:
+    def get_actions_submit_line(self) -> List[UnfoldAction]:
         return self._get_base_actions_submit_line()
 
-    def _get_base_actions_submit_line(self)-> List[UnfoldAction]:
+    def _get_base_actions_submit_line(self) -> List[UnfoldAction]:
         """
         Returns all available submit row actions, prior to any filtering
         """
