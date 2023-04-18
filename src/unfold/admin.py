@@ -30,6 +30,7 @@ from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from unfold.utils import display_for_field
 
+from .checks import UnfoldModelAdminChecks
 from .dto import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
@@ -306,6 +307,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     add_fieldsets = ()
     list_filter_submit = False
     readonly_preprocess_fields = {}
+    checks_class = UnfoldModelAdminChecks
 
     @property
     def media(self):
