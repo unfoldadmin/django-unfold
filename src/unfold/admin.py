@@ -534,11 +534,11 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        for action_attrs in self.get_actions_submit_line():
-            if action_attrs["action_name"] not in request.POST:
+        for action in self.get_actions_submit_line():
+            if action.action_name not in request.POST:
                 continue
 
-            action_attrs["method"](request, obj)
+            action.method(request, obj)
 
     def _get_instance_method(self, method_name: str) -> Callable:
         """
