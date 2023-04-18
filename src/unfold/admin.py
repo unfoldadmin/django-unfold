@@ -330,9 +330,27 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
 
-    def get_actions_list(self) -> List[UnfoldAction]:
-        # TODO filter actions
-        return self._get_base_actions_list()
+    def _filter_unfold_actions_by_permissions(
+        self, request: HttpRequest, actions: List[UnfoldAction]
+    ) -> List[UnfoldAction]:
+        """Filter out any Unfold actions that the user doesn't have access to."""
+        filtered_actions = []
+        for action in actions:
+            if not hasattr(action.method, "allowed_permissions"):
+                filtered_actions.append(action)
+                continue
+            permission_checks = (
+                getattr(self, "has_%s_permission" % permission)
+                for permission in action.method.allowed_permissions
+            )
+            if any(has_permission(request) for has_permission in permission_checks):
+                filtered_actions.append(action)
+        return filtered_actions
+
+    def get_actions_list(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_list()
+        )
 
     def _get_base_actions_list(self) -> List[UnfoldAction]:
         """
@@ -340,9 +358,10 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return [self.get_unfold_action(action) for action in self.actions_list or []]
 
-    def get_actions_detail(self) -> List[UnfoldAction]:
-        # TODO filter actions
-        return self._get_base_actions_detail()
+    def get_actions_detail(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_detail()
+        )
 
     def _get_base_actions_detail(self) -> List[UnfoldAction]:
         """
@@ -350,9 +369,10 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return [self.get_unfold_action(action) for action in self.actions_detail or []]
 
-    def get_actions_row(self) -> List[UnfoldAction]:
-        # TODO filter actions
-        return self._get_base_actions_row()
+    def get_actions_row(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_row()
+        )
 
     def _get_base_actions_row(self) -> List[UnfoldAction]:
         """
@@ -360,8 +380,10 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return [self.get_unfold_action(action) for action in self.actions_row or []]
 
-    def get_actions_submit_line(self) -> List[UnfoldAction]:
-        return self._get_base_actions_submit_line()
+    def get_actions_submit_line(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_submit_line()
+        )
 
     def _get_base_actions_submit_line(self) -> List[UnfoldAction]:
         """
@@ -401,7 +423,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                 wrap(action.method),
                 name=action.action_name,
             )
-            for action in self.get_actions_list()
+            for action in self._get_base_actions_list()
         ]
 
         action_detail_urls = [
@@ -410,7 +432,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                 wrap(action.method),
                 name=action.action_name,
             )
-            for action in self.get_actions_detail()
+            for action in self._get_base_actions_detail()
         ]
 
         action_row_urls = [
@@ -419,7 +441,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                 wrap(action.method),
                 name=action.action_name,
             )
-            for action in self.get_actions_row()
+            for action in self._get_base_actions_row()
         ]
 
         return (
@@ -440,14 +462,15 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         )
 
     @display(description="")
-    def actions_holder(self, instance):
+    def actions_holder(self, instance, *args, **kwargs):
         actions = [
             {
                 "title": action.description,
                 "attrs": action.method.attrs,
                 "path": reverse(f"admin:{action.action_name}", args=(instance.pk,)),
             }
-            for action in self.get_actions_row()
+            # TODO filter these actions
+            for action in self._get_base_actions_row()
         ]
         return render_to_string(
             "unfold/helpers/actions_row.html",
@@ -458,7 +481,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         )
 
     def get_list_display(self, request):
-        if len(self.get_actions_row()) > 0:
+        if len(self.get_actions_row(request)) > 0:
             return [*super().get_list_display(request), "actions_holder"]
         return super().get_list_display(request)
 
@@ -468,7 +491,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         actions = []
         if object_id:
-            for action in self.get_actions_detail():
+            for action in self.get_actions_detail(request):
                 actions.append(
                     {
                         "title": action.description,
@@ -481,7 +504,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         extra_context.update(
             {
-                "actions_submit_line": self.get_actions_submit_line(),
+                "actions_submit_line": self.get_actions_submit_line(request),
                 "actions_detail": actions,
             }
         )
@@ -498,7 +521,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                 "attrs": action.method.attrs,
                 "path": reverse(f"admin:{action.action_name}"),
             }
-            for action in self.get_actions_list()
+            for action in self.get_actions_list(request)
         ]
 
         extra_context.update({"actions_list": actions})
@@ -534,7 +557,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        for action in self.get_actions_submit_line():
+        for action in self.get_actions_submit_line(request):
             if action.action_name not in request.POST:
                 continue
 
