@@ -204,16 +204,26 @@ def items_for_result(cl, result, form):
         yield format_html("<td>{}</td>", form[cl.model._meta.pk.name])
 
 
+class UnfoldResultList(ResultList):
+    def __init__(self, instance_pk, form, *items):
+        self.instance_pk = instance_pk
+        super().__init__(form, *items)
+
+
 def results(cl):
     if cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms):
-            yield ResultList(form, items_for_result(cl, res, form))
+            pk = cl.lookup_opts.pk.attname
+            pk_value = getattr(res, pk)
+            yield UnfoldResultList(pk_value, form, items_for_result(cl, res, form))
     else:
         for res in cl.result_list:
-            yield ResultList(None, items_for_result(cl, res, None))
+            pk = cl.lookup_opts.pk.attname
+            pk_value = getattr(res, pk)
+            yield UnfoldResultList(pk_value, None, items_for_result(cl, res, None))
 
 
-def result_list(cl):
+def result_list(context, cl):
     """
     Display the headers and data list together.
     """
@@ -228,6 +238,7 @@ def result_list(cl):
         "result_headers": headers,
         "num_sorted_fields": num_sorted_fields,
         "results": list(results(cl)),
+        "actions_row": context["actions_row"],
     }
 
 
@@ -238,7 +249,6 @@ def result_list_tag(parser, token):
         token,
         func=result_list,
         template_name="change_list_results.html",
-        takes_context=False,
     )
 
 

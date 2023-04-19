@@ -21,7 +21,6 @@ from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
-from django.template.loader import render_to_string
 from django.urls import path, reverse
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
@@ -461,30 +460,6 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             name=custom_url[1],
         )
 
-    @display(description="")
-    def actions_holder(self, instance, *args, **kwargs):
-        actions = [
-            {
-                "title": action.description,
-                "attrs": action.method.attrs,
-                "path": reverse(f"admin:{action.action_name}", args=(instance.pk,)),
-            }
-            # TODO filter these actions
-            for action in self._get_base_actions_row()
-        ]
-        return render_to_string(
-            "unfold/helpers/actions_row.html",
-            context={
-                "instance": instance,
-                "actions": actions,
-            },
-        )
-
-    def get_list_display(self, request):
-        if len(self.get_actions_row(request)) > 0:
-            return [*super().get_list_display(request), "actions_holder"]
-        return super().get_list_display(request)
-
     def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
         if extra_context is None:
             extra_context = {}
@@ -524,7 +499,16 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             for action in self.get_actions_list(request)
         ]
 
-        extra_context.update({"actions_list": actions})
+        actions_row = [
+            {
+                "title": action.description,
+                "attrs": action.method.attrs,
+                "raw_path": f"admin:{action.action_name}",
+            }
+            for action in self.get_actions_row(request)
+        ]
+
+        extra_context.update({"actions_list": actions, "actions_row": actions_row})
 
         return super().changelist_view(request, extra_context)
 
