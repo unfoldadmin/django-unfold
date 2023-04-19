@@ -30,7 +30,7 @@ from django.utils.translation import gettext_lazy as _
 from unfold.utils import display_for_field
 
 from .checks import UnfoldModelAdminChecks
-from .dto import UnfoldAction
+from .dataclasses import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config

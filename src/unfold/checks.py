@@ -3,7 +3,7 @@ from typing import List
 from django.contrib.admin.checks import ModelAdminChecks
 from django.core import checks
 
-from .dto import UnfoldAction
+from .dataclasses import UnfoldAction
 
 
 class UnfoldModelAdminChecks(ModelAdminChecks):
