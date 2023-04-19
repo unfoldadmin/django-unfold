@@ -11,10 +11,9 @@ def action(
                     getattr(model_admin, f"has_{permission}_permission")
                     for permission in permissions
                 )
-                # TODO add obj parameter into has_permission method call
-                # permissions methods have following syntax:
-                # has_<some>_permission(self, request, obj=None):
-                # but obj is not examined by default in django admin and it would also require additional
+                # TODO add obj parameter into has_permission method call.
+                # Permissions methods have following syntax: has_<some>_permission(self, request, obj=None):
+                # But obj is not examined by default in django admin and it would also require additional
                 # fetch from database, therefore it is not supported yet
                 if not any(
                     has_permission(request) for has_permission in permission_checks
