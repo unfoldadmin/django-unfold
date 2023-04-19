@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-from typing import Callable
+
+from .typing import ActionFunction
 
 
 @dataclass(frozen=True)
 class UnfoldAction:
     action_name: str
-    method: Callable
+    method: ActionFunction
     description: str
     path: str
