@@ -14,7 +14,7 @@
     <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
         {% for line in fieldset %}
             <div class="block {% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
-{#                `not line.fields|length_is:1` means current line has multiple elements #}
+{#                TODO `not line.fields|length_is:1` means current line has multiple elements #}
                 {% if not line.fields|length_is:1 %}<div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 items-start">{% endif %}
                 {% for field in line %}
                     <div class="flex {% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}" {% if not line.fields|length_is:1 %} class="fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="checkbox-row"{% endif %}>
