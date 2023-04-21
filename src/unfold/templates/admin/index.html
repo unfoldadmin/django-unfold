@@ -15,13 +15,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="flex -mx-4">
-        <div class="px-4 w-8/12">
+    <div class="flex flex-row -mx-4">
+        <div class="flex-grow px-4">
             {% include "unfold/helpers/app_list_default.html" %}
         </div>
 
-        <div class="px-4 w-4/12">
-            {% include "unfold/helpers/history.html" %}
-        </div>
+        {% include "unfold/helpers/history.html" %}
     </div>
 {% endblock %}
