@@ -2,7 +2,7 @@
 
 <div class="flex-col items-center w-full">
     <div class="flex flex-row related-widget-wrapper"{% if not model_has_limit_choices_to %} data-model-ref="{{ model }}"{% endif %}>
-        <div>
+        <div class="flex-grow max-w-2xl">
             {{ rendered_widget }}
         </div>
 
