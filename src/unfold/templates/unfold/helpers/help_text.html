@@ -1,3 +1,5 @@
-<div class="leading-relaxed mt-2 text-gray-500 text-xs dark:text-gray-400">
-    {{ help_text|safe }}
-</div>
+{% if help_text %}
+    <div class="leading-relaxed mt-2 text-gray-500 text-xs dark:text-gray-400">
+        {{ help_text|safe }}
+    </div>
+{% endif %}

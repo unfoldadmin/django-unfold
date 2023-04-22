@@ -20,7 +20,9 @@ class UnfoldAdminSite(AdminSite):
 
         super().__init__(name)
 
-        self.login_form = AuthenticationForm
+        if self.login_form is None:
+            self.login_form = AuthenticationForm
+
         if get_config(self.settings_name)["SITE_TITLE"]:
             self.site_title = get_config(self.settings_name)["SITE_TITLE"]
 

@@ -2,17 +2,13 @@
 
 {% get_admin_log 10 as admin_log for_user user %}
 
-<div id="content-related">
-    <div class="module" id="recent-actions-module">
-        <h2 class="mb-4 font-semibold text-gray-700 text-sm dark:text-gray-200">
-            {% translate 'Recent actions' %}
-        </h2>
+{% if admin_log %}
+    <div id="content-related" class="px-4 w-4/12">
+        <div class="module" id="recent-actions-module">
+            <h2 class="mb-4 font-semibold text-gray-700 text-sm dark:text-gray-200">
+                {% translate 'Recent actions' %}
+            </h2>
 
-        {% if not admin_log %}
-            <p class="dark:text-gray-400">
-                {% translate 'None available' %}
-            </p>
-        {% else %}
             <ul class="actionlist bg-gray-50 rounded-md p-3 dark:bg-gray-800">
                 {% for entry in admin_log %}
                     <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} bg-white mb-4 p-3 rounded-md shadow-sm last:mb-0 dark:bg-gray-900">
@@ -40,6 +36,6 @@
                     </li>
                 {% endfor %}
             </ul>
-            {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
