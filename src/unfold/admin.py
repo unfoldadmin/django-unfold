@@ -125,11 +125,6 @@ class UnfoldAdminField(helpers.AdminField):
         if self.field.field.required:
             classes.append("required")
 
-        # TODO This was causing issues, for second label in row this was appended and margins
-        # were not taken into account
-        # if not self.is_first:
-        #     classes.append("inline")
-
         attrs = {"class": " ".join(classes)} if classes else {}
         required = mark_safe(' <span class="text-red-600">*</span>')
 
