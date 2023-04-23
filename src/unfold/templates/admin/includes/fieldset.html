@@ -13,13 +13,9 @@
 
     <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
         {% for line in fieldset %}
-{#            LINE is one individual str or tuple inside `fields`, in case `fields = ("email", ("first", "last"))`, line will be first ("email",) and then ("first", last")#}
-            <div class="block {% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
-{#                TODO `not line.fields|length_is:1` means current line has multiple elements #}
-                {% if not line.fields|length_is:1 %}<div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 items-start">{% endif %}
+            <div class="block {% if not line.fields|length_is:'1' %}flex flex-row flex-wrap gap-x-8 {% else %}block {% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
                 {% for field in line %}
-{#            FIELD is one element from line, in previous scenario where line was `("first", last")`, field will be "first" and then "last" #}
-                    <div class="flex {% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}" {% if not line.fields|length_is:1 %} class="fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="checkbox-row"{% endif %}>
+                    <div class="flex group {% if field.errors %}errors {% endif %}{% if not line.fields|length_is:1 %}lg:max-w-xs w-full {% endif %}{% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}">
                         {% if field.is_checkbox %}
                             <div class="flex flex-row items-center">
                                 {{ field.field }}{{ field.label_tag }}
@@ -30,7 +26,7 @@
                             </div>
 
                             {% if field.is_readonly %}
-                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
+                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                                     {% if field.contents %}
                                         {{ field.contents }}
                                     {% else %}
@@ -55,7 +51,6 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-                {% if not line.fields|length_is:1 %}</div>{% endif %}
             </div>
         {% endfor %}
     </div>
