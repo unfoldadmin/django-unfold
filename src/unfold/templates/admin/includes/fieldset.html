@@ -13,13 +13,9 @@
 
     <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
         {% for line in fieldset %}
-            <div class="block {% if line.fields|length_is:'1' and line.errors %} group errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+            <div class="block {% if not line.fields|length_is:'1' %}flex flex-row flex-wrap gap-x-8 {% else %}block {% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
                 {% for field in line %}
-                    <div class="flex {% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}" {% if not line.fields|length_is:'1' %} class="fieldBox{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% if not field.is_readonly and field.errors %} errors{% endif %}{% if field.field.is_hidden %} hidden{% endif %}"{% elif field.is_checkbox %} class="checkbox-row"{% endif %}>
-                        {% if not line.fields|length_is:'1' and not field.is_readonly %}
-                            {{ field.errors }}
-                        {% endif %}
-
+                    <div class="flex group {% if field.errors %}errors {% endif %}{% if not line.fields|length_is:1 %}lg:max-w-xs w-full {% endif %}{% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}">
                         {% if field.is_checkbox %}
                             <div class="flex flex-row items-center">
                                 {{ field.field }}{{ field.label_tag }}
@@ -30,7 +26,7 @@
                             </div>
 
                             {% if field.is_readonly %}
-                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
+                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                                     {% if field.contents %}
                                         {{ field.contents }}
                                     {% else %}
@@ -42,9 +38,9 @@
                             {% endif %}
                         {% endif %}
 
-                        {% if line.errors and line.fields|length_is:'1' %}
+                        {% if field.errors %}
                             <span class="mt-1 text-red-600 text-sm dark:text-red-500">
-                                {{ line.errors }}
+                                {{ field.errors }}
                             </span>
                         {% endif %}
 
