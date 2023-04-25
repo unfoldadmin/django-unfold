@@ -174,28 +174,32 @@ UNFOLD = {
                         "link": reverse_lazy("admin:index"),
                         "badge": "sample_app.badge_callback",
                     },
+                    # Example of showing custom link in navigation
                     {
                         "title": _("Users"),
                         "icon": "people",
                         "link": reverse_lazy("admin:users_user_changelist"),
                     },
+                    # Example of showing models automatically, possibly in tabs
+                    {
+                        "title": _("Companies"),
+                        "icon": "company",
+                        "models": [
+                          # If there are more than 1 model, they are shown as TABS
+                          {
+                            "model": "users.company",
+                            "title": _("Companies"), # optional, defaults to models verbose_name_plural,
+                            "link": reverse_lazy("admin:users_company_changelist") # optional, defaults to changelist
+                          },
+                          {
+                            "model": "users.address"
+                          }
+                        ]
+                    },
                 ],
             },
         ],
     },
-    "TABS": [
-        {
-            "models": [
-                "app_label.model_name_in_lowercase",
-            ],
-            "items": [
-                {
-                    "title": _("Your custom title"),
-                    "link": reverse_lazy("admin:app_label_model_name_changelist"),
-                },
-            ],
-        },
-    ],
 }
 
 

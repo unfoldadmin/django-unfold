@@ -6,12 +6,26 @@ register = Library()
 
 @register.simple_tag(name="tab_list", takes_context=True)
 def tab_list(context, opts):
-    tabs = None
+    def _find_tabs():
+        """
+        Iterate through sidebar navigation items and finds which
+        tabs should be displayed on current listing screen.
+        :return:
+        """
+        for group in context.get("sidebar_navigation", []):
+            for item in group.get("items", []):
+                # If item is not active, we definitely don't want to display its tabs
+                if not item.get("active"):
+                    continue
+                for model in item.get("models", []):
+                    # If we have found current model is specified within models in some
+                    # navigation item and this navigation item has more than one model,
+                    # we show them as tabs inside
+                    if model.get("model") == str(opts):
+                        if len(item.get("models")) > 1:
+                            return item.get("models")
 
-    for tab in context.get("tab_list"):
-        if str(opts) in tab["models"]:
-            tabs = tab["items"]
-            break
+    tabs = _find_tabs()
 
     return render_to_string(
         "unfold/helpers/tab_list.html",
