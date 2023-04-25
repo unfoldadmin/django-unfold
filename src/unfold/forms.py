@@ -50,7 +50,7 @@ class UserCreationForm(BaseUserCreationForm):
         self,
         request: Optional[HttpRequest] = None,
         *args: Any,
-        **kwargs: Dict[str, Any],
+        **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
@@ -63,7 +63,7 @@ class UserChangeForm(BaseUserChangeForm):
         self,
         request: Optional[HttpRequest] = None,
         *args: Any,
-        **kwargs: Dict[str, Any],
+        **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
@@ -83,7 +83,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
         self,
         request: Optional[HttpRequest] = None,
         *args: Any,
-        **kwargs: Dict[str, Any],
+        **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
@@ -92,7 +92,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
 
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
-    def __init__(self, *args: Any, **kwargs: Dict[str, Any]) -> None:
+    def __init__(self, *args: Any, **kwargs) -> None:
         super().__init__(kwargs.pop("user"), *args, **kwargs)
 
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)

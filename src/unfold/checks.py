@@ -9,7 +9,7 @@ from .dataclasses import UnfoldAction
 
 class UnfoldModelAdminChecks(ModelAdminChecks):
     def check(
-        self, admin_obj: BaseModelAdmin[Any], **kwargs: Dict[str, Any]
+        self, admin_obj: BaseModelAdmin[Any], **kwargs
     ) -> List[checks.Error]:
         return [
             *super().check(admin_obj, **kwargs),

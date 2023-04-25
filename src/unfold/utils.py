@@ -1,7 +1,7 @@
 import datetime
 import decimal
 import json
-from typing import Any, List, Tuple, Union
+from typing import Any, Iterable
 
 from django.db import models
 from django.template.loader import render_to_string
@@ -17,7 +17,7 @@ def _boolean_icon(field_val: Any) -> str:
     return render_to_string("unfold/helpers/boolean.html", {"value": field_val})
 
 
-def display_for_header(value: Union[List, Tuple], empty_value_display: str) -> SafeText:
+def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
     if not isinstance(value, list) and not isinstance(value, tuple):
         raise UnfoldException("Display header requires list or tuple")
 

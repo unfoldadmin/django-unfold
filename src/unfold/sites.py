@@ -240,7 +240,7 @@ class UnfoldAdminSite(AdminSite):
 
     def _get_value(
         self, instance: Union[str, Callable, None], *args: Any
-    ) -> Union[None, str]:
+    ) -> Optional[str]:
         if instance is None:
             return None
 

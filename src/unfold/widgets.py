@@ -128,7 +128,7 @@ class UnfoldAdminIntegerRangeWidget(MultiWidget):
 
     def decompress(
         self, value: Union[str, None]
-    ) -> Tuple[Union[Callable, None], Union[Callable, None]]:
+    ) -> Tuple[Optional[Callable], ...]:
         if value:
             return value.lower, value.upper
         return None, None
@@ -245,7 +245,7 @@ class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
         MultiWidget.__init__(self, widgets, attrs)
 
     def get_context(
-        self, name: str, value: Any, attrs: Union[None, Dict[str, Any]]
+        self, name: str, value: Any, attrs: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         context = super().get_context(name, value, attrs)
 

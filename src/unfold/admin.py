@@ -22,6 +22,7 @@ from django.forms.fields import TypedChoiceField
 from django.forms.models import (
     ModelChoiceField,
     ModelMultipleChoiceField,
+    Model,
 )
 from django.forms import Form
 from django.forms.utils import flatatt
@@ -30,6 +31,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
 from django.template.response import TemplateResponse
+from django.views import View
 from django.urls import URLPattern, path, reverse
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
@@ -63,6 +65,8 @@ from .widgets import (
     UnfoldAdminTextInputWidget,
     UnfoldAdminUUIDInputWidget,
 )
+
+from .typing import FieldsetsType
 
 try:
     from django.contrib.postgres.fields import ArrayField, IntegerRangeField
@@ -245,7 +249,7 @@ class ModelAdminMixin:
         super().__init__(model, admin_site)
 
     def formfield_for_choice_field(
-        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs: Dict[str, Any]
+        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs
     ) -> TypedChoiceField:
         # Overrides widget for CharFields which have choices attribute
         if "widget" not in kwargs:
@@ -257,7 +261,7 @@ class ModelAdminMixin:
         return super().formfield_for_choice_field(db_field, request, **kwargs)
 
     def formfield_for_foreignkey(
-        self, db_field: ForeignKey[Any], request: HttpRequest, **kwargs: Dict[str, Any]
+        self, db_field: ForeignKey[Any], request: HttpRequest, **kwargs
     ) -> Optional[ModelChoiceField]:
         # Overrides widgets for all related fields
         if "widget" not in kwargs:
@@ -280,7 +284,7 @@ class ModelAdminMixin:
         self,
         db_field: ManyToManyField[Any, Any],
         request: HttpRequest,
-        **kwargs: Dict[str, Any],
+        **kwargs,
     ) -> ModelMultipleChoiceField:
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
@@ -348,7 +352,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
     def get_fieldsets(
         self, request: HttpRequest, obj=None
-    ) -> List[Tuple[Union[str, None], Dict[str, Any]]]:
+    ) -> FieldsetsType:
         if not obj and self.add_fieldsets:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
@@ -416,7 +420,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             self.get_unfold_action(action) for action in self.actions_submit_line or []
         ]
 
-    def get_custom_urls(self) -> Tuple:
+    def get_custom_urls(self) -> Tuple[Tuple[str, str, View], ...]:
         """
         Method to get custom views for ModelAdmin with their urls
 
@@ -571,7 +575,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         return getattr(func, "url_path", name)
 
     def save_model(
-        self, request: HttpRequest, obj: Any, form: Form, change: Any
+        self, request: HttpRequest, obj: Model, form: Form, change: Any
     ) -> None:
         super().save_model(request, obj, form, change)
 
@@ -607,11 +611,11 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         return super().get_action_choices(request, default_choices)
 
     @display(description=mark_safe('<input type="checkbox" id="action-toggle">'))
-    def action_checkbox(self, obj: Any):
+    def action_checkbox(self, obj: Model):
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
     def response_change(
-        self, request: HttpRequest, obj: Any
+        self, request: HttpRequest, obj: Model
     ) -> Union[HttpResponse, HttpResponseRedirect]:
         res = super().response_change(request, obj)
         if "next" in request.GET:
@@ -619,7 +623,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         return res
 
     def response_add(
-        self, request: HttpRequest, obj: Any, post_url_continue: Optional[str] = None
+        self, request: HttpRequest, obj: Model, post_url_continue: Optional[str] = None
     ) -> Union[HttpResponse, HttpResponseRedirect]:
         res = super().response_add(request, obj, post_url_continue)
         if "next" in request.GET:

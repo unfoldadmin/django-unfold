@@ -2,7 +2,7 @@ from typing import Any, Callable, Dict, Iterable, Optional, Union
 
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Combinable
+from django.db.models import Combinable, Model
 from django.db.models.expressions import BaseExpression
 from django.http import HttpRequest, HttpResponse
 
@@ -22,7 +22,7 @@ def action(
             model_admin: BaseModelAdmin[Any],
             request: HttpRequest,
             *args: Any,
-            **kwargs: Dict[str, Any],
+            **kwargs,
         ) -> Optional[HttpResponse]:
             if permissions:
                 permission_checks = (
@@ -55,7 +55,7 @@ def action(
 
 
 def display(
-    function: Optional[Callable] = None,
+    function: Optional[Callable[[Model], Any]] = None,
     *,
     boolean: Optional[bool] = None,
     ordering: Optional[Union[str, Combinable, BaseExpression]] = None,
@@ -64,7 +64,7 @@ def display(
     label: Optional[Union[bool, str, Dict[str, str]]] = None,
     header: Optional[bool] = None,
 ) -> Callable:
-    def decorator(func: Callable) -> Callable:
+    def decorator(func: Callable[[Model], Any]) -> Callable:
         if boolean is not None and empty_value is not None:
             raise ValueError(
                 "The boolean and empty_value arguments to the @display "

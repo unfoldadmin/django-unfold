@@ -10,7 +10,7 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
     Prepares views to be displayed in admin
     """
 
-    def get_context_data(self, **kwargs: Dict[str, Any]) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs) -> Dict[str, Any]:
         if "model_admin" not in self.kwargs:
             raise UnfoldException(
                 "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"
