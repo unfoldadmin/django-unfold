@@ -23,6 +23,7 @@ from django.forms.models import (
     ModelChoiceField,
     ModelMultipleChoiceField,
 )
+from django.forms import Form
 from django.forms.utils import flatatt
 from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
@@ -570,7 +571,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         return getattr(func, "url_path", name)
 
     def save_model(
-        self, request: HttpRequest, obj: Any, form: Any, change: Any
+        self, request: HttpRequest, obj: Any, form: Form, change: Any
     ) -> None:
         super().save_model(request, obj, form, change)
 
