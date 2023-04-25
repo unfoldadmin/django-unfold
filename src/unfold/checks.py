@@ -1,4 +1,4 @@
-from typing import Any, List, Dict
+from typing import Any, Dict, List
 
 from django.contrib.admin.checks import ModelAdminChecks
 from django.contrib.admin.options import BaseModelAdmin
@@ -8,7 +8,9 @@ from .dataclasses import UnfoldAction
 
 
 class UnfoldModelAdminChecks(ModelAdminChecks):
-    def check(self, admin_obj: BaseModelAdmin[Any], **kwargs: Dict[str, Any]) -> List[checks.Error]:
+    def check(
+        self, admin_obj: BaseModelAdmin[Any], **kwargs: Dict[str, Any]
+    ) -> List[checks.Error]:
         return [
             *super().check(admin_obj, **kwargs),
             *self._check_unfold_action_permission_methods(admin_obj),

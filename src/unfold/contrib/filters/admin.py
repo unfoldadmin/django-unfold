@@ -2,9 +2,9 @@ from typing import Any, Dict, List, Tuple, Type, Union
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
+from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
 from django.db.models import Max, Min, Model, QuerySet
-from django.contrib.admin.views.main import ChangeList
 from django.db.models.fields import (
     AutoField,
     DateField,
