@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.5.2"
+version = "0.5.3"
 description = "Clean & minimal Django admin theme based on Tailwind CSS"
 license = "MIT"
 readme = "README.md"
@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Operating System :: OS Independent",
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
