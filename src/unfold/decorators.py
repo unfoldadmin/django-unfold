@@ -1,11 +1,26 @@
+from typing import Any, Callable, Dict, Iterable, Optional, Union
+
 from django.core.exceptions import PermissionDenied
+from django.db.models import Combinable
+from django.db.models.expressions import BaseExpression
+from django.http import HttpRequest, HttpResponse
+from django.contrib.admin.options import BaseModelAdmin
+
+from .typing import ActionFunction
 
 
 def action(
-    function=None, *, permissions=None, description=None, url_path=None, attrs=None
-):
-    def decorator(func):
-        def inner(model_admin, request, *args, **kwargs):
+    function: Optional[Callable] = None,
+    *,
+    permissions: Optional[Iterable[str]] = None,
+    description: Optional[str] = None,
+    url_path: Optional[str] = None,
+    attrs=None,
+) -> ActionFunction:
+    def decorator(func: Callable) -> ActionFunction:
+        def inner(
+            model_admin: BaseModelAdmin[Any], request: HttpRequest, *args: Any, **kwargs: Dict[str, Any]
+        ) -> Optional[HttpResponse]:
             if permissions:
                 permission_checks = (
                     getattr(model_admin, f"has_{permission}_permission")
@@ -37,16 +52,16 @@ def action(
 
 
 def display(
-    function=None,
+    function: Optional[Callable] = None,
     *,
-    boolean=None,
-    ordering=None,
-    description=None,
-    empty_value=None,
-    label=None,
-    header=None,
-):
-    def decorator(func):
+    boolean: Optional[bool] = None,
+    ordering: Optional[Union[str, Combinable, BaseExpression]] = None,
+    description: Optional[str] = None,
+    empty_value: Optional[str] = None,
+    label: Optional[Union[bool, str, Dict[str, str]]] = None,
+    header: Optional[bool] = None,
+) -> Callable:
+    def decorator(func: Callable) -> Callable:
         if boolean is not None and empty_value is not None:
             raise ValueError(
                 "The boolean and empty_value arguments to the @display "
