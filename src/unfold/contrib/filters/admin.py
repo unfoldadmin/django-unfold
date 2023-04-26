@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Type, Optional
+from typing import Any, Dict, List, Optional, Tuple, Type
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
@@ -70,9 +70,7 @@ class SingleNumericFilter(admin.FieldListFilter):
     def expected_parameters(self) -> List[Optional[str]]:
         return [self.parameter_name]
 
-    def choices(
-        self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -221,9 +219,7 @@ class SliderNumericFilter(RangeNumericFilter):
         self.field = field
         self.q = model_admin.get_queryset(request)
 
-    def choices(
-        self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         total = self.q.all().count()
         min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get("min", 0)
 
@@ -344,9 +340,7 @@ class RangeDateFilter(admin.FieldListFilter):
             f"{self.parameter_name}_to",
         ]
 
-    def choices(
-        self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -451,9 +445,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
 
         return queryset.filter(**filters)
 
-    def choices(
-        self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,

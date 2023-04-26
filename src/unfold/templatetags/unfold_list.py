@@ -209,7 +209,9 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
 
 
 class UnfoldResultList(ResultList):
-    def __init__(self, instance_pk: Union[int, str], form: Optional[Form], *items: Any) -> None:
+    def __init__(
+        self, instance_pk: Union[int, str], form: Optional[Form], *items: Any
+    ) -> None:
         self.instance_pk = instance_pk
         super().__init__(form, *items)
 

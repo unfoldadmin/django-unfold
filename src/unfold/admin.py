@@ -18,26 +18,26 @@ from django.db.models import (
 )
 from django.db.models.fields import Field
 from django.db.models.fields.related import ForeignKey, ManyToManyField
+from django.forms import Form
 from django.forms.fields import TypedChoiceField
 from django.forms.models import (
+    Model,
     ModelChoiceField,
     ModelMultipleChoiceField,
-    Model,
 )
-from django.forms import Form
 from django.forms.utils import flatatt
 from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
 from django.template.response import TemplateResponse
-from django.views import View
 from django.urls import URLPattern, path, reverse
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from unfold.utils import display_for_field
 
 from .checks import UnfoldModelAdminChecks
@@ -45,6 +45,7 @@ from .dataclasses import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config
+from .typing import FieldsetsType
 from .widgets import (
     CHECKBOX_LABEL_CLASSES,
     INPUT_CLASSES,
@@ -65,8 +66,6 @@ from .widgets import (
     UnfoldAdminTextInputWidget,
     UnfoldAdminUUIDInputWidget,
 )
-
-from .typing import FieldsetsType
 
 try:
     from django.contrib.postgres.fields import ArrayField, IntegerRangeField
@@ -350,9 +349,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         return media + additional_media
 
-    def get_fieldsets(
-        self, request: HttpRequest, obj=None
-    ) -> FieldsetsType:
+    def get_fieldsets(self, request: HttpRequest, obj=None) -> FieldsetsType:
         if not obj and self.add_fieldsets:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
@@ -614,9 +611,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def action_checkbox(self, obj: Model):
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
-    def response_change(
-        self, request: HttpRequest, obj: Model
-    ) -> HttpResponse:
+    def response_change(self, request: HttpRequest, obj: Model) -> HttpResponse:
         res = super().response_change(request, obj)
         if "next" in request.GET:
             return redirect(request.GET["next"])
