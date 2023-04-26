@@ -15,7 +15,7 @@ def action(
     permissions: Optional[Iterable[str]] = None,
     description: Optional[str] = None,
     url_path: Optional[str] = None,
-    attrs=None,
+    attrs: Optional[Dict[str, Any]] = None,
 ) -> ActionFunction:
     def decorator(func: Callable) -> ActionFunction:
         def inner(

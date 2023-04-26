@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Type, Union
+from typing import Any, Dict, List, Tuple, Type, Optional
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
@@ -60,19 +60,19 @@ class SingleNumericFilter(admin.FieldListFilter):
 
     def queryset(
         self, request: HttpRequest, queryset: QuerySet[Any]
-    ) -> Union[None, QuerySet]:
+    ) -> Optional[QuerySet]:
         if self.value():
             return queryset.filter(**{self.parameter_name: self.value()})
 
     def value(self) -> Any:
         return self.used_parameters.get(self.parameter_name, None)
 
-    def expected_parameters(self) -> List[Union[None, str]]:
+    def expected_parameters(self) -> List[Optional[str]]:
         return [self.parameter_name]
 
     def choices(
         self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any],]:
+    ) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -131,7 +131,7 @@ class RangeNumericMixin:
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any]]:
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -170,7 +170,7 @@ class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
 
     def lookups(
         self, request: HttpRequest, model_admin: ModelAdmin
-    ) -> Tuple[Tuple[str, str],]:
+    ) -> Tuple[Tuple[str, str], ...]:
         return (("dummy", "dummy"),)
 
 
@@ -223,7 +223,7 @@ class SliderNumericFilter(RangeNumericFilter):
 
     def choices(
         self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any],]:
+    ) -> Tuple[Dict[str, Any], ...]:
         total = self.q.all().count()
         min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get("min", 0)
 
@@ -346,7 +346,7 @@ class RangeDateFilter(admin.FieldListFilter):
 
     def choices(
         self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any],]:
+    ) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -453,7 +453,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
 
     def choices(
         self, changelist: ChangeList
-    ) -> Tuple[Dict[str, Any],]:
+    ) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,

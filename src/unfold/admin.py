@@ -1,6 +1,6 @@
 import copy
 from functools import update_wrapper
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -27,7 +27,7 @@ from django.forms.models import (
 from django.forms import Form
 from django.forms.utils import flatatt
 from django.forms.widgets import SelectMultiple
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
 from django.template.response import TemplateResponse
@@ -616,7 +616,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
     def response_change(
         self, request: HttpRequest, obj: Model
-    ) -> Union[HttpResponse, HttpResponseRedirect]:
+    ) -> HttpResponse:
         res = super().response_change(request, obj)
         if "next" in request.GET:
             return redirect(request.GET["next"])
@@ -624,7 +624,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
     def response_add(
         self, request: HttpRequest, obj: Model, post_url_continue: Optional[str] = None
-    ) -> Union[HttpResponse, HttpResponseRedirect]:
+    ) -> HttpResponse:
         res = super().response_add(request, obj, post_url_continue)
         if "next" in request.GET:
             return redirect(request.GET["next"])
