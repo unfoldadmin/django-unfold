@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Optional
 
 from django import forms
 from django.contrib.admin.forms import (
@@ -36,8 +36,8 @@ class AuthenticationForm(AdminAuthenticationForm):
     def __init__(
         self,
         request: Optional[HttpRequest] = None,
-        *args: Any,
-        **kwargs: Dict[str, Any],
+        *args,
+        **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
@@ -49,7 +49,7 @@ class UserCreationForm(BaseUserCreationForm):
     def __init__(
         self,
         request: Optional[HttpRequest] = None,
-        *args: Any,
+        *args,
         **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
@@ -62,7 +62,7 @@ class UserChangeForm(BaseUserChangeForm):
     def __init__(
         self,
         request: Optional[HttpRequest] = None,
-        *args: Any,
+        *args,
         **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
@@ -82,7 +82,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
     def __init__(
         self,
         request: Optional[HttpRequest] = None,
-        *args: Any,
+        *args,
         **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
@@ -92,7 +92,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
 
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
-    def __init__(self, *args: Any, **kwargs) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(kwargs.pop("user"), *args, **kwargs)
 
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
