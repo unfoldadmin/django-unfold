@@ -66,6 +66,7 @@
                     {% for item in result %}
                         {{ item }}
                     {% endfor %}
+                    {% include 'unfold/helpers/actions_row.html' with actions=actions_row instance_pk=result.instance_pk %}
                 </tr>
             {% endfor %}
         </tbody>
