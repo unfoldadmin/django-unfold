@@ -16,5 +16,4 @@ class ActionFunction(Protocol):
     def __call__(self, *args, **kwargs):
         pass
 
-
 FieldsetsType = List[Tuple[Union[str, None], Dict[str, Any]]]
