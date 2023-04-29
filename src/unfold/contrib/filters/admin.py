@@ -33,11 +33,11 @@ class SingleNumericFilter(admin.FieldListFilter):
 
     def __init__(
         self,
-        field: Field[Any, Any],
+        field: Field,
         request: HttpRequest,
         params: Dict[str, str],
         model: Type[Model],
-        model_admin: ModelAdmin[Any],
+        model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
@@ -175,7 +175,7 @@ class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
 class RangeNumericFilter(RangeNumericMixin, admin.FieldListFilter):
     def __init__(
         self,
-        field: Field[Any, Any],
+        field: Field,
         request: HttpRequest,
         params: Dict[str, str],
         model: Type[Model],
@@ -207,7 +207,7 @@ class SliderNumericFilter(RangeNumericFilter):
 
     def __init__(
         self,
-        field: Field[Any, Any],
+        field: Field,
         request: HttpRequest,
         params: Dict[str, str],
         model: Type[Model],
@@ -280,7 +280,7 @@ class RangeDateFilter(admin.FieldListFilter):
 
     def __init__(
         self,
-        field: Field[Any, Any],
+        field: Field,
         request: HttpRequest,
         params: Dict[str, str],
         model: Type[Model],
@@ -370,7 +370,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
 
     def __init__(
         self,
-        field: Field[Any, Any],
+        field: Field,
         request: HttpRequest,
         params: Dict[str, str],
         model: Type[Model],

@@ -14,6 +14,7 @@ from django.db.models import (
     BLANK_CHOICE_DASH,
     ForeignObjectRel,
     ManyToManyRel,
+    Model,
     OneToOneField,
 )
 from django.db.models.fields import Field
@@ -21,7 +22,6 @@ from django.db.models.fields.related import ForeignKey, ManyToManyField
 from django.forms import Form
 from django.forms.fields import TypedChoiceField
 from django.forms.models import (
-    Model,
     ModelChoiceField,
     ModelMultipleChoiceField,
 )
@@ -245,7 +245,7 @@ class ModelAdminMixin:
         super().__init__(model, admin_site)
 
     def formfield_for_choice_field(
-        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs
+        self, db_field: Field, request: HttpRequest, **kwargs
     ) -> TypedChoiceField:
         # Overrides widget for CharFields which have choices attribute
         if "widget" not in kwargs:
@@ -278,7 +278,7 @@ class ModelAdminMixin:
 
     def formfield_for_manytomany(
         self,
-        db_field: ManyToManyField[Any, Any],
+        db_field: ManyToManyField,
         request: HttpRequest,
         **kwargs,
     ) -> ModelMultipleChoiceField:
@@ -300,8 +300,8 @@ class ModelAdminMixin:
         return form_field
 
     def formfield_for_nullboolean_field(
-        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs
-    ) -> Optional[Field[Any, Any]]:
+        self, db_field: Field, request: HttpRequest, **kwargs
+    ) -> Optional[Field]:
         if "widget" not in kwargs:
             kwargs["widget"] = forms.NullBooleanSelect(
                 attrs={"class": " ".join(SELECT_CLASSES)}
@@ -310,8 +310,8 @@ class ModelAdminMixin:
         return db_field.formfield(**kwargs)
 
     def formfield_for_dbfield(
-        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs
-    ) -> Optional[Field[Any, Any]]:
+        self, db_field: Field, request: HttpRequest, **kwargs
+    ) -> Optional[Field]:
         if isinstance(db_field, models.BooleanField) and db_field.null is True:
             return self.formfield_for_nullboolean_field(db_field, request, **kwargs)
 
