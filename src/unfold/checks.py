@@ -2,14 +2,13 @@ from typing import Any, List
 
 from django.contrib.admin.checks import ModelAdminChecks
 from django.contrib.admin.options import BaseModelAdmin
-
 from django.core import checks
 
 from .dataclasses import UnfoldAction
 
 
 class UnfoldModelAdminChecks(ModelAdminChecks):
-    def check(self, admin_obj: BaseModelAdmin[Any], **kwargs) -> List[checks.Error]:
+    def check(self, admin_obj: BaseModelAdmin, **kwargs) -> List[checks.Error]:
         return [
             *super().check(admin_obj, **kwargs),
             *self._check_unfold_action_permission_methods(admin_obj),
