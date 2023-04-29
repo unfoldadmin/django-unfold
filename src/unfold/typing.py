@@ -1,4 +1,4 @@
-from typing import Any, Dict, Iterable, Protocol
+from typing import Any, Dict, Iterable, List, Protocol, Tuple, Union
 
 
 class ActionFunction(Protocol):
@@ -15,3 +15,5 @@ class ActionFunction(Protocol):
 
     def __call__(self, *args, **kwargs):
         pass
+
+FieldsetsType = List[Tuple[Union[str, None], Dict[str, Any]]]

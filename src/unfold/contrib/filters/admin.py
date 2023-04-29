@@ -1,14 +1,20 @@
+from typing import Any, Dict, List, Optional, Tuple, Type
+
 from django.contrib import admin
+from django.contrib.admin.options import ModelAdmin
+from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Model, QuerySet
 from django.db.models.fields import (
     AutoField,
     DateField,
     DateTimeField,
     DecimalField,
+    Field,
     FloatField,
     IntegerField,
 )
+from django.http import HttpRequest
 from django.utils.dateparse import parse_datetime
 
 from .forms import (
@@ -25,7 +31,15 @@ class SingleNumericFilter(admin.FieldListFilter):
     parameter_name = None
     template = "unfold/filters/filters_numeric_single.html"
 
-    def __init__(self, field, request, params, model, model_admin, field_path):
+    def __init__(
+        self,
+        field: Field[Any, Any],
+        request: HttpRequest,
+        params: Dict[str, str],
+        model: Type[Model],
+        model_admin: ModelAdmin[Any],
+        field_path: str,
+    ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
 
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
@@ -44,17 +58,19 @@ class SingleNumericFilter(admin.FieldListFilter):
             value = params.pop(self.parameter_name)
             self.used_parameters[self.parameter_name] = value
 
-    def queryset(self, request, queryset):
+    def queryset(
+        self, request: HttpRequest, queryset: QuerySet[Any]
+    ) -> Optional[QuerySet]:
         if self.value():
             return queryset.filter(**{self.parameter_name: self.value()})
 
-    def value(self):
+    def value(self) -> Any:
         return self.used_parameters.get(self.parameter_name, None)
 
-    def expected_parameters(self):
+    def expected_parameters(self) -> List[Optional[str]]:
         return [self.parameter_name]
 
-    def choices(self, changelist):
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -71,7 +87,7 @@ class RangeNumericMixin:
     parameter_name = None
     template = "unfold/filters/filters_numeric_range.html"
 
-    def init_used_parameters(self, params):
+    def init_used_parameters(self, params: Dict[str, Any]) -> None:
         if self.parameter_name + "_from" in params:
             value = params.pop(self.parameter_name + "_from")
             self.used_parameters[self.parameter_name + "_from"] = value
@@ -80,7 +96,7 @@ class RangeNumericMixin:
             value = params.pop(self.parameter_name + "_to")
             self.used_parameters[self.parameter_name + "_to"] = value
 
-    def queryset(self, request, queryset):
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
         value_from = self.used_parameters.get(self.parameter_name + "_from", None)
@@ -107,13 +123,13 @@ class RangeNumericMixin:
 
         return queryset.filter(**filters)
 
-    def expected_parameters(self):
+    def expected_parameters(self) -> List[str]:
         return [
             f"{self.parameter_name}_from",
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist):
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -136,7 +152,13 @@ class RangeNumericMixin:
 
 
 class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
-    def __init__(self, request, params, model, model_admin):
+    def __init__(
+        self,
+        request: HttpRequest,
+        params: Dict[str, str],
+        model: Type[Model],
+        model_admin: ModelAdmin,
+    ) -> None:
         super().__init__(request, params, model, model_admin)
         if not self.parameter_name:
             raise ValueError("Parameter name cannot be None")
@@ -144,12 +166,22 @@ class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
         self.request = request
         self.init_used_parameters(params)
 
-    def lookups(self, request, model_admin):
+    def lookups(
+        self, request: HttpRequest, model_admin: ModelAdmin
+    ) -> Tuple[Tuple[str, str], ...]:
         return (("dummy", "dummy"),)
 
 
 class RangeNumericFilter(RangeNumericMixin, admin.FieldListFilter):
-    def __init__(self, field, request, params, model, model_admin, field_path):
+    def __init__(
+        self,
+        field: Field[Any, Any],
+        request: HttpRequest,
+        params: Dict[str, str],
+        model: Type[Model],
+        model_admin: ModelAdmin,
+        field_path: str,
+    ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError(
@@ -173,13 +205,21 @@ class SliderNumericFilter(RangeNumericFilter):
     field = None
     form_class = SliderNumericForm
 
-    def __init__(self, field, request, params, model, model_admin, field_path):
+    def __init__(
+        self,
+        field: Field[Any, Any],
+        request: HttpRequest,
+        params: Dict[str, str],
+        model: Type[Model],
+        model_admin: ModelAdmin,
+        field_path: str,
+    ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
 
         self.field = field
         self.q = model_admin.get_queryset(request)
 
-    def choices(self, changelist):
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         total = self.q.all().count()
         min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get("min", 0)
 
@@ -227,7 +267,7 @@ class SliderNumericFilter(RangeNumericFilter):
             },
         )
 
-    def _get_min_step(self, precision):
+    def _get_min_step(self, precision: int) -> float:
         result_format = f"{{:.{precision - 1}f}}"
         return float(result_format.format(0) + "1")
 
@@ -238,7 +278,15 @@ class RangeDateFilter(admin.FieldListFilter):
     form_class = RangeDateForm
     template = "unfold/filters/filters_date_range.html"
 
-    def __init__(self, field, request, params, model, model_admin, field_path):
+    def __init__(
+        self,
+        field: Field[Any, Any],
+        request: HttpRequest,
+        params: Dict[str, str],
+        model: Type[Model],
+        model_admin: ModelAdmin,
+        field_path: str,
+    ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
         if not isinstance(field, DateField):
             raise TypeError(
@@ -259,7 +307,7 @@ class RangeDateFilter(admin.FieldListFilter):
             value = params.pop(self.field_path + "_to")
             self.used_parameters[self.field_path + "_to"] = value
 
-    def queryset(self, request, queryset):
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
         value_from = self.used_parameters.get(self.parameter_name + "_from", None)
@@ -286,13 +334,13 @@ class RangeDateFilter(admin.FieldListFilter):
 
         return queryset.filter(**filters)
 
-    def expected_parameters(self):
+    def expected_parameters(self) -> List[str]:
         return [
             f"{self.parameter_name}_from",
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist):
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -320,7 +368,15 @@ class RangeDateTimeFilter(admin.FieldListFilter):
     template = "unfold/filters/filters_datetime_range.html"
     form_class = RangeDateTimeForm
 
-    def __init__(self, field, request, params, model, model_admin, field_path):
+    def __init__(
+        self,
+        field: Field[Any, Any],
+        request: HttpRequest,
+        params: Dict[str, str],
+        model: Type[Model],
+        model_admin: ModelAdmin,
+        field_path: str,
+    ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
         if not isinstance(field, DateTimeField):
             raise TypeError(
@@ -349,7 +405,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             value = params.pop(self.field_path + "_to_1")
             self.used_parameters[self.field_path + "_to_1"] = value
 
-    def expected_parameters(self):
+    def expected_parameters(self) -> List[str]:
         return [
             f"{self.parameter_name}_from_0",
             f"{self.parameter_name}_from_1",
@@ -357,7 +413,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             f"{self.parameter_name}_to_1",
         ]
 
-    def queryset(self, request, queryset):
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
         date_value_from = self.used_parameters.get(
@@ -389,7 +445,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
 
         return queryset.filter(**filters)
 
-    def choices(self, changelist):
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
             {
                 "request": self.request,

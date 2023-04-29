@@ -1,11 +1,15 @@
+from typing import Any, Dict, Mapping, Union
+
 from django.template import Library, Node, TemplateSyntaxError
+from django.template.base import NodeList, Parser, Token
 from django.template.loader import render_to_string
+from django.utils.safestring import SafeText
 
 register = Library()
 
 
 @register.simple_tag(name="tab_list", takes_context=True)
-def tab_list(context, opts):
+def tab_list(context, opts) -> str:
     tabs = None
 
     for tab in context.get("tab_list"):
@@ -25,17 +29,32 @@ def tab_list(context, opts):
 
 
 @register.filter
-def class_name(value):
+def class_name(value: Any) -> str:
     return value.__class__.__name__
 
 
 @register.filter
-def index(indexable, i):
+def index(indexable: Mapping[int, Any], i: int) -> Any:
     return indexable[i]
 
 
+class CaptureNode(Node):
+    def __init__(self, nodelist: NodeList, varname: str, silent: bool) -> None:
+        self.nodelist = nodelist
+        self.varname = varname
+        self.silent = silent
+
+    def render(self, context: Dict[str, Any]) -> Union[str, SafeText]:
+        output = self.nodelist.render(context)
+        context[self.varname] = output
+        if self.silent:
+            return ""
+        else:
+            return output
+
+
 @register.tag(name="capture")
-def do_capture(parser, token):
+def do_capture(parser: Parser, token: Token) -> CaptureNode:
     """
     Capture the contents of a tag output.
     Usage:
@@ -87,18 +106,3 @@ def do_capture(parser, token):
     nodelist = parser.parse(("endcapture",))
     parser.delete_first_token()
     return CaptureNode(nodelist, var, silent)
-
-
-class CaptureNode(Node):
-    def __init__(self, nodelist, varname, silent):
-        self.nodelist = nodelist
-        self.varname = varname
-        self.silent = silent
-
-    def render(self, context):
-        output = self.nodelist.render(context)
-        context[self.varname] = output
-        if self.silent:
-            return ""
-        else:
-            return output

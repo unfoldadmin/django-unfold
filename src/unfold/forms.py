@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django import forms
 from django.contrib.admin.forms import (
     AdminAuthenticationForm,
@@ -10,6 +12,7 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 from .widgets import BASE_INPUT_CLASSES, INPUT_CLASSES, SELECT_CLASSES
@@ -30,7 +33,12 @@ class ActionForm(forms.Form):
 
 
 class AuthenticationForm(AdminAuthenticationForm):
-    def __init__(self, request=None, *args, **kwargs):
+    def __init__(
+        self,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> None:
         super().__init__(request, *args, **kwargs)
 
         self.fields["username"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
@@ -38,7 +46,12 @@ class AuthenticationForm(AdminAuthenticationForm):
 
 
 class UserCreationForm(BaseUserCreationForm):
-    def __init__(self, request=None, *args, **kwargs):
+    def __init__(
+        self,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> None:
         super().__init__(request, *args, **kwargs)
 
         self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
@@ -46,7 +59,12 @@ class UserCreationForm(BaseUserCreationForm):
 
 
 class UserChangeForm(BaseUserChangeForm):
-    def __init__(self, request=None, *args, **kwargs):
+    def __init__(
+        self,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> None:
         super().__init__(request, *args, **kwargs)
 
         self.fields["password"].help_text = _(
@@ -61,7 +79,12 @@ class UserChangeForm(BaseUserChangeForm):
 
 
 class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
-    def __init__(self, request=None, *args, **kwargs):
+    def __init__(
+        self,
+        request: Optional[HttpRequest] = None,
+        *args,
+        **kwargs,
+    ) -> None:
         super().__init__(request, *args, **kwargs)
 
         self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
@@ -69,7 +92,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
 
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(kwargs.pop("user"), *args, **kwargs)
 
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
