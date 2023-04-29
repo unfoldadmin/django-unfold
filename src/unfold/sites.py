@@ -1,11 +1,12 @@
 from http import HTTPStatus
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from django.contrib.admin import AdminSite
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.validators import EMPTY_VALUES
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
-from django.urls import path, reverse, reverse_lazy
+from django.urls import URLPattern, path, reverse, reverse_lazy
 from django.utils.module_loading import import_string
 
 from .settings import get_config
@@ -15,7 +16,7 @@ class UnfoldAdminSite(AdminSite):
     default_site = "unfold.admin.UnfoldAdminSite"
     settings_name = "UNFOLD"
 
-    def __init__(self, name="admin"):
+    def __init__(self, name: str = "admin") -> None:
         from .forms import AuthenticationForm
 
         super().__init__(name)
@@ -32,7 +33,7 @@ class UnfoldAdminSite(AdminSite):
         if get_config(self.settings_name)["SITE_URL"]:
             self.site_url = get_config(self.settings_name)["SITE_URL"]
 
-    def get_urls(self):
+    def get_urls(self) -> List[URLPattern]:
         urlpatterns = [
             path("search/", self.admin_view(self.search), name="search"),
             path(
@@ -44,7 +45,7 @@ class UnfoldAdminSite(AdminSite):
 
         return urlpatterns
 
-    def each_context(self, request):
+    def each_context(self, request: HttpRequest) -> Dict[str, Any]:
         context = super().each_context(request)
 
         context.update(
@@ -82,7 +83,9 @@ class UnfoldAdminSite(AdminSite):
 
         return context
 
-    def index(self, request, extra_context=None):
+    def index(
+        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+    ) -> TemplateResponse:
         app_list = self.get_app_list(request)
 
         context = {
@@ -105,7 +108,9 @@ class UnfoldAdminSite(AdminSite):
             request, self.index_template or "admin/index.html", context
         )
 
-    def toggle_sidebar(self, request, extra_context=None):
+    def toggle_sidebar(
+        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+    ) -> HttpResponse:
         if "toggle_sidebar" not in request.session:
             request.session["toggle_sidebar"] = True
         else:
@@ -113,7 +118,9 @@ class UnfoldAdminSite(AdminSite):
 
         return HttpResponse(status=HTTPStatus.OK)
 
-    def search(self, request, extra_context=None):
+    def search(
+        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+    ) -> TemplateResponse:
         query = request.GET.get("s").lower()
         app_list = super().get_app_list(request)
         results = []
@@ -144,7 +151,9 @@ class UnfoldAdminSite(AdminSite):
             },
         )
 
-    def login(self, request, extra_context=None):
+    def login(
+        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+    ) -> HttpResponse:
         extra_context = {} if extra_context is None else extra_context
         image = self._get_value(
             get_config(self.settings_name)["LOGIN"].get("image"), request
@@ -166,7 +175,9 @@ class UnfoldAdminSite(AdminSite):
 
         return super().login(request, extra_context)
 
-    def password_change(self, request, extra_context=None):
+    def password_change(
+        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+    ) -> HttpResponse:
         from django.contrib.auth.views import PasswordChangeView
 
         from .forms import AdminOwnPasswordChangeForm
@@ -182,11 +193,11 @@ class UnfoldAdminSite(AdminSite):
         request.current_app = self.name
         return PasswordChangeView.as_view(**defaults)(request)
 
-    def get_sidebar_list(self, request):
+    def get_sidebar_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
         navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
         results = []
 
-        def _get_is_active(link):
+        def _get_is_active(link: str) -> bool:
             if not isinstance(link, str):
                 link = str(link)
 
@@ -229,7 +240,9 @@ class UnfoldAdminSite(AdminSite):
 
         return results
 
-    def _get_value(self, instance, *args):
+    def _get_value(
+        self, instance: Union[str, Callable, None], *args: Any
+    ) -> Optional[str]:
         if instance is None:
             return None
 
@@ -238,7 +251,7 @@ class UnfoldAdminSite(AdminSite):
 
         return instance(*args)
 
-    def _replace_values(self, target, source, request):
+    def _replace_values(self, target: Dict, source: Dict, request: HttpRequest):
         for key in source.keys():
             if source[key] is not None and callable(source[key]):
                 target[key] = source[key](request)

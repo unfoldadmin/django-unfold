@@ -1,6 +1,6 @@
 import copy
 from functools import update_wrapper
-from typing import Callable, List
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -16,17 +16,28 @@ from django.db.models import (
     ManyToManyRel,
     OneToOneField,
 )
+from django.db.models.fields import Field
+from django.db.models.fields.related import ForeignKey, ManyToManyField
+from django.forms import Form
+from django.forms.fields import TypedChoiceField
+from django.forms.models import (
+    Model,
+    ModelChoiceField,
+    ModelMultipleChoiceField,
+)
 from django.forms.utils import flatatt
 from django.forms.widgets import SelectMultiple
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
-from django.urls import path, reverse
+from django.template.response import TemplateResponse
+from django.urls import URLPattern, path, reverse
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 from unfold.utils import display_for_field
 
 from .checks import UnfoldModelAdminChecks
@@ -34,6 +45,7 @@ from .dataclasses import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config
+from .typing import FieldsetsType
 from .widgets import (
     CHECKBOX_LABEL_CLASSES,
     INPUT_CLASSES,
@@ -106,7 +118,7 @@ FORMFIELD_OVERRIDES_INLINE.update(
 
 
 class UnfoldAdminField(helpers.AdminField):
-    def label_tag(self):
+    def label_tag(self) -> SafeText:
         classes = []
 
         # TODO load config from current AdminSite (override Fieldline.__iter__ method)
@@ -141,7 +153,7 @@ helpers.AdminField = UnfoldAdminField
 
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
-    def label_tag(self):
+    def label_tag(self) -> SafeText:
         attrs = {
             "class": " ".join(LABEL_CLASSES + ["mb-2"]),
         }
@@ -158,14 +170,14 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             self.form.label_suffix,
         )
 
-    def contents(self):
+    def contents(self) -> str:
         contents = self._get_contents()
 
         self._preprocess_field(contents)
 
         return contents
 
-    def _get_contents(self):
+    def _get_contents(self) -> str:
         from django.contrib.admin.templatetags.admin_list import _boolean_icon
 
         field, obj, model_admin = (
@@ -206,7 +218,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 result_repr = linebreaksbr(result_repr)
         return conditional_escape(result_repr)
 
-    def _preprocess_field(self, contents):
+    def _preprocess_field(self, contents: str) -> str:
         if self.field["field"] in self.model_admin.readonly_preprocess_fields:
             func = self.model_admin.readonly_preprocess_fields[self.field["field"]]
 
@@ -232,7 +244,9 @@ class ModelAdminMixin:
 
         super().__init__(model, admin_site)
 
-    def formfield_for_choice_field(self, db_field, request: HttpRequest, **kwargs):
+    def formfield_for_choice_field(
+        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs
+    ) -> TypedChoiceField:
         # Overrides widget for CharFields which have choices attribute
         if "widget" not in kwargs:
             kwargs["widget"] = forms.Select(attrs={"class": " ".join(SELECT_CLASSES)})
@@ -242,7 +256,9 @@ class ModelAdminMixin:
 
         return super().formfield_for_choice_field(db_field, request, **kwargs)
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    def formfield_for_foreignkey(
+        self, db_field: ForeignKey[Any], request: HttpRequest, **kwargs
+    ) -> Optional[ModelChoiceField]:
         # Overrides widgets for all related fields
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
@@ -260,7 +276,12 @@ class ModelAdminMixin:
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
+    def formfield_for_manytomany(
+        self,
+        db_field: ManyToManyField[Any, Any],
+        request: HttpRequest,
+        **kwargs,
+    ) -> ModelMultipleChoiceField:
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
                 kwargs["widget"] = forms.TextInput(
@@ -278,7 +299,9 @@ class ModelAdminMixin:
 
         return form_field
 
-    def formfield_for_nullboolean_field(self, db_field, request, **kwargs):
+    def formfield_for_nullboolean_field(
+        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs
+    ) -> Optional[Field[Any, Any]]:
         if "widget" not in kwargs:
             kwargs["widget"] = forms.NullBooleanSelect(
                 attrs={"class": " ".join(SELECT_CLASSES)}
@@ -286,7 +309,9 @@ class ModelAdminMixin:
 
         return db_field.formfield(**kwargs)
 
-    def formfield_for_dbfield(self, db_field, request, **kwargs):
+    def formfield_for_dbfield(
+        self, db_field: Field[Any, Any], request: HttpRequest, **kwargs
+    ) -> Optional[Field[Any, Any]]:
         if isinstance(db_field, models.BooleanField) and db_field.null is True:
             return self.formfield_for_nullboolean_field(db_field, request, **kwargs)
 
@@ -321,7 +346,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         return media + additional_media
 
-    def get_fieldsets(self, request, obj=None):
+    def get_fieldsets(self, request: HttpRequest, obj=None) -> FieldsetsType:
         if not obj and self.add_fieldsets:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
@@ -389,7 +414,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             self.get_unfold_action(action) for action in self.actions_submit_line or []
         ]
 
-    def get_custom_urls(self):
+    def get_custom_urls(self) -> Tuple[Tuple[str, str, View], ...]:
         """
         Method to get custom views for ModelAdmin with their urls
 
@@ -398,7 +423,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return () if self.custom_urls is None else self.custom_urls
 
-    def get_urls(self):
+    def get_urls(self) -> List[URLPattern]:
         urls = super().get_urls()
 
         def wrap(view):
@@ -448,7 +473,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             + urls
         )
 
-    def _path_from_custom_url(self, custom_url):
+    def _path_from_custom_url(self, custom_url) -> URLPattern:
         # TODO: wrap()
         return path(
             custom_url[0],
@@ -457,7 +482,13 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             name=custom_url[1],
         )
 
-    def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
+    def changeform_view(
+        self,
+        request: HttpRequest,
+        object_id: Optional[str] = None,
+        form_url: str = "",
+        extra_context: Optional[Dict[str, bool]] = None,
+    ) -> Any:
         if extra_context is None:
             extra_context = {}
 
@@ -483,7 +514,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         return super().changeform_view(request, object_id, form_url, extra_context)
 
-    def changelist_view(self, request, extra_context=None):
+    def changelist_view(
+        self, request: HttpRequest, extra_context: Optional[Dict[str, str]] = None
+    ) -> TemplateResponse:
         if extra_context is None:
             extra_context = {}
 
@@ -535,7 +568,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return getattr(func, "url_path", name)
 
-    def save_model(self, request, obj, form, change):
+    def save_model(
+        self, request: HttpRequest, obj: Model, form: Form, change: Any
+    ) -> None:
         super().save_model(request, obj, form, change)
 
         for action in self.get_actions_submit_line(request):
@@ -563,21 +598,25 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         return method
 
-    def get_action_choices(self, request, default_choices=BLANK_CHOICE_DASH):
+    def get_action_choices(
+        self, request: HttpRequest, default_choices=BLANK_CHOICE_DASH
+    ):
         default_choices = [("", _("Select action"))]
         return super().get_action_choices(request, default_choices)
 
     @display(description=mark_safe('<input type="checkbox" id="action-toggle">'))
-    def action_checkbox(self, obj):
+    def action_checkbox(self, obj: Model):
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
-    def response_change(self, request, obj):
+    def response_change(self, request: HttpRequest, obj: Model) -> HttpResponse:
         res = super().response_change(request, obj)
         if "next" in request.GET:
             return redirect(request.GET["next"])
         return res
 
-    def response_add(self, request, obj, post_url_continue=None):
+    def response_add(
+        self, request: HttpRequest, obj: Model, post_url_continue: Optional[str] = None
+    ) -> HttpResponse:
         res = super().response_add(request, obj, post_url_continue)
         if "next" in request.GET:
             return redirect(request.GET["next"])

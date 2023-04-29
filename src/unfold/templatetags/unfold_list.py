@@ -1,4 +1,5 @@
 import datetime
+from typing import Any, Dict, Optional, Union
 
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
@@ -9,14 +10,17 @@ from django.contrib.admin.templatetags.admin_list import (
 from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.contrib.admin.templatetags.base import InclusionAdminNode
 from django.contrib.admin.utils import lookup_field
-from django.contrib.admin.views.main import PAGE_VAR
+from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.forms import Form
+from django.http import HttpRequest
 from django.template import Library
+from django.template.base import Parser, Token
 from django.template.loader import render_to_string
 from django.urls import NoReverseMatch
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeText, mark_safe
 
 from ..utils import (
     display_for_field,
@@ -30,12 +34,12 @@ register = Library()
 LINK_CLASSES = ["text-gray-700 dark:text-gray-200"]
 
 
-def items_for_result(cl, result, form):
+def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
     """
     Generate the actual list of data.
     """
 
-    def link_in_col(is_first, field_name, cl):
+    def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
             return False
         if is_first and not cl.list_display_links:
@@ -205,12 +209,14 @@ def items_for_result(cl, result, form):
 
 
 class UnfoldResultList(ResultList):
-    def __init__(self, instance_pk, form, *items):
+    def __init__(
+        self, instance_pk: Union[int, str], form: Optional[Form], *items: Any
+    ) -> None:
         self.instance_pk = instance_pk
         super().__init__(form, *items)
 
 
-def results(cl):
+def results(cl: ChangeList):
     if cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms):
             pk = cl.lookup_opts.pk.attname
@@ -223,7 +229,7 @@ def results(cl):
             yield UnfoldResultList(pk_value, None, items_for_result(cl, res, None))
 
 
-def result_list(context, cl):
+def result_list(context: Dict[str, Any], cl: ChangeList) -> Dict[str, Any]:
     """
     Display the headers and data list together.
     """
@@ -243,7 +249,7 @@ def result_list(context, cl):
 
 
 @register.tag(name="unfold_result_list")
-def result_list_tag(parser, token):
+def result_list_tag(parser: Parser, token: Token) -> InclusionAdminNode:
     return InclusionAdminNode(
         parser,
         token,
@@ -253,7 +259,7 @@ def result_list_tag(parser, token):
 
 
 @register.simple_tag
-def paginator_number(cl, i):
+def paginator_number(cl: ChangeList, i: Union[str, int]) -> Union[str, SafeText]:
     """
     Generate an individual page index link in a paginated list.
     """

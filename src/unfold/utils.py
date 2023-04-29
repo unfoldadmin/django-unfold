@@ -1,22 +1,23 @@
 import datetime
 import decimal
 import json
+from typing import Any, Iterable
 
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils import formats, timezone
 from django.utils.hashable import make_hashable
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeText, mark_safe
 
 from .exceptions import UnfoldException
 
 
-def _boolean_icon(field_val):
+def _boolean_icon(field_val: Any) -> str:
     return render_to_string("unfold/helpers/boolean.html", {"value": field_val})
 
 
-def display_for_header(value, empty_value_display):
+def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
     if not isinstance(value, list) and not isinstance(value, tuple):
         raise UnfoldException("Display header requires list or tuple")
 
@@ -30,7 +31,7 @@ def display_for_header(value, empty_value_display):
     )
 
 
-def display_for_label(value, empty_value_display, label):
+def display_for_label(value: Any, empty_value_display: str, label: Any) -> SafeText:
     label_type = None
     multiple = False
 
@@ -59,7 +60,9 @@ def display_for_label(value, empty_value_display, label):
     )
 
 
-def display_for_value(value, empty_value_display, boolean=False):
+def display_for_value(
+    value: Any, empty_value_display: str, boolean: bool = False
+) -> str:
     if boolean:
         return _boolean_icon(value)
     elif value is None:
@@ -78,7 +81,7 @@ def display_for_value(value, empty_value_display, boolean=False):
         return str(value)
 
 
-def display_for_field(value, field, empty_value_display):
+def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
     if getattr(field, "flatchoices", None):
         try:
             return dict(field.flatchoices).get(value, empty_value_display)

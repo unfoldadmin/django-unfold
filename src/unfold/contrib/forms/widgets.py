@@ -1,3 +1,5 @@
+from typing import Any, Dict, Optional
+
 from django.forms import Widget
 from unfold.widgets import PROSE_CLASSES
 
@@ -30,7 +32,7 @@ class WysiwygWidget(Widget):
             "unfold/forms/js/trix.config.js",
         )
 
-    def __init__(self, attrs=None):
+    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(attrs)
 
         self.attrs.update(
