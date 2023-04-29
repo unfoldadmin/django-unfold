@@ -1,5 +1,6 @@
 import copy
 from functools import update_wrapper
+from typing import Callable, List
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -20,7 +21,6 @@ from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
-from django.template.loader import render_to_string
 from django.urls import path, reverse
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
@@ -29,6 +29,8 @@ from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from unfold.utils import display_for_field
 
+from .checks import UnfoldModelAdminChecks
+from .dataclasses import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config
@@ -301,6 +303,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     add_fieldsets = ()
     list_filter_submit = False
     readonly_preprocess_fields = {}
+    checks_class = UnfoldModelAdminChecks
 
     @property
     def media(self):
@@ -323,16 +326,65 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
 
-    def get_actions_list(self):
+    def _filter_unfold_actions_by_permissions(
+        self, request: HttpRequest, actions: List[UnfoldAction]
+    ) -> List[UnfoldAction]:
+        """Filter out any Unfold actions that the user doesn't have access to."""
+        filtered_actions = []
+        for action in actions:
+            if not hasattr(action.method, "allowed_permissions"):
+                filtered_actions.append(action)
+                continue
+            permission_checks = (
+                getattr(self, "has_%s_permission" % permission)
+                for permission in action.method.allowed_permissions
+            )
+            if any(has_permission(request) for has_permission in permission_checks):
+                filtered_actions.append(action)
+        return filtered_actions
+
+    def get_actions_list(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_list()
+        )
+
+    def _get_base_actions_list(self) -> List[UnfoldAction]:
+        """
+        Returns all available list global actions, prior to any filtering
+        """
         return [self.get_unfold_action(action) for action in self.actions_list or []]
 
-    def get_actions_detail(self):
+    def get_actions_detail(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_detail()
+        )
+
+    def _get_base_actions_detail(self) -> List[UnfoldAction]:
+        """
+        Returns all available detail actions, prior to any filtering
+        """
         return [self.get_unfold_action(action) for action in self.actions_detail or []]
 
-    def get_actions_row(self):
+    def get_actions_row(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_row()
+        )
+
+    def _get_base_actions_row(self) -> List[UnfoldAction]:
+        """
+        Returns all available row actions, prior to any filtering
+        """
         return [self.get_unfold_action(action) for action in self.actions_row or []]
 
-    def get_actions_submit_line(self):
+    def get_actions_submit_line(self, request: HttpRequest) -> List[UnfoldAction]:
+        return self._filter_unfold_actions_by_permissions(
+            request, self._get_base_actions_submit_line()
+        )
+
+    def _get_base_actions_submit_line(self) -> List[UnfoldAction]:
+        """
+        Returns all available submit row actions, prior to any filtering
+        """
         return [
             self.get_unfold_action(action) for action in self.actions_submit_line or []
         ]
@@ -363,29 +415,29 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         actions_list_urls = [
             path(
-                action["path"],
-                wrap(action["method"]),
-                name=action["action_name"],
+                action.path,
+                wrap(action.method),
+                name=action.action_name,
             )
-            for action in self.get_actions_list()
+            for action in self._get_base_actions_list()
         ]
 
         action_detail_urls = [
             path(
-                f"<path:object_id>/{action['path']}/",
-                wrap(action["method"]),
-                name=action["action_name"],
+                f"<path:object_id>/{action.path}/",
+                wrap(action.method),
+                name=action.action_name,
             )
-            for action in self.get_actions_detail()
+            for action in self._get_base_actions_detail()
         ]
 
         action_row_urls = [
             path(
-                f"<path:object_id>/{action['path']}",
-                wrap(action["method"]),
-                name=action["action_name"],
+                f"<path:object_id>/{action.path}",
+                wrap(action.method),
+                name=action.action_name,
             )
-            for action in self.get_actions_row()
+            for action in self._get_base_actions_row()
         ]
 
         return (
@@ -405,49 +457,26 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             name=custom_url[1],
         )
 
-    @display(description="")
-    def actions_holder(self, instance):
-        actions = [
-            {
-                "title": action["description"],
-                "attrs": action["method"].attrs,
-                "path": reverse(f"admin:{action['action_name']}", args=(instance.pk,)),
-            }
-            for action in self.get_actions_row()
-        ]
-        return render_to_string(
-            "unfold/helpers/actions_row.html",
-            context={
-                "instance": instance,
-                "actions": actions,
-            },
-        )
-
-    def get_list_display(self, request):
-        if len(self.get_actions_row()) > 0:
-            return [*super().get_list_display(request), "actions_holder"]
-        return super().get_list_display(request)
-
     def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
         if extra_context is None:
             extra_context = {}
 
         actions = []
         if object_id:
-            for action in self.get_actions_detail():
+            for action in self.get_actions_detail(request):
                 actions.append(
                     {
-                        "title": action["description"],
-                        "attrs": action["method"].attrs,
+                        "title": action.description,
+                        "attrs": action.method.attrs,
                         "path": reverse(
-                            f"admin:{action['action_name']}", args=(object_id,)
+                            f"admin:{action.action_name}", args=(object_id,)
                         ),
                     }
                 )
 
         extra_context.update(
             {
-                "actions_submit_line": self.get_actions_submit_line(),
+                "actions_submit_line": self.get_actions_submit_line(request),
                 "actions_detail": actions,
             }
         )
@@ -460,41 +489,68 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         actions = [
             {
-                "title": action["description"],
-                "attrs": action["method"].attrs,
-                "path": reverse(f"admin:{action['action_name']}"),
+                "title": action.description,
+                "attrs": action.method.attrs,
+                "path": reverse(f"admin:{action.action_name}"),
             }
-            for action in self.get_actions_list()
+            for action in self.get_actions_list(request)
         ]
 
-        extra_context.update({"actions_list": actions})
+        actions_row = [
+            {
+                "title": action.description,
+                "attrs": action.method.attrs,
+                "raw_path": f"admin:{action.action_name}",
+            }
+            for action in self.get_actions_row(request)
+        ]
+
+        extra_context.update({"actions_list": actions, "actions_row": actions_row})
 
         return super().changelist_view(request, extra_context)
 
-    def get_unfold_action(self, action):
+    def get_unfold_action(self, action: str) -> UnfoldAction:
+        """
+        Converts action name to UnfoldAction
+        :param action:
+        :return:
+        """
         method = self._get_instance_method(action)
 
-        return {
-            "action_name": f"{self.model._meta.app_label}_{self.model._meta.model_name}_{action}",
-            "method": method,
-            "description": self._get_action_description(method, action),
-            "path": self._get_action_url(method, action),
-        }
+        return UnfoldAction(
+            action_name=f"{self.model._meta.app_label}_{self.model._meta.model_name}_{action}",
+            method=method,
+            description=self._get_action_description(method, action),
+            path=self._get_action_url(method, action),
+        )
 
     @staticmethod
-    def _get_action_url(func, name):
+    def _get_action_url(func: Callable, name: str) -> str:
+        """
+        Returns action URL if it was specified in @action decorator.
+        If it was not, name of the action is returned.
+        :param func:
+        :param name:
+        :return:
+        """
         return getattr(func, "url_path", name)
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        for action_attrs in self.get_actions_submit_line():
-            if action_attrs["action_name"] not in request.POST:
+        for action in self.get_actions_submit_line(request):
+            if action.action_name not in request.POST:
                 continue
 
-            action_attrs["method"](request, obj)
+            action.method(request, obj)
 
-    def _get_instance_method(self, method_name):
+    def _get_instance_method(self, method_name: str) -> Callable:
+        """
+        Searches for method on self instance based on method_name and returns it if it exists.
+        If it does not exist or is not callable, it raises UnfoldException
+        :param method_name: Name of the method to search for
+        :return: method from self instance
+        """
         try:
             method = getattr(self, method_name)
         except AttributeError as e:

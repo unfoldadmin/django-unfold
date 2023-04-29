@@ -1,15 +1,34 @@
+from django.core.exceptions import PermissionDenied
+
+
 def action(
     function=None, *, permissions=None, description=None, url_path=None, attrs=None
 ):
     def decorator(func):
+        def inner(model_admin, request, *args, **kwargs):
+            if permissions:
+                permission_checks = (
+                    getattr(model_admin, f"has_{permission}_permission")
+                    for permission in permissions
+                )
+                # TODO add obj parameter into has_permission method call.
+                # Permissions methods have following syntax: has_<some>_permission(self, request, obj=None):
+                # But obj is not examined by default in django admin and it would also require additional
+                # fetch from database, therefore it is not supported yet
+                if not any(
+                    has_permission(request) for has_permission in permission_checks
+                ):
+                    raise PermissionDenied
+            return func(model_admin, request, *args, **kwargs)
+
         if permissions is not None:
-            func.allowed_permissions = permissions
+            inner.allowed_permissions = permissions
         if description is not None:
-            func.short_description = description
+            inner.short_description = description
         if url_path is not None:
-            func.url_path = url_path
-        func.attrs = attrs or {}
-        return func
+            inner.url_path = url_path
+        inner.attrs = attrs or {}
+        return inner
 
     if function is None:
         return decorator

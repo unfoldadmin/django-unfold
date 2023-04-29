@@ -1,0 +1,46 @@
+from typing import List
+
+from django.contrib.admin.checks import ModelAdminChecks
+from django.core import checks
+
+from .dataclasses import UnfoldAction
+
+
+class UnfoldModelAdminChecks(ModelAdminChecks):
+    def check(self, admin_obj, **kwargs):
+        return [
+            *super().check(admin_obj, **kwargs),
+            *self._check_unfold_action_permission_methods(admin_obj),
+        ]
+
+    def _check_unfold_action_permission_methods(self, obj) -> List[checks.Error]:
+        """
+        Actions with an allowed_permission attribute require the ModelAdmin to
+        implement a has_<perm>_permission() method for each permission.
+        """
+        actions: List[UnfoldAction] = [
+            *obj._get_base_actions_list(),
+            *obj._get_base_actions_detail(),
+            *obj._get_base_actions_row(),
+            *obj._get_base_actions_submit_line(),
+        ]
+        errors = []
+        for action in actions:
+            if not hasattr(action.method, "allowed_permissions"):
+                continue
+            for permission in action.method.allowed_permissions:
+                method_name = "has_%s_permission" % permission
+                if not hasattr(obj, method_name):
+                    errors.append(
+                        checks.Error(
+                            "%s must define a %s() method for the %s action."
+                            % (
+                                obj.__class__.__name__,
+                                method_name,
+                                action.method.__name__,
+                            ),
+                            obj=obj.__class__,
+                            id="admin.E129",
+                        )
+                    )
+        return errors
