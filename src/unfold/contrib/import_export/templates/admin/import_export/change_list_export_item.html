@@ -1,0 +1,9 @@
+{% load admin_urls i18n %}
+
+{% if has_export_permission %}
+    <li class="border-r flex-grow text-center last:border-0 dark:border-gray-700">
+        <a href="{% url opts|admin_urlname:'export' %}{{ cl.get_query_string }}" class="block px-4 py-2 text-gray-500 whitespace-nowrap hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200">
+            {% trans "Export" %}
+        </a>
+    </li>
+{% endif %}

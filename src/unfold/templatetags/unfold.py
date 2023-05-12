@@ -23,6 +23,7 @@ def tab_list(context, opts) -> str:
         context={
             "tab_list": tabs,
             "actions_list": context.get("actions_list"),
+            "actions_items": context.get("actions_items"),
             "is_popup": context.get("is_popup"),
         },
     )

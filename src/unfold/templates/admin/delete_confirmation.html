@@ -53,7 +53,7 @@
                 {% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would require deleting the following protected related objects:{% endblocktranslate %}
             </p>
 
-            <div class="bborder-gray-200  order-t p-4 dark:border-gray-800">
+            <div class="border-t border-gray-200  order-t p-4 dark:border-gray-800">
                 <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-400">
                     {% for obj in protected %}
                         <li>

@@ -1,0 +1,47 @@
+{% extends "admin/import_export/base.html" %}
+
+{% load admin_urls i18n import_export_tags %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+
+    {{ form.media }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="px-4 lg:px-12">
+        <div class="container mb-6 mx-auto -my-3 lg:mb-12">
+            <ul class="flex">
+                {% url 'admin:index' as link %}
+                {% trans 'Home' as name %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
+
+                {% url 'admin:app_list' app_label=opts.app_label as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
+
+                {% url opts|admin_urlname:'changelist' as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.verbose_name_plural|capfirst %}
+
+                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=cl.opts.verbose_name_plural|capfirst %}
+
+                {% trans 'Export' as name %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=name %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <fieldset class="border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+            {% include "unfold/helpers/field.html" with field=form.file_format %}
+        </fieldset>
+
+        <button type="submit" class="bg-primary-600 border border-transparent font-medium px-3 py-2 rounded-md text-sm text-white">
+            {% translate 'Submit' %}
+        </button>
+    </form>
+{% endblock %}

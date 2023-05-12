@@ -141,6 +141,10 @@ class UnfoldAdminImageFieldWidget(AdminFileWidget):
     pass
 
 
+class UnfoldAdminFileFieldWidget(AdminFileWidget):
+    template_name = "unfold/widgets/clearable_file_input_small.html"
+
+
 class UnfoldAdminImageSmallFieldWidget(AdminFileWidget):
     template_name = "unfold/widgets/clearable_file_input_small.html"
 

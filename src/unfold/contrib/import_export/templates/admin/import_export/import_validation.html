@@ -1,0 +1,88 @@
+{% load i18n unfold %}
+
+{% block validation_errors %}
+    <div class="bg-red-50 border border-red-200 mb-4 mt-8 rounded shadow-sm text-red-500 text-sm dark:bg-red-500/20 dark:border-red-500/20">
+        <div class="border-b border-red-200 flex flex-row py-3 px-4 dark:border-red-500/20">
+            <h2 class="font-medium">
+                {% trans "Some rows failed to validate" %}
+            </h2>
+        </div>
+
+        <div class="px-4 py-3">
+            <p>
+                {% trans "Please correct these errors in your data where possible, then reupload it using the form above." %}
+            </p>
+        </div>
+    </div>
+
+    <table class="border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+        <thead class="hidden lg:table-header-group">
+            <tr>
+                <th class="align-middle capitalize font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                    {% trans "Row" %}
+                </th>
+
+                <th class="align-middle capitalize font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                    {% trans "Errors" %}
+                </th>
+
+                {% for field in result.diff_headers %}
+                    <th class="align-middle capitalize font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                        {{ field }}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in result.invalid_rows %}
+                <tr class="{% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                    <td data-label="{% trans "Row" %}" class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-400 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                        {{ row.number }}
+                    </td>
+
+                    <td data-label="{% trans "Errors" %}" class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-400 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                        <div>
+                            <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">{{ row.error_count }}</span>
+                        </div>
+
+                        <div class="validation-error-container">
+                            <ul class="validation-error-list">
+                                {% for field_name, error_list in row.field_specific_errors.items %}
+                                    <li>
+                                        <span class="validation-error-field-label">{{ field_name }}</span>
+                                        <ul>
+                                            {% for error in error_list %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+
+                                {% if row.non_field_specific_errors %}
+                                    <li>
+                                        <span class="validation-error-field-label">
+                                            {% trans "Non field specific" %}
+                                        </span>
+
+                                        <ul>
+                                            {% for error in row.non_field_specific_errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </td>
+
+                    {% for field in row.values %}
+                        <td data-label="{{ result.diff_headers|index:forloop.counter0 }}" class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-400 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                            {{ field }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
