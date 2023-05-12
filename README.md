@@ -32,6 +32,8 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
     - [For global, row and detail action](#for-global-row-and-detail-action)
   - [Action examples](#action-examples)
 - [Filters](#filters)
+- [Third party packages](#third-party-packages)
+  - [django-import-export](#django-import-export)
 - [User Admin Form](#user-admin-form)
 - [Adding Custom Styles and Scripts](#adding-custom-styles-and-scripts)
 - [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet)
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
     "unfold",  # before django.contrib.admin
     "unfold.contrib.filters",  # optional, if special filters are needed
     "unfold.contrib.forms",  # optional, if special form elements are needed
+    "unfold.contrib.import_export",  # optional, if django-import-export package is used
     "django.contrib.admin",  # required
 ]
 ```
@@ -485,6 +488,24 @@ class YourModelAdmin(ModelAdmin):
 ```
 
 
+## Third party packages
+
+
+### django-import-export
+
+To get proper visual appearance for django-import-export, two things are needed
+
+1. Add `unfold.contrib.import_export` to `INSTALLED_APPS` at the begging of the file. This action will override all templates coming from the plugin.
+2. Change `import_form_class` and `export_form_class` in ModelAdmin which is inheriting from `ImportExportModelAdmin`. This chunk of code is responsible for adding proper styling to form elements.
+
+```python
+from unfold.admin import ModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm
+
+class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+```
 
 ## User Admin Form
 

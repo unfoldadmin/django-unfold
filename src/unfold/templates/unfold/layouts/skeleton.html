@@ -9,6 +9,7 @@
 {% capture as content_subtitle silent %}{% block content_subtitle %}{% if subtitle %}{{ subtitle }}{% endif %}{% endblock %}{% endcapture %}
 {% capture as nav_global silent %}{% block nav-global %}{% endblock %}{% endcapture %}
 {% capture as nav_global_side silent %}{% block nav-global-side %}{% endblock %}{% endcapture %}
+{% capture as actions_items silent %}{% block actions-items %}{% endblock %}{% endcapture %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" x-data="{ theme: $persist({'value': 'auto'}).as('theme') }" x-bind:class="theme.value && theme.value" x-cloak>
