@@ -1,0 +1,19 @@
+{% load admin_urls i18n import_export_tags %}
+
+{% block confirm_import_form %}
+    <form action="{% url opts|admin_urlname:"process_import" %}" method="post" class="border border-gray-200 mb-8 rounded-md shadow-sm dark:border-gray-800">
+        {% csrf_token %}
+
+        {{ confirm_form.as_p }}
+
+        <p class="font-medium p-4 text-sm text-gray-700 dark:text-gray-200">
+            {% trans "Below is a preview of data to be imported. If you are satisfied with the results, click 'Confirm import'" %}
+        </p>
+
+        <div class="border-t border-gray-200 flex flex-row px-4 py-3 dark:border-gray-800">
+            <button type="submit" class="bg-primary-600 border border-transparent font-medium ml-auto px-3 py-2 rounded-md text-sm text-white">
+                {% translate 'Confirm import' %}
+            </button>
+        </div>
+    </form>
+{% endblock %}

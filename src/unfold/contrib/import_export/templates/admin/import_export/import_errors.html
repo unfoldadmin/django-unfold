@@ -1,0 +1,40 @@
+{% load i18n %}
+
+{% block errors %}
+    <hr class="my-8">
+
+    <ul>
+        {% for error in result.base_errors  %}
+            <li>
+            {{ error.error }}
+
+            <div class="traceback">{{ error.traceback|linebreaks }}</div></li>
+        {% endfor %}
+
+        {% for line, errors in result.row_errors %}
+            {% for error in errors %}
+                <li x-data="{ open: false }">
+                    <div class="bg-red-50 border border-red-200 mb-4 rounded shadow-sm text-red-500 text-sm">
+                        <div class="border-b border-red-200 flex flex-row py-3 px-4">
+                            {% trans "Line number" %}: {{ line }} - {{ error.error }}
+
+                            <a class="cursor-pointer ml-auto underline" x-on:click="open = ! open">
+                                {% trans "Open traceback" %}
+                            </a>
+                        </div>
+
+                        <div class="px-4 py-3">
+                            <code>
+                                {{ error.row.values|join:", " }}
+                            </code>
+                        </div>
+                    </div>
+
+                    <code class="bg-white block border leading-relaxed rounded p-4 text-sm traceback" x-show="open">
+                        {{ error.traceback|linebreaks }}
+                    </code>
+                </li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endblock %}
