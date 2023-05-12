@@ -8,16 +8,16 @@
             {% trans "This importer will import the following fields: " %}
 
             {% if fields_list|length <= 1 %}
-            <span class="font-medium text-blue-700">
-                {{ fields_list.0.1|join:", " }}
-            </code>
+                <span class="font-medium">
+                    {{ fields_list.0.1|join:", " }}
+                </code>
             {% else %}
-            <dl>
-                {% for resource, fields in fields_list %}
-                    <dt>{{ resource }}</dt>
-                    <dd><code>{{ fields|join:", " }}</code></dd>
-                {% endfor %}
-            </dl>
+                <dl>
+                    {% for resource, fields in fields_list %}
+                        <dt>{{ resource }}</dt>
+                        <dd><code>{{ fields|join:", " }}</code></dd>
+                    {% endfor %}
+                </dl>
             {% endif %}
         </p>
 

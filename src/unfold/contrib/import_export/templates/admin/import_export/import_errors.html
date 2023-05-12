@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% block errors %}
-    <hr class="my-8">
+    <hr class="dark:border-gray-800 my-8">
 
     <ul>
         {% for error in result.base_errors  %}
@@ -14,13 +14,9 @@
         {% for line, errors in result.row_errors %}
             {% for error in errors %}
                 <li x-data="{ open: false }">
-                    <div class="bg-red-50 border border-red-200 mb-4 rounded shadow-sm text-red-500 text-sm">
-                        <div class="border-b border-red-200 flex flex-row py-3 px-4">
+                    <div class="bg-red-50 border border-red-200 cursor-pointer mb-4 rounded shadow-sm text-red-500 text-sm dark:bg-red-500/20 dark:border-red-500/20" x-on:click="open = ! open">
+                        <div class="border-b border-red-200 flex flex-row font-medium py-3 px-4 dark:border-red-500/20">
                             {% trans "Line number" %}: {{ line }} - {{ error.error }}
-
-                            <a class="cursor-pointer ml-auto underline" x-on:click="open = ! open">
-                                {% trans "Open traceback" %}
-                            </a>
                         </div>
 
                         <div class="px-4 py-3">
@@ -30,9 +26,9 @@
                         </div>
                     </div>
 
-                    <code class="bg-white block border leading-relaxed rounded p-4 text-sm traceback" x-show="open">
+                    <div class="block border leading-relaxed rounded p-4 text-sm traceback dark:border-gray-800 dark:text-gray-400 " x-show="open">
                         {{ error.traceback|linebreaks }}
-                    </code>
+                    </div>
                 </li>
             {% endfor %}
         {% endfor %}
