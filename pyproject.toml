@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.6.0"
+version = "0.6.1"
 description = "Clean & minimal Django admin theme based on Tailwind CSS"
 license = "MIT"
 readme = "README.md"
 authors = []
 homepage = "https://unfoldadmin.com"
-repository = "https://github.com/remastr/django-unfold"
+repository = "https://github.com/unfoldadmin/django-unfold"
 packages = [
     { include = "unfold", from = "src" },
 ]
