@@ -1,11 +1,11 @@
 <div class="datetime flex flex-col max-w-2xl lg:flex-row">
-    <div class="basis-1/2 flex flex-col flex-wrap mr-2">
+    <div class="basis-1/2 flex flex-col flex-wrap mb-4 lg:mb-0 lg:mr-2">
         <div class="font-medium mb-2 text-gray-500 text-sm dark:text-gray-400">
             {{ date_label }}
         </div>
 
         {% with widget=widget.subwidgets.0 %}
-            <div class="flex flex-row flex-wrap">
+            <div class="flex">
                 {% include widget.template_name %}
             </div>
         {% endwith %}
@@ -17,7 +17,7 @@
         </div>
 
         {% with widget=widget.subwidgets.1 %}
-            <div class="flex flex-row flex-wrap">
+            <div class="flex">
                 {% include widget.template_name %}
             </div>
         {% endwith %}

@@ -188,7 +188,7 @@ table tr.selected {
  Selector
  *******************************************************/
 .selector {
-  @apply flex flex-col items-center md:flex-row;
+  @apply flex flex-col flex-grow items-center max-w-2xl md:flex-row;
 }
 
 .selector select {
@@ -248,6 +248,10 @@ table tr.selected {
 
 .selector-remove:after {
   content: 'arrow_back';
+}
+
+.related-widget-wrapper-link {
+  @apply order-last;
 }
 
 /*******************************************************
