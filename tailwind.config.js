@@ -41,6 +41,7 @@ module.exports = {
         "width": "width",
       },
       width: {
+        "4.5": "1.125rem",
         "9.5": "2.375rem",
         "sidebar": "18rem",
       },
