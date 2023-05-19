@@ -235,16 +235,18 @@ def result_list(context: Dict[str, Any], cl: ChangeList) -> Dict[str, Any]:
     """
     headers = list(result_headers(cl))
     num_sorted_fields = 0
+
     for h in headers:
         if h["sortable"] and h["sorted"]:
             num_sorted_fields += 1
+
     return {
         "cl": cl,
         "result_hidden_fields": list(result_hidden_fields(cl)),
         "result_headers": headers,
         "num_sorted_fields": num_sorted_fields,
         "results": list(results(cl)),
-        "actions_row": context["actions_row"],
+        "actions_row": context.get("actions_row"),
     }
 
 
