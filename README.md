@@ -225,7 +225,7 @@ def badge_callback(request):
 ```python
 from django import models
 from django.contrib import admin
-
+from django.db import models
 from unfold.admin import ModelAdmin
 from unfold.contrib.forms.widgets import WysiwygWidget
 
@@ -248,7 +248,9 @@ class CustomAdminClass(ModelAdmin):
     actions_submit_line = []  # Displayed near save in object detail
 
     formfield_overrides = {
-        models.TextField: WysiwygWidget,
+        models.TextField: {
+            "widget": WysiwygWidget,
+        }
     }
 ```
 
