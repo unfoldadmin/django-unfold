@@ -70,7 +70,7 @@ class UserChangeForm(BaseUserChangeForm):
         self.fields["password"].help_text = _(
             "Raw passwords are not stored, so there is no way to see this "
             "user’s password, but you can change the password using "
-            '<a href="{}" class="text-primary-600 underline whitespace-nowrap">this form</a>.'
+            '<a href="{}" class="text-primary-600 underline whitespace-nowrap dark:text-primary-500">this form</a>.'
         )
 
         password = self.fields.get("password")
