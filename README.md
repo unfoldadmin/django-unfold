@@ -42,6 +42,7 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
   - [Pre-commit](#pre-commit)
   - [Poetry Configuration](#poetry-configuration)
   - [Compiling Tailwind](#compiling-tailwind)
+- [Credits](#credits)
 
 ## Installation
 
@@ -644,3 +645,11 @@ npm run tailwind:build # run once
 Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
 
 None: most of the custom styles localted in style.css are created via `@apply some-tailwind-class;`.
+
+# Credits
+
+- [TailwindCSS](https://tailwindcss.com/) - CSS framework
+- [HTMX](https://htmx.org/) - AJAX communication with backend
+- [Material Icons](https://fonts.google.com/icons) - Icons from Google Fonts
+- [Trix](https://trix-editor.org/) - WYSIWYG editor
+- [Alpine.js](https://alpinejs.dev/) - JavaScript interactions
