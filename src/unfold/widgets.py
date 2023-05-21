@@ -51,7 +51,9 @@ BASE_INPUT_CLASSES = [
     "dark:bg-gray-900",
     "dark:border-gray-700",
     "dark:text-gray-400",
-    "dark:focus:ring-primary-600/30",
+    "dark:focus:border-primary-600",
+    "dark:focus:ring-primary-700",
+    "dark:focus:ring-opacity-50",
     "dark:group-[.errors]:border-red-500",
     "dark:group-[.errors]:focus:ring-red-600/40",
 ]
