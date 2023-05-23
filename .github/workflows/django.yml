@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-
 env:
   RANDOM_SEED: ${{ github.run_id }}
 
@@ -26,11 +25,12 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
-    - name: Install poetry
+    - name: Install run dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install poetry==1.5.0
         python -m pip install tox-gh-actions
+        python -m pip install coverage
 
     - name: Configure poetry
       run: |
@@ -42,14 +42,24 @@ jobs:
         path: ./.venv
         key: ${{ runner.os }}-${{ matrix.python-version }}-venv-${{ hashFiles('**/poetry.lock') }}
 
-    - name: Install dependencies
+    - name: Install app dependencies
       run: |
         python -m poetry install --with testing
 
-    - name: Run tests
+    - name: Run tests with coverage
       run: |
         echo "Random seed: $RANDOM_SEED"
         export RANDOM_SEED
         chmod +x runtests.sh
-        ./runtests.sh
-        exit 0
+        coverage run --source='.' runtests.sh
+
+  finish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./coverage/lcov.info
+        parallel: true
