@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 # Set the RANDOM_SEED environment variable, to keep the tests deterministic between different environments
 
 # If RANDOM_SEED is not set or is empty
@@ -8,3 +10,4 @@ fi
 
 echo "Running tests with RANDOM_SEED=$RANDOM_SEED"
 tox
+echo "Tests ran successfully"
