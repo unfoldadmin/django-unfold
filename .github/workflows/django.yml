@@ -8,7 +8,7 @@ on:
 
 
 env:
-  RANDOM_SEED: ${{ (github.run_number % 10000) + 1 }}
+  RANDOM_SEED: ${RANDOM}
 
 jobs:
   build:
