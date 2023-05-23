@@ -51,7 +51,9 @@ BASE_INPUT_CLASSES = [
     "dark:bg-gray-900",
     "dark:border-gray-700",
     "dark:text-gray-400",
-    "dark:focus:ring-primary-600/30",
+    "dark:focus:border-primary-600",
+    "dark:focus:ring-primary-700",
+    "dark:focus:ring-opacity-50",
     "dark:group-[.errors]:border-red-500",
     "dark:group-[.errors]:focus:ring-red-600/40",
 ]
@@ -87,7 +89,10 @@ SELECT_CLASSES = [*BASE_INPUT_CLASSES, "pr-8", "max-w-2xl", "appearance-none"]
 PROSE_CLASSES = [
     "font-normal",
     "prose-sm",
+    "prose-blockquote:border-l-4",
     "prose-blockquote:not-italic",
+    "prose-pre:bg-gray-50",
+    "prose-pre:rounded",
     "prose-headings:font-medium",
     "prose-a:text-primary-600",
     "prose-a:underline",
@@ -96,8 +101,9 @@ PROSE_CLASSES = [
     "prose-ol:list-decimal",
     "prose-ul:list-disc",
     "prose-strong:text-gray-700",
+    "dark:prose-pre:bg-gray-800",
     "dark:prose-blockquote:border-gray-700",
-    "dark:prose-blockquote:text-gray-200",
+    "dark:prose-blockquote:text-gray-400",
     "dark:prose-headings:text-gray-200",
     "dark:prose-strong:text-gray-200",
 ]

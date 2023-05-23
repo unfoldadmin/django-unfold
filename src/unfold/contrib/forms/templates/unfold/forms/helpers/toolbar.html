@@ -1,8 +1,8 @@
 {% load i18n %}
 
 <template id="trix-toolbar">
-    <div class="bg-gray-50 flex flex-row border group-[.errors]:border-t-red-600 group-[.errors]:border-x-red-600 px-3 py-2 relative rounded-t-md shadow-sm w-full dark:bg-white/[.02] dark:border-gray-700 dark:group-[.errors]:border-t-red-500 dark:group-[.errors]:border-x-red-500">
-        <div data-trix-button-group="text-tools" class="bg-white border border-md flex flex-row mr-4 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
+    <div class="bg-gray-50 flex flex-row flex-wrap border group-[.errors]:border-t-red-600 gap-4 group-[.errors]:border-x-red-600 px-3 py-2 relative rounded-t-md shadow-sm w-full dark:bg-white/[.02] dark:border-gray-700 dark:group-[.errors]:border-t-red-500 dark:group-[.errors]:border-x-red-500">
+        <div data-trix-button-group="text-tools" class="bg-white border border-md flex flex-row rounded-md shadow-sm shrink-0 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
             {% spaceless %}
                 <button type="button" data-trix-attribute="p" data-trix-key="p" title="{% trans "Paragraph" %}" tabindex="-1" class="border-r cursor-pointer flex items-center h-8 justify-center transition-colors w-8 hover:text-primary-600 dark:border-gray-700">
                     <span class="material-symbols-outlined">format_paragraph</span>
@@ -30,7 +30,7 @@
             {% endspaceless %}
         </div>
 
-        <div data-trix-button-group="block-headings" class="bg-white border border-md flex flex-row mr-4 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
+        <div data-trix-button-group="block-headings" class="bg-white border border-md flex flex-row rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
             {% spaceless %}
                 <button type="button" data-trix-attribute="heading1" title="{% trans "Heading" %} 1" tabindex="-1" class="border-r cursor-pointer flex items-center h-8 justify-center transition-colors w-8 hover:text-primary-600 dark:border-gray-700">
                     <span class="material-symbols-outlined">format_h1</span>
@@ -50,7 +50,7 @@
             {% endspaceless %}
         </div>
 
-        <div data-trix-button-group="block-tools" class="bg-white border border-md flex flex-row mr-4 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
+        <div data-trix-button-group="block-tools" class="bg-white border border-md flex flex-row rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
             {% spaceless %}
                 <button type="button" data-trix-attribute="quote" title="{% trans "Quote" %}" tabindex="-1" class="border-r cursor-pointer flex items-center h-8 justify-center transition-colors w-8 hover:text-primary-600 dark:border-gray-700">
                     <span class="material-symbols-outlined">format_quote</span>
@@ -78,7 +78,7 @@
             {% endspaceless %}
         </div>
 
-        <div data-trix-button-group="history-tools" class="bg-white border border-md flex flex-row ml-auto rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400">
+        <div data-trix-button-group="history-tools" class="bg-white border border-md flex flex-row rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 lg:ml-auto">
             <button type="button" data-trix-action="undo" data-trix-key="z" title="{% trans "Undo" %}" tabindex="-1" class="border-r cursor-pointer flex items-center h-8 justify-center transition-colors w-8 hover:text-primary-600 dark:border-gray-700">
                 <span class="material-symbols-outlined">undo</span>
             </button>

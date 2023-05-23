@@ -42,6 +42,8 @@ Unfold is a new theme for Django Admin incorporating some most common practises 
   - [Pre-commit](#pre-commit)
   - [Poetry Configuration](#poetry-configuration)
   - [Compiling Tailwind](#compiling-tailwind)
+  - [Testing](#testing)
+- [Credits](#credits)
 
 ## Installation
 
@@ -225,7 +227,7 @@ def badge_callback(request):
 ```python
 from django import models
 from django.contrib import admin
-
+from django.db import models
 from unfold.admin import ModelAdmin
 from unfold.contrib.forms.widgets import WysiwygWidget
 
@@ -248,7 +250,9 @@ class CustomAdminClass(ModelAdmin):
     actions_submit_line = []  # Displayed near save in object detail
 
     formfield_overrides = {
-        models.TextField: WysiwygWidget,
+        models.TextField: {
+            "widget": WysiwygWidget,
+        }
     }
 ```
 
@@ -643,6 +647,7 @@ Some components like datepickers, calendars or selectors in admin was not possib
 
 None: most of the custom styles localted in style.css are created via `@apply some-tailwind-class;`.
 
+
 ### Testing
 Tox is used to run the tests
 
@@ -662,3 +667,11 @@ If you want to run tests for a specific seed:
 ```bash
 RANDOM_SEED=1234 ./runtests.sh
 ```
+
+# Credits
+
+- [TailwindCSS](https://tailwindcss.com/) - CSS framework
+- [HTMX](https://htmx.org/) - AJAX communication with backend
+- [Material Icons](https://fonts.google.com/icons) - Icons from Google Fonts
+- [Trix](https://trix-editor.org/) - WYSIWYG editor
+- [Alpine.js](https://alpinejs.dev/) - JavaScript interactions
