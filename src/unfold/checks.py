@@ -3,8 +3,7 @@ from typing import Any, List
 from django.contrib.admin.checks import ModelAdminChecks
 from django.contrib.admin.options import BaseModelAdmin
 from django.core import checks
-
-from .dataclasses import UnfoldAction
+from unfold.custom.dataclasses import UnfoldAction
 
 
 class UnfoldModelAdminChecks(ModelAdminChecks):

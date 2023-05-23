@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .custom_types import ActionFunction
+from unfold.custom.typing import ActionFunction
 
 
 @dataclass(frozen=True)
