@@ -41,11 +41,11 @@ from django.views import View
 from unfold.utils import display_for_field
 
 from .checks import UnfoldModelAdminChecks
+from .custom_types import FieldsetsType
 from .dataclasses import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config
-from .typing import FieldsetsType
 from .widgets import (
     CHECKBOX_LABEL_CLASSES,
     INPUT_CLASSES,

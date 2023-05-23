@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .typing import ActionFunction
+from .custom_types import ActionFunction
 
 
 @dataclass(frozen=True)

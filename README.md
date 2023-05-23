@@ -642,3 +642,23 @@ npm run tailwind:build # run once
 Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
 
 None: most of the custom styles localted in style.css are created via `@apply some-tailwind-class;`.
+
+### Testing
+Tox is used to run the tests
+
+#### Setup before running tests
+Install tox & testing dependencies
+```bash
+poetry install --with testing
+```
+
+#### Running tests
+From main directory
+```bash
+ ./runrests.sh
+```
+
+If you want to run tests for a specific seed:
+```bash
+RANDOM_SEED=1234 ./runrests.sh
+```
