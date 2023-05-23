@@ -11,7 +11,7 @@ if __name__ == "__main__":
     test_runner = DiscoverRunner(
         verbosity=2, interactive=False, shuffle=os.getenv("RANDOM_SEED")
     )
-    print(f"Testing against Django=={django.get_version()}")
+    print(f"Testing against Django=={django.get_version()}, Python=={sys.version}")
     failures = test_runner.run_tests(["unfold.tests"])
     if failures:
         sys.exit(failures)
