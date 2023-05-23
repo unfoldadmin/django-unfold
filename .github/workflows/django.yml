@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+
+env:
+  RANDOM_SEED: ${{ (github.run_number % 10000) + 1 }}
+
 jobs:
   build:
 
@@ -45,5 +49,7 @@ jobs:
     - name: Run tests
       run: |
         ls -la
+        echo "Random seed: $RANDOM_SEED"
+        export RANDOM_SEED
         chmod +x runtests.sh
         ./runtests.sh
