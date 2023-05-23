@@ -655,10 +655,10 @@ poetry install --with testing
 #### Running tests
 From main directory
 ```bash
- ./runrests.sh
+ ./runtests.sh
 ```
 
 If you want to run tests for a specific seed:
 ```bash
-RANDOM_SEED=1234 ./runrests.sh
+RANDOM_SEED=1234 ./runtests.sh
 ```
