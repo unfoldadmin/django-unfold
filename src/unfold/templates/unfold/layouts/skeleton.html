@@ -31,7 +31,6 @@
     <script src="{% static 'unfold/js/alpine.persist.js' %}" defer></script>
     <script src="{% static 'unfold/js/alpine.js' %}" defer></script>
     <script src="{% static 'unfold/js/htmx.js' %}"></script>
-    <script src="{% static 'unfold/js/app.js' %}"></script>
 
     {% for script in scripts %}
         <script src="{{ script }}"></script>
@@ -40,6 +39,8 @@
     {% block extrastyle %}{% endblock %}
 
     {% block extrahead %}{% endblock %}
+
+    <script src="{% static 'unfold/js/app.js' %}"></script>
 
     {% block responsive %}
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -64,6 +65,8 @@
 
 <body class="antialiased bg-white font-sans text-gray-500 dark:bg-gray-900 dark:text-gray-400 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }">
     {% block base %}{% endblock %}
+
+    <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
 </body>
 
 </html>
