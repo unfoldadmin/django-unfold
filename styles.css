@@ -414,8 +414,8 @@ fieldset.collapsed .collapse-toggle {
 /*******************************************************
  Calendar
  *******************************************************/
-.calendarbox {
-  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm w-80 z-50 dark:bg-gray-800 dark:border-gray-700;
+.calendarbox, .clockbox {
+  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm w-80 z-50 dark:bg-gray-800 dark:border-gray-700 !fixed !left-1/2 !top-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 .calendar caption {
