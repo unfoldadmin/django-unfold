@@ -27,6 +27,7 @@ classifiers = [
     "Framework :: Django",
 ]
 
+
 [tool.black]
 target-version = ["py38", "py39"]
 
@@ -48,9 +49,22 @@ ignore = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
-django = ">=3.2"
+python = "~=3.8"
+django = ">=4.2,<4.3"
+coverage = {extras = ["toml"], version = "^7.2.6"}
+
+[tool.poetry.group.testing]
+optional = true
+
+[tool.poetry.group.testing.dependencies]
+tox = "^4.5.1 "
 
 [build-system]
-requires = ["poetry>=1.0"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+omit = [
+    "runtests.py",
+    "tests/*",
+]

@@ -38,14 +38,14 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from django.views import View
+from unfold.custom.dataclasses import UnfoldAction
+from unfold.custom.typing import FieldsetsType
 from unfold.utils import display_for_field
 
 from .checks import UnfoldModelAdminChecks
-from .dataclasses import UnfoldAction
 from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config
-from .typing import FieldsetsType
 from .widgets import (
     CHECKBOX_LABEL_CLASSES,
     INPUT_CLASSES,

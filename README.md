@@ -646,6 +646,26 @@ Some components like datepickers, calendars or selectors in admin was not possib
 
 None: most of the custom styles localted in style.css are created via `@apply some-tailwind-class;`.
 
+### Testing
+Tox is used to run the tests
+
+#### Setup before running tests
+Install tox & testing dependencies
+```bash
+poetry install --with testing
+```
+
+#### Running tests
+From main directory
+```bash
+ ./runtests.sh
+```
+
+If you want to run tests for a specific seed:
+```bash
+RANDOM_SEED=1234 ./runtests.sh
+```
+
 # Credits
 
 - [TailwindCSS](https://tailwindcss.com/) - CSS framework

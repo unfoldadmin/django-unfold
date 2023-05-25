@@ -5,8 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
-
-from .typing import ActionFunction
+from unfold.custom.typing import ActionFunction
 
 
 def action(

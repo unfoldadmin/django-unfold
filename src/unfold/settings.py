@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import Optional
 
 from django.conf import settings
 
@@ -40,7 +41,7 @@ CONFIG_DEFAULTS = {
 
 
 @lru_cache
-def get_config(settings_name=None):
+def get_config(settings_name: Optional[str] = None):
     if settings_name is None:
         settings_name = "UNFOLD"
 
