@@ -1,6 +1,4 @@
-![Screenshot - Objects Listing](https://github.com/unfoldadmin/django-unfold/raw/main/screenshot-1.jpg)
-
-![Screenshot - Login Page](https://github.com/unfoldadmin/django-unfold/raw/main/screenshot-2.jpg)
+![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/1a6fd8ac-432a-4917-aa9b-a441b1a988e1)
 
 ## Unfold Django Admin Theme
 
