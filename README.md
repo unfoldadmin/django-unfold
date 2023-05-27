@@ -14,7 +14,7 @@ Demo is available at [unfoldadmin.com](https://unfoldadmin.com).
 - **Configuration:** most of the basic options can be changed in settings.py
 - **Dependencies:** completely based only on `django.contrib.admin`
 - **Actions:** multiple ways how to define actions within different parts of admin
-- **WYSIWIG:** built-in support for WYSIWIG (Trix)
+- **WYSIWYG:** built-in support for WYSIWYG (Trix)
 - **Numeric filters:** widgets for filtering number values
 - **Datetime filters:** widgets for filtering datetime values
 - **Dashboard:** helpers to bootstrap custom dashboard
