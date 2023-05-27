@@ -4,7 +4,7 @@
 
 Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
 
-Available demo [demo](https://unfoldadmin.com).
+Demo is available at [unfoldadmin.com](https://unfoldadmin.com).
 
 ## Features
 
@@ -18,7 +18,7 @@ Available demo [demo](https://unfoldadmin.com).
 - **Numeric filters:** widgets for filtering number values
 - **Datetime filters:** widgets for filtering datetime values
 - **Dashboard:** helpers to bootstrap custom dashboard
-- **Tabs:** custom tab navigations
+- **Tabs:** define custom tab navigations for models
 - **Colors:** possibility to override default color scheme
 - **Django import / export:** default support for this popular application
 
