@@ -1,4 +1,5 @@
-![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/1a6fd8ac-432a-4917-aa9b-a441b1a988e1)
+![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/daef6e7e-e8a1-4142-8e4c-fa2a287978d2)
+
 
 ## Unfold Django Admin Theme
 
