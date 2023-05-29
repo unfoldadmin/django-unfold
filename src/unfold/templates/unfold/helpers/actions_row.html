@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if actions %}
-    <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-400 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800 lg:w-0">
+    <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-400 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800 lg:w-px">
         <div class="group leading-none relative" x-data="{ openActionsId{{ instance.pk }}: false }">
             <span class="cursor-pointer material-symbols-outlined md-18 text-gray-400 transition-colors group-hover:text-primary-600 dark:text-gray-400" @click="openActionsId{{ instance.pk }} = !openActionsId{{ instance.pk }}">more_horiz</span>
 

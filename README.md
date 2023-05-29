@@ -1,23 +1,30 @@
-![Screenshot - Objects Listing](https://github.com/unfoldadmin/django-unfold/raw/main/screenshot-1.jpg)
+![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/daef6e7e-e8a1-4142-8e4c-fa2a287978d2)
 
-![Screenshot - Login Page](https://github.com/unfoldadmin/django-unfold/raw/main/screenshot-2.jpg)
 
 ## Unfold Django Admin Theme
 
-Unfold is a new theme for Django Admin incorporating some most common practises for building full-fledged admin areas.
+Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
+
+Demo is available at [unfoldadmin.com](https://unfoldadmin.com).
+
+## Features
 
 - **Visual**: provides new user interface based on Tailwind CSS framework
-- **Sidebar:** simplifies definition of custom sidebar navigation
+- **Sidebar:** simplifies definition of custom sidebar navigation with icons
 - **Dark mode:** supports both light and dark mode versions
 - **Configuration:** most of the basic options can be changed in settings.py
 - **Dependencies:** completely based only on `django.contrib.admin`
-- **Filters:** custom widgets for filters (e.g. numeric filter)
 - **Actions:** multiple ways how to define actions within different parts of admin
+- **WYSIWYG:** built-in support for WYSIWYG (Trix)
+- **Numeric filters:** widgets for filtering number values
+- **Datetime filters:** widgets for filtering datetime values
+- **Dashboard:** helpers to bootstrap custom dashboard
+- **Tabs:** define custom tab navigations for models
+- **Colors:** possibility to override default color scheme
+- **Django import / export:** default support for this popular application
 
 ## Table of Contents
 
-- [Unfold Django Admin Theme](#unfold-django-admin-theme)
-- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
 - [Configuration](#configuration)
   - [Available settings.py options](#available-settingspy-options)

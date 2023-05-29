@@ -2,7 +2,36 @@ window.addEventListener('load', e => {
     submitSearch()
 
     fileInputUpdatePath()
+
+    dateTimeShortcutsOverlay()
 })
+
+/*************************************************************
+ * Calendar & clock
+ *************************************************************/
+const dateTimeShortcutsOverlay = () => {
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutationRecord => {
+            const display = mutationRecord.target.style.display
+            const overlay = document.getElementById('modal-overlay')
+
+            if (display === 'block') {
+                overlay.style.display = 'block'
+            } else {
+                overlay.style.display = 'none'
+            }
+        });
+    });
+
+    const targets = document.querySelectorAll('.calendarbox, .clockbox')
+
+    Array.from(targets).forEach(target => {
+        observer.observe(target, {
+            attributes: true,
+            attributeFilter: ['style']
+        });
+    })
+}
 
 /*************************************************************
  * File upload path

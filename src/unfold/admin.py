@@ -257,7 +257,7 @@ class ModelAdminMixin:
         return super().formfield_for_choice_field(db_field, request, **kwargs)
 
     def formfield_for_foreignkey(
-        self, db_field: ForeignKey[Any], request: HttpRequest, **kwargs
+        self, db_field: ForeignKey, request: HttpRequest, **kwargs
     ) -> Optional[ModelChoiceField]:
         # Overrides widgets for all related fields
         if "widget" not in kwargs:
