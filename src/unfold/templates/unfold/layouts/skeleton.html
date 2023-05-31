@@ -25,6 +25,9 @@
     {% endfor %}
 
     <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
+    {% if LANGUAGE_BIDI %}
+        <link href="{% static 'unfold/css/rtl.css' %}" rel="stylesheet">
+    {% endif %}
     <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
 
     <script src="{% static 'unfold/js/simplebar.js' %}"></script>
