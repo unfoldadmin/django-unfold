@@ -1,0 +1,6 @@
+.text-left {text-align: right;}[dir="rtl"] .text-right{text-align: left;}
+#site-name {  text-indent: 4px; }
+.sortoptions a{padding-right:3px;padding-left:3px;}
+.material-symbols-outlined.pl-4{padding-left:0;padding-right:1rem;}
+select:not([class*="bg-none"]):not([multiple]){background-position:left center;padding:0.6rem;}
+[type="checkbox"]{margin-left:6px;}
