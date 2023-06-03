@@ -23,4 +23,4 @@ jobs:
       - name: Install dependencies
         run: poetry install --with=test
       - name: Run tox targets for ${{ matrix.python-version }}
-        run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
+        run: poetry run tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
