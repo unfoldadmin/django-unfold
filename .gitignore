@@ -1,5 +1,6 @@
 .DS_Store
 .idea/
+.coverage
 *.pyc
 __pycache__
 venv
