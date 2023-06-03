@@ -27,8 +27,13 @@ classifiers = [
     "Framework :: Django",
 ]
 
+[tool.poetry.group.test.dependencies]
+pytest = "^7.3.1"
+pytest-django = "^4.5.2"
+tox = "^4.5.2"
+
 [tool.black]
-target-version = ["py38", "py39"]
+target-version = ["py38", "py39", "py310"]
 
 [tool.ruff]
 fix = true
@@ -46,6 +51,14 @@ ignore = [
     "B905",  # zip() without strict=True
     "C901",  # too complex
 ]
+
+[tool.pytest.ini_options]
+addopts = """\
+    --strict-config
+    --strict-markers
+    --ds=tests.settings
+    """
+django_find_project = false
 
 [tool.poetry.dependencies]
 python = ">=3.8"
