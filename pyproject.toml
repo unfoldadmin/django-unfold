@@ -30,6 +30,7 @@ classifiers = [
 [tool.poetry.group.test.dependencies]
 pytest = "^7.3.1"
 pytest-django = "^4.5.2"
+tox = "^4.5.2"
 
 [tool.black]
 target-version = ["py38", "py39", "py310"]
