@@ -12,7 +12,7 @@
 {% capture as actions_items silent %}{% block actions-items %}{% endblock %}{% endcapture %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" x-data="{ adminTheme: $persist('auto').as('adminTheme') }" x-bind:class="adminTheme && adminTheme" x-cloak>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" x-data="{ adminTheme: $persist('auto').as('adminTheme') }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak>
 
 <head>
     <title>{% block title %}{% endblock %}</title>
