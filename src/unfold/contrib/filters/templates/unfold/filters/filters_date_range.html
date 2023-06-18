@@ -6,7 +6,7 @@
 
         <div class="flex flex-col space-y-4">
             {% for field in choice.form %}
-                <div class="flex flex-row">
+                <div class="flex flex-row flex-wrap relative">
                     {{ field }}
                 </div>
             {% endfor %}

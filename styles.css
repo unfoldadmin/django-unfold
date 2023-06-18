@@ -134,7 +134,7 @@ table tr.selected {
  Datetime
  *******************************************************/
 .datetimeshortcuts {
-  @apply flex flex-row-reverse items-center text-0;
+  @apply absolute flex flex-row-reverse items-center right-0 text-0 top-px;
 }
 
 .datetimeshortcuts a {
@@ -142,11 +142,11 @@ table tr.selected {
 }
 
 .datetimeshortcuts a:first-child {
-  @apply ml-2 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200;
+  @apply hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200;
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply bg-white border flex h-9.5 items-center justify-center leading-none material-symbols-outlined py-2 rounded shadow-sm text-base text-center w-9.5 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:hover:text-white;
+  @apply border-l flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700 dark:hover:text-white;
   content: 'timer';
 }
 
@@ -155,11 +155,11 @@ table tr.selected {
 }
 
 .date-icon {
-  @apply block h-9.5 ml-2 text-gray-400 transition-all w-9.5 hover:text-gray-700 dark:text-gray-500 dark:hover:text-white;
+  @apply block h-9 text-gray-400 transition-all w-9 hover:text-gray-700 dark:text-gray-500 dark:hover:text-white;
 }
 
 .date-icon:after {
-  @apply bg-white border h-9.5 items-center justify-center leading-none material-symbols-outlined py-2 rounded shadow-sm text-base text-center w-9.5 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700;
+  @apply border-l h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700;
   content: 'edit';
 }
 
@@ -168,11 +168,11 @@ table tr.selected {
 }
 
 .clock-icon {
-  @apply block h-9.5 ml-2 w-9.5 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200;
+  @apply block h-9 ml-2 w-9 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200;
 }
 
 .clock-icon:after {
-  @apply bg-white border h-9.5 items-center justify-center material-symbols-outlined py-2 rounded shadow-sm text-base text-center w-9.5 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:hover:text-white;
+  @apply border-l h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700 dark:hover:text-white;
   content: 'edit';
 }
 
