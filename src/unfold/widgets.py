@@ -160,7 +160,7 @@ class UnfoldAdminDateWidget(AdminDateWidget):
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
-            "class": "vDateField w-36 lg:w-60 " + " ".join(INPUT_CLASSES),
+            "class": "vDateField " + " ".join(INPUT_CLASSES),
             "size": "10",
             **(attrs or {}),
         }
@@ -186,7 +186,7 @@ class UnfoldAdminTimeWidget(AdminTimeWidget):
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
-            "class": "vTimeField w-36 lg:w-60 " + " ".join(INPUT_CLASSES),
+            "class": "vTimeField " + " ".join(INPUT_CLASSES),
             "size": "8",
             **(attrs or {}),
         }
@@ -200,7 +200,7 @@ class UnfoldAdminSingleTimeWidget(AdminTimeWidget):
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
-            "class": "vTimeField w-36 lg:w-60 " + " ".join(INPUT_CLASSES),
+            "class": "vTimeField " + " ".join(INPUT_CLASSES),
             "size": "8",
             **(attrs or {}),
         }

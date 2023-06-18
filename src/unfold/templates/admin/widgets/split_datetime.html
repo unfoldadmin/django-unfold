@@ -5,7 +5,7 @@
         </div>
 
         {% with widget=widget.subwidgets.0 %}
-            <div class="flex">
+            <div class="flex flex-col relative">
                 {% include widget.template_name %}
             </div>
         {% endwith %}
@@ -17,7 +17,7 @@
         </div>
 
         {% with widget=widget.subwidgets.1 %}
-            <div class="flex">
+            <div class="flex flex-col relative">
                 {% include widget.template_name %}
             </div>
         {% endwith %}
