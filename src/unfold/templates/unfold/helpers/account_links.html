@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<div class="relative">
+    <a class="block cursor-pointer hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" @click="openUserLinks = !openUserLinks">
+        <span class="material-symbols-outlined">person</span>
+    </a>
+
+    <nav class="absolute bg-white border flex flex-col leading-none overflow-hidden py-1 -right-2 rounded shadow-lg text-sm text-gray-500 top-7 w-52 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" x-cloak x-show="openUserLinks" @click.outside="openUserLinks = false">
+        <div class="border-b border-gray-100 flex flex-row flex-shrink-0 items-start justify-start mb-1 pb-1 dark:border-gray-700">
+            <span class="block mx-1 px-3 py-2 truncate">
+                {% firstof user.get_short_name user.get_username %}
+            </span>
+        </div>
+
+        {% if nav_global %}
+            {{ nav_global }}
+        {% endif %}
+
+        {% if site_url %}
+            <a href="{{ site_url }}" class="mx-1 px-3 py-2 rounded hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200">
+                {% translate 'View site' %}
+            </a>
+        {% endif %}
+
+        {% if user.has_usable_password %}
+            <a href="{% url 'admin:password_change' %}" class="mx-1 px-3 py-2 rounded hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200">
+                {% translate 'Change password' %}
+            </a>
+        {% endif %}
+
+        <div class="border-t mt-1 pt-1 dark:border-gray-700">
+            <a href="{% url 'admin:logout' %}" class="bg-none block mx-1 px-3 py-2 text-red-500 rounded hover:bg-red-100 dark:hover:bg-red-500/20 dark:hover:text-red-500">
+                {% translate 'Log out' %}
+            </a>
+        </div>
+    </nav>
+</div>

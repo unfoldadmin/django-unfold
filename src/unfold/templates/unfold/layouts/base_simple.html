@@ -11,6 +11,7 @@
         {% endif %}
 
         <div id="main" class="shadow flex-grow">
+            {% block content_before %}{% endblock %}
             <div class="p-4 lg:p-12">
                 <div id="content" class="container mx-auto {% block coltype %}colM{% endblock %}">
                     {% block content %}
