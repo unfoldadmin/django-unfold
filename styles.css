@@ -85,11 +85,8 @@ select:after {
 }
 
 #page input[type=checkbox] {
-  @apply appearance-none bg-white block border border-gray-300 cursor-pointer h-4 relative rounded w-4 dark:bg-gray-700 dark:border-gray-500;
-}
-
-#page input[type=checkbox]:hover {
-  @apply border-gray-400;
+  @apply appearance-none bg-white block border border-gray-300 cursor-pointer h-4 relative rounded w-4 dark:bg-gray-700 dark:border-gray-500 hover:border-gray-400;
+  @apply focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-primary-500
 }
 
 #page input[type=checkbox]:after {
