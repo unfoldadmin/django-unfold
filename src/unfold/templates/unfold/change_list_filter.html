@@ -1,0 +1,49 @@
+{% load i18n admin_list %}
+
+<div id="changelist-filter" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 flex fixed inset-0 z-50" x-show="filterOpen">
+    <label for="show-filters" id="changelist-filter-close" class="flex-grow"></label>
+
+    <div class="bg-white flex mr-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800">
+        <div class="flex-grow h-full overflow-auto relative" data-simplebar>
+            <h3 class="border-b flex font-medium mb-6 px-6 py-4 text-gray-700 text-sm dark:text-gray-200 dark:border-gray-700">
+                {% trans "Filter results" %}
+
+                {% if cl.has_active_filters %}
+                    <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-3 text-sm text-red-600 underline dark:text-red-500">
+                        {% translate "Clear all filters" %}
+                    </a>
+                {% endif %}
+
+                <a class="cursor-pointer material-symbols-outlined md-18 ml-auto pl-4 text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" x-on:click="filterOpen = false">
+                    close
+                </a>
+            </h3>
+
+            <div class="px-6{% if cl.model_admin.list_filter_submit %} pb-16{% endif %}">
+                {% if cl.model_admin.list_filter_submit %}
+                    <form method="get">
+
+                    {% for k, v in request.GET.items %}
+                        {% if not k == choice.parameter_name|add:'_from' and not k == choice.parameter_name|add:'_to' %}
+                            <input type="hidden" name="{{ k }}" value="{{ v }}">
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+
+                {% for spec in cl.filter_specs %}
+                    {% admin_list_filter cl spec %}
+                {% endfor %}
+
+                {% if cl.model_admin.list_filter_submit %}
+                        <div class="bg-gray-50 border-gray-200 border-t bottom-4 fixed px-6 py-3 right-4 rounded-b w-96 dark:bg-gray-700 dark:border-gray-600">
+                            <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md self-end text-sm text-white w-full">
+                                {% trans "Apply Filters" %}
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
