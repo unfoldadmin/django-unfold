@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{{ diff_html }}
+
+<h4>{% trans "Edit comment:" %}</h4>
+<blockquote>{{ version2.revision.comment|default:_("(no comment exists)") }}</blockquote>
+
+<h4>{% trans "Note:" %}</h4>
+<p>
+    {% blocktrans %}
+    This is the fallback compare, because the normal compare can't be applied
+    between the two selected version:
+    {% endblocktrans %}
+</p>
+<pre>{{ compare_error }}</pre>
+<p>
+    {% trans "Revert to the old version will probably not work!" %}
+    ({% trans "More info:" %} <a href="https://github.com/etianen/django-reversion/issues/859">
+    django-reversion issues #859</a>)
+</p>

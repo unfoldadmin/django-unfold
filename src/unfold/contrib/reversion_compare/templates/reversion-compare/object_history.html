@@ -1,0 +1,20 @@
+{% extends "admin/object_history.html" %}
+{% load i18n l10n %}
+
+{% block content %}
+    <div id="content-main">
+        <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+            <div class="">
+                <label class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200" for="id_name">Choose a date from the list below to revert to a previous version of this object.</label>
+            </div>
+            <div>
+                {% if action_list %}
+                    {% include "reversion-compare-unfold/action_list_partial.html" with action="../history/compare/" %}
+                {% else %}
+                    <p>{% trans "This object doesn't have a change history. It probably wasn't added via this admin site." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

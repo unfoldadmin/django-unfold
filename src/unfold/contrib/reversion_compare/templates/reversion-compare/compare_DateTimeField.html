@@ -1,0 +1,6 @@
+{% load i18n %}
+
+<pre class="highlight">
+<del>- {{ date1|date:_("DATETIME_FORMAT") }}</del> ({% trans 'time since that date:' %} {{ date1|timesince }})
+<ins>+ {{ date2|date:_("DATETIME_FORMAT") }}</ins> ({% trans 'time since that date:' %} {{ date2|timesince }})
+</pre>

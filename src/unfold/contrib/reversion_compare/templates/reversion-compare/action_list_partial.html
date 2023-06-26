@@ -1,0 +1,56 @@
+{% load i18n l10n %}
+{% if compare_view %}<form method="GET" action="{{ action }}">{% endif %}
+<table id="change-history" class="border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+    <thead class="hidden lg:table-header-group">
+        <tr>
+            {% if compare_view %}
+                <th class="align-middle font-medium px-3 py-2 text-middle text-gray-400 text-sm" scope="col">
+                    {% if comparable %}
+                        <button type="submit" value="{% trans 'compare' %}" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md text-sm text-white w-full lg:w-auto">
+                            {% trans "Compare" %}
+                        </button>
+                    {% else %}
+                       <b>{% trans "Compare" %}</b>
+                    {% endif %}
+                </th>
+            {% endif %}
+            <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">{% trans 'Date/time' %}</th>
+            <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">{% trans 'User' %}</th>
+            <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">{% trans 'Comment' %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for action in action_list %}
+            <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                {% if compare_view %}
+                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" scope="row">
+                    {% if comparable %}
+                       <input type="radio" name="version_id1" value="{{ action.version.pk|unlocalize }}" {% if action.first %}style="visibility:hidden" {% endif %}{% if version1.pk|unlocalize == action.version.pk|unlocalize or action.second %}checked="checked"{% endif%}/>
+                       <b><=></b>
+                       <input type="radio" name="version_id2" value="{{ action.version.pk|unlocalize }}" {% if version2.pk|unlocalize == action.version.pk|unlocalize or action.first == 1 %}checked="checked"{% endif%}/>
+                    {% else %}
+                       <b>-</b>
+                    {% endif %}
+                </td>
+                {% endif %}
+                <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" scope="row">
+                    {% if action.url %}
+                        <a href="{{action.url}}">{{action.revision.date_created|date:_("DATETIME_FORMAT")}}</a>
+                    {% else %}
+                        {{action.revision.date_created|date:_("DATETIME_FORMAT")}}
+                    {% endif %}
+                </th>
+                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" scope="row">
+                    {% if action.revision.user %}
+                        {{action.revision.user.get_username}}
+                        {% if action.revision.user.get_full_name %} ({{action.revision.user.get_full_name}}){% endif %}
+                    {% endif %}
+                </td>
+                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" scope="row">
+                    {{action.revision.comment|default:""}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% if compare_view %}</form>{% endif %}

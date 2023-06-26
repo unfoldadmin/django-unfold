@@ -1,0 +1,51 @@
+{% extends "admin/object_history.html" %}
+{% load i18n %}
+
+
+{% block content %}
+    <div id="content-main">
+        <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+            <div>
+                <label class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">{% blocktrans %}Choose a date from the list below to revert to a previous version of this object.{% endblocktrans %}</label>
+            </div>
+
+            <div class="module">
+                {% if action_list %}
+                    <table id="change-history" class="border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+                        <thead class="hidden lg:table-header-group">
+                            <tr>
+                                <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm" scope="col">{% trans 'Date/time' %}</th>
+                                <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm" scope="col">{% trans 'User' %}</th>
+                                <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm" scope="col">{% trans 'Action' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for action in action_list %}
+                                <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                                    <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" scope="row">
+                                        <a href="{{action.url}}">{{action.revision.date_created|date:"DATETIME_FORMAT"}}</a>
+                                    </th>
+                                    <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" scope="row">
+                                        {% if action.revision.user %}
+                                            {{action.revision.user.get_username}}
+                                            {% if action.revision.user.get_full_name %} ({{action.revision.user.get_full_name}}){% endif %}
+                                        {% else %}
+                                            &mdash;
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" scope="row">
+                                        {{action.revision.get_comment|linebreaksbr|default:""}}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div>
+                        <label class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">{% trans "This object doesn't have a change history. It probably wasn't added via this admin site." %}</label>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% load i18n %}
+{% if prev_url %}
+    <a href="{{ prev_url }}">
+        <button class="border font-medium px-3 py-2 rounded-md text-sm text-gray-500 transition-all  w-full hover:bg-gray-50 lg:w-auto dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-900">
+            {% trans "Previous" %}
+        </button>
+    </a>
+{% endif %}
+{% if next_url %}
+    <a href="{{ next_url }}">
+        <button class="border font-medium px-3 py-2 rounded-md text-sm text-gray-500 transition-all  w-full hover:bg-gray-50 lg:w-auto dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-900">
+            {% trans "Next" %}
+        </button>
+    </a>
+{% endif %}

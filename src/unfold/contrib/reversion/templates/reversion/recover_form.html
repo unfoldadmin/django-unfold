@@ -1,0 +1,43 @@
+{% extends "reversion/revision_form.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+        <div class="px-4 lg:px-12">
+            <div class="container mb-6 mx-auto -my-3 lg:mb-12">
+                <ul class="flex">
+                    {% url 'admin:index' as link %}
+                    {% trans 'Home' as name %}
+                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
+
+                    {% url 'admin:app_list' app_label=opts.app_label as link %}
+                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
+
+                    {% url opts|admin_urlname:'changelist' as link %}
+                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link  name=opts.verbose_name_plural|capfirst %}
+
+                    <li class="text-gray-500 text-xs dark:text-gray-400">
+                        <a href="{% url opts|admin_urlname:'recoverlist' %}">{% blocktrans with opts.verbose_name_plural as name %}Recover deleted {{name}}{% endblocktrans %}</a> <span class="mx-2 text-gray-200 dark:text-gray-600">/</span>
+                    </li>
+
+                    <li class="text-gray-500 text-xs dark:text-gray-400">
+                        {% blocktrans with opts.verbose_name as verbose_name %}Recover {{verbose_name}}{% endblocktrans %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+{% endif %}
+
+{% block object-tools %}{% endblock %}
+
+
+{% block form_top %}
+    <div>
+        <label class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">{% blocktrans %}Press the save button below to recover this version of the object.{% endblocktrans %}</label>
+    </div>
+{% endblock %}
+
+
+{% block submit_buttons_top %}{% with is_popup=1 %}{{block.super}}{% endwith %}{% endblock %}
+{% block submit_buttons_bottom %}{% with is_popup=1 %}{{block.super}}{% endwith %}{% endblock %}

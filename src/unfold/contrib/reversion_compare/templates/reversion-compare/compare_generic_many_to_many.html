@@ -1,0 +1,32 @@
+{% load i18n %}
+
+<p class="highlight">
+{% for item1, item2 in change_info.changed_items %}
+    <del>{{ item1 }}</del> &rarr; <ins>{{ item2 }}</ins><br />
+{% endfor %}
+
+{% for item in change_info.removed_items %}
+    <del>- {{ item }}</del><br />
+{% endfor %}
+{% for item in change_info.removed_missing_objects %}
+    <del>- {{ item }}</del><sup class="follow">*</sup><br />
+{% endfor %}
+
+{% for item in change_info.deleted_items %}
+    <del>- {{ item }}</del>  &rarr; Deleted<br />
+{% endfor %}
+
+{% for item in change_info.added_items %}
+    <ins>+ {{ item }}</ins><br />
+{% endfor %}
+{% for item in change_info.added_missing_objects %}
+    <ins>+ {{ item }}</ins><sup class="follow">*</sup><br />
+{% endfor %}
+
+{% for item in change_info.same_items %}
+    {{ item }}<br />
+{% endfor %}
+{% for item in change_info.same_missing_objects %}
+    {{ item }}<sup class="follow">*</sup><br />
+{% endfor %}
+</p>
