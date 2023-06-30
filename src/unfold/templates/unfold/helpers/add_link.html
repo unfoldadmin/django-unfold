@@ -1,0 +1,19 @@
+{% load i18n admin_urls %}
+
+{% if cl %}
+    {% url cl.opts|admin_urlname:"add" as add_url %}
+    {% blocktranslate with name=cl.opts.verbose_name asvar title %}Add {{ name }}{% endblocktranslate %}
+{% else %}
+    {% url opts|admin_urlname:"add" as add_url %}
+    {% blocktranslate with name=opts.verbose_name asvar title %}Add {{ name }}{% endblocktranslate %}
+{% endif %}
+
+{% if add_url %}
+    <li class="flex flex-row items-center">
+        <span class="block bg-gray-200 h-5 mx-4 w-px dark:bg-gray-700"></span>
+
+        <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 flex items-center h-9 justify-center -my-1 rounded-full w-9" title="{{ title }}">
+            <span class="material-symbols-outlined text-white">add</span>
+        </a>
+    </li>
+{% endif %}
