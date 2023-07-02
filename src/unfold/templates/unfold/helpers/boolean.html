@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="flex items-center ">
-    <div class="block mr-3 rounded-full h-1 w-1 {% if value == '' or value == None %}bg-gray-500{% elif value %}bg-green-500{% else %}bg-red-500{% endif %}"></div>
+    <div class="block mr-3 outline rounded-full h-1 w-1 {% if value == '' or value == None %}bg-gray-500 outline-gray-500/20{% elif value %}bg-green-500 outline-green-200 dark:outline-green-500/20{% else %}bg-red-500 outline-red-200 dark:outline-red-500/20{% endif %}"></div>
 
     <span>
         {% if value == '' or value == None %}
