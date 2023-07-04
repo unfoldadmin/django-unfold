@@ -39,7 +39,7 @@ CONFIG_DEFAULTS = {
 }
 
 
-@lru_cache
+@lru_cache()
 def get_config(settings_name=None):
     if settings_name is None:
         settings_name = "UNFOLD"
