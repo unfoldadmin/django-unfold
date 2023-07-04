@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          50: "rgb(var(--color-primary-50) / <alpha-value>)",
           100: "rgb(var(--color-primary-100) / <alpha-value>)",
           200: "rgb(var(--color-primary-200) / <alpha-value>)",
           300: "rgb(var(--color-primary-300) / <alpha-value>)",

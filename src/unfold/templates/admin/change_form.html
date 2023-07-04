@@ -53,6 +53,12 @@
     {% endif %}
 {% endspaceless %}{% endblock %}
 
+{% block nav-global-side %}
+    {% if has_add_permission %}
+        {% include "unfold/helpers/add_link.html" %}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div id="content-main">
         <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post" id="{{ opts.model_name }}_form" novalidate>
