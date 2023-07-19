@@ -318,8 +318,6 @@ class UserAdmin(ModelAdmin):
     def show_status_customized_color(self, obj)
         return obj.status
 
-    def show_status_default_colorscheme(self, obj):
-        return obj.status
     @display(description=_("Status with label"), ordering="status", label=True)
     def show_status_with_custom_label(self, obj):
         return obj.status, obj.get_status_display()
