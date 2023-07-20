@@ -1,7 +1,11 @@
 ![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/daef6e7e-e8a1-4142-8e4c-fa2a287978d2)
 
-
 ## Unfold Django Admin Theme
+
+[![Build](https://img.shields.io/github/actions/workflow/status/unfoldadmin/django-unfold/release.yml?style=for-the-badge)](https://github.com/unfoldadmin/django-unfold/actions?query=workflow%3Arelease)
+[![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
+![Code Style - Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)
+![Pre Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=for-the-badge)
 
 Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
 
