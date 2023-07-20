@@ -596,7 +596,7 @@ module.exports = {
 Once the configuration file is set, it is possible to compile new styles which can be loaded into admin by using **STYLES** key in **UNFOLD** dict.
 
 ```bash
-npx tailwindcss  -o your_project/static/css/styles.css --watch --minify
+npx tailwindcss -o your_project/static/css/styles.css --watch --minify
 ```
 
 ## Custom Admin Dashboard
@@ -652,7 +652,7 @@ At the moment project contains package.json with all dependencies required to co
 
 ```bash
 npm install
-npx tailwindcss -i styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify
+npx tailwindcss -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify
 
 npm run tailwind:watch # run after each change in code
 npm run tailwind:build # run once
