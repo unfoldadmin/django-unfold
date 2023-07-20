@@ -299,15 +299,23 @@ class UserAdmin(ModelAdmin):
     @display(
         description=_("Status"),
         ordering="status",
-        label=True,
-        mapping={
-            UserStatus.ACTIVE: "success",
-            UserStatus.PENDING: "info",
-            UserStatus.INACTIVE: "warning",
-            UserStatus.CANCELLED: "danger",
+        label=True
+    )
+    def show_status_default_color(self, obj):
+        return obj.status
+
+
+    @display(
+        description=_("Status"),
+        ordering="status",
+        label={
+            UserStatus.ACTIVE: "success",  # green
+            UserStatus.PENDING: "info",  # blue
+            UserStatus.INACTIVE: "warning",  # orange
+            UserStatus.CANCELLED: "danger",  # red
         },
     )
-    def show_status(self, obj):
+    def show_status_customized_color(self, obj)
         return obj.status
 
     @display(description=_("Status with label"), ordering="status", label=True)
