@@ -11,7 +11,7 @@
         </caption>
 
         {% for model in app.models %}
-          <tr class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %} {% cycle "bg-white dark:bg-gray-900" "bg-gray-50 dark:bg-gray-800" %}">
+          <tr class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %} {% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %}">
             {% if model.admin_url %}
               <th scope="row" class="font-normal p-3 text-left dark:text-gray-400 {% if not forloop.last %}border-b dark:border-gray-800{% endif %}">
                   <a href="{{ model.admin_url }}"{% if model.admin_url in request.path %} aria-current="page"{% endif %}>
