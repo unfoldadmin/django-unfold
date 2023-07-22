@@ -1,5 +1,8 @@
-{% extends "admin/index.html" %}
+{% extends "admin/base.html" %}
+
 {% load i18n %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block bodyclass %}{{ block.super }} app-{{ app_label }}{% endblock %}
 
@@ -20,5 +23,21 @@
         </div>
     {% endblock %}
 {% endif %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Django administration') }}
+        </a>
+    </h1>
+{% endblock %}
+
+{% block content %}
+    <div class="flex flex-row -mx-4">
+        <div class="flex-grow px-4">
+            {% include "unfold/helpers/app_list_default.html" %}
+        </div>
+    </div>
+{% endblock %}
 
 {% block sidebar %}{% endblock %}
