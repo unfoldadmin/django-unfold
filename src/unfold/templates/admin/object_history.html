@@ -30,15 +30,15 @@
         <table class="border border-spacing-none border-separate rounded-md shadow-sm text-gray-700 w-full">
             <thead>
                 <tr>
-                    <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm ">
+                    <th scope="col" class="align-middle font-medium px-3 py-2 text-start text-gray-400 text-sm ">
                         {% translate 'Date/time' %}
                     </th>
 
-                    <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm ">
+                    <th scope="col" class="align-middle font-medium px-3 py-2 text-start text-gray-400 text-sm ">
                         {% translate 'User' %}
                     </th>
 
-                    <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm ">
+                    <th scope="col" class="align-middle font-medium px-3 py-2 text-start text-gray-400 text-sm ">
                         {% translate 'Action' %}
                     </th>
                 </tr>
@@ -47,15 +47,15 @@
             <tbody>
                 {% for action in actions_list %}
                     <tr>
-                        <th scope="row" class="align-middle border-t text-left px-3 py-3 font-normal text-sm">
+                        <th scope="row" class="align-middle border-t text-start px-3 py-3 font-normal text-sm">
                             {{ action.action_time|date:"DATETIME_FORMAT" }}
                         </th>
 
-                        <td class="align-middle border-t text-left px-3 py-3 font-normal text-sm">
+                        <td class="align-middle border-t text-start px-3 py-3 font-normal text-sm">
                             {{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}
                         </td>
 
-                        <td class="align-middle border-t text-left px-3 py-3 font-normal text-sm">
+                        <td class="align-middle border-t text-start px-3 py-3 font-normal text-sm">
                             {{ action.get_change_message }}
                         </td>
                     </tr>

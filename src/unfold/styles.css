@@ -651,6 +651,14 @@ trix-toolbar[id^="trix-toolbar-"] {
   padding-inline-end: 1rem;
 }
 
+.text-start{
+  text-align: start;
+}
+
+.text-end{
+  text-align: end;
+}
+
 @media (min-width: 1024px) {
   .lg\:ms-auto {
     margin-inline-start: auto;
@@ -658,9 +666,15 @@ trix-toolbar[id^="trix-toolbar-"] {
   .lg\:me-2 {
     margin-inline-end: 0.5rem;
   }
-
   .lg\:me-3 {
     margin-inline-end: 0.75rem;
+  }
+
+  .lg\:text-start {
+    text-align: start;
+  }
+  .lg\:text-end {
+    text-align: end;
   }
 }
 
