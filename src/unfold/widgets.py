@@ -25,7 +25,7 @@ LABEL_CLASSES = [
 ]
 
 CHECKBOX_LABEL_CLASSES = [
-    "ml-2",
+    "ms-2",
     "text-sm",
     "text-gray-900",
     "dark:text-gray-200",
@@ -84,7 +84,7 @@ TEXTAREA_EXPANDABLE_CLASSES = [
     "h-full",
 ]
 
-SELECT_CLASSES = [*BASE_INPUT_CLASSES, "pr-8", "max-w-2xl", "appearance-none"]
+SELECT_CLASSES = [*BASE_INPUT_CLASSES, "pe-8", "max-w-2xl", "appearance-none"]
 
 PROSE_CLASSES = [
     "font-normal",

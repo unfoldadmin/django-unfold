@@ -635,6 +635,10 @@ trix-toolbar[id^="trix-toolbar-"] {
   padding-inline-end: 1rem;
 }
 
+.pr-8{
+  padding-inline-end: 2rem;
+}
+
 .ps-1 {
   padding-inline-end: 0.25rem;
 }
