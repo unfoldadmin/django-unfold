@@ -663,6 +663,42 @@ trix-toolbar[id^="trix-toolbar-"] {
   text-align: end;
 }
 
+.-right-2{
+  inset-inline-end: -0.5rem;
+}
+.-right-1{
+  inset-inline-end: -0.25rem;
+}
+.right-0{
+  inset-inline-end: 0;
+}
+.right-2{
+  inset-inline-end: 0.5rem;
+}
+.right-4{
+  inset-inline-end: 1rem;
+}
+
+.-left-2{
+  inset-inline-start: -0.5rem;
+}
+.-left-1{
+  inset-inline-start: -0.25rem;
+}
+.left-0{
+  inset-inline-start: 0;
+}
+.left-2{
+  inset-inline-start: 0.5rem;
+}
+.left-4{
+  inset-inline-start: 1rem;
+}
+
+.menu-width{
+  width: fit-content;
+}
+
 @media (min-width: 1024px) {
   .lg\:ms-auto {
     margin-inline-start: auto;
