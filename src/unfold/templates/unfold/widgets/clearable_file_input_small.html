@@ -7,7 +7,7 @@
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
                     <input type="checkbox" class="form-check-input" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
-                    <span class="ml-2 text-gray-500">
+                    <span class="ms-2 text-gray-500">
                         {{ widget.clear_checkbox_label }}
                     </span>
                 </label>
@@ -26,7 +26,7 @@
     </div>
 
     {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
-        <div class="bg-gray-50 border h-9 ml-3 overflow-hidden relative rounded-md shadow-sm w-9 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500">
+        <div class="bg-gray-50 border h-9 ms-3 overflow-hidden relative rounded-md shadow-sm w-9 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500">
             <div class="absolute flex font-medium h-full items-center left-0 justify-center text-gray-400 top-0 w-full z-10 dark:text-gray-500">
                 ?
             </div>

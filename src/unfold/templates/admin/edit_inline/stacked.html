@@ -23,7 +23,7 @@
 
                         <span class="inline_label font-semibold text-gray-900">
                             {% if inline_admin_form.original and inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} ml-1">
+                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} ms-1">
                                     {{ inline_admin_form.original }}
                                 </a>
                             {% else %}
@@ -36,13 +36,13 @@
                         </span>
 
                         {% if inline_admin_form.show_url %}
-                            <a href="{{ inline_admin_form.absolute_url }}" class="h-4 leading-none ml-1">
+                            <a href="{{ inline_admin_form.absolute_url }}" class="h-4 leading-none ms-1">
                                 <span class="material-symbols-outlined h-4 md-16 text-gray-400">launch</span>
                             </a>
                         {% endif %}
 
                         {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission and inline_admin_form.original %}
-                            <span class="delete flex items-center ml-auto text-gray-500">
+                            <span class="delete flex items-center ms-auto text-gray-500">
                                 {{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}
                             </span>
                         {% endif %}

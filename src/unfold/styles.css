@@ -559,3 +559,91 @@ trix-toolbar[id^="trix-toolbar-"] {
 .trix-active {
   @apply text-primary-600;
 }
+
+/*******************************************************
+ RTL
+ *******************************************************/
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.ms-1 {
+  margin-inline-start: 0.25rem;
+}
+
+.ms-2 {
+  margin-inline-start: 0.5rem;
+}
+
+.ms-3 {
+  margin-inline-start: 0.75rem;
+}
+
+.ms-4 {
+  margin-inline-start: 1rem;
+}
+
+.ms-6 {
+  margin-inline-start: 1.5rem;
+}
+
+.ms-72 {
+  margin-inline-start: 18rem;
+}
+
+.ms-auto {
+  margin-inline-start: auto;
+}
+
+.me-1 {
+  margin-inline-end: 0.25rem;
+}
+
+.me-2 {
+  margin-inline-end: 0.5rem;
+}
+
+.me-3 {
+  margin-inline-end: 0.75rem;
+}
+
+.me-4 {
+  margin-inline-end: 1rem;
+}
+
+.me-auto {
+  margin-inline-end: auto;
+}
+
+@media (min-width: 1024px) {
+  .lg\:ms-auto {
+    margin-inline-start: auto;
+  }
+  .lg\:me-2 {
+    margin-inline-end: 0.5rem;
+  }
+
+  .lg\:me-3 {
+    margin-inline-end: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:ms-auto {
+    margin-inline-start: auto;
+  }
+  .md\:me-4 {
+    margin-inline-end: 1rem;
+  }
+  .md\:me-8 {
+    margin-inline-end: 2rem;
+  }
+  .before\:me-auto::before {
+    content: var(--tw-content);
+    margin-inline-end: auto;
+  }
+}
