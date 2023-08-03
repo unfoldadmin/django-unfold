@@ -48,7 +48,7 @@
                     {% if show_delete_link and original %}
                         {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
 
-                        <p class="deletelink-box mr-auto w-full lg:w-auto">
+                        <p class="deletelink-box me-auto w-full lg:w-auto">
                             <a href="{% add_preserved_filters delete_url %}" class="block border border-red-500 font-medium px-3 py-2 rounded-md text-center text-sm text-red-500 whitespace-nowrap dark:border-transparent dark:bg-red-500/20 dark:text-red-500">
                                 {% translate "Delete" %} {{ opts.verbose_name }}
                             </a>

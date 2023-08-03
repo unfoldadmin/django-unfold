@@ -619,6 +619,38 @@ trix-toolbar[id^="trix-toolbar-"] {
   margin-inline-end: auto;
 }
 
+.pe-1 {
+  padding-inline-end: 0.25rem;
+}
+
+.pe-2 {
+  padding-inline-end: 0.5rem;
+}
+
+.pe-3 {
+  padding-inline-end: 0.75rem;
+}
+
+.pe-4 {
+  padding-inline-end: 1rem;
+}
+
+.ps-1 {
+  padding-inline-end: 0.25rem;
+}
+
+.ps-2 {
+  padding-inline-end: 0.5rem;
+}
+
+.ps-3 {
+  padding-inline-end: 0.75rem;
+}
+
+.ps-4 {
+  padding-inline-end: 1rem;
+}
+
 @media (min-width: 1024px) {
   .lg\:ms-auto {
     margin-inline-start: auto;

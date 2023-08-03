@@ -3,7 +3,7 @@
 <div id="changelist-filter" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 flex fixed inset-0 z-50" x-show="filterOpen">
     <label for="show-filters" id="changelist-filter-close" class="flex-grow"></label>
 
-    <div class="bg-white flex mr-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800">
+    <div class="bg-white flex me-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800">
         <div class="flex-grow h-full overflow-auto relative" data-simplebar>
             <h3 class="border-b flex font-medium mb-6 px-6 py-4 text-gray-700 text-sm dark:text-gray-200 dark:border-gray-700">
                 {% trans "Filter results" %}
@@ -14,7 +14,7 @@
                     </a>
                 {% endif %}
 
-                <a class="cursor-pointer material-symbols-outlined md-18 ms-auto pl-4 text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" x-on:click="filterOpen = false">
+                <a class="cursor-pointer material-symbols-outlined md-18 ms-auto ps-4 text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" x-on:click="filterOpen = false">
                     close
                 </a>
             </h3>
