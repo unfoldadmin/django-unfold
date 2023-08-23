@@ -41,39 +41,39 @@
     </div>
 
     {% if sidebar_show_all_applications %}
-        <label for="show-applications" class="cursor-pointer flex items-center mt-auto px-6 py-3 text-gray-500 text-sm transition-all hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200">
-            <span class="material-symbols-outlined md-18 mr-3">
-                apps
-            </span>
+        <div class="mt-auto" x-data="{ openAllApplications: false }">
+            <a class="cursor-pointer flex items-center px-6 py-3 text-gray-500 text-sm transition-all hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200" x-on:click="openAllApplications = !openAllApplications">
+                <span class="material-symbols-outlined md-18 mr-3">
+                    apps
+                </span>
 
-            <span>
-                {% trans "All applications" %}
-            </span>
-        </label>
+                <span>
+                    {% trans "All applications" %}
+                </span>
+            </a>
 
-        <input type="checkbox" id="show-applications" class="hidden peer" />
+            <div class="absolute bottom-0 left-72 right-0 top-0 z-50 peer-checked:block" x-cloak x-show="openAllApplications">
+                <label class="absolute bg-gray-900 bg-opacity-80 backdrop-blur-sm bottom-0 left-0 right-0 top-0 z-10 w-screen" for="show-applications"></label>
 
-        <div class="absolute bottom-0 hidden left-72 right-0 top-0 z-50 peer-checked:block">
-            <label class="absolute bg-gray-900 bg-opacity-80 backdrop-blur-sm bottom-0 left-0 right-0 top-0 z-10 w-screen" for="show-applications"></label>
+                <div class="bg-white flex flex-col h-full overflow-x-hidden overflow-y-auto py-5 px-8 relative text-sm w-80 z-20 dark:bg-gray-900 dark:border-r dark:border-gray-800" data-simplebar x-on:click.outside="openAllApplications = false" x-on:keydown.escape.window="openAllApplications = false">
+                    {% for app in app_list %}
+                        <div class="mb-6 last:mb-0">
+                            <h3 class="mb-4 font-medium overflow-hidden text-ellipsis text-gray-700 whitespace-nowrap dark:text-gray-200">
+                                {{ app.name }}
+                            </h3>
 
-            <div class="bg-white flex flex-col h-full overflow-x-hidden overflow-y-auto py-5 px-8 relative text-sm w-80 z-20 dark:bg-gray-900 dark:border-r dark:border-gray-800" data-simplebar>
-                {% for app in app_list %}
-                    <div class="mb-6 last:mb-0">
-                        <h3 class="mb-4 font-medium overflow-hidden text-ellipsis text-gray-700 whitespace-nowrap dark:text-gray-200">
-                            {{ app.name }}
-                        </h3>
-
-                        <ul>
-                            {% for model in app.models %}
-                                <li class="block mb-4 last:mb-0">
-                                    <a href="{{ model.admin_url }}" class="block overflow-hidden text-ellipsis text-gray-500 transition-all whitespace-nowrap hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
-                                        {{ model.name }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endfor %}
+                            <ul>
+                                {% for model in app.models %}
+                                    <li class="block mb-4 last:mb-0">
+                                        <a href="{{ model.admin_url }}" class="block overflow-hidden text-ellipsis text-gray-500 transition-all whitespace-nowrap hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                                            {{ model.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     {% endif %}

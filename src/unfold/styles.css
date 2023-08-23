@@ -5,6 +5,7 @@
 @tailwind utilities;
 
 html {
+  --color-primary-50: theme('colors.purple.50');
   --color-primary-100: theme('colors.purple.100');
   --color-primary-200: theme('colors.purple.200');
   --color-primary-300: theme('colors.purple.300');

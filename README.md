@@ -1,7 +1,11 @@
 ![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/daef6e7e-e8a1-4142-8e4c-fa2a287978d2)
 
-
 ## Unfold Django Admin Theme
+
+[![Build](https://img.shields.io/github/actions/workflow/status/unfoldadmin/django-unfold/release.yml?style=for-the-badge)](https://github.com/unfoldadmin/django-unfold/actions?query=workflow%3Arelease)
+[![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
+![Code Style - Black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)
+![Pre Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=for-the-badge)
 
 Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
 
@@ -299,15 +303,23 @@ class UserAdmin(ModelAdmin):
     @display(
         description=_("Status"),
         ordering="status",
-        label=True,
-        mapping={
-            UserStatus.ACTIVE: "success",
-            UserStatus.PENDING: "info",
-            UserStatus.INACTIVE: "warning",
-            UserStatus.CANCELLED: "danger",
+        label=True
+    )
+    def show_status_default_color(self, obj):
+        return obj.status
+
+
+    @display(
+        description=_("Status"),
+        ordering="status",
+        label={
+            UserStatus.ACTIVE: "success",  # green
+            UserStatus.PENDING: "info",  # blue
+            UserStatus.INACTIVE: "warning",  # orange
+            UserStatus.CANCELLED: "danger",  # red
         },
     )
-    def show_status(self, obj):
+    def show_status_customized_color(self, obj)
         return obj.status
 
     @display(description=_("Status with label"), ordering="status", label=True)
@@ -588,7 +600,7 @@ module.exports = {
 Once the configuration file is set, it is possible to compile new styles which can be loaded into admin by using **STYLES** key in **UNFOLD** dict.
 
 ```bash
-npx tailwindcss  -o your_project/static/css/styles.css --watch --minify
+npx tailwindcss -o your_project/static/css/styles.css --watch --minify
 ```
 
 ## Custom Admin Dashboard
@@ -644,7 +656,7 @@ At the moment project contains package.json with all dependencies required to co
 
 ```bash
 npm install
-npx tailwindcss -i styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify
+npx tailwindcss -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify
 
 npm run tailwind:watch # run after each change in code
 npm run tailwind:build # run once
