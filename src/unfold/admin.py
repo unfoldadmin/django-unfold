@@ -219,7 +219,10 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         return conditional_escape(result_repr)
 
     def _preprocess_field(self, contents: str) -> str:
-        if self.field["field"] in self.model_admin.readonly_preprocess_fields:
+        if (
+            hasattr(self.model_admin, "readonly_preprocess_fields")
+            and self.field["field"] in self.model_admin.readonly_preprocess_fields
+        ):
             func = self.model_admin.readonly_preprocess_fields[self.field["field"]]
 
             if isinstance(func, str):
