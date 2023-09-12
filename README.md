@@ -9,7 +9,9 @@
 
 Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
 
-Demo is available at [unfoldadmin.com](https://unfoldadmin.com).
+- demo site is available at [unfoldadmin.com](https://unfoldadmin.com)
+- repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
+- Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
 
 ## Features
 
@@ -110,6 +112,7 @@ class CustomAdminClass(ModelAdmin):
 
 ```python
 # admin.py
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
@@ -235,6 +238,8 @@ def badge_callback(request):
 ### Available unfold.admin.ModelAdmin options
 
 ```python
+# admin.py
+
 from django import models
 from django.contrib import admin
 from django.db import models
@@ -277,7 +282,7 @@ Unfold introduces it's own `unfold.decorators.display` decorator. By default it 
 `@display(header=True)` displays in results list two information in one table cell. Good example is when we want to display customer information, first line is going to be customer's name and right below the name display corresponding email address. Method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`.
 
 ```python
-# models.py
+# admin.py
 
 from django.db.models import TextChoices
 from django.utils.translation import gettext_lazy as _
@@ -307,7 +312,6 @@ class UserAdmin(ModelAdmin):
     )
     def show_status_default_color(self, obj):
         return obj.status
-
 
     @display(
         description=_("Status"),
@@ -521,6 +525,8 @@ To get proper visual appearance for django-import-export, two things are needed
 2. Change `import_form_class` and `export_form_class` in ModelAdmin which is inheriting from `ImportExportModelAdmin`. This chunk of code is responsible for adding proper styling to form elements.
 
 ```python
+# admin.py
+
 from unfold.admin import ModelAdmin
 from unfold.contrib.import_export.forms import ExportForm, ImportForm
 
