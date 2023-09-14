@@ -58,6 +58,7 @@ from .widgets import (
     UnfoldAdminImageSmallFieldWidget,
     UnfoldAdminIntegerFieldWidget,
     UnfoldAdminIntegerRangeWidget,
+    UnfoldAdminMoneyWidget,
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminSingleDateWidget,
     UnfoldAdminSingleTimeWidget,
@@ -74,6 +75,13 @@ try:
     HAS_PSYCOPG = True
 except ImportError:
     HAS_PSYCOPG = False
+
+try:
+    from djmoney.models.fields import MoneyField
+
+    HAS_MONEY = True
+except ImportError:
+    HAS_MONEY = False
 
 checkbox = forms.CheckboxInput({"class": "action-select"}, lambda value: False)
 
@@ -105,6 +113,13 @@ if HAS_PSYCOPG:
             ArrayField: {"widget": UnfoldAdminTextareaWidget},
             SearchVectorField: {"widget": UnfoldAdminTextareaWidget},
             IntegerRangeField: {"widget": UnfoldAdminIntegerRangeWidget},
+        }
+    )
+
+if HAS_MONEY:
+    FORMFIELD_OVERRIDES.update(
+        {
+            MoneyField: {"widget": UnfoldAdminMoneyWidget},
         }
     )
 
