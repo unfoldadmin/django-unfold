@@ -12,8 +12,10 @@ from django.contrib.admin.widgets import (
     AdminTimeWidget,
     AdminUUIDInputWidget,
 )
-from django.forms import MultiWidget, NullBooleanSelect, NumberInput
+from django.forms import MultiWidget, NullBooleanSelect, NumberInput, Select
 from django.utils.translation import gettext_lazy as _
+
+from .exceptions import UnfoldException
 
 LABEL_CLASSES = [
     "block",
@@ -84,7 +86,13 @@ TEXTAREA_EXPANDABLE_CLASSES = [
     "h-full",
 ]
 
-SELECT_CLASSES = [*BASE_INPUT_CLASSES, "pr-8", "max-w-2xl", "appearance-none"]
+SELECT_CLASSES = [
+    *BASE_INPUT_CLASSES,
+    "pr-8",
+    "max-w-2xl",
+    "appearance-none",
+    "truncate",
+]
 
 PROSE_CLASSES = [
     "font-normal",
@@ -287,3 +295,32 @@ class UnfoldAdminBigIntegerFieldWidget(AdminBigIntegerFieldWidget):
 
 class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
     pass
+
+
+class UnfoldAdminSelect(Select):
+    def __init__(self, attrs=None, choices=()):
+        if attrs is None:
+            attrs = {}
+
+        attrs["class"] = " ".join(SELECT_CLASSES)
+        super().__init__(attrs, choices)
+
+
+try:
+    from djmoney.forms.widgets import MoneyWidget
+    from djmoney.settings import CURRENCY_CHOICES
+
+    class UnfoldAdminMoneyWidget(MoneyWidget):
+        template_name = "unfold/widgets/split_money.html"
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(
+                amount_widget=UnfoldAdminTextInputWidget,
+                currency_widget=UnfoldAdminSelect(choices=CURRENCY_CHOICES),
+            )
+
+except ImportError:
+
+    class UnfoldAdminMoneyWidget:
+        def __init__(self, *args, **kwargs):
+            raise UnfoldException("django-money not installed")
