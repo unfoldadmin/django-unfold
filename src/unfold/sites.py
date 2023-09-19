@@ -60,7 +60,7 @@ class UnfoldAdminSite(AdminSite):
                 "symbol": self._get_value(
                     get_config(self.settings_name)["SITE_SYMBOL"], request
                 ),
-                "tab_list": get_config(self.settings_name)["TABS"],
+                "tab_list": self.get_tabs_list(request),
                 "styles": [
                     self._get_value(style, request)
                     for style in get_config(self.settings_name)["STYLES"]
@@ -209,7 +209,14 @@ class UnfoldAdminSite(AdminSite):
             return False
 
         for group in navigation:
+            allowed_items = []
+
             for item in group["items"]:
+                # Permission callbacks
+                if not self._call_permission_callback(item.get("permission"), request):
+                    # Skip item if permission check fails
+                    continue
+
                 item["active"] = False
                 item["active"] = _get_is_active(item["link"])
 
@@ -236,10 +243,39 @@ class UnfoldAdminSite(AdminSite):
                     except ImportError:
                         pass
 
+                allowed_items.append(item)
+
+            group["items"] = allowed_items
+
             results.append(group)
 
         return results
 
+    def get_tabs_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
+        tabs = get_config(self.settings_name)["TABS"]
+
+        for tab in tabs:
+            allowed_items = []
+
+            for item in tab["items"]:
+                if not self._call_permission_callback(item.get("permission"), request):
+                    # Skip item if permission check fails
+                    continue
+
+                allowed_items.append(item)
+
+            tab["items"] = allowed_items
+
+        return tabs
+
+    def _call_permission_callback(self, callback: Union[str, Callable, None], request: HttpRequest):
+        if callback is None:
+            return True
+
+        if isinstance(callback, str):
+            callback = import_string(callback)
+
+        return callback(request)
     def _get_value(
         self, instance: Union[str, Callable, None], *args: Any
     ) -> Optional[str]:
