@@ -2,7 +2,9 @@
 
 {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
     <div class="bg-gray-50 border mb-4 p-1 rounded-md w-48">
-        <img src="{{ widget.value.url }}" alt="{% trans 'Image preview' %}" class="rounded" />
+        <a href="{{ widget.value.url }}">
+            <img src="{{ widget.value.url }}" alt="{% trans 'Image preview' %}" class="rounded" />
+        </a>
     </div>
 {% endif %}
 
