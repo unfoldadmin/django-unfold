@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
-    <div class="bg-gray-50 border mb-4 p-1 rounded-md w-48">
+    <div class="bg-gray-50 border mb-4 p-1 rounded-md w-48 dark:bg-white/[.02] dark:border-gray-700">
         <a href="{{ widget.value.url }}">
             <img src="{{ widget.value.url }}" alt="{% trans 'Image preview' %}" class="rounded" />
         </a>
