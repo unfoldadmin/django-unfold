@@ -310,10 +310,12 @@ h3 span:nth-child(3) {
     @apply font-medium h-9 px-3 py-2 text-gray-500 text-sm dark:text-gray-400;
 }
 
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__clear,
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear {
   @apply flex items-center mr-5 h-9 -mt-2 text-0;
 }
 
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__clear:after,
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear:after {
   @apply material-symbols-outlined text-gray-500;
   content: "close";
@@ -358,7 +360,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--open .select2-dropdown--above {
-  @apply rounded-b-none rounded-t-md after:bottom-0 after:-mb-1 after:mt-0 after:top-auto;;
+  @apply rounded-b-none rounded-t-md after:bottom-0 after:-mb-1 after:mt-0 after:top-auto;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-results__option {
@@ -369,23 +371,31 @@ h3 span:nth-child(3) {
   @apply text-primary-500;
 }
 
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__clear {
+  @apply m-0 mr-2 top-0;
+}
+
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__rendered {
+  @apply pl-1 pr-6 py-0 pt-1;
+}
+
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice {
-  @apply bg-gray-100 flex font-medium h-7 items-center px-2 text-sm text-gray-500 transition-all dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-200;
+  @apply bg-gray-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-gray-500 truncate dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-200;
 }
 
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove {
-  @apply text-0 hover:text-gray-600 dark:hover:text-gray-200;
+  @apply align-top text-0 hover:text-gray-600 dark:hover:text-gray-200;
 }
 
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove:after {
-  @apply material-symbols-outlined;
+  @apply h-7 !leading-7 material-symbols-outlined;
 
   content: "close";
   font-size: 14px;
 }
 
 .select2-container--admin-autocomplete .select2-selection--multiple li.select2-search--inline .select2-search__field {
-  @apply h-7 text-gray-500 text-sm;
+  @apply m-0 h-7 text-gray-500 text-sm;
 }
 
 .select2.select2-container--open {
