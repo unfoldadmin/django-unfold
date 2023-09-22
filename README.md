@@ -192,6 +192,7 @@ UNFOLD = {
                         "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
                         "link": reverse_lazy("admin:index"),
                         "badge": "sample_app.badge_callback",
+                        "permission": lambda request: request.user.is_superuser,
                     },
                     {
                         "title": _("Users"),
@@ -211,6 +212,7 @@ UNFOLD = {
                 {
                     "title": _("Your custom title"),
                     "link": reverse_lazy("admin:app_label_model_name_changelist"),
+                    "permission": "sample_app.permission_callback",
                 },
             ],
         },
@@ -233,6 +235,10 @@ def dashboard_callback(request, context):
 
 def badge_callback(request):
     return 3
+
+def permission_callback(request):
+    return request.user.has_perm("sample_app.change_model")
+
 ```
 
 ### Available unfold.admin.ModelAdmin options
