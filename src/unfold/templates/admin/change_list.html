@@ -84,7 +84,7 @@
                     {% block result_list %}
                         {% if actions_on_top %}
                             {% if cl.search_fields or action_form or cl.has_filters %}
-                                <div class="bg-gray-50 flex flex-col mb-4 p-3 rounded-md md:flex-row dark:bg-gray-800">
+                                <div class="bg-gray-50 flex flex-col gap-3 mb-4 p-3 rounded-md md:flex-row dark:bg-gray-800">
                                     {% block search %}
                                         {% search_form cl %}
                                     {% endblock %}
