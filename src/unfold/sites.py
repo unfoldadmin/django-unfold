@@ -268,7 +268,9 @@ class UnfoldAdminSite(AdminSite):
 
         return tabs
 
-    def _call_permission_callback(self, callback: Union[str, Callable, None], request: HttpRequest):
+    def _call_permission_callback(
+        self, callback: Union[str, Callable, None], request: HttpRequest
+    ):
         if callback is None:
             return True
 
@@ -276,6 +278,7 @@ class UnfoldAdminSite(AdminSite):
             callback = import_string(callback)
 
         return callback(request)
+
     def _get_value(
         self, instance: Union[str, Callable, None], *args: Any
     ) -> Optional[str]:
