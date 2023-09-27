@@ -12,7 +12,7 @@ register = Library()
 def tab_list(context, opts) -> str:
     tabs = None
 
-    for tab in context.get("tab_list"):
+    for tab in context.get("tab_list", []):
         if str(opts) in tab["models"]:
             tabs = tab["items"]
             break
