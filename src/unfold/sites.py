@@ -279,7 +279,7 @@ class UnfoldAdminSite(AdminSite):
         if isinstance(callback, str):
             callback = import_string(callback)
 
-        return lazy(callback, str)(request)
+        return callback(request)
 
     def _get_value(
         self, instance: Union[str, Callable, None], *args: Any
