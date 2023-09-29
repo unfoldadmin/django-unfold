@@ -6,8 +6,10 @@
 
         <div class="flex flex-col space-y-4">
             {% for field in choice.form %}
-                <div class="flex flex-col">
+                <div class="flex flex-row flex-wrap group relative{% if field.errors %} errors{% endif %}">
                     {{ field }}
+
+                    {% include "unfold/helpers/form_errors.html" with errors=field.errors %}
                 </div>
             {% endfor %}
         </div>

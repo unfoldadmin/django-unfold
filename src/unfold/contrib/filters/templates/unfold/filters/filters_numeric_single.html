@@ -4,6 +4,12 @@
     <div class="flex flex-col mb-6">
         <h3 class="font-medium mb-4 text-sm">{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
 
-        {{ choice.form.as_p }}
+        {% for field in choice.form %}
+            <div class="flex flex-row flex-wrap group relative{% if field.errors %} errors{% endif %}">
+                {{ field }}
+
+                {% include "unfold/helpers/form_errors.html" with errors=field.errors %}
+            </div>
+        {% endfor %}
     </div>
 {% endwith %}
