@@ -33,17 +33,14 @@ CHECKBOX_LABEL_CLASSES = [
     "dark:text-gray-200",
 ]
 
-BASE_INPUT_CLASSES = [
+BASE_CLASSES = [
     "border",
     "bg-white",
     "font-medium",
-    "px-3",
-    "py-2",
     "rounded-md",
     "shadow-sm",
     "text-gray-500",
     "text-sm",
-    "w-full",
     "focus:ring",
     "focus:ring-primary-300",
     "focus:border-primary-600",
@@ -60,7 +57,16 @@ BASE_INPUT_CLASSES = [
     "dark:group-[.errors]:focus:ring-red-600/40",
 ]
 
+BASE_INPUT_CLASSES = [
+    *BASE_CLASSES,
+    "px-3",
+    "py-2",
+    "w-full",
+]
+
 INPUT_CLASSES = [*BASE_INPUT_CLASSES, "max-w-2xl"]
+
+COLOR_CLASSES = [*BASE_CLASSES, "h-9.5", "px-2", "py-2", "w-32"]
 
 INPUT_CLASSES_READONLY = [*BASE_INPUT_CLASSES, "bg-gray-50"]
 
@@ -120,6 +126,13 @@ PROSE_CLASSES = [
 class UnfoldAdminTextInputWidget(AdminTextInputWidget):
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(attrs={"class": " ".join(INPUT_CLASSES), **(attrs or {})})
+
+
+class UnfoldAdminColorInputWidget(AdminTextInputWidget):
+    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(
+            attrs={"type": "color", "class": " ".join(COLOR_CLASSES), **(attrs or {})}
+        )
 
 
 class UnfoldAdminUUIDInputWidget(AdminUUIDInputWidget):
