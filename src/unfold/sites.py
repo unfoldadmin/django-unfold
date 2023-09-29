@@ -7,6 +7,7 @@ from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
+from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 
 from .settings import get_config
@@ -239,7 +240,8 @@ class UnfoldAdminSite(AdminSite):
                 # Badge callbacks
                 if "badge" in item and isinstance(item["badge"], str):
                     try:
-                        item["badge"] = import_string(item["badge"])(request)
+                        callback = import_string(item["badge"])
+                        item["badge"] = lazy(callback)(request)
                     except ImportError:
                         pass
 
