@@ -4,8 +4,14 @@
     <div class="flex flex-col mb-6">
         <h3 class="font-medium mb-4 text-sm">{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
 
-        <div class="flex flex-row space-x-4">
-            {{ choice.form.as_p }}
+        <div class="flex flex-row gap-4">
+            {% for field in choice.form %}
+                <div class="group relative w-1/2{% if field.errors %} errors{% endif %}">
+                    {{ field }}
+
+                    {% include "unfold/helpers/form_errors.html" with errors=field.errors %}
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endwith %}

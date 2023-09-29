@@ -14,6 +14,7 @@ from django.db.models.fields import (
     FloatField,
     IntegerField,
 )
+from django.forms import ValidationError
 from django.http import HttpRequest
 from django.utils.dateparse import parse_datetime
 
@@ -62,7 +63,10 @@ class SingleNumericFilter(admin.FieldListFilter):
         self, request: HttpRequest, queryset: QuerySet[Any]
     ) -> Optional[QuerySet]:
         if self.value():
-            return queryset.filter(**{self.parameter_name: self.value()})
+            try:
+                return queryset.filter(**{self.parameter_name: self.value()})
+            except (ValueError, ValidationError):
+                return None
 
     def value(self) -> Any:
         return self.used_parameters.get(self.parameter_name, None)
@@ -121,7 +125,10 @@ class RangeNumericMixin:
                 }
             )
 
-        return queryset.filter(**filters)
+        try:
+            return queryset.filter(**filters)
+        except (ValueError, ValidationError):
+            return None
 
     def expected_parameters(self) -> List[str]:
         return [
@@ -332,7 +339,10 @@ class RangeDateFilter(admin.FieldListFilter):
                 }
             )
 
-        return queryset.filter(**filters)
+        try:
+            return queryset.filter(**filters)
+        except (ValueError, ValidationError):
+            return None
 
     def expected_parameters(self) -> List[str]:
         return [
@@ -443,7 +453,10 @@ class RangeDateTimeFilter(admin.FieldListFilter):
                 }
             )
 
-        return queryset.filter(**filters)
+        try:
+            return queryset.filter(**filters)
+        except (ValueError, ValidationError):
+            return None
 
     def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
