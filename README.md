@@ -338,7 +338,10 @@ class UserAdmin(ModelAdmin):
 
     @display(header=True)
     def display_as_two_line_heading(self, obj):
-        return "First main heading", "Smaller additional description"
+        """
+        Third argument is short text which will appear as prefix in circle
+        """
+        return "First main heading", "Smaller additional description", "AB"
 ```
 
 ## Actions
