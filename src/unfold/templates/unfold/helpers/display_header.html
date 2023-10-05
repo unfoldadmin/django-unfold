@@ -1,13 +1,17 @@
-{% load i18n static %}
-
-<div class="flex items-center">
-    <div class="flex flex-col text-right lg:text-left">
-        <h3>
-            {{ value.0 }}
-        </h3>
-
-        <p class="text-gray-500">
-            {{ value.1  }}
-        </p>
+<div class="flex gap-4 items-center">
+  {% if value.2 %}
+    <div class="border flex font-medium h-8 justify-center items-center rounded-full text-xs uppercase w-8 dark:border-gray-700">
+      {{ value.2 }}
     </div>
+  {% endif %}
+
+  <div class="flex flex-col text-right lg:text-left">
+    <h3>{{ value.0 }}</h3>
+
+    {% if value.1 %}
+      <p class="text-gray-500">
+        {{ value.1 }}
+      </p>
+    {% endif %}
+  </div>
 </div>
