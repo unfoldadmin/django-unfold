@@ -1,0 +1,23 @@
+<div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800{% if class %} {{ class }}{% endif %}">
+    {% if title %}
+        <h2 class="border-b font-medium mb-6 -mt-2 -mx-6 pb-4 px-6 text-sm text-gray-700 dark:text-gray-200 dark:border-gray-800">
+            {{ title }}
+        </h2>
+    {% endif %}
+
+    <div class="flex-grow relative">
+        {{ children }}
+
+        {% if label %}
+            <div class="absolute border font-semibold leading-none px-2 py-1 rounded shadow-sm text-xxs uppercase whitespace-nowrap bg-primary-50 border-primary-200 text-primary-500 dark:bg-primary-500/20 dark:border-primary-500/10 right-0 top-0">
+                {{ label }}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if footer %}
+        <div class="border-t flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-gray-800">
+            {{ footer }}
+        </div>
+    {% endif %}
+</div>

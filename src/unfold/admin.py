@@ -13,6 +13,7 @@ from django.db import models
 from django.db.models import (
     BLANK_CHOICE_DASH,
     ForeignObjectRel,
+    JSONField,
     ManyToManyRel,
     Model,
     OneToOneField,
@@ -60,6 +61,7 @@ from .widgets import (
     UnfoldAdminIntegerRangeWidget,
     UnfoldAdminMoneyWidget,
     UnfoldAdminNullBooleanSelectWidget,
+    UnfoldAdminRadioSelectWidget,
     UnfoldAdminSingleDateWidget,
     UnfoldAdminSingleTimeWidget,
     UnfoldAdminSplitDateTimeWidget,
@@ -185,11 +187,23 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             self.form.label_suffix,
         )
 
+    def is_json(self) -> bool:
+        field, obj, model_admin = (
+            self.field["field"],
+            self.form.instance,
+            self.model_admin,
+        )
+
+        try:
+            f, attr, value = lookup_field(field, obj, model_admin)
+        except (AttributeError, ValueError, ObjectDoesNotExist):
+            return False
+
+        return isinstance(f, JSONField)
+
     def contents(self) -> str:
         contents = self._get_contents()
-
-        self._preprocess_field(contents)
-
+        contents = self._preprocess_field(contents)
         return contents
 
     def _get_contents(self) -> str:
@@ -239,7 +253,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             and self.field["field"] in self.model_admin.readonly_preprocess_fields
         ):
             func = self.model_admin.readonly_preprocess_fields[self.field["field"]]
-
             if isinstance(func, str):
                 contents = import_string(func)(contents)
             elif callable(func):
@@ -265,9 +278,16 @@ class ModelAdminMixin:
     def formfield_for_choice_field(
         self, db_field: Field, request: HttpRequest, **kwargs
     ) -> TypedChoiceField:
-        # Overrides widget for CharFields which have choices attribute
         if "widget" not in kwargs:
-            kwargs["widget"] = forms.Select(attrs={"class": " ".join(SELECT_CLASSES)})
+            if db_field.name in self.radio_fields:
+                kwargs["widget"] = UnfoldAdminRadioSelectWidget(
+                    radio_style=self.radio_fields[db_field.name]
+                )
+            else:
+                kwargs["widget"] = forms.Select(
+                    attrs={"class": " ".join(SELECT_CLASSES)}
+                )
+
             kwargs["choices"] = db_field.get_choices(
                 include_blank=db_field.blank, blank_choice=[("", _("Select value"))]
             )

@@ -1,0 +1,9 @@
+{% if items %}
+    <nav class="bg-gray-100 flex gap-2 mb-8 p-1.5 rounded text-sm dark:bg-white/[.02]{% if class %} {{ class }}{% endif %}">
+        {% for item in items %}
+            <a href="{{ item.link }}" class="font-medium px-3 py-2 rounded text-gray-400 hover:text-gray-700 dark:hover:text-white{% if item.link|stringformat:"s" in request.path %} bg-white shadow-sm text-gray-700 dark:bg-white/[.04] dark:text-white{% endif %}">
+                {{ item.title }}
+            </a>
+        {% endfor %}
+    </nav>
+{% endif %}
