@@ -60,6 +60,7 @@ from .widgets import (
     UnfoldAdminIntegerRangeWidget,
     UnfoldAdminMoneyWidget,
     UnfoldAdminNullBooleanSelectWidget,
+    UnfoldAdminRadioSelectWidget,
     UnfoldAdminSingleDateWidget,
     UnfoldAdminSingleTimeWidget,
     UnfoldAdminSplitDateTimeWidget,
@@ -265,9 +266,16 @@ class ModelAdminMixin:
     def formfield_for_choice_field(
         self, db_field: Field, request: HttpRequest, **kwargs
     ) -> TypedChoiceField:
-        # Overrides widget for CharFields which have choices attribute
         if "widget" not in kwargs:
-            kwargs["widget"] = forms.Select(attrs={"class": " ".join(SELECT_CLASSES)})
+            if db_field.name in self.radio_fields:
+                kwargs["widget"] = UnfoldAdminRadioSelectWidget(
+                    radio_style=self.radio_fields[db_field.name]
+                )
+            else:
+                kwargs["widget"] = forms.Select(
+                    attrs={"class": " ".join(SELECT_CLASSES)}
+                )
+
             kwargs["choices"] = db_field.get_choices(
                 include_blank=db_field.blank, blank_choice=[("", _("Select value"))]
             )
