@@ -1,11 +1,13 @@
 from typing import Any, Callable, Dict, Optional, Tuple, Union
 
+from django.contrib.admin.options import VERTICAL
 from django.contrib.admin.widgets import (
     AdminBigIntegerFieldWidget,
     AdminDateWidget,
     AdminEmailInputWidget,
     AdminFileWidget,
     AdminIntegerFieldWidget,
+    AdminRadioSelect,
     AdminSplitDateTime,
     AdminTextareaWidget,
     AdminTextInputWidget,
@@ -317,6 +319,23 @@ class UnfoldAdminSelect(Select):
 
         attrs["class"] = " ".join(SELECT_CLASSES)
         super().__init__(attrs, choices)
+
+
+class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
+    option_template_name = "admin/widgets/radio_option.html"
+
+    def __init__(self, radio_style: Optional[int] = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if radio_style is None:
+            radio_style = VERTICAL
+
+        self.radio_style = radio_style
+
+    def get_context(self, *args, **kwargs) -> Dict[str, Any]:
+        context = super().get_context(*args, **kwargs)
+        context.update({"radio_style": self.radio_style})
+        return context
 
 
 try:
