@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Optional, Tuple, Union
+from typing import Any, Callable, Dict, Literal, Optional, Tuple, Union
 
 from django.contrib.admin.options import VERTICAL
 from django.contrib.admin.widgets import (
@@ -324,7 +324,7 @@ class UnfoldAdminSelect(Select):
 class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
     option_template_name = "admin/widgets/radio_option.html"
 
-    def __init__(self, radio_style: Optional[int] = None, *args, **kwargs):
+    def __init__(self, radio_style: Optional[Literal[1, 2]] = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         if radio_style is None:
