@@ -1,0 +1,12 @@
+{% if widget.wrap_label %}
+    <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %} class="flex flex-row items-center gap-2">
+{% endif %}
+
+{% include "django/forms/widgets/input.html" %}
+
+{% if widget.wrap_label %}
+        <span class="text-sm text-gray-900 dark:text-gray-200">
+            {{ widget.label }}
+        </span>
+    </label>
+{% endif %}
