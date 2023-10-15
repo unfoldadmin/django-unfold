@@ -13,6 +13,7 @@ from django.db import models
 from django.db.models import (
     BLANK_CHOICE_DASH,
     ForeignObjectRel,
+    JSONField,
     ManyToManyRel,
     Model,
     OneToOneField,
@@ -186,11 +187,23 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             self.form.label_suffix,
         )
 
+    def is_json(self) -> bool:
+        field, obj, model_admin = (
+            self.field["field"],
+            self.form.instance,
+            self.model_admin,
+        )
+
+        try:
+            f, attr, value = lookup_field(field, obj, model_admin)
+        except (AttributeError, ValueError, ObjectDoesNotExist):
+            return False
+
+        return isinstance(f, JSONField)
+
     def contents(self) -> str:
         contents = self._get_contents()
-
-        self._preprocess_field(contents)
-
+        contents = self._preprocess_field(contents)
         return contents
 
     def _get_contents(self) -> str:
@@ -240,7 +253,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             and self.field["field"] in self.model_admin.readonly_preprocess_fields
         ):
             func = self.model_admin.readonly_preprocess_fields[self.field["field"]]
-
             if isinstance(func, str):
                 contents = import_string(func)(contents)
             elif callable(func):
