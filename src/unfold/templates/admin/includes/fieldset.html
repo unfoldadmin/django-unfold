@@ -1,3 +1,5 @@
+{% load unfold %}
+
 <fieldset class="module {{ fieldset.classes }}">
     {% if fieldset.name %}
         <h2 class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-gray-200">
@@ -26,13 +28,7 @@
                             </div>
 
                             {% if field.is_readonly %}
-                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
-                                    {% if field.contents %}
-                                        {{ field.contents }}
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </div>
+                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800 {% if field.is_json %}whitespace-pre{% endif %}">{% if field.contents %}{{ field.contents }}{% else %}-{% endif %}</div>
                             {% else %}
                                 {{ field.field }}
                             {% endif %}
