@@ -1,0 +1,35 @@
+{% extends "admin/change_form.html" %}
+
+{% load admin_urls i18n guardian_tags  %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+    <div class="px-4 lg:px-12">
+        <div class="container mb-6 mx-auto -my-3 lg:mb-12">
+            <ul class="flex">
+                {% url 'admin:index' as link %}
+                {% trans 'Home' as name %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
+
+                {% url 'admin:app_list' app_label=opts.app_label as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
+
+                {% url opts|admin_urlname:'changelist' as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.verbose_name_plural|capfirst %}
+
+                {% url opts|admin_urlname:'change' object.pk|admin_urlquote as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=original|truncatewords:'18' %}
+
+                {% trans 'Object permissions' as name %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=name %}
+            </ul>
+        </div>
+    </div>
+{% endif %}{% endblock %}
+
+{% block content %}
+    {% include "unfold/guardian/user_form.html" %}
+
+    <hr class="my-12 dark:border-gray-800"/>
+
+    {% include "unfold/guardian/group_form.html" %}
+{% endblock %}

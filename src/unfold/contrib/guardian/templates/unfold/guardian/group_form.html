@@ -1,0 +1,72 @@
+{% load i18n %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <h2 class="font-medium mb-3 text-sm text-gray-700 dark:text-gray-200">
+        {% trans "Group permissions" %}
+    </h2>
+
+    {% if groups_perms.items %}
+        <table id="group-permissions" class="border-gray-200 border-spacing-none border-separate mb-6 text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+            <thead class="hidden lg:table-header-group">
+                <tr>
+                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                        {% trans "Group" %}
+                    </th>
+
+                    {% for perm in model_perms %}
+                        <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                            {{ perm.name }}
+                        </th>
+                    {% endfor %}
+
+                    <th class="align-middle font-medium px-3 py-2 text-right text-gray-400 text-sm">
+                        {% trans "Action" %}
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for group, group_perms in groups_perms.items %}
+                    <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "User" %}">
+                            <span class="text-gray-700 dark:text-gray-200">
+                                {{ group }}
+                            </span>
+                        </th>
+
+                        {% for perm in model_perms %}
+                            <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{{ perm.name }}">
+                                {% if perm.codename in group_perms %}
+                                    {% include "unfold/helpers/boolean.html" with value=False %}
+                                {% else %}
+                                    {% include "unfold/helpers/boolean.html" with value=True %}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+
+                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-right text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "Action" %}">
+                            <a href="group-manage/{{ group.id|safe }}/" class="hover:text-gray-700 dark:hover:text-white">
+                                {% trans "Edit" %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <div class="border border-gray-200 overflow-hidden rounded-md p-3 shadow-sm dark:border-gray-800">
+        {% for field in group_form %}
+            {% include "admin/guardian/model/field.html" %}
+        {% endfor %}
+
+        <div class="bg-gray-50 border-t flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-gray-800">
+            <div class="ml-auto">
+                {% trans "Manage group" as title %}
+                {% include "unfold/helpers/submit.html" with title=title name="submit_manage_group" %}
+            </div>
+        </div>
+    </div>
+</form>
