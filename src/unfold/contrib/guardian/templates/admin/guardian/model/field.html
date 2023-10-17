@@ -1,0 +1,11 @@
+{% load unfold %}
+
+{% if field.is_checkbox %}
+    {{ field }}
+
+    <label for="{{ field.auto_id }}" class="required vCheckboxLabel">
+        {{ field.label }}
+    </label>
+{% else %}
+    {% include "unfold/helpers/field.html" with field=field|add_css_class:form_classes.text_input %}
+{% endif %}

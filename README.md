@@ -1,6 +1,6 @@
 ![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/daef6e7e-e8a1-4142-8e4c-fa2a287978d2)
 
-## Unfold Django Admin Theme
+## Unfold Django Admin Theme <!-- omit from toc -->
 
 [![Build](https://img.shields.io/github/actions/workflow/status/unfoldadmin/django-unfold/release.yml?style=for-the-badge)](https://github.com/unfoldadmin/django-unfold/actions?query=workflow%3Arelease)
 [![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
@@ -13,7 +13,7 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
 - Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
 
-## Features
+## Features <!-- omit from toc -->
 
 - **Visual**: provides new user interface based on Tailwind CSS framework
 - **Sidebar:** simplifies definition of custom sidebar navigation with icons
@@ -29,7 +29,7 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - **Colors:** possibility to override default color scheme
 - **Django import / export:** default support for this popular application
 
-## Table of Contents
+## Table of contents <!-- omit from toc -->
 
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -47,6 +47,9 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - [Filters](#filters)
 - [Third party packages](#third-party-packages)
   - [django-import-export](#django-import-export)
+  - [django-modeltranslation](#django-modeltranslation)
+  - [django-guardian](#django-guardian)
+  - [django-money](#django-money)
 - [User Admin Form](#user-admin-form)
 - [Adding Custom Styles and Scripts](#adding-custom-styles-and-scripts)
 - [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet)
@@ -69,6 +72,7 @@ INSTALLED_APPS = [
     "unfold.contrib.filters",  # optional, if special filters are needed
     "unfold.contrib.forms",  # optional, if special form elements are needed
     "unfold.contrib.import_export",  # optional, if django-import-export package is used
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
     "django.contrib.admin",  # required
 ]
 ```
@@ -528,9 +532,7 @@ class YourModelAdmin(ModelAdmin):
 
 ### django-import-export
 
-To get proper visual appearance for django-import-export, two things are needed
-
-1. Add `unfold.contrib.import_export` to `INSTALLED_APPS` at the begging of the file. This action will override all templates coming from the plugin.
+1. Add `unfold.contrib.import_export` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the application.
 2. Change `import_form_class` and `export_form_class` in ModelAdmin which is inheriting from `ImportExportModelAdmin`. This chunk of code is responsible for adding proper styling to form elements.
 
 ```python
@@ -543,6 +545,36 @@ class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
 ```
+
+### django-modeltranslation
+
+By default Unfold does not contain any specific implementation for django-modeltranslation and the application is partially supported. Basic behavior is supported except of tab navigation provided by django-modeltranslation. At the moment there are no plans in supporting this behavior.
+
+For django-modeltranslation fields for spefic languages, it is possible to define custom flags which will appear as a suffix in field's label. It is recommended to use emojis as suffix.
+
+```python
+# settings.py
+
+UNFOLD = {
+    "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {
+                "en": "🇬🇧",
+                "fr": "🇫🇷",
+                "nl": "🇧🇪",
+            },
+        },
+    },
+}
+```
+
+### django-guardian
+
+Adding support for django-guardian is quote straightforward in Unfold, just add `unfold.contrib.guardian` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the django-guardian. Please note that **Object permissions** link is available in top right dropdown navigation.
+
+### django-money
+
+This application is supported in Unfold by default. It is not needed to add any other applications into `INSTALLED_APPS`. Unfold is recognizing special form widget coming from django-money and applying specific styling.
 
 ## User Admin Form
 
@@ -681,7 +713,7 @@ Some components like datepickers, calendars or selectors in admin was not possib
 
 None: most of the custom styles localted in style.css are created via `@apply some-tailwind-class;`.
 
-# Credits
+## Credits
 
 - [TailwindCSS](https://tailwindcss.com/) - CSS framework
 - [HTMX](https://htmx.org/) - AJAX communication with backend
