@@ -1,5 +1,6 @@
 from typing import Any, Dict, Mapping, Union
 
+from django.forms import Field
 from django.template import Library, Node, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token
 from django.template.loader import render_to_string
@@ -107,3 +108,16 @@ def do_capture(parser: Parser, token: Token) -> CaptureNode:
     nodelist = parser.parse(("endcapture",))
     parser.delete_first_token()
     return CaptureNode(nodelist, var, silent)
+
+
+@register.filter
+def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
+    if type(classes) in (list, tuple):
+        classes = " ".join(classes)
+
+    if "class" in field.field.widget.attrs:
+        field.field.widget.attrs["class"] += f" {classes}"
+    else:
+        field.field.widget.attrs["class"] = classes
+
+    return field

@@ -11,6 +11,7 @@ from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 
 from .settings import get_config
+from .widgets import INPUT_CLASSES
 
 
 class UnfoldAdminSite(AdminSite):
@@ -51,6 +52,9 @@ class UnfoldAdminSite(AdminSite):
 
         context.update(
             {
+                "form_classes": {
+                    "text_input": INPUT_CLASSES,
+                },
                 "logo": self._get_value(
                     get_config(self.settings_name)["SIDEBAR"].get("logo"), request
                 ),

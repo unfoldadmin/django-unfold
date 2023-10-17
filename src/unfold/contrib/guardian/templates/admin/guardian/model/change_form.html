@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    {% url opts|admin_urlname:'permissions' original.pk|admin_urlquote as history_url %}
+
+    <a href="{% add_preserved_filters history_url %}" class="permissionslink mx-1 px-3 py-2 rounded-md transition-all hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200">
+        {% trans "Object permissions" %}
+    </a>
+
+    {{ block.super }}
+{% endblock %}
