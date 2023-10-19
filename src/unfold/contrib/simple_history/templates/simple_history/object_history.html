@@ -1,0 +1,21 @@
+{% extends "admin/object_history.html" %}
+
+{% load admin_urls i18n %}
+{% load url from simple_history_compat %}
+{% load display_list from simple_history_admin_list %}
+
+{% block content %}
+    {% if not revert_disabled %}
+        <p class="px-3 py-3 rounded-md text-sm last:mb-8 er-amber-600/10 bg-blue-50 mb-8 text-blue-500 dark:bg-blue-500/20 dark:border-blue-500/10">
+            {% blocktrans %}Choose a date from the list below to revert to a previous version of this object.{% endblocktrans %}
+        </p>
+    {% endif %}
+
+    {% if action_list %}
+        {% display_list %}
+    {% else %}
+        <p class="mb-3 px-3 py-3 rounded-md text-sm last:mb-8 bg-amber-100 text-amber-600 dark:bg-amber-600/20 dark:border-amber-600/10">
+            {% trans "This object doesn't have a change history." %}
+        </p>
+    {% endif %}
+{% endblock %}
