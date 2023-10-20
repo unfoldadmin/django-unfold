@@ -41,8 +41,6 @@ Unfold is theme for Django admin incorporating most common practises for buildin
   - [Actions overview](#actions-overview)
   - [Custom unfold @action decorator](#custom-unfold-action-decorator)
   - [Action handler functions](#action-handler-functions)
-    - [For submit row action](#for-submit-row-action)
-    - [For global, row and detail action](#for-global-row-and-detail-action)
   - [Action examples](#action-examples)
 - [Filters](#filters)
 - [Third party packages](#third-party-packages)
@@ -50,6 +48,7 @@ Unfold is theme for Django admin incorporating most common practises for buildin
   - [django-modeltranslation](#django-modeltranslation)
   - [django-guardian](#django-guardian)
   - [django-money](#django-money)
+  - [django-celery-beat](#django-celery-beat)
 - [User Admin Form](#user-admin-form)
 - [Adding Custom Styles and Scripts](#adding-custom-styles-and-scripts)
 - [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet)
@@ -73,6 +72,7 @@ INSTALLED_APPS = [
     "unfold.contrib.forms",  # optional, if special form elements are needed
     "unfold.contrib.import_export",  # optional, if django-import-export package is used
     "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
     "django.contrib.admin",  # required
 ]
 ```
@@ -378,13 +378,13 @@ Unfold also uses custom `@action` decorator, supporting 2 more parameters in com
 This section provides explanation of how the action handler functions should be constructed for Unfold actions.
 For default actions, follow official Django admin documentation.
 
-#### For submit row action
+#### For submit row action <!-- omit from toc -->
 
 Submit row actions work a bit differently when compared to other custom Unfold actions.
 These actions first invoke form save (same as if you hit `Save` button) and then lets you
 perform additional logic on already saved instance.
 
-#### For global, row and detail action
+#### For global, row and detail action <!-- omit from toc -->
 
 All these actions are based on custom URLs generated for each of them. Handler function for these views is
 basically function based view.
@@ -575,6 +575,52 @@ Adding support for django-guardian is quote straightforward in Unfold, just add 
 ### django-money
 
 This application is supported in Unfold by default. It is not needed to add any other applications into `INSTALLED_APPS`. Unfold is recognizing special form widget coming from django-money and applying specific styling.
+
+### django-celery-beat
+
+In general, django-celery-beat does not have any components that require special styling. The default changelist templates are not inheriting from Unfold's `ModelAdmin` but they are using default `ModelAdmin` coming from `django.contrib.admin` which is causing some design discrepancies in the changelist.
+
+In the source code below you can find a short code snippet to unregister all `django-celery-beat` admin classes and register them with the proper parent `ModelAdmin` class.
+
+```python
+# admin.py
+from django.contrib import admin
+from unfold.admin import ModelAdmin
+
+from django_celery_beat.models import (
+    ClockedSchedule,
+    CrontabSchedule,
+    IntervalSchedule,
+    PeriodicTask,
+    SolarSchedule,
+)
+
+
+admin.site.unregister(PeriodicTask)
+admin.site.unregister(IntervalSchedule)
+admin.site.unregister(CrontabSchedule)
+admin.site.unregister(SolarSchedule)
+admin.site.unregister(ClockedSchedule)
+
+@admin.register(PeriodicTask)
+class PeriodicTaskAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(IntervalSchedule)
+class IntervalScheduleAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(CrontabSchedule)
+class CrontabScheduleAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(SolarSchedule)
+class SolarScheduleAdmin(ModelAdmin):
+    pass
+```
 
 ## User Admin Form
 
