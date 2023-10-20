@@ -44,7 +44,6 @@ Unfold is theme for Django admin incorporating most common practises for buildin
   - [Action examples](#action-examples)
 - [Filters](#filters)
 - [Third party packages](#third-party-packages)
-  - [django-simple-history](#django-simple-history)
   - [django-import-export](#django-import-export)
   - [django-modeltranslation](#django-modeltranslation)
   - [django-guardian](#django-guardian)
@@ -531,8 +530,6 @@ class YourModelAdmin(ModelAdmin):
 ```
 
 ## Third party packages
-
-### django-simple-history
 
 ### django-import-export
 
