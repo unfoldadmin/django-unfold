@@ -1,7 +1,5 @@
 module.exports = {
-  content: [
-    "./src/**/*.{html,py,js}",
-  ],
+  content: ["./src/**/*.{html,py,js}"],
   media: false,
   darkMode: "class",
   theme: {
@@ -17,34 +15,35 @@ module.exports = {
           600: "rgb(var(--color-primary-600) / <alpha-value>)",
           700: "rgb(var(--color-primary-700) / <alpha-value>)",
           800: "rgb(var(--color-primary-800) / <alpha-value>)",
-          900: "rgb(var(--color-primary-900) / <alpha-value>)"
-        }
+          900: "rgb(var(--color-primary-900) / <alpha-value>)",
+          950: "rgb(var(--color-primary-950) / <alpha-value>)",
+        },
       },
       fontSize: {
         0: [0, 1],
         xxs: ["11px", "14px"],
       },
       fontFamily: {
-        sans: ["Inter",  "sans-serif"]
+        sans: ["Inter", "sans-serif"],
       },
       height: {
-        "9.5": "2.375rem",
+        9.5: "2.375rem",
       },
       minWidth: {
-        "sidebar": "18rem",
+        sidebar: "18rem",
       },
       spacing: {
-        "68": "17rem",
-        "128": "32rem",
+        68: "17rem",
+        128: "32rem",
       },
       transitionProperty: {
-        "height": "height",
-        "width": "width",
+        height: "height",
+        width: "width",
       },
       width: {
-        "4.5": "1.125rem",
-        "9.5": "2.375rem",
-        "sidebar": "18rem",
+        4.5: "1.125rem",
+        9.5: "2.375rem",
+        sidebar: "18rem",
       },
     },
   },
@@ -53,10 +52,8 @@ module.exports = {
       borderColor: ["checked", "focus-within", "hover"],
       display: ["group-hover"],
       overflow: ["hover"],
-      textColor: ["hover"]
-    }
+      textColor: ["hover"],
+    },
   },
-  plugins: [
-      require('@tailwindcss/typography'),
-  ]
-}
+  plugins: [require("@tailwindcss/typography")],
+};
