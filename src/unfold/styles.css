@@ -15,6 +15,7 @@ html {
   --color-primary-700: theme("colors.purple.700");
   --color-primary-800: theme("colors.purple.800");
   --color-primary-900: theme("colors.purple.900");
+  --color-primary-950: theme("colors.purple.950");
 }
 
 /*******************************************************
