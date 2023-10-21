@@ -9,9 +9,9 @@
 
 Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
 
-- demo site is available at [unfoldadmin.com](https://unfoldadmin.com)
-- repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
-- Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
+- **Unfold:** demo site is available at [unfoldadmin.com](https://unfoldadmin.com)
+- **Formula:** repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
+- **Turbo:** Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
 
 ## Features <!-- omit from toc -->
 
@@ -22,12 +22,11 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - **Dependencies:** completely based only on `django.contrib.admin`
 - **Actions:** multiple ways how to define actions within different parts of admin
 - **WYSIWYG:** built-in support for WYSIWYG (Trix)
-- **Numeric filters:** widgets for filtering number values
-- **Datetime filters:** widgets for filtering datetime values
+- **Custom filters:** widgets for filtering number & datetime values
 - **Dashboard:** helpers to bootstrap custom dashboard
 - **Tabs:** define custom tab navigations for models
 - **Colors:** possibility to override default color scheme
-- **Django import / export:** default support for this popular application
+- **Third party packages:** default support for multiple popular applications
 
 ## Table of contents <!-- omit from toc -->
 
@@ -35,27 +34,29 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - [Configuration](#configuration)
   - [Available settings.py options](#available-settingspy-options)
   - [Available unfold.admin.ModelAdmin options](#available-unfoldadminmodeladmin-options)
-- [Decorators](#decorators)
-  - [@display](#display)
 - [Actions](#actions)
   - [Actions overview](#actions-overview)
   - [Custom unfold @action decorator](#custom-unfold-action-decorator)
   - [Action handler functions](#action-handler-functions)
   - [Action examples](#action-examples)
 - [Filters](#filters)
+  - [Numeric filters](#numeric-filters)
+  - [Date/time filters](#datetime-filters)
+- [Display decorator](#display-decorator)
 - [Third party packages](#third-party-packages)
+  - [django-celery-beat](#django-celery-beat)
+  - [django-guardian](#django-guardian)
   - [django-import-export](#django-import-export)
   - [django-modeltranslation](#django-modeltranslation)
-  - [django-guardian](#django-guardian)
   - [django-money](#django-money)
-  - [django-celery-beat](#django-celery-beat)
+  - [django-simple-history](#django-simple-history)
 - [User Admin Form](#user-admin-form)
-- [Adding Custom Styles and Scripts](#adding-custom-styles-and-scripts)
-- [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet)
-- [Custom Admin Dashboard](#custom-admin-dashboard)
-- [Unfold Development](#unfold-development)
+- [Adding custom styles and scripts](#adding-custom-styles-and-scripts)
+- [Project level Tailwind stylesheet](#project-level-tailwind-stylesheet)
+- [Custom admin dashboard](#custom-admin-dashboard)
+- [Unfold development](#unfold-development)
   - [Pre-commit](#pre-commit)
-  - [Poetry Configuration](#poetry-configuration)
+  - [Poetry configuration](#poetry-configuration)
   - [Compiling Tailwind](#compiling-tailwind)
 - [Credits](#credits)
 
@@ -282,73 +283,6 @@ class CustomAdminClass(ModelAdmin):
     }
 ```
 
-## Decorators
-
-### @display
-
-Unfold introduces it's own `unfold.decorators.display` decorator. By default it has exactly same behavior as native `django.contrib.admin.decorators.display` but it adds same customizations which helps to extends default logic.
-
-`@display(label=True)`, `@display(label={"value1": "success"})` displays a result as a label. This option fits for different types of statuses. Label can be either boolean indicating we want to use label with default color or dict where the dict is responsible for displaying labels in different colors. At the moment these color combinations are supported: success(green), info(blue), danger(red) and warning(orange).
-
-`@display(header=True)` displays in results list two information in one table cell. Good example is when we want to display customer information, first line is going to be customer's name and right below the name display corresponding email address. Method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`.
-
-```python
-# admin.py
-
-from django.db.models import TextChoices
-from django.utils.translation import gettext_lazy as _
-
-from unfold.admin import ModelAdmin
-from unfold.decorators import display
-
-
-class UserStatus(TextChoices):
-    ACTIVE = "ACTIVE", _("Active")
-    PENDING = "PENDING", _("Pending")
-    INACTIVE = "INACTIVE", _("Inactive")
-    CANCELLED = "CANCELLED", _("Cancelled")
-
-
-class UserAdmin(ModelAdmin):
-    list_display = [
-        "display_as_two_line_heading",
-        "show_status",
-        "show_status_with_custom_label",
-    ]
-
-    @display(
-        description=_("Status"),
-        ordering="status",
-        label=True
-    )
-    def show_status_default_color(self, obj):
-        return obj.status
-
-    @display(
-        description=_("Status"),
-        ordering="status",
-        label={
-            UserStatus.ACTIVE: "success",  # green
-            UserStatus.PENDING: "info",  # blue
-            UserStatus.INACTIVE: "warning",  # orange
-            UserStatus.CANCELLED: "danger",  # red
-        },
-    )
-    def show_status_customized_color(self, obj)
-        return obj.status
-
-    @display(description=_("Status with label"), ordering="status", label=True)
-    def show_status_with_custom_label(self, obj):
-        return obj.status, obj.get_status_display()
-
-    @display(header=True)
-    def display_as_two_line_heading(self, obj):
-        """
-        Third argument is short text which will appear as prefix in circle
-        """
-        return "First main heading", "Smaller additional description", "AB"
-```
-
 ## Actions
 
 It is highly recommended to read the base [Django actions documentation](https://docs.djangoproject.com/en/4.2/ref/contrib/admin/actions/) before reading this section, since Unfold actions are derived from Django actions.
@@ -483,6 +417,10 @@ class UserAdmin(ModelAdmin):
 
 By default, Django admin handles all filters as regular HTML links pointing at the same URL with different query parameters. This approach is for basic filtering more than enough. In the case of more advanced filtering by incorporating input fields, it is not going to work.
 
+**Note:** when implementing a filter which contains input fields, there is a no way that user can submit the values, because default filters does not contain submit button. To implement submit button, `unfold.admin.ModelAdmin` contains boolean `list_filter_submit` flag which enables submit button in filter form.
+
+### Numeric filters
+
 Currently, Unfold implements numeric filters inside `unfold.contrib.filters` application. In order to use these filters, it is required to add this application into `INSTALLED_APPS` in `settings.py` right after `unfold` application.
 
 ```python
@@ -497,8 +435,6 @@ from unfold.contrib.filters.admin import (
     RangeNumericFilter,
     SingleNumericFilter,
     SliderNumericFilter,
-    RangeDateFilter,
-    RangeDateTimeFilter,
 )
 
 
@@ -520,8 +456,6 @@ class YourModelAdmin(ModelAdmin):
         ("field_B", RangeNumericFilter),  # Numeric range search, __gte and __lte lookup
         ("field_C", SliderNumericFilter),  # Numeric range filter but with slider
         ("field_D", CustomSliderNumericFilter),  # Numeric filter with custom attributes
-        ("field_E", RangeDateFilter),  # Date filter
-        ("field_F", RangeDateTimeFilter),  # Datetime filter
         CustomRangeNumericListFilter,  # Numeric range search not restricted to a model field
     )
 
@@ -529,53 +463,96 @@ class YourModelAdmin(ModelAdmin):
         return super().get_queryset().annotate(items_count=Count("item", distinct=True))
 ```
 
-## Third party packages
-
-### django-import-export
-
-1. Add `unfold.contrib.import_export` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the application.
-2. Change `import_form_class` and `export_form_class` in ModelAdmin which is inheriting from `ImportExportModelAdmin`. This chunk of code is responsible for adding proper styling to form elements.
+### Date/time filters
 
 ```python
 # admin.py
 
-from unfold.admin import ModelAdmin
-from unfold.contrib.import_export.forms import ExportForm, ImportForm
+from django.contrib import admin
+from django.contrib.auth.models import User
 
-class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
-    import_form_class = ImportForm
-    export_form_class = ExportForm
+from unfold.admin import ModelAdmin
+from unfold.contrib.filters.admin import (
+    RangeDateFilter,
+    RangeDateTimeFilter,
+)
+
+
+@admin.register(User)
+class YourModelAdmin(ModelAdmin):
+    list_filter_submit = True  # Submit button at the bottom of the filter
+    list_filter = (
+        ("field_E", RangeDateFilter),  # Date filter
+        ("field_F", RangeDateTimeFilter),  # Datetime filter
+    )
 ```
 
-### django-modeltranslation
+## Display decorator
 
-By default Unfold does not contain any specific implementation for django-modeltranslation and the application is partially supported. Basic behavior is supported except of tab navigation provided by django-modeltranslation. At the moment there are no plans in supporting this behavior.
+Unfold introduces it's own `unfold.decorators.display` decorator. By default it has exactly same behavior as native `django.contrib.admin.decorators.display` but it adds same customizations which helps to extends default logic.
 
-For django-modeltranslation fields for spefic languages, it is possible to define custom flags which will appear as a suffix in field's label. It is recommended to use emojis as suffix.
+`@display(label=True)`, `@display(label={"value1": "success"})` displays a result as a label. This option fits for different types of statuses. Label can be either boolean indicating we want to use label with default color or dict where the dict is responsible for displaying labels in different colors. At the moment these color combinations are supported: success(green), info(blue), danger(red) and warning(orange).
+
+`@display(header=True)` displays in results list two information in one table cell. Good example is when we want to display customer information, first line is going to be customer's name and right below the name display corresponding email address. Method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`. There is a third optional argument, which is type of the string and its value is displayed in a circle before first two values on the front end. Its optimal usage is for displaying initials.
 
 ```python
-# settings.py
+# admin.py
 
-UNFOLD = {
-    "EXTENSIONS": {
-        "modeltranslation": {
-            "flags": {
-                "en": "🇬🇧",
-                "fr": "🇫🇷",
-                "nl": "🇧🇪",
-            },
+from django.db.models import TextChoices
+from django.utils.translation import gettext_lazy as _
+
+from unfold.admin import ModelAdmin
+from unfold.decorators import display
+
+
+class UserStatus(TextChoices):
+    ACTIVE = "ACTIVE", _("Active")
+    PENDING = "PENDING", _("Pending")
+    INACTIVE = "INACTIVE", _("Inactive")
+    CANCELLED = "CANCELLED", _("Cancelled")
+
+
+class UserAdmin(ModelAdmin):
+    list_display = [
+        "display_as_two_line_heading",
+        "show_status",
+        "show_status_with_custom_label",
+    ]
+
+    @display(
+        description=_("Status"),
+        ordering="status",
+        label=True
+    )
+    def show_status_default_color(self, obj):
+        return obj.status
+
+    @display(
+        description=_("Status"),
+        ordering="status",
+        label={
+            UserStatus.ACTIVE: "success",  # green
+            UserStatus.PENDING: "info",  # blue
+            UserStatus.INACTIVE: "warning",  # orange
+            UserStatus.CANCELLED: "danger",  # red
         },
-    },
-}
+    )
+    def show_status_customized_color(self, obj)
+        return obj.status
+
+    @display(description=_("Status with label"), ordering="status", label=True)
+    def show_status_with_custom_label(self, obj):
+        return obj.status, obj.get_status_display()
+
+    @display(header=True)
+    def display_as_two_line_heading(self, obj):
+        """
+        Third argument is short text which will appear as prefix in circle
+        """
+        return "First main heading", "Smaller additional description", "AB"
 ```
 
-### django-guardian
-
-Adding support for django-guardian is quote straightforward in Unfold, just add `unfold.contrib.guardian` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the django-guardian. Please note that **Object permissions** link is available in top right dropdown navigation.
-
-### django-money
-
-This application is supported in Unfold by default. It is not needed to add any other applications into `INSTALLED_APPS`. Unfold is recognizing special form widget coming from django-money and applying specific styling.
+## Third party packages
 
 ### django-celery-beat
 
@@ -623,6 +600,56 @@ class SolarScheduleAdmin(ModelAdmin):
     pass
 ```
 
+### django-guardian
+
+Adding support for django-guardian is quote straightforward in Unfold, just add `unfold.contrib.guardian` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the django-guardian. Please note that **Object permissions** link is available in top right dropdown navigation.
+
+### django-import-export
+
+1. Add `unfold.contrib.import_export` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the application.
+2. Change `import_form_class` and `export_form_class` in ModelAdmin which is inheriting from `ImportExportModelAdmin`. This chunk of code is responsible for adding proper styling to form elements.
+
+```python
+# admin.py
+
+from unfold.admin import ModelAdmin
+from unfold.contrib.import_export.forms import ExportForm, ImportForm
+
+class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+```
+
+### django-modeltranslation
+
+By default Unfold does not contain any specific implementation for django-modeltranslation and the application is partially supported. Basic behavior is supported except of tab navigation provided by django-modeltranslation. At the moment there are no plans in supporting this behavior.
+
+For django-modeltranslation fields for spefic languages, it is possible to define custom flags which will appear as a suffix in field's label. It is recommended to use emojis as suffix.
+
+```python
+# settings.py
+
+UNFOLD = {
+    "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {
+                "en": "🇬🇧",
+                "fr": "🇫🇷",
+                "nl": "🇧🇪",
+            },
+        },
+    },
+}
+```
+
+### django-money
+
+This application is supported in Unfold by default. It is not needed to add any other applications into `INSTALLED_APPS`. Unfold is recognizing special form widget coming from django-money and applying specific styling.
+
+### django-simple-history
+
+To make this application work, add `unfold.contrib.simple_history` into `settings.py` in `INSTALLED_APPS` variable before right after `unfold`. This app should ensure that templates coming from django-simple-history are overriden by Unfold.
+
 ## User Admin Form
 
 User's admin in Django is specific as it contains several forms which are requiring custom styling. All of these forms has been inherited and accordingly adjusted. In user admin class it is needed to use these inherited form classes to enable custom styling matching rest of the website.
@@ -645,7 +672,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     change_password_form = AdminPasswordChangeForm
 ```
 
-## Adding Custom Styles and Scripts
+## Adding custom styles and scripts
 
 To add new custom styles, for example for custom dashboard, it is possible to load them via **STYLES** key in **UNFOLD** dict. This key accepts a list of strings or lambda functions which will be loaded on all pages. JavaScript files can be loaded by using similar apprach, but **SCRIPTS** is used.
 
@@ -664,7 +691,7 @@ UNFOLD = {
 }
 ```
 
-## Project Level Tailwind Stylesheet
+## Project level Tailwind stylesheet
 
 When creating custom dashboard or adding custom components, it is needed to add own styles. Adding custom styles is described above. Most of the time, it is supposed that new elements are going to match with the rest of the administration panel. First of all, create tailwind.config.js in your application. Below is located minimal configuration for this file.
 
@@ -697,7 +724,7 @@ Once the configuration file is set, it is possible to compile new styles which c
 npx tailwindcss -o your_project/static/css/styles.css --watch --minify
 ```
 
-## Custom Admin Dashboard
+## Custom admin dashboard
 
 The most common thing which needs to be adjusted for each project in admin is the dashboard. By default Unfold does not provide any dashboard components. The default dashboard experience with list of all applications and models is kept with proper styling matching rest of the components but thats it. Anyway, Unfold was created that creation of custom dashboard will be streamlined.
 
@@ -723,7 +750,7 @@ Create `templates/admin/index.html` in your project and paste the base template 
 
 Note: In case that it is needed to pass custom variables into dashboard tamplate, check **DASHOARD_CALLBACK** in **UNFOLD** dict.
 
-## Unfold Development
+## Unfold development
 
 ### Pre-commit
 
@@ -735,7 +762,7 @@ pre-commit install
 pre-commit install --hook-type commit-msg
 ```
 
-### Poetry Configuration
+### Poetry configuration
 
 To add a new feature or fix the easiest approach is to use django-unfold in combination with Poetry. The process looks like:
 
@@ -758,7 +785,7 @@ npm run tailwind:build # run once
 
 Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
 
-None: most of the custom styles localted in style.css are created via `@apply some-tailwind-class;`.
+**Note:** most of the custom styles located in style.css are created via `@apply some-tailwind-class;` as is not possible to manually add CSS class to element which are for example created via jQuery.
 
 ## Credits
 
