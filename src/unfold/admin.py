@@ -175,9 +175,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             "class": " ".join(LABEL_CLASSES + ["mb-2"]),
         }
 
-        if not self.is_first:
-            attrs["class"] = "inline"
-
         label = self.field["label"]
 
         return format_html(
