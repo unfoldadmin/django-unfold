@@ -55,7 +55,7 @@
             <div class="absolute bottom-0 left-72 right-0 top-0 z-50 peer-checked:block" x-cloak x-show="openAllApplications">
                 <label class="absolute bg-gray-900 bg-opacity-80 backdrop-blur-sm bottom-0 left-0 right-0 top-0 z-10 w-screen" for="show-applications"></label>
 
-                <div class="bg-white flex flex-col h-full overflow-x-hidden overflow-y-auto py-5 px-8 relative text-sm w-80 z-20 dark:bg-gray-900 dark:border-r dark:border-gray-800" data-simplebar x-on:click.outside="openAllApplications = false" x-on:keydown.escape.window="openAllApplications = false">
+                <div class="bg-white flex flex-col h-full overflow-x-hidden overflow-y-auto py-5 px-8 relative text-sm w-80 z-20 dark:bg-gray-900 dark:border-r dark:border-gray-800" x-on:click.outside="openAllApplications = false" x-on:keydown.escape.window="openAllApplications = false">
                     {% for app in app_list %}
                         <div class="mb-6 last:mb-0">
                             <h3 class="mb-4 font-medium overflow-hidden text-ellipsis text-gray-700 whitespace-nowrap dark:text-gray-200">
