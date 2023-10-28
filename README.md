@@ -537,7 +537,7 @@ class UserAdmin(ModelAdmin):
             UserStatus.CANCELLED: "danger",  # red
         },
     )
-    def show_status_customized_color(self, obj)
+    def show_status_customized_color(self, obj):
         return obj.status
 
     @display(description=_("Status with label"), ordering="status", label=True)
