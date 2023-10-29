@@ -3,13 +3,12 @@
 {% block object-tools-items %}
     {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
 
-    <a href="{% add_preserved_filters history_url %}" class="historylink mx-1 px-3 py-2 rounded-md transition-all hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200">
-        {% trans 'History' %}
-    </a>
+    {% trans 'History' as title %}
+    {% add_preserved_filters history_url as link %}
+    {% include "unfold/helpers/tab_action.html" with title=title link=link %}
 
     {% if has_absolute_url %}
-        <a href="{{ absolute_url }}" target="_blank" class="viewsitelink mx-1 px-3 py-2 rounded-md transition-all hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200">
-            {% trans 'View on site' %}
-        </a>
+        {% trans 'View on site' as title %}
+        {% include "unfold/helpers/tab_action.html" with title=title link=absolute_url blank=1 %}
     {% endif %}
 {% endblock %}
