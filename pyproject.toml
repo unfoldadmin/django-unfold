@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "django-unfold"
 version = "0.14.1"
-description = "Clean & minimal Django admin theme based on Tailwind CSS"
+description = "Modern Django admin theme for seamless interface development"
 license = "MIT"
 readme = "README.md"
 authors = []
@@ -65,7 +65,6 @@ django_find_project = false
 [tool.poetry.dependencies]
 python = ">=3.8"
 django = ">=3.2"
-importlib-metadata = "6.7.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
