@@ -740,10 +740,20 @@ Create `templates/admin/index.html` in your project and paste the base template 
 
 {% block breadcrumbs %}{% endblock %}
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block title %}
+    {% if subtitle %}
+        {{ subtitle }} |
+    {% endif %}
+
+    {{ title }} | {{ site_title|default:_('Django site admin') }}
+{% endblock %}
 
 {% block branding %}
-    <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Django administration') }}
+        </a>
+    </h1>
 {% endblock %}
 
 {% block content %}
@@ -804,9 +814,11 @@ Below you can find a more complex example which is using multiple components and
 {% block content %}
     {% component "unfold/components/container.html" %}
         {% component "unfold/components/flex.html" with class="gap-4"%}
-            {% component "unfold/components/navigation.html" with items=navigation %}{% endcomponent %}
+            {% component "unfold/components/navigation.html" with items=navigation %}
+            {% endcomponent %}
 
-            {% component "unfold/components/navigation.html" with class="ml-auto" items=filters %}{% endcomponent %}
+            {% component "unfold/components/navigation.html" with class="ml-auto" items=filters %}
+            {% endcomponent %}
         {% endcomponent %}
 
         {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
