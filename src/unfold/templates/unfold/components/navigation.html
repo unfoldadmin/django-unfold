@@ -1,0 +1,15 @@
+{% if items %}
+    <nav class="bg-gray-100 flex gap-2 mb-8 p-1 rounded text-sm dark:bg-white/[.04]{% if class %} {{ class }}{% endif %}">
+        {% for item in items %}
+            <a href="{{ item.link }}" class="flex flex-row font-medium items-center px-2.5 py-1 rounded {% if item.active %} bg-white shadow-sm text-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-white{% else %} text-gray-400 hover:bg-gray-700/[.04] hover:text-gray-700 dark:hover:bg-white/[.04] dark:hover:text-white{% endif %}">
+                {% if item.icon %}
+                    <span class="material-symbols-outlined{% if item.title %} mr-2{% endif %}">{{ item.icon }}</span>
+                {% endif %}
+
+                {% if item.title %}
+                    {{ item.title }}
+                {% endif %}
+            </a>
+        {% endfor %}
+    </nav>
+{% endif %}

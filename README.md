@@ -23,7 +23,7 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - **Actions:** multiple ways how to define actions within different parts of admin
 - **WYSIWYG:** built-in support for WYSIWYG (Trix)
 - **Custom filters:** widgets for filtering number & datetime values
-- **Dashboard:** helpers to bootstrap custom dashboard
+- **Dashboard:** custom components for rapid dashboard development
 - **Tabs:** define custom tab navigations for models
 - **Colors:** possibility to override default color scheme
 - **Third party packages:** default support for multiple popular applications
@@ -53,7 +53,10 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - [User Admin Form](#user-admin-form)
 - [Adding custom styles and scripts](#adding-custom-styles-and-scripts)
 - [Project level Tailwind stylesheet](#project-level-tailwind-stylesheet)
-- [Custom admin dashboard](#custom-admin-dashboard)
+- [Admin dashboard](#admin-dashboard)
+  - [Overriding template](#overriding-template)
+  - [Custom variables](#custom-variables)
+  - [Unfold components](#unfold-components)
 - [Unfold development](#unfold-development)
   - [Pre-commit](#pre-commit)
   - [Poetry configuration](#poetry-configuration)
@@ -537,7 +540,7 @@ class UserAdmin(ModelAdmin):
             UserStatus.CANCELLED: "danger",  # red
         },
     )
-    def show_status_customized_color(self, obj)
+    def show_status_customized_color(self, obj):
         return obj.status
 
     @display(description=_("Status with label"), ordering="status", label=True)
@@ -713,6 +716,7 @@ module.exports = {
       700: "rgb(var(--color-primary-700) / <alpha-value>)",
       800: "rgb(var(--color-primary-800) / <alpha-value>)",
       900: "rgb(var(--color-primary-900) / <alpha-value>)",
+      950: "rgb(var(--color-primary-950) / <alpha-value>)",
     },
   },
 };
@@ -724,23 +728,33 @@ Once the configuration file is set, it is possible to compile new styles which c
 npx tailwindcss -o your_project/static/css/styles.css --watch --minify
 ```
 
-## Custom admin dashboard
+## Admin dashboard
 
-The most common thing which needs to be adjusted for each project in admin is the dashboard. By default Unfold does not provide any dashboard components. The default dashboard experience with list of all applications and models is kept with proper styling matching rest of the components but thats it. Anyway, Unfold was created that creation of custom dashboard will be streamlined.
+### Overriding template
 
 Create `templates/admin/index.html` in your project and paste the base template below into it. By default, all your custom styles here are not compiled because CSS classes are located in your specific project. Here it is needed to set up the Tailwind for your project and all requried instructions are located in [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet) chapter.
 
-```
+```html+django
 {% extends 'unfold/layouts/base_simple.html' %}
 
 {% load cache humanize i18n %}
 
 {% block breadcrumbs %}{% endblock %}
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block title %}
+    {% if subtitle %}
+        {{ subtitle }} |
+    {% endif %}
+
+    {{ title }} | {{ site_title|default:_('Django site admin') }}
+{% endblock %}
 
 {% block branding %}
-    <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Django administration') }}
+        </a>
+    </h1>
 {% endblock %}
 
 {% block content %}
@@ -748,7 +762,99 @@ Create `templates/admin/index.html` in your project and paste the base template 
 {% endblock %}
 ```
 
-Note: In case that it is needed to pass custom variables into dashboard tamplate, check **DASHOARD_CALLBACK** in **UNFOLD** dict.
+### Custom variables
+
+When you are building a new dashboard, you need to display some data mostly coming from the database. To pass these data to the dashboard template, Unfold contains a special `DASHBOARD_CALLBACK` parameter which allows passing a dictionary of variables to `templates/admin/index.html` template.
+
+```python
+# views.py
+
+def dashboard_callback(request, context):
+    context.update({
+        "custom_variable": "value",
+    })
+
+    return context
+```
+
+```python
+# settings.py
+
+UNFOLD = {
+    "DASHBOARD_CALLBACK": "app.views.dashboard_callback",
+}
+```
+
+### Unfold components
+
+Unfold provides a set of already predefined templates to speed up overall dashboard development. These templates contain predefined design which matches global design style so there is no need to spend any time adjusting styles.
+
+The biggest benefit of Unfold components is the possibility to nest them inside one template file provides an unlimited amount of possible combinations. Then each component includes `children` variable which contains a value specified in the parent component. Except for `children` variable, components can have multiple variables coming from the parent template as component variables. These parameters can be specified in the same as parameters when using `{% include with param1=value1 param2=value2 %}` template tag.
+
+```html+django
+{% compontent "unfold/components/flex.html" with col=1 %}
+    {% component "unfold/components/card.html" %}
+        {% compontent "unfold/components/title.html" %}
+            Card Title
+        {% endcomponent %}
+    {% endcomponent %}
+{% endcompontent %}
+```
+
+Below you can find a more complex example which is using multiple components and processing them based on the passed variables from the `DASHBOARD_CALLBACK`.
+
+```html+django
+{% load i18n %}
+
+{% block content_before %}
+    {% component "unfold/components/header.html" %}
+        {% trans "Unfold Dashboard" %}
+    {% endcomponent %}
+{% endblock %}
+
+{% block content %}
+    {% component "unfold/components/container.html" %}
+        {% component "unfold/components/flex.html" with class="gap-4"%}
+            {% component "unfold/components/navigation.html" with items=navigation %}
+            {% endcomponent %}
+
+            {% component "unfold/components/navigation.html" with class="ml-auto" items=filters %}
+            {% endcomponent %}
+        {% endcomponent %}
+
+        {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+            {% for card in cards %}
+                {% trans "Last 7 days" as label %}
+                {% component "unfold/components/card.html" with class="lg:w-1/3" %}
+                    {% component "unfold/components/text.html" %}
+                        {{ card.title }}
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" %}
+                        {{ card.metric }}
+                    {% endcomponent %}
+                {% endcomponent %}
+            {% endfor %}
+        {% endcomponent %}
+    {% endcomponent %}
+{% endblock %}
+```
+
+#### List of available components <!-- omit from toc -->
+
+| Component                         | Description                    | Arguments                        |
+| --------------------------------- | ------------------------------ | -------------------------------- |
+| unfold/components/chart/bar.html  | Bar chart implementation       | class, data                      |
+| unfold/components/chart/line.html | Line chart implementation      | class, data                      |
+| unfold/components/card.html       | Card component                 | class, title, footer, label      |
+| unfold/components/container.html  | Wrapper for settings max width | class                            |
+| unfold/components/flex.html       | Flex items                     | class, col                       |
+| unfold/components/header.html     | Page header, user links        | class                            |
+| unfold/components/navigation.html | List of navigation links       | class, items                     |
+| unfold/components/progress.html   | Percentual progress bar        | class, value, title, description |
+| unfold/components/separator.html  | Separator, horizontal rule     | class                            |
+| unfold/components/text.html       | Paragraph of text              | class                            |
+| unfold/components/title.html      | Basic heading element          | class                            |
 
 ## Unfold development
 
