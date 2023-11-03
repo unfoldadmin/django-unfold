@@ -56,4 +56,26 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/typography")],
+  safelist: [
+    {
+      pattern: /gap-+/,
+      variants: ["lg"],
+    },
+    {
+      pattern: /w-+/,
+      variants: ["lg"],
+    },
+    {
+      pattern: /h-+/,
+      variants: ["lg"],
+    },
+    {
+      pattern: /m(\w?)-+/,
+      variants: ["lg"],
+    },
+    {
+      pattern: /p(\w?)-+/,
+      variants: ["lg"],
+    },
+  ],
 };
