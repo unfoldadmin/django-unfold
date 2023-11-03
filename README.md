@@ -844,8 +844,8 @@ Below you can find a more complex example which is using multiple components and
 
 | Component                         | Description                    | Arguments                        |
 | --------------------------------- | ------------------------------ | -------------------------------- |
-| unfold/components/chart/bar.html  | Bar chart implementation       | class, data                      |
-| unfold/components/chart/line.html | Line chart implementation      | class, data                      |
+| unfold/components/chart/bar.html  | Bar chart implementation       | class, data, height, width       |
+| unfold/components/chart/line.html | Line chart implementation      | class, data, height, width       |
 | unfold/components/card.html       | Card component                 | class, title, footer, label      |
 | unfold/components/container.html  | Wrapper for settings max width | class                            |
 | unfold/components/flex.html       | Flex items                     | class, col                       |
