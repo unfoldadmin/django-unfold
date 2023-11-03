@@ -733,7 +733,7 @@ npx tailwindcss -o your_project/static/css/styles.css --watch --minify
 
 Create `templates/admin/index.html` in your project and paste the base template below into it. By default, all your custom styles here are not compiled because CSS classes are located in your specific project. Here it is needed to set up the Tailwind for your project and all requried instructions are located in [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet) chapter.
 
-```
+```html+django
 {% extends 'unfold/layouts/base_simple.html' %}
 
 {% load cache humanize i18n %}
@@ -790,7 +790,7 @@ Unfold provides a set of already predefined templates to speed up overall dashbo
 
 The biggest benefit of Unfold components is the possibility to nest them inside one template file provides an unlimited amount of possible combinations. Then each component includes `children` variable which contains a value specified in the parent component. Except for `children` variable, components can have multiple variables coming from the parent template as component variables. These parameters can be specified in the same as parameters when using `{% include with param1=value1 param2=value2 %}` template tag.
 
-```
+```html+django
 {% compontent "unfold/components/flex.html" with col=1 %}
     {% component "unfold/components/card.html" %}
         {% compontent "unfold/components/title.html" %}
@@ -802,7 +802,7 @@ The biggest benefit of Unfold components is the possibility to nest them inside 
 
 Below you can find a more complex example which is using multiple components and processing them based on the passed variables from the `DASHBOARD_CALLBACK`.
 
-```
+```html+django
 {% load i18n %}
 
 {% block content_before %}
@@ -838,6 +838,8 @@ Below you can find a more complex example which is using multiple components and
     {% endcomponent %}
 {% endblock %}
 ```
+
+#### List of available components <!-- omit from toc -->
 
 | Component                         | Description                    | Arguments                        |
 | --------------------------------- | ------------------------------ | -------------------------------- |
