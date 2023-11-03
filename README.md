@@ -839,19 +839,19 @@ Below you can find a more complex example which is using multiple components and
 {% endblock %}
 ```
 
-| Component                         | Description                                        | Arguments                        |
-| --------------------------------- | -------------------------------------------------- | -------------------------------- |
-| unfold/components/chart/bar.html  | Bar chart implementation of chart.js               | class, data                      |
-| unfold/components/chart/line.html | Line chart implementation of chart.js              | class, data                      |
-| unfold/components/card.html       | Card component                                     | class, title, footer, label      |
-| unfold/components/container.html  | Content wrapper for settings max width             | class                            |
-| unfold/components/flex.html       | Flex items                                         | class, col                       |
-| unfold/components/header.html     | Main page header, with user links and theme switch | class                            |
-| unfold/components/navigation.html | List of navigation links                           | class, items                     |
-| unfold/components/progress.html   | Percentual progress bar with title and value       | class, value, title, description |
-| unfold/components/separator.html  | Content separator - horizontal rule                | class                            |
-| unfold/components/text.html       | Paragraph of text                                  | class                            |
-| unfold/components/title.html      | Basic heading element                              | class                            |
+| Component                         | Description                              | Arguments                        |
+| --------------------------------- | ---------------------------------------- | -------------------------------- |
+| unfold/components/chart/bar.html  | Bar chart implementation of chart.js     | class, data                      |
+| unfold/components/chart/line.html | Line chart implementation of chart.js    | class, data                      |
+| unfold/components/card.html       | Card component                           | class, title, footer, label      |
+| unfold/components/container.html  | Wrapper for settings max width           | class                            |
+| unfold/components/flex.html       | Flex items                               | class, col                       |
+| unfold/components/header.html     | Main page header+ user links + dark mode | class                            |
+| unfold/components/navigation.html | List of navigation links                 | class, items                     |
+| unfold/components/progress.html   | Percentual progress bar                  | class, value, title, description |
+| unfold/components/separator.html  | Content separator - horizontal rule      | class                            |
+| unfold/components/text.html       | Paragraph of text                        | class                            |
+| unfold/components/title.html      | Basic heading element                    | class                            |
 
 ## Unfold development
 
