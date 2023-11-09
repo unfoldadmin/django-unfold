@@ -153,10 +153,11 @@ UNFOLD = {
     "SITE_URL": "/",
     "SITE_ICON": lambda request: static("logo.svg"),
     "SITE_SYMBOL": "speed",  # symbol from icon set
+    "ENVIRONMENT": "sample_app.environment_callback",
     "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
     "LOGIN": {
-        "image": lambda r: static("sample/login-bg.jpg"),
-        "redirect_after": lambda r: reverse_lazy("admin:APP_MODEL_changelist"),
+        "image": lambda request: static("sample/login-bg.jpg"),
+        "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
     },
     "STYLES": [
         lambda request: static("css/style.css"),
@@ -806,12 +807,6 @@ Below you can find a more complex example which is using multiple components and
 ```html+django
 {% load i18n %}
 
-{% block content_before %}
-    {% component "unfold/components/header.html" %}
-        {% trans "Unfold Dashboard" %}
-    {% endcomponent %}
-{% endblock %}
-
 {% block content %}
     {% component "unfold/components/container.html" %}
         {% component "unfold/components/flex.html" with class="gap-4"%}
@@ -849,7 +844,6 @@ Below you can find a more complex example which is using multiple components and
 | unfold/components/card.html       | Card component                 | class, title, footer, label      |
 | unfold/components/container.html  | Wrapper for settings max width | class                            |
 | unfold/components/flex.html       | Flex items                     | class, col                       |
-| unfold/components/header.html     | Page header, user links        | class                            |
 | unfold/components/navigation.html | List of navigation links       | class, items                     |
 | unfold/components/progress.html   | Percentual progress bar        | class, value, title, description |
 | unfold/components/separator.html  | Separator, horizontal rule     | class                            |
