@@ -9,6 +9,7 @@ from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
+import types
 
 from .settings import get_config
 from .widgets import INPUT_CLASSES
@@ -230,13 +231,15 @@ class UnfoldAdminSite(AdminSite):
                     has_tab_link_active = False
 
                     for tab_item in tab["items"]:
+                        if isinstance(tab_item['link'], types.LambdaType) and tab_item['link'].__name__ == "<lambda>":
+                            tab_item['link'] = tab_item['link'](request)
+
                         if item["link"] == tab_item["link"]:
                             has_primary_link = True
                             continue
 
                         if _get_is_active(tab_item["link"]):
                             has_tab_link_active = True
-                            break
 
                     if has_primary_link and has_tab_link_active:
                         item["active"] = True
