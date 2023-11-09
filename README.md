@@ -262,7 +262,7 @@ def reverse_lazy_change(view, request):
     """
     if 'object_id' in request.resolver_match.kwargs:
         return reverse_lazy(view, args=(request.resolver_match.kwargs['object_id']))
-    return reverse_lazy(view)
+    return reverse_lazy(view + 'list')
 
 ```
 
