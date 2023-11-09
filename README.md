@@ -215,12 +215,17 @@ UNFOLD = {
     "TABS": [
         {
             "models": [
-                "app_label.model_name_in_lowercase",
+                "app_label.model_name_in_lowercase", "app_label.model2_name_in_lowercase"
             ],
             "items": [
                 {
                     "title": _("Your custom title"),
                     "link": reverse_lazy("admin:app_label_model_name_changelist"),
+                    "permission": "sample_app.permission_callback",
+                },
+                {
+                    "title": _("Referenced model to object_id"),
+                    "link": lambda request: reverse_lazy_change("admin:app_label_model2_name_change"),
                     "permission": "sample_app.permission_callback",
                 },
             ],
@@ -247,6 +252,17 @@ def badge_callback(request):
 
 def permission_callback(request):
     return request.user.has_perm("sample_app.change_model")
+
+def reverse_lazy_change(view, request):
+    """
+    Generate the view with the object_id of the page.
+
+    '*_change' views require a parameter that usually is the 'object_id' from the same page
+    this means that you can reference a tab to a different model that have the same foreign key.
+    """
+    if 'object_id' in request.resolver_match.kwargs:
+        return reverse_lazy(view, args=(request.resolver_match.kwargs['object_id']))
+    return reverse_lazy(view)
 
 ```
 
