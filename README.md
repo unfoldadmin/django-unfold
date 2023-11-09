@@ -243,6 +243,10 @@ def dashboard_callback(request, context):
     return context
 
 
+def environment_callback(request):
+    return ["Production", "danger"] # info, danger, warning, success
+
+
 def badge_callback(request):
     return 3
 
