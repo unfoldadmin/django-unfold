@@ -27,6 +27,7 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - **Tabs:** define custom tab navigations for models
 - **Colors:** possibility to override default color scheme
 - **Third party packages:** default support for multiple popular applications
+- **Environment label**: distinguish between environments by displaying a label
 
 ## Table of contents <!-- omit from toc -->
 
