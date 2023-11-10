@@ -1,7 +1,7 @@
 {% load i18n admin_urls %}
 
 <div {% if not is_popup %}id="submit-row"{% endif %} class="relative z-20 {% if not is_popup %} mt-20 lg:mt-8{% endif %}">
-    <div class="{% if not is_popup %}bottom-0 fixed left-0 right-0 xl:left-72{% endif %}" :class="{'xl:left-0': !sidebarDesktopOpen}">
+    <div class="{% if not is_popup %}bottom-0 fixed left-0 right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %}>
         <div class="bg-white dark:bg-gray-900 {% if not is_popup %}border-t px-4 py-4 relative scrollable-top lg:px-12 dark:border-gray-800{% endif %}">
             <div class="container flex flex-col-reverse gap-3 items-center mx-auto lg:flex-row-reverse">
                 {% block submit-row %}
