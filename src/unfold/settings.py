@@ -24,6 +24,7 @@ CONFIG_DEFAULTS = {
         },
     },
     "DASHBOARD_CALLBACK": None,
+    "ENVIRONMENT": None,
     "STYLES": [],
     "SCRIPTS": [],
     "SIDEBAR": {
