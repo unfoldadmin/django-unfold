@@ -1,4 +1,6 @@
-![screenshot](https://github.com/unfoldadmin/django-unfold/assets/10785882/daef6e7e-e8a1-4142-8e4c-fa2a287978d2)
+[![screenshot-light](https://github.com/unfoldadmin/django-unfold/assets/10785882/291e69c9-abdd-4f7e-a0d6-2af210a9013a#gh-light-mode-only)](https://github.com/unfoldadmin/django-unfold/assets/10785882/291e69c9-abdd-4f7e-a0d6-2af210a9013a#gh-light-mode-only)
+
+[![screenshot-dark](https://github.com/unfoldadmin/django-unfold/assets/10785882/94a2e90f-924a-4aaf-b6d9-cb1592000c55#gh-dark-mode-only)](https://github.com/unfoldadmin/django-unfold/assets/10785882/94a2e90f-924a-4aaf-b6d9-cb1592000c55#gh-dark-mode-only)
 
 ## Unfold Django Admin Theme <!-- omit from toc -->
 
