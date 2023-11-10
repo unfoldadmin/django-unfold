@@ -2,7 +2,7 @@
 {% load i18n admin_urls %}
 
 {% block breadcrumbs %}
-    <div class="px-12">
+    <div class="px-4 lg:px-12">
         <div class="container mb-12 mx-auto -my-3">
             <ul class="flex">
                 {% url 'admin:index' as link %}
@@ -26,36 +26,36 @@
 {% endblock %}
 
 {% block content %}
-    {% if actions_list %}
-        <table class="border border-spacing-none border-separate rounded-md shadow-sm text-gray-700 w-full">
-            <thead>
+    {% if action_list %}
+        <table class="border-gray-200 border-spacing-none border-separate mb-6 text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+            <thead class="hidden lg:table-header-group">
                 <tr>
-                    <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm ">
+                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
                         {% translate 'Date/time' %}
                     </th>
 
-                    <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm ">
+                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
                         {% translate 'User' %}
                     </th>
 
-                    <th scope="col" class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm ">
+                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
                         {% translate 'Action' %}
                     </th>
                 </tr>
             </thead>
 
             <tbody>
-                {% for action in actions_list %}
-                    <tr>
-                        <th scope="row" class="align-middle border-t text-left px-3 py-3 font-normal text-sm">
+                {% for action in action_list %}
+                    <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'Date/time' %}">
                             {{ action.action_time|date:"DATETIME_FORMAT" }}
                         </th>
 
-                        <td class="align-middle border-t text-left px-3 py-3 font-normal text-sm">
+                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'User' %}">
                             {{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}
                         </td>
 
-                        <td class="align-middle border-t text-left px-3 py-3 font-normal text-sm">
+                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'Action' %}">
                             {{ action.get_change_message }}
                         </td>
                     </tr>
@@ -63,24 +63,23 @@
             </tbody>
         </table>
 
-        <p class="bg-gray-50 flex my-4 items-center p-3 rounded-md text-sm text-gray-400">
+        <div class="bg-gray-50 flex my-4 items-center p-3 rounded-md text-gray-400 text-sm dark:bg-gray-800">
             {% if pagination_required %}
                 {% for i in page_range %}
                     <span class="pr-4">
-                        {% if i == actions_list.paginator.ELLIPSIS %}
-                            {{ actions_list.paginator.ELLIPSIS }}
-                        {% elif i == actions_list.number %}
+                        {% if i == action_list.paginator.ELLIPSIS %}
+                            {{ action_list.paginator.ELLIPSIS }}
+                        {% elif i == action_list.number %}
                             <span class="font-medium text-primary-600">{{ i }}</span>
                         {% else %}
-                            <a href="?{{ page_var }}={{ i }}" {% if i == actions_list.paginator.num_pages %} class="end" {% endif %}>{{ i }}</a>
+                            <a href="?{{ page_var }}={{ i }}" {% if i == action_list.paginator.num_pages %} class="end" {% endif %}>{{ i }}</a>
                         {% endif %}
                     </span>
                 {% endfor %}
             {% endif %}
 
-            {{ actions_list.count }} {% if actions_list.count == 1 %}{% translate "entry" %}{% else %}{% translate "entries" %}{% endif %}
-        </p>
-
+            {{ action_list.paginator.count }} {% blocktranslate count counter=action_list.paginator.count %}entry{% plural %}entries{% endblocktranslate %}
+        </div>
     {% else %}
         <p>{% translate 'This object doesn’t have a change history. It probably wasn’t added via this admin site.' %}</p>
     {% endif %}
