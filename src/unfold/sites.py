@@ -86,6 +86,15 @@ class UnfoldAdminSite(AdminSite):
             }
         )
 
+        environment = get_config(self.settings_name)["ENVIRONMENT"]
+
+        if environment and isinstance(environment, str):
+            try:
+                callback = import_string(environment)
+                context.update({"environment": callback(request)})
+            except ImportError:
+                pass
+
         return context
 
     def index(
