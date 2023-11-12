@@ -1,11 +1,19 @@
 {% load i18n %}
 
-{% if icon %}
+{% if site_icon %}
     <a  href="{% url "admin:index" %}">
-        <img src="{{ icon }}" class="h-8 mr-4" alt="{% trans "Home" %}"/>
+        {% if site_icon.light and site_icon.dark %}
+            <img src="{{ site_icon.dark }}" alt="{% trans 'Home' %}" class="h-8 hidden mr-4 dark:block"/>
+
+            <img src="{{ site_icon.light }}" alt="{% trans 'Home' %}" class="block h-8 mr-4 dark:hidden" />
+        {% else %}
+            <img src="{{ site_icon }}" class="h-8 mr-4" alt="{% trans 'Home' %}" />
+        {% endif %}
     </a>
 {% else %}
     <a href="{% url "admin:index" %}" class="bg-primary-600 flex h-8 items-center justify-center rounded-md mr-4 text-white text-xs w-8">
-        <span class="material-symbols-outlined md-18">{% if symbol %}{{ symbol }}{% else %}settings{% endif %}</span>
+        <span class="material-symbols-outlined md-18">{% if site_symbol %}{{ site_symbol }}{% else %}settings{% endif %}</span>
     </a>
 {% endif %}
+
+{{ branding }}

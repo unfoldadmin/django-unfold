@@ -33,7 +33,6 @@ class EnvironmentTestCase(TestCase):
         request = RequestFactory().get("/rand")
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
-        print(context)
         self.assertTrue("environment" not in context)
         get_config.cache_clear()
 
@@ -50,7 +49,6 @@ class EnvironmentTestCase(TestCase):
         request = RequestFactory().get("/rand")
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
-        print(context)
         self.assertTrue("environment" in context)
         self.assertEqual(context["environment"], ["Testing Environment", "warning"])
         get_config.cache_clear()
