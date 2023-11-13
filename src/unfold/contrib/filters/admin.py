@@ -107,8 +107,7 @@ class RangeNumericMixin:
         if value_from is not None and value_from != "":
             filters.update(
                 {
-                    self.parameter_name
-                    + "__gte": self.used_parameters.get(
+                    self.parameter_name + "__gte": self.used_parameters.get(
                         self.parameter_name + "_from", None
                     ),
                 }
@@ -118,8 +117,7 @@ class RangeNumericMixin:
         if value_to is not None and value_to != "":
             filters.update(
                 {
-                    self.parameter_name
-                    + "__lte": self.used_parameters.get(
+                    self.parameter_name + "__lte": self.used_parameters.get(
                         self.parameter_name + "_to", None
                     ),
                 }
@@ -144,12 +142,10 @@ class RangeNumericMixin:
                 "form": RangeNumericForm(
                     name=self.parameter_name,
                     data={
-                        self.parameter_name
-                        + "_from": self.used_parameters.get(
+                        self.parameter_name + "_from": self.used_parameters.get(
                             self.parameter_name + "_from", None
                         ),
-                        self.parameter_name
-                        + "_to": self.used_parameters.get(
+                        self.parameter_name + "_to": self.used_parameters.get(
                             self.parameter_name + "_to", None
                         ),
                     },
@@ -261,12 +257,10 @@ class SliderNumericFilter(RangeNumericFilter):
                 "form": self.form_class(
                     name=self.parameter_name,
                     data={
-                        self.parameter_name
-                        + "_from": self.used_parameters.get(
+                        self.parameter_name + "_from": self.used_parameters.get(
                             self.parameter_name + "_from", min_value
                         ),
-                        self.parameter_name
-                        + "_to": self.used_parameters.get(
+                        self.parameter_name + "_to": self.used_parameters.get(
                             self.parameter_name + "_to", max_value
                         ),
                     },
@@ -321,8 +315,7 @@ class RangeDateFilter(admin.FieldListFilter):
         if value_from not in EMPTY_VALUES:
             filters.update(
                 {
-                    self.parameter_name
-                    + "__gte": self.used_parameters.get(
+                    self.parameter_name + "__gte": self.used_parameters.get(
                         self.parameter_name + "_from", None
                     ),
                 }
@@ -332,8 +325,7 @@ class RangeDateFilter(admin.FieldListFilter):
         if value_to not in EMPTY_VALUES:
             filters.update(
                 {
-                    self.parameter_name
-                    + "__lte": self.used_parameters.get(
+                    self.parameter_name + "__lte": self.used_parameters.get(
                         self.parameter_name + "_to", None
                     ),
                 }
@@ -358,12 +350,10 @@ class RangeDateFilter(admin.FieldListFilter):
                 "form": self.form_class(
                     name=self.parameter_name,
                     data={
-                        self.parameter_name
-                        + "_from": self.used_parameters.get(
+                        self.parameter_name + "_from": self.used_parameters.get(
                             self.parameter_name + "_from", None
                         ),
-                        self.parameter_name
-                        + "_to": self.used_parameters.get(
+                        self.parameter_name + "_to": self.used_parameters.get(
                             self.parameter_name + "_to", None
                         ),
                     },
@@ -466,20 +456,16 @@ class RangeDateTimeFilter(admin.FieldListFilter):
                 "form": self.form_class(
                     name=self.parameter_name,
                     data={
-                        self.parameter_name
-                        + "_from_0": self.used_parameters.get(
+                        self.parameter_name + "_from_0": self.used_parameters.get(
                             self.parameter_name + "_from_0", None
                         ),
-                        self.parameter_name
-                        + "_from_1": self.used_parameters.get(
+                        self.parameter_name + "_from_1": self.used_parameters.get(
                             self.parameter_name + "_from_1", None
                         ),
-                        self.parameter_name
-                        + "_to_0": self.used_parameters.get(
+                        self.parameter_name + "_to_0": self.used_parameters.get(
                             self.parameter_name + "_to_0", None
                         ),
-                        self.parameter_name
-                        + "_to_1": self.used_parameters.get(
+                        self.parameter_name + "_to_1": self.used_parameters.get(
                             self.parameter_name + "_to_1", None
                         ),
                     },

@@ -9,14 +9,13 @@ repos:
       - id: check-toml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/psf/black
-    rev: 23.10.1
-    hooks:
-      - id: black
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.4
+    rev: v0.1.5
     hooks:
       - id: ruff
+        args:
+          - --fix
+      - id: ruff-format
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v2.4.0
     hooks:

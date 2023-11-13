@@ -34,9 +34,6 @@ pytest = "^7.3.1"
 pytest-django = "^4.5.2"
 tox = "^4.5.2"
 
-[tool.black]
-target-version = ["py38", "py39", "py310", "py311", "py312"]
-
 [tool.ruff]
 fix = true
 line-length = 88
@@ -47,6 +44,7 @@ select = [
     "I",  # isort
     "C",  # flake8-comprehensions
     "B",  # flake8-bugbear
+    "UP", # pyupgrade
 ]
 ignore = [
     "E501",  # line too long, handled by black

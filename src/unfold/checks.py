@@ -34,8 +34,7 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
                 if not hasattr(obj, method_name):
                     errors.append(
                         checks.Error(
-                            "%s must define a %s() method for the %s action."
-                            % (
+                            "{} must define a {}() method for the {} action.".format(
                                 obj.__class__.__name__,
                                 method_name,
                                 action.method.__name__,
