@@ -64,6 +64,10 @@ class UnfoldAdminSite(AdminSite):
                 "site_symbol": self._get_value(
                     get_config(self.settings_name)["SITE_SYMBOL"], request
                 ),
+                "show_history": get_config(self.settings_name)["SHOW_HISTORY"],
+                "show_view_on_site": get_config(self.settings_name)[
+                    "SHOW_VIEW_ON_SITE"
+                ],
                 "colors": get_config(self.settings_name)["COLORS"],
                 "tab_list": self.get_tabs_list(request),
                 "styles": [
