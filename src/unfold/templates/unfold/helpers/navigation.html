@@ -4,12 +4,10 @@
     <nav id="nav-sidebar" class="bg-gray-50 border-r border-gray-200 flex flex-col fixed max-h-screen min-h-screen min-w-sidebar transition-width w-sidebar dark:bg-gray-900 dark:border-gray-800">
         <div class="border-b border-gray-200 mb-5 py-3 dark:border-gray-800">
             <div class="flex font-medium h-10 items-center px-6 text-gray-700 dark:text-gray-200">
-                {% if logo %}
-                    <img src="{{ logo }}" alt="{% trans "Home" %}"/>
+                {% if site_logo %}
+                    {% include "unfold/helpers/site_logo.html" %}
                 {% elif branding %}
                     {% include "unfold/helpers/site_icon.html" %}
-
-                    {{ branding }}
                 {% endif %}
             </div>
         </div>

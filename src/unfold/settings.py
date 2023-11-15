@@ -8,6 +8,7 @@ CONFIG_DEFAULTS = {
     "SITE_URL": "/",
     "SITE_ICON": None,
     "SITE_SYMBOL": None,
+    "SITE_LOGO": None,
     "COLORS": {
         "primary": {
             "50": "250 245 255",

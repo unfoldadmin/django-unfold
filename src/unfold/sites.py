@@ -55,16 +55,16 @@ class UnfoldAdminSite(AdminSite):
                 "form_classes": {
                     "text_input": INPUT_CLASSES,
                 },
-                "logo": self._get_value(
-                    get_config(self.settings_name)["SIDEBAR"].get("logo"), request
+                "site_logo": self._get_mode_images(
+                    get_config(self.settings_name)["SITE_LOGO"], request
                 ),
-                "colors": get_config(self.settings_name)["COLORS"],
-                "icon": self._get_value(
+                "site_icon": self._get_mode_images(
                     get_config(self.settings_name)["SITE_ICON"], request
                 ),
-                "symbol": self._get_value(
+                "site_symbol": self._get_value(
                     get_config(self.settings_name)["SITE_SYMBOL"], request
                 ),
+                "colors": get_config(self.settings_name)["COLORS"],
                 "tab_list": self.get_tabs_list(request),
                 "styles": [
                     self._get_value(style, request)
@@ -283,6 +283,20 @@ class UnfoldAdminSite(AdminSite):
 
         return tabs
 
+    def _get_mode_images(
+        self, images: Union[Dict[str, callable], callable, str], request: HttpRequest
+    ) -> Union[Dict[str, str], str, None]:
+        if isinstance(images, dict):
+            if "light" in images and "dark" in images:
+                return {
+                    "light": self._get_value(images["light"], request),
+                    "dark": self._get_value(images["dark"], request),
+                }
+
+            return None
+
+        return self._get_value(images, request)
+
     def _call_permission_callback(
         self, callback: Union[str, Callable, None], request: HttpRequest
     ):
@@ -303,7 +317,10 @@ class UnfoldAdminSite(AdminSite):
         if isinstance(instance, str):
             return instance
 
-        return instance(*args)
+        if isinstance(instance, Callable):
+            return instance(*args)
+
+        return None
 
     def _replace_values(self, target: Dict, source: Dict, request: HttpRequest):
         for key in source.keys():
