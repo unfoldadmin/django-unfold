@@ -17,4 +17,7 @@ class ActionFunction(Protocol):
         pass
 
 
-FieldsetsType = List[Tuple[Union[str, None], Dict[str, Any]]]
+FieldsetsType = Union[
+    List[Tuple[Union[str, None], Dict[str, Any]]],
+    Tuple[Tuple[Union[str, None], Dict[str, Any]]],
+]
