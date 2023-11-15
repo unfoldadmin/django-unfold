@@ -154,7 +154,16 @@ UNFOLD = {
     "SITE_TITLE": None,
     "SITE_HEADER": None,
     "SITE_URL": "/",
-    "SITE_ICON": lambda request: static("logo.svg"),
+    # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
+    "SITE_ICON": {
+        "light": lambda request: static("icon-light.svg"),  # light mode
+        "dark": lambda request: static("icon-dark.svg"),  # dark mode
+    },
+    # "SITE_LOGO": lambda request: static("logo.svg"),  # both modes, optimise for 32px height
+    "SITE_LOGO": {
+        "light": lambda request: static("logo-light.svg"),  # light mode
+        "dark": lambda request: static("logo-dark.svg"),  # dark mode
+    },
     "SITE_SYMBOL": "speed",  # symbol from icon set
     "ENVIRONMENT": "sample_app.environment_callback",
     "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
