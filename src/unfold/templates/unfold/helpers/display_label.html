@@ -1,37 +1,9 @@
 {% if label %}
     {% if multiple %}
         {% for item in label %}
-            <span class="border border-gray-200 font-semibold leading-none mr-2 px-2 py-1 rounded shadow-sm text-xxs uppercase whitespace-nowrap last:mr-0
-                {% if label_type == 'info' %}
-                    bg-blue-50 border-blue-200 text-blue-500 dark:bg-blue-500/20 dark:border-blue-500/10
-                {% elif label_type == 'danger' %}
-                    bg-red-50 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/10
-                {% elif label_type == 'warning' %}
-                    bg-orange-50 border-orange-200 text-orange-500 dark:bg-orange-500/20 dark:border-orange-500/10
-                {% elif label_type == 'success' %}
-                    bg-green-50 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/10
-                {% else %}
-                    bg-white text-gray-400 dark:bg-white/[.04] dark:border-gray-800 dark:text-gray-400
-                {% endif %}
-        ">
-                {{ item }}
-            </span>
+            {% include "unfold/helpers/label.html" with type=label_type text=item %}
         {% endfor %}
     {% else %}
-        <span class="border border-gray-200 font-semibold leading-none mr-2 px-2 py-1 rounded shadow-sm text-xxs uppercase whitespace-nowrap last:mr-0
-            {% if label_type == 'info' %}
-                bg-blue-50 border-blue-200 text-blue-500 dark:bg-blue-500/20 dark:border-blue-500/10
-            {% elif label_type == 'danger' %}
-                bg-red-50 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/10
-            {% elif label_type == 'warning' %}
-                bg-orange-50 border-orange-200 text-orange-500 dark:bg-orange-500/20 dark:border-orange-500/10
-            {% elif label_type == 'success' %}
-                bg-green-50 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/10
-            {% else %}
-                bg-white text-gray-400 dark:bg-white/[.04] dark:border-gray-800 dark:text-gray-400
-            {% endif %}
-    ">
-            {{ label }}
-        </span>
+        {% include "unfold/helpers/label.html" with type=label_type text=label %}
     {% endif %}
 {% endif %}

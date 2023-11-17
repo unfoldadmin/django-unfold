@@ -9,8 +9,8 @@
         {{ children }}
 
         {% if label %}
-            <div class="absolute border font-semibold leading-none px-2 py-1 rounded shadow-sm text-xxs uppercase whitespace-nowrap bg-primary-50 border-primary-200 text-primary-500 dark:bg-primary-500/20 dark:border-primary-500/10 right-0 top-0">
-                {{ label }}
+            <div class="absolute right-0 top-0">
+                {% include "unfold/helpers/label.html" with text=label type="primary" %}
             </div>
         {% endif %}
     </div>
