@@ -59,23 +59,13 @@ const dateTimeShortcutsOverlay = () => {
  * File upload path
  *************************************************************/
 const fileInputUpdatePath = () => {
-  const updateFilePath = () => {
-    Array.from(document.querySelectorAll("input[type=file]")).forEach(
-      (input) => {
-        input.addEventListener("change", (e) => {
-          const parts = e.target.value.split("\\");
-          const placeholder =
-            input.parentNode.parentNode.querySelector("input[type=text]");
-          placeholder.setAttribute("value", parts[parts.length - 1]);
-        });
-      }
-    );
-  };
-
-  updateFilePath();
-
-  document.addEventListener("DOMNodeInserted", (e) => {
-    updateFilePath();
+  Array.from(document.querySelectorAll("input[type=file]")).forEach((input) => {
+    input.addEventListener("change", (e) => {
+      const parts = e.target.value.split("\\");
+      const placeholder =
+        input.parentNode.parentNode.querySelector("input[type=text]");
+      placeholder.setAttribute("value", parts[parts.length - 1]);
+    });
   });
 };
 
