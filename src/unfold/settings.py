@@ -9,6 +9,8 @@ CONFIG_DEFAULTS = {
     "SITE_ICON": None,
     "SITE_SYMBOL": None,
     "SITE_LOGO": None,
+    "SHOW_HISTORY": True,
+    "SHOW_VIEW_ON_SITE": True,
     "COLORS": {
         "primary": {
             "50": "250 245 255",

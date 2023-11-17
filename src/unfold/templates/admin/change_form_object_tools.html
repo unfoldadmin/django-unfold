@@ -1,13 +1,14 @@
 {% load i18n admin_urls %}
 
 {% block object-tools-items %}
-    {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
+    {% if show_history %}
+        {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
+        {% trans 'History' as title %}
+        {% add_preserved_filters history_url as link %}
+        {% include "unfold/helpers/tab_action.html" with title=title link=link %}
+    {% endif %}
 
-    {% trans 'History' as title %}
-    {% add_preserved_filters history_url as link %}
-    {% include "unfold/helpers/tab_action.html" with title=title link=link %}
-
-    {% if has_absolute_url %}
+    {% if has_absolute_url and show_view_on_site %}
         {% trans 'View on site' as title %}
         {% include "unfold/helpers/tab_action.html" with title=title link=absolute_url blank=1 %}
     {% endif %}
