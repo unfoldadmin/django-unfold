@@ -57,6 +57,9 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/typography")],
   safelist: [
+    "md:border-0",
+    "md:border-r",
+    "md:w-48",
     {
       pattern: /gap-+/,
       variants: ["lg"],
