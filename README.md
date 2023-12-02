@@ -815,9 +815,9 @@ Unfold provides a set of already predefined templates to speed up overall dashbo
 The biggest benefit of Unfold components is the possibility to nest them inside one template file provides an unlimited amount of possible combinations. Then each component includes `children` variable which contains a value specified in the parent component. Except for `children` variable, components can have multiple variables coming from the parent template as component variables. These parameters can be specified in the same as parameters when using `{% include with param1=value1 param2=value2 %}` template tag.
 
 ```html+django
-{% compontent "unfold/components/flex.html" with col=1 %}
+{% component "unfold/components/flex.html" with col=1 %}
     {% component "unfold/components/card.html" %}
-        {% compontent "unfold/components/title.html" %}
+        {% component "unfold/components/title.html" %}
             Card Title
         {% endcomponent %}
     {% endcomponent %}
