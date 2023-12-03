@@ -1,7 +1,7 @@
 import datetime
 import decimal
 import json
-from typing import Any, Iterable
+from typing import Any, Iterable, List
 
 from django.db import models
 from django.template.loader import render_to_string
@@ -113,7 +113,7 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return display_for_value(value, empty_value_display)
 
 
-def hex_to_rgb(hex_color: str) -> list[int]:
+def hex_to_rgb(hex_color: str) -> List[int]:
     hex_color = hex_color.lstrip("#")
 
     r = int(hex_color[0:2], 16)
