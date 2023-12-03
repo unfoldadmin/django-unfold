@@ -11,6 +11,7 @@ from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 
 from .settings import get_config
+from .utils import hex_to_rgb
 from .widgets import INPUT_CLASSES
 
 
@@ -68,7 +69,9 @@ class UnfoldAdminSite(AdminSite):
                 "show_view_on_site": get_config(self.settings_name)[
                     "SHOW_VIEW_ON_SITE"
                 ],
-                "colors": get_config(self.settings_name)["COLORS"],
+                "colors": self._process_colors(
+                    get_config(self.settings_name)["COLORS"]
+                ),
                 "tab_list": self.get_tabs_list(request),
                 "styles": [
                     self._get_value(style, request)
@@ -334,3 +337,15 @@ class UnfoldAdminSite(AdminSite):
                 target[key] = source[key]
 
         return target
+
+    def _process_colors(
+        self, colors: Dict[str, Dict[str, str]]
+    ) -> Dict[str, Dict[str, str]]:
+        for name, weights in colors.items():
+            for weight, value in weights.items():
+                if value[0] != "#":
+                    continue
+
+                colors[name][weight] = " ".join(str(item) for item in hex_to_rgb(value))
+
+        return colors
