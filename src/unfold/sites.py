@@ -340,7 +340,7 @@ class UnfoldAdminSite(AdminSite):
 
     def _process_colors(
         self, colors: Dict[str, Dict[str, str]]
-    ) -> Dict[str, dict[str, str]]:
+    ) -> Dict[str, Dict[str, str]]:
         for name, weights in colors.items():
             for weight, value in weights.items():
                 if value[0] != "#":
