@@ -1,14 +1,15 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "*.*.*"
+  workflow_dispatch:
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,11 +18,18 @@ jobs:
         with:
           python-version: "3.10"
       - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python - -y
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y
+          poetry install
+      - name: Release
+        run: |
+          poetry run semantic-release version
+          poetry run semantic-release publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         run: poetry build
       - name: Publish
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run:
-          poetry publish
+        run: poetry publish

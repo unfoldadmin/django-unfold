@@ -29,10 +29,19 @@ classifiers = [
     "Framework :: Django",
 ]
 
+[tool.poetry.dependencies]
+python = ">=3.8"
+django = ">=3.2"
+python-semantic-release = "^8.5.0"
+
 [tool.poetry.group.test.dependencies]
 pytest = "^7.3.1"
 pytest-django = "^4.5.2"
 tox = "^4.5.2"
+
+
+[tool.poetry.group.dev.dependencies]
+python-semantic-release = "^8.5.0"
 
 [tool.ruff]
 fix = true
@@ -52,6 +61,26 @@ ignore = [
     "C901",  # too complex
 ]
 
+[tool.semantic_release]
+tag_format = "{version}"
+major_on_zero = true
+version_toml = [
+    "pyproject.toml:tool.poetry.version"
+]
+
+[tool.semantic_release.changelog]
+template_dir = "src/templates"
+exclude_commit_patterns = [
+    "chore: version bump"
+]
+
+[tool.semantic_release.changelog.environment]
+trim_blocks = true
+lstrip_blocks = true
+
+[tool.semantic_release.publish]
+upload_to_vcs_release = false
+
 [tool.pytest.ini_options]
 addopts = """\
     --strict-config
@@ -59,10 +88,6 @@ addopts = """\
     --ds=tests.settings
     """
 django_find_project = false
-
-[tool.poetry.dependencies]
-python = ">=3.8"
-django = ">=3.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

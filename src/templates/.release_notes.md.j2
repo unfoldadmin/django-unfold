@@ -1,0 +1,9 @@
+{% set priority = ["feature", "fix", "documentation", "chore"] %}
+{%- for type_ in priority %}
+{% set commits = release["elements"][type_] -%}
+{% for commit in commits -%}
+{% if type_ != "unknown" -%}
+* {{ commit.commit.message.rstrip() }} ([`{{ commit.commit.hexsha[:7] }}`]({{ commit.commit.hexsha | commit_hash_url }}))
+{% endif %}
+{% endfor %}
+{% endfor %}
