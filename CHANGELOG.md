@@ -1,6 +1,10 @@
-## To be released
 
+## 0.18.0 (2023-12-08)
+
+- feat: semantic release integration (#218) ([`f82f660`](https://github.com/unfoldadmin/django-unfold/commit/f82f66050d3551c203849d3c5fc84cce329ba012))
 - feat: hex to rgb (#213) ([`b5ab5e2`](https://github.com/unfoldadmin/django-unfold/commit/b5ab5e2e024e57935e8a9ffa06fba81f69238e49))
+- fix: semantic release changelog templates (#220) ([`36ae49d`](https://github.com/unfoldadmin/django-unfold/commit/36ae49d37da3ac0a7bc404bf36e5fbf9b5849ae4))
+- fix: checkout depth in release flow (#219) ([`29ba25f`](https://github.com/unfoldadmin/django-unfold/commit/29ba25f504bd6f9ef37431cda8b55bafeeb17806))
 - fix: component typo (#212) ([`ed2fadc`](https://github.com/unfoldadmin/django-unfold/commit/ed2fadc92aabd53707286a2ed950783dea6f5920))
 
 ## 0.17.1 (2023-11-24)
@@ -276,3 +280,4 @@
 - chore: version ([`c1ba672`](https://github.com/unfoldadmin/django-unfold/commit/c1ba672998c670ed58771f67386f3a28ca89c743))
 - chore: improved screenshots ([`bbd2fce`](https://github.com/unfoldadmin/django-unfold/commit/bbd2fceed968120c67a265f8f2a700dae61abd3d))
 - chore(deps): bump django from 3.2.14 to 3.2.15 ([`676d963`](https://github.com/unfoldadmin/django-unfold/commit/676d96374036478b94c9e7c7c1aedc4025c5ebb5))
+
