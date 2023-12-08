@@ -69,7 +69,7 @@ version_toml = [
 ]
 
 [tool.semantic_release.changelog]
-template_dir = "src/templates"
+template_dir = ".github/templates"
 exclude_commit_patterns = [
     "chore: version bump"
 ]
