@@ -639,6 +639,7 @@ Adding support for django-guardian is quote straightforward in Unfold, just add 
 # admin.py
 
 from unfold.admin import ModelAdmin
+from import_export.admin import ImportExportModelAdmin
 from unfold.contrib.import_export.forms import ExportForm, ImportForm
 
 class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
