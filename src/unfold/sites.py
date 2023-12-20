@@ -312,12 +312,13 @@ class UnfoldAdminSite(AdminSite):
         if isinstance(callback, str):
             try:
                 callback = import_string(callback)
-
-                # We are not able to use here "is" because type is lazy loaded function
-                if lazy(callback)(request) == True:  # noqa: E712
-                    return True
             except ImportError:
                 pass
+
+        if isinstance(callback, str) or isinstance(callback, Callable):
+            # We are not able to use here "is" because type is lazy loaded function
+            if lazy(callback)(request) == True:  # noqa: E712
+                return True
 
         return False
 
