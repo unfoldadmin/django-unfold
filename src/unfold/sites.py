@@ -233,9 +233,8 @@ class UnfoldAdminSite(AdminSite):
             allowed_items = []
 
             for item in group["items"]:
-                # Permission callbacks
+                # Skip item if permission check fails
                 if not self._call_permission_callback(item.get("permission"), request):
-                    # Skip item if permission check fails
                     continue
 
                 item["active"] = False
@@ -280,8 +279,8 @@ class UnfoldAdminSite(AdminSite):
             allowed_items = []
 
             for item in tab["items"]:
+                # Skip item if permission check fails
                 if not self._call_permission_callback(item.get("permission"), request):
-                    # Skip item if permission check fails
                     continue
 
                 allowed_items.append(item)
@@ -306,14 +305,21 @@ class UnfoldAdminSite(AdminSite):
 
     def _call_permission_callback(
         self, callback: Union[str, Callable, None], request: HttpRequest
-    ):
+    ) -> bool:
         if callback is None:
             return True
 
         if isinstance(callback, str):
-            callback = import_string(callback)
+            try:
+                callback = import_string(callback)
 
-        return callback(request)
+                # We are not able to use here "is" because type is lazy loaded function
+                if lazy(callback)(request) == True:  # noqa: E712
+                    return True
+            except ImportError:
+                pass
+
+        return False
 
     def _get_value(
         self, instance: Union[str, Callable, None], *args: Any
