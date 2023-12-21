@@ -97,7 +97,7 @@ const submitSearch = () => {
 /*************************************************************
  * Chart
  *************************************************************/
-const CHART_OPTIONS = {
+const DEFAULT_CHART_OPTIONS = {
   animation: false,
   barPercentage: 1,
   base: 0,
@@ -197,6 +197,7 @@ const renderCharts = () => {
     const ctx = chart.getContext("2d");
     const data = chart.dataset.value;
     const type = chart.dataset.type;
+    const options = chart.dataset.options;
 
     if (!data) {
       return;
@@ -206,7 +207,7 @@ const renderCharts = () => {
       new Chart(ctx, {
         type: type || "bar",
         data: JSON.parse(chart.dataset.value),
-        options: CHART_OPTIONS,
+        options: options ? JSON.parse(options) : DEFAULT_CHART_OPTIONS,
       })
     );
   });
