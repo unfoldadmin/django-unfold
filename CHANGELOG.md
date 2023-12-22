@@ -1,4 +1,13 @@
 
+## 0.18.1 (2023-12-22)
+
+- fix: lazy loaded permission callback (#234) ([`97ca6dd`](https://github.com/unfoldadmin/django-unfold/commit/97ca6dd54563a1546d53ffcce90e04fce8b3d7f7))
+- fix: logout link (#228) ([`1a1d735`](https://github.com/unfoldadmin/django-unfold/commit/1a1d735c461bf0e26d0b3e636840003acd39b154))
+- fix: ignore CHANGELOG.md in pre-commit hooks (#221) ([`3418fcc`](https://github.com/unfoldadmin/django-unfold/commit/3418fccbcb50487904ec7692ba60570003d424ba))
+- docs: update README.md with correct import_export import (#223) ([`3d04c9a`](https://github.com/unfoldadmin/django-unfold/commit/3d04c9a5285f29acb804325f7a144f15fb0d48eb))
+- chore: tailwindcss 3.4 update (#233) ([`4c49f08`](https://github.com/unfoldadmin/django-unfold/commit/4c49f08b62535602eb8cd398ecead68349ab4689))
+- chore(deps): bump actions/setup-python from 4 to 5 (#224) ([`dc22daf`](https://github.com/unfoldadmin/django-unfold/commit/dc22daf5b0388b21d3e4e07a12cf5499b08640d3))
+
 ## 0.18.0 (2023-12-08)
 
 - feat: semantic release integration (#218) ([`f82f660`](https://github.com/unfoldadmin/django-unfold/commit/f82f66050d3551c203849d3c5fc84cce329ba012))
