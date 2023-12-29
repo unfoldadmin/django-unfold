@@ -68,6 +68,8 @@ from .widgets import (
     UnfoldAdminTextareaWidget,
     UnfoldAdminTextInputWidget,
     UnfoldAdminUUIDInputWidget,
+    UnfoldBooleanSwitchWidget,
+    UnfoldBooleanWidget,
 )
 
 try:
@@ -85,7 +87,7 @@ try:
 except ImportError:
     HAS_MONEY = False
 
-checkbox = forms.CheckboxInput({"class": "action-select"}, lambda value: False)
+checkbox = UnfoldBooleanWidget({"class": "action-select"}, lambda value: False)
 
 FORMFIELD_OVERRIDES = {
     models.DateTimeField: {
@@ -101,6 +103,7 @@ FORMFIELD_OVERRIDES = {
     models.UUIDField: {"widget": UnfoldAdminUUIDInputWidget},
     models.TextField: {"widget": UnfoldAdminTextareaWidget},
     models.NullBooleanField: {"widget": UnfoldAdminNullBooleanSelectWidget},
+    models.BooleanField: {"widget": UnfoldBooleanWidget},
     models.IntegerField: {"widget": UnfoldAdminIntegerFieldWidget},
     models.BigIntegerField: {"widget": UnfoldAdminBigIntegerFieldWidget},
     models.DecimalField: {"widget": UnfoldAdminDecimalFieldWidget},
@@ -125,6 +128,11 @@ if HAS_MONEY:
             MoneyField: {"widget": UnfoldAdminMoneyWidget},
         }
     )
+
+CHANGE_FORM_FORMFIELD_OVERRIDES = copy.deepcopy(FORMFIELD_OVERRIDES)
+CHANGE_FORM_FORMFIELD_OVERRIDES.update(
+    {models.BooleanField: {"widget": UnfoldBooleanSwitchWidget}}
+)
 
 FORMFIELD_OVERRIDES_INLINE = copy.deepcopy(FORMFIELD_OVERRIDES)
 
@@ -528,6 +536,8 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         if extra_context is None:
             extra_context = {}
 
+        self.formfield_overrides = CHANGE_FORM_FORMFIELD_OVERRIDES
+
         actions = []
         if object_id:
             for action in self.get_actions_detail(request):
@@ -640,7 +650,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         default_choices = [("", _("Select action"))]
         return super().get_action_choices(request, default_choices)
 
-    @display(description=mark_safe('<input type="checkbox" id="action-toggle">'))
+    @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
     def action_checkbox(self, obj: Model):
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
