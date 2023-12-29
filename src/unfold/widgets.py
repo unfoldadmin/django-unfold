@@ -14,7 +14,13 @@ from django.contrib.admin.widgets import (
     AdminTimeWidget,
     AdminUUIDInputWidget,
 )
-from django.forms import MultiWidget, NullBooleanSelect, NumberInput, Select
+from django.forms import (
+    CheckboxInput,
+    MultiWidget,
+    NullBooleanSelect,
+    NumberInput,
+    Select,
+)
 from django.utils.translation import gettext_lazy as _
 
 from .exceptions import UnfoldException
@@ -122,6 +128,115 @@ PROSE_CLASSES = [
     "dark:prose-blockquote:text-gray-400",
     "dark:prose-headings:text-gray-200",
     "dark:prose-strong:text-gray-200",
+]
+
+CHECKBOX_CLASSES = [
+    "appearance-none",
+    "bg-white",
+    "block",
+    "border",
+    "border-gray-300",
+    "cursor-pointer",
+    "h-4",
+    "relative",
+    "rounded",
+    "shadow-sm",
+    "w-4",
+    "hover:border-gray-400",
+    "dark:bg-gray-700",
+    "dark:border-gray-500",
+    "dark:after:checked:text-white",
+    "focus:outline",
+    "focus:outline-1",
+    "focus:outline-offset-2",
+    "focus:outline-primary-500",
+    "after:absolute",
+    "after:content-['done']",
+    "after:!flex",
+    "after:h-4",
+    "after:items-center",
+    "after:justify-center",
+    "after:leading-none",
+    "after:material-symbols-outlined",
+    "after:-ml-px",
+    "after:-mt-px",
+    "after:!text-sm",
+    "after:text-white",
+    "after:transition-all",
+    "after:w-4",
+    "after:dark:text-gray-700",
+    "checked:bg-primary-600",
+    "checked:border-primary-600",
+    "checked:transition-all",
+    "checked:hover:border-primary-600",
+]
+
+RADIO_CLASSES = [
+    "appearance-none",
+    "bg-white",
+    "block",
+    "border",
+    "border-gray-300",
+    "cursor-pointer",
+    "h-4",
+    "relative",
+    "rounded-full",
+    "w-4",
+    "dark:bg-gray-700",
+    "dark:border-gray-500",
+    "hover:border-gray-400",
+    "focus:outline",
+    "focus:outline-1",
+    "focus:outline-offset-2",
+    "focus:outline-primary-500",
+    "after:absolute",
+    "after:bg-white",
+    "after:content-['']",
+    "after:flex",
+    "after:h-2",
+    "after:items-center",
+    "after:justify-center",
+    "after:leading-none",
+    "after:left-1/2",
+    "after:rounded-full",
+    "after:text-white",
+    "after:top-1/2",
+    "after:transition-all",
+    "after:-translate-x-1/2",
+    "after:-translate-y-1/2",
+    "after:text-sm",
+    "after:w-2",
+    "after:dark:text-gray-700",
+    "after:dark:bg-transparent",
+    "checked:bg-primary-600",
+    "checked:border-primary-600",
+    "checked:transition-all",
+    "checked:after:bg-white",
+    "checked:after:dark:bg-gray-200",
+]
+
+SWITCH_CLASSES = [
+    "appearance-none",
+    "bg-gray-300",
+    "cursor-pointer",
+    "h-5",
+    "relative",
+    "rounded-full",
+    "transition-all",
+    "w-8",
+    "after:absolute",
+    "after:bg-white",
+    "after:content-['']",
+    "after:bg-red-300",
+    "after:h-3",
+    "after:rounded-full",
+    "after:shadow-sm",
+    "after:left-1",
+    "after:top-1",
+    "after:w-3",
+    "checked:bg-primary-600",
+    "checked:after:left-4",
+    "dark:bg-gray-600",
 ]
 
 
@@ -331,6 +446,7 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
             radio_style = VERTICAL
 
         self.radio_style = radio_style
+        self.attrs = {"class": " ".join(RADIO_CLASSES)}
 
     def get_context(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context(*args, **kwargs)
@@ -356,3 +472,28 @@ except ImportError:
     class UnfoldAdminMoneyWidget:
         def __init__(self, *args, **kwargs):
             raise UnfoldException("django-money not installed")
+
+
+class UnfoldBooleanWidget(CheckboxInput):
+    def __init__(
+        self, attrs: Optional[Dict[str, Any]] = None, check_test: Callable = None
+    ) -> None:
+        if attrs is None:
+            attrs = {}
+
+        return super().__init__(
+            {
+                **(attrs or {}),
+                "class": " ".join(CHECKBOX_CLASSES + [attrs.get("class", "")]),
+            },
+            check_test,
+        )
+
+
+class UnfoldBooleanSwitchWidget(CheckboxInput):
+    def __init__(
+        self, attrs: Optional[Dict[str, Any]] = None, check_test: Callable = None
+    ) -> None:
+        return super().__init__(
+            attrs={"class": " ".join(SWITCH_CLASSES), **(attrs or {})}, check_test=None
+        )

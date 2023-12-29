@@ -1,4 +1,4 @@
-{% load i18n admin_urls %}
+{% load admin_urls i18n unfold %}
 
 <div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="stacked" data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
     <fieldset class="module {{ inline_admin_formset.classes }}">
@@ -43,7 +43,7 @@
 
                         {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission and inline_admin_form.original %}
                             <span class="delete flex items-center ml-auto text-gray-500">
-                                {{ inline_admin_form.deletion_field.field }} {{ inline_admin_form.deletion_field.label_tag }}
+                                {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }} {{ inline_admin_form.deletion_field.label_tag }}
                             </span>
                         {% endif %}
                     </h3>
