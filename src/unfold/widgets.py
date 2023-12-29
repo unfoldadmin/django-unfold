@@ -290,15 +290,15 @@ class FileFieldMixin:
         return widget
 
 
-class UnfoldAdminImageFieldWidget(AdminFileWidget, FileFieldMixin):
+class UnfoldAdminImageFieldWidget(FileFieldMixin, AdminFileWidget):
     pass
 
 
-class UnfoldAdminFileFieldWidget(AdminFileWidget, FileFieldMixin):
+class UnfoldAdminFileFieldWidget(FileFieldMixin, AdminFileWidget):
     template_name = "unfold/widgets/clearable_file_input_small.html"
 
 
-class UnfoldAdminImageSmallFieldWidget(AdminFileWidget, FileFieldMixin):
+class UnfoldAdminImageSmallFieldWidget(FileFieldMixin, AdminFileWidget):
     template_name = "unfold/widgets/clearable_file_input_small.html"
 
 

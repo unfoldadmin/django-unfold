@@ -3,11 +3,11 @@
 <div class="flex flex-row">
     <div class="border flex items-center overflow-hidden rounded-md shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-gray-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
         {% if widget.is_initial and not widget.required %}
-            <div class="bg-gray-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-gray-900">
+            <div class="bg-gray-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-gray-900 dark:border-r-gray-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
                     <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
-                    <span class="ml-2 text-gray-500">
+                    <span class="ml-2 text-gray-500 dark:text-gray-400">
                         {{ widget.clear_checkbox_label }}
                     </span>
                 </label>
@@ -19,7 +19,7 @@
         <div class="flex flex-none items-center leading-none self-stretch">
             <input id="{{ widget.name }}" type="{{ widget.type }}" name="{{ widget.name }}" class="opacity-0 pointer-events-none" {% include "django/forms/widgets/attrs.html" %} />
 
-            <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 dark:text-gray-400">
+            <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 dark:text-gray-500">
                 <span class="material-symbols-outlined">file_upload</span>
             </label>
         </div>
