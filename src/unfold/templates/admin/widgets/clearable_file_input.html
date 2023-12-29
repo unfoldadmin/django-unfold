@@ -12,7 +12,7 @@
     {% if widget.is_initial and not widget.required %}
         <div class="bg-gray-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-gray-700 dark:text-gray-400">
             <label for="{{ widget.checkbox_id }}" class="flex items-center">
-                <input type="checkbox" class="form-check-input" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
+                <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
                 <span class="ml-2 text-gray-500 dark:text-gray-400">
                     {{ widget.clear_checkbox_label }}

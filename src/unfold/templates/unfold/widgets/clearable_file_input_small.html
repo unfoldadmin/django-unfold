@@ -3,11 +3,11 @@
 <div class="flex flex-row">
     <div class="border flex items-center overflow-hidden rounded-md shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-gray-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
         {% if widget.is_initial and not widget.required %}
-            <div class="bg-gray-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-gray-900">
+            <div class="bg-gray-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-gray-900 dark:border-r-gray-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
-                    <input type="checkbox" class="form-check-input" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
+                    <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
-                    <span class="ml-2 text-gray-500">
+                    <span class="ml-2 text-gray-500 dark:text-gray-400">
                         {{ widget.clear_checkbox_label }}
                     </span>
                 </label>
@@ -19,19 +19,19 @@
         <div class="flex flex-none items-center leading-none self-stretch">
             <input id="{{ widget.name }}" type="{{ widget.type }}" name="{{ widget.name }}" class="opacity-0 pointer-events-none" {% include "django/forms/widgets/attrs.html" %} />
 
-            <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 dark:text-gray-400">
+            <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 dark:text-gray-500">
                 <span class="material-symbols-outlined">file_upload</span>
             </label>
         </div>
     </div>
 
     {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
-        <div class="bg-gray-50 border h-9 ml-3 overflow-hidden relative rounded-md shadow-sm w-9 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500">
-            <div class="absolute flex font-medium h-full items-center left-0 justify-center text-gray-400 top-0 w-full z-10 dark:text-gray-500">
+        <div class="h-9.5 ml-3 relative w-9.5">
+            <div class="absolute border flex font-medium h-full items-center left-0 rounded-md justify-center shadow-sm text-gray-400 top-0 w-full z-10 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500">
                 ?
             </div>
 
-            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-no-repeat block h-9 relative w-9 z-20" style="background-image: url('{{ widget.value.url }}')">
+            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-no-repeat block h-9.5 overflow-hidden relative rounded-md w-9.5 z-20" style="background-image: url('{{ widget.value.url }}')">
             </a>
         </div>
     {% endif %}

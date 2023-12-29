@@ -281,15 +281,24 @@ class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
         super().__init__(attrs={"class": " ".join(INPUT_CLASSES), **(attrs or {})})
 
 
-class UnfoldAdminImageFieldWidget(AdminFileWidget):
+class FileFieldMixin:
+    def get_context(self, name, value, attrs):
+        widget = super().get_context(name, value, attrs)
+        widget["widget"].update(
+            {"class": " ".join([*CHECKBOX_CLASSES, *["form-check-input"]])}
+        )
+        return widget
+
+
+class UnfoldAdminImageFieldWidget(FileFieldMixin, AdminFileWidget):
     pass
 
 
-class UnfoldAdminFileFieldWidget(AdminFileWidget):
+class UnfoldAdminFileFieldWidget(FileFieldMixin, AdminFileWidget):
     template_name = "unfold/widgets/clearable_file_input_small.html"
 
 
-class UnfoldAdminImageSmallFieldWidget(AdminFileWidget):
+class UnfoldAdminImageSmallFieldWidget(FileFieldMixin, AdminFileWidget):
     template_name = "unfold/widgets/clearable_file_input_small.html"
 
 
