@@ -89,8 +89,6 @@ except ImportError:
 
 checkbox = UnfoldBooleanWidget({"class": "action-select"}, lambda value: False)
 
-checkbox_toggle_all = UnfoldBooleanWidget({"id": "action-toggle"}, lambda value: False)
-
 FORMFIELD_OVERRIDES = {
     models.DateTimeField: {
         "form_class": forms.SplitDateTimeField,
@@ -652,7 +650,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         default_choices = [("", _("Select action"))]
         return super().get_action_choices(request, default_choices)
 
-    @display(description=mark_safe(checkbox_toggle_all.render("action_toggle_all", 1)))
+    @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
     def action_checkbox(self, obj: Model):
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 

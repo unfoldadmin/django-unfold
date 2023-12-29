@@ -11,7 +11,7 @@
         <thead class="hidden lg:table-header-group">
             <tr>
                 {% for header in result_headers %}
-                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm {% if "action-toggle" in header.text and forloop.counter == 1 %}w-10{% endif %}" scope="col"{{ header.class_attrib }}>
+                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}w-10{% endif %}" scope="col">
                         <div class="flex items-center">
                             <div class="text">
                                 {% if header.sortable %}
