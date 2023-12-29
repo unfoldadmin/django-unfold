@@ -107,6 +107,7 @@ FORMFIELD_OVERRIDES = {
     models.FloatField: {"widget": UnfoldAdminDecimalFieldWidget},
     models.ImageField: {"widget": UnfoldAdminImageFieldWidget},
     models.JSONField: {"widget": UnfoldAdminTextareaWidget},
+    models.DurationField: {"widget": UnfoldAdminTextInputWidget},
 }
 
 if HAS_PSYCOPG:
