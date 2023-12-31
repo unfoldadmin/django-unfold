@@ -19,7 +19,7 @@
         <div class="flex flex-none items-center leading-none self-stretch">
             <input id="{{ widget.name }}" type="{{ widget.type }}" name="{{ widget.name }}" class="opacity-0 pointer-events-none" {% include "django/forms/widgets/attrs.html" %} />
 
-            <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 dark:text-gray-500">
+            <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200">
                 <span class="material-symbols-outlined">file_upload</span>
             </label>
         </div>
