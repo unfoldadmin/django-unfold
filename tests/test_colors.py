@@ -2,7 +2,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from unfold.settings import CONFIG_DEFAULTS, get_config
+from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
 
@@ -49,8 +49,6 @@ class ColorsTestCase(TestCase):
         self.assertEqual(context["colors"]["primary"][900], "12 74 110")
         self.assertEqual(context["colors"]["primary"][950], "8 47 73")
 
-        get_config.cache_clear()
-
     @override_settings(
         UNFOLD={
             **CONFIG_DEFAULTS,
@@ -92,5 +90,3 @@ class ColorsTestCase(TestCase):
         self.assertEqual(context["colors"]["primary"][800], "7 89 133")
         self.assertEqual(context["colors"]["primary"][900], "12 74 110")
         self.assertEqual(context["colors"]["primary"][950], "8 47 73")
-
-        get_config.cache_clear()
