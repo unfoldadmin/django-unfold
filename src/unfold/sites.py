@@ -257,6 +257,9 @@ class UnfoldAdminSite(AdminSite):
                     if has_primary_link and has_tab_link_active:
                         item["active"] = True
 
+                if isinstance(item["link"], Callable):
+                    item["link"] = item["link"](request)
+
                 # Badge callbacks
                 if "badge" in item and isinstance(item["badge"], str):
                     try:
@@ -283,6 +286,9 @@ class UnfoldAdminSite(AdminSite):
                 # Skip item if permission check fails
                 if not self._call_permission_callback(item.get("permission"), request):
                     continue
+
+                if isinstance(item["link"], Callable):
+                    item["link"] = item["link"](request)
 
                 allowed_items.append(item)
 
