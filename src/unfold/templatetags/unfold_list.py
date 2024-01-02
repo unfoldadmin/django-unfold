@@ -307,7 +307,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                 yield format_html(
                     '<td{} data-label="{}">{}</td>',
                     row_class,
-                    "Select record",
+                    _("Select record"),
                     result_repr,
                 )
 
