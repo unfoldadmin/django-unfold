@@ -94,6 +94,15 @@
                 {% include "unfold/helpers/messages/error.html" with errors=adminform.form.non_field_errors %}
 
                 {% block field_sets %}
+                    {% if adminform.model_admin.fieldsets_tabs %}
+                    <ul id="form-tabs" data-tab-prefix="fieldset-tab" class="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400 mb-4">
+                        {% for tab in adminform.model_admin.fieldsets_tabs %}
+                            <li class="{% if not forloop.last %}mr-2{% endif %}">
+                                <a href="#{{ tab.0 }}" class="inline-block px-4 py-3 rounded-md hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-white">{{ tab.1 }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                     {% for fieldset in adminform %}
                         {% include 'admin/includes/fieldset.html' %}
                     {% endfor %}
@@ -117,6 +126,48 @@
                 {% endblock %}
 
                 {% prepopulated_fields_js %}
+                {% if adminform.model_admin.fieldsets_tabs %}
+                <script language="javascript">
+                    django.jQuery.fn.formTabs = function () {
+                        var $tabs = django.jQuery(this);
+                        var tabPrefix = $tabs.data('tab-prefix');
+                        if (!tabPrefix)
+                            return;
+
+                        var $tabLinks = $tabs.find('a');
+                        var $activeClasses = 'text-white bg-primary-600 hover:text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-800';
+
+                        function tabContents($link) {
+                            return django.jQuery('.' + tabPrefix + '-' + $link.attr('href').replace('#', ''));
+                        }
+
+                        function activateTabs() {
+                            // Init tab by url hash or init first tab
+                            if (window.location.hash) {
+                                django.jQuery($tabs).find('a[href=\\' + window.location.hash + ']').click();
+                            } else {
+                                $tabLinks.first().trigger('click');
+                            }
+                        }
+
+                        $tabLinks.click(function () {
+                            var $link = django.jQuery(this),
+                                showEvent = django.jQuery.Event('shown.fieldset.tab', {
+                                    relatedTarget: $link,
+                                    tab: $link.attr('href').replace('#', '')
+                                });
+                            $link.parent().parent().find('[data-active]').removeClass($activeClasses);
+                            $link.attr('data-active', true).addClass($activeClasses);
+                            django.jQuery('.' + tabPrefix).addClass('hidden');
+                            tabContents($link).removeClass('hidden');
+                            $link.trigger(showEvent);
+                        });
+
+                        activateTabs();
+                    };
+                    django.jQuery("#form-tabs").formTabs();
+                </script>
+                {% endif %}
             </div>
         </form>
     </div>
