@@ -15,6 +15,10 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - **Formula:** repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
 - **Turbo:** Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
 
+## Are you using Unfold and need a help?<!-- omit from toc -->
+
+Did you decide to start using Unfold but you don't have time to make the switch from native Django admin? [Get in touch with us](https://unfoldadmin.com/) and let's supercharge development by using our know-how.
+
 ## Features <!-- omit from toc -->
 
 - **Visual**: provides new user interface based on Tailwind CSS framework
