@@ -1,4 +1,15 @@
 
+## 0.19.0 (2024-01-06)
+
+- feat: self hosted fonts (#235) ([`e2eaa45`](https://github.com/unfoldadmin/django-unfold/commit/e2eaa45f1478d38e82436e72dbe37e8dc916578d))
+- feat: switch widget for boolean values (#237) ([`2dd8713`](https://github.com/unfoldadmin/django-unfold/commit/2dd87132049edebc7334f1590914183f0608d1bc))
+- feat: duration field widget (#239) ([`dd852b2`](https://github.com/unfoldadmin/django-unfold/commit/dd852b2fccbb8a0ba6b628c4635dbe2db2a40993))
+- feat: charts options support (#236) ([`4034084`](https://github.com/unfoldadmin/django-unfold/commit/4034084266072e5dfa07370f534993258c3403ce))
+- fix: select record translation (#243) ([`08a5aba`](https://github.com/unfoldadmin/django-unfold/commit/08a5aba9fea4cd805b95a0711f27e22d70f512ab))
+- fix: file input hover (#241) ([`a01242b`](https://github.com/unfoldadmin/django-unfold/commit/a01242b5f28f25bd6dcee22ed27d44f69e06cd95))
+- fix: upload field checkbox widget (#240) ([`0fca143`](https://github.com/unfoldadmin/django-unfold/commit/0fca14386961ceace56c3423f2b0922d4d38b77e))
+- fix: json field formatting (#232) ([`fbf7f08`](https://github.com/unfoldadmin/django-unfold/commit/fbf7f0830d15594706101d3d7bc28eab777ddc22))
+
 ## 0.18.1 (2023-12-22)
 
 - fix: lazy loaded permission callback (#234) ([`97ca6dd`](https://github.com/unfoldadmin/django-unfold/commit/97ca6dd54563a1546d53ffcce90e04fce8b3d7f7))
