@@ -15,7 +15,7 @@
 
     <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
         {% for line in fieldset %}
-            <div class="block {% if not line.fields|length_is:'1' %}flex flex-row flex-wrap gap-x-8 {% else %}block {% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+            <div class="form-row block {% if not line.fields|length_is:'1' %}flex flex-row flex-wrap gap-x-8{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
                 {% for field in line %}
                     <div class="flex group {% if field.errors %}errors {% endif %}{% if not line.fields|length_is:1 %}lg:max-w-xs w-full {% endif %}{% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}">
                         {% if field.is_checkbox %}

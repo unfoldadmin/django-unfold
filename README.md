@@ -653,7 +653,21 @@ class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
 
 ### django-modeltranslation
 
-By default Unfold does not contain any specific implementation for django-modeltranslation and the application is partially supported. Basic behavior is supported except of tab navigation provided by django-modeltranslation. At the moment there are no plans in supporting this behavior.
+By default, Unfold supports django-modeltranslation and `TabbedTranslationAdmin` admin class for the tabbed navigation is implemented with custom styling as well.
+
+```python
+from django.contrib import admin
+
+from modeltranslation.admin import TabbedTranslationAdmin
+from unfold.admin import ModelAdmin
+
+from .models import MyModel
+
+
+@admin.register(MyModel)
+class MyModelAdmin(ModelAdmin, TabbedTranslationAdmin):
+    pass
+```
 
 For django-modeltranslation fields for spefic languages, it is possible to define custom flags which will appear as a suffix in field's label. It is recommended to use emojis as suffix.
 

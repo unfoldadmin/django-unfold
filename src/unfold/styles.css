@@ -586,3 +586,26 @@ trix-toolbar[id^="trix-toolbar-"] {
 .trix-active {
   @apply text-primary-600;
 }
+
+/*******************************************************
+ django-modeltranslation
+ *******************************************************/
+.ui-tabs {
+  @apply flex flex-col;
+}
+
+.ui-tabs.ui-widget .ui-tabs-nav {
+  @apply bg-gray-100 border-0 flex gap-2 m-0 mb-4 mr-auto p-1 rounded text-sm dark:bg-white/[.04] after:hidden;
+}
+
+.ui-tabs.ui-widget .ui-tabs-nav li {
+  @apply border-0 top-0;
+}
+
+.ui-tabs.ui-widget .ui-tabs-nav li a {
+  @apply bg-transparent border-0 flex flex-row font-medium items-center m-0 px-2.5 py-1 rounded text-gray-400 text-sm hover:bg-gray-700/[.04] hover:text-gray-700 dark:hover:bg-white/[.04] dark:hover:text-white;
+}
+
+.ui-tabs.ui-widget .ui-tabs-nav li.ui-tabs-active a {
+  @apply flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-white;
+}
