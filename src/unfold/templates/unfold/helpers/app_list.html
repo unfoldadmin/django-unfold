@@ -7,7 +7,7 @@
                 <hr class="border-t border-gray-200 mx-6 my-2 dark:border-gray-800" />
             {% endif %}
 
-            {% if group.title %}
+            {% if group.title and group.items%}
                 <h3 class="font-medium my-3 px-6 text-gray-900 text-sm first:mt-0 dark:text-gray-200">
                     {{ group.title }}
                 </h3>
