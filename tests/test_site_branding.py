@@ -3,7 +3,7 @@ from django.templatetags.static import static
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from unfold.settings import CONFIG_DEFAULTS, get_config
+from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
 
@@ -22,7 +22,6 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertEqual(context["site_icon"], "icon.svg")
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -38,7 +37,6 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertEqual(context["site_icon"], "hardcoded-icon.svg")
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -59,7 +57,6 @@ class SiteBrandingTestCase(TestCase):
         self.assertDictEqual(
             context["site_icon"], {"light": "icon-light.svg", "dark": "icon-dark.svg"}
         )
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -77,7 +74,6 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertIsNone(context["site_icon"])
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -93,7 +89,6 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertEqual(context["site_logo"], "logo.svg")
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -109,7 +104,6 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertEqual(context["site_logo"], "hardcoded-logo.svg")
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -130,7 +124,6 @@ class SiteBrandingTestCase(TestCase):
         self.assertDictEqual(
             context["site_logo"], {"light": "logo-light.svg", "dark": "logo-dark.svg"}
         )
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -148,4 +141,3 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertIsNone(context["site_logo"])
-        get_config.cache_clear()
