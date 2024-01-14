@@ -1,6 +1,7 @@
-from typing import Any, Dict, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional, Union
 
 from django import template
+from django.contrib.admin.helpers import AdminForm, Fieldset
 from django.forms import Field
 from django.template import Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
@@ -40,6 +41,17 @@ def class_name(value: Any) -> str:
 @register.filter
 def index(indexable: Mapping[int, Any], i: int) -> Any:
     return indexable[i]
+
+
+@register.filter
+def tabs(adminform: AdminForm) -> List[Fieldset]:
+    result = []
+
+    for fieldset in adminform:
+        if "tab" in fieldset.classes and fieldset.name:
+            result.append(fieldset)
+
+    return result
 
 
 class CaptureNode(Node):

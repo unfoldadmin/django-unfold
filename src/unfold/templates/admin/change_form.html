@@ -95,8 +95,12 @@
 
                 {% block field_sets %}
                     {% for fieldset in adminform %}
-                        {% include 'admin/includes/fieldset.html' %}
+                        {% if "tab" not in fieldset.classes %}
+                            {% include 'admin/includes/fieldset.html' %}
+                        {% endif %}
                     {% endfor %}
+
+                    {% include "unfold/helpers/fieldsets_tabs.html" %}
                 {% endblock %}
 
                 {% block after_field_sets %}{% endblock %}
