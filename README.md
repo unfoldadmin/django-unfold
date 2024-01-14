@@ -30,7 +30,8 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **WYSIWYG:** built-in support for WYSIWYG (Trix)
 - **Custom filters:** widgets for filtering number & datetime values
 - **Dashboard:** custom components for rapid dashboard development
-- **Tabs:** define custom tab navigations for models
+- **Model tabs:** define custom tab navigations for models
+- **Fieldset tabs:** merge several fielsets into tabs in change form
 - **Colors:** possibility to override default color scheme
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
@@ -50,6 +51,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Numeric filters](#numeric-filters)
   - [Date/time filters](#datetime-filters)
 - [Display decorator](#display-decorator)
+- [Change form tabs](#change-form-tabs)
 - [Third party packages](#third-party-packages)
   - [django-celery-beat](#django-celery-beat)
   - [django-guardian](#django-guardian)
@@ -580,6 +582,55 @@ class UserAdmin(ModelAdmin):
         Third argument is short text which will appear as prefix in circle
         """
         return "First main heading", "Smaller additional description", "AB"
+```
+
+## Change form tabs
+
+When the change form contains a lot of fieldsets, sometimes it is better to group them into tabs so it will not be needed to scroll. To mark a fieldset for tab navigation it is required to add a `tab` CSS class to the fieldset. Once the fieldset contains `tab` class it will be recognized in a template and grouped into tab navigation. Each tab must contain its name. If the name is not available, it will be not included in the tab navigation.
+
+```python
+# admin.py
+
+from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
+
+from .models import MyModel
+
+
+@admin.register(MyModel)
+class MyModelAdmin(ModelAdmin):
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": [
+                    "field_1",
+                    "field_2",
+                ],
+            },
+        ),
+        (
+            _("Tab 1"),
+            {
+                "classes": ["tab"],
+                "fields": [
+                    "field_3",
+                    "field_4",
+                ],
+            },
+        ),
+        (
+            _("Tab 2"),
+            {
+                "classes": ["tab"],
+                "fields": [
+                    "field_5",
+                    "field_6",
+                ],
+            },
+        ),
+    )
 ```
 
 ## Third party packages
