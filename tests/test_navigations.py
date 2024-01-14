@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from unfold.settings import CONFIG_DEFAULTS, get_config
+from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
 
@@ -37,7 +37,6 @@ class NavigationTestCase(TestCase):
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
         self.assertEqual(len(tabs[0]["items"]), 0)
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -62,7 +61,6 @@ class NavigationTestCase(TestCase):
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
         self.assertEqual(len(tabs[0]["items"]), 1)
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -87,7 +85,6 @@ class NavigationTestCase(TestCase):
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
         self.assertEqual(len(tabs[0]["items"]), 0)
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -112,4 +109,3 @@ class NavigationTestCase(TestCase):
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
         self.assertEqual(len(tabs[0]["items"]), 1)
-        get_config.cache_clear()

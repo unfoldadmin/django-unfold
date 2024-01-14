@@ -15,6 +15,10 @@ Unfold is theme for Django admin incorporating most common practises for buildin
 - **Formula:** repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
 - **Turbo:** Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
 
+## Are you using Unfold and need a help?<!-- omit from toc -->
+
+Did you decide to start using Unfold but you don't have time to make the switch from native Django admin? [Get in touch with us](https://unfoldadmin.com/) and let's supercharge development by using our know-how.
+
 ## Features <!-- omit from toc -->
 
 - **Visual**: provides new user interface based on Tailwind CSS framework
@@ -700,7 +704,21 @@ class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
 
 ### django-modeltranslation
 
-By default Unfold does not contain any specific implementation for django-modeltranslation and the application is partially supported. Basic behavior is supported except of tab navigation provided by django-modeltranslation. At the moment there are no plans in supporting this behavior.
+By default, Unfold supports django-modeltranslation and `TabbedTranslationAdmin` admin class for the tabbed navigation is implemented with custom styling as well.
+
+```python
+from django.contrib import admin
+
+from modeltranslation.admin import TabbedTranslationAdmin
+from unfold.admin import ModelAdmin
+
+from .models import MyModel
+
+
+@admin.register(MyModel)
+class MyModelAdmin(ModelAdmin, TabbedTranslationAdmin):
+    pass
+```
 
 For django-modeltranslation fields for spefic languages, it is possible to define custom flags which will appear as a suffix in field's label. It is recommended to use emojis as suffix.
 
