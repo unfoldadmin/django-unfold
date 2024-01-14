@@ -129,11 +129,6 @@ if HAS_MONEY:
         }
     )
 
-CHANGE_FORM_FORMFIELD_OVERRIDES = copy.deepcopy(FORMFIELD_OVERRIDES)
-CHANGE_FORM_FORMFIELD_OVERRIDES.update(
-    {models.BooleanField: {"widget": UnfoldBooleanSwitchWidget}}
-)
-
 FORMFIELD_OVERRIDES_INLINE = copy.deepcopy(FORMFIELD_OVERRIDES)
 
 FORMFIELD_OVERRIDES_INLINE.update(
@@ -536,7 +531,12 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         if extra_context is None:
             extra_context = {}
 
-        self.formfield_overrides = CHANGE_FORM_FORMFIELD_OVERRIDES
+        new_formfield_overrides = copy.deepcopy(self.formfield_overrides)
+        new_formfield_overrides.update(
+            {models.BooleanField: {"widget": UnfoldBooleanSwitchWidget}}
+        )
+
+        self.formfield_overrides = new_formfield_overrides
 
         actions = []
         if object_id:
