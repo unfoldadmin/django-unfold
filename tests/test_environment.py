@@ -2,7 +2,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from unfold.settings import CONFIG_DEFAULTS, get_config
+from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
 
@@ -18,7 +18,6 @@ class EnvironmentTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertTrue("environment" not in context)
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -34,7 +33,6 @@ class EnvironmentTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertTrue("environment" not in context)
-        get_config.cache_clear()
 
     @override_settings(
         UNFOLD={
@@ -51,4 +49,3 @@ class EnvironmentTestCase(TestCase):
         context = admin_site.each_context(request)
         self.assertTrue("environment" in context)
         self.assertEqual(context["environment"], ["Testing Environment", "warning"])
-        get_config.cache_clear()
