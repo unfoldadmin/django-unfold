@@ -1,4 +1,13 @@
 
+## 0.20.0 (2024-01-15)
+
+- feat: fieldset as tabs (#249) ([`b412b20`](https://github.com/unfoldadmin/django-unfold/commit/b412b20f70af1f96ac27f949c8f19969b818f88f))
+- feat: lambda support in links (#245) ([`06efaa5`](https://github.com/unfoldadmin/django-unfold/commit/06efaa5a65d8d119a91a4610abb4b7bfe910fa58))
+- feat: django-modeltranslation admin tabs support (#244) ([`efbc2c3`](https://github.com/unfoldadmin/django-unfold/commit/efbc2c35c4f1bbfa08fd7a2f67a9c45107aa0165))
+- fix: empty menu items (#258) ([`a126d71`](https://github.com/unfoldadmin/django-unfold/commit/a126d71ac4414768c1f6fd69ed76927aa6abcb59))
+- fix: formfield overrides (#256) ([`3a10c02`](https://github.com/unfoldadmin/django-unfold/commit/3a10c026744bed9f0931b0f227cbefc032f436ff))
+- docs: theme support (#250) ([`ad4752c`](https://github.com/unfoldadmin/django-unfold/commit/ad4752c6af51daac6b54eb8c5929741ee7b54fdb))
+
 ## 0.19.0 (2024-01-06)
 
 - feat: self hosted fonts (#235) ([`e2eaa45`](https://github.com/unfoldadmin/django-unfold/commit/e2eaa45f1478d38e82436e72dbe37e8dc916578d))
