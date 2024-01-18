@@ -1,4 +1,8 @@
 
+## 0.20.1 (2024-01-18)
+
+- fix: remove python-semantic-release as dependency (#263) ([`a0bb3b0`](https://github.com/unfoldadmin/django-unfold/commit/a0bb3b077e482d36988fb00f70c2ac1642d285b8))
+
 ## 0.20.0 (2024-01-15)
 
 - feat: fieldset as tabs (#249) ([`b412b20`](https://github.com/unfoldadmin/django-unfold/commit/b412b20f70af1f96ac27f949c8f19969b818f88f))
