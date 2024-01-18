@@ -32,7 +32,6 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.8"
 django = ">=3.2"
-python-semantic-release = "^8.5.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.3.1"
