@@ -1,4 +1,8 @@
 
+## 0.20.2 (2024-02-02)
+
+- fix: has_permission callback in template (#275) ([`b92ab12`](https://github.com/unfoldadmin/django-unfold/commit/b92ab12b55a16c8fadf128a7f7ca1a3d20a08b6d))
+
 ## 0.20.1 (2024-01-18)
 
 - fix: remove python-semantic-release as dependency (#263) ([`a0bb3b0`](https://github.com/unfoldadmin/django-unfold/commit/a0bb3b077e482d36988fb00f70c2ac1642d285b8))
