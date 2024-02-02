@@ -4,11 +4,13 @@
             {% if tab_list %}
                 <ul class="border rounded-md flex flex-col w-full md:flex-row md:border-b-0 md:border-t-0 md:border-l-0 md:border-r-0 dark:border-gray-800">
                     {% for item in tab_list %}
-                        <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-gray-800">
-                            <a href="{{ item.link }}" class="block px-3 py-2 {% if item.link|stringformat:"s" in request.path %} border-b md:border-primary-500 dark:md:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500{% else %} hover:text-gray-700 dark:hover:text-gray-200{% endif %} md:py-4 md:px-0 dark:border-gray-800">
-                                {{ item.title }}
-                            </a>
-                        </li>
+                        {% if item.has_permission %}
+                            <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-gray-800">
+                                <a href="{{ item.link }}" class="block px-3 py-2 {% if item.link|stringformat:"s" in request.path %} border-b md:border-primary-500 dark:md:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500{% else %} hover:text-gray-700 dark:hover:text-gray-200{% endif %} md:py-4 md:px-0 dark:border-gray-800">
+                                    {{ item.title }}
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             {% endif %}
