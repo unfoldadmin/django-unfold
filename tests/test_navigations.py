@@ -36,7 +36,7 @@ class NavigationTestCase(TestCase):
         admin_site = UnfoldAdminSite()
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
-        self.assertEqual(len(tabs[0]["items"]), 0)
+        self.assertFalse(tabs[0]["items"][0]["has_permission"])
 
     @override_settings(
         UNFOLD={
@@ -60,7 +60,7 @@ class NavigationTestCase(TestCase):
         admin_site = UnfoldAdminSite()
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
-        self.assertEqual(len(tabs[0]["items"]), 1)
+        self.assertTrue(tabs[0]["items"][0]["has_permission"])
 
     @override_settings(
         UNFOLD={
@@ -84,7 +84,7 @@ class NavigationTestCase(TestCase):
         admin_site = UnfoldAdminSite()
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
-        self.assertEqual(len(tabs[0]["items"]), 0)
+        self.assertFalse(tabs[0]["items"][0]["has_permission"])
 
     @override_settings(
         UNFOLD={
@@ -108,4 +108,4 @@ class NavigationTestCase(TestCase):
         admin_site = UnfoldAdminSite()
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
-        self.assertEqual(len(tabs[0]["items"]), 1)
+        self.assertTrue(tabs[0]["items"][0]["has_permission"])
