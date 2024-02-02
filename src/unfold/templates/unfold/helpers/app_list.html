@@ -16,26 +16,27 @@
 
                 <ol class="px-6">
                     {% for item in group.items %}
-                        <li>
-                            <a href="{{ item.link }}"
-                            class="border border-transparent flex h-11 items-center -mx-3 px-3 py-2 rounded-md {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:border dark:border-gray-800 dark:bg-white/[.02] dark:text-primary-500{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200{% endif %}">
-                                {% if item.icon %}
-                                    <span class="material-symbols-outlined md-18 mr-3 w-4.5">
-                                        {{ item.icon }}
-                                    </span>
-                                {% endif %}
+                        {% if item.has_permission %}
+                            <li>
+                                <a href="{{ item.link }}" class="border border-transparent flex h-11 items-center -mx-3 px-3 py-2 rounded-md {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:border dark:border-gray-800 dark:bg-white/[.02] dark:text-primary-500{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200{% endif %}">
+                                    {% if item.icon %}
+                                        <span class="material-symbols-outlined md-18 mr-3 w-4.5">
+                                            {{ item.icon }}
+                                        </span>
+                                    {% endif %}
 
-                                <span class="text-sm">
-                                    {{ item.title|safe }}
-                                </span>
-
-                                {% if item.badge %}
-                                    <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">
-                                        {{ item.badge|safe }}
+                                    <span class="text-sm">
+                                        {{ item.title|safe }}
                                     </span>
-                                {% endif %}
-                            </a>
-                        </li>
+
+                                    {% if item.badge %}
+                                        <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">
+                                            {{ item.badge|safe }}
+                                        </span>
+                                    {% endif %}
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ol>
             {% endif %}
