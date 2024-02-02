@@ -234,10 +234,6 @@ class UnfoldAdminSite(AdminSite):
             allowed_items = []
 
             for item in group["items"]:
-                # Skip item if permission check fails
-                if not self._call_permission_callback(item.get("permission"), request):
-                    continue
-
                 item["active"] = False
                 item["active"] = _get_is_active(item["link"])
 
@@ -259,6 +255,11 @@ class UnfoldAdminSite(AdminSite):
 
                 if isinstance(item["link"], Callable):
                     item["link"] = item["link"](request)
+
+                # Permission callback
+                item["has_permission"] = self._call_permission_callback(
+                    item.get("permission"), request
+                )
 
                 # Badge callbacks
                 if "badge" in item and isinstance(item["badge"], str):
@@ -283,9 +284,9 @@ class UnfoldAdminSite(AdminSite):
             allowed_items = []
 
             for item in tab["items"]:
-                # Skip item if permission check fails
-                if not self._call_permission_callback(item.get("permission"), request):
-                    continue
+                item["has_permission"] = self._call_permission_callback(
+                    item.get("permission"), request
+                )
 
                 if isinstance(item["link"], Callable):
                     item["link"] = item["link"](request)
