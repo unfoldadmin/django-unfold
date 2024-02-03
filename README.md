@@ -702,6 +702,18 @@ class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
     export_form_class = ExportForm
 ```
 
+When implementing `import_export.admin.ExportActionModelAdmin` class in admin panel, import_export plugin adds its own implementation of action form which is not incorporating Unfold CSS classes. For this reason, `unfold.contrib.import_export.admin` contains class with the same name `ExportActionModelAdmin` which inherits behavior of parent form and adds appropriate CSS classes.
+
+```python
+admin.py
+
+from unfold.admin import ModelAdmin
+from unfold.contrib.import_export import ExportActionModelAdmin
+
+class ExampleAdmin(ModelAdmin, ExportActionModelAdmin):
+    pass
+```
+
 ### django-modeltranslation
 
 By default, Unfold supports django-modeltranslation and `TabbedTranslationAdmin` admin class for the tabbed navigation is implemented with custom styling as well.
