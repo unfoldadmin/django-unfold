@@ -1,4 +1,9 @@
 
+## 0.20.3 (2024-02-03)
+
+- fix: responsive all applications menu (#278) ([`5ef241b`](https://github.com/unfoldadmin/django-unfold/commit/5ef241bb88ad0a7690506125f5ca7b95f31f5a85))
+- fix: responsive default dashboard on mobile (#277) ([`a313df6`](https://github.com/unfoldadmin/django-unfold/commit/a313df6dedcda627c5bd95df108a951bb6d8c465))
+
 ## 0.20.2 (2024-02-02)
 
 - fix: has_permission callback in template (#275) ([`b92ab12`](https://github.com/unfoldadmin/django-unfold/commit/b92ab12b55a16c8fadf128a7f7ca1a3d20a08b6d))
