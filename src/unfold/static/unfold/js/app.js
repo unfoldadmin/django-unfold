@@ -76,12 +76,17 @@ const submitSearch = () => {
   const searchbar = document.getElementById("searchbar");
   const searchbarSubmit = document.getElementById("searchbar-submit");
 
+  const updateUrlWithSearchQuery = (searchQuery) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('q', searchQuery);
+    window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+  };
+
   if (searchbar !== null) {
     searchbar.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
-        window.location = `?q=${e.target.value}`;
         e.preventDefault();
-      } else {
+        updateUrlWithSearchQuery(e.target.value);
       }
     });
   }
@@ -89,7 +94,7 @@ const submitSearch = () => {
   if (searchbarSubmit !== null && searchbar !== null) {
     searchbarSubmit.addEventListener("click", (e) => {
       e.preventDefault();
-      window.location = `?q=${searchbar.value}`;
+      updateUrlWithSearchQuery(searchbar.value);
     });
   }
 };
