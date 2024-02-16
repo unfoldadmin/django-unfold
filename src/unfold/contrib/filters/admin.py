@@ -57,7 +57,10 @@ class SingleNumericFilter(admin.FieldListFilter):
 
         if self.parameter_name in params:
             value = params.pop(self.parameter_name)
-            self.used_parameters[self.parameter_name] = value
+            value = value[0] if isinstance(value, list) else value
+
+            if value not in EMPTY_VALUES:
+                self.used_parameters[self.parameter_name] = value
 
     def queryset(
         self, request: HttpRequest, queryset: QuerySet[Any]
@@ -94,15 +97,21 @@ class RangeNumericMixin:
     def init_used_parameters(self, params: Dict[str, Any]) -> None:
         if self.parameter_name + "_from" in params:
             value = params.pop(self.parameter_name + "_from")
-            self.used_parameters[self.parameter_name + "_from"] = value
+
+            self.used_parameters[self.parameter_name + "_from"] = (
+                value[0] if isinstance(value, list) else value
+            )
 
         if self.parameter_name + "_to" in params:
             value = params.pop(self.parameter_name + "_to")
-            self.used_parameters[self.parameter_name + "_to"] = value
+            self.used_parameters[self.parameter_name + "_to"] = (
+                value[0] if isinstance(value, list) else value
+            )
 
     def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
+        print(self.used_parameters)
         value_from = self.used_parameters.get(self.parameter_name + "_from", None)
         if value_from is not None and value_from != "":
             filters.update(
@@ -302,11 +311,17 @@ class RangeDateFilter(admin.FieldListFilter):
 
         if self.parameter_name + "_from" in params:
             value = params.pop(self.field_path + "_from")
-            self.used_parameters[self.field_path + "_from"] = value
+            value = value[0] if isinstance(value, list) else value
+
+            if value not in EMPTY_VALUES:
+                self.used_parameters[self.field_path + "_from"] = value
 
         if self.parameter_name + "_to" in params:
             value = params.pop(self.field_path + "_to")
-            self.used_parameters[self.field_path + "_to"] = value
+            value = value[0] if isinstance(value, list) else value
+
+            if value not in EMPTY_VALUES:
+                self.used_parameters[self.field_path + "_to"] = value
 
     def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
