@@ -111,7 +111,6 @@ class RangeNumericMixin:
     def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
-        print(self.used_parameters)
         value_from = self.used_parameters.get(self.parameter_name + "_from", None)
         if value_from is not None and value_from != "":
             filters.update(
