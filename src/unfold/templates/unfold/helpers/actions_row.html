@@ -9,7 +9,7 @@
 
             <nav class="absolute bg-white border flex flex-col leading-none py-1 right-0 rounded-md shadow-lg text-gray-500 text-sm top-7 z-50 w-48 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" x-cloak x-show="openActionsId{{ instance.pk }}" @click.outside="openActionsId{{ instance.pk }} = false">
                 {% for action in actions %}
-                    <a href="{% url action.raw_path instance_pk %}" class="mx-1 px-3 py-2 rounded-md whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
+                    <a href="{% url action.raw_path instance_pk %}" class="mx-1 px-3 py-2 rounded-md truncate whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
                         {{ action.title }}
                     </a>
                 {% endfor %}
