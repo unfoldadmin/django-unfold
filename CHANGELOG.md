@@ -1,4 +1,11 @@
 
+## 0.20.4 (2024-02-19)
+
+- fix: long title in actions dropdown (#294) ([`a587f66`](https://github.com/unfoldadmin/django-unfold/commit/a587f6661419d58332b7e421fcd295eda2f45765))
+- fix: range filters wrong arguments (#293) ([`2ad558e`](https://github.com/unfoldadmin/django-unfold/commit/2ad558e3ccd1581c192fcbe4eaa898aec225a7cd))
+- fix: import_export actions form styling (#279) ([`e35c5f5`](https://github.com/unfoldadmin/django-unfold/commit/e35c5f5af0de86740f85526d00b022bccf08aaaf))
+- chore(deps): bump django from 3.2.23 to 3.2.24 (#286) ([`de85e4f`](https://github.com/unfoldadmin/django-unfold/commit/de85e4f2d73326278ef34e54b6243e2a140fda0f))
+
 ## 0.20.3 (2024-02-03)
 
 - fix: responsive all applications menu (#278) ([`5ef241b`](https://github.com/unfoldadmin/django-unfold/commit/5ef241bb88ad0a7690506125f5ca7b95f31f5a85))
