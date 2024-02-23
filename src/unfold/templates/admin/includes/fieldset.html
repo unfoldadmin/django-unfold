@@ -41,9 +41,7 @@
                         {% endif %}
 
                         {% if field.field.help_text %}
-                            <div class="leading-relaxed mt-2 text-gray-500 text-xs dark:text-gray-400">
-                                {{ field.field.help_text|safe }}
-                            </div>
+                            {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
                         {% endif %}
                     </div>
                 {% endfor %}
