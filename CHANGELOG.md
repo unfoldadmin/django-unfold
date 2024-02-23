@@ -1,4 +1,8 @@
 
+## 0.20.5 (2024-02-23)
+
+- fix: help text templates (#299) ([`88dec0f`](https://github.com/unfoldadmin/django-unfold/commit/88dec0f24142dd1b6bdc33b9f77be85caa05dc34))
+
 ## 0.20.4 (2024-02-19)
 
 - fix: long title in actions dropdown (#294) ([`a587f66`](https://github.com/unfoldadmin/django-unfold/commit/a587f6661419d58332b7e421fcd295eda2f45765))
