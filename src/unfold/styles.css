@@ -134,7 +134,7 @@ table tr.selected {
 }
 
 .date-icon:after {
-  @apply border-l h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700;
+  @apply border-l rtl:border-r h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700;
   content: "edit";
 }
 
@@ -147,7 +147,7 @@ table tr.selected {
 }
 
 .clock-icon:after {
-  @apply border-l h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700 dark:hover:text-white;
+  @apply border-l rtl:border-r h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700 dark:hover:text-white;
   content: "edit";
 }
 
