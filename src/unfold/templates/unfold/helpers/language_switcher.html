@@ -14,7 +14,7 @@
             {% get_available_languages as LANGUAGES %}
             {% get_language_info_list for LANGUAGES as languages %}
             {% for language in languages %}
-                <button name="language" value="{{ language.code }}" type="submit" class="cursor-pointer flex flex-row gap-2 mx-1 px-3 py-1.5 rounded hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 w-full">{{ language.name }}</button>
+                <button name="language" value="{{ language.code }}" type="submit" class="cursor-pointer flex flex-row gap-2 mx-1 px-3 py-1.5 rounded hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 w-full">{% trans language.name %}</button>
             {% endfor %}
         </form>
     </nav>
