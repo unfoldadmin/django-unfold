@@ -35,7 +35,6 @@ LABEL_CLASSES = [
 ]
 
 CHECKBOX_LABEL_CLASSES = [
-    "ml-2",
     "text-sm",
     "text-gray-900",
     "dark:text-gray-200",
