@@ -6,7 +6,7 @@
          hx-get="{% url "admin:toggle_sidebar" %}"
          hx-swap="none"
          class="block bg-white border cursor-pointer fixed h-6 items-center justify-center rounded-full text-gray-500 top-5 -translate-x-1/2 w-6 z-50 xl:flex dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
-         :class="{'ml-6 rotate-180': !sidebarDesktopOpen, 'ml-72': sidebarDesktopOpen}">
+         :class="{'ml-6 rotate-180': !sidebarDesktopOpen, 'ml-72 rtl:mr-72': sidebarDesktopOpen}">
         <span class="material-symbols-outlined md-16">
             {% if is_rtl %}last_page{% else %}first_page{% endif %}
         </span>
