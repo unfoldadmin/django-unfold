@@ -7,7 +7,11 @@
                 {% include "unfold/helpers/label.html" with text=environment.0 type=environment.1 %}
             {% endif %}
             
-            {% include "unfold/helpers/language_switcher.html" %}
+            {% url 'set_language' as set_language_url %}
+            {% if set_language_url %}
+                {% include "unfold/helpers/language_switcher.html" %}
+            {% endif %}
+            
 
             {% include "unfold/helpers/theme_switch.html" %}
 
