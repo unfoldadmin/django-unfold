@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div class="relative" x-data="{ openLanguages: false }">
+    <a class="block cursor-pointer leading-none hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" x-on:click="openLanguages = !openLanguages">
+        <span class="material-symbols-outlined">
+            translate
+        </span>
+    </a>
+
+    <nav class="absolute bg-white border flex flex-col leading-none overflow-hidden py-1 right-0 rtl:left-0 rounded shadow-lg text-sm text-gray-500 top-7 w-40 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" x-cloak x-show="openLanguages" @click.outside="openLanguages = false">
+       <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <button name="language" value="{{ language.code }}" type="submit" class="cursor-pointer flex flex-row gap-2 mx-1 px-3 py-1.5 rounded hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 w-full">{{ language.name }}</button>
+            {% endfor %}
+        </form>
+    </nav>
+</div>
