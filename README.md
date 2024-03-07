@@ -903,7 +903,7 @@ The biggest benefit of Unfold components is the possibility to nest them inside 
             Card Title
         {% endcomponent %}
     {% endcomponent %}
-{% endcompontent %}
+{% endcomponent %}
 ```
 
 Below you can find a more complex example which is using multiple components and processing them based on the passed variables from the `DASHBOARD_CALLBACK`.
