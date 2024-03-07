@@ -7,7 +7,9 @@
                 {% include "unfold/helpers/label.html" with text=environment.0 type=environment.1 %}
             {% endif %}
 
-            {% include "unfold/helpers/theme_switch.html" %}
+            {% if not theme %}
+                {% include "unfold/helpers/theme_switch.html" %}
+            {% endif %}
 
             {% include "unfold/helpers/account_links.html" %}
         </div>
