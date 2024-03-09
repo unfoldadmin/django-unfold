@@ -3,16 +3,16 @@
 {% get_admin_log 10 as admin_log for_user user %}
 
 {% if admin_log %}
-    <div id="content-related" class="lg:w-4/12">
-        <div class="module" id="recent-actions-module">
-            <h2 class="mb-4 font-semibold text-gray-700 text-sm dark:text-gray-200">
+    <div id="content-related" class="lg:w-96">
+        <div id="recent-actions-module" class="module bg-gray-50 rounded-md p-3 dark:bg-gray-800">
+            <h2 class="mb-3 font-semibold text-gray-700 text-sm dark:text-gray-200">
                 {% translate 'Recent actions' %}
             </h2>
 
-            <ul class="actionlist bg-gray-50 rounded-md p-3 dark:bg-gray-800">
+            <ul class="actionlist">
                 {% for entry in admin_log %}
-                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} bg-white mb-4 p-3 rounded-md shadow-sm last:mb-0 dark:bg-gray-900">
-                        <div class="mb-3 text-gray-500 overflow-hidden text-ellipsis text-sm whitespace-nowrap dark:text-gray-200">
+                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} border border-gray-400/10 bg-white mb-3 p-3 rounded-md shadow-sm last:mb-0 dark:bg-gray-900">
+                        <div class="mb-3 text-gray-700 overflow-hidden text-ellipsis text-sm whitespace-nowrap dark:text-gray-200">
                             {% if entry.is_deletion or not entry.get_admin_url %}
                                 {{ entry.object_repr }}
                             {% else %}
