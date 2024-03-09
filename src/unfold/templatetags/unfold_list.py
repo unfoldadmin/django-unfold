@@ -166,6 +166,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
             "px-3",
             "py-2",
             "text-left",
+            "rtl:text-right",
             "text-sm",
             "before:flex",
             "before:capitalize",
