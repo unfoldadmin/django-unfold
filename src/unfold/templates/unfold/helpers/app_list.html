@@ -46,7 +46,7 @@
     {% if sidebar_show_all_applications %}
         <div class="mt-auto" x-data="{ openAllApplications: false }">
             <a class="cursor-pointer flex items-center px-6 py-3 text-gray-500 text-sm transition-all hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200" x-on:click="openAllApplications = !openAllApplications">
-                <span class="material-symbols-outlined md-18 mr-3">
+                <span class="material-symbols-outlined md-18 mr-3 rtl:ml-3">
                     apps
                 </span>
 
@@ -55,7 +55,7 @@
                 </span>
             </a>
 
-            <div class="absolute bottom-0 left-0 right-0 top-0 z-50 md:left-72" x-cloak x-show="openAllApplications">
+            <div class="absolute bottom-0 left-0 right-0 top-0 z-50 md:left-72 rtl:md:right-72" x-cloak x-show="openAllApplications">
                 <div class="absolute bg-gray-900 bg-opacity-80 backdrop-blur-sm bottom-0 left-0 right-0 top-0 z-10 w-screen"></div>
 
                 <div class="bg-white flex flex-col h-full overflow-x-hidden overflow-y-auto py-5 px-8 relative text-sm w-80 z-20 dark:bg-gray-900 dark:border-r dark:border-gray-800" x-on:click.outside="openAllApplications = false" x-on:keydown.escape.window="openAllApplications = false">
