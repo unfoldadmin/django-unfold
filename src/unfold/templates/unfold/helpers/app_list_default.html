@@ -25,33 +25,29 @@
                                 </th>
                             {% endif %}
 
-                            {% if model.add_url %}
-                                <td class="{% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %} p-3 text-right">
-                                    <a href="{{ model.add_url }}" class="addlink text-gray-500 transition-all underline dark:text-gray-400 dark:hover:text-gray-200">
-                                        {% translate 'Add' %}
-                                    </a>
-                                </td>
-                            {% else %}
-                                <td class="{% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %} p-3 text-right"></td>
-                            {% endif %}
+                            <td class="{% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %} p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    {% if model.add_url %}
+                                        <a href="{{ model.add_url }}" class="addlink block leading-none text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="{% translate 'Add' %}">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    {% endif %}
 
-                            {% if model.admin_url and show_changelinks %}
-                                {% if model.view_only %}
-                                    <td class="{% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %} p-3 text-right">
-                                        <a href="{{ model.admin_url }}" class="viewlink text-gray-500 transition-all underline dark:text-gray-400 dark:hover:text-gray-200">
-                                            {% translate 'View' %}
-                                        </a>
-                                    </td>
-                                {% else %}
-                                    <td class="{% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %} p-3 text-right">
-                                        <a href="{{ model.admin_url }}" class="changelink text-gray-500 transition-all underline dark:text-gray-400 dark:hover:text-gray-200">
-                                            {% translate 'Change' %}
-                                        </a>
-                                    </td>
-                                {% endif %}
-                            {% elif show_changelinks %}
-                                <td class="{% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %} p-3 text-right"></td>
-                            {% endif %}
+                                    {% if model.admin_url and show_changelinks %}
+                                        {% if model.view_only %}
+                                            <a href="{{ model.admin_url }}" class="viewlink block leading-none text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="{% translate 'View' %} ">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ model.admin_url }}" class="changelink block leading-none text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="{% translate 'Change' %}">
+                                                <span class="material-symbols-outlined">edit_square</span>
+                                            </a>
+                                        {% endif %}
+                                    {% elif show_changelinks %}
+                                    {% endif %}
+                                </div>
+                            </td>
+
                         </tr>
                     {% endfor %}
                 </table>
