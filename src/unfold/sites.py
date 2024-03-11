@@ -78,6 +78,7 @@ class UnfoldAdminSite(AdminSite):
                     self._get_value(style, request)
                     for style in get_config(self.settings_name)["STYLES"]
                 ],
+                "theme": get_config(self.settings_name).get("THEME"),
                 "scripts": [
                     self._get_value(script, request)
                     for script in get_config(self.settings_name)["SCRIPTS"]
