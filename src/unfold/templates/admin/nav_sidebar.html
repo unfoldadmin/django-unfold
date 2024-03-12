@@ -5,7 +5,7 @@
          hx-get="{% url "admin:toggle_sidebar" %}"
          hx-swap="none"
          class="xl:flex hidden bg-white border cursor-pointer fixed h-8 w-8 items-center justify-center rounded-full text-gray-500 top-5 -translate-x-1/2 z-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200"
-         :class="{'ml-6 rtl:mr-6': !sidebarDesktopOpen, 'ml-72 rtl:mr-[256px] rtl:rotate-180': sidebarDesktopOpen}">
+         :class="{'ms-6': !sidebarDesktopOpen, 'ms-72 rtl:rotate-180': sidebarDesktopOpen}">
         <span x-show='sidebarDesktopOpen' class="material-symbols-outlined">
             menu_open
         </span>
@@ -15,8 +15,8 @@
     </div>
 
     <div @click="sidebarMobileOpen = !sidebarMobileOpen"
-         class="fixed bottom-0 bg-gray-700 flex cursor-pointer items-center rtl:right-0 left-0 mb-2 ml-2 w-8 rtl:mr-2 justify-center px-2 py-1 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden"
-        :class="{'ml-72 rtl:mr-[256px]  -translate-x-1/2': sidebarMobileOpen}">
+         class="fixed bottom-0 bg-gray-700 flex cursor-pointer items-center rtl:right-0 left-0 mb-2 ms-2 w-8 justify-center px-2 py-1 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden"
+        :class="{'ms-72 -translate-x-1/2': sidebarMobileOpen}">
         <span x-show='sidebarMobileOpen' class="material-symbols-outlined">
             menu_open
         </span>
