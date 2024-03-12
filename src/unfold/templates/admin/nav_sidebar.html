@@ -15,8 +15,8 @@
     </div>
 
     <div @click="sidebarMobileOpen = !sidebarMobileOpen"
-         class="fixed bottom-0 bg-gray-700 flex cursor-pointer items-center rtl:right-0 left-0 mb-2 ms-2 w-8 justify-center px-2 py-1 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden"
-        :class="{'ms-72 -translate-x-1/2': sidebarMobileOpen}">
+         class="fixed bottom-0 bg-gray-700 flex cursor-pointer items-center mb-2 ms-2 w-8 justify-center px-2 py-1 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden"
+        :class="{'ms-72 -translate-x-1/2 rtl:rotate-180': sidebarMobileOpen}">
         <span x-show='sidebarMobileOpen' class="material-symbols-outlined">
             menu_open
         </span>
