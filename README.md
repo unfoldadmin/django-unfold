@@ -175,6 +175,7 @@ UNFOLD = {
     "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
     "ENVIRONMENT": "sample_app.environment_callback",
     "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
+    "THEME": "dark", # Force theme: "dark" or "light". Will disable theme switcher
     "LOGIN": {
         "image": lambda request: static("sample/login-bg.jpg"),
         "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
@@ -903,7 +904,7 @@ The biggest benefit of Unfold components is the possibility to nest them inside 
             Card Title
         {% endcomponent %}
     {% endcomponent %}
-{% endcompontent %}
+{% endcomponent %}
 ```
 
 Below you can find a more complex example which is using multiple components and processing them based on the passed variables from the `DASHBOARD_CALLBACK`.

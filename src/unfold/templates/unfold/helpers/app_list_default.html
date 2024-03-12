@@ -1,61 +1,61 @@
 {% load i18n %}
 
 {% if app_list %}
-  {% for app in app_list %}
-    <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
-      <table class="border border-spacing-none border-separate rounded-md shadow-sm text-gray-700 text-sm w-full dark:border-gray-800 {% if not forloop.last %}mb-8{% endif %}">
-        <caption class="font-semibold mb-4 text-gray-700 text-left dark:text-gray-200">
-          <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
-              {{ app.name }}
-          </a>
-        </caption>
+    {% for app in app_list %}
+        <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
+            <div class="bg-gray-50 mb-6 rounded-md p-3 dark:bg-gray-800">
+                <table class="border border-gray-400/10 border-spacing-none border-separate rounded-md overflow-hidden shadow-sm text-gray-700 text-sm w-full dark:border-gray-800">
+                    <caption class="font-semibold mb-3 text-gray-700 text-left dark:text-gray-200">
+                        <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
+                            {{ app.name }}
+                        </a>
+                    </caption>
 
-        {% for model in app.models %}
-          <tr class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %} {% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %}">
-            {% if model.admin_url %}
-              <th scope="row" class="font-normal p-3 text-left dark:text-gray-400 {% if not forloop.last %}border-b dark:border-gray-800{% endif %}">
-                  <a href="{{ model.admin_url }}"{% if model.admin_url in request.path %} aria-current="page"{% endif %}>
-                      {{ model.name }}
-                  </a>
-              </th>
-            {% else %}
-              <th scope="row" class="font-normal p-3 text-left dark:text-gray-400 {% if not forloop.last %}border-b dark:border-gray-800{% endif %}">
-                  {{ model.name }}
-              </th>
-            {% endif %}
+                    {% for model in app.models %}
+                        <tr class="bg-white dark:bg-gray-900 model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %}">
+                            {% if model.admin_url %}
+                                <th scope="row" class="font-normal p-3 text-left dark:text-gray-200 {% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %}">
+                                    <a href="{{ model.admin_url }}"{% if model.admin_url in request.path %} aria-current="page"{% endif %}>
+                                        {{ model.name }}
+                                    </a>
+                                </th>
+                            {% else %}
+                                <th scope="row" class="font-normal p-3 text-left dark:text-gray-400 {% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %}">
+                                    {{ model.name }}
+                                </th>
+                            {% endif %}
 
-            {% if model.add_url %}
-              <td class="{% if not forloop.last %}border-b dark:border-gray-800{% endif %} p-3 text-right">
-                  <a href="{{ model.add_url }}" class="addlink text-gray-500 transition-all underline dark:text-gray-400 dark:hover:text-gray-200">
-                      {% translate 'Add' %}
-                  </a>
-              </td>
-            {% else %}
-              <td class="{% if not forloop.last %}border-b dark:border-gray-800{% endif %} p-3 text-right"></td>
-            {% endif %}
+                            <td class="{% if not forloop.last %}border-b border-gray-100 dark:border-gray-800{% endif %} p-3 text-right">
+                                <div class="flex flex-row items-center ml-auto gap-4 justify-end">
+                                    {% if model.add_url %}
+                                        <a href="{{ model.add_url }}" class="addlink block leading-none text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="{% translate 'Add' %}">
+                                            <span class="material-symbols-outlined">add</span>
+                                        </a>
+                                    {% endif %}
 
-            {% if model.admin_url and show_changelinks %}
-              {% if model.view_only %}
-                <td class="{% if not forloop.last %}border-b dark:border-gray-800{% endif %} p-3 text-right">
-                    <a href="{{ model.admin_url }}" class="viewlink text-gray-500 transition-all underline dark:text-gray-400 dark:hover:text-gray-200">
-                        {% translate 'View' %}
-                    </a>
-                </td>
-              {% else %}
-                <td class="{% if not forloop.last %}border-b dark:border-gray-800{% endif %} p-3 text-right">
-                    <a href="{{ model.admin_url }}" class="changelink text-gray-500 transition-all underline dark:text-gray-400 dark:hover:text-gray-200">
-                        {% translate 'Change' %}
-                    </a>
-                </td>
-              {% endif %}
-            {% elif show_changelinks %}
-              <td class="{% if not forloop.last %}border-b dark:border-gray-800{% endif %} p-3 text-right"></td>
-            {% endif %}
-          </tr>
-        {% endfor %}
-      </table>
-    </div>
-  {% endfor %}
+                                    {% if model.admin_url and show_changelinks %}
+                                        {% if model.view_only %}
+                                            <a href="{{ model.admin_url }}" class="viewlink block leading-none text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="{% translate 'View' %} ">
+                                                <span class="material-symbols-outlined">visibility</span>
+                                            </a>
+                                        {% else %}
+                                            <a href="{{ model.admin_url }}" class="changelink block leading-none text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="{% translate 'Change' %}">
+                                                <span class="material-symbols-outlined">edit_square</span>
+                                            </a>
+                                        {% endif %}
+                                    {% elif show_changelinks %}
+                                    {% endif %}
+                                </div>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endfor %}
 {% else %}
-  <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
+    <p>
+        {% translate 'You don’t have permission to view or edit anything.' %}
+    </p>
 {% endif %}
