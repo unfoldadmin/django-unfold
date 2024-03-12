@@ -25,7 +25,7 @@
 
                             {% if header.sortable %}
                                 {% if header.sort_priority > 0 %}
-                                    <div class="sortoptions flex items-center ml-2 rtl:mr-2">
+                                    <div class="sortoptions flex items-center ms-2">
                                         <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
                                             {% if header.ascending %}
                                                 <span class="block material-symbols-outlined">arrow_circle_down</span>
@@ -34,13 +34,13 @@
                                             {% endif %}
                                         </a>
 
-                                        <a class="sortremove flex items-center leading-none ml-1 rtl:mr-1 text-gray-400 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                        <a class="sortremove flex items-center leading-none ms-1 text-gray-400 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
                                             <span class="block material-symbols-outlined">cancel</span>
                                         </a>
                                     </div>
 
                                     {% if num_sorted_fields > 1 %}
-                                        <span class="sortpriority font-medium ml-2 rtl:mr-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
+                                        <span class="sortpriority font-medium ms-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
                                             {{ header.sort_priority }}
                                         </span>
                                     {% endif %}
