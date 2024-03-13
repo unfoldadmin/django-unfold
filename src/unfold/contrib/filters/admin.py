@@ -45,9 +45,7 @@ class SingleNumericFilter(admin.FieldListFilter):
 
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError(
-                "Class {} is not supported for {}.".format(
-                    type(self.field), self.__class__.__name__
-                )
+                f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
             )
 
         self.request = request
@@ -196,9 +194,7 @@ class RangeNumericFilter(RangeNumericMixin, admin.FieldListFilter):
         super().__init__(field, request, params, model, model_admin, field_path)
         if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
             raise TypeError(
-                "Class {} is not supported for {}.".format(
-                    type(self.field), self.__class__.__name__
-                )
+                f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
             )
 
         self.request = request
@@ -299,9 +295,7 @@ class RangeDateFilter(admin.FieldListFilter):
         super().__init__(field, request, params, model, model_admin, field_path)
         if not isinstance(field, DateField):
             raise TypeError(
-                "Class {} is not supported for {}.".format(
-                    type(self.field), self.__class__.__name__
-                )
+                f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
             )
 
         self.request = request
@@ -394,9 +388,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         super().__init__(field, request, params, model, model_admin, field_path)
         if not isinstance(field, DateTimeField):
             raise TypeError(
-                "Class {} is not supported for {}.".format(
-                    type(self.field), self.__class__.__name__
-                )
+                f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
             )
 
         self.request = request
