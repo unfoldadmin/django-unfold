@@ -1,4 +1,11 @@
 
+## 0.21.0 (2024-03-14)
+
+- feat: redesigned default dashboard (#310) ([`7e5a575`](https://github.com/unfoldadmin/django-unfold/commit/7e5a57577ba087835c94e5a442b33e8e896bff4a))
+- feat: force design theme (#308) ([`f1e4dd0`](https://github.com/unfoldadmin/django-unfold/commit/f1e4dd079f499db1fe60224d12d5080ec2083ef7))
+- docs: components sample code typo ([`9ae600b`](https://github.com/unfoldadmin/django-unfold/commit/9ae600bc98bdbe8fa435cbe097adfaef64b082b8))
+- chore: trix editor update (#311) ([`9b3daa9`](https://github.com/unfoldadmin/django-unfold/commit/9b3daa9c2590c6285ee84b4dfc227f3f6720eac4))
+
 ## 0.20.5 (2024-02-23)
 
 - fix: help text templates (#299) ([`88dec0f`](https://github.com/unfoldadmin/django-unfold/commit/88dec0f24142dd1b6bdc33b9f77be85caa05dc34))
