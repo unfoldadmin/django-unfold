@@ -1,4 +1,8 @@
 
+## 0.21.1 (2024-03-16)
+
+- fix: whitenoise collectstatic (#316) ([`fdfd5f4`](https://github.com/unfoldadmin/django-unfold/commit/fdfd5f470d6d884f44486313127b078a80109bbe))
+
 ## 0.21.0 (2024-03-14)
 
 - feat: redesigned default dashboard (#310) ([`7e5a575`](https://github.com/unfoldadmin/django-unfold/commit/7e5a57577ba087835c94e5a442b33e8e896bff4a))
