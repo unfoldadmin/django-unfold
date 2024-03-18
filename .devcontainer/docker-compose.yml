@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  unfold:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/app
+      - ../src/unfold:/usr/local/lib/python3.12/site-packages/unfold
+    env_file:
+      - backend.env

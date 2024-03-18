@@ -35,6 +35,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Colors:** possibility to override default color scheme
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
+- **VS Code**: project configuration and development container is included
 
 ## Table of contents <!-- omit from toc -->
 
@@ -70,6 +71,9 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Pre-commit](#pre-commit)
   - [Poetry configuration](#poetry-configuration)
   - [Compiling Tailwind](#compiling-tailwind)
+  - [Using VS Code with containers](#using-vs-code-with-containers)
+    - [Development server](#development-server)
+    - [Compiling Tailwind in devcontainer](#compiling-tailwind-in-devcontainer)
 - [Credits](#credits)
 
 ## Installation
@@ -965,6 +969,7 @@ Before adding any source code, it is recommended to have pre-commit installed on
 pip install pre-commit
 pre-commit install
 pre-commit install --hook-type commit-msg
+pre-commit run --all-files # Check if everything is okay
 ```
 
 ### Poetry configuration
@@ -991,6 +996,20 @@ npm run tailwind:build # run once
 Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
 
 **Note:** most of the custom styles located in style.css are created via `@apply some-tailwind-class;` as is not possible to manually add CSS class to element which are for example created via jQuery.
+
+### Using VS Code with containers
+
+Unfold already contains prepared support for VS Code development. After cloning the project locally, open the main folder in VS Code (in terminal `code .`). Immediately, you would see a message from VS Code **Folder contains a Dev Container configuration file. Reopen folder to develop in a container** which will inform you that the support for containers is prepared. Confirm the message by clicking on **Reopen in Container**. If the message is not there, you can still manually open the project in a container by running the command **Dev Containers: Reopen in Container**.
+
+#### Development server
+
+Now the VS Code will build an image and install Python dependencies. After successful installation is completed, VS Code will spin a container and from now it is possible to directly develop in the container. Unfold contains an example development application with the basic Unfold configuration available under `tests/server`. Run `python manage.py runserver` within a `tests/server` folder to start a development Django server. Note that you have to run the command from VS Code terminal which is already connected to the running container.
+
+**Note:** this is not a production ready server. Use it just for running tests or developing features & fixes.
+
+#### Compiling Tailwind in devcontainer
+
+The container has already a node preinstalled so it is possible to compile a new CSS. Open the terminal and run `npm install` which will install all dependencies and will create `node_modules` folder. Now, you can run npm commands for Tailwind as described in the previous chapter.
 
 ## Credits
 
