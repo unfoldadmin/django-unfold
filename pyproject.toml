@@ -7,15 +7,8 @@ readme = "README.md"
 authors = []
 homepage = "https://unfoldadmin.com"
 repository = "https://github.com/unfoldadmin/django-unfold"
-packages = [
-    { include = "unfold", from = "src" },
-]
-keywords = [
-    "django",
-    "admin",
-    "tailwind",
-    "theme",
-]
+packages = [{ include = "unfold", from = "src" }]
+keywords = ["django", "admin", "tailwind", "theme"]
 classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.8",
@@ -39,7 +32,6 @@ pytest-django = "^4.5.2"
 tox = "^4.5.2"
 
 
-
 [tool.poetry.group.dev.dependencies]
 python-semantic-release = "^8.7.0"
 
@@ -56,23 +48,19 @@ select = [
     "UP", # pyupgrade
 ]
 ignore = [
-    "E501",  # line too long, handled by black
-    "B905",  # zip() without strict=True
-    "C901",  # too complex
+    "E501", # line too long, handled by black
+    "B905", # zip() without strict=True
+    "C901", # too complex
 ]
 
 [tool.semantic_release]
 tag_format = "{version}"
 major_on_zero = true
-version_toml = [
-    "pyproject.toml:tool.poetry.version"
-]
+version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [tool.semantic_release.changelog]
 template_dir = ".github/templates"
-exclude_commit_patterns = [
-    "chore: version bump"
-]
+exclude_commit_patterns = ["chore: version bump"]
 
 [tool.semantic_release.changelog.environment]
 trim_blocks = true
@@ -85,8 +73,9 @@ upload_to_vcs_release = false
 addopts = """\
     --strict-config
     --strict-markers
-    --ds=tests.settings
+    --ds=example.settings
     """
+pythonpath = "tests/server"
 django_find_project = false
 
 [build-system]

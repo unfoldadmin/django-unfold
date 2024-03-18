@@ -21,7 +21,7 @@ class SiteBrandingTestCase(TestCase):
         request = RequestFactory().get("/rand")
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
-        self.assertEqual(context["site_icon"], "icon.svg")
+        self.assertEqual(context["site_icon"], static("icon.svg"))
 
     @override_settings(
         UNFOLD={
@@ -55,7 +55,8 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertDictEqual(
-            context["site_icon"], {"light": "icon-light.svg", "dark": "icon-dark.svg"}
+            context["site_icon"],
+            {"light": static("icon-light.svg"), "dark": static("icon-dark.svg")},
         )
 
     @override_settings(
@@ -88,7 +89,7 @@ class SiteBrandingTestCase(TestCase):
         request = RequestFactory().get("/rand")
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
-        self.assertEqual(context["site_logo"], "logo.svg")
+        self.assertEqual(context["site_logo"], static("logo.svg"))
 
     @override_settings(
         UNFOLD={
@@ -122,7 +123,8 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertDictEqual(
-            context["site_logo"], {"light": "logo-light.svg", "dark": "logo-dark.svg"}
+            context["site_logo"],
+            {"light": static("logo-light.svg"), "dark": static("logo-dark.svg")},
         )
 
     @override_settings(
