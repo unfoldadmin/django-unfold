@@ -225,6 +225,10 @@ table tr.selected {
   content: "arrow_back";
 }
 
+.related-widget-wrapper {
+  @apply !flex-nowrap;
+}
+
 .related-widget-wrapper-link {
   @apply order-last;
 }
