@@ -19,7 +19,7 @@ repos:
           - --fix
       - id: ruff-format
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v3.1.0
+    rev: v3.2.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
