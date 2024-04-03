@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ExportActionModelAdmin as BaseExportActionModelAdmin
 from unfold.admin import ActionForm
-from unfold.widgets import SELECT_CLASSES
+from unfold.settings import get_config
 
 
 def export_action_form_factory(formats):
@@ -12,7 +12,11 @@ def export_action_form_factory(formats):
             choices=formats,
             required=False,
             widget=forms.Select(
-                {"class": " ".join([*SELECT_CLASSES, "ml-3", "!w-auto", "lg:!w-40"])}
+                {
+                    "class": " ".join(
+                        [*get_config()["SELECT_CLASSES"], "ml-3", "!w-auto", "lg:!w-40"]
+                    )
+                }
             ),
         )
 

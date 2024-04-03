@@ -16,13 +16,15 @@ from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from .widgets import BASE_INPUT_CLASSES, INPUT_CLASSES, SELECT_CLASSES
+from .settings import get_config
 
 
 class ActionForm(forms.Form):
     action = forms.ChoiceField(
         label="",
-        widget=forms.Select({"class": " ".join([*SELECT_CLASSES, "w-72"])}),
+        widget=forms.Select(
+            {"class": " ".join([*get_config()["SELECT_CLASSES"], "w-72"])}
+        ),
     )
 
     select_across = forms.BooleanField(
@@ -42,8 +44,12 @@ class AuthenticationForm(AdminAuthenticationForm):
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
-        self.fields["username"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
-        self.fields["password"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
+        self.fields["username"].widget.attrs["class"] = " ".join(
+            get_config()["BASE_INPUT_CLASSES"]
+        )
+        self.fields["password"].widget.attrs["class"] = " ".join(
+            get_config()["BASE_INPUT_CLASSES"]
+        )
 
 
 class UserCreationForm(BaseUserCreationForm):
@@ -55,8 +61,12 @@ class UserCreationForm(BaseUserCreationForm):
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
-        self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
-        self.fields["password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+        self.fields["password1"].widget.attrs["class"] = " ".join(
+            get_config()["INPUT_CLASSES"]
+        )
+        self.fields["password2"].widget.attrs["class"] = " ".join(
+            get_config()["INPUT_CLASSES"]
+        )
 
 
 class UserChangeForm(BaseUserChangeForm):
@@ -88,14 +98,24 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
-        self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
-        self.fields["password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+        self.fields["password1"].widget.attrs["class"] = " ".join(
+            get_config()["INPUT_CLASSES"]
+        )
+        self.fields["password2"].widget.attrs["class"] = " ".join(
+            get_config()["INPUT_CLASSES"]
+        )
 
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(kwargs.pop("user"), *args, **kwargs)
 
-        self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
-        self.fields["new_password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
-        self.fields["new_password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+        self.fields["old_password"].widget.attrs["class"] = " ".join(
+            get_config()["INPUT_CLASSES"]
+        )
+        self.fields["new_password1"].widget.attrs["class"] = " ".join(
+            get_config()["INPUT_CLASSES"]
+        )
+        self.fields["new_password2"].widget.attrs["class"] = " ".join(
+            get_config()["INPUT_CLASSES"]
+        )

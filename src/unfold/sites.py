@@ -12,7 +12,6 @@ from django.utils.module_loading import import_string
 
 from .settings import get_config
 from .utils import hex_to_rgb
-from .widgets import CHECKBOX_CLASSES, INPUT_CLASSES
 
 
 class UnfoldAdminSite(AdminSite):
@@ -54,8 +53,8 @@ class UnfoldAdminSite(AdminSite):
         context.update(
             {
                 "form_classes": {
-                    "text_input": INPUT_CLASSES,
-                    "checkbox": CHECKBOX_CLASSES,
+                    "text_input": get_config()["INPUT_CLASSES"],
+                    "checkbox": get_config()["CHECKBOX_CLASSES"],
                 },
                 "site_logo": self._get_mode_images(
                     get_config(self.settings_name)["SITE_LOGO"], request

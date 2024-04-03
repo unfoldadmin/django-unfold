@@ -1,10 +1,10 @@
 from typing import Any, Dict, Optional
 
 from django.forms import Widget
-from unfold.widgets import PROSE_CLASSES
+from unfold.settings import get_config
 
 WYSIWYG_CLASSES = [
-    *PROSE_CLASSES,
+    *get_config()["PROSE_CLASSES"],
     "border",
     "border-gray-200",
     "border-t-0",
