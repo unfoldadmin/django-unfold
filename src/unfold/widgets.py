@@ -360,7 +360,8 @@ class UnfoldAdminTextareaWidget(AdminTextareaWidget):
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         attrs = attrs or {}
 
-        attrs.update({"rows": 2})
+        if "rows" not in attrs:
+            attrs.update({"rows": 2})
 
         super().__init__(
             attrs={
