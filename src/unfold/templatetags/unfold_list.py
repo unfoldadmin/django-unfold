@@ -36,7 +36,61 @@ from ..widgets import UnfoldBooleanWidget
 
 register = Library()
 
-LINK_CLASSES = ["text-gray-700 dark:text-gray-200"]
+LINK_CLASSES = [
+    "text-gray-700",
+    "truncate",
+    "dark:text-gray-200",
+]
+
+ROW_CLASSES = [
+    "align-middle",
+    "flex",
+    "border-t",
+    "border-gray-200",
+    "font-normal",
+    "gap-4",
+    "min-w-0",
+    "overflow-hidden",
+    "px-3",
+    "py-2",
+    "text-left",
+    "text-sm",
+    "before:flex",
+    "before:capitalize",
+    "before:content-[attr(data-label)]",
+    "before:items-center",
+    "before:mr-auto",
+    "before:text-gray-500",
+    "first:border-t-0",
+    "dark:before:text-gray-400",
+    "lg:before:hidden",
+    "lg:first:border-t",
+    "lg:py-3",
+    "lg:table-cell",
+    "dark:border-gray-800",
+]
+
+CHECKBOX_CLASSES = [
+    "action-checkbox",
+    "align-middle",
+    "flex",
+    "items-center",
+    "px-3",
+    "py-2",
+    "text-left",
+    "text-sm",
+    "before:block",
+    "before:capitalize",
+    "before:content-[attr(data-label)]",
+    "before:mr-auto",
+    "before:text-gray-500",
+    "lg:before:hidden",
+    "lg:border-t",
+    "lg:border-gray-200",
+    "lg:table-cell",
+    "dark:before:text-gray-400",
+    "dark:lg:border-gray-800",
+]
 
 
 def result_headers(cl):
@@ -158,28 +212,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
         empty_value_display = cl.model_admin.get_empty_value_display()
         row_classes = [
             "field-%s" % _coerce_field_name(field_name, field_index),
-            "align-middle",
-            "flex",
-            "border-t",
-            "border-gray-200",
-            "font-normal",
-            "px-3",
-            "py-2",
-            "text-left",
-            "text-sm",
-            "before:flex",
-            "before:capitalize",
-            "before:content-[attr(data-label)]",
-            "before:items-center",
-            "before:mr-auto",
-            "before:text-gray-500",
-            "first:border-t-0",
-            "dark:before:text-gray-400",
-            "lg:before:hidden",
-            "lg:first:border-t",
-            "lg:py-3",
-            "lg:table-cell",
-            "dark:border-gray-800",
+            *ROW_CLASSES,
         ]
 
         try:
@@ -192,27 +225,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
             )
             if f is None or f.auto_created:
                 if field_name == "action_checkbox":
-                    row_classes = [
-                        "action-checkbox",
-                        "align-middle",
-                        "flex",
-                        "items-center",
-                        "px-3",
-                        "py-2",
-                        "text-left",
-                        "text-sm",
-                        "before:block",
-                        "before:capitalize",
-                        "before:content-[attr(data-label)]",
-                        "before:mr-auto",
-                        "before:text-gray-500",
-                        "lg:before:hidden",
-                        "lg:border-t",
-                        "lg:border-gray-200",
-                        "lg:table-cell",
-                        "dark:before:text-gray-400",
-                        "dark:lg:border-gray-800",
-                    ]
+                    row_classes = CHECKBOX_CLASSES
                 boolean = getattr(attr, "boolean", False)
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)
