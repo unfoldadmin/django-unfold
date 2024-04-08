@@ -7,7 +7,7 @@
 {% endif %}
 
 {% if results %}
-    <table id="result_list" class="border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+    <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:table lg:dark:border-gray-800">
         <thead class="hidden lg:table-header-group">
             <tr>
                 {% for header in result_headers %}
@@ -52,7 +52,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="block lg:table-row-group">
             {% for result in results %}
                 {% if result.form and result.form.non_field_errors %}
                     <tr>
