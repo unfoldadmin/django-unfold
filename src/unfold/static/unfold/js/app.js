@@ -207,7 +207,7 @@ const renderCharts = () => {
       new Chart(ctx, {
         type: type || "bar",
         data: JSON.parse(chart.dataset.value),
-        options: options ? JSON.parse(options) : DEFAULT_CHART_OPTIONS,
+        options: options ? JSON.parse(options) : Object.assign({}, DEFAULT_CHART_OPTIONS),
       })
     );
   });
