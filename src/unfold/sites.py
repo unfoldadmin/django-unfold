@@ -266,7 +266,7 @@ class UnfoldAdminSite(AdminSite):
                 if "badge" in item and isinstance(item["badge"], str):
                     try:
                         callback = import_string(item["badge"])
-                        item["badge"] = lazy(callback)(request)
+                        item["badge_callback"] = lazy(callback)(request)
                     except ImportError:
                         pass
 
