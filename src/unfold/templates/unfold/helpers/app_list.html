@@ -31,7 +31,11 @@
 
                                     {% if item.badge %}
                                         <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">
-                                            {{ item.badge|safe }}
+                                            {% if item.badge_callback %}
+                                                {{ item.badge_callback }}
+                                            {% else %}
+                                                {{ item.badge }}
+                                            {% endif %}
                                         </span>
                                     {% endif %}
                                 </a>
