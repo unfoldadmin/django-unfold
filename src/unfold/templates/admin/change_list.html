@@ -67,7 +67,7 @@
         {% endif %}
 
         <div class="flex -mx-4 module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-            <div class="changelist-form-container flex-grow px-4" x-data="{ filterOpen: false }">
+            <div class="changelist-form-container flex-grow min-w-0 px-4" x-data="{ filterOpen: false }">
                 {% block date_hierarchy %}
                     {% if cl.date_hierarchy %}
                         {% date_hierarchy cl %}
