@@ -1,4 +1,17 @@
 
+## 0.22.0 (2024-04-14)
+
+- feat: vs code devcontainer (#319) ([`788eca2`](https://github.com/unfoldadmin/django-unfold/commit/788eca2eb1024685d5d5d2a7be52b19612b42bb9))
+- fix: login theme switch with picture (#352) ([`089b5ca`](https://github.com/unfoldadmin/django-unfold/commit/089b5ca8773e361ecd9d1b450e045759510f32bf))
+- fix: autocomplete field display in changelist (#335) ([`6a85166`](https://github.com/unfoldadmin/django-unfold/commit/6a851664eb978160a1f94af6eb90b07d179ec7bd))
+- fix: sidebar badge callback (#342) ([`97c2e32`](https://github.com/unfoldadmin/django-unfold/commit/97c2e32bb2982058f7c581801056bf8eb58d82d3))
+- fix: empty label default value (#334) ([`baaac90`](https://github.com/unfoldadmin/django-unfold/commit/baaac90739cf8a0bf934dc5b12b426a9b1fc9a7a))
+- fix: responsive titles in changelist tables (#333) ([`907efe6`](https://github.com/unfoldadmin/django-unfold/commit/907efe635b211c1fd2d37e3eca25614ec8cd1ce5))
+- fix: put label for all contrib apps ([`2b96dfc`](https://github.com/unfoldadmin/django-unfold/commit/2b96dfc5db0421d97e9b10feb800d3087723e128))
+- fix: theme switch on login page (#322) ([`13cfd05`](https://github.com/unfoldadmin/django-unfold/commit/13cfd05c50c795432f8c899d33b6214512713e05))
+- fix: logout button clickable area (#321) ([`7256dbd`](https://github.com/unfoldadmin/django-unfold/commit/7256dbd2281fd1d10d3e2959413564f7d38ecf15))
+- chore: license date (#318) ([`6cf1b7c`](https://github.com/unfoldadmin/django-unfold/commit/6cf1b7c607d6b80643827debb1d812d6eca35e00))
+
 ## 0.21.1 (2024-03-16)
 
 - fix: whitenoise collectstatic (#316) ([`fdfd5f4`](https://github.com/unfoldadmin/django-unfold/commit/fdfd5f470d6d884f44486313127b078a80109bbe))
