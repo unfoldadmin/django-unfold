@@ -73,7 +73,10 @@ class UnfoldAdminSite(AdminSite):
                 "colors": self._process_colors(
                     get_config(self.settings_name)["COLORS"]
                 ),
-                "fieldset_classes": get_config(self.settings_name).get("FIELDSET_CLASSES") or [],
+                "fieldset_classes": get_config(self.settings_name).get(
+                    "FIELDSET_CLASSES"
+                )
+                or [],
                 "tab_list": self.get_tabs_list(request),
                 "styles": [
                     self._get_value(style, request)

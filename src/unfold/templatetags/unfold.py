@@ -44,7 +44,9 @@ def index(indexable: Mapping[int, Any], i: int) -> Any:
 
 
 @register.filter
-def tabs(adminform: AdminForm, fieldset_classes: Optional[List[str]] = None) -> List[Fieldset]:
+def tabs(
+    adminform: AdminForm, fieldset_classes: Optional[List[str]] = None
+) -> List[Fieldset]:
     result = []
 
     for fieldset in adminform:
