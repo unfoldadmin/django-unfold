@@ -9,6 +9,8 @@ CONFIG_DEFAULTS = {
     "SITE_LOGO": None,
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
+    "FIELDSET_CLASSES": ['tab'],
+    "IS_SHOW_INLINES_IN_TAB": True,
     "COLORS": {
         "primary": {
             "50": "250 245 255",

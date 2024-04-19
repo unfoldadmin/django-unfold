@@ -95,7 +95,7 @@
 
                 {% block field_sets %}
                     {% for fieldset in adminform %}
-                        {% if "tab" not in fieldset.classes %}
+                        {% if "tab" not in fieldset.classes|default:fieldset_classes %}
                             {% include 'admin/includes/fieldset.html' %}
                         {% endif %}
                     {% endfor %}

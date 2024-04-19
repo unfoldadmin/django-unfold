@@ -1,23 +1,24 @@
-{% load unfold %}
+{% load i18n unfold %}
 
-{% with tabs=adminform|tabs %}
+{% with tabs=adminform|tabs:fieldset_classes %}
     {% if tabs %}
+        {% trans 'General' as general %}
         <div x-data="{openTab: null}">
             <ul class="bg-gray-100 border border-transparent flex gap-10 mb-6 px-4 py-3 rounded-md text-gray-400 text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-gray-400">
                 {% for fieldset in tabs %}
                     <li>
                         <a class="cursor-pointer font-semibold hover:text-gray-700 dark:hover:text-white"
-                        x-on:click="openTab = '{{ fieldset.name|slugify }}'"
-                        x-bind:class="openTab == '{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %} ? 'text-gray-700 dark:text-white' : ''">
-                            {{ fieldset.name }}
+                        x-on:click="openTab = '{{ fieldset.name|default_if_none:general|slugify }}'"
+                        x-bind:class="openTab == '{{ fieldset.name|default_if_none:general|slugify }}'{% if forloop.first %} || openTab == null{% endif %} ? 'text-gray-700 dark:text-white' : ''">
+                            {{ fieldset.name|default_if_none:general }}
                         </a>
                     </li>
                 {% endfor %}
             </ul>
 
             {% for fieldset in tabs %}
-                <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|slugify }}{% endif %}"
-                    x-show="openTab == '{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %}">
+                <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|default_if_none:general|slugify }}{% endif %}"
+                    x-show="openTab == '{{ fieldset.name|default_if_none:general|slugify }}'{% if forloop.first %} || openTab == null{% endif %}">
                     {% include 'admin/includes/fieldset.html' %}
                 </div>
             {% endfor %}

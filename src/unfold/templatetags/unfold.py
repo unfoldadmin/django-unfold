@@ -44,11 +44,11 @@ def index(indexable: Mapping[int, Any], i: int) -> Any:
 
 
 @register.filter
-def tabs(adminform: AdminForm) -> List[Fieldset]:
+def tabs(adminform: AdminForm, fieldset_classes: Optional[List[str]] = None) -> List[Fieldset]:
     result = []
 
     for fieldset in adminform:
-        if "tab" in fieldset.classes and fieldset.name:
+        if "tab" in (fieldset_classes or fieldset.classes):
             result.append(fieldset)
 
     return result
