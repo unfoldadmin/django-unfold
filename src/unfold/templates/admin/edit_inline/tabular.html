@@ -4,7 +4,7 @@
     <div class="tabular inline-related {% if forloop.last %}last-related{% endif %}">
         {{ inline_admin_formset.formset.management_form }}
 
-        <fieldset class="module {{ inline_admin_formset.classes|default:fieldset_classes|join:' ' }}">
+        <fieldset class="module {{ inline_admin_formset.classes }}">
             <h2 class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-gray-900 text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-gray-200">
                 {% if inline_admin_formset.formset.max_num == 1 %}
                     {{ inline_admin_formset.opts.verbose_name|capfirst }}
