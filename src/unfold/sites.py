@@ -74,7 +74,6 @@ class UnfoldAdminSite(AdminSite):
                     get_config(self.settings_name)["COLORS"]
                 ),
                 "fieldset_classes": get_config(self.settings_name).get("FIELDSET_CLASSES") or [],
-                "is_show_inlines_in_tab": get_config(self.settings_name)["IS_SHOW_INLINES_IN_TAB"],
                 "tab_list": self.get_tabs_list(request),
                 "styles": [
                     self._get_value(style, request)
