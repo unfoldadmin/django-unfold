@@ -30,7 +30,7 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
             if not hasattr(action.method, "allowed_permissions"):
                 continue
             for permission in action.method.allowed_permissions:
-                method_name = "has_%s_permission" % permission
+                method_name = f"has_{permission}_permission"
                 if not hasattr(obj, method_name):
                     errors.append(
                         checks.Error(

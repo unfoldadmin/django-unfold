@@ -149,7 +149,7 @@ def result_headers(cl):
         if is_sorted:
             order_type = ordering_field_columns.get(i).lower()
             sort_priority = list(ordering_field_columns).index(i) + 1
-            th_classes.append("sorted %sending" % order_type)
+            th_classes.append(f"sorted {order_type}ending")
             new_order_type = {"asc": "desc", "desc": "asc"}[order_type]
 
         # build new ordering param
@@ -211,7 +211,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
     for field_index, field_name in enumerate(cl.list_display):
         empty_value_display = cl.model_admin.get_empty_value_display()
         row_classes = [
-            "field-%s" % _coerce_field_name(field_name, field_index),
+            f"field-{_coerce_field_name(field_name, field_index)}",
             *ROW_CLASSES,
         ]
 
@@ -252,7 +252,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                     f, (models.DateField, models.TimeField, models.ForeignKey)
                 ):
                     row_classes.append("nowrap")
-        row_class = mark_safe(' class="%s"' % " ".join(row_classes))
+        row_class = mark_safe(f' class="{" ".join(row_classes)}"')
         # If list_display_links not defined, add the link tag to the first field
 
         if link_in_col(first, field_name, cl):

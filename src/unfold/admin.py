@@ -39,6 +39,7 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from django.views import View
+
 from unfold.utils import display_for_field
 
 from .checks import UnfoldModelAdminChecks
@@ -400,7 +401,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                 filtered_actions.append(action)
                 continue
             permission_checks = (
-                getattr(self, "has_%s_permission" % permission)
+                getattr(self, f"has_{permission}_permission")
                 for permission in action.method.allowed_permissions
             )
             if any(has_permission(request) for has_permission in permission_checks):

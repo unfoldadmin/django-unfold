@@ -1,6 +1,7 @@
 from typing import Any, Dict, Optional
 
 from django.forms import Widget
+
 from unfold.widgets import PROSE_CLASSES
 
 WYSIWYG_CLASSES = [

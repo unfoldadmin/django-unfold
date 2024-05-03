@@ -2,6 +2,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
+
 from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
