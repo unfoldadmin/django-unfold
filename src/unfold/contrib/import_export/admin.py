@@ -1,7 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ExportActionModelAdmin as BaseExportActionModelAdmin
-
 from unfold.admin import ActionForm
 from unfold.widgets import SELECT_CLASSES
 
