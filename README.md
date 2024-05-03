@@ -684,6 +684,10 @@ class CrontabScheduleAdmin(ModelAdmin):
 @admin.register(SolarSchedule)
 class SolarScheduleAdmin(ModelAdmin):
     pass
+
+@admin.register(ClockedSchedule)
+class ClockedScheduleAdmin(ModelAdmin):
+    pass
 ```
 
 ### django-guardian
