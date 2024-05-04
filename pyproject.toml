@@ -38,6 +38,8 @@ python-semantic-release = "^8.7.0"
 [tool.ruff]
 fix = true
 line-length = 88
+
+[tool.ruff.lint]
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings

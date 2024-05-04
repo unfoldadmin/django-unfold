@@ -400,7 +400,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                 filtered_actions.append(action)
                 continue
             permission_checks = (
-                getattr(self, "has_%s_permission" % permission)
+                getattr(self, f"has_{permission}_permission")
                 for permission in action.method.allowed_permissions
             )
             if any(has_permission(request) for has_permission in permission_checks):
