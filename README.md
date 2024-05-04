@@ -717,7 +717,7 @@ When implementing `import_export.admin.ExportActionModelAdmin` class in admin pa
 admin.py
 
 from unfold.admin import ModelAdmin
-from unfold.contrib.import_export import ExportActionModelAdmin
+from unfold.contrib.import_export.admin import ExportActionModelAdmin
 
 class ExampleAdmin(ModelAdmin, ExportActionModelAdmin):
     pass
