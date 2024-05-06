@@ -22,7 +22,12 @@ from .widgets import BASE_INPUT_CLASSES, INPUT_CLASSES, SELECT_CLASSES
 class ActionForm(forms.Form):
     action = forms.ChoiceField(
         label="",
-        widget=forms.Select({"class": " ".join([*SELECT_CLASSES, "w-72"])}),
+        widget=forms.Select(
+            {
+                "class": " ".join([*SELECT_CLASSES, "max-w-full", "lg:!w-64"]),
+                "x-model": "action",
+            }
+        ),
     )
 
     select_across = forms.BooleanField(

@@ -1,19 +1,17 @@
 {% load i18n static %}
 
 {% if cl.search_fields %}
-    <div id="toolbar" class="lg:w-72">
-        <div>
-            <div class="bg-white border flex rounded-md overflow-hidden shadow-sm focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-gray-900 dark:border-gray-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
-                <input class="font-medium h-9 px-3 text-gray-500 text-sm w-40 lg:w-60 focus:outline-none dark:bg-gray-900 dark:text-gray-400" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" placeholder="{% trans 'Type to search' %}" />
+    <div id="toolbar">
+        <div class="bg-white border flex rounded-md overflow-hidden shadow-sm lg:w-64 focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-gray-900 dark:border-gray-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
+            <input class="font-medium grow min-w-0 h-9 px-3 text-gray-500 text-sm focus:outline-none dark:bg-gray-900 dark:text-gray-400" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" placeholder="{% trans 'Type to search' %}" />
 
-                <button type="submit" class="flex items-center ml-auto px-2 focus:outline-none" id="searchbar-submit">
-                    <span class="material-symbols-outlined md-18 text-gray-400 dark:text-gray-500">search</span>
-                </button>
-            </div>
-
-            {% for pair in cl.params.items %}
-                {% if pair.0 != search_var %}<input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}">{% endif %}
-            {% endfor %}
+            <button type="submit" class="flex items-center px-2 focus:outline-none" id="searchbar-submit">
+                <span class="material-symbols-outlined md-18 text-gray-400 dark:text-gray-500">search</span>
+            </button>
         </div>
+
+        {% for pair in cl.params.items %}
+            {% if pair.0 != search_var %}<input type="hidden" name="{{ pair.0 }}" value="{{ pair.1 }}">{% endif %}
+        {% endfor %}
     </div>
 {% endif %}

@@ -1,6 +1,6 @@
 {% if not is_popup %}
     {% if tab_list or actions_list or actions_items or nav_global %}
-        <div class="flex items-start flex-col mb-2 text-gray-500 text-sm w-full md:border-b dark:md:border-gray-800 md:border-l-0 md:flex-row md:items-center md:justify-end dark:text-gray-400">
+        <div class="flex items-start flex-col mb-4 text-gray-500 text-sm w-full md:border-b dark:md:border-gray-800 md:border-l-0 md:flex-row md:items-center md:justify-end dark:text-gray-400">
             {% if tab_list %}
                 <ul class="border rounded-md flex flex-col w-full md:flex-row md:border-b-0 md:border-t-0 md:border-l-0 md:border-r-0 dark:border-gray-800">
                     {% for item in tab_list %}
