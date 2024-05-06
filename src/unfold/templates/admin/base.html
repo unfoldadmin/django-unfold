@@ -43,9 +43,7 @@
                     {% if cl %}
                         {% tab_list cl.opts %}
                     {% elif opts %}
-                        <div class="mb-8">
-                            {% tab_list opts %}
-                        </div>
+                        {% tab_list opts %}
                     {% endif %}
 
                     {% block content %}

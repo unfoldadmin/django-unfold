@@ -37,9 +37,9 @@ from ..widgets import UnfoldBooleanWidget
 register = Library()
 
 LINK_CLASSES = [
-    "text-gray-700",
+    "text-gray-600",
     "truncate",
-    "dark:text-gray-200",
+    "dark:text-gray-300",
 ]
 
 ROW_CLASSES = [
@@ -54,6 +54,7 @@ ROW_CLASSES = [
     "px-3",
     "py-2",
     "text-left",
+    "text-gray-500",
     "text-sm",
     "before:flex",
     "before:capitalize",
@@ -63,6 +64,7 @@ ROW_CLASSES = [
     "before:text-gray-500",
     "first:border-t-0",
     "dark:before:text-gray-400",
+    "dark:text-gray-400",
     "lg:before:hidden",
     "lg:first:border-t",
     "lg:py-3",
@@ -186,7 +188,7 @@ def result_headers(cl):
             "url_primary": cl.get_query_string({ORDER_VAR: ".".join(o_list_primary)}),
             "url_remove": cl.get_query_string({ORDER_VAR: ".".join(o_list_remove)}),
             "url_toggle": cl.get_query_string({ORDER_VAR: ".".join(o_list_toggle)}),
-            "class_attrib": format_html(' class="{}"', " ".join(th_classes))
+            "class_attrib": format_html("{}", " ".join(th_classes))
             if th_classes
             else "",
         }

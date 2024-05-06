@@ -101,8 +101,9 @@ table select:focus {
   @apply border-primary-600;
 }
 
-table tr.selected {
-  @apply bg-yellow-50 dark:bg-white/[.06];
+table tr.selected td,
+table tr.selected th {
+  @apply bg-yellow-200/[.10] dark:bg-white/[.03];
 }
 
 /*******************************************************

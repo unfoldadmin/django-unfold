@@ -8,10 +8,10 @@
 
 {% if results %}
     <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:table lg:dark:border-gray-800">
-        <thead class="hidden lg:table-header-group">
+        <thead>
             <tr>
                 {% for header in result_headers %}
-                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}w-10{% endif %}" scope="col">
+                    <th class="align-middle font-medium py-2 text-left text-gray-400 text-sm {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
                         <div class="flex items-center">
                             <div class="text">
                                 {% if header.sortable %}
@@ -19,7 +19,19 @@
                                         {{ header.text|capfirst }}
                                     </a>
                                 {% else %}
-                                    <span>{{ header.text|capfirst }}</span>
+                                    {% if "action-toggle" in header.text and forloop.counter == 1 %}
+                                        <label class="flex flex-row items-center gap-2">
+                                            {{ header.text|capfirst }}
+
+                                            <span class="block font-normal text-gray-500 dark:text-gray-400 lg:hidden">
+                                                {% trans "Select all rows"%}
+                                            </span>
+                                        </label>
+                                    {% else %}
+                                        <span>
+                                            {{ header.text|capfirst }}
+                                        </span>
+                                    {% endif %}
                                 {% endif %}
                             </div>
 

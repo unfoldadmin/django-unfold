@@ -1,8 +1,8 @@
 {% load i18n %}
 
-<div class="actions flex flex-col md:flex-row md:items-center">
+<div class="actions flex flex-col gap-3 order-last lg:order-none lg:flex-row lg:items-center">
     {% block actions %}
-        <div class="flex">
+        <div class="flex flex-col gap-2 lg:flex-row" x-data="{action: ''}">
             {% block actions-form %}
                 {% for field in action_form %}
                     {% if field.label %}
@@ -19,31 +19,31 @@
             {% endblock %}
 
             {% block actions-submit %}
-                <button type="submit" class="bg-white border flex items-center h-9.5 ml-3 px-2 rounded shadow-sm text-gray-400 w-9.5 hover:text-gray-700 focus:outline-none dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
-                    <span class="material-symbols-outlined md-18">chevron_right</span>
+                <button type="submit" x-show="action" class="bg-primary-600 cursor-pointer flex font-medium items-center justify-center px-3 py-2 rounded-md text-sm text-white whitespace-nowrap" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+                    {% trans "Run" %}
                 </button>
             {% endblock %}
         </div>
 
         {% block actions-counter %}
             {% if actions_selection_counter %}
-                <div class="hidden truncate md:block">
-                    <span class="action-counter ml-4 text-sm text-gray-500 dark:text-gray-400" data-actions-icnt="{{ cl.result_list|length }}">
+                <div class="bg-gray-100 flex flex-row gap-2 h-9.5 items-center px-3 rounded-md shadow-sm truncate dark:bg-white/[.04] lg:bg-transparent dark:lg:!bg-transparent lg:px-0 lg:shadow-none">
+                    <span class="action-counter text-sm text-gray-500 dark:text-gray-400" data-actions-icnt="{{ cl.result_list|length }}">
                         {{ selection_note }}
                     </span>
 
                     {% if cl.result_count != cl.result_list|length %}
-                        <span class="all hidden ml-4 text-gray-500 text-sm">
+                        <span class="all hidden text-gray-500 text-sm">
                             {{ selection_note_all }}
                         </span>
 
-                        <span class="question hidden ml-4 text-primary-600 text-sm underline">
+                        <span class="question hidden text-primary-600 text-sm underline">
                             <a href="#" title="{% translate "Click here to select the objects across all pages" %}">
                                 {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
                             </a>
                         </span>
 
-                        <span class="clear hidden ml-4 text-sm text-red-600 underline">
+                        <span class="clear hidden text-sm text-red-600 underline">
                             <a href="#">
                                 {% translate "Clear selection" %}
                             </a>
