@@ -108,6 +108,14 @@ SELECT_CLASSES = [
     "truncate",
 ]
 
+MULTIPLE_SELECT_CLASSES = [
+    *BASE_INPUT_CLASSES,
+    "pr-8",
+    "max-w-2xl",
+    "appearance-none",
+    "overflow-y-auto",
+]
+
 PROSE_CLASSES = [
     "font-normal",
     "prose-sm",

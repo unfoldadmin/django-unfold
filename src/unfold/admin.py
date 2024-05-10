@@ -51,6 +51,7 @@ from .widgets import (
     CHECKBOX_LABEL_CLASSES,
     INPUT_CLASSES,
     LABEL_CLASSES,
+    MULTIPLE_SELECT_CLASSES,
     SELECT_CLASSES,
     UnfoldAdminBigIntegerFieldWidget,
     UnfoldAdminDecimalFieldWidget,
@@ -334,7 +335,7 @@ class ModelAdminMixin:
             return None
 
         if isinstance(form_field.widget, SelectMultiple):
-            form_field.widget.attrs["class"] = " ".join(SELECT_CLASSES)
+            form_field.widget.attrs["class"] = " ".join(MULTIPLE_SELECT_CLASSES)
 
         return form_field
 
