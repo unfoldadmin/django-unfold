@@ -13,3 +13,7 @@ class DefaultAppConfig(AppConfig):
 
         admin.site = site
         sites.site = site
+
+
+class BasicAppConfig(AppConfig):
+    name = "unfold"
