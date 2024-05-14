@@ -436,7 +436,12 @@ class UnfoldAdminBigIntegerFieldWidget(AdminBigIntegerFieldWidget):
 
 
 class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
-    pass
+    def __init__(self, attrs=None):
+        if attrs is None:
+            attrs = {}
+
+        attrs["class"] = " ".join(SELECT_CLASSES)
+        super().__init__(attrs)
 
 
 class UnfoldAdminSelect(Select):

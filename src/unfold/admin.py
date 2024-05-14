@@ -63,6 +63,7 @@ from .widgets import (
     UnfoldAdminMoneyWidget,
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminRadioSelectWidget,
+    UnfoldAdminSelect,
     UnfoldAdminSingleDateWidget,
     UnfoldAdminSingleTimeWidget,
     UnfoldAdminSplitDateTimeWidget,
@@ -294,9 +295,7 @@ class ModelAdminMixin:
                     radio_style=self.radio_fields[db_field.name]
                 )
             else:
-                kwargs["widget"] = forms.Select(
-                    attrs={"class": " ".join(SELECT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminSelect()
 
             kwargs["choices"] = db_field.get_choices(
                 include_blank=db_field.blank, blank_choice=[("", _("Select value"))]
@@ -317,9 +316,7 @@ class ModelAdminMixin:
                 db_field.name not in self.get_autocomplete_fields(request)
                 and db_field.name not in self.radio_fields
             ):
-                kwargs["widget"] = forms.Select(
-                    attrs={"class": " ".join(SELECT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminSelect()
                 kwargs["empty_label"] = _("Select value")
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
@@ -351,9 +348,7 @@ class ModelAdminMixin:
         self, db_field: Field, request: HttpRequest, **kwargs
     ) -> Optional[Field]:
         if "widget" not in kwargs:
-            kwargs["widget"] = forms.NullBooleanSelect(
-                attrs={"class": " ".join(SELECT_CLASSES)}
-            )
+            kwargs["widget"] = UnfoldAdminNullBooleanSelectWidget()
 
         return db_field.formfield(**kwargs)
 
