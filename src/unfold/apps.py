@@ -7,9 +7,14 @@ from .sites import UnfoldAdminSite
 
 class DefaultAppConfig(AppConfig):
     name = "unfold"
+    default = True
 
     def ready(self):
         site = UnfoldAdminSite()
 
         admin.site = site
         sites.site = site
+
+
+class BasicAppConfig(AppConfig):
+    name = "unfold"

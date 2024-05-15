@@ -8,6 +8,7 @@ from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
 from django.contrib.admin.utils import lookup_field
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import (
@@ -39,7 +40,6 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from django.views import View
-from unfold.utils import display_for_field
 
 from .checks import UnfoldModelAdminChecks
 from .dataclasses import UnfoldAction
@@ -47,9 +47,9 @@ from .exceptions import UnfoldException
 from .forms import ActionForm
 from .settings import get_config
 from .typing import FieldsetsType
+from .utils import display_for_field
 from .widgets import (
     CHECKBOX_LABEL_CLASSES,
-    INPUT_CLASSES,
     LABEL_CLASSES,
     SELECT_CLASSES,
     UnfoldAdminBigIntegerFieldWidget,
@@ -62,6 +62,7 @@ from .widgets import (
     UnfoldAdminMoneyWidget,
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminRadioSelectWidget,
+    UnfoldAdminSelect,
     UnfoldAdminSingleDateWidget,
     UnfoldAdminSingleTimeWidget,
     UnfoldAdminSplitDateTimeWidget,
@@ -142,6 +143,11 @@ class UnfoldAdminField(helpers.AdminField):
     def label_tag(self) -> SafeText:
         classes = []
 
+        if not self.field.field.widget.__class__.__name__.startswith(
+            "Unfold"
+        ) and not self.field.field.widget.template_name.startswith("unfold"):
+            return super().label_tag()
+
         # TODO load config from current AdminSite (override Fieldline.__iter__ method)
         for lang, flag in get_config()["EXTENSIONS"]["modeltranslation"][
             "flags"
@@ -175,6 +181,9 @@ helpers.AdminField = UnfoldAdminField
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def label_tag(self) -> SafeText:
+        if not isinstance(self.model_admin, ModelAdmin):
+            return super().label_tag()
+
         attrs = {
             "class": " ".join(LABEL_CLASSES + ["mb-2"]),
         }
@@ -285,9 +294,7 @@ class ModelAdminMixin:
                     radio_style=self.radio_fields[db_field.name]
                 )
             else:
-                kwargs["widget"] = forms.Select(
-                    attrs={"class": " ".join(SELECT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminSelect()
 
             kwargs["choices"] = db_field.get_choices(
                 include_blank=db_field.blank, blank_choice=[("", _("Select value"))]
@@ -301,16 +308,12 @@ class ModelAdminMixin:
         # Overrides widgets for all related fields
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
-                kwargs["widget"] = forms.TextInput(
-                    attrs={"class": " ".join(INPUT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminTextInputWidget()
             elif (
                 db_field.name not in self.get_autocomplete_fields(request)
                 and db_field.name not in self.radio_fields
             ):
-                kwargs["widget"] = forms.Select(
-                    attrs={"class": " ".join(SELECT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminSelect()
                 kwargs["empty_label"] = _("Select value")
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
@@ -323,9 +326,7 @@ class ModelAdminMixin:
     ) -> ModelMultipleChoiceField:
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
-                kwargs["widget"] = forms.TextInput(
-                    attrs={"class": " ".join(INPUT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminTextInputWidget()
 
         form_field = super().formfield_for_manytomany(db_field, request, **kwargs)
 
@@ -342,9 +343,7 @@ class ModelAdminMixin:
         self, db_field: Field, request: HttpRequest, **kwargs
     ) -> Optional[Field]:
         if "widget" not in kwargs:
-            kwargs["widget"] = forms.NullBooleanSelect(
-                attrs={"class": " ".join(SELECT_CLASSES)}
-            )
+            kwargs["widget"] = UnfoldAdminNullBooleanSelectWidget()
 
         return db_field.formfield(**kwargs)
 
@@ -354,7 +353,14 @@ class ModelAdminMixin:
         if isinstance(db_field, models.BooleanField) and db_field.null is True:
             return self.formfield_for_nullboolean_field(db_field, request, **kwargs)
 
-        return super().formfield_for_dbfield(db_field, request, **kwargs)
+        formfield = super().formfield_for_dbfield(db_field, request, **kwargs)
+
+        if formfield and isinstance(formfield.widget, RelatedFieldWidgetWrapper):
+            formfield.widget.template_name = (
+                "unfold/widgets/related_widget_wrapper.html"
+            )
+
+        return formfield
 
 
 class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
@@ -546,7 +552,8 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
                         "title": action.description,
                         "attrs": action.method.attrs,
                         "path": reverse(
-                            f"admin:{action.action_name}", args=(object_id,)
+                            f"{self.admin_site.name}:{action.action_name}",
+                            args=(object_id,),
                         ),
                     }
                 )
@@ -570,7 +577,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             {
                 "title": action.description,
                 "attrs": action.method.attrs,
-                "path": reverse(f"admin:{action.action_name}"),
+                "path": reverse(f"{self.admin_site.name}:{action.action_name}"),
             }
             for action in self.get_actions_list(request)
         ]
@@ -579,7 +586,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             {
                 "title": action.description,
                 "attrs": action.method.attrs,
-                "raw_path": f"admin:{action.action_name}",
+                "raw_path": f"{self.admin_site.name}:{action.action_name}",
             }
             for action in self.get_actions_row(request)
         ]

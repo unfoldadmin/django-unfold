@@ -13,6 +13,7 @@ from django.contrib.admin.widgets import (
     AdminTextInputWidget,
     AdminTimeWidget,
     AdminUUIDInputWidget,
+    RelatedFieldWidgetWrapper,
 )
 from django.forms import (
     CheckboxInput,
@@ -291,7 +292,7 @@ class FileFieldMixin:
 
 
 class UnfoldAdminImageFieldWidget(FileFieldMixin, AdminFileWidget):
-    pass
+    template_name = "unfold/widgets/clearable_file_input.html"
 
 
 class UnfoldAdminFileFieldWidget(FileFieldMixin, AdminFileWidget):
@@ -374,6 +375,8 @@ class UnfoldAdminTextareaWidget(AdminTextareaWidget):
 
 
 class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
+    template_name = "unfold/widgets/split_datetime.html"
+
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         widgets = [UnfoldAdminDateWidget, UnfoldAdminTimeWidget]
         MultiWidget.__init__(self, widgets, attrs)
@@ -433,7 +436,12 @@ class UnfoldAdminBigIntegerFieldWidget(AdminBigIntegerFieldWidget):
 
 
 class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
-    pass
+    def __init__(self, attrs=None):
+        if attrs is None:
+            attrs = {}
+
+        attrs["class"] = " ".join(SELECT_CLASSES)
+        super().__init__(attrs)
 
 
 class UnfoldAdminSelect(Select):
@@ -446,7 +454,8 @@ class UnfoldAdminSelect(Select):
 
 
 class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
-    option_template_name = "admin/widgets/radio_option.html"
+    template_name = "unfold/widgets/radio.html"
+    option_template_name = "unfold/widgets/radio_option.html"
 
     def __init__(self, radio_style: Optional[int] = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -506,3 +515,7 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
         return super().__init__(
             attrs={"class": " ".join(SWITCH_CLASSES), **(attrs or {})}, check_test=None
         )
+
+
+class UnfoldRelatedFieldWidgetWrapper(RelatedFieldWidgetWrapper):
+    template_name = "unfold/widgets/related_widget_wrapper.html"

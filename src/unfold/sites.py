@@ -205,7 +205,7 @@ class UnfoldAdminSite(AdminSite):
 
         from .forms import AdminOwnPasswordChangeForm
 
-        url = reverse("admin:password_change_done", current_app=self.name)
+        url = reverse(f"{self.name}:password_change_done", current_app=self.name)
         defaults = {
             "form_class": AdminOwnPasswordChangeForm,
             "success_url": url,
@@ -224,9 +224,9 @@ class UnfoldAdminSite(AdminSite):
             if not isinstance(link, str):
                 link = str(link)
 
-            if link in request.path and link != reverse_lazy("admin:index"):
+            if link in request.path and link != reverse_lazy(f"{self.name}:index"):
                 return True
-            elif link == request.path == reverse_lazy("admin:index"):
+            elif link == request.path == reverse_lazy(f"{self.name}:index"):
                 return True
 
             return False
