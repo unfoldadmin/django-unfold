@@ -50,7 +50,6 @@ from .typing import FieldsetsType
 from .utils import display_for_field
 from .widgets import (
     CHECKBOX_LABEL_CLASSES,
-    INPUT_CLASSES,
     LABEL_CLASSES,
     SELECT_CLASSES,
     UnfoldAdminBigIntegerFieldWidget,
@@ -309,9 +308,7 @@ class ModelAdminMixin:
         # Overrides widgets for all related fields
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
-                kwargs["widget"] = forms.TextInput(
-                    attrs={"class": " ".join(INPUT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminTextInputWidget()
             elif (
                 db_field.name not in self.get_autocomplete_fields(request)
                 and db_field.name not in self.radio_fields
@@ -329,9 +326,7 @@ class ModelAdminMixin:
     ) -> ModelMultipleChoiceField:
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
-                kwargs["widget"] = forms.TextInput(
-                    attrs={"class": " ".join(INPUT_CLASSES)}
-                )
+                kwargs["widget"] = UnfoldAdminTextInputWidget()
 
         form_field = super().formfield_for_manytomany(db_field, request, **kwargs)
 
