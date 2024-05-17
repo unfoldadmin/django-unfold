@@ -1,4 +1,21 @@
 
+## 0.23.0 (2024-05-17)
+
+- feat: parallel default admin support (#379) ([`5978dec`](https://github.com/unfoldadmin/django-unfold/commit/5978dec6845fbd737f342c5564263e8181001bde))
+- fix: app list long title (#386) ([`68b8ccc`](https://github.com/unfoldadmin/django-unfold/commit/68b8cccb7fb0bc8a57c6dac5f3fcdb967de1da06))
+- fix: visual changelist improvements (#368) ([`f351eb2`](https://github.com/unfoldadmin/django-unfold/commit/f351eb2e14864df32d850f2fe229dbd8252cd2db))
+- fix: tabular date and time fields (#367) ([`1aa5e7c`](https://github.com/unfoldadmin/django-unfold/commit/1aa5e7c56198d26762bbdb23405978dc3d792c0d))
+- fix: autocomplete field dark mode (#365) ([`838224d`](https://github.com/unfoldadmin/django-unfold/commit/838224dd0e5241137c9f4f49b92e0e1a718703aa))
+- fix: responsive dropdowns (#364) ([`60fe560`](https://github.com/unfoldadmin/django-unfold/commit/60fe560097b71c58c0fb8aa7e8c05b126f93c3e7))
+- fix: responsive chartjs (#363) ([`79e12f6`](https://github.com/unfoldadmin/django-unfold/commit/79e12f65ef9128f8707c87898de33af2f9b0a135))
+- fix: ruff new lint rules (#361) ([`f03f672`](https://github.com/unfoldadmin/django-unfold/commit/f03f672a6678c28ab16fe220c8b34adce074a26f))
+- docs: import ExportActionModelAdmin example ([`c7bae6a`](https://github.com/unfoldadmin/django-unfold/commit/c7bae6a7d853d52b19aae408aae517f256cc508d))
+- docs: missing ClockedSchedule register (#358) ([`ac9cc54`](https://github.com/unfoldadmin/django-unfold/commit/ac9cc54319e84a55f14667c3c7695d7f3837384c))
+- chore(deps-dev): bump jinja2 from 3.1.3 to 3.1.4 (#375) ([`41ebb0b`](https://github.com/unfoldadmin/django-unfold/commit/41ebb0b0cf82583b29be39768b6ced5b4dbbd176))
+- chore(deps): bump django from 3.2.24 to 3.2.25 (#371) ([`c2413d7`](https://github.com/unfoldadmin/django-unfold/commit/c2413d76489f573af9f189cd55dae8a73ed6dc87))
+- chore(deps-dev): bump idna from 3.6 to 3.7 (#370) ([`ce54ae0`](https://github.com/unfoldadmin/django-unfold/commit/ce54ae07c05a94681a34e8918c4e26f9e22385f0))
+- chore(deps): bump sqlparse from 0.4.4 to 0.5.0 (#369) ([`0170f58`](https://github.com/unfoldadmin/django-unfold/commit/0170f5840891532d0c46ac65587b15b872661152))
+
 ## 0.22.0 (2024-04-14)
 
 - feat: vs code devcontainer (#319) ([`788eca2`](https://github.com/unfoldadmin/django-unfold/commit/788eca2eb1024685d5d5d2a7be52b19612b42bb9))
