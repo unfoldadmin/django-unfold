@@ -35,7 +35,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Colors:** possibility to override default color scheme
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
-- **Parallel admin**: support for having default admin in parallel with Unfold
+- **Parallel admin**: support for having default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/)
 - **VS Code**: project configuration and development container is included
 
 ## Table of contents <!-- omit from toc -->
