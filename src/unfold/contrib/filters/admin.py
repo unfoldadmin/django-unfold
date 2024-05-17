@@ -60,8 +60,6 @@ class DropdownMixin:
     all_option = ["", _("All")]
 
     def value(self):
-        # print("LOOKUP VALUE", self.lookup_val)
-
         return (
             self.lookup_val[0]
             if self.lookup_val not in EMPTY_VALUES
