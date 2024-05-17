@@ -17,14 +17,90 @@ from django.db.models.fields import (
 from django.forms import ValidationError
 from django.http import HttpRequest
 from django.utils.dateparse import parse_datetime
+from django.utils.translation import gettext_lazy as _
 
 from .forms import (
+    DropdownForm,
     RangeDateForm,
     RangeDateTimeForm,
     RangeNumericForm,
+    SearchForm,
     SingleNumericForm,
     SliderNumericForm,
 )
+
+
+class SearchFilter(admin.SimpleListFilter):
+    template = "unfold/filters/filters_search.html"
+    form_class = SearchForm
+
+    def has_output(self) -> bool:
+        return True
+
+    def lookups(
+        self, request: HttpRequest, model_admin: ModelAdmin
+    ) -> Tuple[Tuple[str, str], ...]:
+        return ()
+
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+        return (
+            {
+                "form": self.form_class(
+                    name=self.parameter_name,
+                    label=_("By {}").format(self.title),
+                    data={self.parameter_name: self.value()},
+                ),
+            },
+        )
+
+
+class DropdownMixin:
+    template = "unfold/filters/filters_dropdown.html"
+    form_class = DropdownForm
+    all_option = ["", _("All")]
+
+    def value(self):
+        # print("LOOKUP VALUE", self.lookup_val)
+
+        return (
+            self.lookup_val[0]
+            if self.lookup_val not in EMPTY_VALUES
+            and isinstance(self.lookup_val, List)
+            and len(self.lookup_val) > 0
+            else self.lookup_val
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return super().queryset(request, queryset)
+
+        return queryset
+
+
+class ChoicesDropdownFilter(DropdownMixin, admin.ChoicesFieldListFilter):
+    def choices(self, changelist: ChangeList):
+        choices = [self.all_option, *self.field.flatchoices]
+
+        yield {
+            "form": self.form_class(
+                label=_("By {}").format(self.title),
+                name=self.lookup_kwarg,
+                choices=choices,
+                data={self.lookup_kwarg: self.value()},
+            ),
+        }
+
+
+class RelatedDropdownFilter(DropdownMixin, admin.RelatedFieldListFilter):
+    def choices(self, changelist: ChangeList):
+        yield {
+            "form": self.form_class(
+                label=_("By {}").format(self.title),
+                name=self.lookup_kwarg,
+                choices=[self.all_option, *self.lookup_choices],
+                data={self.lookup_kwarg: self.value()},
+            ),
+        }
 
 
 class SingleNumericFilter(admin.FieldListFilter):
