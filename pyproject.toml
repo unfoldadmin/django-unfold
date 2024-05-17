@@ -62,7 +62,7 @@ version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [tool.semantic_release.changelog]
 template_dir = ".github/templates"
-exclude_commit_patterns = ["chore: version bump"]
+exclude_commit_patterns = ["chore: version bump", "chore(deps)", "chore(deps-dev)"]
 
 [tool.semantic_release.changelog.environment]
 trim_blocks = true
