@@ -444,7 +444,7 @@ class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
         super().__init__(attrs)
 
 
-class UnfoldAdminSelect(Select):
+class UnfoldAdminSelectWidget(Select):
     def __init__(self, attrs=None, choices=()):
         if attrs is None:
             attrs = {}
@@ -482,7 +482,7 @@ try:
         def __init__(self, *args, **kwargs):
             super().__init__(
                 amount_widget=UnfoldAdminTextInputWidget,
-                currency_widget=UnfoldAdminSelect(choices=CURRENCY_CHOICES),
+                currency_widget=UnfoldAdminSelectWidget(choices=CURRENCY_CHOICES),
             )
 
 except ImportError:
