@@ -6,7 +6,7 @@
     </h3>
 
     {% for choice in choices %}
-        {% if choice.selected %}
+        {% if choice.selected and spec.lookup_val.0 %}
             <input type="hidden" name="{{ spec.lookup_kwarg }}" value="{{ spec.lookup_val.0 }}" />
         {% endif %}
     {% endfor %}

@@ -30,16 +30,37 @@ from .forms import (
 )
 
 
-class SearchFilter(admin.SimpleListFilter):
-    template = "unfold/filters/filters_search.html"
+class ValueMixin:
+    def value(self) -> Optional[str]:
+        return (
+            self.lookup_val[0]
+            if self.lookup_val not in EMPTY_VALUES
+            and isinstance(self.lookup_val, List)
+            and len(self.lookup_val) > 0
+            else self.lookup_val
+        )
+
+
+class DropdownMixin:
+    template = "unfold/filters/filters_field.html"
+    form_class = DropdownForm
+    all_option = ["", _("All")]
+
+    def queryset(self, request, queryset) -> QuerySet:
+        if self.value() not in EMPTY_VALUES:
+            return super().queryset(request, queryset)
+
+        return queryset
+
+
+class TextFilter(admin.SimpleListFilter):
+    template = "unfold/filters/filters_field.html"
     form_class = SearchForm
 
     def has_output(self) -> bool:
         return True
 
-    def lookups(
-        self, request: HttpRequest, model_admin: ModelAdmin
-    ) -> Tuple[Tuple[str, str], ...]:
+    def lookups(self, request: HttpRequest, model_admin: ModelAdmin) -> Tuple:
         return ()
 
     def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
@@ -54,28 +75,31 @@ class SearchFilter(admin.SimpleListFilter):
         )
 
 
-class DropdownMixin:
-    template = "unfold/filters/filters_dropdown.html"
-    form_class = DropdownForm
-    all_option = ["", _("All")]
+class FieldTextFilter(ValueMixin, admin.FieldListFilter):
+    template = "unfold/filters/filters_field.html"
+    form_class = SearchForm
 
-    def value(self):
+    def __init__(self, field, request, params, model, model_admin, field_path):
+        self.lookup_kwarg = f"{field_path}__icontains"
+        self.lookup_val = params.get(self.lookup_kwarg)
+        super().__init__(field, request, params, model, model_admin, field_path)
+
+    def expected_parameters(self) -> List[str]:
+        return [self.lookup_kwarg]
+
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
         return (
-            self.lookup_val[0]
-            if self.lookup_val not in EMPTY_VALUES
-            and isinstance(self.lookup_val, List)
-            and len(self.lookup_val) > 0
-            else self.lookup_val
+            {
+                "form": self.form_class(
+                    label=_("By {}").format(self.title),
+                    name=self.lookup_kwarg,
+                    data={self.lookup_kwarg: self.value()},
+                ),
+            },
         )
 
-    def queryset(self, request, queryset):
-        if self.value() not in EMPTY_VALUES:
-            return super().queryset(request, queryset)
 
-        return queryset
-
-
-class ChoicesDropdownFilter(DropdownMixin, admin.ChoicesFieldListFilter):
+class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
     def choices(self, changelist: ChangeList):
         choices = [self.all_option, *self.field.flatchoices]
 
@@ -89,7 +113,7 @@ class ChoicesDropdownFilter(DropdownMixin, admin.ChoicesFieldListFilter):
         }
 
 
-class RelatedDropdownFilter(DropdownMixin, admin.RelatedFieldListFilter):
+class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFilter):
     def choices(self, changelist: ChangeList):
         yield {
             "form": self.form_class(
