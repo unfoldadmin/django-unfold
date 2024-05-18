@@ -28,7 +28,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Dependencies:** completely based only on `django.contrib.admin`
 - **Actions:** multiple ways how to define actions within different parts of admin
 - **WYSIWYG:** built-in support for WYSIWYG (Trix)
-- **Custom filters:** widgets for filtering number & datetime values
+- **Filters:** custom dropdown, numeric, datetime, and text fields
 - **Dashboard:** custom components for rapid dashboard development
 - **Model tabs:** define custom tab navigations for models
 - **Fieldset tabs:** merge several fielsets into tabs in change form
@@ -50,6 +50,8 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Action handler functions](#action-handler-functions)
   - [Action examples](#action-examples)
 - [Filters](#filters)
+  - [Text filters](#text-filters)
+  - [Dropdown filters](#dropdown-filters)
   - [Numeric filters](#numeric-filters)
   - [Date/time filters](#datetime-filters)
 - [Display decorator](#display-decorator)
@@ -456,6 +458,68 @@ class UserAdmin(ModelAdmin):
 By default, Django admin handles all filters as regular HTML links pointing at the same URL with different query parameters. This approach is for basic filtering more than enough. In the case of more advanced filtering by incorporating input fields, it is not going to work.
 
 **Note:** when implementing a filter which contains input fields, there is a no way that user can submit the values, because default filters does not contain submit button. To implement submit button, `unfold.admin.ModelAdmin` contains boolean `list_filter_submit` flag which enables submit button in filter form.
+
+### Text filters
+
+Text input field which allows filtering by the free string submitted by the user. There are two different variants of this filter: `FieldTextFilter` and `TextFilter`.
+
+`FieldTextFilter` requires just a model field name and the filter will make `__icontains` search on this field. There are no other things to configure so the integration in `list_filter` will be just one new row looking like `("model_field_name", FieldTextFilter)`.
+
+In the case of the `TextFilter`, it is needed the write a whole new class inheriting from `TextFilter` with a custom implementation of the `queryset` method and the `parameter_name` attribute. This attribute will be a representation of the search query parameter name in URI. The benefit of the `TextFilter` is the possibility of writing complex queries.
+
+```python
+from django.contrib import admin
+from django.contrib.auth.models import User
+from django.core.validators import EMPTY_VALUES
+from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
+from unfold.contrib.filters.admin import TextFilter, FieldTextFilter
+
+class CustomTextFilter(TextFilter):
+    title = _("Custom filter")
+    parameter_name = "query_param_in_uri"
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            # Here write custom query
+            return queryset.filter(your_field=self.value())
+
+        return queryset
+
+
+@admin.register(User)
+class MyAdmin(ModelAdmin):
+    list_filter_submit = True
+    list_filter = [
+        ("model_charfield", FieldTextFilter),
+        CustomTextFilter
+    ]
+```
+
+### Dropdown filters
+
+Dropdown filters will display a select field with a list of options. Unfold contains two types of dropdowns: `ChoicesDropdownFilter` and `RelatedDropdownFilter`.
+
+The difference between them is that `ChoicesDropdownFilter` will collect a list of options based on the `choices` attribute of the model field so most commonly it will be used in combination with `CharField` with specified `choices`.  On the other side, `RelatedDropdownFilter` needs a one-to-many or many-to-many foreign key to display options.
+
+**Note:** At the moment Unfold does not implement a dropdown with an autocomplete functionality, so it is important not to use dropdowns displaying large datasets.
+
+```python
+# admin.py
+
+from django.contrib import admin
+from django.contrib.auth.models import User
+from unfold.admin import ModelAdmin
+from unfold.contrib.filters.admin import ChoicesDropdownFilter, RelatedDropdownFilter
+
+@admin.register(User)
+class MyAdmin(ModelAdmin):
+    list_filter_submit = True
+    list_filter = [
+        ("modelfield_with_choices", ChoicesDropdownFilter),
+        ("modelfield_with_foreign_key", RelatedDropdownFilter)
+    ]
+```
 
 ### Numeric filters
 
