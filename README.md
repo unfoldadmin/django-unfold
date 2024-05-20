@@ -510,12 +510,32 @@ The difference between them is that `ChoicesDropdownFilter` will collect a list 
 from django.contrib import admin
 from django.contrib.auth.models import User
 from unfold.admin import ModelAdmin
-from unfold.contrib.filters.admin import ChoicesDropdownFilter, RelatedDropdownFilter
+from unfold.contrib.filters.admin import ChoicesDropdownFilter, RelatedDropdownFilter, DropdownFilter
+
+
+class CustomDropdownFilter(DropdownFilter):
+    title = _("Custom dropdown filter")
+    parameter_name = "query_param_in_uri"
+
+    def lookups(self, request, model_admin):
+        return [
+            ["option_1", _("Option 1")],
+            ["option_2", _("Option 2")],
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            # Here write custom query
+            return queryset.filter(your_field=self.value())
+
+        return queryset
+
 
 @admin.register(User)
 class MyAdmin(ModelAdmin):
     list_filter_submit = True
     list_filter = [
+        CustomDropdownFilter,
         ("modelfield_with_choices", ChoicesDropdownFilter),
         ("modelfield_with_foreign_key", RelatedDropdownFilter)
     ]
