@@ -99,6 +99,24 @@ class FieldTextFilter(ValueMixin, admin.FieldListFilter):
         )
 
 
+class DropdownFilter(admin.SimpleListFilter):
+    template = "unfold/filters/filters_field.html"
+    form_class = DropdownForm
+    all_option = ["", _("All")]
+
+    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+        return (
+            {
+                "form": self.form_class(
+                    label=_("By {}").format(self.title),
+                    name=self.parameter_name,
+                    choices=[self.all_option, *self.lookup_choices],
+                    data={self.parameter_name: self.value()},
+                ),
+            },
+        )
+
+
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
     def choices(self, changelist: ChangeList):
         choices = [self.all_option, *self.field.flatchoices]
