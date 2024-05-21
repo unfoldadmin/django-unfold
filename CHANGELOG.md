@@ -1,4 +1,13 @@
 
+## 0.24.0 (2024-05-21)
+
+- feat: django-import-export 4.0 support (3.x deprecated) (#398) ([`ceb90ee`](https://github.com/unfoldadmin/django-unfold/commit/ceb90eea280913b8f26342b00e566e20ab731f86))
+- feat: custom dropdown filter (#396) ([`61c60f3`](https://github.com/unfoldadmin/django-unfold/commit/61c60f33d443ba186c826243dc5584351650c226))
+- feat: image support in header decorator (#393) ([`cf1ae88`](https://github.com/unfoldadmin/django-unfold/commit/cf1ae881c2e84c68d580561a010fb7981942a47d))
+- feat: dropdown and text filters (#388) ([`bfd11b5`](https://github.com/unfoldadmin/django-unfold/commit/bfd11b56ec45694dba60c087b6098958922dfb49))
+- fix: semantic release execluded patterns (#389) ([`ed7f4ad`](https://github.com/unfoldadmin/django-unfold/commit/ed7f4ad13371cfce7b597318115d241b1a7ed4e5))
+- docs: admin migration guide link (#390) ([`05c9981`](https://github.com/unfoldadmin/django-unfold/commit/05c99811b576fb9436c21e95ef7d26d7ec1a6985))
+
 ## 0.23.0 (2024-05-17)
 
 - feat: parallel default admin support (#379) ([`5978dec`](https://github.com/unfoldadmin/django-unfold/commit/5978dec6845fbd737f342c5564263e8181001bde))
