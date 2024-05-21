@@ -37,7 +37,7 @@
         {% csrf_token %}
 
         <fieldset class="border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
-            {% include "unfold/helpers/field.html" with field=form.file_format %}
+            {% include "unfold/helpers/field.html" with field=form.format %}
         </fieldset>
 
         <button type="submit" class="bg-primary-600 border border-transparent font-medium px-3 py-2 rounded-md text-sm text-white">

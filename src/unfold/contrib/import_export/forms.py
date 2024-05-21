@@ -1,16 +1,15 @@
-from import_export.forms import ExportForm as BaseExportForm
-from import_export.forms import ImportForm as BaseImportForm
+from import_export.forms import ImportExportFormBase as BaseImportExportFormBase
 from unfold.widgets import SELECT_CLASSES, UnfoldAdminFileFieldWidget
 
 
-class ImportForm(BaseImportForm):
+class ImportForm(BaseImportExportFormBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["import_file"].widget = UnfoldAdminFileFieldWidget()
-        self.fields["input_format"].widget.attrs["class"] = " ".join(SELECT_CLASSES)
+        self.fields["resource"].widget = UnfoldAdminFileFieldWidget()
+        self.fields["format"].widget.attrs["class"] = " ".join(SELECT_CLASSES)
 
 
-class ExportForm(BaseExportForm):
+class ExportForm(BaseImportExportFormBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["file_format"].widget.attrs["class"] = " ".join(SELECT_CLASSES)
+        self.fields["format"].widget.attrs["class"] = " ".join(SELECT_CLASSES)

@@ -7,7 +7,7 @@ from unfold.widgets import SELECT_CLASSES
 
 def export_action_form_factory(formats):
     class _ExportActionForm(ActionForm):
-        file_format = forms.ChoiceField(
+        format = forms.ChoiceField(
             label=" ",
             choices=formats,
             required=False,
