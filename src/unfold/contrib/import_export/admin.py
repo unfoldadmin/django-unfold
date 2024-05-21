@@ -1,13 +1,14 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ExportActionModelAdmin as BaseExportActionModelAdmin
+
 from unfold.admin import ActionForm
 from unfold.widgets import SELECT_CLASSES
 
 
 def export_action_form_factory(formats):
     class _ExportActionForm(ActionForm):
-        file_format = forms.ChoiceField(
+        format = forms.ChoiceField(
             label=" ",
             choices=formats,
             required=False,
