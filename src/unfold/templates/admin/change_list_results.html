@@ -7,80 +7,82 @@
 {% endif %}
 
 {% if results %}
-    <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:table lg:dark:border-gray-800">
-        <thead>
-            <tr>
-                {% for header in result_headers %}
-                    <th class="align-middle font-medium py-2 text-left text-gray-400 text-sm {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
-                        <div class="flex items-center">
-                            <div class="text">
-                                {% if header.sortable %}
-                                    <a href="{{ header.url_primary }}">
-                                        {{ header.text|capfirst }}
-                                    </a>
-                                {% else %}
-                                    {% if "action-toggle" in header.text and forloop.counter == 1 %}
-                                        <label class="flex flex-row items-center gap-2">
+    <div class="overflow-x-auto lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+        <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:table">
+            <thead>
+                <tr>
+                    {% for header in result_headers %}
+                        <th class="align-middle font-medium py-2 text-left text-gray-400 text-sm {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
+                            <div class="flex items-center">
+                                <div class="text">
+                                    {% if header.sortable %}
+                                        <a href="{{ header.url_primary }}">
                                             {{ header.text|capfirst }}
-
-                                            <span class="block font-normal text-gray-500 dark:text-gray-400 lg:hidden">
-                                                {% trans "Select all rows"%}
-                                            </span>
-                                        </label>
+                                        </a>
                                     {% else %}
-                                        <span>
-                                            {{ header.text|capfirst }}
-                                        </span>
+                                        {% if "action-toggle" in header.text and forloop.counter == 1 %}
+                                            <label class="flex flex-row items-center gap-2">
+                                                {{ header.text|capfirst }}
+
+                                                <span class="block font-normal text-gray-500 dark:text-gray-400 lg:hidden">
+                                                    {% trans "Select all rows"%}
+                                                </span>
+                                            </label>
+                                        {% else %}
+                                            <span>
+                                                {{ header.text|capfirst }}
+                                            </span>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                {% if header.sortable %}
+                                    {% if header.sort_priority > 0 %}
+                                        <div class="sortoptions flex items-center ml-2">
+                                            <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
+                                                {% if header.ascending %}
+                                                    <span class="block material-symbols-outlined">arrow_circle_down</span>
+                                                {% else %}
+                                                    <span class="block material-symbols-outlined">arrow_circle_up</span>
+                                                {% endif %}
+                                            </a>
+
+                                            <a class="sortremove flex items-center leading-none ml-1 text-gray-400 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                                <span class="block material-symbols-outlined">cancel</span>
+                                            </a>
+                                        </div>
+
+                                        {% if num_sorted_fields > 1 %}
+                                            <span class="sortpriority font-medium ml-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
+                                                {{ header.sort_priority }}
+                                            </span>
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             </div>
-
-                            {% if header.sortable %}
-                                {% if header.sort_priority > 0 %}
-                                    <div class="sortoptions flex items-center ml-2">
-                                        <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
-                                            {% if header.ascending %}
-                                                <span class="block material-symbols-outlined">arrow_circle_down</span>
-                                            {% else %}
-                                                <span class="block material-symbols-outlined">arrow_circle_up</span>
-                                            {% endif %}
-                                        </a>
-
-                                        <a class="sortremove flex items-center leading-none ml-1 text-gray-400 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
-                                            <span class="block material-symbols-outlined">cancel</span>
-                                        </a>
-                                    </div>
-
-                                    {% if num_sorted_fields > 1 %}
-                                        <span class="sortpriority font-medium ml-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
-                                            {{ header.sort_priority }}
-                                        </span>
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                    </th>
-                {% endfor %}
-            </tr>
-        </thead>
-
-        <tbody class="block lg:table-row-group">
-            {% for result in results %}
-                {% if result.form and result.form.non_field_errors %}
-                    <tr>
-                        <td class="text-left" colspan="{{ result|length }}">
-                            {{ result.form.non_field_errors }}
-                        </td>
-                    </tr>
-                {% endif %}
-
-                <tr class="{% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
-                    {% for item in result %}
-                        {{ item }}
+                        </th>
                     {% endfor %}
-                    {% include 'unfold/helpers/actions_row.html' with actions=actions_row instance_pk=result.instance_pk %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody class="block lg:table-row-group">
+                {% for result in results %}
+                    {% if result.form and result.form.non_field_errors %}
+                        <tr>
+                            <td class="text-left" colspan="{{ result|length }}">
+                                {{ result.form.non_field_errors }}
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                    <tr class="{% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                        {% for item in result %}
+                            {{ item }}
+                        {% endfor %}
+                        {% include 'unfold/helpers/actions_row.html' with actions=actions_row instance_pk=result.instance_pk %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endif %}
