@@ -64,7 +64,7 @@
                                                     <p class="align-middle flex font-normal items-center leading-none px-3 text-gray-500 text-left text-sm whitespace-nowrap">
                                                         {% if inline_admin_form.original %}
                                                             {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} mt-3 text-gray-500 text-xs">
+                                                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} font-medium mt-3 text-primary-600 underline text-xs">
                                                                     {{ inline_admin_form.original }}
                                                                 </a>
                                                             {% endif %}
