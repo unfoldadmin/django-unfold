@@ -301,7 +301,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__clear {
-  @apply flex items-center mr-5 h-9 -mt-2 text-0;
+  @apply flex items-center h-9 -mt-2 text-0;
 }
 
 .select2-container.select2-container--admin-autocomplete
