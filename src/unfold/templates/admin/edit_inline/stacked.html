@@ -23,7 +23,7 @@
 
                         <span class="inline_label font-semibold text-gray-900">
                             {% if inline_admin_form.original and inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} ml-1">
+                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} font-medium ml-1 text-primary-600 underline text-xs">
                                     {{ inline_admin_form.original }}
                                 </a>
                             {% else %}
@@ -37,7 +37,7 @@
 
                         {% if inline_admin_form.show_url %}
                             <a href="{{ inline_admin_form.absolute_url }}" class="h-4 leading-none ml-1">
-                                <span class="material-symbols-outlined h-4 md-16 text-gray-400">launch</span>
+                                <span class="material-symbols-outlined h-4 md-16 text-primary-600">launch</span>
                             </a>
                         {% endif %}
 
