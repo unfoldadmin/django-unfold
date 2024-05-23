@@ -4,27 +4,20 @@
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <p class="bg-blue-50 mb-8 text-blue-500 px-3 py-3 rounded-md text-sm dark:bg-blue-500/20 dark:border-blue-500/10">
-            {% trans "This importer will import the following fields: " %}
-
-            {% if fields_list|length <= 1 %}
-                <span class="font-medium">
-                    {{ fields_list.0.1|join:", " }}
-                </code>
-            {% else %}
-                <dl>
-                    {% for resource, fields in fields_list %}
-                        <dt>{{ resource }}</dt>
-                        <dd><code>{{ fields|join:", " }}</code></dd>
-                    {% endfor %}
-                </dl>
-            {% endif %}
-        </p>
+        {% include "admin/import_export/resource_fields_list.html" with import_or_export="import" %}
 
         <fieldset class="border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
-        {% include "unfold/helpers/field.html" with field=form.resource %}
+            {% if form.resource.field.widget.attrs.readonly %}
+                {% include "unfold/helpers/field_readonly.html" with title=form.resource.field.label value=form.resource.field.value %}
+                {{ form.resource.as_hidden }}
+            {% else %}
+                {% include "unfold/helpers/field.html" with field=form.resource %}
+            {% endif %}
 
-        {% include "unfold/helpers/field.html" with field=form.format %}
+
+            {% include "unfold/helpers/field.html" with field=form.import_file %}
+
+            {% include "unfold/helpers/field.html" with field=form.format %}
         </fieldset>
 
 
