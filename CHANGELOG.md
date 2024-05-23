@@ -1,4 +1,11 @@
 
+## 0.25.0 (2024-05-23)
+
+- feat: changelist tabular inlines scrollbars (#403) ([`77500dd`](https://github.com/unfoldadmin/django-unfold/commit/77500dd2a36ca4dc3baec205b34861df5cc5cf58))
+- fix: import export 4 support (#404) ([`76022c3`](https://github.com/unfoldadmin/django-unfold/commit/76022c310ef30aa05c891db67d772d76ca6d8b48))
+- fix: autocomplete select clear position (#401) ([`b087b52`](https://github.com/unfoldadmin/django-unfold/commit/b087b52ceca8333f1a0652a4f5d9703ea2f2694b))
+- chore(deps-dev): bump requests from 2.31.0 to 2.32.0 #399 ([`5817af7`](https://github.com/unfoldadmin/django-unfold/commit/5817af7dde4a9c7c2c267dad6d0bf47bb4e5407d))
+
 ## 0.24.0 (2024-05-21)
 
 - feat: django-import-export 4.0 support (3.x deprecated) (#398) ([`ceb90ee`](https://github.com/unfoldadmin/django-unfold/commit/ceb90eea280913b8f26342b00e566e20ab731f86))
