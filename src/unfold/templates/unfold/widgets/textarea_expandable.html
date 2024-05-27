@@ -1,0 +1,7 @@
+<div class="relative">
+    <div class="border break-words font-medium invisible max-w-4xl px-3 py-2 text-sm" style="min-height: 64px">
+        {% if widget.value %}{{ widget.value|linebreaks }}{% endif %}
+    </div>
+
+    <textarea onInput="this.previousElementSibling.innerText = this.value + String.fromCharCode(10)" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+</div>

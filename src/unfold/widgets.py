@@ -361,6 +361,20 @@ class UnfoldAdminTextareaWidget(AdminTextareaWidget):
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         attrs = attrs or {}
 
+        super().__init__(
+            attrs={
+                "class": "vLargeTextField " + " ".join(TEXTAREA_CLASSES),
+                **(attrs or {}),
+            }
+        )
+
+
+class UnfoldAdminExpandableTextareaWidget(AdminTextareaWidget):
+    template_name = "unfold/widgets/textarea.html"
+
+    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+        attrs = attrs or {}
+
         attrs.update({"rows": 2})
 
         super().__init__(
