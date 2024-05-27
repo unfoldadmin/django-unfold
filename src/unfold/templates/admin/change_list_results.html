@@ -7,12 +7,12 @@
 {% endif %}
 
 {% if results %}
-    <div class="overflow-x-auto lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+    <div class="overflow-x-auto lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800" data-simplebar data-simplebar-auto-hide="false">
         <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:table">
             <thead>
                 <tr>
                     {% for header in result_headers %}
-                        <th class="align-middle font-medium py-2 text-left text-gray-400 text-sm {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
+                        <th class="align-middle font-medium py-2 text-left text-gray-400 text-sm whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
                             <div class="flex items-center">
                                 <div class="text">
                                     {% if header.sortable %}

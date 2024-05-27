@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if app_list %}
-    <div class="overflow-auto">
+    <div class="h-0 flex-grow overflow-auto" data-simplebar>
         {% for app in app_list %}
             <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
                 <ol class="px-6">
