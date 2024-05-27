@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if sidebar_navigation %}
-    <div class="overflow-auto">
+    <div class="h-0 flex-grow overflow-auto" data-simplebar>
         {% for group in sidebar_navigation %}
             {% if group.items %}
                 {% if group.separator %}
