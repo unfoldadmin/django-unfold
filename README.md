@@ -673,12 +673,13 @@ class UserAdmin(ModelAdmin):
         """
         return [
             "First main heading",
-            "Smaller additional description", # Use None in case you don't need it
-            "AB", # Short text which will appear in front of
+            "Smaller additional description",  # Use None in case you don't need it
+            "AB",  # Short text which will appear in front of
             # Image instead of initials. Initials are ignored if image is available
             {
                 "path": "some/path/picture.jpg,
                 "squared": True, # Picture is displayed in square format, if empty circle
+                "borderless": True  # Picture will be displayed without border
             }
         ]
 ```
