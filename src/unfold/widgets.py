@@ -370,7 +370,7 @@ class UnfoldAdminTextareaWidget(AdminTextareaWidget):
 
 
 class UnfoldAdminExpandableTextareaWidget(AdminTextareaWidget):
-    template_name = "unfold/widgets/textarea.html"
+    template_name = "unfold/widgets/textarea_expandable.html"
 
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         attrs = attrs or {}
