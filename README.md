@@ -680,6 +680,8 @@ class UserAdmin(ModelAdmin):
                 "path": "some/path/picture.jpg,
                 "squared": True, # Picture is displayed in square format, if empty circle
                 "borderless": True  # Picture will be displayed without border
+                "width": 64, # Removes default width. Use together with height
+                "height": 48, # Removes default height. Use together with width
             }
         ]
 ```
