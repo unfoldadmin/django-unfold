@@ -1,7 +1,7 @@
 <span class="flex gap-4 items-center">
     {% if value.3 and value.3.path %}
-        <span class="bg-center bg-cover bg-white flex font-medium h-8 justify-center overflow-hidden max-w-8 min-w-8 dark:bg-gray-900 dark:border-gray-700 {% if value.3.squared %}rounded-sm{% else %}rounded-full{% endif %}{% if not value.3.borderless %} border{% endif %}">
-            <img loading="lazy" src="{{ value.3.path }}" class="object-cover" />
+        <span class="bg-center bg-cover bg-white flex font-medium justify-center overflow-hidden dark:bg-gray-900 dark:border-gray-700 {% if value.3.squared %}rounded-sm{% else %}rounded-full{% endif %}{% if not value.3.borderless %} border{% endif %}{% if not value.3.width or not value.3.height %}h-8 max-w-8 min-w-8{% endif %}">
+            <img loading="lazy" src="{{ value.3.path }}" class="object-cover" {% if value.3.width %}width="{{ value.3.width }}"{% endif %} {% if value.3.height %}height="{{ value.3.height }}"{% endif %}/>
         </span>
     {% elif value.2 %}
         <span class="bg-white border flex font-medium h-8 justify-center items-center rounded-full text-xs uppercase w-8 dark:bg-gray-900 dark:border-gray-700">
