@@ -106,7 +106,6 @@ SELECT_CLASSES = [
     "pr-8",
     "max-w-2xl",
     "appearance-none",
-    "truncate",
 ]
 
 PROSE_CLASSES = [
