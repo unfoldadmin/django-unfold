@@ -13,7 +13,7 @@
         </div>
     {% endif %}
 
-    <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+    <div class="aligned mb-8 {% if not stacked %}border border-gray-200 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800{% endif %}">
         {% for line in fieldset %}
             <div class="form-row block {% if not line.fields|length_is:'1' %}flex flex-row flex-wrap gap-x-8{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
                 {% for field in line %}

@@ -27,7 +27,7 @@
                                 <tr>
                                     {% for field in inline_admin_formset.fields %}
                                         {% if not field.widget.is_hidden %}
-                                            <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-400 text-sm dark:border-gray-800">
+                                            <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-400 text-sm whitespace-nowrap dark:border-gray-800">
                                                 <span class="flex flex-row items-center">
                                                     {{ field.label|capfirst }}
 
@@ -40,7 +40,7 @@
                                     {% endfor %}
 
                                     {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                        <th class="align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-400 text-sm lg:w-px dark:border-gray-800">
+                                        <th class="align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-400 text-sm whitespace-nowrap lg:w-px dark:border-gray-800">
                                             {% translate "Delete?" %}
                                         </th>
                                     {% endif %}
