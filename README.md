@@ -35,7 +35,8 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Colors:** possibility to override default color scheme
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
-- **Parallel admin**: support for having default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/)
+- **Nonrelated inlines**: displays nonrelated model as inline in changeform
+- **Parallel admin**: support for default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/)
 - **VS Code**: project configuration and development container is included
 
 ## Table of contents <!-- omit from toc -->
@@ -54,6 +55,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Dropdown filters](#dropdown-filters)
   - [Numeric filters](#numeric-filters)
   - [Date/time filters](#datetime-filters)
+- [Nonrelated inlines](#nonrelated-inlines)
 - [Display decorator](#display-decorator)
 - [Change form tabs](#change-form-tabs)
 - [Third party packages](#third-party-packages)
@@ -90,6 +92,7 @@ INSTALLED_APPS = [
     "unfold",  # before django.contrib.admin
     "unfold.contrib.filters",  # optional, if special filters are needed
     "unfold.contrib.forms",  # optional, if special form elements are needed
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
     "unfold.contrib.import_export",  # optional, if django-import-export package is used
     "unfold.contrib.guardian",  # optional, if django-guardian package is used
     "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
@@ -609,6 +612,41 @@ class YourModelAdmin(ModelAdmin):
     )
 ```
 
+## Nonrelated inlines
+
+To display inlines which are not related (no foreign key pointing at the main model) to the model instance in changeform, you can use nonrelated inlines which are included in `unfold.contrib.inlines` module. Make sure this module is included in `INSTALLED_APPS` in settings.py.
+
+```python
+from django.contrib.auth.models import User
+from unfold.admin import ModelAdmin
+from unfold.contrib.inlines.admin import NonrelatedTabularInline
+from .models import OtherModel
+
+class OtherNonrelatedInline(NonrelatedTabularInline):  # NonrelatesStackedInline is available as well
+    model = OtherModel
+    fields = ["field1", "field2"]  # Ignore property to display all fields
+
+    def get_form_queryset(self, obj):
+        """
+        Gets all nonrelated objects needed for inlines. Method must be implemented.
+        """
+        return self.model.objects.all()
+
+    def save_new_instance(self, parent, instance):
+        """
+        Extra save method which can for example update inline instances based on current
+        main model object. Method must be implemented.
+        """
+        pass
+
+
+@admin.register(User)
+class UserAdmin(ModelAdmin):
+    inlines = [OtherNonrelatedInline]
+```
+
+**NOTE:** credit for this functionality goes to [django-nonrelated-inlines](https://github.com/bhomnick/django-nonrelated-inlines)
+
 ## Display decorator
 
 Unfold introduces it's own `unfold.decorators.display` decorator. By default it has exactly same behavior as native `django.contrib.admin.decorators.display` but it adds same customizations which helps to extends default logic.
@@ -1112,6 +1150,7 @@ The container has already a node preinstalled so it is possible to compile a new
 
 ## Credits
 
+- [django-nonrelated-inlines](https://github.com/bhomnick/django-nonrelated-inlines) - Django admin inlines for unrelated models
 - [TailwindCSS](https://tailwindcss.com/) - CSS framework
 - [HTMX](https://htmx.org/) - AJAX communication with backend
 - [Material Icons](https://fonts.google.com/icons) - Icons from Google Fonts
