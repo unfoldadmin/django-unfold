@@ -1,0 +1,10 @@
+{% extends 'admin/change_form.html' %}
+{% load i18n %}
+
+{% block actions %}
+    {{ block.super }}
+
+    {% if show_change_form_export %}
+        <input type="submit" value="{% translate 'Export' %}" name="_export-item" class="bg-white text-gray-500 border cursor-pointer flex font-medium items-center px-3 py-2 mr-3 rounded-md shadow-sm text-sm dark:bg-gray-900 dark:border dark:border-gray-700 dark:text-gray-400">
+    {% endif %}
+{% endblock %}
