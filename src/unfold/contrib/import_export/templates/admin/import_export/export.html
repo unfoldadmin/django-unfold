@@ -33,10 +33,31 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="POST">
+    <form action="{{ export_url }}" method="POST">
         {% csrf_token %}
 
-        <fieldset class="border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+        {% if form.initial.export_items %}
+            <p class="bg-blue-50 mb-4 text-blue-500 px-3 py-3 rounded-md text-sm dark:bg-blue-500/20 dark:border-blue-500/10">
+                {% blocktranslate count len=form.initial.export_items|length %}
+                    Export {{ len }} selected item.
+                {% plural %}
+                    Export {{ len }} selected items.
+                {% endblocktranslate %}
+            </p>
+        {% endif %}
+
+        {% if not form.is_selectable_fields_form %}
+            {% include "admin/import_export/resource_fields_list.html" with import_or_export="export" %}
+        {% endif %}
+
+        <fieldset class="border border-gray-200 mb-4 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+            {% if form.resource.field.widget.attrs.readonly %}
+                {% include "unfold/helpers/field_readonly.html" with title=form.resource.field.label value=form.resource.field.value %}
+                {{ form.resource.as_hidden }}
+            {% else %}
+                {% include "unfold/helpers/field.html" with field=form.resource %}
+            {% endif %}
+
             {% include "unfold/helpers/field.html" with field=form.format %}
         </fieldset>
 

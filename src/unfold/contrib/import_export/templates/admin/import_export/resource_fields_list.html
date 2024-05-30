@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% block fields_help %}
-    <div class="bg-blue-50 mb-8 text-blue-500 px-3 py-3 rounded-md text-sm dark:bg-blue-500/20 dark:border-blue-500/10">
+    <div class="bg-blue-50 mb-4 text-blue-500 px-3 py-3 rounded-md text-sm dark:bg-blue-500/20 dark:border-blue-500/10">
         {% if import_or_export == "export" %}
             {% trans "This exporter will export the following fields: " %}
         {% elif import_or_export == "import" %}

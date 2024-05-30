@@ -848,6 +848,8 @@ class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
 
 When implementing `import_export.admin.ExportActionModelAdmin` class in admin panel, import_export plugin adds its own implementation of action form which is not incorporating Unfold CSS classes. For this reason, `unfold.contrib.import_export.admin` contains class with the same name `ExportActionModelAdmin` which inherits behavior of parent form and adds appropriate CSS classes.
 
+**Note:** This class has been removed and in new version (4.x) of django-import-export it is not needed.
+
 ```python
 admin.py
 
