@@ -7,8 +7,8 @@
                 {% for fieldset in tabs %}
                     <li>
                         <a class="cursor-pointer font-semibold hover:text-gray-700 dark:hover:text-white"
-                        x-on:click="openTab = '{{ fieldset.name|slugify }}'"
-                        x-bind:class="openTab == '{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %} ? 'text-gray-700 dark:text-white' : ''">
+                        x-on:click="openTab = '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'"
+                        x-bind:class="openTab == '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %} ? 'text-gray-700 dark:text-white' : ''">
                             {{ fieldset.name }}
                         </a>
                     </li>
@@ -16,8 +16,8 @@
             </ul>
 
             {% for fieldset in tabs %}
-                <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|slugify }}{% endif %}"
-                    x-show="openTab == '{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %}">
+                <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|slugify }} fieldset-{{ forloop.counter0 }}-{{ fieldset.name|slugify }}{% endif %}"
+                    x-show="openTab == '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %}">
                     {% include 'admin/includes/fieldset.html' %}
                 </div>
             {% endfor %}
