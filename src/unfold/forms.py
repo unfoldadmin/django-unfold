@@ -10,6 +10,7 @@ from django.contrib.admin.forms import (
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
+from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.http import HttpRequest
@@ -17,6 +18,10 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from .widgets import BASE_INPUT_CLASSES, INPUT_CLASSES, SELECT_CLASSES
+
+
+class UnfoldReadOnlyPasswordHashWidget(ReadOnlyPasswordHashWidget):
+    pass
 
 
 class ActionForm(forms.Form):
@@ -72,6 +77,7 @@ class UserChangeForm(BaseUserChangeForm):
         **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
+        self.fields["password"].widget = UnfoldReadOnlyPasswordHashWidget()
 
         self.fields["password"].help_text = _(
             "Raw passwords are not stored, so there is no way to see this "
