@@ -258,7 +258,7 @@ table tr.selected th {
 }
 
 h3 .delete label {
-  @apply text-gray-500;
+  @apply text-gray-500 dark:text-gray-200;
 }
 
 .inline-deletelink {

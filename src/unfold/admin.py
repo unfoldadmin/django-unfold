@@ -142,7 +142,6 @@ FORMFIELD_OVERRIDES_INLINE.update(
 class UnfoldAdminField(helpers.AdminField):
     def label_tag(self) -> SafeText:
         classes = []
-
         if not self.field.field.widget.__class__.__name__.startswith(
             "Unfold"
         ) and not self.field.field.widget.template_name.startswith("unfold"):
@@ -181,7 +180,9 @@ helpers.AdminField = UnfoldAdminField
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def label_tag(self) -> SafeText:
-        if not isinstance(self.model_admin, ModelAdmin):
+        if not isinstance(self.model_admin, ModelAdmin) and not isinstance(
+            self.model_admin, ModelAdminMixin
+        ):
             return super().label_tag()
 
         attrs = {
