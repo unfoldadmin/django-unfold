@@ -1,6 +1,7 @@
 from typing import Any, Callable, Dict, Optional, Tuple, Union
 
 from django.contrib.admin.options import VERTICAL
+from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import (
     AdminBigIntegerFieldWidget,
     AdminDateWidget,
@@ -13,8 +14,10 @@ from django.contrib.admin.widgets import (
     AdminTextInputWidget,
     AdminTimeWidget,
     AdminUUIDInputWidget,
+    ForeignKeyRawIdWidget,
     RelatedFieldWidgetWrapper,
 )
+from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.forms import (
     CheckboxInput,
     MultiWidget,
@@ -532,3 +535,20 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
 
 class UnfoldRelatedFieldWidgetWrapper(RelatedFieldWidgetWrapper):
     template_name = "unfold/widgets/related_widget_wrapper.html"
+
+
+class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
+    template_name = "unfold/widgets/foreign_key_raw_id.html"
+
+    def __init__(
+        self,
+        rel: ForeignObjectRel,
+        admin_site: AdminSite,
+        attrs: Optional[Dict] = None,
+        using: Optional[Any] = None,
+    ) -> None:
+        attrs = {
+            "class": " ".join(["vForeignKeyRawIdAdminField"] + INPUT_CLASSES),
+            **(attrs or {}),
+        }
+        return super().__init__(rel, admin_site, attrs, using)

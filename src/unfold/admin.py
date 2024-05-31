@@ -71,6 +71,7 @@ from .widgets import (
     UnfoldAdminUUIDInputWidget,
     UnfoldBooleanSwitchWidget,
     UnfoldBooleanWidget,
+    UnfoldForeignKeyRawIdWidget,
 )
 
 try:
@@ -306,10 +307,14 @@ class ModelAdminMixin:
     def formfield_for_foreignkey(
         self, db_field: ForeignKey, request: HttpRequest, **kwargs
     ) -> Optional[ModelChoiceField]:
+        db = kwargs.get("using")
+
         # Overrides widgets for all related fields
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
-                kwargs["widget"] = UnfoldAdminTextInputWidget()
+                kwargs["widget"] = UnfoldForeignKeyRawIdWidget(
+                    db_field.remote_field, self.admin_site, using=db
+                )
             elif (
                 db_field.name not in self.get_autocomplete_fields(request)
                 and db_field.name not in self.radio_fields
