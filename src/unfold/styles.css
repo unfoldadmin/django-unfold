@@ -620,3 +620,11 @@ trix-toolbar[id^="trix-toolbar-"] {
 .ui-tabs.ui-widget .ui-tabs-nav li.ui-tabs-active a {
   @apply flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-white;
 }
+
+
+/*******************************************************
+ Simplebar
+ *******************************************************/
+.simplebar-track .simplebar-scrollbar.simplebar-visible::before {
+  @apply bg-gray-900/80  dark:bg-gray-400/80;
+}
