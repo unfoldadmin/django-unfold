@@ -515,7 +515,7 @@ class UnfoldBooleanWidget(CheckboxInput):
         if attrs is None:
             attrs = {}
 
-        return super().__init__(
+        super().__init__(
             {
                 **(attrs or {}),
                 "class": " ".join(CHECKBOX_CLASSES + [attrs.get("class", "")]),
@@ -528,7 +528,7 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
     def __init__(
         self, attrs: Optional[Dict[str, Any]] = None, check_test: Callable = None
     ) -> None:
-        return super().__init__(
+        super().__init__(
             attrs={"class": " ".join(SWITCH_CLASSES), **(attrs or {})}, check_test=None
         )
 
@@ -551,4 +551,4 @@ class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
             "class": " ".join(["vForeignKeyRawIdAdminField"] + INPUT_CLASSES),
             **(attrs or {}),
         }
-        return super().__init__(rel, admin_site, attrs, using)
+        super().__init__(rel, admin_site, attrs, using)
