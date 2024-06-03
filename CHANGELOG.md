@@ -1,4 +1,21 @@
 
+## 0.26.0 (2024-06-03)
+
+- feat: nonrelated inlines (#419) ([`a6fd72b`](https://github.com/unfoldadmin/django-unfold/commit/a6fd72bdecc31a541e8fa3f845aa7419eb160315))
+- feat: header image custom width (#417) ([`d3031d6`](https://github.com/unfoldadmin/django-unfold/commit/d3031d631fa397d6c7fa9af8e593f1dfb1bd60c8))
+- feat: default simple textarea widget (#405) ([`9504bd8`](https://github.com/unfoldadmin/django-unfold/commit/9504bd8c52bbc0b9000273fb5654233f1a9fbd00))
+- feat: styled scrollbars (#409) ([`766098b`](https://github.com/unfoldadmin/django-unfold/commit/766098ba871d69bcaccce9de5066e1cb32c277f2))
+- fix: import export selectable fields (#431) ([`a55523e`](https://github.com/unfoldadmin/django-unfold/commit/a55523ec5592b934da60151152068276ecb53109))
+- fix: scrollbar dark mode (#433) ([`7cc95fe`](https://github.com/unfoldadmin/django-unfold/commit/7cc95fe8e1d16ef7da835c852ea9c58ce6e233a5))
+- fix: filefield widget (#432) ([`3f9d7ba`](https://github.com/unfoldadmin/django-unfold/commit/3f9d7ba834b8f4e7702ac11e77c897a9d3ab3dca))
+- fix: raw id fields (#424) ([`e482ae1`](https://github.com/unfoldadmin/django-unfold/commit/e482ae135e7a578b8ea14da7c52218e976dcf576))
+- fix: readonly password hash label (#423) ([`b424b86`](https://github.com/unfoldadmin/django-unfold/commit/b424b8651034f94eaeb06e6a9b131ef110fcf94d))
+- fix: tabs special characters (#422) ([`ee4b333`](https://github.com/unfoldadmin/django-unfold/commit/ee4b33397083559b71ab594a4ec7528d692b689f))
+- fix: select multiple scrollbar (#421) ([`2f7e421`](https://github.com/unfoldadmin/django-unfold/commit/2f7e42137fc7559be19399fd407c7c6cb00dddb9))
+- fix: import export action (#420) ([`30e3744`](https://github.com/unfoldadmin/django-unfold/commit/30e374403bd5b49a6f2c0652965915e761f1edae))
+- fix: textarea expandable template name (#412) ([`5d710af`](https://github.com/unfoldadmin/django-unfold/commit/5d710af83681b36251c8b96dfde34f4207eb472d))
+- fix: header image improvements (#411) ([`55a8cb1`](https://github.com/unfoldadmin/django-unfold/commit/55a8cb12201c65d49e5e8f3614f4914d63ff8bca))
+
 ## 0.25.0 (2024-05-23)
 
 - feat: changelist tabular inlines scrollbars (#403) ([`77500dd`](https://github.com/unfoldadmin/django-unfold/commit/77500dd2a36ca4dc3baec205b34861df5cc5cf58))
