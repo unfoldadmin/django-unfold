@@ -50,15 +50,29 @@
             {% include "admin/import_export/resource_fields_list.html" with import_or_export="export" %}
         {% endif %}
 
-        <fieldset class="border border-gray-200 mb-4 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
-            {% if form.resource.field.widget.attrs.readonly %}
-                {% include "unfold/helpers/field_readonly.html" with title=form.resource.field.label value=form.resource.field.value %}
-                {{ form.resource.as_hidden }}
-            {% else %}
-                {% include "unfold/helpers/field.html" with field=form.resource %}
-            {% endif %}
+        {{ form.non_field_errors }}
 
-            {% include "unfold/helpers/field.html" with field=form.format %}
+        <fieldset class="border border-gray-200 mb-4 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+            {% for field in form.visible_fields %}
+                <div {% if field.field.is_selectable_field %}class="selectable-field-export-row" resource-index="{{ field.field.resource_index }}"{% else %}class="form-row aligned"{% endif %}>
+                    {% if field.field.initial_field %}
+                        <p class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">
+                            {% trans "This exporter will export the following fields" %}
+                        </p>
+                    {% endif %}
+
+                    {% if field.field.widget.attrs.readonly %}
+                        {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
+                        {{ field.as_hidden }}
+                    {% else %}
+                        {% include "unfold/helpers/field.html" with field=field %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% for field in form.hidden_fields %}
+                {{ field }}
+            {% endfor %}
         </fieldset>
 
         <button type="submit" class="bg-primary-600 border border-transparent font-medium px-3 py-2 rounded-md text-sm text-white">
