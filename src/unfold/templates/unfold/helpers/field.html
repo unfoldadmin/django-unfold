@@ -1,9 +1,23 @@
-<div class="{% if field.errors %}errors {% endif %}flex group mb-6 flex-col last:mb-4">
-    {% include "unfold/helpers/form_label.html" with field=field %}
+{% if field.field.widget.input_type == "checkbox" %}
+    <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-6 last:mb-4">
+        <div class="flex flex-row gap-2 items-center">
+            {{ field }}
 
-    {{ field }}
+            {% include "unfold/helpers/form_label.html" with field=field %}
+        </div>
 
-    {% include "unfold/helpers/form_errors.html" with errors=field.errors %}
+        {% include "unfold/helpers/form_errors.html" with errors=field.errors %}
 
-    {% include "unfold/helpers/help_text.html" with help_text=field.help_text %}
-</div>
+        {% include "unfold/helpers/help_text.html" with help_text=field.help_text %}
+    </div>
+{% else %}
+    <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-6 last:mb-4">
+        {% include "unfold/helpers/form_label.html" with field=field %}
+
+        {{ field }}
+
+        {% include "unfold/helpers/form_errors.html" with errors=field.errors %}
+
+        {% include "unfold/helpers/help_text.html" with help_text=field.help_text %}
+    </div>
+{% endif %}

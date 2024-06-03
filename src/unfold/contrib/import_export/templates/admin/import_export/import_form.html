@@ -7,19 +7,15 @@
         {% include "admin/import_export/resource_fields_list.html" with import_or_export="import" %}
 
         <fieldset class="border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
-            {% if form.resource.field.widget.attrs.readonly %}
-                {% include "unfold/helpers/field_readonly.html" with title=form.resource.field.label value=form.resource.field.value %}
-                {{ form.resource.as_hidden }}
-            {% else %}
-                {% include "unfold/helpers/field.html" with field=form.resource %}
-            {% endif %}
-
-
-            {% include "unfold/helpers/field.html" with field=form.import_file %}
-
-            {% include "unfold/helpers/field.html" with field=form.format %}
+            {% for field in form %}
+                {% if field.field.widget.attrs.readonly %}
+                    {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
+                    {{ field.as_hidden }}
+                {% else %}
+                    {% include "unfold/helpers/field.html" with field=field %}
+                {% endif %}
+            {% endfor %}
         </fieldset>
-
 
         <button type="submit" class="bg-primary-600 border border-transparent font-medium px-3 py-2 rounded-md text-sm text-white">
             {% translate 'Submit' %}

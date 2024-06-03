@@ -1,4 +1,4 @@
-<label for="{{ field.id_for_label }}" class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">
+<label for="{{ field.id_for_label }}" class="block text-gray-900 text-sm dark:text-gray-200{% if field.field.widget.input_type == "checkbox" %}{% else %} font-medium mb-2{% endif %}">
     {{ field.label }}
 
     {% if field.field.required %}
