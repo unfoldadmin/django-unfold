@@ -2,7 +2,6 @@ from typing import Any, Dict, Optional
 
 from django.core.validators import EMPTY_VALUES
 from django.forms import MultiWidget, Widget
-
 from unfold.widgets import PROSE_CLASSES, UnfoldAdminTextInputWidget
 
 WYSIWYG_CLASSES = [
