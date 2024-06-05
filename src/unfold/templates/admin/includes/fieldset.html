@@ -50,10 +50,8 @@
                             </span>
                         {% endif %}
 
-                        {% if not field.is_checkbox %}
-                            {% if field.field.help_text %}
-                                {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
-                            {% endif %}
+                        {% if field.field.help_text and not field.is_checkbox %}
+                            {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
                         {% endif %}
                     </div>
                 {% endfor %}
