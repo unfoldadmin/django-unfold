@@ -25,11 +25,11 @@
                                 <div class="flex flex-col">
                                     {{ field.label_tag }}
 
-                                    <div class="ml-2 -mt-1">
-                                        {% if field.field.help_text %}
+                                    {% if field.field.help_text %}
+                                        <div class="ml-2 -mt-1">
                                             {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
-                                        {% endif %}
-                                    </div>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% else %}
