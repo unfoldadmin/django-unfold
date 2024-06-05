@@ -1,7 +1,9 @@
 from typing import Any, Dict, Optional
 
-from django.forms import Widget
-from unfold.widgets import PROSE_CLASSES
+from django.core.validators import EMPTY_VALUES
+from django.forms import MultiWidget, Widget
+
+from unfold.widgets import PROSE_CLASSES, UnfoldAdminTextInputWidget
 
 WYSIWYG_CLASSES = [
     *PROSE_CLASSES,
@@ -20,6 +22,44 @@ WYSIWYG_CLASSES = [
     "dark:text-gray-400",
     "dark:group-[.errors]:border-red-500",
 ]
+
+
+class ArrayWidget(MultiWidget):
+    template_name = "unfold/forms/array.html"
+    widget_class = UnfoldAdminTextInputWidget
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        widgets = [self.widget_class]
+        super().__init__(widgets)
+
+    def get_context(self, name: str, value: str, attrs: Dict) -> Dict:
+        self._resolve_widgets(value)
+        context = super().get_context(name, value, attrs)
+        template_widget = UnfoldAdminTextInputWidget()
+        template_widget.name = name
+
+        context.update({"template": template_widget})
+        return context
+
+    def value_from_datadict(self, data, files, name):
+        values = []
+
+        for item in data.getlist(name):
+            if item not in EMPTY_VALUES:
+                values.append(item)
+
+        return values
+
+    def value_omitted_from_data(self, data, files, name):
+        return data.getlist(name) not in [[""], *EMPTY_VALUES]
+
+    def decompress(self, value: str) -> list:
+        return value.split(",")
+
+    def _resolve_widgets(self, value: str) -> None:
+        self.widgets = [self.widget_class for item in value.split(",")]
+        self.widgets_names = ["" for i in range(len(self.widgets))]
+        self.widgets = [w() if isinstance(w, type) else w for w in self.widgets]
 
 
 class WysiwygWidget(Widget):

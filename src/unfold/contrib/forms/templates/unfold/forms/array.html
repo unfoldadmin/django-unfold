@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div class="flex flex-col gap-4" x-data="{items: []}">
+    {% for subwidget in widget.subwidgets %}
+        <div class="flex flex-row">
+            {% with widget=subwidget %}
+                {% include widget.template_name %}
+            {% endwith %}
+
+            <a x-on:click="$el.parentElement.remove()" class="bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm w-9.5 dark:bg-gray-900 dark:border-gray-700 dark:text-red-500">
+                <span class="material-symbols-outlined text-sm">delete</span>
+            </a>
+        </div>
+    {% endfor %}
+
+    <template x-for="(item, index) in items" :key="item.key">
+        <div class="flex flex-row">
+            {% include template.template_name with widget=template %}
+
+            <a x-on:click="items.splice(index, 1)" class="bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm w-9.5 dark:bg-gray-900 dark:border-gray-700 dark:text-red-500">
+                <span class="material-symbols-outlined text-sm">delete</span>
+            </a>
+        </div>
+    </template>
+
+    <div class="flex flex-row">
+        <div x-on:click="items.push({ key: new Date().getTime()})" class="bg-primary-600 border border-transparent cursor-pointer font-medium inline-block px-3 py-2 rounded-md text-sm text-white w-full lg:w-auto">
+            {% trans "Add new item" %}
+        </div>
+    </div>
+</div>
