@@ -38,7 +38,7 @@
                             </div>
 
                             {% if field.is_readonly %}
-                                <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800 {% if field.is_json %}truncate whitespace-pre-wrap{% endif %}">{% if field.contents %}{{ field.contents }}{% else %}-{% endif %}</div>
+                                {% include "unfold/helpers/field_readonly_value.html" %}
                             {% else %}
                                 {{ field.field }}
                             {% endif %}

@@ -112,9 +112,7 @@
                                                             {% if field.is_readonly or not field.field.is_hidden %}
                                                                 <td{% if field.field.name %} class="field-{{ field.field.name }}{% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
                                                                     {% if field.is_readonly %}
-                                                                        <div class="bg-gray-50 border font-medium max-w-lg px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm truncate whitespace-nowrap dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
-                                                                            {{ field.contents }}
-                                                                        </div>
+                                                                        {% include "unfold/helpers/field_readonly_value.html" %}
                                                                     {% else %}
                                                                         {{ field.field }}
 
