@@ -28,6 +28,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Dependencies:** completely based only on `django.contrib.admin`
 - **Actions:** multiple ways how to define actions within different parts of admin
 - **WYSIWYG:** built-in support for WYSIWYG (Trix)
+- **Array widget:** built-in widget for `django.contrib.postgres.fields.ArrayField`
 - **Filters:** custom dropdown, numeric, datetime, and text fields
 - **Dashboard:** custom components for rapid dashboard development
 - **Model tabs:** define custom tab navigations for models
@@ -297,9 +298,10 @@ def permission_callback(request):
 
 from django import models
 from django.contrib import admin
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from unfold.admin import ModelAdmin
-from unfold.contrib.forms.widgets import WysiwygWidget
+from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
 
 
 @admin.register(MyModel)
@@ -322,6 +324,9 @@ class CustomAdminClass(ModelAdmin):
     formfield_overrides = {
         models.TextField: {
             "widget": WysiwygWidget,
+        },
+        ArrayField: {
+            "widget": ArrayWidget,
         }
     }
 ```
