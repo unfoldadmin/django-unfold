@@ -13,49 +13,9 @@
         </div>
     {% endif %}
 
-    <div class="aligned mb-8 {% if not stacked %}border border-gray-200 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800{% endif %}">
+    <div class="aligned {% if stacked %}mb-5{% else %}border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800{% endif %}">
         {% for line in fieldset %}
-            <div class="form-row block {% if not line.fields|length == 1 %}flex flex-row flex-wrap gap-x-8{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
-                {% for field in line %}
-                    <div class="flex group {% if field.errors %}errors {% endif %}{% if not line.fields|length == 1 %}lg:max-w-xs w-full {% endif %}{% if not forloop.parentloop.last %} mb-6 {% else %} mb-3{% endif %} {% if row %}flex-row items-center{% else %}flex-col{% endif %}">
-                        {% if field.is_checkbox %}
-                            <div class="flex flex-row">
-                                {{ field.field }}
-
-                                <div class="flex flex-col">
-                                    {{ field.label_tag }}
-
-                                    {% if field.field.help_text %}
-                                        <div class="ml-2 -mt-1">
-                                            {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="{% if row %} w-48{% endif %}">
-                                {{ field.label_tag }}
-                            </div>
-
-                            {% if field.is_readonly %}
-                                {% include "unfold/helpers/field_readonly_value.html" %}
-                            {% else %}
-                                {{ field.field }}
-                            {% endif %}
-                        {% endif %}
-
-                        {% if field.errors %}
-                            <span class="mt-1 text-red-600 text-sm dark:text-red-500">
-                                {{ field.errors }}
-                            </span>
-                        {% endif %}
-
-                        {% if field.field.help_text and not field.is_checkbox %}
-                            {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
+            {% include "unfold/helpers/fieldset_row.html" %}
         {% endfor %}
     </div>
 </fieldset>
