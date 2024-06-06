@@ -7,8 +7,6 @@
     {{ media }}
 {% endblock %}
 
-{% comment %} {% block coltype %}colM{% endblock %} {% endcomment %}
-
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
 
 {% if not is_popup %}
