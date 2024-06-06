@@ -1,7 +1,10 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from django.core.validators import EMPTY_VALUES
 from django.forms import MultiWidget, Widget
+from django.http import QueryDict
+from django.utils.datastructures import MultiValueDict
+
 from unfold.widgets import PROSE_CLASSES, UnfoldAdminTextInputWidget
 
 WYSIWYG_CLASSES = [
@@ -40,7 +43,9 @@ class ArrayWidget(MultiWidget):
         context.update({"template": template_widget})
         return context
 
-    def value_from_datadict(self, data, files, name):
+    def value_from_datadict(
+        self, data: QueryDict, files: MultiValueDict, name: str
+    ) -> List:
         values = []
 
         for item in data.getlist(name):
@@ -49,14 +54,26 @@ class ArrayWidget(MultiWidget):
 
         return values
 
-    def value_omitted_from_data(self, data, files, name):
+    def value_omitted_from_data(
+        self, data: QueryDict, files: MultiValueDict, name: str
+    ) -> List:
         return data.getlist(name) not in [[""], *EMPTY_VALUES]
 
-    def decompress(self, value: str) -> list:
-        return value.split(",")
+    def decompress(self, value: Union[str, List]) -> List:
+        if isinstance(value, List):
+            return value.split(",")
 
-    def _resolve_widgets(self, value: str) -> None:
-        self.widgets = [self.widget_class for item in value.split(",")]
+        return []
+
+    def _resolve_widgets(self, value: Optional[Union[List, str]]) -> None:
+        if value is None:
+            value = []
+
+        elif isinstance(value, List):
+            self.widgets = [self.widget_class for item in value]
+        else:
+            self.widgets = [self.widget_class for item in value.split(",")]
+
         self.widgets_names = ["" for i in range(len(self.widgets))]
         self.widgets = [w() if isinstance(w, type) else w for w in self.widgets]
 
