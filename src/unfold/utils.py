@@ -1,7 +1,7 @@
 import datetime
 import decimal
 import json
-from typing import Any, Iterable, List
+from typing import Any, Iterable, List, Optional
 
 from django.db import models
 from django.template.loader import render_to_string
@@ -121,3 +121,19 @@ def hex_to_rgb(hex_color: str) -> List[int]:
     b = int(hex_color[4:6], 16)
 
     return (r, g, b)
+
+
+def prettify_json(data: Any) -> Optional[str]:
+    try:
+        from pygments import highlight
+        from pygments.formatters import HtmlFormatter
+        from pygments.lexers import JsonLexer
+    except ImportError:
+        return None
+
+    response = json.dumps(data, sort_keys=True, indent=4)
+    formatter = HtmlFormatter(style="colorful")
+    response = highlight(response, JsonLexer(), formatter)
+    style = f"<style>{formatter.get_style_defs()}</style>"
+
+    return mark_safe(style + response)
