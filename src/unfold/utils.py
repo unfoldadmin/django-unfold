@@ -131,9 +131,13 @@ def prettify_json(data: Any) -> Optional[str]:
     except ImportError:
         return None
 
-    response = json.dumps(data, sort_keys=True, indent=4)
-    formatter = HtmlFormatter(style="colorful")
-    response = highlight(response, JsonLexer(), formatter)
-    style = f"<style>{formatter.get_style_defs()}</style>"
+    def format_response(response: str, theme: str) -> str:
+        formatter = HtmlFormatter(style=theme, noclasses=True, nobackground=True)
+        return highlight(response, JsonLexer(), formatter)
 
-    return mark_safe(style + response)
+    response = json.dumps(data, sort_keys=True, indent=4)
+
+    return mark_safe(
+        f'<div class="block dark:hidden">{format_response(response, "colorful")}</div>'
+        f'<div class="hidden dark:block">{format_response(response, "monokai")}</div>'
+    )
