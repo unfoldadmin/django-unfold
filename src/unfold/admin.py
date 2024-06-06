@@ -7,7 +7,7 @@ from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
-from django.contrib.admin.utils import lookup_field
+from django.contrib.admin.utils import lookup_field, quote
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -33,7 +33,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.template.defaultfilters import linebreaksbr
 from django.template.response import TemplateResponse
-from django.urls import URLPattern, path, reverse
+from django.urls import NoReverseMatch, URLPattern, path, reverse
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
@@ -220,6 +220,22 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         contents = self._preprocess_field(contents)
         return contents
 
+    def get_admin_url(self, remote_field, remote_obj):
+        url_name = f"admin:{remote_field.model._meta.app_label}_{remote_field.model._meta.model_name}_change"
+        try:
+            url = reverse(
+                url_name,
+                args=[quote(remote_obj.pk)],
+                current_app=self.model_admin.admin_site.name,
+            )
+            return format_html(
+                '<a href="{}" class="text-primary-600 underline">{}</a>',
+                url,
+                remote_obj,
+            )
+        except NoReverseMatch:
+            return str(remote_obj)
+
     def _get_contents(self) -> str:
         from django.contrib.admin.templatetags.admin_list import _boolean_icon
 
@@ -239,6 +255,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 # ReadOnlyPasswordHashWidget.
                 if getattr(widget, "read_only", False):
                     return widget.render(field, value)
+
             if f is None:
                 if getattr(attr, "boolean", False):
                     result_repr = _boolean_icon(value)
@@ -255,6 +272,12 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                     and value is not None
                 ):
                     result_repr = self.get_admin_url(f.remote_field, value)
+                elif isinstance(f, models.URLField):
+                    return format_html(
+                        '<a href="{}" class="text-primary-600 underline">{}</a>',
+                        value,
+                        value,
+                    )
                 else:
                     result_repr = display_for_field(value, f, self.empty_value_display)
                     return conditional_escape(result_repr)

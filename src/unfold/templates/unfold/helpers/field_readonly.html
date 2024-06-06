@@ -3,7 +3,5 @@
         {{ title }}
     </label>
 
-    <div class="readonly bg-gray-50 border font-medium max-w-2xl px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
-        {{ value }}
-    </div>
+    {% include "unfold/helpers/field_readonly_value.html" %}
 </div>
