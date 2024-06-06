@@ -58,6 +58,7 @@ def display(
     function: Optional[Callable[[Model], Any]] = None,
     *,
     boolean: Optional[bool] = None,
+    image: Optional[bool] = None,
     ordering: Optional[Union[str, Combinable, BaseExpression]] = None,
     description: Optional[str] = None,
     empty_value: Optional[str] = None,
@@ -72,6 +73,8 @@ def display(
             )
         if boolean is not None:
             func.boolean = boolean
+        if image is not None:
+            func.image = image
         if ordering is not None:
             func.admin_order_field = ordering
         if description is not None:

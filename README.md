@@ -34,6 +34,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Model tabs:** define custom tab navigations for models
 - **Fieldset tabs:** merge several fielsets into tabs in change form
 - **Colors:** possibility to override default color scheme
+- **Changeform modes:** display fields in changeform in compressed mode
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
 - **Nonrelated inlines**: displays nonrelated model as inline in changeform
@@ -306,6 +307,9 @@ from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
 
 @admin.register(MyModel)
 class CustomAdminClass(ModelAdmin):
+    # Display fields in changeform in compressed mode
+    compressed_fields = True  # Default: False
+
     # Preprocess content of readonly fields before render
     readonly_preprocess_fields = {
         "model_field_name": "html.unescape",

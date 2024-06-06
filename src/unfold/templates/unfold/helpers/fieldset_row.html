@@ -1,0 +1,53 @@
+<div class="form-row
+            {% if adminform.model_admin.compressed_fields %} border-b border-gray-200 -mx-3 px-3 pt-3 first:pt-0 last:border-b-0{% endif %}
+            {% if not line.fields|length == 1 %} flex flex-row flex-wrap gap-x-8{% endif %}
+            {% if not line.has_visible_field %} hidden{% endif %}
+            {% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+    {% for field in line %}
+        <div class="flex group {% if not line.fields|length == 1 and not adminform.model_admin.compressed_fields %} lg:max-w-xs flex-grow{% endif %}{% if field.errors %} errors {% endif %}{% if not forloop.parentloop.last %} {% if adminform.model_admin.compressed_fields %}mb-3{% else %}mb-6{% endif %}{% else %} pb-3{% endif %} {% if adminform.model_admin.compressed_fields %}flex-col lg:flex-row lg:gap-2 {% else %}flex-col{% endif %}">
+            {% if field.is_checkbox %}
+                <div class="flex flex-row">
+                    {{ field.field }}
+
+                    <div class="flex flex-col">
+                        {{ field.label_tag }}
+
+                        {% if field.field.help_text %}
+                            <div class="ml-2 -mt-1">
+                                {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
+                            </div>
+                        {% endif %}
+
+                        {% if field.errors %}
+                            <span class="mt-1 text-red-600 text-sm dark:text-red-500">
+                                {{ field.errors }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="{% if adminform.model_admin.compressed_fields %} min-w-48 mt-2 w-48{% endif %}">
+                    {{ field.label_tag }}
+                </div>
+
+                <div class="flex-grow">
+                    {% if field.is_readonly %}
+                        {% include "unfold/helpers/field_readonly_value.html" %}
+                    {% else %}
+                        {{ field.field }}
+                    {% endif %}
+
+                    {% if field.field.help_text and not field.is_checkbox %}
+                        {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <span class="mt-1 text-red-600 text-sm dark:text-red-500">
+                            {{ field.errors }}
+                        </span>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
