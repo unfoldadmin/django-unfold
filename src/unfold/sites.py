@@ -1,3 +1,4 @@
+import copy
 from http import HTTPStatus
 from typing import Any, Callable, Dict, List, Optional, Union
 
@@ -217,7 +218,9 @@ class UnfoldAdminSite(AdminSite):
         return PasswordChangeView.as_view(**defaults)(request)
 
     def get_sidebar_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
-        navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
+        navigation = copy.deepcopy(
+            get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
+        )
         results = []
 
         def _get_is_active(link: str) -> bool:
@@ -235,14 +238,19 @@ class UnfoldAdminSite(AdminSite):
             allowed_items = []
 
             for item in group["items"]:
-                item["active"] = False
+                if isinstance(item["link"], Callable):
+                    item["link"] = item["link"](request)
+
                 item["active"] = _get_is_active(item["link"])
 
-                for tab in get_config(self.settings_name)["TABS"]:
+                for tab in copy.deepcopy(get_config(self.settings_name)["TABS"]):
                     has_primary_link = False
                     has_tab_link_active = False
 
                     for tab_item in tab["items"]:
+                        if isinstance(tab_item["link"], Callable):
+                            tab_item["link"] = tab_item["link"](request)
+
                         if item["link"] == tab_item["link"]:
                             has_primary_link = True
                             continue
@@ -253,9 +261,6 @@ class UnfoldAdminSite(AdminSite):
 
                     if has_primary_link and has_tab_link_active:
                         item["active"] = True
-
-                if isinstance(item["link"], Callable):
-                    item["link"] = item["link"](request)
 
                 # Permission callback
                 item["has_permission"] = self._call_permission_callback(
@@ -279,7 +284,7 @@ class UnfoldAdminSite(AdminSite):
         return results
 
     def get_tabs_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
-        tabs = get_config(self.settings_name)["TABS"]
+        tabs = copy.deepcopy(get_config(self.settings_name)["TABS"])
 
         for tab in tabs:
             allowed_items = []
