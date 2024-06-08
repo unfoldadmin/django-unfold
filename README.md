@@ -11,13 +11,13 @@
 
 Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
 
-- **Unfold:** demo site is available at [unfoldadmin.com](https://unfoldadmin.com)
+- **Unfold:** demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold)
 - **Formula:** repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
 - **Turbo:** Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
 
 ## Are you using Unfold and need a help?<!-- omit from toc -->
 
-Did you decide to start using Unfold but you don't have time to make the switch from native Django admin? [Get in touch with us](https://unfoldadmin.com/) and let's supercharge development by using our know-how.
+Did you decide to start using Unfold but you don't have time to make the switch from native Django admin? [Get in touch with us](https://unfoldadmin.com/?utm_medium=github&utm_source=unfold) and let's supercharge development by using our know-how.
 
 ## Features <!-- omit from toc -->
 
@@ -38,7 +38,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
 - **Nonrelated inlines**: displays nonrelated model as inline in changeform
-- **Parallel admin**: support for default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/)
+- **Parallel admin**: support for default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold)
 - **VS Code**: project configuration and development container is included
 
 ## Table of contents <!-- omit from toc -->
