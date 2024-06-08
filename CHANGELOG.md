@@ -1,4 +1,13 @@
 
+## 0.27.0 (2024-06-08)
+
+- feat: compressed changeform mode (#450) ([`d2fe80f`](https://github.com/unfoldadmin/django-unfold/commit/d2fe80fa8bc2b57d6d0d045388b2d0cbb8276110))
+- feat: array widget (#441) ([`b34cc16`](https://github.com/unfoldadmin/django-unfold/commit/b34cc1698414435369139935d4685c49bd68cdf7))
+- feat: simplified picture design (#446) ([`67d7a03`](https://github.com/unfoldadmin/django-unfold/commit/67d7a03549a66b8340ff0ccaea013f4673c0aeec))
+- feat: readonly fields with links (#445) ([`3986ffb`](https://github.com/unfoldadmin/django-unfold/commit/3986ffb97a37e015716248cb316132320fac44af))
+- fix: switch help text (#444) ([`23d8714`](https://github.com/unfoldadmin/django-unfold/commit/23d8714b23ca6148b337b62dca5a2f889cde198d))
+- fix: django length_is migration (#442) ([`12f41c3`](https://github.com/unfoldadmin/django-unfold/commit/12f41c3c166d91368e59f20e42cbc6f4b314d24b))
+
 ## 0.26.0 (2024-06-03)
 
 - feat: nonrelated inlines (#419) ([`a6fd72b`](https://github.com/unfoldadmin/django-unfold/commit/a6fd72bdecc31a541e8fa3f845aa7419eb160315))
