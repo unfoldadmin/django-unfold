@@ -17,7 +17,7 @@
         <input type="text" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white flex-grow font-medium px-3 py-2 text-ellipsis dark:bg-gray-900 {% if widget.value %}text-gray-500 dark:text-gray-400{% else %}text-gray-300 dark:text-gray-400{% endif %}">
 
         <div class="flex flex-none items-center leading-none self-stretch">
-            <input id="{{ widget.name }}" type="{{ widget.type }}" name="{{ widget.name }}" class="opacity-0 pointer-events-none" {% include "django/forms/widgets/attrs.html" %} />
+            <input id="{{ widget.name }}" type="{{ widget.type }}" name="{{ widget.name }}" class="{{ widget.file_input_class }}" {% include "django/forms/widgets/attrs.html" %} />
 
             <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200">
                 <span class="material-symbols-outlined">file_upload</span>
