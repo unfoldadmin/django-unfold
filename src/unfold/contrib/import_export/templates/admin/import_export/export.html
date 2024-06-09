@@ -54,7 +54,7 @@
 
         <fieldset class="border border-gray-200 mb-4 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
             {% for field in form.visible_fields %}
-                <div {% if field.field.is_selectable_field %}class="selectable-field-export-row" resource-index="{{ field.field.resource_index }}"{% else %}class="form-row aligned"{% endif %}>
+                <div {% if field.field.is_selectable_field %}class="selectable-field-export-row" resource-index="{{ field.field.resource_index }}"{% endif %}>
                     {% if field.field.initial_field %}
                         <p class="block font-medium mb-2 text-gray-900 text-sm dark:text-gray-200">
                             {% trans "This exporter will export the following fields" %}
