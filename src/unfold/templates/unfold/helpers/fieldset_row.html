@@ -1,5 +1,5 @@
 <div class="form-row
-            {% if adminform.model_admin.compressed_fields %} border-b border-gray-200 -mx-3 px-3 pt-3 first:pt-0 last:border-b-0{% endif %}
+            {% if adminform.model_admin.compressed_fields %} border-b border-gray-200 -mx-3 px-3 pt-3 first:pt-0 dark:border-gray-800 last:border-b-0{% endif %}
             {% if not line.fields|length == 1 %} flex flex-row flex-wrap gap-x-8{% endif %}
             {% if not line.has_visible_field %} hidden{% endif %}
             {% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
