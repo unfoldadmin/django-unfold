@@ -18,7 +18,7 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 
 from .settings import get_config
-from .utils import display_for_field
+from .utils import display_for_field, prettify_json
 from .widgets import CHECKBOX_LABEL_CLASSES, LABEL_CLASSES
 
 
@@ -138,6 +138,14 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                     and value is not None
                 ):
                     result_repr = self.get_admin_url(f.remote_field, value)
+                elif isinstance(f, models.JSONField):
+                    formatted_output = prettify_json(value)
+
+                    if formatted_output:
+                        return formatted_output
+
+                    result_repr = display_for_field(value, f, self.empty_value_display)
+                    return conditional_escape(result_repr)
                 elif isinstance(f, models.URLField):
                     return format_html(
                         '<a href="{}" class="text-primary-600 underline whitespace-nowrap">{}</a>',
