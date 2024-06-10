@@ -57,6 +57,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Dropdown filters](#dropdown-filters)
   - [Numeric filters](#numeric-filters)
   - [Date/time filters](#datetime-filters)
+- [Custom admin pages](#custom-admin-pages)
 - [Nonrelated inlines](#nonrelated-inlines)
 - [Display decorator](#display-decorator)
 - [Change form tabs](#change-form-tabs)
@@ -619,6 +620,45 @@ class YourModelAdmin(ModelAdmin):
         ("field_E", RangeDateFilter),  # Date filter
         ("field_F", RangeDateTimeFilter),  # Datetime filter
     )
+```
+
+## Custom admin pages
+
+By default, Unfold provides a basic view mixin which helps with creation of basic views which are part of Unfold UI. The implementation requires creation of class based view inheriting from `unfold.views.UnfoldModelAdminViewMixin`. It is important to add `title` and `permissions_required` properties.
+
+```python
+# admin.py
+
+from django.views.generic import TemplateView
+from unfold.admin import ModelAdmin
+from unfold.views import UnfoldModelAdminViewMixin
+
+
+class MyClassBasedView(UnfoldModelAdminViewMixin, TemplateView):
+    title = "Custom Title"  # required: custom page header title
+    permissions_required = () # required: tuple of permissions
+    template_name = "some/template/path.html"
+
+
+class CustomAdmin(ModelAdmin):
+    def get_urls(self):
+        return super().get_urls() + [
+            path(
+                "custom-url-path",
+                MyClassBasedView.as_view(model_admin=self),  # IMPORTANT: model_admin is required
+                name="custom_name"
+            ),
+        ]
+```
+
+The template is straightforward, extend from `unfold/layouts/base.html` and the UI will display all Unfold components like header or sidebar with all menu items. Then all content needs to be located in `content` block.
+
+```django-html
+{% extends "unfold/layouts/base.html" %}
+
+{% block content %}
+    Content here
+{% endblock %}
 ```
 
 ## Nonrelated inlines
