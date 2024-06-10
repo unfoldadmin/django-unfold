@@ -45,6 +45,8 @@
                     {% include "unfold/helpers/messages/error.html" with error=message %}
                 {% endif %}
 
+                {% block login_before %}{% endblock %}
+
                 <form action="{{ app_path }}" method="post" id="login-form">
                     {% csrf_token %}
 
@@ -70,6 +72,8 @@
                         </button>
                     </div>
                 </form>
+
+                {% block login_after %}{% endblock %}
             </div>
 
             <div class="absolute flex flex-row items-center justify-between left-0 m-4 right-0 top-0">
