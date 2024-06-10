@@ -288,7 +288,18 @@ class FileFieldMixin:
     def get_context(self, name, value, attrs):
         widget = super().get_context(name, value, attrs)
         widget["widget"].update(
-            {"class": " ".join([*CHECKBOX_CLASSES, *["form-check-input"]])}
+            {
+                "class": " ".join([*CHECKBOX_CLASSES, *["form-check-input"]]),
+                "file_input_class": " ".join(
+                    [
+                        self.attrs.get("class", ""),
+                        *[
+                            "opacity-0",
+                            "pointer-events-none",
+                        ],
+                    ]
+                ),
+            }
         )
         return widget
 
