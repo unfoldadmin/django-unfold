@@ -59,12 +59,12 @@
 
                                     {% if inline_admin_form.original or inline_admin_form.show_url %}
                                         <tr>
-                                            <td class="original" colspan="10">
+                                            <td class="original {% if inline_admin_form.original or inline_admin_form.show_url %}{% if inline_admin_form.original and inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model and inline_admin_formset.has_change_permission %}bg-gray-50 border-b  border-gray-200 dark:bg-white/[.02] dark:border-gray-800{% endif %}{% endif %}" colspan="10">
                                                 {% if inline_admin_form.original or inline_admin_form.show_url %}
                                                     <p class="align-middle flex font-normal items-center leading-none px-3 text-gray-500 text-left text-sm whitespace-nowrap">
                                                         {% if inline_admin_form.original %}
                                                             {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} font-medium mt-3 text-primary-600 underline text-xs">
+                                                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink py-1.5{% else %}inlineviewlink mt-3{% endif %} font-medium text-primary-600 underline text-xs">
                                                                     {{ inline_admin_form.original }}
                                                                 </a>
                                                             {% endif %}
@@ -112,7 +112,7 @@
                                                             {% if field.is_readonly or not field.field.is_hidden %}
                                                                 <td{% if field.field.name %} class="field-{{ field.field.name }}{% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:w-72 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
                                                                     {% if field.is_readonly %}
-                                                                        {% include "unfold/helpers/field_readonly_value.html" %}
+                                                                        {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
                                                                     {% else %}
                                                                         {{ field.field }}
 

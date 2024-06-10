@@ -11,13 +11,13 @@
 
 Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
 
-- **Unfold:** demo site is available at [unfoldadmin.com](https://unfoldadmin.com)
+- **Unfold:** demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold)
 - **Formula:** repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
 - **Turbo:** Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo)
 
 ## Are you using Unfold and need a help?<!-- omit from toc -->
 
-Did you decide to start using Unfold but you don't have time to make the switch from native Django admin? [Get in touch with us](https://unfoldadmin.com/) and let's supercharge development by using our know-how.
+Did you decide to start using Unfold but you don't have time to make the switch from native Django admin? [Get in touch with us](https://unfoldadmin.com/?utm_medium=github&utm_source=unfold) and let's supercharge development by using our know-how.
 
 ## Features <!-- omit from toc -->
 
@@ -28,15 +28,17 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Dependencies:** completely based only on `django.contrib.admin`
 - **Actions:** multiple ways how to define actions within different parts of admin
 - **WYSIWYG:** built-in support for WYSIWYG (Trix)
+- **Array widget:** built-in widget for `django.contrib.postgres.fields.ArrayField`
 - **Filters:** custom dropdown, numeric, datetime, and text fields
 - **Dashboard:** custom components for rapid dashboard development
 - **Model tabs:** define custom tab navigations for models
 - **Fieldset tabs:** merge several fielsets into tabs in change form
 - **Colors:** possibility to override default color scheme
+- **Changeform modes:** display fields in changeform in compressed mode
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
 - **Nonrelated inlines**: displays nonrelated model as inline in changeform
-- **Parallel admin**: support for default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/)
+- **Parallel admin**: support for default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold)
 - **VS Code**: project configuration and development container is included
 
 ## Table of contents <!-- omit from toc -->
@@ -55,6 +57,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Dropdown filters](#dropdown-filters)
   - [Numeric filters](#numeric-filters)
   - [Date/time filters](#datetime-filters)
+- [Custom admin pages](#custom-admin-pages)
 - [Nonrelated inlines](#nonrelated-inlines)
 - [Display decorator](#display-decorator)
 - [Change form tabs](#change-form-tabs)
@@ -297,13 +300,17 @@ def permission_callback(request):
 
 from django import models
 from django.contrib import admin
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from unfold.admin import ModelAdmin
-from unfold.contrib.forms.widgets import WysiwygWidget
+from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
 
 
 @admin.register(MyModel)
 class CustomAdminClass(ModelAdmin):
+    # Display fields in changeform in compressed mode
+    compressed_fields = True  # Default: False
+
     # Preprocess content of readonly fields before render
     readonly_preprocess_fields = {
         "model_field_name": "html.unescape",
@@ -322,6 +329,9 @@ class CustomAdminClass(ModelAdmin):
     formfield_overrides = {
         models.TextField: {
             "widget": WysiwygWidget,
+        },
+        ArrayField: {
+            "widget": ArrayWidget,
         }
     }
 ```
@@ -610,6 +620,45 @@ class YourModelAdmin(ModelAdmin):
         ("field_E", RangeDateFilter),  # Date filter
         ("field_F", RangeDateTimeFilter),  # Datetime filter
     )
+```
+
+## Custom admin pages
+
+By default, Unfold provides a basic view mixin which helps with creation of basic views which are part of Unfold UI. The implementation requires creation of class based view inheriting from `unfold.views.UnfoldModelAdminViewMixin`. It is important to add `title` and `permissions_required` properties.
+
+```python
+# admin.py
+
+from django.views.generic import TemplateView
+from unfold.admin import ModelAdmin
+from unfold.views import UnfoldModelAdminViewMixin
+
+
+class MyClassBasedView(UnfoldModelAdminViewMixin, TemplateView):
+    title = "Custom Title"  # required: custom page header title
+    permissions_required = () # required: tuple of permissions
+    template_name = "some/template/path.html"
+
+
+class CustomAdmin(ModelAdmin):
+    def get_urls(self):
+        return super().get_urls() + [
+            path(
+                "custom-url-path",
+                MyClassBasedView.as_view(model_admin=self),  # IMPORTANT: model_admin is required
+                name="custom_name"
+            ),
+        ]
+```
+
+The template is straightforward, extend from `unfold/layouts/base.html` and the UI will display all Unfold components like header or sidebar with all menu items. Then all content needs to be located in `content` block.
+
+```django-html
+{% extends "unfold/layouts/base.html" %}
+
+{% block content %}
+    Content here
+{% endblock %}
 ```
 
 ## Nonrelated inlines
