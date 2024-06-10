@@ -30,8 +30,6 @@ from .exceptions import UnfoldException
 from .fields import UnfoldAdminField, UnfoldAdminReadonlyField
 from .forms import ActionForm
 from .typing import FieldsetsType
-from .utils import display_for_field, prettify_json
-
 from .widgets import (
     SELECT_CLASSES,
     UnfoldAdminBigIntegerFieldWidget,
