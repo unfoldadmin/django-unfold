@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Dict, Optional
 
 from .typing import ActionFunction
 
@@ -9,3 +10,4 @@ class UnfoldAction:
     method: ActionFunction
     description: str
     path: str
+    attrs: Optional[Dict] = None
