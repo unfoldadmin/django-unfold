@@ -1,4 +1,16 @@
 
+## 0.28.0 (2024-06-12)
+
+- feat: optionally format json with pygments (#451) ([`c947162`](https://github.com/unfoldadmin/django-unfold/commit/c94716294ae81280cbf9400d81ea5b9b60e255cb))
+- feat: login blocks (#465) ([`43e1904`](https://github.com/unfoldadmin/django-unfold/commit/43e1904171d8568e2ffeeb8ec2a3bece3b1fba48))
+- feat: custom views (#468) ([`8039073`](https://github.com/unfoldadmin/django-unfold/commit/8039073bf93cdbdb9789eb3721d83bd8280efc5f))
+- fix: submit line action attrs (#472) ([`e8f7a62`](https://github.com/unfoldadmin/django-unfold/commit/e8f7a6278c2bb93df27046dc6ccda863c110be26))
+- fix: export changelist action button (#464) ([`c01a1ba`](https://github.com/unfoldadmin/django-unfold/commit/c01a1badb60bc3b53638c9c5a10aba4912c5a54a))
+- fix: import export guess type (#466) ([`91c7439`](https://github.com/unfoldadmin/django-unfold/commit/91c7439435756a6744dee30206ecaa340f8a0912))
+- fix: compressed fields dark mode border (#467) ([`ce6e979`](https://github.com/unfoldadmin/django-unfold/commit/ce6e9798062ff151af6009bfd963850e193eaa39))
+- fix: search results z-index (#458) ([`2e378e3`](https://github.com/unfoldadmin/django-unfold/commit/2e378e3ab3647e7321f230355f062395b32bbec8))
+- docs: utm params (#460) ([`4a2792d`](https://github.com/unfoldadmin/django-unfold/commit/4a2792d6dc4e3c3ca1c3db751b8be1aeccc6703d))
+
 ## 0.27.0 (2024-06-08)
 
 - feat: compressed changeform mode (#450) ([`d2fe80f`](https://github.com/unfoldadmin/django-unfold/commit/d2fe80fa8bc2b57d6d0d045388b2d0cbb8276110))
