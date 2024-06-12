@@ -464,6 +464,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             method=method,
             description=self._get_action_description(method, action),
             path=self._get_action_url(method, action),
+            attrs=method.attrs if hasattr(method, "attrs") else None,
         )
 
     @staticmethod
