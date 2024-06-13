@@ -4,7 +4,7 @@
             {% if not line.has_visible_field %} hidden{% endif %}
             {% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
     {% for field in line %}
-        <div class="flex group {% if not line.fields|length == 1 and not adminform.model_admin.compressed_fields %} lg:max-w-xs flex-grow{% endif %}{% if field.errors %} errors {% endif %}{% if not forloop.parentloop.last %} {% if adminform.model_admin.compressed_fields %}mb-3{% else %}mb-6{% endif %}{% else %} pb-3{% endif %} {% if adminform.model_admin.compressed_fields %}flex-col lg:flex-row lg:gap-2 {% else %}flex-col{% endif %}">
+        <div class="flex group {% if adminform.model_admin.compressed_fields %} field-row{% endif %}{% if not line.fields|length == 1 and not adminform.model_admin.compressed_fields %} lg:max-w-xs flex-grow{% endif %}{% if field.errors %} errors {% endif %}{% if not forloop.parentloop.last %} {% if adminform.model_admin.compressed_fields %}mb-3{% else %}mb-6{% endif %}{% else %} pb-3{% endif %} {% if adminform.model_admin.compressed_fields %}flex-col lg:flex-row lg:gap-2 {% else %}flex-col{% endif %}">
             {% if field.is_checkbox %}
                 <div class="flex flex-row">
                     {{ field.field }}
