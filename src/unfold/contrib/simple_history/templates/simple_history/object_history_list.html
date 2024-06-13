@@ -31,40 +31,44 @@
             <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
                 {% trans 'Change reason' %}
             </th>
+
+            <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                {% trans 'Changes' %}
+            </th>
         </tr>
     </thead>
 
     <tbody>
-        {% for action in action_list %}
+        {% for record in historical_records %}
             <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
                 <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Object' %}">
-                    <a href="{% url opts|admin_urlname:'simple_history' object.pk action.pk %}">
-                        {{ action.history_object }}
+                    <a href="{% url opts|admin_urlname:'simple_history' object.pk record.pk %}">
+                        {{ record.history_object }}
                     </a>
                 </td>
 
                 {% for column in history_list_display %}
                     <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans column %}">
-                        {{ action|getattribute:column }}
+                        {{ record|getattribute:column }}
                     </th>
                 {% endfor %}
 
                 <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Date/time' %}">
-                    {{ action.history_date }}
+                    {{ record.history_date }}
                 </td>
 
                 <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Comment' %}">
-                    {{ action.get_history_type_display }}
+                    {{ record.get_history_type_display }}
                 </td>
 
                 <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Changed by' %}">
-                    {% if action.history_user %}
-                        {% url admin_user_view action.history_user_id as admin_user_url %}
+                    {% if record.history_user %}
+                        {% url admin_user_view record.history_user_id as admin_user_url %}
 
                         {% if admin_user_url %}
-                            <a href="{{ admin_user_url }}">{{ action.history_user }}</a>
+                            <a href="{{ admin_user_url }}">{{ record.history_user }}</a>
                         {% else %}
-                            {{ action.history_user }}
+                            {{ record.history_user }}
                         {% endif %}
                     {% else %}
                         {% trans "None" %}
@@ -72,7 +76,41 @@
                 </td>
 
                 <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Change reason' %}">
-                    {{ action.history_change_reason }}
+                    {{ record.history_change_reason }}
+                </td>
+
+                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Changes' %}">
+                    {% block history_delta_changes %}
+                        {% if record.history_delta_changes %}
+                            <ul>
+                                {% for change in record.history_delta_changes %}
+                                    <li class="flex flex-row gap-2">
+                                        <strong class="font-medium text-gray-700 dark:text-gray-200">
+                                            {{ change.field }}:
+                                        </strong>
+
+                                        <div class="flex flex-row items-center gap-2">
+                                            {% if change.old %}
+                                                <span>
+                                                    {{ change.old }}
+                                                </span>
+                                            {% endif %}
+
+                                            {% if change.old and change.new %}
+                                                <span class="align-text-top material-symbols-outlined md-18 text-gray-300 group-hover:text-gray-400 dark:text-gray-600">arrow_right_alt</span>
+                                            {% endif %}
+
+                                            {% if change.new %}
+                                                <span>
+                                                    {{ change.new }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endblock %}
                 </td>
             </tr>
         {% endfor %}
