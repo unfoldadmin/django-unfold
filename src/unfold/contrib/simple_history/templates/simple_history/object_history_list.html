@@ -63,7 +63,7 @@
 
                 <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Changed by' %}">
                     {% if record.history_user %}
-                        {% url admin_user_view action.history_user_id as admin_user_url %}
+                        {% url admin_user_view record.history_user_id as admin_user_url %}
 
                         {% if admin_user_url %}
                             <a href="{{ admin_user_url }}">{{ record.history_user }}</a>
