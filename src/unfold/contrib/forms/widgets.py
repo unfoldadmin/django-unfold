@@ -60,6 +60,8 @@ class ArrayWidget(MultiWidget):
 
     def decompress(self, value: Union[str, List]) -> List:
         if isinstance(value, List):
+            return value
+        elif isinstance(value, str):
             return value.split(",")
 
         return []
