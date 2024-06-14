@@ -1,4 +1,14 @@
 
+## 0.28.1 (2024-06-14)
+
+- fix: detailed django celery beat installation (#483) ([`4ad2d0c`](https://github.com/unfoldadmin/django-unfold/commit/4ad2d0c1d68d46d3652d3ed07831e26b8cc9cfe1))
+- fix: simple history templates refactoring (#482) ([`045920f`](https://github.com/unfoldadmin/django-unfold/commit/045920f2a36290428fc3b433b6a55bcff15dd680))
+- fix: compressed datetime field (#481) ([`b1b5d2b`](https://github.com/unfoldadmin/django-unfold/commit/b1b5d2b9489cca76327176c2d05181443790a97f))
+- fix: arraywidget decompress (#473) ([`8f931da`](https://github.com/unfoldadmin/django-unfold/commit/8f931da6dc132ceebe769cbe663ef3272866b3f9))
+- fix: readonly field truncate (#476) ([`ba76987`](https://github.com/unfoldadmin/django-unfold/commit/ba76987fa3586740f04d67c72ed411709720ed0b))
+- fix: sidebar dark mode (#474) ([`feacc84`](https://github.com/unfoldadmin/django-unfold/commit/feacc84ed59baf8816b584b3dcc6b111562f86af))
+- chore(deps): bump braces from 3.0.2 to 3.0.3 (#477) ([`68e46bd`](https://github.com/unfoldadmin/django-unfold/commit/68e46bddbc17035fa784db307280dafe9d1f5662))
+
 ## 0.28.0 (2024-06-12)
 
 - feat: optionally format json with pygments (#451) ([`c947162`](https://github.com/unfoldadmin/django-unfold/commit/c94716294ae81280cbf9400d81ea5b9b60e255cb))
