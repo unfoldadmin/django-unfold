@@ -12,6 +12,10 @@
             {% endif %}
 
             {% include "unfold/helpers/account_links.html" %}
+            
+            {% if use_multilanguage %}
+                {% include "unfold/helpers/language_switch.html" %}
+            {% endif %}
         </div>
     </div>
 
