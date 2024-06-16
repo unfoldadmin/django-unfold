@@ -70,6 +70,9 @@ class UnfoldAdminSite(AdminSite):
                 "show_view_on_site": get_config(self.settings_name)[
                     "SHOW_VIEW_ON_SITE"
                 ],
+                "use_multilanguage": get_config(self.settings_name)[
+                    "USE_MULTILANGUAGE"
+                ],
                 "colors": self._process_colors(
                     get_config(self.settings_name)["COLORS"]
                 ),
@@ -120,7 +123,8 @@ class UnfoldAdminSite(AdminSite):
             **(extra_context or {}),
         }
 
-        dashboard_callback = get_config(self.settings_name)["DASHBOARD_CALLBACK"]
+        dashboard_callback = get_config(self.settings_name)[
+            "DASHBOARD_CALLBACK"]
 
         if isinstance(dashboard_callback, str):
             context = import_string(dashboard_callback)(request, context)
@@ -183,7 +187,8 @@ class UnfoldAdminSite(AdminSite):
         )
 
         redirect_field_name = self._get_value(
-            get_config(self.settings_name)["LOGIN"].get("redirect_after"), request
+            get_config(self.settings_name)["LOGIN"].get(
+                "redirect_after"), request
         )
 
         if image not in EMPTY_VALUES:
@@ -205,7 +210,8 @@ class UnfoldAdminSite(AdminSite):
 
         from .forms import AdminOwnPasswordChangeForm
 
-        url = reverse(f"{self.name}:password_change_done", current_app=self.name)
+        url = reverse(f"{self.name}:password_change_done",
+                      current_app=self.name)
         defaults = {
             "form_class": AdminOwnPasswordChangeForm,
             "success_url": url,
@@ -217,7 +223,8 @@ class UnfoldAdminSite(AdminSite):
         return PasswordChangeView.as_view(**defaults)(request)
 
     def get_sidebar_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
-        navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
+        navigation = get_config(self.settings_name)[
+            "SIDEBAR"].get("navigation", [])
         results = []
 
         def _get_is_active(link: str) -> bool:
@@ -362,6 +369,7 @@ class UnfoldAdminSite(AdminSite):
                 if value[0] != "#":
                     continue
 
-                colors[name][weight] = " ".join(str(item) for item in hex_to_rgb(value))
+                colors[name][weight] = " ".join(
+                    str(item) for item in hex_to_rgb(value))
 
         return colors
