@@ -1,5 +1,5 @@
 {% if not is_popup %}
-    {% if tab_list or actions_list or actions_items or nav_global %}
+    {% if tab_list or actions_list or actions_detail or actions_items or nav_global %}
         <div class="flex items-start flex-col mb-4 text-gray-500 text-sm w-full md:border-b dark:md:border-gray-800 md:border-l-0 md:flex-row md:items-center md:justify-end dark:text-gray-400">
             {% if tab_list %}
                 <ul class="border rounded-md flex flex-col w-full md:flex-row md:border-b-0 md:border-t-0 md:border-l-0 md:border-r-0 dark:border-gray-800">
@@ -15,9 +15,13 @@
                 </ul>
             {% endif %}
 
-            {% if actions_list or actions_items or nav_global %}
+            {% if actions_list or actions_detail or actions_items or nav_global %}
                 <ul class="border flex flex-col mb-4 mt-2 rounded-md shadow-sm md:flex-row md:mb-2 md:mt-0 dark:border-gray-800 max-md:w-full">
                     {% for action in actions_list %}
+                        {% include "unfold/helpers/tab_action.html" with title=action.title link=action.path %}
+                    {% endfor %}
+
+                    {% for action in actions_detail %}
                         {% include "unfold/helpers/tab_action.html" with title=action.title link=action.path %}
                     {% endfor %}
 
