@@ -52,6 +52,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Custom unfold @action decorator](#custom-unfold-action-decorator)
   - [Action handler functions](#action-handler-functions)
   - [Action examples](#action-examples)
+  - [Action with form example](#action-with-form-example)
 - [Filters](#filters)
   - [Text filters](#text-filters)
   - [Dropdown filters](#dropdown-filters)
@@ -464,6 +465,63 @@ class UserAdmin(ModelAdmin):
         return redirect(
             reverse_lazy("admin:users_user_change", args=(object_id,))
         )
+```
+
+### Action with form example
+
+Below is an example of an action that will display a form after clicking on the action button on the detail object page.
+
+```python
+from django import forms
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+
+from unfold.widgets import UnfoldAdminTextInputWidget
+
+
+class SomeForm(forms.Form):
+    # It is important to set a widget coming from Unfold
+    note = forms.CharField(label=_("Note"), widget=UnfoldAdminTextInputWidget)
+
+
+@register(User)
+class UserAdmin(ModelAdmin):
+    actions_detail = ["change_detail_action_block"]
+    form = SomeForm(request.POST or None)
+
+    @action(description=_("Detail"))
+    def change_detail_action_block(self, request: HttpRequest, object_id: int) -> str:
+        user = User.objects.get(pk=object_id)
+
+        if request.method == "POST" and form.is_valid():
+            # Do something with form data
+            form.cleaned_data["note"]
+
+            return redirect(
+                reverse_lazy("admin:users_user_change", args=[object_id])
+            )
+
+        return render_to_string("some/template.html", {
+            "form": form,
+        })
+```
+
+Template displaying the form. Please note that breadcrumbs are empty in this case but if you want, you can configure your own breadcrumbs path.
+
+```html
+{% extends "admin/base_site.html" %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+            {% include "unfold/helpers/field.html" with field=field %}
+        {% endfor %}
+    </form>
+{% endblock %}
 ```
 
 ## Filters
