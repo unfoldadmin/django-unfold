@@ -1222,6 +1222,7 @@ Below you can find a more complex example which is using multiple components and
 | unfold/components/separator.html  | Separator, horizontal rule     | class                            |
 | unfold/components/text.html       | Paragraph of text              | class                            |
 | unfold/components/title.html      | Basic heading element          | class                            |
+| unfold/components/button.html     | Basic button  element          | submit                           |
 
 ## Unfold development
 
