@@ -227,6 +227,7 @@ SWITCH_CLASSES = [
     "rounded-full",
     "transition-all",
     "w-8",
+    "min-w-8",
     "after:absolute",
     "after:bg-white",
     "after:content-['']",
