@@ -1,4 +1,17 @@
 
+## 0.29.0 (2024-06-23)
+
+- feat: basic button component (#504) ([`7258a47`](https://github.com/unfoldadmin/django-unfold/commit/7258a476800ffd03afe6af27ecc0deaba129c097))
+- feat: unified details actions with tabs (#492) ([`7802d59`](https://github.com/unfoldadmin/django-unfold/commit/7802d59f8782cb5b2ee1ecacfda56f52e4481f95))
+- fix: inline timezone warning (#506) ([`8461406`](https://github.com/unfoldadmin/django-unfold/commit/8461406e22ec0f7ce7662bbdccfd8b0d76532fc7))
+- fix: compressed switch checkbox (#505) ([`b323b41`](https://github.com/unfoldadmin/django-unfold/commit/b323b41c2772b92e0f69e602d40c22ad191f378b))
+- fix: header dropdowns z-index (#502) ([`36aebae`](https://github.com/unfoldadmin/django-unfold/commit/36aebae47894ea230e1255582f17816dbc6d832d))
+- fix: compressed fields for tabular inline (#500) ([`1b84513`](https://github.com/unfoldadmin/django-unfold/commit/1b84513abfadc3ae5382e3c9fa6f0266ac0af462))
+- fix: sidebar dark mode bg color (#501) ([`4281da6`](https://github.com/unfoldadmin/django-unfold/commit/4281da66d1c4f98989824dc37c9ce68e6522a2c1))
+- fix: readonly field image improvements (#490) ([`b771b84`](https://github.com/unfoldadmin/django-unfold/commit/b771b842e571679c90ee00ae6b25667f838c78ae))
+- docs: action with form example (#503) ([`61a9d97`](https://github.com/unfoldadmin/django-unfold/commit/61a9d97f02e0b22c073df6596d5e6a16abe25f06))
+- chore(deps-dev): bump urllib3 from 2.1.0 to 2.2.2 (#495) ([`47a1181`](https://github.com/unfoldadmin/django-unfold/commit/47a1181bca433c13a5774d2ed56fb0c981ed7654))
+
 ## 0.28.1 (2024-06-14)
 
 - fix: detailed django celery beat installation (#483) ([`4ad2d0c`](https://github.com/unfoldadmin/django-unfold/commit/4ad2d0c1d68d46d3652d3ed07831e26b8cc9cfe1))
