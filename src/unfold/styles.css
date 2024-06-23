@@ -157,7 +157,21 @@ table tr.selected th {
 }
 
 .timezonewarning {
-  @apply mt-2 text-gray-500 text-xs w-full;
+  @apply absolute block items-center right-20 top-2.5 text-gray-500 truncate;
+  font-size: 0;
+}
+
+.timezonewarning:hover {
+  @apply bg-white bottom-px leading-9 left-px right-px px-3 rounded-md text-xs top-px dark:bg-gray-900;
+}
+
+.timezonewarning:hover:before {
+  @apply hidden mr-2;
+}
+
+.timezonewarning:before {
+  @apply block cursor-pointer items-center justify-center material-symbols-outlined text-base text-center text-red-600 dark:border-gray-700;
+  content: "warning";
 }
 
 /*******************************************************
