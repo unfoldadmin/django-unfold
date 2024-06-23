@@ -157,20 +157,20 @@ table tr.selected th {
 }
 
 .timezonewarning {
-  @apply absolute flex flex-row items-center right-20 top-2.5 text-gray-500;
+  @apply absolute block items-center right-20 top-2.5 text-gray-500 truncate;
   font-size: 0;
 }
 
 .timezonewarning:hover {
-  @apply bg-white bottom-px left-px right-px px-3 rounded-md text-xs truncate top-px dark:bg-gray-900;
+  @apply bg-white bottom-px leading-9 left-px right-px px-3 rounded-md text-xs top-px dark:bg-gray-900;
 }
 
 .timezonewarning:hover:before {
-  @apply hidden;
+  @apply hidden mr-2;
 }
 
 .timezonewarning:before {
-  @apply block cursor-pointer items-center justify-center material-symbols-outlined mr-2 text-base text-center text-red-600 dark:border-gray-700;
+  @apply block cursor-pointer items-center justify-center material-symbols-outlined text-base text-center text-red-600 dark:border-gray-700;
   content: "warning";
 }
 

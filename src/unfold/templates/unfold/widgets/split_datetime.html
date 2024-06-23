@@ -1,23 +1,23 @@
-<div class="datetime flex flex-col gap-2 max-w-2xl lg:flex-row group-[.field-row]:flex-row group-[.field-row]:items-center">
-    <div class="basis-1/2 flex flex-col flex-wrap mb-4 lg:mb-0 group-[.field-row]:flex-row group-[.field-row]:gap-2">
-        <div class="font-medium mb-2 text-gray-500 text-sm dark:text-gray-400 group-[.field-row]:mb-0 group-[.field-row]:flex group-[.field-row]:items-center">
+<div class="datetime flex flex-col gap-2 max-w-2xl lg:flex-row lg:group-[.field-row]:flex-row lg:group-[.field-row]:items-center lg:group-[.field-tabular]:flex-row lg:group-[.field-tabular]:items-center">
+    <div class="basis-1/2 flex flex-col lg:group-[.field-row]:flex-row group-[.field-row]:gap-2 lg:group-[.field-tabular]:flex-row group-[.field-tabular]:gap-2">
+        <div class="font-medium mb-2 text-gray-500 text-sm dark:text-gray-400 group-[.field-row]:mb-0 group-[.field-row]:flex group-[.field-row]:items-center group-[.field-tabular]:mb-0 group-[.field-tabular]:flex group-[.field-tabular]:items-center">
             {{ date_label }}
         </div>
 
         {% with widget=widget.subwidgets.0 %}
-            <div class="flex flex-col relative group-[.field-row]:flex-grow">
+            <div class="flex flex-col min-w-52 relative group-[.field-row]:flex-grow group-[.field-tabular]:flex-grow">
                 {% include widget.template_name %}
             </div>
         {% endwith %}
     </div>
 
-    <div class="basis-1/2 flex flex-col flex-wrap lg:ml-auto mt-3 md:mt-0 group-[.field-row]:flex-row group-[.field-row]:gap-2">
-        <div class="font-medium mb-2 text-gray-500 text-sm dark:text-gray-400 group-[.field-row]:mb-0 group-[.field-row]:flex group-[.field-row]:items-center">
+    <div class="basis-1/2 flex flex-col lg:ml-auto md:mt-0 lg:group-[.field-row]:flex-row group-[.field-row]:gap-2 lg:group-[.field-tabular]:flex-row group-[.field-tabular]:gap-2">
+        <div class="font-medium mb-2 text-gray-500 text-sm dark:text-gray-400 group-[.field-row]:mb-0 group-[.field-row]:flex group-[.field-row]:items-center group-[.field-tabular]:mb-0 group-[.field-tabular]:flex group-[.field-tabular]:items-center">
             {{ time_label }}
         </div>
 
         {% with widget=widget.subwidgets.1 %}
-            <div class="flex flex-col relative group-[.field-row]:flex-grow">
+            <div class="flex flex-col min-w-52 relative group-[.field-row]:flex-grow group-[.field-tabular]:flex-grow">
                 {% include widget.template_name %}
             </div>
         {% endwith %}

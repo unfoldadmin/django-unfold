@@ -49,6 +49,7 @@ BASE_CLASSES = [
     "border",
     "bg-white",
     "font-medium",
+    "min-w-20",
     "rounded-md",
     "shadow-sm",
     "text-gray-500",
@@ -77,6 +78,8 @@ BASE_INPUT_CLASSES = [
 ]
 
 INPUT_CLASSES = [*BASE_INPUT_CLASSES, "max-w-2xl"]
+
+DATETIME_CLASSES = [*BASE_INPUT_CLASSES, "min-w-52"]
 
 COLOR_CLASSES = [*BASE_CLASSES, "h-9.5", "px-2", "py-2", "w-32"]
 
@@ -322,7 +325,7 @@ class UnfoldAdminDateWidget(AdminDateWidget):
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
-            "class": "vDateField " + " ".join(INPUT_CLASSES),
+            "class": "vDateField " + " ".join(DATETIME_CLASSES),
             "size": "10",
             **(attrs or {}),
         }
@@ -336,7 +339,7 @@ class UnfoldAdminSingleDateWidget(AdminDateWidget):
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
-            "class": "vDateField " + " ".join(INPUT_CLASSES),
+            "class": "vDateField " + " ".join(DATETIME_CLASSES),
             "size": "10",
             **(attrs or {}),
         }
@@ -348,7 +351,7 @@ class UnfoldAdminTimeWidget(AdminTimeWidget):
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
-            "class": "vTimeField " + " ".join(INPUT_CLASSES),
+            "class": "vTimeField " + " ".join(DATETIME_CLASSES),
             "size": "8",
             **(attrs or {}),
         }
@@ -362,7 +365,7 @@ class UnfoldAdminSingleTimeWidget(AdminTimeWidget):
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
-            "class": "vTimeField " + " ".join(INPUT_CLASSES),
+            "class": "vTimeField " + " ".join(DATETIME_CLASSES),
             "size": "8",
             **(attrs or {}),
         }
