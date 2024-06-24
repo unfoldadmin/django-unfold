@@ -29,7 +29,7 @@
             <div class="w-full sm:w-96">
                 <h1 class="font-semibold mb-10">
                     <span class="block text-gray-700 dark:text-gray-200">{% trans 'Welcome back to' %}</span>
-                    <span class="block text-primary-600 text-xl">{{ site_title }}</span>
+                    <span class="block text-primary-600 text-xl dark:text-primary-500">{{ site_title }}</span>
                 </h1>
 
                 {% include "unfold/helpers/messages/errornote.html" with errors=form.errors %}
@@ -78,7 +78,7 @@
 
             <div class="absolute flex flex-row items-center justify-between left-0 m-4 right-0 top-0">
                 {% if site_url %}
-                    <a href="{{ site_url }}" class="flex font-medium items-center text-sm text-primary-600">
+                    <a href="{{ site_url }}" class="flex font-medium items-center text-sm text-primary-600 dark:text-primary-500">
                         <span class="material-symbols-outlined mr-2">arrow_back</span> {% trans 'Return to site' %}
                     </a>
                 {% endif %}
