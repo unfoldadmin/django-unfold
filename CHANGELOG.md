@@ -1,4 +1,11 @@
 
+## 0.29.1 (2024-06-24)
+
+- fix: tabbed inline border (#512) ([`854cb6f`](https://github.com/unfoldadmin/django-unfold/commit/854cb6ff53c2ae76fa4f2ba1516774a52ee162e6))
+- fix: sidebar color (#510) ([`0022a15`](https://github.com/unfoldadmin/django-unfold/commit/0022a159664aa91e7e98a666b2147c4cd2894afd))
+- fix: inline headers (#509) ([`0bf73ac`](https://github.com/unfoldadmin/django-unfold/commit/0bf73ac30cac14d1e2c4acabc48a26259e3f9498))
+- fix: dark mode link colors (#508) ([`d1b5a1e`](https://github.com/unfoldadmin/django-unfold/commit/d1b5a1e006338a54cbea9cd6146fc5422d95cd60))
+
 ## 0.29.0 (2024-06-23)
 
 - feat: basic button component (#504) ([`7258a47`](https://github.com/unfoldadmin/django-unfold/commit/7258a476800ffd03afe6af27ecc0deaba129c097))
