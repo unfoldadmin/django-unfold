@@ -116,6 +116,7 @@ SELECT_CLASSES = [
 
 PROSE_CLASSES = [
     "font-normal",
+    "whitespace-normal",
     "prose-sm",
     "prose-blockquote:border-l-4",
     "prose-blockquote:not-italic",
