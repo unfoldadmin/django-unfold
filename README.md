@@ -321,6 +321,9 @@ class CustomAdminClass(ModelAdmin):
     # Display submit button in filters
     list_filter_submit = False
 
+    # Position horizontal scrollbar in changelist at the top
+    list_horizontal_scrollbar_top = False
+
     # Custom actions
     actions_list = []  # Displayed above the results list
     actions_row = []  # Displayed in a table row in results list
