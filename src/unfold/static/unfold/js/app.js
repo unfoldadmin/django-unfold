@@ -6,7 +6,26 @@ window.addEventListener("load", (e) => {
   dateTimeShortcutsOverlay();
 
   renderCharts();
+
+  filterForm();
 });
+
+/*************************************************************
+ * Filter form
+ *************************************************************/
+const filterForm = () => {
+  const filterForm = document.getElementById("filter-form");
+
+  if (!filterForm) {
+    return;
+  }
+
+  filterForm.addEventListener("formdata", (event) => {
+    Array.from(event.formData.entries()).forEach(([key, value]) => {
+      if (value === "") event.formData.delete(key);
+    });
+  });
+};
 
 /*************************************************************
  * Class watcher
