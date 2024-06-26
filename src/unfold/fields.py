@@ -95,7 +95,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 current_app=self.model_admin.admin_site.name,
             )
             return format_html(
-                '<a href="{}" class="text-primary-600 underline whitespace-nowrap">{}</a>',
+                '<a href="{}" class="text-primary-600 underline whitespace-nowrap dark:text-primary-500">{}</a>',
                 url,
                 remote_obj,
             )
@@ -148,7 +148,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                     return conditional_escape(result_repr)
                 elif isinstance(f, models.URLField):
                     return format_html(
-                        '<a href="{}" class="text-primary-600 underline whitespace-nowrap">{}</a>',
+                        '<a href="{}" class="text-primary-600 underline whitespace-nowrap dark:text-primary-500">{}</a>',
                         value,
                         value,
                     )
