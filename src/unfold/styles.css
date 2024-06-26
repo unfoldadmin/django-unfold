@@ -641,3 +641,7 @@ trix-toolbar[id^="trix-toolbar-"] {
 .simplebar-track .simplebar-scrollbar::before {
   @apply bg-gray-900/80  dark:bg-gray-400/80;
 }
+
+.simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
+  @apply top-9
+}

@@ -227,7 +227,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     actions_submit_line = ()
     custom_urls = ()
     add_fieldsets = ()
+    list_horizontal_scrollbar_top = False
     list_filter_submit = False
+    compressed_fields = False
     readonly_preprocess_fields = {}
     checks_class = UnfoldModelAdminChecks
 
