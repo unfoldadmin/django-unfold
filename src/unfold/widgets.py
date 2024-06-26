@@ -90,7 +90,7 @@ TEXTAREA_CLASSES = [
     "max-w-4xl",
     "appearance-none",
     "expandable",
-    "overflow-hidden",
+    "overflow-auto",
     "transition",
     "transition-height",
     "duration-75",
