@@ -90,12 +90,10 @@ TEXTAREA_CLASSES = [
     "max-w-4xl",
     "appearance-none",
     "expandable",
-    "overflow-hidden",
     "transition",
     "transition-height",
     "duration-75",
     "ease-in-out",
-    "resize-none",
 ]
 
 TEXTAREA_EXPANDABLE_CLASSES = [
