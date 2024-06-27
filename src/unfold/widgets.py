@@ -23,6 +23,7 @@ from django.forms import (
     MultiWidget,
     NullBooleanSelect,
     NumberInput,
+    PasswordInput,
     Select,
 )
 from django.utils.translation import gettext_lazy as _
@@ -566,3 +567,10 @@ class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
             **(attrs or {}),
         }
         super().__init__(rel, admin_site, attrs, using)
+
+
+class UnfoldAdminPasswordInput(PasswordInput):
+    def __init__(self, attrs=None, render_value=False):
+        super().__init__(
+            {"class": " ".join(INPUT_CLASSES), **(attrs or {})}, render_value
+        )

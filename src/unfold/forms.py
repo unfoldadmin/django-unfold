@@ -17,7 +17,13 @@ from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from .widgets import BASE_INPUT_CLASSES, INPUT_CLASSES, SELECT_CLASSES
+from .widgets import (
+    BASE_INPUT_CLASSES,
+    INPUT_CLASSES,
+    SELECT_CLASSES,
+    UnfoldAdminPasswordInput,
+    UnfoldAdminRadioSelectWidget,
+)
 
 
 class UnfoldReadOnlyPasswordHashWidget(ReadOnlyPasswordHashWidget):
@@ -65,8 +71,17 @@ class UserCreationForm(BaseUserCreationForm):
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
-        self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
-        self.fields["password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+        self.fields["password1"].widget = UnfoldAdminPasswordInput(
+            attrs={"autocomplete": "new-password"}
+        )
+        self.fields["password2"].widget = UnfoldAdminPasswordInput(
+            attrs={"autocomplete": "new-password"}
+        )
+
+        if "usable_password" in self.fields:
+            self.fields["usable_password"].widget = UnfoldAdminRadioSelectWidget(
+                choices=self.fields["usable_password"].choices,
+            )
 
 
 class UserChangeForm(BaseUserChangeForm):
