@@ -490,10 +490,10 @@ class SomeForm(forms.Form):
 @register(User)
 class UserAdmin(ModelAdmin):
     actions_detail = ["change_detail_action_block"]
-    form = SomeForm(request.POST or None)
 
     @action(description=_("Detail"))
     def change_detail_action_block(self, request: HttpRequest, object_id: int) -> str:
+        form = SomeForm(request.POST or None)
         user = User.objects.get(pk=object_id)
 
         if request.method == "POST" and form.is_valid():
