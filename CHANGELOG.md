@@ -1,4 +1,15 @@
 
+## 0.30.0 (2024-07-01)
+
+- feat: changelist horizontal scrollbar position (#519) ([`533e35a`](https://github.com/unfoldadmin/django-unfold/commit/533e35ade65ff6c484f7ec96994fe95e21adf7cd))
+- fix: fields display (#529) ([`aae3893`](https://github.com/unfoldadmin/django-unfold/commit/aae38932491b6200da538970711750bbe35adfc4))
+- fix: user create form (#522) ([`3445287`](https://github.com/unfoldadmin/django-unfold/commit/3445287a9a244c287f67211f7693917f0af20d46))
+- fix: readonly URL field dark mode (#520) ([`668bba1`](https://github.com/unfoldadmin/django-unfold/commit/668bba1080dd19f407fbc0892c3e52f84960c0ae))
+- fix: textarea resizing (#518) ([`ec712b5`](https://github.com/unfoldadmin/django-unfold/commit/ec712b59f9f0e21f1f88c06ac7d47c05fdb89f18))
+- fix: filters query params (#515) ([`2d0f9f1`](https://github.com/unfoldadmin/django-unfold/commit/2d0f9f134dddcebd43b8d237b6c42ddf5d19620e))
+- docs: action form (#527) ([`4763e8d`](https://github.com/unfoldadmin/django-unfold/commit/4763e8d356c50a1f3f2d597f27c237c2de38b77e))
+- chore: trix update (#514) ([`2d3cde6`](https://github.com/unfoldadmin/django-unfold/commit/2d3cde62335f2e0846da768001eb44c5549dc108))
+
 ## 0.29.1 (2024-06-24)
 
 - fix: tabbed inline border (#512) ([`854cb6f`](https://github.com/unfoldadmin/django-unfold/commit/854cb6ff53c2ae76fa4f2ba1516774a52ee162e6))
