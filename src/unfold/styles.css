@@ -256,7 +256,7 @@ table tr.selected th {
 }
 
 .add-row {
-  @apply align-middle bg-gray-50 text-left px-3 py-5 font-normal text-right text-sm dark:bg-gray-900;
+  @apply align-middle bg-gray-50 px-3 py-5 font-normal text-right text-sm dark:bg-gray-900;
 }
 
 [data-inline-type="stacked"] .add-row {
