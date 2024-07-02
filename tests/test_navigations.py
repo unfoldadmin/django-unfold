@@ -109,3 +109,59 @@ class NavigationTestCase(TestCase):
         request = RequestFactory().get("/rand")
         tabs = admin_site.get_tabs_list(request)
         self.assertTrue(tabs[0]["items"][0]["has_permission"])
+
+    @override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "TABS": [
+                    {
+                        "items": [
+                            {
+                                "title": "Example Title",
+                                "link": lambda request: request.path,
+                            }
+                        ],
+                    }
+                ],
+            },
+        }
+    )
+    def test_check_tab_path_mutation(self):
+        admin_site = UnfoldAdminSite()
+        request = RequestFactory().get("/rand")
+        tabs = admin_site.get_tabs_list(request)
+        self.assertEqual(tabs[0]["items"][0]["link"], "/rand")
+
+        request = RequestFactory().get("/random")
+        tabs = admin_site.get_tabs_list(request)
+        self.assertEqual(tabs[0]["items"][0]["link"], "/random")
+
+    @override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "SIDEBAR": {
+                    "navigation": [
+                        {
+                            "items": [
+                                {
+                                    "title": "Nav title",
+                                    "link": lambda request: request.path,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            },
+        }
+    )
+    def test_check_navigation_path_mutation(self):
+        admin_site = UnfoldAdminSite()
+        request = RequestFactory().get("/rand")
+        navigation = admin_site.get_sidebar_list(request)
+        self.assertEqual(navigation[0]["items"][0]["link"], "/rand")
+
+        request = RequestFactory().get("/random")
+        navigation = admin_site.get_sidebar_list(request)
+        self.assertEqual(navigation[0]["items"][0]["link"], "/random")
