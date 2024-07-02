@@ -70,6 +70,9 @@ class UnfoldAdminSite(AdminSite):
                 "show_view_on_site": get_config(self.settings_name)[
                     "SHOW_VIEW_ON_SITE"
                 ],
+                "use_multilanguage": get_config(self.settings_name)[
+                    "USE_MULTILANGUAGE"
+                ],
                 "colors": self._process_colors(
                     get_config(self.settings_name)["COLORS"]
                 ),
