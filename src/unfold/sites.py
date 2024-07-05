@@ -255,7 +255,7 @@ class UnfoldAdminSite(AdminSite):
                         item["active"] = True
 
                 if isinstance(item["link"], Callable):
-                    item["link"] = item["link"](request)
+                    item["link_callback"] = lazy(item["link"])(request)
 
                 # Permission callback
                 item["has_permission"] = self._call_permission_callback(
