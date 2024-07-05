@@ -254,7 +254,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                     f, (models.DateField, models.TimeField, models.ForeignKey)
                 ):
                     row_classes.append("nowrap")
-        row_class = mark_safe(f' class="{" ".join(row_classes)}"')
+
         # If list_display_links not defined, add the link tag to the first field
 
         if link_in_col(first, field_name, cl):
@@ -287,7 +287,7 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                     else "",
                     result_repr,
                 )
-
+            row_class = mark_safe(f' class="{" ".join(row_classes)}"')
             yield format_html(
                 '<{}{} data-label="{}">{}</{}>',
                 table_tag,
@@ -309,7 +309,17 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                 )
             ):
                 bf = form[field_name]
-                result_repr = mark_safe(str(bf.errors) + str(bf))
+                result_repr = mark_safe(
+                    str(bf)
+                    + render_to_string(
+                        "unfold/helpers/form_errors.html", {"errors": bf.errors}
+                    )
+                )
+
+                if bf.errors:
+                    row_classes += ["group", "errors"]
+
+            row_class = mark_safe(f' class="{" ".join(row_classes)}"')
 
             if field_index != 0:
                 yield format_html(
