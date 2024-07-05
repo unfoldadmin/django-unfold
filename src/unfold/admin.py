@@ -148,6 +148,7 @@ class ModelAdminMixin:
             else:
                 kwargs["widget"] = UnfoldAdminSelectWidget()
 
+        if "choices" not in kwargs:
             kwargs["choices"] = db_field.get_choices(
                 include_blank=db_field.blank, blank_choice=[("", _("Select value"))]
             )
