@@ -56,14 +56,6 @@
 
                     {% url 'admin_password_reset' as password_reset_url %}
 
-                    {% if password_reset_url %}
-                        <div class="password-reset-link">
-                            <a href="{{ password_reset_url }}">
-                                {% translate 'Forgotten your password or username?' %}
-                            </a>
-                        </div>
-                    {% endif %}
-
                     <div class="submit-row">
                         <button type="submit" class="bg-primary-600 border border-transparent flex flex-row font-semibold group items-center justify-center py-2 rounded-md text-sm text-white w-full">
                             {% translate 'Log in' %}
@@ -71,6 +63,14 @@
                             <i class="material-symbols-outlined ml-2 relative right-0 text-lg transition-all group-hover:-right-1">arrow_forward</i>
                         </button>
                     </div>
+
+                    {% if password_reset_url %}
+                        <div class="password-reset-link">
+                            <a href="{{ password_reset_url }}" class="border font-medium hidden mt-4 px-3 py-2 rounded-md text-center text-sm text-gray-500 transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                                {% translate 'Forgotten your password or username?' %}
+                            </a>
+                        </div>
+                    {% endif %}
                 </form>
 
                 {% block login_after %}{% endblock %}
