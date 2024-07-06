@@ -220,23 +220,14 @@ class UnfoldAdminSite(AdminSite):
         navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
         results = []
 
-        def _get_is_active(link: str) -> bool:
-            if not isinstance(link, str):
-                link = str(link)
-
-            if link in request.path and link != reverse_lazy(f"{self.name}:index"):
-                return True
-            elif link == request.path == reverse_lazy(f"{self.name}:index"):
-                return True
-
-            return False
-
         for group in navigation:
             allowed_items = []
 
             for item in group["items"]:
                 item["active"] = False
-                item["active"] = _get_is_active(item["link"])
+                item["active"] = self._get_is_active(
+                    request, item.get("link_callback") or item["link"]
+                )
 
                 for tab in get_config(self.settings_name)["TABS"]:
                     has_primary_link = False
@@ -247,7 +238,9 @@ class UnfoldAdminSite(AdminSite):
                             has_primary_link = True
                             continue
 
-                        if _get_is_active(tab_item["link"]):
+                        if self._get_is_active(
+                            request, tab_item.get("link_callback") or tab_item["link"]
+                        ):
                             has_tab_link_active = True
                             break
 
@@ -290,8 +283,11 @@ class UnfoldAdminSite(AdminSite):
                 )
 
                 if isinstance(item["link"], Callable):
-                    item["link"] = item["link"](request)
+                    item["link_callback"] = lazy(item["link"])(request)
 
+                item["active"] = self._get_is_active(
+                    request, item.get("link_callback") or item["link"]
+                )
                 allowed_items.append(item)
 
             tab["items"] = allowed_items
@@ -365,3 +361,14 @@ class UnfoldAdminSite(AdminSite):
                 colors[name][weight] = " ".join(str(item) for item in hex_to_rgb(value))
 
         return colors
+
+    def _get_is_active(self, request: HttpRequest, link: str) -> bool:
+        if not isinstance(link, str):
+            link = str(link)
+
+        if link in request.path and link != reverse_lazy(f"{self.name}:index"):
+            return True
+        elif link == request.path == reverse_lazy(f"{self.name}:index"):
+            return True
+
+        return False
