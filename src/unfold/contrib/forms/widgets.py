@@ -4,7 +4,11 @@ from django.core.validators import EMPTY_VALUES
 from django.forms import MultiWidget, Widget
 from django.http import QueryDict
 from django.utils.datastructures import MultiValueDict
-from unfold.widgets import PROSE_CLASSES, UnfoldAdminTextInputWidget
+from unfold.widgets import (
+    PROSE_CLASSES,
+    UnfoldAdminSelectWidget,
+    UnfoldAdminTextInputWidget,
+)
 
 WYSIWYG_CLASSES = [
     *PROSE_CLASSES,
@@ -27,19 +31,26 @@ WYSIWYG_CLASSES = [
 
 class ArrayWidget(MultiWidget):
     template_name = "unfold/forms/array.html"
-    widget_class = UnfoldAdminTextInputWidget
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
-        widgets = [self.widget_class]
+        if "choices" in kwargs:
+            self.choices = kwargs["choices"]
+
+        widgets = [self.get_widget_instance()]
         super().__init__(widgets)
+
+    def get_widget_instance(self) -> Any:
+        if hasattr(self, "choices"):
+            return UnfoldAdminSelectWidget(choices=self.choices)
+
+        return UnfoldAdminTextInputWidget()
 
     def get_context(self, name: str, value: str, attrs: Dict) -> Dict:
         self._resolve_widgets(value)
         context = super().get_context(name, value, attrs)
-        template_widget = UnfoldAdminTextInputWidget()
-        template_widget.name = name
-
-        context.update({"template": template_widget})
+        context.update(
+            {"template": self.get_widget_instance().get_context(name, "", {})["widget"]}
+        )
         return context
 
     def value_from_datadict(
@@ -71,12 +82,12 @@ class ArrayWidget(MultiWidget):
             value = []
 
         elif isinstance(value, List):
-            self.widgets = [self.widget_class for item in value]
+            self.widgets = [self.get_widget_instance() for item in value]
         else:
-            self.widgets = [self.widget_class for item in value.split(",")]
+            self.widgets = [self.get_widget_instance() for item in value.split(",")]
 
         self.widgets_names = ["" for i in range(len(self.widgets))]
-        self.widgets = [w() if isinstance(w, type) else w for w in self.widgets]
+        self.widgets = [w if isinstance(w, type) else w for w in self.widgets]
 
 
 class WysiwygWidget(Widget):
