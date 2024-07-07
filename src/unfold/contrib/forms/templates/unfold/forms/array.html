@@ -15,7 +15,9 @@
 
     <template x-for="(item, index) in items" :key="item.key">
         <div class="flex flex-row">
-            {% include template.template_name with widget=template %}
+            {% with widget=template %}
+                {% include template.template_name %}
+            {% endwith %}
 
             <a x-on:click="items.splice(index, 1)" class="bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm w-9.5 dark:bg-gray-900 dark:border-gray-700 dark:text-red-500">
                 <span class="material-symbols-outlined text-sm">delete</span>
