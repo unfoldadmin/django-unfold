@@ -1,23 +1,26 @@
 {% load i18n %}
+
 {% if sidebar_show_search %}
-    <div class="mb-5 mx-3 relative">
+    <div class="mb-5 mx-3 relative" x-data="{openSearchResults: false}">
         <div class="bg-white border flex items-center overflow-hidden rounded-md shadow-sm focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-gray-900 dark:border-gray-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
             <span class="material-symbols-outlined md-18 pl-3 text-gray-400">manage_search</span>
 
             <input type="search"
                    id="nav-filter"
                    name="s"
+                   x-on:blur="setTimeout(function() {openSearchResults = false}, 200)"
+                   x-on:focus="openSearchResults=true"
                    hx-get="{% url "admin:search" %}"
                    hx-trigger="keyup changed delay:500ms, search"
                    hx-target="#search-results"
                    hx-indicator=".htmx-indicator"
                    class="flex-grow font-medium overflow-hidden pl-2 pr-3 py-2 text-gray-500 text-sm focus:outline-none dark:bg-gray-900 dark:text-gray-400"
                    placeholder="{% translate 'Search apps and models...' %}" aria-label="{% translate 'Filter navigation items' %}" />
-            <div class="absolute htmx-indicator mt-0.5 opacity-0 right-2 top-2">
+            <div class="absolute opacity-0 htmx-indicator mt-0.5 right-2 top-2">
                 <span class="animate-spin material-symbols-outlined md-18 text-gray-300">sync</span>
             </div>
         </div>
 
-        <div id="search-results"></div>
+        <div id="search-results" x-show="openSearchResults"></div>
     </div>
 {% endif %}
