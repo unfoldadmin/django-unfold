@@ -31,6 +31,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Array widget:** built-in widget for `django.contrib.postgres.fields.ArrayField`
 - **Filters:** custom dropdown, numeric, datetime, and text fields
 - **Dashboard:** custom components for rapid dashboard development
+- **Inline tabs:** group inlines to tab navigation in changeform
 - **Model tabs:** define custom tab navigations for models
 - **Fieldset tabs:** merge several fielsets into tabs in change form
 - **Colors:** possibility to override default color scheme
@@ -881,6 +882,19 @@ class MyModelAdmin(ModelAdmin):
             },
         ),
     )
+```
+
+Inlines can be grouped into tab navigation by specifying `tab` attribute in the inline class.
+
+```python
+# admin.py
+
+from unfold.admin import TabularInline
+
+
+class MyInline(TabularInline):
+    model = User
+    tab = True
 ```
 
 ## Third party packages

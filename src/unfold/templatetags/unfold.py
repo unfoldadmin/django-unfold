@@ -12,25 +12,37 @@ register = Library()
 
 
 @register.simple_tag(name="tab_list", takes_context=True)
-def tab_list(context, opts) -> str:
-    tabs = None
+def tab_list(context, page, opts) -> str:
+    tabs_list = []
+    inlines_list = []
+
+    data = {
+        "nav_global": context.get("nav_global"),
+        "actions_detail": context.get("actions_detail"),
+        "actions_list": context.get("actions_list"),
+        "actions_items": context.get("actions_items"),
+        "is_popup": context.get("is_popup"),
+    }
 
     for tab in context.get("tab_list", []):
         if str(opts) in tab["models"]:
-            tabs = tab["items"]
+            tabs_list = tab["items"]
             break
+
+    if page == "changelist":
+        data["tabs_list"] = tabs_list
+
+    for inline in context.get("inline_admin_formsets", []):
+        if hasattr(inline.opts, "tab"):
+            inlines_list.append(inline)
+
+    if page == "changeform" and len(inlines_list) > 0:
+        data["inlines_list"] = inlines_list
 
     return render_to_string(
         "unfold/helpers/tab_list.html",
-        request=context.request,
-        context={
-            "tab_list": tabs,
-            "nav_global": context.get("nav_global"),
-            "actions_detail": context.get("actions_detail"),
-            "actions_list": context.get("actions_list"),
-            "actions_items": context.get("actions_items"),
-            "is_popup": context.get("is_popup"),
-        },
+        request=context["request"],
+        context=data,
     )
 
 
