@@ -1,9 +1,11 @@
+{% load i18n %}
+
 {% if not is_popup %}
-    {% if tab_list or actions_list or actions_detail or actions_items or nav_global %}
+    {% if tabs_list or inlines_list or actions_list or actions_detail or actions_items or nav_global %}
         <div class="flex items-start flex-col mb-4 text-gray-500 text-sm w-full md:border-b dark:md:border-gray-800 md:border-l-0 md:flex-row md:items-center md:justify-end dark:text-gray-400">
-            {% if tab_list %}
+            {% if inlines_list or tabs_list %}
                 <ul class="border rounded-md flex flex-col w-full md:flex-row md:border-b-0 md:border-t-0 md:border-l-0 md:border-r-0 dark:border-gray-800">
-                    {% for item in tab_list %}
+                    {% for item in tabs_list %}
                         {% if item.has_permission %}
                             <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-gray-800">
                                 <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="block px-3 py-2 {% if item.active %} border-b md:border-primary-500 dark:md:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500{% else %} hover:text-gray-700 dark:hover:text-gray-200{% endif %} md:py-4 md:px-0 dark:border-gray-800">
@@ -12,6 +14,26 @@
                             </li>
                         {% endif %}
                     {% endfor %}
+
+                    {% if inlines_list %}
+                        <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-gray-800">
+                            <a class="block cursor-pointer px-3 py-2 hover:text-gray-700 dark:hover:text-gray-200  md:py-4 md:px-0 dark:border-gray-800" x-on:click="activeTab = 'general'" x-bind:class="{'border-b md:border-primary-500 dark:md:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500': activeTab == 'general'}">
+                                {% trans "General" %}
+                            </a>
+                        </li>
+
+                        {% for inline in inlines_list %}
+                            <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-gray-800">
+                                <a class="block cursor-pointer px-3 py-2 hover:text-gray-700 dark:hover:text-gray-200  md:py-4 md:px-0 dark:border-gray-800"  x-on:click="activeTab = '{{ inline.opts.verbose_name|slugify }}'" x-bind:class="{'border-b md:border-primary-500 dark:md:border-primary-600 font-medium -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500': activeTab == '{{ inline.opts.verbose_name|slugify }}'}">
+                                    {% if inline.formset.max_num == 1 %}
+                                        {{ inline.opts.verbose_name|capfirst }}
+                                    {% else %}
+                                        {{ inline.opts.verbose_name_plural|capfirst }}
+                                    {% endif %}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
                 </ul>
             {% endif %}
 
