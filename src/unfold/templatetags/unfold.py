@@ -46,6 +46,15 @@ def tab_list(context, page, opts) -> str:
     )
 
 
+@register.simple_tag(name="has_nav_item_active")
+def has_nav_item_active(items: list) -> bool:
+    for item in items:
+        if "active" in item and item["active"]:
+            return True
+
+    return False
+
+
 @register.filter
 def class_name(value: Any) -> str:
     return value.__class__.__name__
