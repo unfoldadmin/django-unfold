@@ -1,0 +1,62 @@
+{% load i18n %}
+{% if site_favicons %}
+    <!-- Favicon for all browsers -->
+    {% if site_favicons.favicon_16x16 %}
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ site_favicons.favicon_16x16 }}">
+    {% endif %}
+    {% if site_favicons.favicon_32x32 %}
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ site_favicons.favicon_32x32 }}">
+    {% endif %}
+    {% if site_favicons.favicon_48x48 %}
+        <link rel="icon" type="image/png" sizes="48x48" href="{{ site_favicons.favicon_48x48 }}">
+    {% endif %}
+    {% if site_favicons.favicon_96x96 %}
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ site_favicons.favicon_96x96 }}">
+    {% endif %}
+
+    <!-- Apple Touch Icon -->
+    {% if site_favicons.apple_icon_57 %}
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ site_favicons.apple_icon_57 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_60 %}
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ site_favicons.apple_icon_60 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_72 %}
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ site_favicons.apple_icon_72 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_76 %}
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ site_favicons.apple_icon_76 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_114 %}
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ site_favicons.apple_icon_114 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_120 %}
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ site_favicons.apple_icon_120 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_144 %}
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ site_favicons.apple_icon_144 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_152 %}
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ site_favicons.apple_icon_152 }}">
+    {% endif %}
+    {% if site_favicons.apple_icon_180 %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ site_favicons.apple_icon_180 }}">
+    {% endif %}
+
+    <!-- Windows 8 Tile Icon -->
+    {% if site_favicons.ms_tile_144 %}
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="{{ site_favicons.ms_tile_144 }}">
+    {% endif %}
+
+    <!-- Android Chrome Icons -->
+    {% if site_favicons.android_icon_192 %}
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ site_favicons.android_icon_192 }}">
+    {% endif %}
+
+    <!-- Favicon for IE -->
+    {% if site_favicons.favicon_ico %}
+        <link rel="icon" type="image/x-icon" href="{{ site_favicons.favicon_ico }}">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ site_favicons.favicon_ico }}">
+    {% endif %}
+{% endif %}

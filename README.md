@@ -173,6 +173,24 @@ from django.utils.translation import gettext_lazy as _
 
 UNFOLD = {
     "SITE_TITLE": None,
+    "SITE_FAVICONS": {
+        "SITE_FAVICON_16": lambda request: static("favicon-16x16.png"),
+        "SITE_FAVICON_32": lambda request: static("favicon-32x32.png"),
+        "SITE_FAVICON_48": lambda request: static("favicon-48x48.png"),
+        "SITE_FAVICON_96": lambda request: static("favicon-96x96.png"),
+        "APPLE_ICON_57": lambda request: static("apple-icon-57x57.png"),
+        "APPLE_ICON_60": lambda request: static("apple-icon-60x60.png"),
+        "APPLE_ICON_72": lambda request: static("apple-icon-72x72.png"),
+        "APPLE_ICON_76": lambda request: static("apple-icon-76x76.png"),
+        "APPLE_ICON_114": lambda request: static("apple-icon-114x114.png"),
+        "APPLE_ICON_120": lambda request: static("apple-icon-120x120.png"),
+        "APPLE_ICON_144": lambda request: static("apple-icon-144x144.png"),
+        "APPLE_ICON_152": **lambda** request: static("apple-icon-152x152.png"),
+        "APPLE_ICON_180": lambda request: static("apple-icon-180x180.png"),
+        "MS_TILE_144": lambda request: static("ms-icon-144x144.png"),
+        "ANDROID_ICON_192": lambda request: static("android-icon-192x192.png"),
+        "FAVICON_ICO": lambda request: static("favicon.ico)"
+    },
     "SITE_HEADER": None,
     "SITE_URL": "/",
     # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
