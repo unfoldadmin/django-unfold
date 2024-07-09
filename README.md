@@ -9,7 +9,7 @@
 ![Code Style - Ruff](https://img.shields.io/badge/code%20style-ruff-30173D.svg?style=for-the-badge)
 ![Pre Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=for-the-badge)
 
-Unfold is theme for Django admin incorporating most common practises for building full-fledged admin areas. It is designed to work at the top of default administration provided by Django.
+Unfold is a theme for Django admin incorporating most common practices for building full-fledged admin areas. It is designed to work on top of default administration provided by Django.
 
 - **Unfold:** demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold)
 - **Formula:** repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula)
@@ -21,7 +21,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 
 ## Features <!-- omit from toc -->
 
-- **Visual**: provides new user interface based on Tailwind CSS framework
+- **Visual**: provides a new user interface based on Tailwind CSS framework
 - **Sidebar:** simplifies definition of custom sidebar navigation with icons
 - **Dark mode:** supports both light and dark mode versions
 - **Configuration:** most of the basic options can be changed in settings.py
@@ -31,11 +31,11 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Array widget:** built-in widget for `django.contrib.postgres.fields.ArrayField`
 - **Filters:** custom dropdown, numeric, datetime, and text fields
 - **Dashboard:** custom components for rapid dashboard development
-- **Inline tabs:** group inlines to tab navigation in changeform
+- **Inline tabs:** group inlines into tab navigation in the change form
 - **Model tabs:** define custom tab navigations for models
-- **Fieldset tabs:** merge several fielsets into tabs in change form
-- **Colors:** possibility to override default color scheme
-- **Changeform modes:** display fields in changeform in compressed mode
+- **Fieldset tabs:** merge several fieldsets into tabs in the change form
+- **Colors:** possibility to override the default color scheme
+- **Changeform modes:** display fields in the change form in compressed mode
 - **Third party packages:** default support for multiple popular applications
 - **Environment label**: distinguish between environments by displaying a label
 - **Nonrelated inlines**: displays nonrelated model as inline in changeform
@@ -88,7 +88,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 
 ## Installation
 
-The installation process is minimal. Everything what is needed after installation is to put new application at the beginning of **INSTALLED_APPS**. Default admin configuration in urls.py can stay as it is and there are no changes required.
+The installation process is minimal. Everything that is needed after installation is to put new application at the beginning of **INSTALLED_APPS**. The default admin configuration in urls.py can stay as it is, and no changes are required.
 
 ```python
 # settings.py
@@ -548,7 +548,7 @@ Text input field which allows filtering by the free string submitted by the user
 
 `FieldTextFilter` requires just a model field name and the filter will make `__icontains` search on this field. There are no other things to configure so the integration in `list_filter` will be just one new row looking like `("model_field_name", FieldTextFilter)`.
 
-In the case of the `TextFilter`, it is needed the write a whole new class inheriting from `TextFilter` with a custom implementation of the `queryset` method and the `parameter_name` attribute. This attribute will be a representation of the search query parameter name in URI. The benefit of the `TextFilter` is the possibility of writing complex queries.
+In the case of the `TextFilter`, it is needed to write a whole new class inheriting from `TextFilter` with a custom implementation of the `queryset` method and the `parameter_name` attribute. This attribute will be a representation of the search query parameter name in URI. The benefit of the `TextFilter` is the possibility of writing complex queries.
 
 ```python
 from django.contrib import admin
@@ -583,7 +583,7 @@ class MyAdmin(ModelAdmin):
 
 Dropdown filters will display a select field with a list of options. Unfold contains two types of dropdowns: `ChoicesDropdownFilter` and `RelatedDropdownFilter`.
 
-The difference between them is that `ChoicesDropdownFilter` will collect a list of options based on the `choices` attribute of the model field so most commonly it will be used in combination with `CharField` with specified `choices`.  On the other side, `RelatedDropdownFilter` needs a one-to-many or many-to-many foreign key to display options.
+The difference between them is that `ChoicesDropdownFilter` will collect a list of options based on the `choices` attribute of the model field so most commonly it will be used in combination with `CharField` with specified `choices`.  On the other hand, `RelatedDropdownFilter` needs a one-to-many or many-to-many foreign key to display options.
 
 **Note:** At the moment Unfold does not implement a dropdown with an autocomplete functionality, so it is important not to use dropdowns displaying large datasets.
 
@@ -974,11 +974,11 @@ class ClockedScheduleAdmin(BaseClockedScheduleAdmin, ModelAdmin):
 
 ### django-guardian
 
-Adding support for django-guardian is quote straightforward in Unfold, just add `unfold.contrib.guardian` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the django-guardian. Please note that **Object permissions** link is available in top right dropdown navigation.
+Adding support for django-guardian is quite straightforward in Unfold, just add `unfold.contrib.guardian` to `INSTALLED_APPS` at the beginning of the file. This action will override all templates coming from the django-guardian. Please note that **Object permissions** link is available in top right dropdown navigation.
 
 ### django-import-export
 
-1. Add `unfold.contrib.import_export` to `INSTALLED_APPS` at the beggining of the file. This action will override all templates coming from the application.
+1. Add `unfold.contrib.import_export` to `INSTALLED_APPS` at the beginning of the file. This action will override all templates coming from the application.
 2. Change `import_form_class` and `export_form_class` in ModelAdmin which is inheriting from `ImportExportModelAdmin`. This chunk of code is responsible for adding proper styling to form elements.
 
 ```python
@@ -1050,7 +1050,7 @@ This application is supported in Unfold by default. It is not needed to add any 
 
 ### django-simple-history
 
-To make this application work, add `unfold.contrib.simple_history` into `settings.py` in `INSTALLED_APPS` variable before right after `unfold`. This app should ensure that templates coming from django-simple-history are overriden by Unfold.
+To make this application work, add `unfold.contrib.simple_history` into `settings.py` in `INSTALLED_APPS` variable before right after `unfold`. This app should ensure that templates coming from django-simple-history are overridden by Unfold.
 
 ## User Admin Form
 
@@ -1131,7 +1131,7 @@ npx tailwindcss -o your_project/static/css/styles.css --watch --minify
 
 ### Overriding template
 
-Create `templates/admin/index.html` in your project and paste the base template below into it. By default, all your custom styles here are not compiled because CSS classes are located in your specific project. Here it is needed to set up the Tailwind for your project and all requried instructions are located in [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet) chapter.
+Create `templates/admin/index.html` in your project and paste the base template below into it. By default, all your custom styles here are not compiled because CSS classes are located in your specific project. Here it is needed to set up the Tailwind for your project and all required instructions are located in [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet) chapter.
 
 ```html+django
 {% extends 'unfold/layouts/base_simple.html' %}
@@ -1253,7 +1253,7 @@ Below you can find a more complex example which is using multiple components and
 
 ### Pre-commit
 
-Before adding any source code, it is recommended to have pre-commit installed on your local computer to check for all potential issues when comitting the code.
+Before adding any source code, it is recommended to have pre-commit installed on your local computer to check for all potential issues when committing the code.
 
 ```bash
 pip install pre-commit
@@ -1273,7 +1273,7 @@ To add a new feature or fix the easiest approach is to use django-unfold in comb
 
 ### Compiling Tailwind
 
-At the moment project contains package.json with all dependencies required to compile new CSS file. Tailwind configuration file is set to check all html, js and py files for Tailwind's classeses occurrences.
+At the moment project contains package.json with all dependencies required to compile new CSS file. Tailwind configuration file is set to check all html, js and py files for Tailwind's classes occurrences.
 
 ```bash
 npm install
@@ -1283,7 +1283,7 @@ npm run tailwind:watch # run after each change in code
 npm run tailwind:build # run once
 ```
 
-Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overriden in **styles.css**.
+Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overridden in **styles.css**.
 
 **Note:** most of the custom styles located in style.css are created via `@apply some-tailwind-class;` as is not possible to manually add CSS class to element which are for example created via jQuery.
 
