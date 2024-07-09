@@ -1,49 +1,59 @@
-{% load i18n %}
+{% load i18n unfold %}
 
 {% if sidebar_navigation %}
     <div class="h-0 flex-grow overflow-auto" data-simplebar>
         {% for group in sidebar_navigation %}
             {% if group.items %}
-                {% if group.separator %}
-                    <hr class="border-t border-gray-200 mx-6 my-2 dark:border-gray-800" />
-                {% endif %}
+                {% has_nav_item_active group.items as has_active %}
 
-                {% if group.title %}
-                    <h3 class="font-medium my-3 px-6 text-gray-900 text-sm first:mt-0 dark:text-gray-200">
-                        {{ group.title }}
-                    </h3>
-                {% endif %}
+                <div {% if group.collapsible %}x-data="{navigationOpen: {% if has_active %}true{% else %}false{% endif %}}"{% endif %}>
+                    {% if group.separator %}
+                        <hr class="border-t border-gray-200 mx-6 my-2 dark:border-gray-800" />
+                    {% endif %}
 
-                <ol class="px-6">
-                    {% for item in group.items %}
-                        {% if item.has_permission %}
-                            <li>
-                                <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="border border-transparent flex h-11 items-center -mx-3 px-3 py-2 rounded-md {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:border dark:border-gray-800 dark:bg-white/[.02] dark:text-primary-500{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200{% endif %}">
-                                    {% if item.icon %}
-                                        <span class="material-symbols-outlined md-18 mr-3 w-4.5">
-                                            {{ item.icon }}
+                    {% if group.title %}
+                        <h3 class="font-medium flex flex-row items-center my-3 px-6 select-none text-gray-900 text-sm first:mt-0 dark:text-gray-200 {% if group.collapsible %}cursor-pointer{% endif %}" {% if group.collapsible %}x-on:click="navigationOpen = !navigationOpen"{% endif %}>
+                            {{ group.title }}
+
+                            {% if group.collapsible %}
+                                <span class="material-symbols-outlined ml-auto transition-all" x-bind:class="{'rotate-90': navigationOpen}">
+                                    chevron_right
+                                </span>
+                            {% endif %}
+                        </h3>
+                    {% endif %}
+
+                    <ol class="px-6" {% if group.collapsible %}x-show="navigationOpen"{% endif %}>
+                        {% for item in group.items %}
+                            {% if item.has_permission %}
+                                <li>
+                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="border border-transparent flex h-11 items-center -mx-3 px-3 py-2 rounded-md {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:border dark:border-gray-800 dark:bg-white/[.02] dark:text-primary-500{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-400 hover:dark:text-gray-200{% endif %}">
+                                        {% if item.icon %}
+                                            <span class="material-symbols-outlined md-18 mr-3 w-4.5">
+                                                {{ item.icon }}
+                                            </span>
+                                        {% endif %}
+
+                                        <span class="text-sm">
+                                            {{ item.title|safe }}
                                         </span>
-                                    {% endif %}
 
-                                    <span class="text-sm">
-                                        {{ item.title|safe }}
-                                    </span>
-
-                                    {% if item.badge %}
-                                        <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">
-                                            {% if item.badge_callback %}
-                                                {{ item.badge_callback }}
-                                            {% else %}
-                                                {{ item.badge }}
-                                            {% endif %}
-                                        </span>
-                                    {% endif %}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ol>
-            {% endif %}
+                                        {% if item.badge %}
+                                            <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">
+                                                {% if item.badge_callback %}
+                                                    {{ item.badge_callback }}
+                                                {% else %}
+                                                    {{ item.badge }}
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            </div>
         {% endfor %}
     </div>
 

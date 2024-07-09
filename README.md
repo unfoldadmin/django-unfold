@@ -232,6 +232,7 @@ UNFOLD = {
             {
                 "title": _("Navigation"),
                 "separator": True,  # Top border
+                "collapsible": True,  # Collapsible group of links
                 "items": [
                     {
                         "title": _("Dashboard"),
