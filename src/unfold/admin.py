@@ -1,6 +1,6 @@
 import copy
 from functools import update_wrapper
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -256,7 +256,10 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         return super().get_fieldsets(request, obj)
 
     def _filter_unfold_actions_by_permissions(
-        self, request: HttpRequest, actions: List[UnfoldAction]
+        self,
+        request: HttpRequest,
+        actions: List[UnfoldAction],
+        object_id: Optional[Union[int, str]] = None,
     ) -> List[UnfoldAction]:
         """Filter out any Unfold actions that the user doesn't have access to."""
         filtered_actions = []
@@ -264,12 +267,22 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             if not hasattr(action.method, "allowed_permissions"):
                 filtered_actions.append(action)
                 continue
+
             permission_checks = (
                 getattr(self, f"has_{permission}_permission")
                 for permission in action.method.allowed_permissions
             )
-            if any(has_permission(request) for has_permission in permission_checks):
-                filtered_actions.append(action)
+
+            if object_id:
+                if any(
+                    has_permission(request, object_id)
+                    for has_permission in permission_checks
+                ):
+                    filtered_actions.append(action)
+            else:
+                if any(has_permission(request) for has_permission in permission_checks):
+                    filtered_actions.append(action)
+
         return filtered_actions
 
     def get_actions_list(self, request: HttpRequest) -> List[UnfoldAction]:
@@ -283,9 +296,11 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return [self.get_unfold_action(action) for action in self.actions_list or []]
 
-    def get_actions_detail(self, request: HttpRequest) -> List[UnfoldAction]:
+    def get_actions_detail(
+        self, request: HttpRequest, object_id: int
+    ) -> List[UnfoldAction]:
         return self._filter_unfold_actions_by_permissions(
-            request, self._get_base_actions_detail()
+            request, self._get_base_actions_detail(), object_id
         )
 
     def _get_base_actions_detail(self) -> List[UnfoldAction]:
@@ -305,9 +320,11 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return [self.get_unfold_action(action) for action in self.actions_row or []]
 
-    def get_actions_submit_line(self, request: HttpRequest) -> List[UnfoldAction]:
+    def get_actions_submit_line(
+        self, request: HttpRequest, object_id: int
+    ) -> List[UnfoldAction]:
         return self._filter_unfold_actions_by_permissions(
-            request, self._get_base_actions_submit_line()
+            request, self._get_base_actions_submit_line(), object_id
         )
 
     def _get_base_actions_submit_line(self) -> List[UnfoldAction]:
@@ -405,7 +422,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         actions = []
         if object_id:
-            for action in self.get_actions_detail(request):
+            for action in self.get_actions_detail(request, object_id):
                 actions.append(
                     {
                         "title": action.description,
@@ -419,7 +436,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         extra_context.update(
             {
-                "actions_submit_line": self.get_actions_submit_line(request),
+                "actions_submit_line": self.get_actions_submit_line(request, object_id),
                 "actions_detail": actions,
             }
         )
@@ -486,7 +503,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     ) -> None:
         super().save_model(request, obj, form, change)
 
-        for action in self.get_actions_submit_line(request):
+        for action in self.get_actions_submit_line(request, obj.pk):
             if action.action_name not in request.POST:
                 continue
 
