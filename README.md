@@ -419,7 +419,7 @@ class UserAdmin(ModelAdmin):
     actions_detail = ["change_detail_action_block"]
     actions_submit_line = ["submit_line_action_activate"]
 
-    @action(description=_("Save & Activate"))
+    @action(description=_("Save & Activate"), permissions=["submit_line_action_activate"])
     def submit_line_action_activate(self, request: HttpRequest, obj: User):
         """
         If instance is modified in any way, it also needs to be saved,
@@ -430,6 +430,9 @@ class UserAdmin(ModelAdmin):
         """
         obj.is_active = True
         obj.save()
+
+    def has_submit_line_action_activate_permission(self, request: HttpRequest, object_id: Union[str, int]):
+        pass
 
     @action(description=_("Import"), url_path="import")
     def changelist_global_action_import(self, request: HttpRequest):
@@ -455,7 +458,7 @@ class UserAdmin(ModelAdmin):
         """
         return redirect(f"https://example.com/{object_id}")
 
-    @action(description=_("Detail"), url_path="detail-action", attrs={"target": "_blank"})
+    @action(description=_("Detail"), url_path="detail-action", attrs={"target": "_blank"}, permissions=["change_detail_action_block"])
     def change_detail_action_block(self, request: HttpRequest, object_id: int):
         """
         Handler for detail action.
@@ -470,6 +473,10 @@ class UserAdmin(ModelAdmin):
         return redirect(
             reverse_lazy("admin:users_user_change", args=(object_id,))
         )
+
+
+    def has_change_detail_action_block_permission(self, request: HttpRequest, object_id: Union[str, int]):
+        pass
 ```
 
 ### Action with form example
