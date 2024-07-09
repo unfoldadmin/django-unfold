@@ -185,7 +185,7 @@ UNFOLD = {
         "APPLE_ICON_114": lambda request: static("apple-icon-114x114.png"),
         "APPLE_ICON_120": lambda request: static("apple-icon-120x120.png"),
         "APPLE_ICON_144": lambda request: static("apple-icon-144x144.png"),
-        "APPLE_ICON_152": **lambda** request: static("apple-icon-152x152.png"),
+        "APPLE_ICON_152": lambda request: static("apple-icon-152x152.png"),
         "APPLE_ICON_180": lambda request: static("apple-icon-180x180.png"),
         "MS_TILE_144": lambda request: static("ms-icon-144x144.png"),
         "ANDROID_ICON_192": lambda request: static("android-icon-192x192.png"),
