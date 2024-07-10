@@ -40,6 +40,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
 - **Environment label**: distinguish between environments by displaying a label
 - **Nonrelated inlines**: displays nonrelated model as inline in changeform
 - **Parallel admin**: support for default admin in parallel with Unfold. [Admin migration guide](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold)
+- **Favicons**: built-in support for configuring various site favicons
 - **VS Code**: project configuration and development container is included
 
 ## Table of contents <!-- omit from toc -->
@@ -186,6 +187,14 @@ UNFOLD = {
         "dark": lambda request: static("logo-dark.svg"),  # dark mode
     },
     "SITE_SYMBOL": "speed",  # symbol from icon set
+    "SITE_FAVICONS": [
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/svg+xml",
+            "href": lambda request: static("favicon.svg"),
+        },
+    ],
     "SHOW_HISTORY": True, # show/hide "History" button, default: True
     "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
     "ENVIRONMENT": "sample_app.environment_callback",

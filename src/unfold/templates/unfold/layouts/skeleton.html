@@ -24,6 +24,10 @@
         <link href="{{ style }}" rel="stylesheet">
     {% endfor %}
 
+    {% for favicon in site_favicons %}
+        <link {% if favicon.rel %}rel="{{ favicon.rel }}"{% endif %} {% if favicon.href %}href="{{ favicon.href }}"{% endif %} {% if favicon.type %}type="{{ favicon.type }}"{% endif %} {% if favicon.sizes %}sizes="{{ favicon.sizes }}"{% endif %}>
+    {% endfor %}
+
     <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
     <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
 

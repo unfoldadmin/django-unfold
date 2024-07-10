@@ -10,6 +10,7 @@ from django.urls import URLPattern, path, reverse, reverse_lazy
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 
+from .dataclasses import Favicon
 from .settings import get_config
 from .utils import hex_to_rgb
 from .widgets import CHECKBOX_CLASSES, INPUT_CLASSES
@@ -65,6 +66,9 @@ class UnfoldAdminSite(AdminSite):
                 ),
                 "site_symbol": self._get_value(
                     get_config(self.settings_name)["SITE_SYMBOL"], request
+                ),
+                "site_favicons": self._process_favicons(
+                    request, get_config(self.settings_name)["SITE_FAVICONS"]
                 ),
                 "show_history": get_config(self.settings_name)["SHOW_HISTORY"],
                 "show_view_on_site": get_config(self.settings_name)[
@@ -349,6 +353,19 @@ class UnfoldAdminSite(AdminSite):
                 target[key] = source[key]
 
         return target
+
+    def _process_favicons(
+        self, request: HttpRequest, favicons: List[Dict]
+    ) -> List[Favicon]:
+        return [
+            Favicon(
+                href=self._get_value(item["href"], request),
+                rel=item.get("rel"),
+                sizes=item.get("sizes"),
+                type=item.get("type"),
+            )
+            for item in favicons
+        ]
 
     def _process_colors(
         self, colors: Dict[str, Dict[str, str]]
