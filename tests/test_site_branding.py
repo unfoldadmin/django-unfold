@@ -143,3 +143,29 @@ class SiteBrandingTestCase(TestCase):
         request.user = AnonymousUser()
         context = admin_site.each_context(request)
         self.assertIsNone(context["site_logo"])
+
+    @override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "SITE_FAVICONS": [
+                    {
+                        "rel": "icon",
+                        "sizes": "32x32",
+                        "type": "image/svg+xml",
+                        "href": lambda request: static("favicon.svg"),
+                    }
+                ]
+            },
+        }
+    )
+    def test_favicons(self):
+        admin_site = UnfoldAdminSite()
+        request = RequestFactory().get("/rand")
+        request.user = AnonymousUser()
+        context = admin_site.each_context(request)
+
+        self.assertEqual(context["site_favicons"][0].rel, "icon")
+        self.assertEqual(context["site_favicons"][0].sizes, "32x32")
+        self.assertEqual(context["site_favicons"][0].type, "image/svg+xml")
+        self.assertEqual(context["site_favicons"][0].href, "/static/favicon.svg")
