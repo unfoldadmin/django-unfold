@@ -6,17 +6,17 @@
             {% if group.items %}
                 {% has_nav_item_active group.items as has_active %}
 
-                <div {% if group.collapsible %}x-data="{navigationOpen: {% if has_active %}true{% else %}false{% endif %}}"{% endif %}>
+                <div class="mb-3" {% if group.collapsible %}x-data="{navigationOpen: {% if has_active %}true{% else %}false{% endif %}}"{% endif %}>
                     {% if group.separator %}
                         <hr class="border-t border-gray-200 mx-6 my-2 dark:border-gray-800" />
                     {% endif %}
 
                     {% if group.title %}
-                        <h3 class="font-medium flex flex-row items-center my-3 px-6 select-none text-gray-900 text-sm first:mt-0 dark:text-gray-200 {% if group.collapsible %}cursor-pointer{% endif %}" {% if group.collapsible %}x-on:click="navigationOpen = !navigationOpen"{% endif %}>
+                        <h3 class="font-medium flex flex-row items-center mb-1 mx-3 py-1.5 px-3 select-none text-gray-900 text-sm dark:text-gray-200 {% if group.collapsible %}cursor-pointer{% endif %}" {% if group.collapsible %}x-on:click="navigationOpen = !navigationOpen"{% endif %}>
                             {{ group.title }}
 
                             {% if group.collapsible %}
-                                <span class="material-symbols-outlined ml-auto transition-all" x-bind:class="{'rotate-90': navigationOpen}">
+                                <span class="material-symbols-outlined ml-auto text-gray-400 transition-all" x-bind:class="{'rotate-90': navigationOpen}">
                                     chevron_right
                                 </span>
                             {% endif %}
