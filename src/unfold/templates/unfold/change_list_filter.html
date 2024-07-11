@@ -22,6 +22,10 @@
             <div class="px-6{% if cl.model_admin.list_filter_submit %} pb-16{% endif %}">
                 {% if cl.model_admin.list_filter_submit %}
                     <form id="filter-form" method="get">
+
+                    {% if request.GET.q %}
+                        <input type="hidden" name="q" value="{{ request.GET.q }}">
+                    {% endif %}
                 {% endif %}
 
 
