@@ -95,12 +95,33 @@ const submitSearch = () => {
   const searchbar = document.getElementById("searchbar");
   const searchbarSubmit = document.getElementById("searchbar-submit");
 
+  const getQueryParams = (searchString) => {
+    const queryParams = window.location.search
+      .replace("?", "")
+      .split("&")
+      .map((param) => param.split("="))
+      .reduce((values, [key, value]) => {
+        if (key == "q") {
+          values[key] = searchString;
+        } else {
+          values[key] = value;
+        }
+
+        return values;
+      }, {});
+
+    const result = Object.entries(queryParams)
+      .map(([key, value]) => `${key}=${value}`)
+      .join("&");
+
+    return `?${result}`;
+  };
+
   if (searchbar !== null) {
     searchbar.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
-        window.location = `?q=${e.target.value}`;
+        window.location = getQueryParams(e.target.value);
         e.preventDefault();
-      } else {
       }
     });
   }
@@ -108,7 +129,7 @@ const submitSearch = () => {
   if (searchbarSubmit !== null && searchbar !== null) {
     searchbarSubmit.addEventListener("click", (e) => {
       e.preventDefault();
-      window.location = `?q=${searchbar.value}`;
+      window.location = getQueryParams(searchbar.value);
     });
   }
 };
