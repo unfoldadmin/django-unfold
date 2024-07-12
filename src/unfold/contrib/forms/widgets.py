@@ -4,6 +4,7 @@ from django.core.validators import EMPTY_VALUES
 from django.forms import MultiWidget, Widget
 from django.http import QueryDict
 from django.utils.datastructures import MultiValueDict
+
 from unfold.widgets import (
     PROSE_CLASSES,
     UnfoldAdminSelectWidget,
@@ -24,7 +25,7 @@ WYSIWYG_CLASSES = [
     "w-full",
     "focus:outline-none",
     "dark:border-gray-700",
-    "dark:text-gray-400",
+    "dark:text-gray-300",
     "dark:group-[.errors]:border-red-500",
 ]
 

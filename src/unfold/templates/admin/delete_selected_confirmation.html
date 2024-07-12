@@ -38,7 +38,7 @@
         </p>
 
         <div class="border-t border-gray-200 p-4 dark:border-gray-800">
-            <ul class="leading-relaxed text-gray-500 text-sm dark:border-gray-800 dark:text-gray-400">
+            <ul class="leading-relaxed text-gray-500 text-sm dark:border-gray-800 dark:text-gray-300">
                 {% for obj in perms_lacking %}
                     <li>{{ obj }}</li>
                 {% endfor %}
@@ -51,7 +51,7 @@
             </p>
 
             <div class="border-t border-gray-200 p-4 dark:border-gray-800">
-                <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-400">
+                <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-300">
                     {% for obj in protected %}
                         <li>{{ obj }}</li>
                     {% endfor %}
@@ -72,7 +72,7 @@
                 </h2>
 
                 {% for deletable_object in deletable_objects %}
-                    <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-400">
+                    <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-300">
                         {{ deletable_object|unordered_list }}
                     </ul>
                 {% endfor %}
@@ -89,7 +89,7 @@
                     <input type="hidden" name="action" value="delete_selected">
                     <input type="hidden" name="post" value="yes">
 
-                    <a href="#" class="border cancel-link font-medium hidden mb-3 px-3 py-2 rounded-md text-sm text-gray-500 transition-all w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                    <a href="#" class="border cancel-link font-medium hidden mb-3 px-3 py-2 rounded-md text-sm text-gray-500 transition-all w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-gray-900">
                         {% translate "No, take me back" %}
                     </a>
 
