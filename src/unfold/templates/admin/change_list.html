@@ -30,7 +30,7 @@
 {% if not is_popup %}
     {% block breadcrumbs %}
         <div class="px-4 lg:px-12">
-            <div class="container mb-6 mx-auto -my-3 lg:mb-12">
+            <div class="{% if not cl.model_admin.list_filter_submit %}container{% endif %} mb-6 mx-auto -my-3 lg:mb-12">
                 <ul class="flex">
                     {% url 'admin:index' as link %}
                     {% trans 'Home' as name %}
