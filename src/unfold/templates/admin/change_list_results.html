@@ -8,7 +8,7 @@
 
 {% if results %}
     <div class="overflow-x-auto lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
-        <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-400 lg:table">
+        <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-300 lg:table">
             <thead>
                 <tr>
                     {% for header in result_headers %}
@@ -24,7 +24,7 @@
                                             <label class="flex flex-row items-center gap-2">
                                                 {{ header.text|capfirst }}
 
-                                                <span class="block font-normal text-gray-500 dark:text-gray-400 lg:hidden">
+                                                <span class="block font-normal text-gray-500 dark:text-gray-300 lg:hidden">
                                                     {% trans "Select all rows"%}
                                                 </span>
                                             </label>

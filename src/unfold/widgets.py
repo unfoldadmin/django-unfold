@@ -63,7 +63,7 @@ BASE_CLASSES = [
     "group-[.errors]:focus:ring-red-200",
     "dark:bg-gray-900",
     "dark:border-gray-700",
-    "dark:text-gray-400",
+    "dark:text-gray-300",
     "dark:focus:border-primary-600",
     "dark:focus:ring-primary-700",
     "dark:focus:ring-opacity-50",
@@ -131,7 +131,7 @@ PROSE_CLASSES = [
     "prose-strong:text-gray-700",
     "dark:prose-pre:bg-gray-800",
     "dark:prose-blockquote:border-gray-700",
-    "dark:prose-blockquote:text-gray-400",
+    "dark:prose-blockquote:text-gray-300",
     "dark:prose-headings:text-gray-200",
     "dark:prose-strong:text-gray-200",
 ]

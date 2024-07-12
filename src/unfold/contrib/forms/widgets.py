@@ -24,7 +24,7 @@ WYSIWYG_CLASSES = [
     "w-full",
     "focus:outline-none",
     "dark:border-gray-700",
-    "dark:text-gray-400",
+    "dark:text-gray-300",
     "dark:group-[.errors]:border-red-500",
 ]
 

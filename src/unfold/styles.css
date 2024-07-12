@@ -186,7 +186,7 @@ table tr.selected th {
 }
 
 .selector option {
-  @apply px-3 text-gray-500 text-sm truncate dark:text-gray-400;
+  @apply px-3 text-gray-500 text-sm truncate dark:text-gray-300;
 }
 
 .selector .list-footer-display {
@@ -207,7 +207,7 @@ table tr.selected th {
   @apply flex;
 }
 .selector-filter input {
-  @apply bg-gray-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded-md text-gray-500 text-sm focus:outline-none dark:bg-gray-800 dark:text-gray-400;
+  @apply bg-gray-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded-md text-gray-500 text-sm focus:outline-none dark:bg-gray-800 dark:text-gray-300;
 }
 
 .selector-chooseall,
@@ -268,7 +268,7 @@ table tr.selected th {
 }
 
 .add-row a {
-  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center text-gray-500 text-sm transition-all lg:float-right dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
+  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center text-gray-500 text-sm transition-all lg:float-right dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-200;
 }
 
 h3 .delete label {
@@ -306,7 +306,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__rendered {
-  @apply font-medium h-9 px-3 py-2 text-gray-500 text-sm dark:text-gray-400;
+  @apply font-medium h-9 px-3 py-2 text-gray-500 text-sm dark:text-gray-300;
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -357,7 +357,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-search--dropdown
   .select2-search__field {
-  @apply bg-gray-50 border border-gray-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm w-full dark:bg-gray-800 dark:border-gray-800 dark:text-gray-400;
+  @apply bg-gray-50 border border-gray-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm w-full dark:bg-gray-800 dark:border-gray-800 dark:text-gray-300;
 }
 
 .select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--above {
@@ -382,7 +382,7 @@ h3 span:nth-child(3) {
 
 .select2-container.select2-container--admin-autocomplete
   .select2-results__option {
-  @apply block px-3 py-2 text-gray-500 text-sm transition-all dark:text-gray-400;
+  @apply block px-3 py-2 text-gray-500 text-sm transition-all dark:text-gray-300;
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -411,7 +411,7 @@ h3 span:nth-child(3) {
 .select2-container--admin-autocomplete
   .select2-selection--multiple
   li.select2-selection__choice {
-  @apply bg-gray-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-gray-500 truncate dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-200;
+  @apply bg-gray-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-gray-500 truncate dark:bg-gray-800 dark:text-gray-300 dark:hover:text-gray-200;
 }
 
 .select2-container--admin-autocomplete
@@ -487,7 +487,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .calendar table td a {
-  @apply block flex h-8 items-center justify-center rounded-full transition-all w-8 dark:text-gray-400;
+  @apply block flex h-8 items-center justify-center rounded-full transition-all w-8 dark:text-gray-300;
 }
 
 .calendar table td a:hover {
@@ -503,7 +503,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .calendar-shortcuts a {
-  @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-gray-500 text-xs transition-all w-1/3 dark:border-gray-700 dark:hover:border-gray-600 dark:text-gray-400 dark:hover:text-gray-200;
+  @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-gray-500 text-xs transition-all w-1/3 dark:border-gray-700 dark:hover:border-gray-600 dark:text-gray-300 dark:hover:text-gray-200;
 }
 
 .calendar-cancel {
@@ -547,7 +547,7 @@ fieldset.collapsed .collapse-toggle {
   @apply font-medium px-3 py-2 text-gray-700 dark:text-gray-200;
 }
 .clockbox .timelist {
-  @apply pb-2 px-3 text-gray-500 dark:text-gray-400;
+  @apply pb-2 px-3 text-gray-500 dark:text-gray-300;
 }
 
 .clockbox .timelist li {

@@ -63,8 +63,8 @@ ROW_CLASSES = [
     "before:mr-auto",
     "before:text-gray-500",
     "first:border-t-0",
-    "dark:before:text-gray-400",
-    "dark:text-gray-400",
+    "dark:before:text-gray-300",
+    "dark:text-gray-300",
     "lg:before:hidden",
     "lg:first:border-t",
     "lg:py-3",
@@ -90,7 +90,7 @@ CHECKBOX_CLASSES = [
     "lg:border-t",
     "lg:border-gray-200",
     "lg:table-cell",
-    "dark:before:text-gray-400",
+    "dark:before:text-gray-300",
     "dark:lg:border-gray-800",
 ]
 

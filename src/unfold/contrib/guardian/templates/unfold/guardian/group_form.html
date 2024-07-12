@@ -8,7 +8,7 @@
     </h2>
 
     {% if groups_perms.items %}
-        <table id="group-permissions" class="border-gray-200 border-spacing-none border-separate mb-6 text-gray-700 w-full dark:text-gray-400 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+        <table id="group-permissions" class="border-gray-200 border-spacing-none border-separate mb-6 text-gray-700 w-full dark:text-gray-300 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
             <thead class="hidden lg:table-header-group">
                 <tr>
                     <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
@@ -30,14 +30,14 @@
             <tbody>
                 {% for group, group_perms in groups_perms.items %}
                     <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
-                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "User" %}">
+                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "User" %}">
                             <span class="text-gray-700 dark:text-gray-200">
                                 {{ group }}
                             </span>
                         </th>
 
                         {% for perm in model_perms %}
-                            <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{{ perm.name }}">
+                            <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{{ perm.name }}">
                                 {% if perm.codename in group_perms %}
                                     {% include "unfold/helpers/boolean.html" with value=False %}
                                 {% else %}
@@ -46,7 +46,7 @@
                             </td>
                         {% endfor %}
 
-                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-right text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-400 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "Action" %}">
+                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-right text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "Action" %}">
                             <a href="group-manage/{{ group.id|safe }}/" class="hover:text-gray-700 dark:hover:text-white">
                                 {% trans "Edit" %}
                             </a>
