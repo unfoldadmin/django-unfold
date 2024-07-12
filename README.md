@@ -332,6 +332,9 @@ class CustomAdminClass(ModelAdmin):
     # Display submit button in filters
     list_filter_submit = False
 
+    # Display changelist in fullwidth
+    list_fullwidth = False
+
     # Position horizontal scrollbar in changelist at the top
     list_horizontal_scrollbar_top = False
 

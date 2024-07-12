@@ -39,7 +39,7 @@
             {% endblock messages %}
 
             <div class="px-4 pb-12 lg:px-12">
-                <div id="content" class="container mx-auto {% block coltype %}colM{% endblock %}">
+                <div id="content" class="{% if not cl.model_admin.list_filter_submit %}container{% endif %} mx-auto {% block coltype %}colM{% endblock %}">
                     {% if cl %}
                         {% tab_list "changelist" cl.opts %}
                     {% elif opts %}
