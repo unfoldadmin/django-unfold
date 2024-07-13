@@ -12,9 +12,8 @@ class NonrelatedInlineModelFormSet(BaseModelFormSet):
         **kwargs: Any,
     ) -> None:
         self.instance = instance
-        self.queryset = self.provided_queryset
-
         super().__init__(**kwargs)
+        self.queryset = self.provided_queryset
 
     @classmethod
     def get_default_prefix(cls: BaseModelFormSet) -> str:
