@@ -25,7 +25,7 @@
 
     <div class="flex flex-none items-center leading-none self-stretch">
         <div class="hidden">
-            <input id="{{ widget.name }}" type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %} />
+            <input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %} />
         </div>
 
         {% if widget.is_initial %}
@@ -34,7 +34,7 @@
             </a>
         {% endif %}
 
-        <label for="{{ widget.name }}" class="cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200">
+        <label for="{{ widget.attrs.id }}" class="cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200">
             <span class="material-symbols-outlined">upload</span>
         </label>
     </div>
