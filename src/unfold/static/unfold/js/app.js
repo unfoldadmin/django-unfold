@@ -101,14 +101,16 @@ const submitSearch = () => {
       .split("&")
       .map((param) => param.split("="))
       .reduce((values, [key, value]) => {
-        if (key == "q") {
-          values[key] = searchString;
-        } else {
+        if (key && key !== "q") {
           values[key] = value;
         }
 
         return values;
       }, {});
+
+    if (searchString) {
+      queryParams["q"] = searchString;
+    }
 
     const result = Object.entries(queryParams)
       .map(([key, value]) => `${key}=${value}`)
