@@ -26,6 +26,10 @@
                     {% if request.GET.q %}
                         <input type="hidden" name="q" value="{{ request.GET.q }}">
                     {% endif %}
+
+                    {% if request.GET.o %}
+                        <input type="hidden" name="o" value="{{ request.GET.o }}">
+                    {% endif %}
                 {% endif %}
 
 

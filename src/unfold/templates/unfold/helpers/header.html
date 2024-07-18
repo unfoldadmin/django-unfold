@@ -1,7 +1,7 @@
 {% if not is_popup %}
     {% block header %}
         <div class="border-b border-gray-200 mb-6 px-4 lg:px-12 dark:border-gray-800">
-            <div class="{% if not cl.model_admin.list_filter_submit %}container{% endif %} flex items-center h-16 mx-auto py-4">
+            <div class="{% if not cl.model_admin.list_fullwidth %}container{% endif %} flex items-center h-16 mx-auto py-4">
                 <div id="header-inner" class="flex items-center w-full">
                     <div class="flex items-center w-full">
                         {% block usertools %}
