@@ -78,6 +78,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Overriding template](#overriding-template)
   - [Custom variables](#custom-variables)
   - [Unfold components](#unfold-components)
+    - [Table component example](#table-component-example)
 - [Unfold development](#unfold-development)
   - [Pre-commit](#pre-commit)
   - [Poetry configuration](#poetry-configuration)
@@ -1256,17 +1257,44 @@ Below you can find a more complex example which is using multiple components and
 
 | Component                         | Description                    | Arguments                        |
 | --------------------------------- | ------------------------------ | -------------------------------- |
+| unfold/components/button.html     | Basic button element           | submit                           |
+| unfold/components/card.html       | Card component                 | class, title, footer, label      |
 | unfold/components/chart/bar.html  | Bar chart implementation       | class, data, height, width       |
 | unfold/components/chart/line.html | Line chart implementation      | class, data, height, width       |
-| unfold/components/card.html       | Card component                 | class, title, footer, label      |
 | unfold/components/container.html  | Wrapper for settings max width | class                            |
 | unfold/components/flex.html       | Flex items                     | class, col                       |
 | unfold/components/navigation.html | List of navigation links       | class, items                     |
 | unfold/components/progress.html   | Percentual progress bar        | class, value, title, description |
 | unfold/components/separator.html  | Separator, horizontal rule     | class                            |
+| unfold/components/table.html      | Table                          | card_included, striped           |
 | unfold/components/text.html       | Paragraph of text              | class                            |
 | unfold/components/title.html      | Basic heading element          | class                            |
-| unfold/components/button.html     | Basic button  element          | submit                           |
+
+
+#### Table component example
+
+```python
+from typing import Dict
+from django.http import HttpRequest
+
+
+def dashboard_callback(self, request: HttpRequest) -> Dict:
+    return {
+        "table_data": {
+            "headers": ["col 1", "col 2"],
+            "rows": [
+                ["a", "b"],
+                ["c", "d"],
+            ]
+        }
+    }
+```
+
+```django-html
+{% component "unfold/components/card" with title="Card title" %}
+    {% component "unfold/components/table.html" table=table_data %}{% encomponent %}
+{% endcomponent %}
+```
 
 ## Unfold development
 
