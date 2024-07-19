@@ -1,0 +1,31 @@
+{% load unfold %}
+
+<div class="{% if card_included == 1 %}-m-6{% else %}lg:border lg:rounded-md lg:shadow-sm{% endif %} overflow-x-auto lg:dark:border-gray-800">
+    <table class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-300 lg:table">
+        {% if table.headers %}
+            <thead>
+                <tr class="bg-gray-50 dark:bg-white/[.02]">
+                    {% for  header in table.headers %}
+                        <th class="align-middle font-medium py-2 text-left text-gray-400 text-sm whitespace-nowrap sortable column-description hidden px-3 lg:table-cell {% if card_included == 1 %}first:pl-6 last:pr-6{% endif %}">
+                            {{ header }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+        {% endif %}
+
+        {% if table.rows %}
+            <tbody class="block lg:table-row-group">
+                {% for row in table.rows %}
+                    <tr class="{% if striped == 1 %}{% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %}{% endif %} block {% if not card_included == 1 %}border mb-3 rounded-md shadow-sm{% else %}border-t{% endif %} lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                        {% for cell in row %}
+                            <td class="px-3 py-2 align-middle flex border-t border-gray-200 font-normal gap-4 min-w-0 overflow-hidden text-left text-gray-500 text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 dark:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800 {% if card_included == 1 %}px-6 lg:first:pl-6 lg:last:pr-6{% endif %}" {% if table.headers %}data-label="{{ table.headers|index:forloop.counter0 }}"{% endif %}>
+                                {{ cell }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
+    </table>
+</div>
