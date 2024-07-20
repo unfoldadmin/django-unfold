@@ -1255,20 +1255,22 @@ Below you can find a more complex example which is using multiple components and
 
 #### List of available components <!-- omit from toc -->
 
-| Component                         | Description                    | Arguments                        |
-| --------------------------------- | ------------------------------ | -------------------------------- |
-| unfold/components/button.html     | Basic button element           | submit                           |
-| unfold/components/card.html       | Card component                 | class, title, footer, label      |
-| unfold/components/chart/bar.html  | Bar chart implementation       | class, data, height, width       |
-| unfold/components/chart/line.html | Line chart implementation      | class, data, height, width       |
-| unfold/components/container.html  | Wrapper for settings max width | class                            |
-| unfold/components/flex.html       | Flex items                     | class, col                       |
-| unfold/components/navigation.html | List of navigation links       | class, items                     |
-| unfold/components/progress.html   | Percentual progress bar        | class, value, title, description |
-| unfold/components/separator.html  | Separator, horizontal rule     | class                            |
-| unfold/components/table.html      | Table                          | card_included, striped           |
-| unfold/components/text.html       | Paragraph of text              | class                            |
-| unfold/components/title.html      | Basic heading element          | class                            |
+| Component                         | Description                    | Arguments                            |
+| --------------------------------- | ------------------------------ | ------------------------------------ |
+| unfold/components/button.html     | Basic button element           | submit                               |
+| unfold/components/card.html       | Card component                 | class, title, footer, label, icon    |
+| unfold/components/chart/bar.html  | Bar chart implementation       | class, data, height, width           |
+| unfold/components/chart/line.html | Line chart implementation      | class, data, height, width           |
+| unfold/components/container.html  | Wrapper for settings max width | class                                |
+| unfold/components/flex.html       | Flex items                     | class, col                           |
+| unfold/components/icon.html       | Icon element                   | class                                |
+| unfold/components/label.html      | Label element                  | class                                |
+| unfold/components/navigation.html | List of navigation links       | class, items                         |
+| unfold/components/progress.html   | Percentual progress bar        | class, value, title, description     |
+| unfold/components/separator.html  | Separator, horizontal rule     | class                                |
+| unfold/components/table.html      | Table                          | table, card_included, striped        |
+| unfold/components/text.html       | Paragraph of text              | class                                |
+| unfold/components/title.html      | Basic heading element          | class                                |
 
 
 #### Table component example
@@ -1278,7 +1280,7 @@ from typing import Dict
 from django.http import HttpRequest
 
 
-def dashboard_callback(self, request: HttpRequest) -> Dict:
+def dashboard_callback(request: HttpRequest) -> Dict:
     return {
         "table_data": {
             "headers": ["col 1", "col 2"],
@@ -1292,7 +1294,7 @@ def dashboard_callback(self, request: HttpRequest) -> Dict:
 
 ```django-html
 {% component "unfold/components/card" with title="Card title" %}
-    {% component "unfold/components/table.html" table=table_data %}{% encomponent %}
+    {% component "unfold/components/table.html" with table=table_data card_included=1 striped=1 %}{% encomponent %}
 {% endcomponent %}
 ```
 

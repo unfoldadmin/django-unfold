@@ -12,6 +12,6 @@
     {% else %}
         bg-gray-100 text-gray-500 dark:bg-gray-500/20 dark:text-gray-300
     {% endif %}
-">
+{% if class %} {{ class }}{% endif %}">
     {{ text }}
 </span>
