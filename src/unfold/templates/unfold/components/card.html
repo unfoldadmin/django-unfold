@@ -1,17 +1,21 @@
-<div class="border flex flex-col flex-grow p-6 rounded-md shadow-sm dark:border-gray-800{% if class %} {{ class }}{% endif %}">
+<div class="border flex flex-col flex-grow overflow-hidden p-6 relative rounded-md shadow-sm dark:border-gray-800{% if class %} {{ class }}{% endif %}">
     {% if title %}
         <h2 class="border-b font-semibold mb-6 -mt-2 -mx-6 pb-4 px-6 text-sm text-gray-700 dark:text-gray-200 dark:border-gray-800">
             {{ title }}
         </h2>
     {% endif %}
 
-    <div class="flex-grow relative">
+    <div class="flex-grow relative {% if icon %} pl-6{% endif %}">
         {{ children }}
 
         {% if label %}
             <div class="absolute right-0 top-0">
                 {% include "unfold/helpers/label.html" with text=label type="primary" %}
             </div>
+        {% endif %}
+
+        {% if icon %}
+            <span class="material-symbols-outlined absolute -left-6 text-gray-300 top-1/2 -translate-x-1/3 -translate-y-1/2 !text-6xl dark:text-gray-500">{{ icon }}</span>
         {% endif %}
     </div>
 
