@@ -1264,7 +1264,6 @@ Below you can find a more complex example which is using multiple components and
 | unfold/components/container.html  | Wrapper for settings max width | class                                |
 | unfold/components/flex.html       | Flex items                     | class, col                           |
 | unfold/components/icon.html       | Icon element                   | class                                |
-| unfold/components/label.html      | Label element                  | class                                |
 | unfold/components/navigation.html | List of navigation links       | class, items                         |
 | unfold/components/progress.html   | Percentual progress bar        | class, value, title, description     |
 | unfold/components/separator.html  | Separator, horizontal rule     | class                                |
