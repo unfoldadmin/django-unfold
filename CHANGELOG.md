@@ -1,4 +1,12 @@
 
+## 0.32.0 (2024-07-21)
+
+- feat: disable blank issues (#607) ([`2a24b02`](https://github.com/unfoldadmin/django-unfold/commit/2a24b0237a14dcd5d6fe254c05765b1ebd3a69e9))
+- feat: issue templates (#606) ([`f4f0d46`](https://github.com/unfoldadmin/django-unfold/commit/f4f0d46ae95ec6f549cced04183bc1d095b9eaa3))
+- feat: various component options (#605) ([`7235580`](https://github.com/unfoldadmin/django-unfold/commit/723558055c3adac41b5cdbfb696a8d5b64310fa4))
+- feat: table component (#597) ([`761e982`](https://github.com/unfoldadmin/django-unfold/commit/761e9822c17eb44c950581e30edf6a8037de0c21))
+- docs: fixed component library listing (#610) ([`39c8411`](https://github.com/unfoldadmin/django-unfold/commit/39c8411fb8f5951c3ac99b9a612df6e2728ba051))
+
 ## 0.31.0 (2024-07-18)
 
 - feat: changelist fullwidth option (#573) ([`debf8b5`](https://github.com/unfoldadmin/django-unfold/commit/debf8b5e5de230cc812137af7f87b12b13d63652))
