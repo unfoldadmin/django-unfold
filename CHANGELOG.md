@@ -1,4 +1,8 @@
 
+## 0.33.0 (2024-07-23)
+
+- feat: optional inline titles (#619) ([`0cce931`](https://github.com/unfoldadmin/django-unfold/commit/0cce93179f475c569a1f91ba32c69a24b09aaa35))
+
 ## 0.32.0 (2024-07-21)
 
 - feat: disable blank issues (#607) ([`2a24b02`](https://github.com/unfoldadmin/django-unfold/commit/2a24b0237a14dcd5d6fe254c05765b1ebd3a69e9))
