@@ -61,9 +61,13 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Numeric filters](#numeric-filters)
   - [Date/time filters](#datetime-filters)
 - [Custom admin pages](#custom-admin-pages)
-- [Nonrelated inlines](#nonrelated-inlines)
 - [Display decorator](#display-decorator)
 - [Change form tabs](#change-form-tabs)
+- [Inlines](#inlines)
+  - [Custom title](#custom-title)
+  - [Hide title row](#hide-title-row)
+  - [Display as tabs](#display-as-tabs)
+  - [Nonrelated inlines](#nonrelated-inlines)
 - [Third party packages](#third-party-packages)
   - [django-celery-beat](#django-celery-beat)
   - [django-guardian](#django-guardian)
@@ -751,41 +755,6 @@ The template is straightforward, extend from `unfold/layouts/base.html` and the 
 {% endblock %}
 ```
 
-## Nonrelated inlines
-
-To display inlines which are not related (no foreign key pointing at the main model) to the model instance in changeform, you can use nonrelated inlines which are included in `unfold.contrib.inlines` module. Make sure this module is included in `INSTALLED_APPS` in settings.py.
-
-```python
-from django.contrib.auth.models import User
-from unfold.admin import ModelAdmin
-from unfold.contrib.inlines.admin import NonrelatedTabularInline
-from .models import OtherModel
-
-class OtherNonrelatedInline(NonrelatedTabularInline):  # NonrelatedStackedInline is available as well
-    model = OtherModel
-    fields = ["field1", "field2"]  # Ignore property to display all fields
-
-    def get_form_queryset(self, obj):
-        """
-        Gets all nonrelated objects needed for inlines. Method must be implemented.
-        """
-        return self.model.objects.all()
-
-    def save_new_instance(self, parent, instance):
-        """
-        Extra save method which can for example update inline instances based on current
-        main model object. Method must be implemented.
-        """
-        pass
-
-
-@admin.register(User)
-class UserAdmin(ModelAdmin):
-    inlines = [OtherNonrelatedInline]
-```
-
-**NOTE:** credit for this functionality goes to [django-nonrelated-inlines](https://github.com/bhomnick/django-nonrelated-inlines)
-
 ## Display decorator
 
 Unfold introduces it's own `unfold.decorators.display` decorator. By default it has exactly same behavior as native `django.contrib.admin.decorators.display` but it adds same customizations which helps to extends default logic.
@@ -912,6 +881,44 @@ class MyModelAdmin(ModelAdmin):
     )
 ```
 
+## Inlines
+
+### Custom title
+
+By default, the title available for each inline row is coming from the `__str__` implementation of the model. Unfold allows you to override this title by implementing `get_inline_title` on the model which can return your own custom title just for the inline.
+
+```python
+from unfold.admin import TabularInline
+
+
+class User(models.Model):
+    # fiels, meta ...
+
+    def get_inline_title(self):
+        return "Custom title"
+
+
+class MyInline(TabularInline):
+    model = User
+```
+
+### Hide title row
+
+By applying `hide_title` attribute set to `True`, it is possible to hide the title row which is available for `StackedInline` or `TabularInline`. For `StackedInline` it is required to have disabled delete permission `can_delete` to be able to hide the title row, because the checkbox with the delete action is inside this title.
+
+```python
+# admin.py
+
+from unfold.admin import TabularInline
+
+
+class MyInline(TabularInline):
+    model = User
+    hide_title = True
+```
+
+### Display as tabs
+
 Inlines can be grouped into tab navigation by specifying `tab` attribute in the inline class.
 
 ```python
@@ -924,6 +931,42 @@ class MyInline(TabularInline):
     model = User
     tab = True
 ```
+
+### Nonrelated inlines
+
+To display inlines which are not related (no foreign key pointing at the main model) to the model instance in changeform, you can use nonrelated inlines which are included in `unfold.contrib.inlines` module. Make sure this module is included in `INSTALLED_APPS` in settings.py.
+
+```python
+from django.contrib.auth.models import User
+from unfold.admin import ModelAdmin
+from unfold.contrib.inlines.admin import NonrelatedTabularInline
+from .models import OtherModel
+
+class OtherNonrelatedInline(NonrelatedTabularInline):  # NonrelatedStackedInline is available as well
+    model = OtherModel
+    fields = ["field1", "field2"]  # Ignore property to display all fields
+
+    def get_form_queryset(self, obj):
+        """
+        Gets all nonrelated objects needed for inlines. Method must be implemented.
+        """
+        return self.model.objects.all()
+
+    def save_new_instance(self, parent, instance):
+        """
+        Extra save method which can for example update inline instances based on current
+        main model object. Method must be implemented.
+        """
+        pass
+
+
+@admin.register(User)
+class UserAdmin(ModelAdmin):
+    inlines = [OtherNonrelatedInline]
+```
+
+**NOTE:** credit for this functionality goes to [django-nonrelated-inlines](https://github.com/bhomnick/django-nonrelated-inlines)
+
 
 ## Third party packages
 
