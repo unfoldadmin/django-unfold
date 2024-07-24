@@ -75,7 +75,7 @@
                                                                 </span>
 
                                                                 {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} font-medium ml-2 text-primary-600 underline dark:text-primary-500">
+                                                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} font-medium ml-2 text-primary-600 dark:text-primary-500">
                                                                         {% if inline_admin_formset.has_change_permission %}
                                                                             {% translate "Change" %}
                                                                         {% else %}
@@ -86,7 +86,7 @@
                                                             {% endif %}
 
                                                             {% if inline_admin_form.show_url %}
-                                                                <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 underline dark:text-primary-500">
+                                                                <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 dark:text-primary-500">
                                                                     {% translate "View on site" %}
                                                                 </a>
                                                             {% endif %}
@@ -146,7 +146,7 @@
                                             {% endfor %}
 
                                             {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                                <td class="delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 border-b border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:underline lg:w-px dark:border-gray-800" data-label="{% trans "Remove" %}">
+                                                <td class="delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 border-b border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px dark:border-gray-800" data-label="{% trans "Remove" %}">
                                                     {% if inline_admin_form.original %}
                                                         <div class="flex flex-row lg:mt-3">
                                                             <div class="ml-auto">

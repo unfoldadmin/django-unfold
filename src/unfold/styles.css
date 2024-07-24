@@ -212,7 +212,7 @@ table tr.selected th {
 
 .selector-chooseall,
 .selector-clearall {
-  @apply block border-t py-2 text-center text-sm text-primary-500 underline dark:border-gray-700;
+  @apply block border-t py-2 text-center text-sm text-primary-500 dark:border-gray-700;
 }
 
 .selector-clearall {
@@ -276,7 +276,7 @@ h3 .delete label {
 }
 
 .inline-deletelink {
-  @apply block leading-none text-red-600 text-sm underline dark:text-red-500;
+  @apply block leading-none text-red-600 text-sm dark:text-red-500;
 }
 
 td .inline-deletelink {
@@ -507,7 +507,7 @@ fieldset.collapsed .collapse-toggle {
 }
 
 .calendar-cancel {
-  @apply block border-t py-2 text-center text-xs text-red-600 underline dark:border-gray-700 dark:text-red-500;
+  @apply block border-t py-2 text-center text-xs text-red-600 dark:border-gray-700 dark:text-red-500;
 }
 
 .calendarnav-previous {
