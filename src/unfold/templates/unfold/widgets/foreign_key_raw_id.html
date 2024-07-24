@@ -2,14 +2,18 @@
     {% include 'django/forms/widgets/input.html' %}
 
     {% if related_url %}
-        <a href="{{ related_url }}" class="related-lookup related-widget-wrapper-link view-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-400 text-sm w-9.5 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200" id="lookup_id_{{ widget.name }}">
+        <a href="{{ related_url }}" class="related-lookup view-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-400 text-sm w-9.5 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200" id="lookup_id_{{ widget.name }}">
             <span class="material-symbols-outlined text-sm">search</span>
         </a>
     {% endif %}
 
-    {% if link_label and link_url %}
-        <a href="{{ link_url }}" title="{{ link_label }}" class="bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-400 text-sm w-9.5 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200">
-            <span class="material-symbols-outlined text-sm">visibility</span>
+    {% if link_url %}
+        <a href="{{ link_url }}" title="{{ link_label }}" class="flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-primary-600 text-sm dark:text-primary-500">
+            {{ link_label }}
         </a>
+    {% else %}
+        <span title="{{ link_label }}" class="bg-white flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-sm">
+            {{ link_label }}
+        </span>
     {% endif %}
 </div>
