@@ -2,18 +2,20 @@
 
 {% if actions %}
     <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-300 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800 lg:w-px">
-        <div class="group leading-none relative" x-data="{ openActionsId: false }">
-            <span x-ref="rowDropdown{{ instance_pk }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 !leading-7 rounded text-center text-gray-400 w-7 group-hover:bg-gray-100 group-hover:text-gray-700 dark:text-gray-300 group-hover:dark:bg-gray-800 group-hover:dark:text-white" @click="openActionsId{{ instance.pk }} = !openActionsId{{ instance.pk }}">
-                more_horiz
-            </span>
+      {% with action_id=instance_pk|cut:"-" %}
+          <div class="group leading-none relative" x-data="{ openActionsId{{ action_id }}: false }">
+              <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 !leading-7 rounded text-center text-gray-400 w-7 group-hover:bg-gray-100 group-hover:text-gray-700 dark:text-gray-300 group-hover:dark:bg-gray-800 group-hover:dark:text-white" @click="openActionsId{{ action_id }} = !openActionsId{{ action_id }}">
+                  more_horiz
+              </span>
 
-            <nav x-anchor.offset.4="$refs.rowDropdown{{ instance_pk }}" class="bg-white border flex flex-col leading-none py-1 rounded-md shadow-lg text-gray-500 text-sm top-7 z-50 w-48 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300" x-cloak x-show="openActionsId" @click.outside="openActionsId{{ instance.pk }} = false">
-                {% for action in actions %}
-                    <a href="{% url action.raw_path instance_pk %}" class="mx-1 px-3 py-2 rounded-md truncate whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
-                        {{ action.title }}
-                    </a>
-                {% endfor %}
-            </nav>
-        </div>
+              <nav x-anchor.offset.4="$refs.rowDropdown{{ action_id }}" class="bg-white border flex flex-col leading-none py-1 rounded-md shadow-lg text-gray-500 text-sm top-7 z-50 w-48 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300" x-cloak x-show="openActionsId{{ action_id }}" @click.outside="openActionsId{{ action_id }} = false">
+                  {% for action in actions %}
+                      <a href="{% url action.raw_path instance_pk %}" class="mx-1 px-3 py-2 rounded-md truncate whitespace-nowrap hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
+                          {{ action.title }}
+                      </a>
+                  {% endfor %}
+              </nav>
+          </div>
+      {% endwith %}
     </td>
 {% endif %}
