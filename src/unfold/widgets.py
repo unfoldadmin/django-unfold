@@ -123,7 +123,6 @@ PROSE_CLASSES = [
     "prose-pre:rounded",
     "prose-headings:font-medium",
     "prose-a:text-primary-600",
-    "prose-a:underline",
     "prose-headings:font-medium",
     "prose-headings:text-gray-700",
     "prose-ol:list-decimal",

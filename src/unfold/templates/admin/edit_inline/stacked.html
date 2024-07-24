@@ -24,7 +24,7 @@
 
                             <span class="inline_label font-semibold text-gray-900 dark:text-gray-200">
                                 {% if inline_admin_form.original and inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} font-medium text-primary-600 underline">
+                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} font-medium text-primary-600 dark:text-primary-500">
                                         {{ inline_admin_form.original }}
                                     </a>
                                 {% else %}
@@ -38,7 +38,7 @@
                                         {% endwith %}
 
                                         {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} font-medium ml-2 text-primary-600 underline dark:text-primary-500">
+                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} font-medium ml-2 text-primary-600 dark:text-primary-500">
                                                 {% if inline_admin_formset.has_change_permission %}
                                                     {% translate "Change" %}
                                                 {% else %}
@@ -53,7 +53,7 @@
                             </span>
 
                             {% if inline_admin_form.show_url %}
-                                <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 underline dark:text-primary-500">
+                                <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 dark:text-primary-500">
                                     {% trans "View on site" %}
                                 </a>
                             {% endif %}

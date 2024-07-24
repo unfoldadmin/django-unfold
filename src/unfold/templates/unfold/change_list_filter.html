@@ -9,7 +9,7 @@
                 {% trans "Filter results" %}
 
                 {% if cl.has_active_filters %}
-                    <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-3 text-sm text-red-600 underline dark:text-red-500">
+                    <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-3 text-sm text-red-600 dark:text-red-500">
                         {% translate "Clear all filters" %}
                     </a>
                 {% endif %}
