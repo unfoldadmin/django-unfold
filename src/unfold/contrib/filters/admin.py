@@ -548,6 +548,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         time_value_to = self.used_parameters.get(self.parameter_name + "_to_1", None)
 
         if date_value_from not in EMPTY_VALUES and time_value_from not in EMPTY_VALUES:
+            date_value_from = date_value_from.replace("/", "-")
             filters.update(
                 {
                     f"{self.parameter_name}__gte": parse_datetime(
@@ -557,6 +558,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             )
 
         if date_value_to not in EMPTY_VALUES and time_value_to not in EMPTY_VALUES:
+            date_value_to = date_value_to.replace("/", "-")
             filters.update(
                 {
                     f"{self.parameter_name}__lte": parse_datetime(
