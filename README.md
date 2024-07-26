@@ -1403,3 +1403,4 @@ The container has already a node preinstalled so it is possible to compile a new
 - [Material Icons](https://fonts.google.com/icons) - Icons from Google Fonts
 - [Trix](https://trix-editor.org/) - WYSIWYG editor
 - [Alpine.js](https://alpinejs.dev/) - JavaScript interactions
+- [Chart.js](https://github.com/chartjs/Chart.js/) - Chart components
