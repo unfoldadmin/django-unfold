@@ -350,6 +350,9 @@ class CustomAdminClass(ModelAdmin):
     # Position horizontal scrollbar in changelist at the top
     list_horizontal_scrollbar_top = False
 
+    # Dsable select all action in changelist
+    list_disable_select_all = False
+
     # Custom actions
     actions_list = []  # Displayed above the results list
     actions_row = []  # Displayed in a table row in results list

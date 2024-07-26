@@ -37,17 +37,19 @@
                             {{ selection_note_all }}
                         </span>
 
-                        <span class="question hidden text-primary-600 text-sm dark:text-primary-500">
-                            <a href="#" title="{% translate "Click here to select the objects across all pages" %}">
-                                {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
-                            </a>
-                        </span>
+                        {% if not cl.model_admin.list_disable_select_all %}
+                            <span class="question hidden text-primary-600 text-sm dark:text-primary-500">
+                                <a href="#" title="{% translate "Click here to select the objects across all pages" %}">
+                                    {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
+                                </a>
+                            </span>
 
-                        <span class="clear hidden text-sm text-red-600">
-                            <a href="#">
-                                {% translate "Clear selection" %}
-                            </a>
-                        </span>
+                            <span class="clear hidden text-sm text-red-600">
+                                <a href="#">
+                                    {% translate "Clear selection" %}
+                                </a>
+                            </span>
+                        {% endif %}
                     {% endif %}
                 </div>
             {% endif %}
