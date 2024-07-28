@@ -17,22 +17,22 @@
 
             <div>
                 {% if not inline_admin_formset.has_add_permission and inline_admin_formset.forms|length == 0 %}
-                    <p class="mb-6 text-gray-500 text-sm dark:text-gray-300">
+                    <p class="mb-6">
                         {% trans "No records found." %}
                     </p>
                 {% else %}
                     <div class="border border-gray-200 mb-6 overflow-x-auto rounded-md shadow-sm dark:border-gray-800" data-simplebar data-simplebar-auto-hide="false">
-                        <table class="border-spacing-none border-separate text-gray-700 w-full">
+                        <table class="border-spacing-none border-separate w-full">
                             <thead class="hidden lg:table-header-group">
                                 <tr>
                                     {% for field in inline_admin_formset.fields %}
                                         {% if not field.widget.is_hidden %}
-                                            <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-400 text-sm whitespace-nowrap dark:border-gray-800">
+                                            <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-900 text-sm whitespace-nowrap dark:text-gray-200 dark:border-gray-800">
                                                 <span class="flex flex-row items-center">
                                                     {{ field.label|capfirst }}
 
                                                     {% if field.help_text %}
-                                                        <span class="cursor-pointer material-symbols-outlined ml-2" title="{{ field.help_text|striptags }}">help</span>
+                                                        <span class="cursor-pointer material-symbols-outlined ml-2 text-gray-400 dark:text-gray-500" title="{{ field.help_text|striptags }}">help</span>
                                                     {% endif %}
                                                 </span>
                                             </th>
@@ -40,7 +40,7 @@
                                     {% endfor %}
 
                                     {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                        <th class="align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-400 text-sm whitespace-nowrap lg:w-px dark:border-gray-800">
+                                        <th class="align-middle border-b border-gray-200 font-medium px-3 py-2 text-left text-gray-900 text-sm whitespace-nowrap lg:w-px dark:border-gray-800 dark:text-gray-200">
                                             {% translate "Delete?" %}
                                         </th>
                                     {% endif %}
@@ -62,9 +62,9 @@
                                             <td class="original" colspan="{{ inline_admin_form|cell_count }}">
                                                 {% if not inline_admin_formset.opts.hide_title %}
                                                     {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                                        <p class="flex font-medium items-center px-3 pt-2 text-gray-400 text-xs">
+                                                        <p class="flex font-medium items-center px-3 pt-2 text-xs">
                                                             {% if inline_admin_form.original %}
-                                                                <span class="font-semibold text-gray-900 dark:text-gray-200">
+                                                                <span>
                                                                     {% with inline_title=inline_admin_form.original.get_inline_title %}
                                                                         {% if inline_title %}
                                                                             {{ inline_title }}
@@ -75,7 +75,7 @@
                                                                 </span>
 
                                                                 {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} font-medium ml-2 text-primary-600 dark:text-primary-500">
+                                                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} ml-2 text-primary-600 dark:text-primary-500">
                                                                         {% if inline_admin_formset.has_change_permission %}
                                                                             {% translate "Change" %}
                                                                         {% else %}

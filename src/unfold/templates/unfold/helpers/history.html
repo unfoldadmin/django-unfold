@@ -5,14 +5,14 @@
 {% if admin_log %}
     <div id="content-related" class="lg:w-96">
         <div id="recent-actions-module" class="module bg-gray-50 rounded-md p-3 dark:bg-gray-800">
-            <h2 class="mb-3 font-semibold text-gray-700 text-sm dark:text-gray-200">
+            <h2 class="mb-3 font-semibold text-gray-900 dark:text-gray-100">
                 {% translate 'Recent actions' %}
             </h2>
 
             <ul class="actionlist">
                 {% for entry in admin_log %}
                     <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} border border-gray-400/10 bg-white mb-3 p-3 rounded-md shadow-sm last:mb-0 dark:bg-gray-900">
-                        <div class="mb-3 text-gray-700 overflow-hidden text-ellipsis text-sm whitespace-nowrap dark:text-gray-200">
+                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
                             {% if entry.is_deletion or not entry.get_admin_url %}
                                 {{ entry.object_repr }}
                             {% else %}
@@ -20,7 +20,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="border-gray-100 border-t flex pt-3 text-gray-500 text-sm dark:border-gray-800 dark:text-gray-300">
+                        <div class="border-gray-100 border-t flex pt-3 dark:border-gray-800">
                             <div>
                                 {% if entry.content_type %}
                                     {% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}

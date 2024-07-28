@@ -119,7 +119,9 @@ FORMFIELD_OVERRIDES_INLINE.update(
     }
 )
 
-checkbox = UnfoldBooleanWidget({"class": "action-select"}, lambda value: False)
+checkbox = UnfoldBooleanWidget(
+    {"class": "action-select", "aria-label": _("Select record")}, lambda value: False
+)
 
 helpers.AdminField = UnfoldAdminField
 

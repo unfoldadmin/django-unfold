@@ -1,13 +1,13 @@
 {% load admin_urls i18n import_export_tags unfold %}
 
 {% block preview %}
-    <table class="border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-300 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
-        <thead class="hidden lg:table-header-group">
+    <table class="border-gray-200 border-spacing-none border-separate w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+        <thead class="hidden lg:table-header-group text-gray-900 dark:text-gray-100">
             <tr>
-                <th class="align-middle capitalize font-medium px-3 py-2 text-left text-gray-400 text-sm"></th>
+                <th class="align-middle capitalize font-semibold px-3 py-2 text-left"></th>
 
                 {% for field in result.diff_headers %}
-                    <th class="align-middle capitalize font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                    <th class="align-middle capitalize font-semibold px-3 py-2 text-left">
                         {{ field }}
                     </th>
                 {% endfor %}
@@ -17,7 +17,7 @@
         <tbody>
             {% for row in result.valid_rows %}
                 <tr class="{{ row.import_type }} {% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
-                    <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-300 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                    <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
                         {% if row.import_type == 'new' %}
                             {% trans "New" %}
                         {% elif row.import_type == 'skip' %}
@@ -30,7 +30,7 @@
                     </td>
 
                     {% for field in row.diff %}
-                        <td data-label="{{ result.diff_headers|index:forloop.counter0 }}" class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-300 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                        <td data-label="{{ result.diff_headers|index:forloop.counter0 }}" class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
                             {{ field }}
                         </td>
                     {% endfor %}
