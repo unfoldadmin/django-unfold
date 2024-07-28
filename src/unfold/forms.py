@@ -36,6 +36,7 @@ class ActionForm(forms.Form):
         widget=forms.Select(
             {
                 "class": " ".join([*SELECT_CLASSES, "max-w-full", "lg:!w-64"]),
+                "aria-label": _("Select action to run"),
                 "x-model": "action",
             }
         ),

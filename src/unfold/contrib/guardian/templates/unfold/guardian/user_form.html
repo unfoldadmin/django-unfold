@@ -3,25 +3,25 @@
 <form method="post">
     {% csrf_token %}
 
-    <h2 class="font-medium mb-3 text-sm text-gray-700 dark:text-gray-200">
+    <h2 class="font-medium mb-3  text-gray-700 dark:text-gray-200">
         {% trans "User permissions" %}
     </h2>
 
     {% if users_perms.items %}
-        <table id="user-permissions" class="border-gray-200 border-spacing-none border-separate mb-6 text-gray-700 w-full dark:text-gray-300 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
-            <thead class="hidden lg:table-header-group">
+        <table id="user-permissions" class="border-gray-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+            <thead class="hidden lg:table-header-group text-gray-900 dark:text-gray-100">
                 <tr>
-                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                    <th class="align-middle font-medium px-3 py-2 text-left">
                         {% trans "User" %}
                     </th>
 
                     {% for perm in model_perms %}
-                        <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                        <th class="align-middle font-medium px-3 py-2 text-left">
                             {{ perm.name }}
                         </th>
                     {% endfor %}
 
-                    <th class="align-middle font-medium px-3 py-2 text-right text-gray-400 text-sm">
+                    <th class="align-middle font-medium px-3 py-2 text-right">
                         {% trans "Action" %}
                     </th>
                 </tr>
@@ -30,14 +30,14 @@
             <tbody>
                 {% for user, user_perms in users_perms.items %}
                     <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
-                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "User" %}">
-                            <span class="text-gray-700 dark:text-gray-200">
+                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "User" %}">
+                            <span>
                                 {{ user }}
                             </span>
                         </th>
 
                         {% for perm in model_perms %}
-                            <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{{ perm.name }}">
+                            <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{{ perm.name }}">
                                 {% if perm.codename in group_perms %}
                                     {% include "unfold/helpers/boolean.html" with value=False %}
                                 {% else %}
@@ -46,7 +46,7 @@
                             </td>
                         {% endfor %}
 
-                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-right text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "Action" %}">
+                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-right  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans "Action" %}">
                             <a href="user-manage/{{ user.id|safe }}/" class="hover:text-gray-700 dark:hover:text-white">
                                 {% trans "Edit" %}
                             </a>

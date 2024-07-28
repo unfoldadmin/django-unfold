@@ -1,7 +1,7 @@
 {% load i18n unfold %}
 
 <div class="mb-6">
-    <h3 class="font-medium mb-2 text-gray-700 text-sm dark:text-gray-200">
+    <h3 class="font-semibold mb-2 text-gray-900 dark:text-gray-100">
         {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
     </h3>
 
@@ -12,9 +12,9 @@
     {% endfor %}
 
     {% if spec|class_name == "BooleanFieldListFilter" %}
-        <ul class="border-l-4 border-gray-200 flex pl-4 py-2 text-gray-500 text-sm dark:border-gray-700">
+        <ul class="border-l-4 border-gray-200 flex pl-4 py-2  dark:border-gray-700">
             {% for choice in choices %}
-                <li class="{% if choice.selected %}font-medium text-primary-600 dark:text-primary-500 dark{% else %}text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200{% endif %} pr-4">
+                <li class="{% if choice.selected %}font-medium text-primary-600 dark:text-primary-500 dark{% else %}hover:text-gray-700 dark:hover:text-gray-200{% endif %} pr-4">
                     <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
                         {{ choice.display }}
                     </a>
@@ -22,9 +22,9 @@
             {% endfor %}
         </ul>
     {% else %}
-        <ul class="border-l-4 border-gray-200 flex flex-col pl-4 py-4 text-gray-500 text-sm dark:border-gray-700">
+        <ul class="border-l-4 border-gray-200 flex flex-col pl-4 py-4 dark:border-gray-700">
             {% for choice in choices %}
-                <li class="mb-4 last:mb-0 {% if choice.selected %}font-medium text-primary-600 dark:text-primary-500 {% else %}text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200{% endif %}">
+                <li class="mb-4 last:mb-0 {% if choice.selected %}font-medium text-primary-600 dark:text-primary-500 {% else %}hover:text-gray-700 dark:hover:text-gray-200{% endif %}">
                     <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
                         {{ choice.display }}
                     </a>

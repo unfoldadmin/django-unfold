@@ -33,12 +33,12 @@
 
 {% block content %}
     {% if perms_lacking %}
-        <p class="font-medium p-4 text-sm text-gray-700 dark:text-gray-200">
+        <p class="font-semibold p-4 text-gray-900 dark:text-gray-100">
             {% blocktranslate %}Deleting the selected {{ objects_name }} would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}
         </p>
 
         <div class="border-t border-gray-200 p-4 dark:border-gray-800">
-            <ul class="leading-relaxed text-gray-500 text-sm dark:border-gray-800 dark:text-gray-300">
+            <ul class="leading-relaxed dark:border-gray-800">
                 {% for obj in perms_lacking %}
                     <li>{{ obj }}</li>
                 {% endfor %}
@@ -46,12 +46,12 @@
         </div>
     {% elif protected %}
         <div class="border border-gray-200 rounded-md shadow-sm dark:border-gray-800">
-            <p class="font-medium p-4 text-sm text-gray-700 dark:text-gray-200">
+            <p class="font-semibold p-4 text-gray-900 dark:text-gray-100">
                 {% blocktranslate %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktranslate %}
             </p>
 
             <div class="border-t border-gray-200 p-4 dark:border-gray-800">
-                <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-300">
+                <ul class="leading-relaxed">
                     {% for obj in protected %}
                         <li>{{ obj }}</li>
                     {% endfor %}
@@ -60,19 +60,19 @@
         </div>
     {% else %}
         <div class="border border-gray-200 rounded-md shadow-sm dark:border-gray-800">
-            <p class="font-medium p-4 text-sm text-gray-700 dark:text-gray-200">
+            <p class="font-semibold p-4 text-gray-900 dark:text-gray-100">
                 {% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktranslate %}
             </p>
 
             {% include "admin/includes/object_delete_summary.html" %}
 
             <div class="border-t border-gray-200 p-4 dark:border-gray-800">
-                <h2 class="font-medium mb-2 text-gray-700 text-sm dark:text-gray-200">
+                <h2 class="font-semibold mb-2 text-gray-900 dark:text-gray-100">
                     {% translate "Objects" %}
                 </h2>
 
                 {% for deletable_object in deletable_objects %}
-                    <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-300">
+                    <ul class="leading-relaxed">
                         {{ deletable_object|unordered_list }}
                     </ul>
                 {% endfor %}
@@ -89,11 +89,11 @@
                     <input type="hidden" name="action" value="delete_selected">
                     <input type="hidden" name="post" value="yes">
 
-                    <a href="#" class="border cancel-link font-medium hidden mb-3 px-3 py-2 rounded-md text-sm text-gray-500 transition-all w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                    <a href="#" class="border cancel-link font-medium hidden mb-3 px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-gray-900">
                         {% translate "No, take me back" %}
                     </a>
 
-                    <input type="submit" value="{% translate 'Yes, I’m sure' %}" class="bg-red-600 cursor-pointer font-medium ml-auto px-3 py-2 rounded-md text-sm text-white dark:bg-red-500/20 dark:text-red-500">
+                    <input type="submit" value="{% translate 'Yes, I’m sure' %}" class="bg-red-600 cursor-pointer font-medium ml-auto px-3 py-2 rounded-md text-white dark:bg-red-500/20 dark:text-red-500">
                 </div>
             </form>
         </div>

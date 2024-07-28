@@ -87,6 +87,7 @@ Did you decide to start using Unfold but you don't have time to make the switch 
   - [Pre-commit](#pre-commit)
   - [Poetry configuration](#poetry-configuration)
   - [Compiling Tailwind](#compiling-tailwind)
+  - [Design system](#design-system)
   - [Using VS Code with containers](#using-vs-code-with-containers)
     - [Development server](#development-server)
     - [Compiling Tailwind in devcontainer](#compiling-tailwind-in-devcontainer)
@@ -1380,6 +1381,17 @@ npm run tailwind:build # run once
 Some components like datepickers, calendars or selectors in admin was not possible to style by overriding html templates so their default styles are overridden in **styles.css**.
 
 **Note:** most of the custom styles located in style.css are created via `@apply some-tailwind-class;` as is not possible to manually add CSS class to element which are for example created via jQuery.
+
+
+### Design system
+
+| Component                         | Classes                                                |
+| --------------------------------- | ------------------------------------------------------ |
+| Regular text                      | text-gray-600 dark:text-gray-300                       |
+| Hover regular text                | text-gray-700 dark:text-gray-200                       |
+| Headings                          | font-semibold text-gray-900 dark:text-gray-100         |
+| Icon                              | text-gray-400 dark:text-gray-500                       |
+| Hover icon                        | hover:text-gray-500 dark:hover:text-gray-400           |
 
 ### Using VS Code with containers
 
