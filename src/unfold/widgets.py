@@ -36,14 +36,14 @@ LABEL_CLASSES = [
     "mb-2",
     "text-gray-900",
     "text-sm",
-    "dark:text-gray-200",
+    "dark:text-gray-100",
 ]
 
 CHECKBOX_LABEL_CLASSES = [
     "ml-2",
     "text-sm",
     "text-gray-900",
-    "dark:text-gray-200",
+    "dark:text-gray-100",
 ]
 
 BASE_CLASSES = [
@@ -512,7 +512,12 @@ try:
         def __init__(self, *args, **kwargs):
             super().__init__(
                 amount_widget=UnfoldAdminTextInputWidget,
-                currency_widget=UnfoldAdminSelectWidget(choices=CURRENCY_CHOICES),
+                currency_widget=UnfoldAdminSelectWidget(
+                    choices=CURRENCY_CHOICES,
+                    attrs={
+                        "aria-label": _("Select currency"),
+                    },
+                ),
             )
 
 except ImportError:

@@ -37,9 +37,7 @@ from ..widgets import UnfoldBooleanWidget
 register = Library()
 
 LINK_CLASSES = [
-    "text-gray-600",
     "truncate",
-    "dark:text-gray-300",
 ]
 
 ROW_CLASSES = [
@@ -54,17 +52,17 @@ ROW_CLASSES = [
     "px-3",
     "py-2",
     "text-left",
-    "text-gray-500",
     "text-sm",
     "before:flex",
     "before:capitalize",
     "before:content-[attr(data-label)]",
     "before:items-center",
+    "before:font-semibold",
     "before:mr-auto",
-    "before:text-gray-500",
+    "before:text-gray-900",
     "first:border-t-0",
-    "dark:before:text-gray-300",
     "dark:text-gray-300",
+    "dark:before:text-gray-100",
     "lg:before:hidden",
     "lg:first:border-t",
     "lg:py-3",
@@ -84,13 +82,14 @@ CHECKBOX_CLASSES = [
     "before:block",
     "before:capitalize",
     "before:content-[attr(data-label)]",
+    "before:font-semibold",
     "before:mr-auto",
-    "before:text-gray-500",
+    "before:text-gray-100",
     "lg:before:hidden",
     "lg:border-t",
     "lg:border-gray-200",
     "lg:table-cell",
-    "dark:before:text-gray-300",
+    "dark:before:text-gray-100",
     "dark:lg:border-gray-800",
 ]
 

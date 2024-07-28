@@ -3,12 +3,14 @@
 <div class="flex-grow font-medium min-w-0 mr-3">
     <h1 class="overflow-hidden text-ellipsis text-sm whitespace-nowrap xl:text-base text-gray-700 dark:text-gray-200">
         {% if content_title %}
-            {{ pretitle }}
+            <span class="font-medium text-gray-900 tracking-tight dark:text-gray-100">
+                {{ pretitle }}
 
-            {{ content_title }}
+                {{ content_title }}
+            </span>
 
             {% if cl and cl.full_result_count != cl.result_count %}
-                <span class="ml-2 text-gray-500 text-sm">
+                <span class="ml-2 text-sm">
                     {% blocktranslate count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktranslate %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktranslate with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktranslate %}{% else %}{% translate "Show all" %}{% endif %}</a>)
                 </span>
             {% endif %}

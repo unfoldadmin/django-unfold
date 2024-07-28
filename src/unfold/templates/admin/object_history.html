@@ -27,18 +27,18 @@
 
 {% block content %}
     {% if action_list %}
-        <table class="border-gray-200 border-spacing-none border-separate mb-6 text-gray-700 w-full dark:text-gray-300 lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
-            <thead class="hidden lg:table-header-group">
+        <table class="border-gray-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+            <thead class="hidden lg:table-header-group text-gray-900 dark:text-gray-100">
                 <tr>
-                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                    <th class="align-middle font-medium px-3 py-2 text-left">
                         {% translate 'Date/time' %}
                     </th>
 
-                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                    <th class="align-middle font-medium px-3 py-2 text-left">
                         {% translate 'User' %}
                     </th>
 
-                    <th class="align-middle font-medium px-3 py-2 text-left text-gray-400 text-sm">
+                    <th class="align-middle font-medium px-3 py-2 text-left">
                         {% translate 'Action' %}
                     </th>
                 </tr>
@@ -47,15 +47,15 @@
             <tbody>
                 {% for action in action_list %}
                     <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
-                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'Date/time' %}">
+                        <th class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'Date/time' %}">
                             {{ action.action_time|date:"DATETIME_FORMAT" }}
                         </th>
 
-                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'User' %}">
+                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'User' %}">
                             {{ action.user.get_username }}{% if action.user.get_full_name %} ({{ action.user.get_full_name }}){% endif %}
                         </td>
 
-                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto before:text-gray-500 first:border-t-0 dark:before:text-gray-300 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'Action' %}">
+                        <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% translate 'Action' %}">
                             {{ action.get_change_message }}
                         </td>
                     </tr>
@@ -63,7 +63,7 @@
             </tbody>
         </table>
 
-        <div class="bg-gray-50 flex my-4 items-center p-3 rounded-md text-gray-400 text-sm dark:bg-gray-800">
+        <div class="bg-gray-50 flex my-4 items-center p-3 rounded-md dark:bg-gray-800">
             {% if pagination_required %}
                 {% for i in page_range %}
                     <span class="pr-4">

@@ -5,7 +5,7 @@
 
     <div class="bg-white flex mr-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800" x-on:click.outside="filterOpen = false">
         <div class="flex-grow h-full overflow-auto relative">
-            <h3 class="border-b flex font-medium mb-6 px-6 py-4 text-gray-700 text-sm dark:text-gray-200 dark:border-gray-700">
+            <h3 class="border-b flex font-semibold mb-6 px-6 py-4 text-gray-900 text-sm dark:text-gray-100 dark:border-gray-700">
                 {% trans "Filter results" %}
 
                 {% if cl.has_active_filters %}
@@ -14,7 +14,7 @@
                     </a>
                 {% endif %}
 
-                <a class="cursor-pointer material-symbols-outlined md-18 ml-auto pl-4 text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-200" x-on:click="filterOpen = false">
+                <a class="cursor-pointer material-symbols-outlined md-18 ml-auto pl-4 text-gray-400 transition-colors hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400" x-on:click="filterOpen = false">
                     close
                 </a>
             </h3>
