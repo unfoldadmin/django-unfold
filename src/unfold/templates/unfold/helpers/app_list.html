@@ -27,7 +27,7 @@
                         {% for item in group.items %}
                             {% if item.has_permission %}
                                 <li>
-                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="border border-transparent flex h-11 items-center -mx-3 px-3 py-2 rounded-md {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:border dark:border-gray-800 dark:bg-white/[.02] dark:text-primary-500{% else %} hover:text-gray-700 hover:dark:text-gray-200{% endif %}">
+                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="flex h-11 items-center -mx-3 px-3 py-2 rounded-md {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% else %} hover:text-gray-700 hover:dark:text-gray-200{% endif %}">
                                         {% if item.icon %}
                                             <span class="material-symbols-outlined md-18 mr-3 w-4.5">
                                                 {{ item.icon }}
