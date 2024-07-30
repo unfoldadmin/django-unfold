@@ -240,9 +240,10 @@ SWITCH_CLASSES = [
     "after:left-1",
     "after:top-1",
     "after:w-3",
-    "checked:bg-primary-600",
+    "checked:bg-green-500",
     "checked:after:left-4",
     "dark:bg-gray-600",
+    "dark:checked:bg-green-700",
 ]
 
 

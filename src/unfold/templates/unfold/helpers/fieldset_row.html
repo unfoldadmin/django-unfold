@@ -7,7 +7,7 @@
         <div class="flex group {% if adminform.model_admin.compressed_fields %} field-row{% endif %}{% if not line.fields|length == 1 and not adminform.model_admin.compressed_fields %} lg:max-w-xs flex-grow{% endif %}{% if field.errors %} errors {% endif %}{% if not forloop.parentloop.last %} {% if adminform.model_admin.compressed_fields %}mb-3{% else %}mb-6{% endif %}{% else %} pb-3{% endif %} {% if adminform.model_admin.compressed_fields %}flex-col lg:flex-row lg:gap-2 {% else %}flex-col{% endif %}">
             {% if field.is_checkbox %}
                 {% if adminform.model_admin.compressed_fields %}
-                    <div class="flex flex-row gap-4">
+                    <div class="flex flex-col gap-4 py-2 lg:flex-row">
                         <div class="font-medium flex items-start -ml-2 min-w-32 w-32 lg:min-w-48 lg:w-48">
                             {{ field.label_tag }}
                         </div>
