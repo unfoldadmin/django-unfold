@@ -8,11 +8,11 @@
                     {% if app.models and not app.hidden %}
                         <li>
                             {% if app.name %}
-                                <h3>
+                                <h2>
                                     <a href="{{ app.app_url }}" class="block font-semibold mb-2 mt-4 text-gray-700 text-sm truncate dark:text-gray-200" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
                                         {{ app.name }}
                                     </a>
-                                </h3>
+                                </h2>
                             {% endif %}
 
                             <ol>
