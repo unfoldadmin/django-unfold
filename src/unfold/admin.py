@@ -84,7 +84,7 @@ FORMFIELD_OVERRIDES = {
     models.UUIDField: {"widget": UnfoldAdminUUIDInputWidget},
     models.TextField: {"widget": UnfoldAdminTextareaWidget},
     models.NullBooleanField: {"widget": UnfoldAdminNullBooleanSelectWidget},
-    models.BooleanField: {"widget": UnfoldBooleanWidget},
+    models.BooleanField: {"widget": UnfoldBooleanSwitchWidget},
     models.IntegerField: {"widget": UnfoldAdminIntegerFieldWidget},
     models.BigIntegerField: {"widget": UnfoldAdminBigIntegerFieldWidget},
     models.DecimalField: {"widget": UnfoldAdminDecimalFieldWidget},
@@ -416,13 +416,6 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     ) -> Any:
         if extra_context is None:
             extra_context = {}
-
-        new_formfield_overrides = copy.deepcopy(self.formfield_overrides)
-        new_formfield_overrides.update(
-            {models.BooleanField: {"widget": UnfoldBooleanSwitchWidget}}
-        )
-
-        self.formfield_overrides = new_formfield_overrides
 
         actions = []
         if object_id:
