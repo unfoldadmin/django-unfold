@@ -25,6 +25,7 @@ from django.forms import (
     NumberInput,
     PasswordInput,
     Select,
+    SelectMultiple,
 )
 from django.utils.translation import gettext_lazy as _
 
@@ -476,6 +477,15 @@ class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
 
 
 class UnfoldAdminSelectWidget(Select):
+    def __init__(self, attrs=None, choices=()):
+        if attrs is None:
+            attrs = {}
+
+        attrs["class"] = " ".join(SELECT_CLASSES)
+        super().__init__(attrs, choices)
+
+
+class UnfoldAdminSelectMultipleWidget(SelectMultiple):
     def __init__(self, attrs=None, choices=()):
         if attrs is None:
             attrs = {}

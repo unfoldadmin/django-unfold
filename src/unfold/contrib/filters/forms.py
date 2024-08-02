@@ -1,8 +1,10 @@
 from django import forms
+from django.forms import ChoiceField, MultipleChoiceField
 from django.utils.translation import gettext_lazy as _
 
 from ...widgets import (
     INPUT_CLASSES,
+    UnfoldAdminSelectMultipleWidget,
     UnfoldAdminSelectWidget,
     UnfoldAdminSplitDateTimeVerticalWidget,
     UnfoldAdminTextInputWidget,
@@ -21,14 +23,23 @@ class SearchForm(forms.Form):
 
 
 class DropdownForm(forms.Form):
-    def __init__(self, name, label, choices, *args, **kwargs):
+    widget = UnfoldAdminSelectWidget
+    field = ChoiceField
+
+    def __init__(self, name, label, choices, multiple=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields[name] = forms.ChoiceField(
+        if multiple:
+            self.widget = UnfoldAdminSelectMultipleWidget(
+                field=name, admin_site="admin"
+            )
+            self.field = MultipleChoiceField
+
+        self.fields[name] = self.field(
             label=label,
             required=False,
             choices=choices,
-            widget=UnfoldAdminSelectWidget,
+            widget=self.widget,
         )
 
 
