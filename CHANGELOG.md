@@ -1,4 +1,18 @@
 
+## 0.34.0 (2024-08-03)
+
+- feat: disable select all action (#630) ([`2877747`](https://github.com/unfoldadmin/django-unfold/commit/287774779f9f2c4f2fb75f990e6d86bbf055e2d1))
+- fix: app list truncate (#644) ([`c7dbd1c`](https://github.com/unfoldadmin/django-unfold/commit/c7dbd1cbc375c10ef7f11565343ceccb5a9feaf3))
+- fix: compressed readonly field (#643) ([`bdc58f7`](https://github.com/unfoldadmin/django-unfold/commit/bdc58f7d8d46bb9962691bd1d70df502751f24e4))
+- fix: boolean checkbox improvements (#640) ([`6454305`](https://github.com/unfoldadmin/django-unfold/commit/6454305f22d186b28fbb296f3e258cdaf12f356b))
+- fix: navigation &amp; tabs improvements (#638) ([`1a85f7c`](https://github.com/unfoldadmin/django-unfold/commit/1a85f7c45c53b54d50677bd7fefc3bd1b47460e3))
+- fix: improved accessibility (#635) ([`a9e168b`](https://github.com/unfoldadmin/django-unfold/commit/a9e168bc3255610bfffa2dd933301506a8075cfe))
+- fix: inline visual hierarchy (#632) ([`cb39ca3`](https://github.com/unfoldadmin/django-unfold/commit/cb39ca37ebeff0c1379ea1ac020091f2dc4fd324))
+- fix: support for uuid pk in action dropdowns ([`acef20b`](https://github.com/unfoldadmin/django-unfold/commit/acef20bbc2ecc99f9999fcdbc3d9a7f0dfe11f34))
+- fix: remove links underline (#621) ([`7ced92a`](https://github.com/unfoldadmin/django-unfold/commit/7ced92af44758796f6a6502a3590de51478ba117))
+- fix: raw id field link styling (#620) ([`b49eafc`](https://github.com/unfoldadmin/django-unfold/commit/b49eafcc898869a2052bab9d42fdfde623ecc69e))
+- docs: add Chart.js credits (#603) ([`71e8736`](https://github.com/unfoldadmin/django-unfold/commit/71e87363a53c175df45d7234ea46e0581d4b3b94))
+
 ## 0.33.0 (2024-07-23)
 
 - feat: optional inline titles (#619) ([`0cce931`](https://github.com/unfoldadmin/django-unfold/commit/0cce93179f475c569a1f91ba32c69a24b09aaa35))
