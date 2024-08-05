@@ -129,7 +129,7 @@ class DropdownFilter(admin.SimpleListFilter):
         )
 
 
-class MultipleDropdownFiler(MultiValueMixin, DropdownFilter):
+class MultipleDropdownFilter(MultiValueMixin, DropdownFilter):
     multiple = True
 
 

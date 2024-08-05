@@ -481,7 +481,7 @@ class UnfoldAdminSelectWidget(Select):
         if attrs is None:
             attrs = {}
 
-        attrs["class"] = " ".join(SELECT_CLASSES)
+        attrs["class"] = " ".join([*SELECT_CLASSES, attrs.get("class", "")])
         super().__init__(attrs, choices)
 
 
@@ -490,7 +490,7 @@ class UnfoldAdminSelectMultipleWidget(SelectMultiple):
         if attrs is None:
             attrs = {}
 
-        attrs["class"] = " ".join(SELECT_CLASSES)
+        attrs["class"] = " ".join([*SELECT_CLASSES, attrs.get("class", "")])
         super().__init__(attrs, choices)
 
 

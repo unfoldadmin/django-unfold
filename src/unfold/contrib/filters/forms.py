@@ -23,7 +23,12 @@ class SearchForm(forms.Form):
 
 
 class DropdownForm(forms.Form):
-    widget = UnfoldAdminSelectWidget
+    widget = UnfoldAdminSelectWidget(
+        attrs={
+            "data-theme": "admin-autocomplete",
+            "class": "admin-autocomplete",
+        }
+    )
     field = ChoiceField
 
     def __init__(self, name, label, choices, multiple=False, *args, **kwargs):
@@ -31,7 +36,10 @@ class DropdownForm(forms.Form):
 
         if multiple:
             self.widget = UnfoldAdminSelectMultipleWidget(
-                field=name, admin_site="admin"
+                attrs={
+                    "data-theme": "admin-autocomplete",
+                    "class": "admin-autocomplete",
+                }
             )
             self.field = MultipleChoiceField
 
@@ -41,6 +49,20 @@ class DropdownForm(forms.Form):
             choices=choices,
             widget=self.widget,
         )
+
+    class Media:
+        js = (
+            "admin/js/vendor/jquery/jquery.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "unfold/js/select2.init.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
 
 
 class SingleNumericForm(forms.Form):
