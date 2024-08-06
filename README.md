@@ -774,31 +774,28 @@ The template is straightforward, extend from `unfold/layouts/base.html` and the 
 
 ## Custom admin site
 
-In order to create a custom admin site, unfold provides the `unfold.sites.UnfoldAdminSite` class. It can be used as follows:
+In order to create a custom admin site, Unfold provides the `unfold.sites.UnfoldAdminSite` class. It can be used as follows:
 
 ```python
+from django.contrib import admin
 from django.contrib.auth.models import User
 from unfold import admin as unfold_admin
 from unfold.sites import UnfoldAdminSite
 
 
-# Register your models here.
 class CustomAdminSite(UnfoldAdminSite):
-    def get_urls(self):
-        urls = super(CustomAdminSite, self).get_urls()
-        custom_urls = []
-        return custom_urls + urls
+    pass
 
 
+custom_admin_site = CustomAdminSite(name="custom_admin_site")
+
+
+@admin.register(User, site=custom_admin_site)
 class UserAdmin(unfold_admin.ModelAdmin):
     model = User
-
-
-custom_admin_site = CustomAdminSite(name="snh2_dj_admin")
-custom_admin_site.register(User, UserAdmin)
 ```
 
-If you use the default `django.contrib.admin.AdminSite` you will receive a `NoReverseMatch` error.
+Note: If you use the default `django.contrib.admin.AdminSite` you will receive a `NoReverseMatch` error.
 
 ## Display decorator
 
