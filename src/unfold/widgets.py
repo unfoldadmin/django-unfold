@@ -408,6 +408,16 @@ class UnfoldAdminExpandableTextareaWidget(AdminTextareaWidget):
 class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
     template_name = "unfold/widgets/split_datetime.html"
 
+    class Media:
+        js = (
+            "/admin/jsi18n/",
+            "/static/admin/js/vendor/jquery/jquery.js",
+            "/static/admin/js/calendar.js",
+            "/static/admin/js/jquery.init.js",
+            "/static/admin/js/admin/DateTimeShortcuts.js",
+            "/static/admin/js/core.js"
+        )
+
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         widgets = [UnfoldAdminDateWidget, UnfoldAdminTimeWidget]
         MultiWidget.__init__(self, widgets, attrs)
@@ -415,6 +425,16 @@ class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
 
 class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
     template_name = "unfold/widgets/split_datetime_vertical.html"
+
+    class Media:
+        js = (
+            "/admin/jsi18n/",
+            "/static/admin/js/vendor/jquery/jquery.js",
+            "/static/admin/js/calendar.js",
+            "/static/admin/js/jquery.init.js",
+            "/static/admin/js/admin/DateTimeShortcuts.js",
+            "/static/admin/js/core.js"
+        )
 
     def __init__(
         self,
