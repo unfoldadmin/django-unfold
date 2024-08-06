@@ -236,6 +236,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     list_disable_select_all = False
     compressed_fields = False
     readonly_preprocess_fields = {}
+    warn_unsaved_form = False
     checks_class = UnfoldModelAdminChecks
 
     @property
