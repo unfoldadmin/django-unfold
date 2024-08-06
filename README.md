@@ -779,7 +779,7 @@ In order to create a custom admin site, Unfold provides the `unfold.sites.Unfold
 ```python
 from django.contrib import admin
 from django.contrib.auth.models import User
-from unfold import admin
+from unfold.admin import ModelAdmin
 from unfold.sites import UnfoldAdminSite
 
 
@@ -791,7 +791,7 @@ custom_admin_site = CustomAdminSite(name="custom_admin_site")
 
 
 @admin.register(User, site=custom_admin_site)
-class UserAdmin(unfold_admin.ModelAdmin):
+class UserAdmin(ModelAdmin):
     model = User
 ```
 
