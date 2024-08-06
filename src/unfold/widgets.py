@@ -415,7 +415,7 @@ class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
             "/static/admin/js/calendar.js",
             "/static/admin/js/jquery.init.js",
             "/static/admin/js/admin/DateTimeShortcuts.js",
-            "/static/admin/js/core.js"
+            "/static/admin/js/core.js",
         )
 
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
@@ -433,7 +433,7 @@ class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
             "/static/admin/js/calendar.js",
             "/static/admin/js/jquery.init.js",
             "/static/admin/js/admin/DateTimeShortcuts.js",
-            "/static/admin/js/core.js"
+            "/static/admin/js/core.js",
         )
 
     def __init__(
