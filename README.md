@@ -734,34 +734,40 @@ class YourModelAdmin(ModelAdmin):
 
 ## Custom admin pages
 
-By default, Unfold provides a basic view mixin which helps with creation of basic views which are part of Unfold UI. The implementation requires creation of class based view inheriting from `unfold.views.UnfoldModelAdminViewMixin`. It is important to add `title` and `permissions_required` properties.
+By default, Unfold provides a basic view mixin which helps with creation of basic views which are part of Unfold UI. The implementation requires creation of class based view inheriting from `unfold.views.UnfoldModelAdminViewMixin`. It is important to add `title` and `permission_required` properties.
 
 ```python
 # admin.py
 
+from django.contrib import admin
 from django.views.generic import TemplateView
+from myapp.models import MyModel
 from unfold.admin import ModelAdmin
 from unfold.views import UnfoldModelAdminViewMixin
 
 
 class MyClassBasedView(UnfoldModelAdminViewMixin, TemplateView):
     title = "Custom Title"  # required: custom page header title
-    permissions_required = () # required: tuple of permissions
+    permission_required = ()  # required: tuple of permissions
     template_name = "some/template/path.html"
 
 
+@admin.register(MyModel)
 class CustomAdmin(ModelAdmin):
     def get_urls(self):
-        return super().get_urls() + [
+        return [
             path(
                 "custom-url-path",
                 MyClassBasedView.as_view(model_admin=self),  # IMPORTANT: model_admin is required
-                name="custom_name"
+                name="custom_name",
             ),
+            *super().get_urls(),
         ]
 ```
 
 The template is straightforward, extend from `unfold/layouts/base.html` and the UI will display all Unfold components like header or sidebar with all menu items. Then all content needs to be located in `content` block.
+
+The custom admin page is **not** automatically added to the sidebar. If you want to link it, you can use the `reverse_lazy` function like this: `reverse_lazy("admin:custom_name")`.
 
 ```django-html
 {% extends "unfold/layouts/base.html" %}
