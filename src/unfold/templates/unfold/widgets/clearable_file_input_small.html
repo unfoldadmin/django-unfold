@@ -7,14 +7,14 @@
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
                     <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
-                    <span class="ml-2 text-gray-500 dark:text-gray-300">
+                    <span class="ml-2">
                         {{ widget.clear_checkbox_label }}
                     </span>
                 </label>
             </div>
         {% endif %}
 
-        <input type="text" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white flex-grow font-medium px-3 py-2 text-ellipsis dark:bg-gray-900 {% if widget.value %}text-gray-500 dark:text-gray-300{% else %}text-gray-300 dark:text-gray-300{% endif %}">
+        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white flex-grow font-medium px-3 py-2 text-ellipsis dark:bg-gray-900 {% if widget.value %}text-gray-500 dark:text-gray-300{% else %}text-gray-300 dark:text-gray-300{% endif %}">
 
         <div class="flex flex-none items-center leading-none self-stretch">
             <input type="{{ widget.type }}" name="{{ widget.name }}" class="{{ widget.file_input_class }}" {% include "django/forms/widgets/attrs.html" %} />

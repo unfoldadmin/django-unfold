@@ -1,11 +1,11 @@
 {% load i18n %}
 
 <div class="border-gray-200 border-t p-4 dark:border-gray-800">
-    <h2 class="font-medium mb-2 text-gray-700 text-sm dark:text-gray-200">
+    <h2 class="font-semibold mb-2 text-gray-900 dark:text-gray-100">
         {% translate "Summary" %}
     </h2>
 
-    <ul class="leading-relaxed text-gray-500 text-sm dark:text-gray-300">
+    <ul class="leading-relaxed">
         {% for model_name, object_count in model_count %}
             <li>
                 {{ model_name|capfirst }}: {{ object_count }}

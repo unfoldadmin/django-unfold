@@ -8,11 +8,11 @@
 
 {% if results %}
     <div class="overflow-x-auto lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
-        <table id="result_list" class="block border-gray-200 border-spacing-none border-separate text-gray-700 w-full dark:text-gray-300 lg:table">
+        <table id="result_list" class="block border-gray-200 border-spacing-none border-separate w-full lg:table">
             <thead>
                 <tr>
                     {% for header in result_headers %}
-                        <th class="align-middle font-medium py-2 text-left text-gray-400 text-sm whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
+                        <th class="align-middle font-semibold py-2 text-left text-gray-900 dark:text-gray-100 text-sm whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
                             <div class="flex items-center">
                                 <div class="text">
                                     {% if header.sortable %}
@@ -39,7 +39,7 @@
                                 {% if header.sortable %}
                                     {% if header.sort_priority > 0 %}
                                         <div class="sortoptions flex items-center ml-2">
-                                            <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
+                                            <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
                                                 {% if header.ascending %}
                                                     <span class="block material-symbols-outlined">arrow_circle_down</span>
                                                 {% else %}
@@ -47,7 +47,7 @@
                                                 {% endif %}
                                             </a>
 
-                                            <a class="sortremove flex items-center leading-none ml-1 text-gray-400 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                            <a class="sortremove flex items-center leading-none ml-1 text-gray-400 dark:text-gray-500 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
                                                 <span class="block material-symbols-outlined">cancel</span>
                                             </a>
                                         </div>

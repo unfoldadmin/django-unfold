@@ -8,7 +8,30 @@ window.addEventListener("load", (e) => {
   renderCharts();
 
   filterForm();
+
+  warnWithoutSaving();
 });
+
+/*************************************************************
+ * Warn without saving
+ *************************************************************/
+const warnWithoutSaving = () => {
+  let formChanged = false;
+
+  Array.from(
+    document.querySelectorAll(
+      "form.warn-unsaved-form input, form.warn-unsaved-form select"
+    )
+  ).forEach((field) => {
+    field.addEventListener("change", (e) => (formChanged = true));
+  });
+
+  window.addEventListener("beforeunload", (e) => {
+    if (formChanged) {
+      e.preventDefault();
+    }
+  });
+};
 
 /*************************************************************
  * Filter form

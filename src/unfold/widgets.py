@@ -25,6 +25,7 @@ from django.forms import (
     NumberInput,
     PasswordInput,
     Select,
+    SelectMultiple,
 )
 from django.utils.translation import gettext_lazy as _
 
@@ -36,14 +37,14 @@ LABEL_CLASSES = [
     "mb-2",
     "text-gray-900",
     "text-sm",
-    "dark:text-gray-200",
+    "dark:text-gray-100",
 ]
 
 CHECKBOX_LABEL_CLASSES = [
     "ml-2",
     "text-sm",
     "text-gray-900",
-    "dark:text-gray-200",
+    "dark:text-gray-100",
 ]
 
 BASE_CLASSES = [
@@ -240,9 +241,10 @@ SWITCH_CLASSES = [
     "after:left-1",
     "after:top-1",
     "after:w-3",
-    "checked:bg-primary-600",
+    "checked:bg-green-500",
     "checked:after:left-4",
     "dark:bg-gray-600",
+    "dark:checked:bg-green-700",
 ]
 
 
@@ -479,7 +481,16 @@ class UnfoldAdminSelectWidget(Select):
         if attrs is None:
             attrs = {}
 
-        attrs["class"] = " ".join(SELECT_CLASSES)
+        attrs["class"] = " ".join([*SELECT_CLASSES, attrs.get("class", "")])
+        super().__init__(attrs, choices)
+
+
+class UnfoldAdminSelectMultipleWidget(SelectMultiple):
+    def __init__(self, attrs=None, choices=()):
+        if attrs is None:
+            attrs = {}
+
+        attrs["class"] = " ".join([*SELECT_CLASSES, attrs.get("class", "")])
         super().__init__(attrs, choices)
 
 
@@ -512,7 +523,12 @@ try:
         def __init__(self, *args, **kwargs):
             super().__init__(
                 amount_widget=UnfoldAdminTextInputWidget,
-                currency_widget=UnfoldAdminSelectWidget(choices=CURRENCY_CHOICES),
+                currency_widget=UnfoldAdminSelectWidget(
+                    choices=CURRENCY_CHOICES,
+                    attrs={
+                        "aria-label": _("Select currency"),
+                    },
+                ),
             )
 
 except ImportError:

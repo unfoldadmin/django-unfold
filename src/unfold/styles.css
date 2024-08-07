@@ -256,7 +256,7 @@ table tr.selected th {
 }
 
 .add-row {
-  @apply align-middle bg-gray-50 px-3 py-5 font-normal text-right text-sm dark:bg-gray-900;
+  @apply align-middle bg-gray-50 px-3 py-5 font-normal text-right dark:bg-gray-900;
 }
 
 [data-inline-type="stacked"] .add-row {
@@ -268,15 +268,11 @@ table tr.selected th {
 }
 
 .add-row a {
-  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center text-gray-500 text-sm transition-all lg:float-right dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-200;
-}
-
-h3 .delete label {
-  @apply text-gray-500 dark:text-gray-200;
+  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center hover:text-gray-700 lg:float-right dark:bg-gray-900 dark:border-gray-700 dark:hover:text-gray-200;
 }
 
 .inline-deletelink {
-  @apply block leading-none text-red-600 text-sm dark:text-red-500;
+  @apply block leading-none text-red-600 dark:text-red-500;
 }
 
 td .inline-deletelink {
@@ -411,7 +407,7 @@ h3 span:nth-child(3) {
 .select2-container--admin-autocomplete
   .select2-selection--multiple
   li.select2-selection__choice {
-  @apply bg-gray-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-gray-500 truncate dark:bg-gray-800 dark:text-gray-300 dark:hover:text-gray-200;
+  @apply bg-gray-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-gray-600 hover:text-gray-700 truncate dark:bg-gray-800 dark:text-gray-300 dark:hover:text-gray-200;
 }
 
 .select2-container--admin-autocomplete

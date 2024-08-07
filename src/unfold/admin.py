@@ -84,7 +84,7 @@ FORMFIELD_OVERRIDES = {
     models.UUIDField: {"widget": UnfoldAdminUUIDInputWidget},
     models.TextField: {"widget": UnfoldAdminTextareaWidget},
     models.NullBooleanField: {"widget": UnfoldAdminNullBooleanSelectWidget},
-    models.BooleanField: {"widget": UnfoldBooleanWidget},
+    models.BooleanField: {"widget": UnfoldBooleanSwitchWidget},
     models.IntegerField: {"widget": UnfoldAdminIntegerFieldWidget},
     models.BigIntegerField: {"widget": UnfoldAdminBigIntegerFieldWidget},
     models.DecimalField: {"widget": UnfoldAdminDecimalFieldWidget},
@@ -119,7 +119,9 @@ FORMFIELD_OVERRIDES_INLINE.update(
     }
 )
 
-checkbox = UnfoldBooleanWidget({"class": "action-select"}, lambda value: False)
+checkbox = UnfoldBooleanWidget(
+    {"class": "action-select", "aria-label": _("Select record")}, lambda value: False
+)
 
 helpers.AdminField = UnfoldAdminField
 
@@ -234,6 +236,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     list_disable_select_all = False
     compressed_fields = False
     readonly_preprocess_fields = {}
+    warn_unsaved_form = False
     checks_class = UnfoldModelAdminChecks
 
     @property
@@ -414,13 +417,6 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     ) -> Any:
         if extra_context is None:
             extra_context = {}
-
-        new_formfield_overrides = copy.deepcopy(self.formfield_overrides)
-        new_formfield_overrides.update(
-            {models.BooleanField: {"widget": UnfoldBooleanSwitchWidget}}
-        )
-
-        self.formfield_overrides = new_formfield_overrides
 
         actions = []
         if object_id:

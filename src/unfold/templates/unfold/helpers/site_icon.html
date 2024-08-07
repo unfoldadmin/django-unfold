@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if site_icon %}
-    <a  href="{% url "admin:index" %}">
+    <a href="{% url "admin:index" %}">
         {% if site_icon.light and site_icon.dark %}
             <img src="{{ site_icon.dark }}" alt="{% trans 'Home' %}" class="h-8 hidden mr-4 dark:block"/>
 
