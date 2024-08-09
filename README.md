@@ -1351,8 +1351,8 @@ def dashboard_callback(request: HttpRequest) -> Dict:
 ```
 
 ```django-html
-{% component "unfold/components/card" with title="Card title" %}
-    {% component "unfold/components/table.html" with table=table_data card_included=1 striped=1 %}{% encomponent %}
+{% component "unfold/components/card.html" with title="Card title" %}
+    {% component "unfold/components/table.html" with table=table_data card_included=1 striped=1 %}{% endcomponent %}
 {% endcomponent %}
 ```
 
