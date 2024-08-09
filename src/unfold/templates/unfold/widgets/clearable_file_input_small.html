@@ -19,6 +19,12 @@
         <div class="flex flex-none items-center leading-none self-stretch">
             <input type="{{ widget.type }}" name="{{ widget.name }}" class="{{ widget.file_input_class }}" {% include "django/forms/widgets/attrs.html" %} />
 
+            {% if widget.is_initial %}
+                <a href="{{ widget.value.url }}" class="border-r cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200" target="_blank">
+                    <span class="material-symbols-outlined">file_download</span>
+                </a>
+            {% endif %}
+
             <label for="{{ widget.attrs.id }}" class="cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200">
                 <span class="material-symbols-outlined">file_upload</span>
             </label>
