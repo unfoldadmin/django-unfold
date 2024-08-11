@@ -1,6 +1,8 @@
 from typing import Any, Dict, List, Mapping, Optional, Union
 
 from django import template
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin.helpers import AdminForm, Fieldset
 from django.forms import Field
 from django.template import Library, Node, RequestContext, TemplateSyntaxError
@@ -224,3 +226,19 @@ def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
         field.field.widget.attrs["class"] = classes
 
     return field
+
+
+@register.simple_tag
+def get_message_tags():
+    default_tags = {
+        messages.DEBUG: "bg-gray-100 text-gray-700 dark:bg-gray-5000/20 dark:text-gray-400",
+        messages.INFO: "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400",
+        messages.SUCCESS: "bg-green-10 text-green-7000 dark:bg-green-500/20 dark:text-green-400",
+        messages.WARNING: "bg-orange-100 text-orange-7000 dark:bg-orange-500/20 dark:text-orange-400",
+        messages.ERROR: "bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400",
+    }
+    # append class to custom tags
+    for level, classes in settings.MESSAGE_TAGS.items():
+        if level in default_tags:
+            default_tags[level] += f" {classes}"
+    return default_tags
