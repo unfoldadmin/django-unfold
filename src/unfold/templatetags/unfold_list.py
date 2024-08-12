@@ -36,9 +36,7 @@ from ..widgets import UnfoldBooleanWidget
 
 register = Library()
 
-LINK_CLASSES = [
-    "truncate",
-]
+LINK_CLASSES = []
 
 ROW_CLASSES = [
     "align-middle",
