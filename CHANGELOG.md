@@ -1,4 +1,14 @@
 
+## 0.35.0 (2024-08-12)
+
+- feat: warn unsaved form (#655) ([`c36f846`](https://github.com/unfoldadmin/django-unfold/commit/c36f846b605163c0f98ce9161aca14cda66f4ea4))
+- feat: multiple dropdown filter (#650) ([`0572dd2`](https://github.com/unfoldadmin/django-unfold/commit/0572dd27527e3d86fd3ea9d94f11909474f7378d))
+- fix: multiple dropdown params (#671) ([`1c5f42a`](https://github.com/unfoldadmin/django-unfold/commit/1c5f42a207de8436e810fea54cb23e422d332ef4))
+- fix: save as new (#668) ([`8a35767`](https://github.com/unfoldadmin/django-unfold/commit/8a357674c17d496fb3203a3d6386a472d54c8075))
+- fix: permission check object id param (#667) ([`ea88013`](https://github.com/unfoldadmin/django-unfold/commit/ea88013807c3c01c464b9bfa5913d7786e536df0))
+- docs: card component typos (#663) ([`a5b14fc`](https://github.com/unfoldadmin/django-unfold/commit/a5b14fc89b0fe12c73fc69bec26162db77772232))
+- docs: missing group import (#623) ([`90d5fa0`](https://github.com/unfoldadmin/django-unfold/commit/90d5fa0530a84620cf3a527832f8e66c4d99be34))
+
 ## 0.34.0 (2024-08-03)
 
 - feat: disable select all action (#630) ([`2877747`](https://github.com/unfoldadmin/django-unfold/commit/287774779f9f2c4f2fb75f990e6d86bbf055e2d1))
