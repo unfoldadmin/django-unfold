@@ -41,12 +41,23 @@ class ValueMixin:
         )
 
 
+class MultiValueMixin:
+    def value(self) -> Optional[List[str]]:
+        return (
+            self.lookup_val
+            if self.lookup_val not in EMPTY_VALUES
+            and isinstance(self.lookup_val, List)
+            and len(self.lookup_val) > 0
+            else self.lookup_val
+        )
+
+
 class DropdownMixin:
     template = "unfold/filters/filters_field.html"
     form_class = DropdownForm
     all_option = ["", _("All")]
 
-    def queryset(self, request, queryset) -> QuerySet:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         if self.value() not in EMPTY_VALUES:
             return super().queryset(request, queryset)
 
@@ -112,9 +123,14 @@ class DropdownFilter(admin.SimpleListFilter):
                     name=self.parameter_name,
                     choices=[self.all_option, *self.lookup_choices],
                     data={self.parameter_name: self.value()},
+                    multiple=self.multiple if hasattr(self, "multiple") else False,
                 ),
             },
         )
+
+
+class MultipleDropdownFilter(MultiValueMixin, DropdownFilter):
+    multiple = True
 
 
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
@@ -127,8 +143,13 @@ class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFil
                 name=self.lookup_kwarg,
                 choices=choices,
                 data={self.lookup_kwarg: self.value()},
+                multiple=self.multiple if hasattr(self, "multiple") else False,
             ),
         }
+
+
+class MultipleChoicesDropdownFilter(MultiValueMixin, ChoicesDropdownFilter):
+    multiple = True
 
 
 class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFilter):
@@ -139,8 +160,13 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
                 name=self.lookup_kwarg,
                 choices=[self.all_option, *self.lookup_choices],
                 data={self.lookup_kwarg: self.value()},
+                multiple=self.multiple if hasattr(self, "multiple") else False,
             ),
         }
+
+
+class MultipleRelatedDropdownFilter(MultiValueMixin, RelatedDropdownFilter):
+    multiple = True
 
 
 class SingleNumericFilter(admin.FieldListFilter):

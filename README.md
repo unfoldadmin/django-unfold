@@ -336,6 +336,9 @@ class CustomAdminClass(ModelAdmin):
     # Display fields in changeform in compressed mode
     compressed_fields = True  # Default: False
 
+    # Warn before leaving unsaved changes in changeform
+    warn_unsaved_form = True  # Default: False
+
     # Preprocess content of readonly fields before render
     readonly_preprocess_fields = {
         "model_field_name": "html.unescape",
@@ -621,7 +624,14 @@ The difference between them is that `ChoicesDropdownFilter` will collect a list 
 from django.contrib import admin
 from django.contrib.auth.models import User
 from unfold.admin import ModelAdmin
-from unfold.contrib.filters.admin import ChoicesDropdownFilter, RelatedDropdownFilter, DropdownFilter
+from unfold.contrib.filters.admin import (
+    ChoicesDropdownFilter,
+    MultipleChoicesDropdownFilter,
+    RelatedDropdownFilter,
+    MultipleRelatedDropdownFilter,
+    DropdownFilter,
+    MultipleDropdownFilter
+)
 
 
 class CustomDropdownFilter(DropdownFilter):
@@ -648,7 +658,9 @@ class MyAdmin(ModelAdmin):
     list_filter = [
         CustomDropdownFilter,
         ("modelfield_with_choices", ChoicesDropdownFilter),
+        ("modelfield_with_choices_multiple", MultipleChoicesDropdownFilter),
         ("modelfield_with_foreign_key", RelatedDropdownFilter)
+        ("modelfield_with_foreign_key_multiple", MultipleRelatedDropdownFilter)
     ]
 ```
 
