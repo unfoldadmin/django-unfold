@@ -129,8 +129,15 @@ class DropdownFilter(admin.SimpleListFilter):
         )
 
 
-class MultipleDropdownFilter(MultiValueMixin, DropdownFilter):
+class MultipleDropdownFilter(DropdownFilter):
     multiple = True
+
+    def __init__(self, request, params, model, model_admin):
+        self.request = request
+        super().__init__(request, params, model, model_admin)
+
+    def value(self):
+        return self.request.GET.getlist(self.parameter_name)
 
 
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):

@@ -245,13 +245,14 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         additional_media = forms.Media()
 
         for filter in self.list_filter:
-            if not isinstance(filter, (tuple, list)):
-                continue
-
-            if hasattr(filter[1], "form_class") and hasattr(
-                filter[1].form_class, "Media"
+            if (
+                isinstance(filter, (tuple, list))
+                and hasattr(filter[1], "form_class")
+                and hasattr(filter[1].form_class, "Media")
             ):
                 additional_media += forms.Media(filter[1].form_class.Media)
+            elif hasattr(filter, "form_class") and hasattr(filter.form_class, "Media"):
+                additional_media += forms.Media(filter.form_class.Media)
 
         return media + additional_media
 
