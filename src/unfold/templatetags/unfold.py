@@ -55,6 +55,11 @@ def has_nav_item_active(items: list) -> bool:
     return False
 
 
+@register.simple_tag(name="has_permission_to_any_item_in_nav_group")
+def has_permission_to_any_item_in_nav_group(items: list) -> bool:
+    return any(e['has_permission'] for e in items['items'])
+
+
 @register.filter
 def class_name(value: Any) -> str:
     return value.__class__.__name__

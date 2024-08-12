@@ -3,7 +3,9 @@
 {% if sidebar_navigation %}
     <div class="h-0 flex-grow overflow-auto" data-simplebar>
         {% for group in sidebar_navigation %}
-            {% if group.items %}
+            {% has_permission_to_any_item_in_nav_group group as has_items %}
+
+            {% if group.items and has_items %}
                 {% has_nav_item_active group.items as has_active %}
 
                 <div class="mb-3" {% if group.collapsible %}x-data="{navigationOpen: {% if has_active %}true{% else %}false{% endif %}}"{% endif %}>
@@ -52,8 +54,8 @@
                             {% endif %}
                         {% endfor %}
                     </ol>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 
