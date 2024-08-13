@@ -59,6 +59,8 @@
 
 {% block content %}
     <div id="content-main">
+        {% block form_before %}{% endblock %}
+
         <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post" id="{{ opts.model_name }}_form" {% if adminform.model_admin.warn_unsaved_form %}class="warn-unsaved-form"{% endif %} novalidate>
             {% csrf_token %}
 
@@ -106,5 +108,7 @@
                 {% prepopulated_fields_js %}
             </div>
         </form>
+
+        {% block form_after %}{% endblock %}
     </div>
 {% endblock %}
