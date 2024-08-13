@@ -62,7 +62,11 @@ version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [tool.semantic_release.changelog]
 template_dir = ".github/templates"
-exclude_commit_patterns = ["chore: version bump", "chore(deps)", "chore(deps-dev)"]
+exclude_commit_patterns = [
+    "chore: version bump",
+    "chore(deps)",
+    "chore(deps-dev)",
+]
 
 [tool.semantic_release.changelog.environment]
 trim_blocks = true
@@ -79,6 +83,22 @@ addopts = """\
     """
 pythonpath = "tests/server"
 django_find_project = false
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    isolated_build = true
+    envlist =
+        python{38,39,310,311,312}-django{32,41,42,50,51}
+
+    [testenv]
+    skip_install = true
+    allowlist_externals = poetry
+    set_env =
+        PYTHONDEVMODE = 1
+    commands_pre = poetry install
+    commands = poetry run python -m pytest tests/
+"""
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
