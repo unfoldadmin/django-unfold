@@ -20,7 +20,6 @@ const warnWithoutSaving = () => {
   const form = document.querySelector("form.warn-unsaved-form");
 
   const checkFormChanged = () => {
-    console.log("Checking changes");
     const elements = document.querySelectorAll(
       "form.warn-unsaved-form input, form.warn-unsaved-form select, form.warn-unsaved-form textarea"
     );
