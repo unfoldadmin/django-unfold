@@ -68,7 +68,7 @@
     {% endif %}
 </head>
 
-<body class="antialiased bg-white font-sans text-gray-600 text-sm dark:bg-gray-900 dark:text-gray-300 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }">
+<body class="antialiased bg-white font-sans text-gray-600 text-sm dark:bg-gray-900 dark:text-gray-300 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
     {% block base %}{% endblock %}
 
     <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
