@@ -1,4 +1,11 @@
 
+## 0.36.0 (2024-08-17)
+
+- feat: tox config in pyproject.toml (#678) ([`3e232ec`](https://github.com/unfoldadmin/django-unfold/commit/3e232ec3259d642e655c59122aedd1f3c5628196))
+- feat: changeform blocks (#677) ([`5b9d844`](https://github.com/unfoldadmin/django-unfold/commit/5b9d844a5cb8b46b5a5c34269fcf5042d968e606))
+- fix: warn without save (#680) ([`40dfb52`](https://github.com/unfoldadmin/django-unfold/commit/40dfb52542e5b9cf5c05e032e95841c7a2b58624))
+- fix: display header truncate (#673) ([`b4773ed`](https://github.com/unfoldadmin/django-unfold/commit/b4773ed2e46c174b21bac220aec7c5919eafbd85))
+
 ## 0.35.0 (2024-08-12)
 
 - feat: warn unsaved form (#655) ([`c36f846`](https://github.com/unfoldadmin/django-unfold/commit/c36f846b605163c0f98ce9161aca14cda66f4ea4))
