@@ -132,7 +132,12 @@ def prettify_json(data: Any) -> Optional[str]:
         return None
 
     def format_response(response: str, theme: str) -> str:
-        formatter = HtmlFormatter(style=theme, noclasses=True, nobackground=True)
+        formatter = HtmlFormatter(
+            style=theme,
+            noclasses=True,
+            nobackground=True,
+            prestyles="white-space: pre-wrap; word-wrap: break-word;",
+        )
         return highlight(response, JsonLexer(), formatter)
 
     response = json.dumps(data, sort_keys=True, indent=4)
