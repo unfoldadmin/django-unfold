@@ -82,7 +82,7 @@ CHECKBOX_CLASSES = [
     "before:content-[attr(data-label)]",
     "before:font-semibold",
     "before:mr-auto",
-    "before:text-gray-100",
+    "before:text-gray-900",
     "lg:before:hidden",
     "lg:border-t",
     "lg:border-gray-200",
