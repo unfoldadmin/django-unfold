@@ -23,13 +23,13 @@
                 {% if cl.model_admin.list_filter_submit %}
                     <form id="filter-form" method="get">
 
-                    {% if request.GET.q %}
-                        <input type="hidden" name="q" value="{{ request.GET.q }}">
-                    {% endif %}
+                        {% if request.GET.q %}
+                            <input type="hidden" name="q" value="{{ request.GET.q }}">
+                        {% endif %}
 
-                    {% if request.GET.o %}
-                        <input type="hidden" name="o" value="{{ request.GET.o }}">
-                    {% endif %}
+                        {% if request.GET.o %}
+                            <input type="hidden" name="o" value="{{ request.GET.o }}">
+                        {% endif %}
                 {% endif %}
 
 
@@ -38,11 +38,11 @@
                 {% endfor %}
 
                 {% if cl.model_admin.list_filter_submit %}
-                        <div class="bg-gray-50 border-gray-200 border-t bottom-4 fixed px-6 py-3 right-4 rounded-b w-96 dark:bg-gray-700 dark:border-gray-600">
-                            <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md self-end text-sm text-white w-full">
-                                {% trans "Apply Filters" %}
-                            </button>
-                        </div>
+                    <div class="bg-gray-50 border-gray-200 border-t bottom-4 fixed px-6 py-3 right-4 rounded-b w-96 dark:bg-gray-700 dark:border-gray-600">
+                        <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md self-end text-sm text-white w-full">
+                            {% trans "Apply Filters" %}
+                        </button>
+                    </div>
                     </form>
                 {% endif %}
             </div>

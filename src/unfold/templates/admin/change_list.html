@@ -2,22 +2,22 @@
 {% load i18n admin_urls static admin_list unfold_list %}
 
 {% block extrastyle %}
-  {{ block.super }}
+    {{ block.super }}
 
-  {% if cl.formset %}
-    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
-  {% endif %}
+    {% if cl.formset %}
+        <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+    {% endif %}
 
 
     <script src="{% url 'admin:jsi18n' %}"></script>
 
-  {{ media.css }}
+    {{ media.css }}
 
-  {% if not actions_on_top and not actions_on_bottom %}
-    <style>
-      #changelist table thead th:first-child {width: inherit}
-    </style>
-  {% endif %}
+    {% if not actions_on_top and not actions_on_bottom %}
+        <style>
+            #changelist table thead th:first-child {width: inherit}
+        </style>
+    {% endif %}
 {% endblock %}
 
 {% block extrahead %}
