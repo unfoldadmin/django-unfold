@@ -4,6 +4,7 @@ from django.core.validators import EMPTY_VALUES
 from django.forms import MultiWidget, Widget
 from django.http import QueryDict
 from django.utils.datastructures import MultiValueDict
+
 from unfold.widgets import (
     PROSE_CLASSES,
     UnfoldAdminSelectWidget,
