@@ -14,65 +14,65 @@
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" {% if theme %}class="{{ theme }}"{% else %}x-data="{ adminTheme: $persist('auto').as('adminTheme') }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak{% endif %}>
 
-<head>
-    <title>{% block title %}{% endblock %}</title>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
 
-    <link href="{% static "unfold/fonts/inter/styles.css" %}" rel="stylesheet">
-    <link href="{% static "unfold/fonts/material-symbols/styles.css" %}" rel="stylesheet">
+        <link href="{% static "unfold/fonts/inter/styles.css" %}" rel="stylesheet">
+        <link href="{% static "unfold/fonts/material-symbols/styles.css" %}" rel="stylesheet">
 
-    {% for style in styles %}
-        <link href="{{ style }}" rel="stylesheet">
-    {% endfor %}
+        {% for style in styles %}
+            <link href="{{ style }}" rel="stylesheet">
+        {% endfor %}
 
-    {% for favicon in site_favicons %}
-        <link {% if favicon.rel %}rel="{{ favicon.rel }}"{% endif %} {% if favicon.href %}href="{{ favicon.href }}"{% endif %} {% if favicon.type %}type="{{ favicon.type }}"{% endif %} {% if favicon.sizes %}sizes="{{ favicon.sizes }}"{% endif %}>
-    {% endfor %}
+        {% for favicon in site_favicons %}
+            <link {% if favicon.rel %}rel="{{ favicon.rel }}"{% endif %} {% if favicon.href %}href="{{ favicon.href }}"{% endif %} {% if favicon.type %}type="{{ favicon.type }}"{% endif %} {% if favicon.sizes %}sizes="{{ favicon.sizes }}"{% endif %}>
+        {% endfor %}
 
-    <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
-    <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
+        <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
 
-    <script src="{% static 'unfold/js/alpine.anchor.js' %}" defer></script>
-    <script src="{% static 'unfold/js/alpine.persist.js' %}" defer></script>
-    <script src="{% static 'unfold/js/alpine.js' %}" defer></script>
-    <script src="{% static 'unfold/js/htmx.js' %}"></script>
-    <script src="{% static 'unfold/js/chart.js' %}"></script>
+        <script src="{% static 'unfold/js/alpine.anchor.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine.persist.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine.js' %}" defer></script>
+        <script src="{% static 'unfold/js/htmx.js' %}"></script>
+        <script src="{% static 'unfold/js/chart.js' %}"></script>
 
-    {% for script in scripts %}
-        <script src="{{ script }}"></script>
-    {% endfor %}
+        {% for script in scripts %}
+            <script src="{{ script }}"></script>
+        {% endfor %}
 
-    {% block extrastyle %}{% endblock %}
+        {% block extrastyle %}{% endblock %}
 
-    {% block extrahead %}{% endblock %}
+        {% block extrahead %}{% endblock %}
 
-    <script src="{% static 'unfold/js/app.js' %}"></script>
+        <script src="{% static 'unfold/js/app.js' %}"></script>
 
-    {% block responsive %}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% endblock %}
+        {% block responsive %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
 
-    {% block blockbots %}
-        <meta name="robots" content="NONE,NOARCHIVE">
-    {% endblock %}
+        {% block blockbots %}
+            <meta name="robots" content="NONE,NOARCHIVE">
+        {% endblock %}
 
-    {% if colors %}
-        <style>
-            html {
-                {% for name, weights in colors.items %}
-                    {% for weight, value in weights.items %}
-                        --color-{{ name }}-{{ weight }}: {{ value }};
+        {% if colors %}
+            <style>
+                html {
+                    {% for name, weights in colors.items %}
+                        {% for weight, value in weights.items %}
+                            --color-{{ name }}-{{ weight }}: {{ value }};
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-            }
-        </style>
-    {% endif %}
-</head>
+                }
+            </style>
+        {% endif %}
+    </head>
 
-<body class="antialiased bg-white font-sans text-gray-600 text-sm dark:bg-gray-900 dark:text-gray-300 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
-    {% block base %}{% endblock %}
+    <body class="antialiased bg-white font-sans text-gray-600 text-sm dark:bg-gray-900 dark:text-gray-300 {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
+        {% block base %}{% endblock %}
 
-    <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
-    <script src="{% static 'unfold/js/simplebar.js' %}"></script>
-</body>
+        <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
+        <script src="{% static 'unfold/js/simplebar.js' %}"></script>
+    </body>
 
 </html>

@@ -22,8 +22,8 @@
                             <a class="related-widget-wrapper-link add-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-gray-400 text-sm w-9.5 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200"
                                data-popup="yes"
                                id="add_id_{{ name }}"
-                                href="{{ add_related_url }}?{{ url_params }}"
-                                title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
+                               href="{{ add_related_url }}?{{ url_params }}"
+                               title="{% blocktranslate %}Add another {{ model }}{% endblocktranslate %}">
                                 <span class="material-symbols-outlined text-sm">add</span>
                             </a>
                         {% endif %}
@@ -38,11 +38,11 @@
                         {% endif %}
 
                         {% if can_delete_related %}
-                        <a class="related-widget-wrapper-link delete-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm w-9.5 dark:bg-gray-900 dark:border-gray-700 dark:text-red-500"
+                            <a class="related-widget-wrapper-link delete-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm w-9.5 dark:bg-gray-900 dark:border-gray-700 dark:text-red-500"
                                id="delete_id_{{ name }}"
-                                data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
-                                data-popup="yes"
-                                title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
+                               data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
+                               data-popup="yes"
+                               title="{% blocktranslate %}Delete selected {{ model }}{% endblocktranslate %}">
                                 <span class="material-symbols-outlined text-sm">delete</span>
                             </a>
                         {% endif %}
