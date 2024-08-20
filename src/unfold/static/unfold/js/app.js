@@ -39,11 +39,17 @@ const warnWithoutSaving = () => {
 
   checkFormChanged();
 
-  window.addEventListener("beforeunload", (e) => {
+  preventLeaving = (e) => {
     if (formChanged) {
       e.preventDefault();
     }
+  };
+
+  form.addEventListener("submit", (e) => {
+    window.removeEventListener("beforeunload", preventLeaving);
   });
+
+  window.addEventListener("beforeunload", preventLeaving);
 };
 
 /*************************************************************
