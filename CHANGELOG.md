@@ -1,4 +1,16 @@
 
+## 0.37.0 (2024-08-26)
+
+- feat: pre-commit djhtml (#693) ([`fbb179e`](https://github.com/unfoldadmin/django-unfold/commit/fbb179ed0c9e0e2100219499a8392abe61eea84c))
+- feat: tabs with URL navigation (#682) ([`e8a8e98`](https://github.com/unfoldadmin/django-unfold/commit/e8a8e980ba7b86bc12141456a380b71e28f9d52d))
+- fix: collapsible empty inline (#702) ([`eb3a3c6`](https://github.com/unfoldadmin/django-unfold/commit/eb3a3c697907098de7e29e33a9271b53fc7422a2))
+- fix: display header image width (#696) ([`421ee23`](https://github.com/unfoldadmin/django-unfold/commit/421ee23dc230a81c818c618c8d05fb0b3aee2bef))
+- fix: warn unsaved form allow submit actions (#692) ([`43ec771`](https://github.com/unfoldadmin/django-unfold/commit/43ec771b69858e646c1ef7855ca4b0f980a4b9aa))
+- fix: long placeholder search text (#691) ([`0071b61`](https://github.com/unfoldadmin/django-unfold/commit/0071b61529882d1f89290b5401490f2c744ebd6f))
+- fix: changeform / changelist responsive improvements (#690) ([`7907fc1`](https://github.com/unfoldadmin/django-unfold/commit/7907fc12a001e347fdcb84111060c530a8757dff))
+- fix: responsive filter margin (#688) ([`9747e54`](https://github.com/unfoldadmin/django-unfold/commit/9747e5418949477eb28b9f93b04ab8ae601f4e70))
+- fix: pygments prestyles formatting (#687) ([`723fdea`](https://github.com/unfoldadmin/django-unfold/commit/723fdea80a4175f181868c148662a66d7784e230))
+
 ## 0.36.0 (2024-08-17)
 
 - feat: tox config in pyproject.toml (#678) ([`3e232ec`](https://github.com/unfoldadmin/django-unfold/commit/3e232ec3259d642e655c59122aedd1f3c5628196))
