@@ -12,8 +12,10 @@
             {{ link_label }}
         </a>
     {% else %}
-        <span title="{{ link_label }}" class="bg-white flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-sm truncate">
-            {{ link_label }}
-        </span>
+        {% if link_label %}
+            <span title="{{ link_label }}" class="flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-sm truncate">
+                {{ link_label }}
+            </span>
+        {% endif %}
     {% endif %}
 </div>
