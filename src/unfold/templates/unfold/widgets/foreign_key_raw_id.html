@@ -8,12 +8,14 @@
     {% endif %}
 
     {% if link_url %}
-        <a href="{{ link_url }}" title="{{ link_label }}" class="flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-primary-600 text-sm dark:text-primary-500">
+        <a href="{{ link_url }}" title="{{ link_label }}" class="flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-primary-600 text-sm truncate dark:text-primary-500">
             {{ link_label }}
         </a>
     {% else %}
-        <span title="{{ link_label }}" class="bg-white flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-sm">
-            {{ link_label }}
-        </span>
+        {% if link_label %}
+            <span title="{{ link_label }}" class="flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-sm truncate">
+                {{ link_label }}
+            </span>
+        {% endif %}
     {% endif %}
 </div>
