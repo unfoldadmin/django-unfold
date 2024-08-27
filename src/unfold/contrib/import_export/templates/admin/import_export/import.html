@@ -44,19 +44,19 @@
 {% endblock %}
 
 {% block content %}
-  {% if confirm_form %}
-    {% include "admin/import_export/import_confirm.html" %}
-  {% else %}
-    {% include "admin/import_export/import_form.html" %}
-  {% endif %}
-
-  {% if result %}
-    {% if result.has_errors %}
-        {% include "admin/import_export/import_errors.html" %}
-    {% elif result.has_validation_errors %}
-      {% include "admin/import_export/import_validation.html" %}
+    {% if confirm_form %}
+        {% include "admin/import_export/import_confirm.html" %}
     {% else %}
-      {% include "admin/import_export/import_preview.html" %}
+        {% include "admin/import_export/import_form.html" %}
     {% endif %}
-  {% endif %}
+
+    {% if result %}
+        {% if result.has_errors %}
+            {% include "admin/import_export/import_errors.html" %}
+        {% elif result.has_validation_errors %}
+            {% include "admin/import_export/import_validation.html" %}
+        {% else %}
+            {% include "admin/import_export/import_preview.html" %}
+        {% endif %}
+    {% endif %}
 {% endblock %}

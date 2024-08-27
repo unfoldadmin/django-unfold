@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.test import SimpleTestCase
 from django.test.utils import override_settings
+
 from unfold.settings import CONFIG_DEFAULTS, get_config
 
 

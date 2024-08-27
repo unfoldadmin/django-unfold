@@ -6,9 +6,9 @@
     <ul>
         {% for error in result.base_errors  %}
             <li>
-            {{ error.error }}
+                {{ error.error }}
 
-            <div class="traceback">{{ error.traceback|linebreaks }}</div></li>
+                <div class="traceback">{{ error.traceback|linebreaks }}</div></li>
         {% endfor %}
 
         {% for line, errors in result.row_errors %}

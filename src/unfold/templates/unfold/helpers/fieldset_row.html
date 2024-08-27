@@ -21,7 +21,7 @@
                                         {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
                                     </div>
                                 {% endif %}
-                                </div>
+                            </div>
 
                             {% if field.errors %}
                                 <div class="mt-1 text-red-600 text-sm dark:text-red-500">
@@ -52,7 +52,7 @@
                     </div>
                 {% endif %}
             {% else %}
-                <div class="{% if adminform.model_admin.compressed_fields %} min-w-48 lg:mt-2 w-48{% endif %}">
+                <div class="{% if adminform.model_admin.compressed_fields %}lg:min-w-48 lg:mt-2 lg:w-48{% endif %}">
                     {{ field.label_tag }}
                 </div>
 

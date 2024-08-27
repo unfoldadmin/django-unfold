@@ -28,7 +28,7 @@
                                             {% if model.admin_url %}
                                                 <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}"
                                                    class="block -mx-3 px-3 py-3 rounded-md truncate {% if model.admin_url in request.path|urlencode %}bg-gray-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% else %} hover:text-gray-700 dark:hover:text-gray-200{% endif %}">
-                                                        {{ model.name }}
+                                                    {{ model.name }}
                                                 </a>
                                             {% else %}
                                                 {{ model.name }}

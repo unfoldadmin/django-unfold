@@ -14,9 +14,11 @@
         {% include "unfold/helpers/messages/error.html" with errors=inline_admin_formset.formset.non_form_errors %}
 
         {% if inline_admin_formset.forms|length == 0 %}
-            <p class="mb-6 text-sm">
-                {% trans "No records found." %}
-            </p>
+            <div>
+                <p class="mb-6 text-sm">
+                    {% trans "No records found." %}
+                </p>
+            </div>
         {% endif %}
         <div class="border border-gray-200 mb-6 overflow-hidden rounded-md shadow-sm w-full dark:border-gray-800">
             {% for inline_admin_form in inline_admin_formset %}
@@ -26,6 +28,7 @@
                             <span class="mr-2">
                                 {{ inline_admin_formset.opts.verbose_name|capfirst }}:
                             </span>
+
 
                             <span class="inline_label font-semibold text-gray-900 dark:text-gray-200">
                                 {% if inline_admin_form.original and inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
