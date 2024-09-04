@@ -6,11 +6,27 @@
     <div class="bg-white flex mx-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800" x-on:click.outside="filterOpen = false">
         <div class="flex-grow h-full overflow-auto relative">
             <h3 class="border-b flex font-semibold mb-6 px-6 py-4 text-gray-900 text-sm dark:text-gray-100 dark:border-gray-700">
-                {% trans "Filter results" %}
+                {% trans "Filter" %}
+
+                {% if cl.is_facets_optional %}
+                    <span id="changelist-filter-extra-actions" class="font-normal ml-3 text-primary-600 text-sm dark:text-primary-500">
+                        {% if cl.is_facets_optional %}
+                            {% if cl.add_facets %}
+                                <a href="{{ cl.remove_facet_link }}" class="hidelink">
+                                    {% trans "Hide counts" %}
+                                </a>
+                            {% else %}
+                                <a href="{{ cl.add_facet_link }}" class="viewlink">
+                                    {% trans "Show counts" %}
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                {% endif %}
 
                 {% if cl.has_active_filters %}
                     <a href="{{ cl.clear_all_filters_qs }}" class="font-normal ml-3 text-sm text-red-600 dark:text-red-500">
-                        {% translate "Clear all filters" %}
+                        {% trans "Clear all filters" %}
                     </a>
                 {% endif %}
 
