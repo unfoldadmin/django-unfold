@@ -5,6 +5,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        font: {
+          "subtle-light": "rgb(var(--color-font-subtle-light) / <alpha-value>)",
+          "subtle-dark": "rgb(var(--color-font-subtle-dark) / <alpha-value>)",
+          "default-light":
+            "rgb(var(--color-font-default-light) / <alpha-value>)",
+          "default-dark": "rgb(var(--color-font-default-dark) / <alpha-value>)",
+          "important-light":
+            "rgb(var(--color-font-important-light) / <alpha-value>)",
+          "important-dark":
+            "rgb(var(--color-font-important-dark) / <alpha-value>)",
+        },
         primary: {
           50: "rgb(var(--color-primary-50) / <alpha-value>)",
           100: "rgb(var(--color-primary-100) / <alpha-value>)",

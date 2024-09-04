@@ -35,16 +35,17 @@ LABEL_CLASSES = [
     "block",
     "font-medium",
     "mb-2",
-    "text-gray-900",
+    "text-font-important-light",
     "text-sm",
-    "dark:text-gray-100",
+    "dark:text-font-important-dark",
 ]
 
 CHECKBOX_LABEL_CLASSES = [
+    "font-medium",
     "ml-2",
     "text-sm",
-    "text-gray-900",
-    "dark:text-gray-100",
+    "text-font-important-light",
+    "dark:text-font-important-dark",
 ]
 
 BASE_CLASSES = [
@@ -54,7 +55,7 @@ BASE_CLASSES = [
     "min-w-20",
     "rounded-md",
     "shadow-sm",
-    "text-gray-500",
+    "text-font-default-light",
     "text-sm",
     "focus:ring",
     "focus:ring-primary-300",
@@ -64,7 +65,7 @@ BASE_CLASSES = [
     "group-[.errors]:focus:ring-red-200",
     "dark:bg-gray-900",
     "dark:border-gray-700",
-    "dark:text-gray-300",
+    "dark:text-font-default-dark",
     "dark:focus:border-primary-600",
     "dark:focus:ring-primary-700",
     "dark:focus:ring-opacity-50",

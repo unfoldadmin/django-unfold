@@ -4,7 +4,7 @@
     <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 dark:before:text-gray-300 lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800 lg:w-px">
         {% with action_id=instance_pk|cut:"-" %}
             <div class="group leading-none relative" x-data="{ openActionsId{{ action_id }}: false }">
-                <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 !leading-7 rounded text-center text-gray-400 w-7 group-hover:bg-gray-100 group-hover:text-gray-700 dark:text-gray-300 group-hover:dark:bg-gray-800 group-hover:dark:text-white" @click="openActionsId{{ action_id }} = !openActionsId{{ action_id }}">
+                <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 !leading-7 rounded text-center text-gray-400 w-7 group-hover:bg-gray-100 group-hover:text-gray-700 dark:text-font-default-dark group-hover:dark:bg-gray-800 group-hover:dark:text-white" @click="openActionsId{{ action_id }} = !openActionsId{{ action_id }}">
                     more_horiz
                 </span>
 

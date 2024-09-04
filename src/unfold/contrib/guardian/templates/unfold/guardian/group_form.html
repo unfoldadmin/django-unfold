@@ -3,25 +3,25 @@
 <form method="post">
     {% csrf_token %}
 
-    <h2 class="font-semibold mb-3  text-gray-900 dark:text-gray-100">
+    <h2 class="font-semibold mb-3 text-font-important-light dark:text-font-important-dark">
         {% trans "Group permissions" %}
     </h2>
 
     {% if groups_perms.items %}
         <table id="group-permissions" class="border-gray-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
-            <thead class="hidden lg:table-header-group text-gray-900 dark:text-gray-100">
+            <thead class="hidden lg:table-header-group text-font-important-light dark:text-font-important-dark">
                 <tr>
-                    <th class="align-middle font-medium px-3 py-2 text-left">
+                    <th class="align-middle font-semibold px-3 py-2 text-left">
                         {% trans "Group" %}
                     </th>
 
                     {% for perm in model_perms %}
-                        <th class="align-middle font-medium px-3 py-2 text-left">
+                        <th class="align-middle font-semibold px-3 py-2 text-left">
                             {{ perm.name }}
                         </th>
                     {% endfor %}
 
-                    <th class="align-middle font-medium px-3 py-2 text-right">
+                    <th class="align-middle font-semibold px-3 py-2 text-right">
                         {% trans "Action" %}
                     </th>
                 </tr>
