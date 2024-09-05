@@ -33,7 +33,7 @@
 {% block content %}
     {% if perms_lacking %}
         <div class="border border-gray-200 rounded-md shadow-sm dark:border-gray-800">
-            <p class="font-semibold p-4 text-gray-900 dark:text-gray-100">
+            <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}
             </p>
 
@@ -49,7 +49,7 @@
         </div>
     {% elif protected %}
         <div class="border border-gray-200 rounded-md shadow-sm dark:border-gray-800">
-            <p class="font-semibold p-4 text-gray-900 dark:text-gray-100">
+            <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would require deleting the following protected related objects:{% endblocktranslate %}
             </p>
 
@@ -65,14 +65,14 @@
         </div>
     {% else %}
         <div class="border border-gray-200 rounded-md shadow-sm dark:border-gray-800">
-            <p class="font-semibold p-4 text-gray-900 dark:text-gray-100">
+            <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate with escaped_object=object %}Are you sure you want to delete the {{ object_name }} "{{ escaped_object }}"? All of the following related items will be deleted:{% endblocktranslate %}
             </p>
 
             {% include "admin/includes/object_delete_summary.html" %}
 
             <div class="border-gray-200 border-t p-4 dark:border-gray-800">
-                <h2 class="font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                <h2 class="font-semibold mb-2 text-font-important-light dark:text-font-important-dark">
                     {% translate "Objects" %}
                 </h2>
 
@@ -96,7 +96,7 @@
                     {% endif %}
 
 
-                    <a href="#" class="border cancel-link font-medium hidden mb-3 px-3 py-2 rounded-md w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                    <a href="#" class="border cancel-link font-medium hidden mb-3 px-3 py-2 rounded-md w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto dark:border-gray-700 dark:text-font-default-dark dark:hover:text-gray-200 dark:hover:bg-gray-900">
                         {% translate "No, take me back" %}
                     </a>
 

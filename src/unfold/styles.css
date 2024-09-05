@@ -130,16 +130,16 @@ table tr.selected th {
   @apply flex;
 }
 
-.datetimeshortcuts span.date-icon {
-  @apply bg-none block h-9 text-gray-400 top-0 transition-all w-9 hover:text-gray-700 dark:text-gray-500 dark:hover:text-white;
+.date-icon {
+  @apply block h-9 text-gray-400 transition-all w-9 hover:text-gray-700 dark:text-gray-500 dark:hover:text-white;
 }
 
-.datetimeshortcuts span.date-icon:after {
+.date-icon:after {
   @apply border-l h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700;
   content: "edit";
 }
 
-.datetimeshortcuts span.date-icon:after {
+.date-icon:after {
   @apply flex dark:hover:text-white;
 }
 
@@ -256,7 +256,7 @@ table tr.selected th {
 }
 
 .add-row {
-  @apply align-middle bg-gray-50 px-3 py-5 font-normal text-right dark:bg-gray-900;
+  @apply align-middle bg-gray-50 px-3 py-5 font-normal text-right dark:bg-white/[.02];
 }
 
 [data-inline-type="stacked"] .add-row {
@@ -461,73 +461,73 @@ fieldset.collapsed .collapse-toggle {
 /*******************************************************
  Calendar
  *******************************************************/
-div.calendarbox,
-div.clockbox {
+.calendarbox,
+.clockbox {
   @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm w-80 z-50 dark:bg-gray-800 dark:border-gray-700 !fixed !left-1/2 !top-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
-div.calendar caption {
-  @apply font-medium mb-3 py-3 text-gray-700 text-sm dark:text-gray-200;
+.calendar caption {
+  @apply font-medium mb-3 py-3 text-gray-700 dark:text-gray-200;
 }
 
-div.calendar table {
-  @apply bg-transparent mb-3 w-full;
+.calendar table {
+  @apply mb-3 w-full;
 }
 
-div.calendar table th {
+.calendar table th {
   @apply font-medium text-center text-gray-700 text-xs dark:text-gray-200;
 }
 
-div.calendar table td {
-  @apply h-10 p-1 text-center text-sm w-10;
+.calendar table td {
+  @apply h-10 p-1 text-center w-10;
 }
 
-div.calendar table td a {
+.calendar table td a {
   @apply block flex h-8 items-center justify-center rounded-full transition-all w-8 dark:text-gray-300;
 }
 
-div.calendar table td a:hover {
+.calendar table td a:hover {
   @apply bg-gray-100 text-gray-700;
 }
 
-div.calendar table td.today a {
+.calendar table td.today a {
   @apply bg-primary-600 font-medium  text-white;
 }
 
-div.calendar-shortcuts {
+.calendar-shortcuts {
   @apply flex flex-row justify-center mb-3 px-1 rounded-b-md text-0;
 }
 
-div.calendar-shortcuts a {
+.calendar-shortcuts a {
   @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-gray-500 text-xs transition-all w-1/3 dark:border-gray-700 dark:hover:border-gray-600 dark:text-gray-300 dark:hover:text-gray-200;
 }
 
-p.calendar-cancel {
-  @apply block border-t border-solid border-gray-200 py-2 text-center text-xs text-red-600 dark:border-gray-700 dark:text-red-500;
+.calendar-cancel {
+  @apply block border-t py-2 text-center text-xs text-red-600 dark:border-gray-700 dark:text-red-500;
 }
 
-.calendarbox a.calendarnav-previous {
-  @apply absolute bg-none block indent-0 ml-2 mt-2 left-0 text-0 top-0;
+.calendarnav-previous {
+  @apply absolute block ml-2 mt-2 left-0 text-0 top-0;
 }
 
-.calendarbox a.calendarnav-next {
-  @apply absolute bg-none block indent-0 mr-2 mt-2 right-3 text-0 top-0;
-}
-
-.calendarbox a.calendarnav-next:after,
-.calendarbox a.calendarnav-previous:after {
+.calendarnav-next:after,
+.calendarnav-previous:after {
   @apply border flex h-7 items-center justify-center material-symbols-outlined rounded-full text-gray-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-800;
 
   content: "navigate_before";
   display: flex;
 }
 
-.calendarbox a.calendarnav-next:hover:after,
-.calendarbox a.calendarnav-previous:hover:after {
+.calendarnav-next:hover:after,
+.calendarnav-previous:hover:after {
   @apply dark:border-gray-600 dark:text-gray-200;
 }
 
-.calendarbox a.calendarnav-next:after {
+.calendarnav-next {
+  @apply absolute block mr-2 mt-2 right-0 text-0 top-0;
+}
+
+.calendarnav-next:after {
   content: "navigate_next";
   display: flex;
 }
