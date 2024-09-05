@@ -2,7 +2,7 @@
 
 {% with choices.0 as choice %}
     <div class="flex flex-col mb-6">
-        <h3 class="font-semibold mb-2 text-gray-900 dark:text-gray-100">{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
+        <h3 class="font-semibold mb-2 text-font-important-light dark:text-font-important-dark">{% blocktrans with filter_title=title %}By {{ filter_title }}{% endblocktrans %}</h3>
 
         <div class="flex flex-row gap-4">
             {% for field in choice.form %}

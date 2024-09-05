@@ -124,9 +124,7 @@ const fileInputUpdatePath = () => {
     input.addEventListener("change", (e) => {
       const parts = e.target.value.split("\\");
       const placeholder =
-        input.parentNode.parentNode.parentNode.querySelector(
-          "input[type=text]"
-        );
+        input.parentNode.parentNode.querySelector("input[type=text]");
       placeholder.setAttribute("value", parts[parts.length - 1]);
     });
   });

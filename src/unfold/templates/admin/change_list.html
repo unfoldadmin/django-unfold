@@ -4,6 +4,11 @@
 {% block extrastyle %}
     {{ block.super }}
 
+    {% if cl.formset %}
+        <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+    {% endif %}
+
+
     <script src="{% url 'admin:jsi18n' %}"></script>
 
     {{ media.css }}
@@ -90,7 +95,7 @@
 
                                     {% block filters %}
                                         {% if cl.has_filters %}
-                                            <a class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:hover:text-gray-200{% endif %} border cursor-pointer flex font-medium group items-center px-3 py-2 rounded-md shadow-sm text-sm lg:ml-auto md:mt-0" x-on:click="filterOpen = true" x-on:keydown.escape.window="filterOpen = false">
+                                            <a class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white dark:bg-gray-900 dark:border-gray-700{% endif %} border cursor-pointer flex font-medium group items-center px-3 py-2 rounded-md shadow-sm text-sm lg:ml-auto md:mt-0" x-on:click="filterOpen = true" x-on:keydown.escape.window="filterOpen = false">
                                                 {% trans "Filters" %}
 
                                                 <span class="material-symbols-outlined md-18 ml-auto -mr-1 pl-4 {% if cl.has_active_filters %}text-white{% else %}text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400 dark:text-gray-500{% endif %}">filter_list</span>

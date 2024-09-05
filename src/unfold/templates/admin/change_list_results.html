@@ -12,7 +12,7 @@
             <thead>
                 <tr>
                     {% for header in result_headers %}
-                        <th class="align-middle font-semibold py-2 text-left text-gray-900 dark:text-gray-100 text-sm whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
+                        <th class="align-middle font-semibold py-2 text-left text-font-important-light dark:text-font-important-dark whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
                             <div class="flex items-center">
                                 <div class="text">
                                     {% if header.sortable %}
@@ -24,7 +24,7 @@
                                             <label class="flex flex-row items-center gap-2">
                                                 {{ header.text|capfirst }}
 
-                                                <span class="block font-normal text-gray-500 dark:text-gray-300 lg:hidden">
+                                                <span class="block font-normal lg:hidden">
                                                     {% trans "Select all rows"%}
                                                 </span>
                                             </label>

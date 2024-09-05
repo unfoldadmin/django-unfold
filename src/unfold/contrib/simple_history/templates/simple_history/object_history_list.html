@@ -4,35 +4,35 @@
 {% load getattribute from getattributes %}
 
 <table id="change-history" class="border-gray-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
-    <thead class="hidden text-gray-900 lg:table-header-group dark:text-gray-100">
+    <thead class="hidden text-font-important-light lg:table-header-group dark:text-font-important-dark">
         <tr>
-            <th class="align-middle font-medium px-3 py-2 text-left ">
+            <th class="align-middle font-semibold px-3 py-2 text-left ">
                 {% trans 'Object' %}
             </th>
 
             {% for column in history_list_display %}
-                <th class="align-middle font-medium px-3 py-2 text-left ">
+                <th class="align-middle font-semibold px-3 py-2 text-left ">
                     {% trans column %}
                 </th>
             {% endfor %}
 
-            <th class="align-middle font-medium px-3 py-2 text-left">
+            <th class="align-middle font-semibold px-3 py-2 text-left">
                 {% trans 'Date/time' %}
             </th>
 
-            <th class="align-middle font-medium px-3 py-2 text-left">
+            <th class="align-middle font-semibold px-3 py-2 text-left">
                 {% trans 'Comment' %}
             </th>
 
-            <th class="align-middle font-medium px-3 py-2 text-left">
+            <th class="align-middle font-semibold px-3 py-2 text-left">
                 {% trans 'Changed by' %}
             </th>
 
-            <th class="align-middle font-medium px-3 py-2 text-left">
+            <th class="align-middle font-semibold px-3 py-2 text-left">
                 {% trans 'Change reason' %}
             </th>
 
-            <th class="align-middle font-medium px-3 py-2 text-left">
+            <th class="align-middle font-semibold px-3 py-2 text-left">
                 {% trans 'Changes' %}
             </th>
         </tr>

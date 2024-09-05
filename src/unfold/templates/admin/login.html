@@ -28,7 +28,7 @@
         <div class="flex flex-grow items-center justify-center mx-auto px-4 relative">
             <div class="w-full sm:w-96">
                 <h1 class="font-semibold mb-10">
-                    <span class="block text-gray-700 dark:text-gray-200">{% trans 'Welcome back to' %}</span>
+                    <span class="block text-font-important-light dark:text-font-important-dark">{% trans 'Welcome back to' %}</span>
                     <span class="block text-primary-600 text-xl dark:text-primary-500">{{ site_title }}</span>
                 </h1>
 
@@ -66,7 +66,7 @@
 
                     {% if password_reset_url %}
                         <div class="password-reset-link">
-                            <a href="{{ password_reset_url }}" class="border font-medium hidden mt-4 px-3 py-2 rounded-md text-center text-sm text-gray-500 transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700 dark:text-gray-300 dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                            <a href="{{ password_reset_url }}" class="border font-medium hidden mt-4 px-3 py-2 rounded-md text-center text-sm text-gray-500 transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700 dark:text-font-default-dark dark:hover:text-gray-200 dark:hover:bg-gray-900">
                                 {% translate 'Forgotten your password or username?' %}
                             </a>
                         </div>
