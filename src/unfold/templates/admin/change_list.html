@@ -4,11 +4,6 @@
 {% block extrastyle %}
     {{ block.super }}
 
-    {% if cl.formset %}
-        <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
-    {% endif %}
-
-
     <script src="{% url 'admin:jsi18n' %}"></script>
 
     {{ media.css }}
