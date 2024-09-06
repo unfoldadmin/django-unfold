@@ -20,6 +20,7 @@ from django.contrib.admin.widgets import (
 from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.forms import (
     CheckboxInput,
+    CheckboxSelectMultiple,
     MultiWidget,
     NullBooleanSelect,
     NumberInput,
@@ -512,6 +513,16 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
         context = super().get_context(*args, **kwargs)
         context.update({"radio_style": self.radio_style})
         return context
+
+
+class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
+    template_name = "unfold/widgets/radio.html"
+    option_template_name = "unfold/widgets/radio_option.html"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.attrs = {"class": " ".join(CHECKBOX_CLASSES)}
 
 
 try:
