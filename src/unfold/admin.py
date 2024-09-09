@@ -235,6 +235,8 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     list_filter_submit = False
     list_fullwidth = False
     list_disable_select_all = False
+    change_form_before_template = None
+    change_form_after_template = None
     compressed_fields = False
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
