@@ -13,6 +13,7 @@ from django.contrib.admin.widgets import (
     AdminTextareaWidget,
     AdminTextInputWidget,
     AdminTimeWidget,
+    AdminURLFieldWidget,
     AdminUUIDInputWidget,
     ForeignKeyRawIdWidget,
     RelatedFieldWidgetWrapper,
@@ -251,6 +252,13 @@ SWITCH_CLASSES = [
 
 
 class UnfoldAdminTextInputWidget(AdminTextInputWidget):
+    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+        super().__init__(attrs={"class": " ".join(INPUT_CLASSES), **(attrs or {})})
+
+
+class UnfoldAdminURLInputWidget(AdminURLFieldWidget):
+    template_name = "unfold/widgets/url.html"
+
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(attrs={"class": " ".join(INPUT_CLASSES), **(attrs or {})})
 
