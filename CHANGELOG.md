@@ -1,4 +1,20 @@
 
+## 0.38.0 (2024-09-10)
+
+- feat: URLField widget, display a clickable link (#723) ([`422bf42`](https://github.com/unfoldadmin/django-unfold/commit/422bf424300f2e698902c7c65bc64128ff5969b7))
+- feat: checkbox select multiple widget (#721) ([`a7f5d6e`](https://github.com/unfoldadmin/django-unfold/commit/a7f5d6e56bb05f958b8bc617e7a89d3dae23ce6a))
+- feat: configurable font colors (#718) ([`e5ddb30`](https://github.com/unfoldadmin/django-unfold/commit/e5ddb305618f35dac3de40d8220b1dc30a36e96d))
+- feat: component button name (#712) ([`ce95813`](https://github.com/unfoldadmin/django-unfold/commit/ce95813e9207643895ac37f64dce8dc22807aa26))
+- feat: external docs (#711) ([`5ee95ed`](https://github.com/unfoldadmin/django-unfold/commit/5ee95edbe3c92f3ffed4e650f45b505bd71424d7))
+- fix: messages class (#725) ([`6062813`](https://github.com/unfoldadmin/django-unfold/commit/6062813a7baef1c34d556e305659bd19becbc145))
+- fix: url widget visual (#724) ([`a810187`](https://github.com/unfoldadmin/django-unfold/commit/a81018702abaf240833d22d0a28c48151826ad1b))
+- fix: changelist forms css loading (#722) ([`b0bb94f`](https://github.com/unfoldadmin/django-unfold/commit/b0bb94f2e38feb56b53e87fdc288fe576e2d599f))
+- fix: hide empty navigation groups (#719) ([`eb3795a`](https://github.com/unfoldadmin/django-unfold/commit/eb3795a08b5b8bc5ef5a0c28ea7e3f5026875436))
+- fix: facet search show/hide button (#717) ([`5d35bb5`](https://github.com/unfoldadmin/django-unfold/commit/5d35bb5e1c2eb0784d7b5b14c19e268f1fd44f22))
+- fix: image placeholder (#716) ([`e31d701`](https://github.com/unfoldadmin/django-unfold/commit/e31d701443cbfebcb022545e192a06cf22f22557))
+- fix: changelist datetimepicker (#715) ([`a6501a0`](https://github.com/unfoldadmin/django-unfold/commit/a6501a0958470d942d44aa4844ba59b53690b817))
+- chore(deps): bump micromatch from 4.0.5 to 4.0.8 (#710) ([`a22b78c`](https://github.com/unfoldadmin/django-unfold/commit/a22b78c8c7a700f7501527279c5ac3c545720fd7))
+
 ## 0.37.0 (2024-08-26)
 
 - feat: pre-commit djhtml (#693) ([`fbb179e`](https://github.com/unfoldadmin/django-unfold/commit/fbb179ed0c9e0e2100219499a8392abe61eea84c))
