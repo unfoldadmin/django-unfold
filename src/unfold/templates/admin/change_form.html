@@ -64,6 +64,10 @@
         <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post" id="{{ opts.model_name }}_form" {% if adminform.model_admin.warn_unsaved_form %}class="warn-unsaved-form"{% endif %} novalidate>
             {% csrf_token %}
 
+            {% if adminform.model_admin.change_form_before_template %}
+                {% include adminform.model_admin.change_form_before_template %}
+            {% endif %}
+
             {% block form_top %}{% endblock %}
 
             <div>
@@ -94,10 +98,13 @@
                     {% for inline_admin_formset in inline_admin_formsets %}
                         {% include inline_admin_formset.opts.template %}
                     {% endfor %}
-
                 {% endblock %}
 
                 {% block after_related_objects %}{% endblock %}
+
+                {% if adminform.model_admin.change_form_after_template %}
+                    {% include adminform.model_admin.change_form_after_template %}
+                {% endif %}
 
                 {% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
 
