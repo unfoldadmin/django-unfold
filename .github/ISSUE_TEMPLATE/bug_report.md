@@ -25,6 +25,14 @@ For example: Yes or No
 
 For example: Yes or No
 
+**Did you checked documentation?**
+
+For example: Yes or No. Docs are here: https://unfoldadmin.com/docs/
+
+**Are you able to replicate the bug in the demo site?**
+
+For example: Link pointing to the demo site: https://demo.unfoldadmin.com
+
 **Repository with reproduced bug**
 
 Create minimal repository where it is possible to reproduce an error.
