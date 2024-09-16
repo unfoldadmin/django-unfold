@@ -10,9 +10,13 @@ from django.contrib.admin.forms import (
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
+
+try:
+    from django.contrib.auth.forms import AdminUserCreationForm as BaseUserCreationForm
+except ImportError:
+    from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
-from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
