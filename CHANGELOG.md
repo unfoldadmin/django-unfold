@@ -1,4 +1,13 @@
 
+## 0.39.0 (2024-09-17)
+
+- feat: changeform before/after templates (#726) ([`0b56e65`](https://github.com/unfoldadmin/django-unfold/commit/0b56e653dda55a96d68bdaea7e44b09513f5d4a9))
+- fix: button component name (#749) ([`b58504e`](https://github.com/unfoldadmin/django-unfold/commit/b58504e9b6d9c28eb9e335209cb95c777c2cbbea))
+- fix: user creation form (#746) ([`1006523`](https://github.com/unfoldadmin/django-unfold/commit/10065233a43980ebb02edbd5242ecc85a2ab8a37))
+- fix: popup window size (#744) ([`5a77b44`](https://github.com/unfoldadmin/django-unfold/commit/5a77b44d615cf346cf20d2cb00345b19f3bf4fa4))
+- fix: fileinput placeholder (#740) ([`db0f3b9`](https://github.com/unfoldadmin/django-unfold/commit/db0f3b9335447180346b98bf1467275f18e2b719))
+- chore: issue template bug report improvements (#741) ([`1a51a25`](https://github.com/unfoldadmin/django-unfold/commit/1a51a25e987a5089bb8bbd96c1b8dcbab8c8e06d))
+
 ## 0.38.0 (2024-09-10)
 
 - feat: URLField widget, display a clickable link (#723) ([`422bf42`](https://github.com/unfoldadmin/django-unfold/commit/422bf424300f2e698902c7c65bc64128ff5969b7))
