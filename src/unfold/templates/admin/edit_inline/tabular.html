@@ -15,154 +15,146 @@
 
             {{ inline_admin_formset.formset.non_form_errors }}
 
-            <div>
-                {% if not inline_admin_formset.has_add_permission and inline_admin_formset.forms|length == 0 %}
-                    <p class="mb-6">
-                        {% trans "No records found." %}
-                    </p>
-                {% else %}
-                    <div class="border border-gray-200 mb-6 overflow-x-auto rounded-md shadow-sm dark:border-gray-800" data-simplebar data-simplebar-auto-hide="false">
-                        <table class="border-spacing-none border-separate w-full">
-                            <thead class="hidden lg:table-header-group">
-                                <tr>
-                                    {% for field in inline_admin_formset.fields %}
-                                        {% if not field.widget.is_hidden %}
-                                            <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap dark:text-font-important-dark dark:border-gray-800">
-                                                <span class="flex flex-row items-center">
-                                                    {{ field.label|capfirst }}
+            <div class="border border-gray-200 mb-6 overflow-x-auto rounded-md shadow-sm dark:border-gray-800" data-simplebar data-simplebar-auto-hide="false">
+                <table class="border-spacing-none border-separate w-full">
+                    <thead class="hidden lg:table-header-group">
+                        <tr>
+                            {% for field in inline_admin_formset.fields %}
+                                {% if not field.widget.is_hidden %}
+                                    <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap dark:text-font-important-dark dark:border-gray-800">
+                                        <span class="flex flex-row items-center">
+                                            {{ field.label|capfirst }}
 
-                                                    {% if field.help_text %}
-                                                        <span class="cursor-pointer material-symbols-outlined ml-2 text-gray-400 dark:text-gray-500" title="{{ field.help_text|striptags }}">help</span>
+                                            {% if field.help_text %}
+                                                <span class="cursor-pointer material-symbols-outlined ml-2 text-gray-400 dark:text-gray-500" title="{{ field.help_text|striptags }}">help</span>
+                                            {% endif %}
+                                        </span>
+                                    </th>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
+                                <th class="align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap lg:w-px dark:border-gray-800 dark:text-font-important-dark">
+                                    {% translate "Delete?" %}
+                                </th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for inline_admin_form in inline_admin_formset %}
+                            {% if inline_admin_form.form.non_field_errors %}
+                                <tr class="row-form-errors group inline-tabular">
+                                    <td colspan="{{ inline_admin_form|cell_count }}">
+                                        {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+
+                            {% if inline_admin_form.original or inline_admin_form.show_url %}
+                                <tr>
+                                    <td class="original" colspan="{{ inline_admin_form|cell_count }}">
+                                        {% if not inline_admin_formset.opts.hide_title %}
+                                            {% if inline_admin_form.original or inline_admin_form.show_url %}
+                                                <p class="flex font-medium items-center px-3 pt-2 text-xs">
+                                                    {% if inline_admin_form.original %}
+                                                        <span>
+                                                            {% with inline_title=inline_admin_form.original.get_inline_title %}
+                                                                {% if inline_title %}
+                                                                    {{ inline_title }}
+                                                                {% else %}
+                                                                    {{ inline_admin_form.original }}
+                                                                {% endif %}
+                                                            {% endwith %}
+                                                        </span>
+
+                                                        {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
+                                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} ml-2 text-primary-600 dark:text-primary-500">
+                                                                {% if inline_admin_formset.has_change_permission %}
+                                                                    {% translate "Change" %}
+                                                                {% else %}
+                                                                    {% translate "View" %}
+                                                                {% endif %}
+                                                            </a>
+                                                        {% endif %}
                                                     {% endif %}
-                                                </span>
-                                            </th>
+
+                                                    {% if inline_admin_form.show_url %}
+                                                        <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 dark:text-primary-500">
+                                                            {% translate "View on site" %}
+                                                        </a>
+                                                    {% endif %}
+                                                </p>
+                                            {% endif %}
                                         {% endif %}
+
+                                        {% if inline_admin_form.needs_explicit_pk_field %}
+                                            {{ inline_admin_form.pk_field.field }}
+                                        {% endif %}
+
+                                        {% if inline_admin_form.fk_field %}
+                                            {{ inline_admin_form.fk_field.field }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+
+                            <tr class="lg:border-b-0 form-row {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+                                {% spaceless %}
+                                    {% for fieldset in inline_admin_form %}
+                                        {% for line in fieldset %}
+                                            {% for field in line %}
+                                                {% if not field.is_readonly and field.field.is_hidden %}
+                                                    {{ field.field }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endspaceless %}
+
+                                {% with is_last_row=forloop.last %}
+                                    {% for fieldset in inline_admin_form %}
+                                        {% for line in fieldset %}
+                                            {% with is_last_col=forloop.last %}
+                                                {% for field in line %}
+                                                    {% if field.is_readonly or not field.field.is_hidden %}
+                                                        <td{% if field.field.name %} class="field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
+                                                            {% if field.is_readonly %}
+                                                                {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
+                                                            {% else %}
+                                                                {{ field.field }}
+
+                                                                {% if field.field.errors|length > 0 %}
+                                                                    <div class="mt-1 text-red-600 text-sm dark:text-red-500">
+                                                                        {% for error in field.field.errors %}
+                                                                            {{ error }}
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        </td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endwith %}
+                                        {% endfor %}
                                     {% endfor %}
 
                                     {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                        <th class="align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap lg:w-px dark:border-gray-800 dark:text-font-important-dark">
-                                            {% translate "Delete?" %}
-                                        </th>
-                                    {% endif %}
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {% for inline_admin_form in inline_admin_formset %}
-                                    {% if inline_admin_form.form.non_field_errors %}
-                                        <tr class="row-form-errors group inline-tabular">
-                                            <td colspan="{{ inline_admin_form|cell_count }}">
-                                                {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-
-                                    {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                        <tr>
-                                            <td class="original" colspan="{{ inline_admin_form|cell_count }}">
-                                                {% if not inline_admin_formset.opts.hide_title %}
-                                                    {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                                        <p class="flex font-medium items-center px-3 pt-2 text-xs">
-                                                            {% if inline_admin_form.original %}
-                                                                <span>
-                                                                    {% with inline_title=inline_admin_form.original.get_inline_title %}
-                                                                        {% if inline_title %}
-                                                                            {{ inline_title }}
-                                                                        {% else %}
-                                                                            {{ inline_admin_form.original }}
-                                                                        {% endif %}
-                                                                    {% endwith %}
-                                                                </span>
-
-                                                                {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} ml-2 text-primary-600 dark:text-primary-500">
-                                                                        {% if inline_admin_formset.has_change_permission %}
-                                                                            {% translate "Change" %}
-                                                                        {% else %}
-                                                                            {% translate "View" %}
-                                                                        {% endif %}
-                                                                    </a>
-                                                                {% endif %}
-                                                            {% endif %}
-
-                                                            {% if inline_admin_form.show_url %}
-                                                                <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 dark:text-primary-500">
-                                                                    {% translate "View on site" %}
-                                                                </a>
-                                                            {% endif %}
-                                                        </p>
-                                                    {% endif %}
-                                                {% endif %}
-
-                                                {% if inline_admin_form.needs_explicit_pk_field %}
-                                                    {{ inline_admin_form.pk_field.field }}
-                                                {% endif %}
-
-                                                {% if inline_admin_form.fk_field %}
-                                                    {{ inline_admin_form.fk_field.field }}
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-
-                                    <tr class="lg:border-b-0 form-row {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
-                                        {% spaceless %}
-                                            {% for fieldset in inline_admin_form %}
-                                                {% for line in fieldset %}
-                                                    {% for field in line %}
-                                                        {% if not field.is_readonly and field.field.is_hidden %}
-                                                            {{ field.field }}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                {% endfor %}
-                                            {% endfor %}
-                                        {% endspaceless %}
-
-                                        {% with is_last_row=forloop.last %}
-                                            {% for fieldset in inline_admin_form %}
-                                                {% for line in fieldset %}
-                                                    {% with is_last_col=forloop.last %}
-                                                        {% for field in line %}
-                                                            {% if field.is_readonly or not field.field.is_hidden %}
-                                                                <td{% if field.field.name %} class="field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
-                                                                    {% if field.is_readonly %}
-                                                                        {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
-                                                                    {% else %}
-                                                                        {{ field.field }}
-
-                                                                        {% if field.field.errors|length > 0 %}
-                                                                            <div class="mt-1 text-red-600 text-sm dark:text-red-500">
-                                                                                {% for error in field.field.errors %}
-                                                                                    {{ error }}
-                                                                                {% endfor %}
-                                                                            </div>
-                                                                        {% endif %}
-                                                                    {% endif %}
-                                                                </td>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    {% endwith %}
-                                                {% endfor %}
-                                            {% endfor %}
-
-                                            {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                                <td class="delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 border-b border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px dark:border-gray-800" data-label="{% trans "Remove" %}">
-                                                    {% if inline_admin_form.original %}
-                                                        <div class="flex flex-row lg:mt-3">
-                                                            <div class="ml-auto">
-                                                                {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }}
-                                                            </div>
-                                                        </div>
-                                                    {% endif %}
-                                                </td>
+                                        <td class="delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 border-b border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px dark:border-gray-800" data-label="{% trans "Remove" %}">
+                                            {% if inline_admin_form.original %}
+                                                <div class="flex flex-row lg:mt-3">
+                                                    <div class="ml-auto">
+                                                        {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }}
+                                                    </div>
+                                                </div>
                                             {% endif %}
-                                        {% endwith %}
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                {% endif %}
+                                        </td>
+                                    {% endif %}
+                                {% endwith %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </fieldset>
     </div>
