@@ -13,82 +13,75 @@
         {{ inline_admin_formset.formset.management_form }}
         {% include "unfold/helpers/messages/error.html" with errors=inline_admin_formset.formset.non_form_errors %}
 
-        {% if inline_admin_formset.forms|length == 0 %}
-            <div>
-                <p class="mb-6 text-sm">
-                    {% trans "No records found." %}
-                </p>
-            </div>
-        {% else %}
-            <div class="border border-gray-200 mb-6 overflow-hidden rounded-md shadow-sm w-full dark:border-gray-800">
-                {% for inline_admin_form in inline_admin_formset %}
-                    <div class="inline-related group inline-stacked {% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
-                        {% if not inline_admin_formset.opts.hide_title or inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                            <h3 class="bg-gray-50 border-b {% if not forloop.first %}border-t{% endif %} border-gray-200 flex font-medium items-center mb-3 px-3 py-2 text-sm dark:bg-white/[.02] dark:border-gray-800">
-                                <span class="mr-2">
-                                    {{ inline_admin_formset.opts.verbose_name|capfirst }}:
-                                </span>
 
-                                <span class="inline_label font-semibold text-font-important-light dark:text-font-important-dark">
-                                    {% if inline_admin_form.original and inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                        <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} font-medium text-primary-600 dark:text-primary-500">
-                                            {{ inline_admin_form.original }}
-                                        </a>
-                                    {% else %}
-                                        {% if inline_admin_form.original %}
-                                            {% with inline_title=inline_admin_form.original.get_inline_title %}
-                                                {% if inline_title %}
-                                                    {{ inline_title }}
-                                                {% else %}
-                                                    {{ inline_admin_form.original }}
-                                                {% endif %}
-                                            {% endwith %}
+        <div class="border border-gray-200 mb-6 overflow-hidden rounded-md shadow-sm w-full dark:border-gray-800">
+            {% for inline_admin_form in inline_admin_formset %}
+                <div class="inline-related group inline-stacked {% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+                    {% if not inline_admin_formset.opts.hide_title or inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
+                        <h3 class="bg-gray-50 border-b {% if not forloop.first %}border-t{% endif %} border-gray-200 flex font-medium items-center mb-3 px-3 py-2 text-sm dark:bg-white/[.02] dark:border-gray-800">
+                            <span class="mr-2">
+                                {{ inline_admin_formset.opts.verbose_name|capfirst }}:
+                            </span>
 
-                                            {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} font-medium ml-2 text-primary-600 dark:text-primary-500">
-                                                    {% if inline_admin_formset.has_change_permission %}
-                                                        {% translate "Change" %}
-                                                    {% else %}
-                                                        {% translate "View" %}
-                                                    {% endif %}
-                                                </a>
-                                            {% endif %}
-                                        {% else %}
-                                            #{{ forloop.counter }}
-                                        {% endif %}
-                                    {% endif %}
-                                </span>
-
-                                {% if inline_admin_form.show_url %}
-                                    <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 dark:text-primary-500">
-                                        {% trans "View on site" %}
+                            <span class="inline_label font-semibold text-font-important-light dark:text-font-important-dark">
+                                {% if inline_admin_form.original and inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
+                                    <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{% if inline_admin_formset.has_change_permission %}inlinechangelink{% else %}inlineviewlink{% endif %} font-medium text-primary-600 dark:text-primary-500">
+                                        {{ inline_admin_form.original }}
                                     </a>
+                                {% else %}
+                                    {% if inline_admin_form.original %}
+                                        {% with inline_title=inline_admin_form.original.get_inline_title %}
+                                            {% if inline_title %}
+                                                {{ inline_title }}
+                                            {% else %}
+                                                {{ inline_admin_form.original }}
+                                            {% endif %}
+                                        {% endwith %}
+
+                                        {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
+                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} font-medium ml-2 text-primary-600 dark:text-primary-500">
+                                                {% if inline_admin_formset.has_change_permission %}
+                                                    {% translate "Change" %}
+                                                {% else %}
+                                                    {% translate "View" %}
+                                                {% endif %}
+                                            </a>
+                                        {% endif %}
+                                    {% else %}
+                                        #{{ forloop.counter }}
+                                    {% endif %}
                                 {% endif %}
+                            </span>
 
-                                {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission and inline_admin_form.original %}
-                                    <span class="delete flex gap-2 items-center ml-auto">
-                                        {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }} {{ inline_admin_form.deletion_field.label_tag }}
-                                    </span>
-                                {% endif %}
-                            </h3>
-                        {% endif %}
+                            {% if inline_admin_form.show_url %}
+                                <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 dark:text-primary-500">
+                                    {% trans "View on site" %}
+                                </a>
+                            {% endif %}
 
-                        {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
+                            {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission and inline_admin_form.original %}
+                                <span class="delete flex gap-2 items-center ml-auto">
+                                    {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }} {{ inline_admin_form.deletion_field.label_tag }}
+                                </span>
+                            {% endif %}
+                        </h3>
+                    {% endif %}
 
-                        {% for fieldset in inline_admin_form %}
-                            <div class="px-3 -mb-5 {% if inline_admin_formset.opts.hide_title %}{% if not inline_admin_formset.formset.can_delete or not inline_admin_formset.has_delete_permission  %}pt-3{% endif %}{% endif %}">
-                                {% include 'admin/includes/fieldset.html' with stacked=1 %}
-                            </div>
-                        {% endfor %}
+                    {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
 
-                        {% if inline_admin_form.needs_explicit_pk_field %}
-                            {{ inline_admin_form.pk_field.field }}
-                        {% endif %}
+                    {% for fieldset in inline_admin_form %}
+                        <div class="px-3 -mb-5 {% if inline_admin_formset.opts.hide_title %}{% if not inline_admin_formset.formset.can_delete or not inline_admin_formset.has_delete_permission  %}pt-3{% endif %}{% endif %}">
+                            {% include 'admin/includes/fieldset.html' with stacked=1 %}
+                        </div>
+                    {% endfor %}
 
-                        {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+                    {% if inline_admin_form.needs_explicit_pk_field %}
+                        {{ inline_admin_form.pk_field.field }}
+                    {% endif %}
+
+                    {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
+                </div>
+            {% endfor %}
+        </div>
     </fieldset>
 </div>
