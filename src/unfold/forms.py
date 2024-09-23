@@ -10,6 +10,7 @@ from django.contrib.admin.forms import (
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
+from django.contrib.auth.models import User
 
 try:
     from django.contrib.auth.forms import AdminUserCreationForm as BaseUserCreationForm
@@ -70,11 +71,10 @@ class AuthenticationForm(AdminAuthenticationForm):
 class UserCreationForm(BaseUserCreationForm):
     def __init__(
         self,
-        request: Optional[HttpRequest] = None,
         *args,
         **kwargs,
     ) -> None:
-        super().__init__(request, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.fields["password1"].widget = UnfoldAdminPasswordInput(
             attrs={"autocomplete": "new-password"}
@@ -92,11 +92,10 @@ class UserCreationForm(BaseUserCreationForm):
 class UserChangeForm(BaseUserChangeForm):
     def __init__(
         self,
-        request: Optional[HttpRequest] = None,
         *args,
         **kwargs,
     ) -> None:
-        super().__init__(request, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["password"].widget = UnfoldReadOnlyPasswordHashWidget()
 
         self.fields["password"].help_text = _(
@@ -113,19 +112,19 @@ class UserChangeForm(BaseUserChangeForm):
 class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
     def __init__(
         self,
-        request: Optional[HttpRequest] = None,
+        user: User,
         *args,
         **kwargs,
     ) -> None:
-        super().__init__(request, *args, **kwargs)
+        super().__init__(user, *args, **kwargs)
 
         self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
         self.fields["password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
 
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(kwargs.pop("user"), *args, **kwargs)
+    def __init__(self, user: User, *args, **kwargs) -> None:
+        super().__init__(user, *args, **kwargs)
 
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
         self.fields["new_password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
