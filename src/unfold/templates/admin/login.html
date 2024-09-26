@@ -32,6 +32,8 @@
                     <span class="block text-primary-600 text-xl dark:text-primary-500">{{ site_title }}</span>
                 </h1>
 
+                {% include "unfold/helpers/messages.html" %}
+
                 {% include "unfold/helpers/messages/errornote.html" with errors=form.errors %}
 
                 {% include "unfold/helpers/messages/error.html" with errors=form.non_field_errors %}
