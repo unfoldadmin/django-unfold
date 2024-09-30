@@ -69,6 +69,10 @@
                     {% endif %}
                 {% endblock %}
 
+                {% if cl.model_admin.list_before_template %}
+                    {% include cl.model_admin.list_before_template %}
+                {% endif %}
+
                 <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
                     {% csrf_token %}
 
@@ -108,6 +112,10 @@
                         {% endblock %}
                     {% endblock %}
                 </form>
+
+                {% if cl.model_admin.list_after_template %}
+                    {% include cl.model_admin.list_after_template %}
+                {% endif %}
 
                 {% if cl.has_filters %}
                     {% include "unfold/change_list_filter.html" %}
