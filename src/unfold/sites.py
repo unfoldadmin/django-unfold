@@ -7,8 +7,18 @@ from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
+from django.views.decorators.cache import never_cache
+
+try:
+    from django.contrib.auth.decorators import login_not_required
+except ImportError:
+
+    def login_not_required(func: Callable) -> Callable:
+        return func
+
 
 from .dataclasses import Favicon
 from .settings import get_config
@@ -178,6 +188,8 @@ class UnfoldAdminSite(AdminSite):
             },
         )
 
+    @method_decorator(never_cache)
+    @login_not_required
     def login(
         self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
     ) -> HttpResponse:
