@@ -1,21 +1,21 @@
 <div class="{% if class %}{{ class }}{% endif %}">
-    <div class="flex flex-row mb-2.5 text-sm">
-        {% if title %}
-            <h3 class="text-sm">
-                {{ title }}
-            </h3>
-        {% endif %}
-
-        {% if description %}
-            <strong class="font-semibold ml-auto">
-                {{ description }}
-            </strong>
-        {% endif %}
-    </div>
-
-    <div class="bg-gray-200 flex flex-row h-1 rounded overflow-hidden dark:bg-white/10">
+    <div class="overflow-hidden relative px-2 py-1 text-sm">
         {% if value %}
-            <div class="bg-primary-500 h-1 rounded-full" style="width: {{ value }}%"></div>
+            <div class="absolute bottom-0 left-0 rounded top-0 bg-primary-100 z-10 dark:bg-primary-500/20" style="width: {{ value }}%"></div>
         {% endif %}
+
+        <div class="flex flex-row relative z-20">
+            {% if title %}
+                <h3 class="text-font-default-light dark:text-font-default-dark text-sm">
+                    {{ title }}
+                </h3>
+            {% endif %}
+
+            {% if description %}
+                <strong class="font-semibold text-font-important-light ml-auto dark:text-font-important-dark">
+                    {{ description }}
+                </strong>
+            {% endif %}
+        </div>
     </div>
 </div>
