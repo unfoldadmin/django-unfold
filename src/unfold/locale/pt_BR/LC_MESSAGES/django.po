@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-04 09:54-0300\n"
-"PO-Revision-Date: 2024-10-04 11:22-0300\n"
+"PO-Revision-Date: 2024-10-04 14:09-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -185,7 +185,7 @@ msgstr "Permissões de objeto"
 #: unfold/templates/unfold/helpers/site_logo.html:7
 #: unfold/templates/unfold/helpers/site_logo.html:9
 msgid "Home"
-msgstr "Lar"
+msgstr "Inicio"
 
 #: unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_group.html:39
 #: unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:40
@@ -898,7 +898,7 @@ msgstr "Adicionar outro %(model)s"
 #: unfold/templates/unfold/widgets/related_widget_wrapper.html:35
 #, python-format
 msgid "View selected %(model)s"
-msgstr "Ver %(model) selecionados"
+msgstr "Ver %(model)s selecionados"
 
 #: unfold/templates/unfold/widgets/related_widget_wrapper.html:45
 #, python-format
