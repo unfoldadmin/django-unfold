@@ -27,13 +27,13 @@ python = ">=3.8"
 django = ">=3.2"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7.3.1"
-pytest-django = "^4.5.2"
-tox = "^4.5.2"
+pytest = "^8.3"
+pytest-django = "^4.9"
+tox = "^4.21"
 
 
 [tool.poetry.group.dev.dependencies]
-python-semantic-release = "^8.7.0"
+python-semantic-release = "^8.7"
 
 [tool.ruff]
 fix = true
