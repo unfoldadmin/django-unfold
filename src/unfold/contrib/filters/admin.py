@@ -1,9 +1,12 @@
+import json
 from typing import Any, Dict, List, Optional, Tuple, Type
 
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
+from django.core.cache import cache
 from django.db.models import Max, Min, Model, QuerySet
 from django.db.models.fields import (
     AutoField,
@@ -62,6 +65,20 @@ class DropdownMixin:
             return super().queryset(request, queryset)
 
         return queryset
+    
+
+class DropdownCacheMixin:
+    def field_choices(self, field, request, model_admin):
+        cache_key = f"field_choices:{field.model._meta.db_table}:{field.name}"
+        cached_choices = cache.get(cache_key)
+
+        if cached_choices is not None:
+            return json.loads(cached_choices)
+        else:
+            ordering = self.field_admin_ordering(field, request, model_admin)
+            choices = field.get_choices(include_blank=False, ordering=ordering)
+            cache.set(cache_key, json.dumps(choices), timeout=getattr(settings, 'UNFOLD_ADMIN_CHOICES_CACHE_TIMEOUT', 60 * 60 * 24))
+            return choices
 
 
 class TextFilter(admin.SimpleListFilter):
@@ -174,6 +191,10 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
 
 class MultipleRelatedDropdownFilter(MultiValueMixin, RelatedDropdownFilter):
     multiple = True
+
+
+class MultipleRelatedDropdownCacheFilter(DropdownCacheMixin, MultipleRelatedDropdownFilter):
+    ...
 
 
 class SingleNumericFilter(admin.FieldListFilter):
