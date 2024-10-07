@@ -38,10 +38,10 @@
 
                         {% for perm in model_perms %}
                             <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{{ perm.name }}">
-                                {% if perm.codename in group_perms %}
-                                    {% include "unfold/helpers/boolean.html" with value=False %}
-                                {% else %}
+                                {% if perm.codename in user_perms %}
                                     {% include "unfold/helpers/boolean.html" with value=True %}
+                                {% else %}
+                                    {% include "unfold/helpers/boolean.html" with value=False %}
                                 {% endif %}
                             </td>
                         {% endfor %}
