@@ -18,7 +18,7 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 
 from .settings import get_config
-from .utils import display_for_field, prettify_json
+from .utils import _boolean_icon, display_for_field, prettify_json
 from .widgets import CHECKBOX_LABEL_CLASSES, LABEL_CLASSES
 
 
@@ -103,8 +103,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             return str(remote_obj)
 
     def _get_contents(self) -> str:
-        from django.contrib.admin.templatetags.admin_list import _boolean_icon
-
         field, obj, model_admin = (
             self.field["field"],
             self.form.instance,
