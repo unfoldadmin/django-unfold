@@ -560,8 +560,12 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 class TabularInline(ModelAdminMixin, BaseTabularInline):
     formfield_overrides = FORMFIELD_OVERRIDES_INLINE
     readonly_preprocess_fields = {}
+    ordering_field = None
+    hide_ordering_field = False
 
 
 class StackedInline(ModelAdminMixin, BaseStackedInline):
     formfield_overrides = FORMFIELD_OVERRIDES_INLINE
     readonly_preprocess_fields = {}
+    ordering_field = None
+    hide_ordering_field = False
