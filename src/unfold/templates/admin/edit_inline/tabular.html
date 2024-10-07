@@ -16,12 +16,17 @@
             {{ inline_admin_formset.formset.non_form_errors }}
 
             <div class="border border-gray-200 mb-6 overflow-x-auto rounded-md shadow-sm dark:border-gray-800" data-simplebar data-simplebar-auto-hide="false">
-                <table class="border-spacing-none border-separate w-full">
+                <table class="border-spacing-none border-separate w-full"
+                       {% if inline_admin_formset.opts.ordering_field %}
+                           data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}"
+                           x-on:end="sortRecords"
+                           x-sort.ghost
+                       {% endif %}>
                     <thead class="hidden lg:table-header-group">
                         <tr>
                             {% for field in inline_admin_formset.fields %}
                                 {% if not field.widget.is_hidden %}
-                                    <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap dark:text-font-important-dark dark:border-gray-800">
+                                    <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap dark:text-font-important-dark dark:border-gray-800 {% if inline_admin_formset.opts.ordering_field and field.name == inline_admin_formset.opts.ordering_field and not inline_admin_form.options.hide_ordering_field %}hidden{% endif %}">
                                         <span class="flex flex-row items-center">
                                             {{ field.label|capfirst }}
 
@@ -41,8 +46,8 @@
                         </tr>
                     </thead>
 
-                    <tbody>
-                        {% for inline_admin_form in inline_admin_formset %}
+                    {% for inline_admin_form in inline_admin_formset %}
+                        <tbody {% if inline_admin_form.original %}x-sort:item{% endif %}>
                             {% if inline_admin_form.form.non_field_errors %}
                                 <tr class="row-form-errors group inline-tabular">
                                     <td colspan="{{ inline_admin_form|cell_count }}">
@@ -118,20 +123,32 @@
                                             {% with is_last_col=forloop.last %}
                                                 {% for field in line %}
                                                     {% if field.is_readonly or not field.field.is_hidden %}
-                                                        <td{% if field.field.name %} class="field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
-                                                            {% if field.is_readonly %}
-                                                                {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
-                                                            {% else %}
-                                                                {{ field.field }}
-
-                                                                {% if field.field.errors|length > 0 %}
-                                                                    <div class="mt-1 text-red-600 text-sm dark:text-red-500">
-                                                                        {% for error in field.field.errors %}
-                                                                            {{ error }}
-                                                                        {% endfor %}
-                                                                    </div>
+                                                        <td{% if field.field.name %} class="field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %} {% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and not inline_admin_form.options.hide_ordering_field %}!hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
+                                                            <div class="flex flex-row gap-3 items-center">
+                                                                {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
+                                                                    {% if inline_admin_formset.opts.ordering_field %}
+                                                                        {% if inline_admin_form.original %}
+                                                                            <span class="material-symbols-outlined cursor-pointer" x-sort:handle>drag_indicator</span>
+                                                                        {% else %}
+                                                                            <span class="-mr-3" x-sort:handle></span>
+                                                                        {% endif %}
+                                                                    {% endif %}
                                                                 {% endif %}
-                                                            {% endif %}
+
+                                                                {% if field.is_readonly %}
+                                                                    {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
+                                                                {% else %}
+                                                                    {{ field.field }}
+
+                                                                    {% if field.field.errors|length > 0 %}
+                                                                        <div class="mt-1 text-red-600 text-sm dark:text-red-500">
+                                                                            {% for error in field.field.errors %}
+                                                                                {{ error }}
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </div>
                                                         </td>
                                                     {% endif %}
                                                 {% endfor %}
@@ -152,8 +169,8 @@
                                     {% endif %}
                                 {% endwith %}
                             </tr>
-                        {% endfor %}
-                    </tbody>
+                        </tbody>
+                    {% endfor %}
                 </table>
             </div>
         </fieldset>
