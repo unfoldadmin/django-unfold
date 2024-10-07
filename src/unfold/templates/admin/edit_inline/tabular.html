@@ -126,8 +126,12 @@
                                                         <td{% if field.field.name %} class="field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-gray-500 before:pr-4 lg:before:hidden font-normal px-3 text-left text-sm lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
                                                             <div class="flex flex-row gap-3 items-center">
                                                                 {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
-                                                                    {% if inline_admin_form.original and inline_admin_formset.opts.ordering_field %}
-                                                                        <span class="material-symbols-outlined cursor-pointer" x-sort:handle>drag_indicator</span>
+                                                                    {% if inline_admin_formset.opts.ordering_field %}
+                                                                        {% if inline_admin_form.original %}
+                                                                            <span class="material-symbols-outlined cursor-pointer" x-sort:handle>drag_indicator</span>
+                                                                        {% else %}
+                                                                            <span class="-mr-3" x-sort:handle></span>
+                                                                        {% endif %}
                                                                     {% endif %}
                                                                 {% endif %}
 
