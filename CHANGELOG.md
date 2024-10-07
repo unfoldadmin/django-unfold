@@ -1,4 +1,19 @@
 
+## 0.40.0 (2024-10-07)
+
+- feat: refactored tests (#784) ([`8c53e8b`](https://github.com/unfoldadmin/django-unfold/commit/8c53e8b7068042e5f101307f303612668b26277c))
+- feat: components redesign (#780) ([`1405687`](https://github.com/unfoldadmin/django-unfold/commit/1405687603eebac2c691a5107a25e718e2ccb1bb))
+- feat: changelist before after templates (#776) ([`cde3771`](https://github.com/unfoldadmin/django-unfold/commit/cde377146c9b2bda392d59bd1d4c38cc8d2dcab7))
+- fix: guardian reverted group permissions display (#793) ([`f0299f1`](https://github.com/unfoldadmin/django-unfold/commit/f0299f1cea636554d9a9fda1e23700a26f35cd57))
+- fix: LoginRequiredMiddleware handling (#775) ([`884ec85`](https://github.com/unfoldadmin/django-unfold/commit/884ec851756d6c2c4cd07b5a65e2cf03ef9460e6))
+- fix: login form messages (#772) ([`815a33f`](https://github.com/unfoldadmin/django-unfold/commit/815a33f168bfbef76473c064f6e6082ce0890fcf))
+- fix: badge relative positioning (#771) ([`be0330c`](https://github.com/unfoldadmin/django-unfold/commit/be0330cb7ee3a016238ae142c6e69ae31da2bb3d))
+- fix: sidebar links hover (#770) ([`e6f9f8b`](https://github.com/unfoldadmin/django-unfold/commit/e6f9f8ba13e228eda976d79f20319c552a4b4789))
+- fix: total count color (#765) ([`3e081ee`](https://github.com/unfoldadmin/django-unfold/commit/3e081eebd87c1fd8866d9eded1c9677183771ab2))
+- fix: user form types (#764) ([`1f0c108`](https://github.com/unfoldadmin/django-unfold/commit/1f0c108fc81a045b19661aa1cdd9ac1f9c8a6fe3))
+- fix: missing add button in empty inlines (#758) ([`af58552`](https://github.com/unfoldadmin/django-unfold/commit/af58552be5ee0658ab034ff301afc85c9fc4ade5))
+- chore: updated readme (#783) ([`866b91b`](https://github.com/unfoldadmin/django-unfold/commit/866b91be1b33d7819c985da5abbc680897b35953))
+
 ## 0.39.0 (2024-09-17)
 
 - feat: changeform before/after templates (#726) ([`0b56e65`](https://github.com/unfoldadmin/django-unfold/commit/0b56e653dda55a96d68bdaea7e44b09513f5d4a9))
