@@ -1,9 +1,9 @@
 {% load i18n admin_list %}
 
 <div id="changelist-filter" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 flex fixed inset-0 z-50" x-show="filterOpen">
-    <label for="show-filters" id="changelist-filter-close" class="flex-grow"></label>
+    <label for="show-filters" id="changelist-filter-close" class="flex-grow" x-on:click="filterOpen = false"></label>
 
-    <div class="bg-white flex mx-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800" x-on:click.outside="filterOpen = false">
+    <div class="bg-white flex mx-4 my-4 overflow-hidden rounded shadow-sm w-96 dark:bg-gray-800">
         <div class="flex-grow h-full overflow-auto relative">
             <h3 class="border-b flex font-semibold mb-6 px-6 py-4 text-font-important-light text-sm dark:text-font-important-dark dark:border-gray-700">
                 {% trans "Filter" %}
