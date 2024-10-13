@@ -10,6 +10,6 @@
   };
 
   $(function () {
-    $(".admin-autocomplete").djangoCustomSelect2();
+    $(".unfold-admin-autocomplete.admin-autocomplete").djangoCustomSelect2();
   });
 }
