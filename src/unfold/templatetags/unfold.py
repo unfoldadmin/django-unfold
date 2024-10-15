@@ -228,7 +228,7 @@ def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
     return field
 
 
-@register.filter(is_safe=True, name='slugify')
+@register.filter(is_safe=True, name="slugify")
 @stringfilter
 def slugify(value):
     return _slugify(value)
