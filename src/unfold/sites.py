@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any, Callable, Dict, List, Optional, Union
+from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -394,10 +395,25 @@ class UnfoldAdminSite(AdminSite):
     def _get_is_active(self, request: HttpRequest, link: str) -> bool:
         if not isinstance(link, str):
             link = str(link)
-
-        if link in request.path and link != reverse_lazy(f"{self.name}:index"):
+        request_path = request.get_full_path()
+        # Special case for the index page
+        if link == request.path == reverse_lazy(f"{self.name}:index"):
             return True
-        elif link == request.path == reverse_lazy(f"{self.name}:index"):
-            return True
 
-        return False
+        link_parts = urlparse(link)
+        request_parts = urlparse(request_path)
+
+        # Check if paths match
+        if link_parts.path != request_parts.path:
+            return False
+        # If there are no query parameters in the link, it's active only if the request also has no query parameters
+        if not link_parts.query:
+            return not request_parts.query
+        # Parse query parameters
+        link_params = parse_qs(link_parts.query)
+        request_params = parse_qs(request_parts.query)
+        # Check if all link parameters are present in the request with the same values
+        return all(
+            key in request_params and request_params[key] == value
+            for key, value in link_params.items()
+        )
