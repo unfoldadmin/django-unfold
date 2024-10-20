@@ -1,5 +1,6 @@
+
 <div class="form-row
-            {% for field in line %}{% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and not inline_admin_form.options.hide_ordering_field %} hidden{% endif %}{% endfor %}
+            {% for field in line %}{% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %} hidden{% endif %}{% endfor %}
             {% if adminform.model_admin.compressed_fields %} border-b border-gray-200 -mx-3 px-3 pt-3 first:pt-0 dark:border-gray-800 last:border-b-0{% endif %}
             {% if not line.fields|length == 1 %} flex flex-row flex-wrap gap-x-8{% endif %}
             {% if not line.has_visible_field %} hidden{% endif %}
