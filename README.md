@@ -13,6 +13,9 @@ Unfold is a theme for Django admin that incorporates common best practices for b
 - **Unfold:** Demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
 - **Formula:** Repository with demo implementation at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula?utm_medium=github&utm_source=unfold).
 - **Turbo:** Django & Next.js boilerplate implementing Unfold at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo?utm_medium=github&utm_source=unfold).
+- **Discord:** Join the Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
+
+
 
 ## Are you using Unfold and need help?
 
@@ -32,6 +35,7 @@ Have you decided to start using Unfold but don’t have time to make the switch 
 - **Inline tabs:** Groups inlines into tab navigation in the change form.
 - **Model tabs:** Allows defining custom tab navigation for models.
 - **Fieldset tabs:** Merges multiple fieldsets into tabs in the change form.
+- **Sortable inlines:** Allows sorting inlines by dragging and dropping.
 - **Environment label**: Distinguishes between environments by displaying a label.
 - **Nonrelated inlines**: Displays nonrelated models as inlines in the change form.
 - **Favicons**: Built-in support for configuring various site favicons.
