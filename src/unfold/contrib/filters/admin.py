@@ -14,7 +14,6 @@ from django.db.models.fields import (
     FloatField,
     IntegerField,
 )
-from django.db.models.fields.generated import GeneratedField
 from django.forms import ValidationError
 from django.http import HttpRequest
 from django.utils.dateparse import parse_datetime
@@ -342,11 +341,28 @@ class RangeNumericFilter(RangeNumericMixin, admin.FieldListFilter):
         field_path: str,
     ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
-        if not isinstance(
-            field, (DecimalField, IntegerField, FloatField, AutoField, GeneratedField)
-        ):
+
+        supported_fields = (DecimalField, IntegerField, FloatField, AutoField)
+
+        # GeneratedField was introduced in Django 5.0
+        # In case it can't be imported, we use None as placeholder, not adding
+        # it to the supported field types, and not perfoming its validation
+        try:
+            from django.db.models import GeneratedField
+
+            supported_fields += (GeneratedField,)
+        except ImportError:
+            GeneratedField = None
+
+        if GeneratedField and isinstance(field, GeneratedField):
+            if not isinstance(field.output_field, supported_fields):
+                raise TypeError(
+                    f"Class {type(field.output_field)} of the output_field is not supported for {self.__class__.__name__}."
+                )
+
+        if not isinstance(field, supported_fields):
             raise TypeError(
-                f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
+                f"Class {type(field)} is not supported for {self.__class__.__name__}."
             )
 
         self.request = request
