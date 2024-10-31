@@ -1,8 +1,8 @@
 {% load i18n admin_urls %}
 
-<div {% if not is_popup %}id="submit-row"{% endif %} class="relative z-20 {% if not is_popup %} mt-20 lg:mt-8{% endif %}">
-    <div class="{% if not is_popup %}bottom-0 fixed left-0 right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %}>
-        <div class="bg-white dark:bg-gray-900 {% if not is_popup %}border-t px-4 py-4 relative scrollable-top lg:px-12 dark:border-gray-800{% endif %}">
+<div {% if not is_popup %}id="submit-row"{% endif %} class="relative z-20 {% if not is_popup %} mt-8{% endif %}">
+    <div class="{% if not is_popup %}lg:bottom-0 lg:fixed lg:left-0 lg:right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %}>
+        <div class="bg-white dark:bg-gray-900 {% if not is_popup %}lg:border-t lg:py-4 relative scrollable-top lg:px-12 dark:border-gray-800{% endif %}">
             <div class="container flex flex-col-reverse gap-3 items-center mx-auto lg:flex-row-reverse">
                 {% block submit-row %}
                     {% if show_save %}
@@ -18,7 +18,7 @@
                     {% endfor %}
 
                     {% if show_save_and_continue %}
-                        <button type="submit" name="_continue" class="border font-medium hidden px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                        <button type="submit" name="_continue" class="border font-medium px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
                             {% if can_change %}
                                 {% translate 'Save and continue editing' %}
                             {% else %}
@@ -30,19 +30,19 @@
                     {% if show_close %}
                         {% url opts|admin_urlname:'changelist' as changelist_url %}
 
-                        <a href="{% add_preserved_filters changelist_url %}" class="border font-medium hidden px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                        <a href="{% add_preserved_filters changelist_url %}" class="border font-medium px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
                             {% translate 'Close' %}
                         </a>
                     {% endif %}
 
                     {% if show_save_and_add_another %}
-                        <button type="submit" name="_addanother" class="border font-medium hidden px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                        <button type="submit" name="_addanother" class="border font-medium px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
                             {% translate 'Save and add another' %}
                         </button>
                     {% endif %}
 
                     {% if show_save_as_new %}
-                        <button type="submit" name="_saveasnew" class="border font-medium hidden px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
+                        <button type="submit" name="_saveasnew" class="border font-medium px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:w-auto dark:border-gray-700  dark:hover:text-gray-200 dark:hover:bg-gray-900">
                             {% translate 'Save as new' %}
                         </button>
                     {% endif %}
@@ -51,7 +51,7 @@
                         {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
 
                         <p class="deletelink-box mr-auto w-full lg:w-auto">
-                            <a href="{% add_preserved_filters delete_url %}" class="block border border-red-500 font-medium px-3 py-2 rounded-md text-center text-red-500 whitespace-nowrap dark:border-transparent dark:bg-red-500/20 dark:text-red-500">
+                            <a href="{% add_preserved_filters delete_url %}" class="bg-red-600 flex items-center justify-center font-medium h-9.5 ml-auto px-3 py-2 rounded-md text-white dark:bg-red-500/20 dark:text-red-500">
                                 {% translate "Delete" %} {{ opts.verbose_name }}
                             </a>
                         </p>

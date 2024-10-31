@@ -89,11 +89,7 @@
                     <input type="hidden" name="action" value="delete_selected">
                     <input type="hidden" name="post" value="yes">
 
-                    <a href="#" class="border cancel-link font-medium hidden mb-3 px-3 py-2 rounded-md transition-all w-full hover:bg-gray-50 lg:block lg:mb-0 lg:mr-3 lg:w-auto dark:border-gray-700 dark:text-font-default-dark dark:hover:text-gray-200 dark:hover:bg-gray-900">
-                        {% translate "No, take me back" %}
-                    </a>
-
-                    <input type="submit" value="{% translate 'Yes, I’m sure' %}" class="bg-red-600 cursor-pointer font-medium ml-auto px-3 py-2 rounded-md text-white dark:bg-red-500/20 dark:text-red-500">
+                    {% include "unfold/helpers/delete_submit_line.html" %}
                 </div>
             </form>
         </div>
