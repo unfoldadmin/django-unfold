@@ -23,7 +23,7 @@
 {% block breadcrumbs %}
     <div class="px-4 lg:px-12">
         <div class="container mb-6 mx-auto -my-3 lg:mb-12">
-            <ul class="flex">
+            <ul class="flex flex-wrap">
                 {% url 'admin:index' as link %}
                 {% trans 'Home' as name %}
                 {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
