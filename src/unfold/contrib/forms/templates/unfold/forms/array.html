@@ -14,7 +14,7 @@
     {% endfor %}
 
     <template x-for="(item, index) in items" :key="item.key">
-        <div class="flex flex-row">
+        <div class="flex flex-row" x-init="if ($el.getElementsByTagName('input')[0].name.includes('__prefix__')) { $el.getElementsByTagName('input')[0].name = $el.parentElement.getElementsByTagName('input')[0].name }">
             {% with widget=template %}
                 {% include template.template_name %}
             {% endwith %}
