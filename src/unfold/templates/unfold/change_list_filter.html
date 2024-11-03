@@ -3,9 +3,9 @@
 <div id="changelist-filter" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 flex inset-0 z-50 fixed {% if not cl.model_admin.list_filter_sheet %}2xl:bg-transparent 2xl:relative 2xl:!block 2xl:z-10{% endif %}" x-show="filterOpen">
     <label for="show-filters" id="changelist-filter-close" class="flex-grow {% if not cl.model_admin.list_filter_sheet %}2xl:hidden{% endif %}" x-on:click="filterOpen = false"></label>
 
-    <div class="bg-white flex m-4 overflow-hidden rounded shadow-sm w-80 dark:bg-gray-800 {% if not cl.model_admin.list_filter_sheet %} 2xl:border 2xl:sticky 2xl:top-4 2xl:dark:border-gray-800 2xl:bg-transparent 2xl:dark:bg-transparent 2xl:m-0{% endif %}">
+    <div class="bg-white flex m-4 overflow-hidden rounded shadow-sm w-80 dark:bg-gray-800 {% if not cl.model_admin.list_filter_sheet %} 2xl:border 2xl:sticky 2xl:top-4 2xl:dark:border-gray-800 2xl:bg-transparent 2xl:dark:!bg-transparent 2xl:m-0{% endif %}">
         <div class="flex-grow h-full overflow-auto relative">
-            <h3 class="border-b flex font-semibold mb-6 px-6 py-4 text-font-important-light text-sm dark:text-font-important-dark dark:border-gray-800">
+            <h3 class="border-b flex font-semibold mb-4 px-4 py-4 text-font-important-light text-sm dark:text-font-important-dark dark:border-gray-800">
                 {% trans "Filter" %}
 
                 {% if cl.is_facets_optional %}
@@ -35,7 +35,7 @@
                 </a>
             </h3>
 
-            <div class="px-6{% if cl.model_admin.list_filter_submit %} {% endif %}">
+            <div class="px-4{% if cl.model_admin.list_filter_submit %} {% endif %}">
                 {% if cl.model_admin.list_filter_submit %}
                     <form id="filter-form" method="get">
                         {% if request.GET.q %}
@@ -52,7 +52,7 @@
                 {% endfor %}
 
                 {% if cl.model_admin.list_filter_submit %}
-                    <div class="bottom-4 absolute left-4 right-4 py-3 {% if not cl.model_admin.list_filter_sheet %}2xl:left-0 2xl:right-0 2xl:relative{% endif %}">
+                    <div class="bottom-4 absolute left-4 right-4 {% if not cl.model_admin.list_filter_sheet %}2xl:left-0 2xl:right-0 2xl:relative 2xl:mt-8{% endif %}">
                         <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md self-end text-sm text-white w-full">
                             {% trans "Apply Filters" %}
                         </button>
