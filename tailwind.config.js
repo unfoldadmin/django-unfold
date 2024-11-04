@@ -40,6 +40,9 @@ module.exports = {
       height: {
         9.5: "2.375rem",
       },
+      minHeight: {
+        9.5: "2.375rem",
+      },
       minWidth: {
         sidebar: "18rem",
       },
