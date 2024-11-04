@@ -62,60 +62,62 @@
         {% endif %}
 
         <div class="flex -mx-4 module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-            <div class="changelist-form-container flex-grow min-w-0 px-4" x-data="{ filterOpen: false }">
-                {% block date_hierarchy %}
-                    {% if cl.date_hierarchy %}
-                        {% date_hierarchy cl %}
-                    {% endif %}
-                {% endblock %}
+            <div class="changelist-form-container flex flex-row flex-grow gap-4 min-w-0 px-4" x-data="{ filterOpen: false }">
+                <div class="flex-grow min-w-0">
+                    {% block date_hierarchy %}
+                        {% if cl.date_hierarchy %}
+                            {% date_hierarchy cl %}
+                        {% endif %}
+                    {% endblock %}
 
-                {% if cl.model_admin.list_before_template %}
-                    {% include cl.model_admin.list_before_template %}
-                {% endif %}
-
-                <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
-                    {% csrf_token %}
-
-                    {% if cl.formset %}
-                        <div>{{ cl.formset.management_form }}</div>
+                    {% if cl.model_admin.list_before_template %}
+                        {% include cl.model_admin.list_before_template %}
                     {% endif %}
 
-                    {% block result_list %}
-                        {% if actions_on_top %}
-                            {% if cl.search_fields or action_form or cl.has_filters %}
-                                <div class="bg-gray-50 flex flex-col gap-3 mb-4 p-3 rounded-md lg:flex-row dark:bg-gray-800">
-                                    {% block search %}
-                                        {% search_form cl %}
-                                    {% endblock %}
+                    <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+                        {% csrf_token %}
 
-                                    {% if action_form %}
-                                        {% admin_actions %}
-                                    {% endif %}
-
-                                    {% block filters %}
-                                        {% if cl.has_filters %}
-                                            <a class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white dark:bg-gray-900 dark:border-gray-700{% endif %} border cursor-pointer flex font-medium group items-center px-3 py-2 rounded-md shadow-sm text-sm lg:ml-auto md:mt-0" x-on:click="filterOpen = true" x-on:keydown.escape.window="filterOpen = false">
-                                                {% trans "Filters" %}
-
-                                                <span class="material-symbols-outlined md-18 ml-auto -mr-1 pl-4 {% if cl.has_active_filters %}text-white{% else %}text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400 dark:text-gray-500{% endif %}">filter_list</span>
-                                            </a>
-                                        {% endif %}
-                                    {% endblock %}
-                                </div>
-                            {% endif %}
+                        {% if cl.formset %}
+                            <div>{{ cl.formset.management_form }}</div>
                         {% endif %}
 
-                        {% unfold_result_list cl %}
+                        {% block result_list %}
+                            {% if actions_on_top %}
+                                {% if cl.search_fields or action_form or cl.has_filters %}
+                                    <div class="bg-gray-50 flex flex-col gap-3 mb-4 p-3 rounded-md lg:flex-row dark:bg-gray-800">
+                                        {% block search %}
+                                            {% search_form cl %}
+                                        {% endblock %}
 
-                        {% block pagination %}
-                            {% pagination cl %}
+                                        {% if action_form %}
+                                            {% admin_actions %}
+                                        {% endif %}
+
+                                        {% block filters %}
+                                            {% if cl.has_filters %}
+                                                <a class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white dark:bg-gray-900 dark:border-gray-700{% endif %} border cursor-pointer flex font-medium group items-center px-3 py-2 rounded-md shadow-sm text-sm lg:ml-auto md:mt-0 {% if not cl.model_admin.list_filter_sheet %}2xl:hidden{% endif %}" x-on:click="filterOpen = true" x-on:keydown.escape.window="filterOpen = false">
+                                                    {% trans "Filters" %}
+
+                                                    <span class="material-symbols-outlined md-18 ml-auto -mr-1 pl-4 {% if cl.has_active_filters %}text-white{% else %}text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400 dark:text-gray-500{% endif %}">filter_list</span>
+                                                </a>
+                                            {% endif %}
+                                        {% endblock %}
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            {% unfold_result_list cl %}
+
+                            {% block pagination %}
+                                {% pagination cl %}
+                            {% endblock %}
                         {% endblock %}
-                    {% endblock %}
-                </form>
+                    </form>
 
-                {% if cl.model_admin.list_after_template %}
-                    {% include cl.model_admin.list_after_template %}
-                {% endif %}
+                    {% if cl.model_admin.list_after_template %}
+                        {% include cl.model_admin.list_after_template %}
+                    {% endif %}
+                </div>
 
                 {% if cl.has_filters %}
                     {% include "unfold/change_list_filter.html" %}
