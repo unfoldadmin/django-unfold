@@ -168,7 +168,7 @@ const submitSearch = () => {
       }, {});
 
     if (searchString) {
-      queryParams["q"] = searchString;
+      queryParams["q"] = encodeURIComponent(searchString);
     }
 
     const result = Object.entries(queryParams)
