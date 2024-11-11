@@ -135,15 +135,26 @@ const dateTimeShortcutsOverlay = () => {
  * File upload path
  *************************************************************/
 const fileInputUpdatePath = () => {
-  Array.from(document.querySelectorAll("input[type=file]")).forEach((input) => {
-    input.addEventListener("change", (e) => {
-      const parts = e.target.value.split("\\");
-      const placeholder =
-        input.parentNode.parentNode.parentNode.querySelector(
-          "input[type=text]"
-        );
-      placeholder.setAttribute("value", parts[parts.length - 1]);
-    });
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "childList") {
+        for (const input of document.querySelectorAll("input[type=file]")) {
+          input.addEventListener("change", (e) => {
+            const parts = e.target.value.split("\\");
+            const placeholder =
+              input.parentNode.parentNode.parentNode.querySelector(
+                "input[type=text]"
+              );
+            placeholder.setAttribute("value", parts[parts.length - 1]);
+          });
+        }
+      }
+    }
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
   });
 };
 
