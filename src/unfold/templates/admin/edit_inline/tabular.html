@@ -47,7 +47,7 @@
                     </thead>
 
                     {% for inline_admin_form in inline_admin_formset %}
-                        <tbody {% if inline_admin_form.original %}x-sort:item{% endif %}>
+                        <tbody x-sort:item>
                             {% if inline_admin_form.form.non_field_errors %}
                                 <tr class="row-form-errors group inline-tabular">
                                     <td colspan="{{ inline_admin_form|cell_count }}">
