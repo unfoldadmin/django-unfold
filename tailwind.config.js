@@ -75,6 +75,9 @@ module.exports = {
     "md:border-r",
     "md:w-48",
     {
+      pattern: /bg-primary-+/
+    },
+    {
       pattern: /gap-+/,
       variants: ["lg"],
     },
