@@ -1,4 +1,25 @@
 
+## 0.41.0 (2024-11-13)
+
+- feat: display header image as background (#841) ([`7f51f1e`](https://github.com/unfoldadmin/django-unfold/commit/7f51f1e2c937c7110f443ce160f7dfdff8c86d44))
+- feat: sidebar filter (#837) ([`541a157`](https://github.com/unfoldadmin/django-unfold/commit/541a1577ec93630a9c99ec623d395a26c7098b65))
+- feat: python 3.13 (#831) ([`1545e0c`](https://github.com/unfoldadmin/django-unfold/commit/1545e0c8a309ecfac3ce71f8da34f46b04d4acc6))
+- feat: sortable inlines (#785) ([`1f9259d`](https://github.com/unfoldadmin/django-unfold/commit/1f9259d80e702c90378d886843b2b750d5e722fb))
+- fix: inlines sorting missing attribute (#847) ([`9d70b91`](https://github.com/unfoldadmin/django-unfold/commit/9d70b911ab2dc8591df6d909c32d6096a74f5952))
+- fix: dynamically added filefields (#846) ([`b80a5f4`](https://github.com/unfoldadmin/django-unfold/commit/b80a5f48d2b348c14bf94646993b0ed9bc3330df))
+- fix: encoded search query (#842) ([`f1322f4`](https://github.com/unfoldadmin/django-unfold/commit/f1322f47231f93be51536dcc360f52c8d9946775))
+- fix: ArrayWidget inlines name (#836) ([`99406bd`](https://github.com/unfoldadmin/django-unfold/commit/99406bdddf17afbca9d00d6ca943bcdd7edddbec))
+- fix: arraywidget mobile button (#835) ([`61aa881`](https://github.com/unfoldadmin/django-unfold/commit/61aa881a662b76ad7b8a6b7e9e3d3fa958a54b11))
+- fix: url field design (#832) ([`8712d87`](https://github.com/unfoldadmin/django-unfold/commit/8712d87b1cd17f291469441aa6590718518d972a))
+- fix: breadcrumbs alignment (#830) ([`aa5e23b`](https://github.com/unfoldadmin/django-unfold/commit/aa5e23b552ace9f0f431af576b5c8377bcffe79e))
+- fix: confirmation buttons (#829) ([`acb0393`](https://github.com/unfoldadmin/django-unfold/commit/acb039352987117d423597d5e564356299980585))
+- fix: hide sorable field (#814) ([`495b357`](https://github.com/unfoldadmin/django-unfold/commit/495b357a128faac56b0d9955167a1152a6f3770c))
+- fix: readonly field max width (#802) ([`ba0c335`](https://github.com/unfoldadmin/django-unfold/commit/ba0c335890c0933aaf74b3ddef5dd268ef6faa75))
+- fix: proper filter close on click (#801) ([`b0a24c1`](https://github.com/unfoldadmin/django-unfold/commit/b0a24c1881469ea3f2e029a3a88e23bf01a8b456))
+- fix: custom select2 init (#800) ([`bc45918`](https://github.com/unfoldadmin/django-unfold/commit/bc4591805aa7a2d868979f2e1d11255f9c55d3a4))
+- chore: updated readme inlines (#815) ([`b0c529a`](https://github.com/unfoldadmin/django-unfold/commit/b0c529aa6f24612e76e2c6cac63c5f0955e5e33d))
+- chore: updated material symbols (#794) ([`2b1153e`](https://github.com/unfoldadmin/django-unfold/commit/2b1153e43dd65ea81578df0aa3bb4c07a203d3d0))
+
 ## 0.40.0 (2024-10-07)
 
 - feat: refactored tests (#784) ([`8c53e8b`](https://github.com/unfoldadmin/django-unfold/commit/8c53e8b7068042e5f101307f303612668b26277c))
