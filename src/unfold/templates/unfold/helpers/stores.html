@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<div class="relative" x-data="{ openUserLinks: false }">
+    <a class="block cursor-pointer hover:text-gray-700 dark:hover:text-gray-200" @click="openUserLinks = !openUserLinks">
+        <span class="material-symbols-outlined">Store</span>
+    </a>
+
+    <nav class="absolute bg-white border flex flex-col leading-none overflow-hidden py-1 left-2 rounded shadow-lg left-0 top-7 w-52 z-50 dark:bg-gray-800 dark:border-gray-700" x-cloak x-show="openUserLinks" @click.outside="openUserLinks = false">
+
+           <div class="pt-1 dark:border-gray-700">
+            <form method="post" action="{% url 'select_site' %}" class="mx-1">
+                {% csrf_token %}
+                <input type="hidden" name="site" value="all" />
+                <button type="submit" class="bg-none block px-3 py-2 text-start text-500 rounded w-full hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200">
+                    {% trans "All Stores" %}
+                </button>
+            </form>
+        </div>
+        
+
+{% for site in user.sites.all %}
+           <div class="pt-1 dark:border-gray-700">
+            <form method="post" action="{% url 'select_site' %}" class="mx-1">
+                {% csrf_token %}
+                <input type="hidden" name="site" value="{{site.id}}" />
+                <button type="submit" class="bg-none block px-3 py-2 text-start text-500 rounded w-full hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200">
+                    {{site.name}}
+                </button>
+            </form>
+        </div>
+{% endfor %}
+
+
+    </nav>
+</div>
