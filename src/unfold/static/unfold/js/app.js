@@ -135,19 +135,24 @@ const dateTimeShortcutsOverlay = () => {
  * File upload path
  *************************************************************/
 const fileInputUpdatePath = () => {
+  const handleFileInput = (input) => {
+    input.addEventListener("change", (e) => {
+      const parts = e.target.value.split("\\");
+      const placeholder = input.parentNode.parentNode.parentNode.querySelector(
+        "input[type=text]"
+      );
+      placeholder.setAttribute("value", parts[parts.length - 1]);
+    });
+  };
+
+  // Handle existing inputs
+  document.querySelectorAll("input[type=file]").forEach(handleFileInput);
+
+  // Watch for new inputs
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
       if (mutation.type === "childList") {
-        for (const input of document.querySelectorAll("input[type=file]")) {
-          input.addEventListener("change", (e) => {
-            const parts = e.target.value.split("\\");
-            const placeholder =
-              input.parentNode.parentNode.parentNode.querySelector(
-                "input[type=text]"
-              );
-            placeholder.setAttribute("value", parts[parts.length - 1]);
-          });
-        }
+        document.querySelectorAll("input[type=file]").forEach(handleFileInput);
       }
     }
   });
