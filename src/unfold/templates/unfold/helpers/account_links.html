@@ -5,7 +5,9 @@
         <span class="material-symbols-outlined">person</span>
     </a>
 
-    <nav class="absolute bg-white border flex flex-col leading-none overflow-hidden py-1 -right-2 rounded shadow-lg top-7 w-52 z-50 dark:bg-gray-800 dark:border-gray-700" x-cloak x-show="openUserLinks" @click.outside="openUserLinks = false">
+    <nav class="absolute bg-white border flex flex-col leading-none py-1 -right-2 rounded shadow-lg top-7 w-52 z-50 dark:bg-gray-800 dark:border-gray-700" x-cloak x-show="openUserLinks" @click.outside="openUserLinks = false">
+        {% include "unfold/helpers/caret.html" %}
+
         <div class="border-b border-gray-100 flex flex-row flex-shrink-0 items-start justify-start mb-1 pb-1 dark:border-gray-700">
             <span class="block mx-1 px-3 py-2 truncate">
                 {% firstof user.get_short_name user.get_username %}
