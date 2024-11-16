@@ -114,7 +114,7 @@ table tr.selected th {
  Datetime
  *******************************************************/
 .datetimeshortcuts {
-  @apply absolute flex flex-row-reverse items-center right-0 text-0 top-px;
+  @apply absolute flex flex-row-reverse items-center left-0 text-0 top-px;
 }
 
 .datetimeshortcuts a {
