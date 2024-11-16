@@ -16,8 +16,9 @@ from django.db.models.fields import (
 )
 from django.forms import ValidationError
 from django.http import HttpRequest
-from django.utils.dateparse import parse_datetime
 from django.utils.translation import gettext_lazy as _
+
+from unfold.utils import parse_date_str, parse_datetime_str
 
 from .forms import (
     DropdownForm,
@@ -468,25 +469,13 @@ class RangeDateFilter(admin.FieldListFilter):
     def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
-        value_from = self.used_parameters.get(self.parameter_name + "_from", None)
+        value_from = self.used_parameters.get(self.parameter_name + "_from")
         if value_from not in EMPTY_VALUES:
-            filters.update(
-                {
-                    self.parameter_name + "__gte": self.used_parameters.get(
-                        self.parameter_name + "_from", None
-                    ),
-                }
-            )
+            filters.update({self.parameter_name + "__gte": parse_date_str(value_from)})
 
-        value_to = self.used_parameters.get(self.parameter_name + "_to", None)
+        value_to = self.used_parameters.get(self.parameter_name + "_to")
         if value_to not in EMPTY_VALUES:
-            filters.update(
-                {
-                    self.parameter_name + "__lte": self.used_parameters.get(
-                        self.parameter_name + "_to", None
-                    ),
-                }
-            )
+            filters.update({self.parameter_name + "__lte": parse_date_str(value_to)})
 
         try:
             return queryset.filter(**filters)
@@ -546,18 +535,22 @@ class RangeDateTimeFilter(admin.FieldListFilter):
 
         if self.parameter_name + "_from_0" in params:
             value = params.pop(self.field_path + "_from_0")
+            value = value[0] if isinstance(value, list) else value
             self.used_parameters[self.field_path + "_from_0"] = value
 
         if self.parameter_name + "_from_1" in params:
             value = params.pop(self.field_path + "_from_1")
+            value = value[0] if isinstance(value, list) else value
             self.used_parameters[self.field_path + "_from_1"] = value
 
         if self.parameter_name + "_to_0" in params:
             value = params.pop(self.field_path + "_to_0")
+            value = value[0] if isinstance(value, list) else value
             self.used_parameters[self.field_path + "_to_0"] = value
 
         if self.parameter_name + "_to_1" in params:
             value = params.pop(self.field_path + "_to_1")
+            value = value[0] if isinstance(value, list) else value
             self.used_parameters[self.field_path + "_to_1"] = value
 
     def expected_parameters(self) -> List[str]:
@@ -571,20 +564,17 @@ class RangeDateTimeFilter(admin.FieldListFilter):
     def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
-        date_value_from = self.used_parameters.get(
-            self.parameter_name + "_from_0", None
-        )
-        time_value_from = self.used_parameters.get(
-            self.parameter_name + "_from_1", None
-        )
-        date_value_to = self.used_parameters.get(self.parameter_name + "_to_0", None)
-        time_value_to = self.used_parameters.get(self.parameter_name + "_to_1", None)
+        date_value_from = self.used_parameters.get(self.parameter_name + "_from_0")
+        time_value_from = self.used_parameters.get(self.parameter_name + "_from_1")
+
+        date_value_to = self.used_parameters.get(self.parameter_name + "_to_0")
+        time_value_to = self.used_parameters.get(self.parameter_name + "_to_1")
 
         if date_value_from not in EMPTY_VALUES and time_value_from not in EMPTY_VALUES:
             filters.update(
                 {
-                    f"{self.parameter_name}__gte": parse_datetime(
-                        f"{date_value_from}T{time_value_from}"
+                    f"{self.parameter_name}__gte": parse_datetime_str(
+                        f"{date_value_from} {time_value_from}"
                     ),
                 }
             )
@@ -592,8 +582,8 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         if date_value_to not in EMPTY_VALUES and time_value_to not in EMPTY_VALUES:
             filters.update(
                 {
-                    f"{self.parameter_name}__lte": parse_datetime(
-                        f"{date_value_to}T{time_value_to}"
+                    f"{self.parameter_name}__lte": parse_datetime_str(
+                        f"{date_value_to} {time_value_to}"
                     ),
                 }
             )
@@ -612,16 +602,16 @@ class RangeDateTimeFilter(admin.FieldListFilter):
                     name=self.parameter_name,
                     data={
                         self.parameter_name + "_from_0": self.used_parameters.get(
-                            self.parameter_name + "_from_0", None
+                            self.parameter_name + "_from_0"
                         ),
                         self.parameter_name + "_from_1": self.used_parameters.get(
-                            self.parameter_name + "_from_1", None
+                            self.parameter_name + "_from_1"
                         ),
                         self.parameter_name + "_to_0": self.used_parameters.get(
-                            self.parameter_name + "_to_0", None
+                            self.parameter_name + "_to_0"
                         ),
                         self.parameter_name + "_to_1": self.used_parameters.get(
-                            self.parameter_name + "_to_1", None
+                            self.parameter_name + "_to_1"
                         ),
                     },
                 ),

@@ -332,6 +332,8 @@ class UnfoldAdminImageSmallFieldWidget(FileFieldMixin, AdminFileWidget):
 
 
 class UnfoldAdminDateWidget(AdminDateWidget):
+    template_name = "unfold/widgets/date.html"
+
     def __init__(
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
@@ -358,6 +360,8 @@ class UnfoldAdminSingleDateWidget(AdminDateWidget):
 
 
 class UnfoldAdminTimeWidget(AdminTimeWidget):
+    template_name = "unfold/widgets/time.html"
+
     def __init__(
         self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
