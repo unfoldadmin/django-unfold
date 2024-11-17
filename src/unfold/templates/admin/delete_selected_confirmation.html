@@ -10,7 +10,7 @@
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation delete-selected-confirmation{% endblock %}
 
 {% block breadcrumbs %}
-    <div class="px-4 lg:px-12">
+    <div class="px-4 lg:px-8">
         <div class="container mb-6 mx-auto -my-3 lg:mb-12">
             <ul class="flex flex-wrap">
                 {% url 'admin:index' as link %}

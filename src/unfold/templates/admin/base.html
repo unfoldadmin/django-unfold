@@ -16,7 +16,7 @@
             {% if not is_popup %}
                 {% spaceless %}
                     {% block breadcrumbs %}
-                        <div class="px-4 lg:px-12">
+                        <div class="px-4 lg:px-8">
                             <div class="container mb-12 mx-auto -my-3">
                                 <ul class="flex flex-wrap">
                                     {% url 'admin:index' as link %}
@@ -31,14 +31,14 @@
             {% endif %}
 
             {% block messages %}
-                <div class="px-4 lg:px-12">
+                <div class="px-4 lg:px-8">
                     <div class="{% if not cl.model_admin.list_fullwidth %}container{% endif %} mx-auto">
                         {% include "unfold/helpers/messages.html" %}
                     </div>
                 </div>
             {% endblock messages %}
 
-            <div class="px-4 pb-12 lg:px-12">
+            <div class="px-4 pb-8 lg:px-8">
                 <div id="content" class="{% if not cl.model_admin.list_fullwidth %}container{% endif %} mx-auto {% block coltype %}colM{% endblock %}">
                     {% if cl %}
                         {% tab_list "changelist" cl.opts %}
