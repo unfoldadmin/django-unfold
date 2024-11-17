@@ -3,6 +3,7 @@ import decimal
 import json
 from typing import Any, Iterable, List, Optional
 
+from django.conf import settings
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils import formats, timezone
@@ -146,3 +147,19 @@ def prettify_json(data: Any) -> Optional[str]:
         f'<div class="block dark:hidden">{format_response(response, "colorful")}</div>'
         f'<div class="hidden dark:block">{format_response(response, "monokai")}</div>'
     )
+
+
+def parse_date_str(value: str) -> Optional[datetime.date]:
+    for format in settings.DATE_INPUT_FORMATS:
+        try:
+            return datetime.datetime.strptime(value, format).date()
+        except (ValueError, TypeError):
+            continue
+
+
+def parse_datetime_str(value: str) -> Optional[datetime.datetime]:
+    for format in settings.DATETIME_INPUT_FORMATS:
+        try:
+            return datetime.datetime.strptime(value, format)
+        except (ValueError, TypeError):
+            continue
