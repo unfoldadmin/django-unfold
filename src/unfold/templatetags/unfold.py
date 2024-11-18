@@ -79,6 +79,7 @@ def tabs(adminform: AdminForm) -> List[Fieldset]:
 class CaptureNode(Node):
     def __init__(self, nodelist: NodeList, varname: str, silent: bool) -> None:
         self.nodelist = nodelist
+        self.child_nodelists = ('nodelist',)
         self.varname = varname
         self.silent = silent
 
