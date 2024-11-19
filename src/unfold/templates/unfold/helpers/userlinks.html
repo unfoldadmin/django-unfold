@@ -7,8 +7,14 @@
             {% if environment %}
                 {% include "unfold/helpers/label.html" with text=environment.0 type=environment.1 %}
             {% endif %}
+
             {% include "unfold/helpers/stores.html" %}
             
+
+            {% if show_languages %}
+                {% include "unfold/helpers/language_switch.html" %}
+            {% endif %}
+
             {% if not theme %}
                 {% include "unfold/helpers/theme_switch.html" %}
             {% endif %}

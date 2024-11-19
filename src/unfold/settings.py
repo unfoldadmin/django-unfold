@@ -12,6 +12,7 @@ CONFIG_DEFAULTS = {
     "SITE_FAVICONS": [],
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
+    "SHOW_LANGUAGES": False,
     "COLORS": {
         "font": {
             "subtle-light": "107 114 128",  # text-gray-500
