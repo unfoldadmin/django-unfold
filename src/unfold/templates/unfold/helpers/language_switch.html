@@ -11,8 +11,6 @@
     </a>
 
     <div class="absolute bg-white border flex flex-col leading-none py-1 -right-2 rounded shadow-lg top-7 w-52 z-50 dark:bg-gray-800 dark:border-gray-700" x-cloak x-show="openLanguageLinks" @click.outside="openLanguageLinks = false">
-        {% include "unfold/helpers/caret.html" %}
-
         {% for language in languages %}
             <form action="{% url 'set_language' %}" method="post" class="flex w-full">
                 {% csrf_token %}
