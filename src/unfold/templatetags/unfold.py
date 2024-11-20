@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Mapping, Optional, Union
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
 from django.forms import Field
+from django.http import QueryDict
 from django.template import Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
@@ -224,3 +225,38 @@ def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
         field.field.widget.attrs["class"] = classes
 
     return field
+
+
+@register.inclusion_tag(
+    "unfold/template_tags/preserve_filters.html", takes_context=True
+)
+def preserve_filters(context):
+    """
+    Generate hidden input fields to preserve filters for POST forms.
+
+    Notes:
+        - Always excludes 'csrfmiddlewaretoken'.
+        - Ensures only the first value for each key is included.
+        - Combines GET and POST parameters into a single QueryDict.
+        - Handles multiple values per key by selecting the first one.
+    """
+    EXCLUDES: set = {"csrfmiddlewaretoken"}
+
+    request = context.get("request")
+    if not request:
+        return {"params": {}}
+
+    # Combine GET and POST into a single QueryDict
+    combined_querydict = QueryDict(mutable=True)
+    combined_querydict.update(request.GET)
+    combined_querydict.update(request.POST)
+
+    # Create a dictionary with only the first value for each key
+    params = {
+        key: combined_querydict.getlist(key)[0] for key in combined_querydict.keys()
+    }
+
+    for exclude in EXCLUDES:
+        params.pop(exclude, None)
+
+    return {"params": params}
