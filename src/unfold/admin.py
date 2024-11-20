@@ -7,6 +7,7 @@ from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
+from django.contrib.admin.options import IS_POPUP_VAR, TO_FIELD_VAR
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH, Model
@@ -472,7 +473,14 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             for action in self.get_actions_row(request)
         ]
 
-        extra_context.update({"actions_list": actions, "actions_row": actions_row})
+        extra_context.update(
+            {
+                "actions_list": actions,
+                "actions_row": actions_row,
+                "to_field_var": TO_FIELD_VAR,
+                "is_popup_var": IS_POPUP_VAR,
+            }
+        )
 
         return super().changelist_view(request, extra_context)
 
