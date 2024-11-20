@@ -462,16 +462,16 @@ fieldset.collapsed .collapse-toggle {
   @apply inline;
 }
 
-details > summary {
+fieldset details > summary {
   @apply list-none
 }
 
-details > summary:after {
+fieldset details > summary:after {
   @apply material-symbols-outlined absolute right-3 top-3.5;
   content: "expand_more";
 }
 
-details[open] > summary:after {
+fieldset details[open] > summary:after {
   @apply rotate-180;
 }
 
