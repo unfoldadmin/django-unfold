@@ -4,14 +4,18 @@
     <div class="tabular inline-related {% if forloop.last %}last-related{% endif %}">
         {{ inline_admin_formset.formset.management_form }}
 
-        <fieldset class="module {{ inline_admin_formset.classes }} min-w-0">
-            <h2 class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-font-important-light text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-font-important-dark {% if inline_admin_formset.opts.tab %}hidden{% endif %}">
+        <fieldset class="module relative {{ inline_admin_formset.classes }} min-w-0" aria-labelledby="{{ inline_admin_formset.formset.prefix }}-heading">
+            {% if inline_admin_formset.is_collapsible %}<details><summary>{% endif %}
+
+            <h2 id="{{ inline_admin_formset.formset.prefix }}-heading" class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-font-important-light text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-font-important-dark {% if inline_admin_formset.opts.tab %}hidden{% endif %} {% if inline_admin_formset.is_collapsible %} cursor-pointer{% endif %}">
                 {% if inline_admin_formset.formset.max_num == 1 %}
                     {{ inline_admin_formset.opts.verbose_name|capfirst }}
                 {% else %}
                     {{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
                 {% endif %}
             </h2>
+
+            {% if inline_admin_formset.is_collapsible %}</summary>{% endif %}
 
             {{ inline_admin_formset.formset.non_form_errors }}
 
@@ -173,6 +177,8 @@
                     {% endfor %}
                 </table>
             </div>
+
+            {% if inline_admin_formset.is_collapsible %}</details>{% endif %}
         </fieldset>
     </div>
 </div>
