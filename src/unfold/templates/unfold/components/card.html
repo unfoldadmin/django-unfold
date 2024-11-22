@@ -9,13 +9,13 @@
         {{ children }}
 
         {% if label %}
-            <div class="absolute right-0 top-0">
+            <div class="absolute left-0 top-0">
                 {% include "unfold/helpers/label.html" with text=label type="primary" %}
             </div>
         {% endif %}
 
         {% if icon %}
-            <span class="material-symbols-outlined absolute -left-6 text-gray-300 top-1/2 -translate-x-1/3 -translate-y-1/2 !text-6xl dark:text-gray-500">{{ icon }}</span>
+            <span class="material-symbols-outlined absolute -left-6 text-gray-300 -translate-x-1/3 -translate-y-1/2 !text-6xl dark:text-gray-500">{{ icon }}</span>
         {% endif %}
     </div>
 
