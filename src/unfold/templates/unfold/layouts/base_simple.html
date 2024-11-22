@@ -36,4 +36,26 @@
             {% block footer %}{% endblock %}
         </div>
     </div>
+            <!-- Calculator Toggle Button -->
+        <button id="calculator-toggle">آلة حاسبة</button>
+
+        <!-- Calculator Container -->
+        <div id="calculator" style="display: none;">
+            <div id="calculator-header">
+                <span>آلة حاسبة</span>
+                <button id="calculator-close">X</button>
+            </div>
+            <input type="text" id="calculator-display" readonly>
+            <div id="calculator-buttons">
+                <!-- Calculator buttons will be generated here -->
+            </div>
+            <div id="calculator-history">
+                <h4>
+                    سجل
+                    <button id="clear-history">مسح سجل</button>
+                </h4>
+                <ul id="calculator-history-list"></ul>
+            </div>
+        </div>
+        
 {% endblock %}
