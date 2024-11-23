@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import Any, Callable, Dict, List, Optional, Union
+from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -303,7 +304,7 @@ class UnfoldAdminSite(AdminSite):
                     item["link_callback"] = lazy(item["link"])(request)
 
                 item["active"] = self._get_is_active(
-                    request, item.get("link_callback") or item["link"]
+                    request, item.get("link_callback") or item["link"], tab["items"]
                 )
                 allowed_items.append(item)
 
@@ -392,13 +393,24 @@ class UnfoldAdminSite(AdminSite):
 
         return colors
 
-    def _get_is_active(self, request: HttpRequest, link: str) -> bool:
+    def _get_is_active(self, request: HttpRequest, link: str, tabs=None) -> bool:
         if not isinstance(link, str):
             link = str(link)
 
-        if link in request.path and link != reverse_lazy(f"{self.name}:index"):
+        index_path = reverse_lazy(f"{self.name}:index")
+        link_path = urlparse(link).path
+
+        if link_path == request.path == index_path:  # Dashboard
             return True
-        elif link == request.path == reverse_lazy(f"{self.name}:index"):
+
+        if link_path in request.path and link_path != index_path:
+            query_params = parse_qs(urlparse(link).query)
+            request_params = parse_qs(request.GET.urlencode())
+
+            # In case of tabs, we need to check if the query params are the same
+            if tabs and query_params != request_params:
+                return False
+
             return True
 
         return False
