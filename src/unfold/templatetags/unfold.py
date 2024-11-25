@@ -229,7 +229,9 @@ def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
 
 
 @register.inclusion_tag(
-    "unfold/templatetags/preserve_changelist_filters.html", takes_context=True
+    "unfold/templatetags/preserve_changelist_filters.html",
+    takes_context=True,
+    name="preserve_filters",
 )
 def preserve_changelist_filters(context: Context) -> Dict[str, dict[str, str]]:
     """
