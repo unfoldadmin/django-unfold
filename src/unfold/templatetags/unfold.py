@@ -233,7 +233,7 @@ def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
     takes_context=True,
     name="preserve_filters",
 )
-def preserve_changelist_filters(context: Context) -> Dict[str, dict[str, str]]:
+def preserve_changelist_filters(context: Context) -> Dict[str, Dict[str, str]]:
     """
     Generate hidden input fields to preserve filters for POST forms.
     """
