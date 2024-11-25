@@ -306,7 +306,7 @@ class UnfoldAdminSite(AdminSite):
                     item["link_callback"] = lazy(item["link"])(request)
 
                 item["active"] = self._get_is_active(
-                    request, item.get("link_callback") or item["link"], tab["items"]
+                    request, item.get("link_callback") or item["link"], True
                 )
                 allowed_items.append(item)
 
@@ -395,7 +395,9 @@ class UnfoldAdminSite(AdminSite):
 
         return colors
 
-    def _get_is_active(self, request: HttpRequest, link: str, tabs=None) -> bool:
+    def _get_is_active(
+        self, request: HttpRequest, link: str, is_tab: bool = False
+    ) -> bool:
         if not isinstance(link, str):
             link = str(link)
 
@@ -411,7 +413,7 @@ class UnfoldAdminSite(AdminSite):
             request_params = parse_qs(request.GET.urlencode())
 
             # In case of tabs, we need to check if the query params are the same
-            if tabs and not all(
+            if is_tab and not all(
                 request_params.get(k) == v for k, v in query_params.items()
             ):
                 return False
