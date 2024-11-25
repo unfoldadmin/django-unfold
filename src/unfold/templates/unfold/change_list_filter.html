@@ -1,4 +1,4 @@
-{% load i18n admin_list %}
+{% load i18n admin_list unfold %}
 
 <div id="changelist-filter" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 flex inset-0 z-50 fixed {% if not cl.model_admin.list_filter_sheet %}2xl:bg-transparent 2xl:relative 2xl:!block 2xl:z-10{% endif %}" x-show="filterOpen">
     <label for="show-filters" id="changelist-filter-close" class="flex-grow {% if not cl.model_admin.list_filter_sheet %}2xl:hidden{% endif %}" x-on:click="filterOpen = false"></label>
@@ -38,22 +38,7 @@
             <div class="px-4{% if cl.model_admin.list_filter_submit %} {% endif %}">
                 {% if cl.model_admin.list_filter_submit %}
                     <form id="filter-form" method="get">
-                        {% if request.GET.q %}
-                            <input type="hidden" name="q" value="{{ request.GET.q }}">
-                        {% endif %}
-
-                        {% if request.GET.o %}
-                            <input type="hidden" name="o" value="{{ request.GET.o }}">
-                        {% endif %}
-
-                        {% if is_popup %}
-                            <input type="hidden" name="{{ is_popup_var }}" value="1">
-                        {% endif %}
-
-                        {% if to_field %}
-                            <input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">
-                        {% endif %}
-
+                        {% preserve_filters %}
                 {% endif %}
 
                 {% for spec in cl.filter_specs %}

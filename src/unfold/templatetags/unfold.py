@@ -1,9 +1,11 @@
-from typing import Any, Dict, List, Mapping, Optional, Union
+from typing import Any, Dict, List, Mapping, Optional, Set, Union
 
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
+from django.contrib.admin.views.main import ChangeList
 from django.forms import Field
-from django.template import Library, Node, RequestContext, TemplateSyntaxError
+from django.http import HttpRequest
+from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
 from django.utils.safestring import SafeText
@@ -224,3 +226,28 @@ def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
         field.field.widget.attrs["class"] = classes
 
     return field
+
+
+@register.inclusion_tag(
+    "unfold/templatetags/preserve_changelist_filters.html",
+    takes_context=True,
+    name="preserve_filters",
+)
+def preserve_changelist_filters(context: Context) -> Dict[str, Dict[str, str]]:
+    """
+    Generate hidden input fields to preserve filters for POST forms.
+    """
+    request: Optional[HttpRequest] = context.get("request")
+    changelist: Optional[ChangeList] = context.get("cl")
+
+    if not request or not changelist:
+        return {"params": {}}
+
+    used_params: Set[str] = {
+        param for spec in changelist.filter_specs for param in spec.used_parameters
+    }
+    preserved_params: Dict[str, str] = {
+        param: value for param, value in request.GET.items() if param not in used_params
+    }
+
+    return {"params": preserved_params}
