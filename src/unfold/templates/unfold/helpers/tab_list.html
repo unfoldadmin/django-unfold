@@ -8,7 +8,7 @@
                     {% for item in tabs_list %}
                         {% if item.has_permission %}
                             <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-gray-800">
-                                <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="block px-3 py-2 md:py-4 md:px-0 dark:border-gray-800 {% if item.active %} border-b font-semibold -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-500 md:border-primary-500 dark:md:!border-primary-600{% else %}font-medium hover:text-gray-700 dark:hover:text-gray-200{% endif %}">
+                                <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="block px-3 py-2 md:py-4 md:px-0 dark:border-gray-800 {% if item.active %} border-b font-semibold -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-500 md:border-primary-500 dark:md:!border-primary-600{% else %}font-medium hover:text-primary-600 dark:hover:text-primary-500{% endif %}">
                                     {{ item.title }}
                                 </a>
                             </li>
@@ -20,7 +20,7 @@
                             <a class="block cursor-pointer font-medium px-3 py-2 md:py-4 md:px-0"
                                href="#general"
                                x-on:click="activeTab = 'general'"
-                               x-bind:class="{'border-b border-gray-200 dark:border-gray-800 md:border-primary-500 dark:md:!border-primary-600 font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == 'general', 'hover:text-gray-700 dark:hover:text-gray-200 dark:border-gray-800': activeTab != 'general'}">
+                               x-bind:class="{'border-b border-gray-200 dark:border-gray-800 md:border-primary-500 dark:md:!border-primary-600 font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == 'general', 'hover:text-primary-600 dark:hover:text-primary-500 dark:border-gray-800': activeTab != 'general'}">
                                 {% trans "General" %}
                             </a>
                         </li>
@@ -30,7 +30,7 @@
                                 <a class="block cursor-pointer font-medium px-3 py-2 md:py-4 md:px-0"
                                    href="#{{ inline.opts.verbose_name|slugify }}"
                                    x-on:click="activeTab = '{{ inline.opts.verbose_name|slugify }}'"
-                                   x-bind:class="{'border-b border-gray-200 dark:border-gray-800 md:border-primary-500 dark:md:!border-primary-600 font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ inline.opts.verbose_name|slugify }}', 'hover:text-gray-700 dark:hover:text-gray-200 dark:border-gray-800': activeTab != '{{ inline.opts.verbose_name|slugify }}'}">
+                                   x-bind:class="{'border-b border-gray-200 dark:border-gray-800 md:border-primary-500 dark:md:!border-primary-600 font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ inline.opts.verbose_name|slugify }}', 'hover:text-primary-600 dark:hover:text-primary-500 dark:border-gray-800': activeTab != '{{ inline.opts.verbose_name|slugify }}'}">
                                     {% if inline.formset.max_num == 1 %}
                                         {{ inline.opts.verbose_name|capfirst }}
                                     {% else %}
