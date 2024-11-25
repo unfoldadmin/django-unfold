@@ -236,6 +236,7 @@ class UnfoldAdminSite(AdminSite):
 
     def get_sidebar_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
         navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
+        tabs = get_config(self.settings_name)["TABS"]
         results = []
 
         for group in navigation:
@@ -247,7 +248,8 @@ class UnfoldAdminSite(AdminSite):
                     request, item.get("link_callback") or item["link"]
                 )
 
-                for tab in get_config(self.settings_name)["TABS"]:
+                # Checks if any tab item is active and then marks the sidebar link as active
+                for tab in tabs:
                     has_primary_link = False
                     has_tab_link_active = False
 
@@ -400,7 +402,8 @@ class UnfoldAdminSite(AdminSite):
         index_path = reverse_lazy(f"{self.name}:index")
         link_path = urlparse(link).path
 
-        if link_path == request.path == index_path:  # Dashboard
+        # Dashboard
+        if link_path == request.path == index_path:
             return True
 
         if link_path in request.path and link_path != index_path:
@@ -408,7 +411,9 @@ class UnfoldAdminSite(AdminSite):
             request_params = parse_qs(request.GET.urlencode())
 
             # In case of tabs, we need to check if the query params are the same
-            if tabs and query_params != request_params:
+            if tabs and not all(
+                request_params.get(k) == v for k, v in query_params.items()
+            ):
                 return False
 
             return True
