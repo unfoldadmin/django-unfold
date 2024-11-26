@@ -443,7 +443,7 @@ h3 span:nth-child(3) {
 }
 
 /*******************************************************
- Collapsed
+ Fieldset collapsible
  *******************************************************/
 fieldset.collapsed > div {
   display: none;
@@ -460,6 +460,19 @@ fieldset.collapsed {
 
 fieldset.collapsed .collapse-toggle {
   @apply inline;
+}
+
+fieldset details > summary {
+  @apply list-none
+}
+
+fieldset details > summary:after {
+  @apply material-symbols-outlined absolute right-3 top-3.5;
+  content: "expand_more";
+}
+
+fieldset details[open] > summary:after {
+  @apply rotate-180;
 }
 
 /*******************************************************

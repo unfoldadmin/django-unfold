@@ -35,7 +35,7 @@ from .exceptions import UnfoldException
 
 LABEL_CLASSES = [
     "block",
-    "font-medium",
+    "font-semibold",
     "mb-2",
     "text-font-important-light",
     "text-sm",
@@ -43,7 +43,7 @@ LABEL_CLASSES = [
 ]
 
 CHECKBOX_LABEL_CLASSES = [
-    "font-medium",
+    "font-semibold",
     "ml-2",
     "text-sm",
     "text-font-important-light",

@@ -472,7 +472,12 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             for action in self.get_actions_row(request)
         ]
 
-        extra_context.update({"actions_list": actions, "actions_row": actions_row})
+        extra_context.update(
+            {
+                "actions_list": actions,
+                "actions_row": actions_row,
+            }
+        )
 
         return super().changelist_view(request, extra_context)
 
