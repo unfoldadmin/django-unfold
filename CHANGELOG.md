@@ -1,4 +1,20 @@
 
+## 0.42.0 (2024-11-26)
+
+- feat: tabs with filters (#876) ([`cce7d2e`](https://github.com/unfoldadmin/django-unfold/commit/cce7d2ebc570c81b4169c0cf049078b140239128))
+- feat: general container spacing (#858) ([`6e6e6c1`](https://github.com/unfoldadmin/django-unfold/commit/6e6e6c1df520f1e4fdc81659f71e08d1b8e1a17d))
+- feat: localized datetime filtering (#857) ([`d8cba95`](https://github.com/unfoldadmin/django-unfold/commit/d8cba9518e7ec804b5b8680843c047eac3df4ea8))
+- feat: language switch (#854) ([`4f24e4a`](https://github.com/unfoldadmin/django-unfold/commit/4f24e4a97acad2a1886e4a68653636753d62b25e))
+- fix: date hierarchy styling (#879) ([`5cd7ff5`](https://github.com/unfoldadmin/django-unfold/commit/5cd7ff51ebc3d25eabf8ee68c33e23ed8905be4e))
+- fix: date hierarchy is reset on filter (#873) (#875) ([`b342733`](https://github.com/unfoldadmin/django-unfold/commit/b342733d80fc4f1036814f5bb3d2e58e5998ac60))
+- fix: is popup lost on filter (#868) (#869) ([`cd0dc18`](https://github.com/unfoldadmin/django-unfold/commit/cd0dc186517ac6b58ab1856acb2b05b5defc5c8f))
+- fix: default badge readability (#872) ([`87dc061`](https://github.com/unfoldadmin/django-unfold/commit/87dc061ca17e92d1e6fc3eb505a5c7d9ea34582a))
+- fix: labels font weight (#871) ([`9f55ff5`](https://github.com/unfoldadmin/django-unfold/commit/9f55ff59335298d2d9976118c0fcdd49e2fcf95f))
+- fix: inline collapsible (#870) ([`9465895`](https://github.com/unfoldadmin/django-unfold/commit/9465895071c103d2526435634b25334360505d74))
+- fix: fileinput change listener (#861) ([`ff0b417`](https://github.com/unfoldadmin/django-unfold/commit/ff0b4177caf8fecff3e6654cb20cb17be02bda56))
+- fix: action dropdown positioning (#859) ([`0d1516a`](https://github.com/unfoldadmin/django-unfold/commit/0d1516a42b3c95ff5133846f07a02186f3285741))
+- fix: safelist primary background (#851) ([`1f9421b`](https://github.com/unfoldadmin/django-unfold/commit/1f9421baac9d24e34b2506d2cda6697050c50b7e))
+
 ## 0.41.0 (2024-11-13)
 
 - feat: display header image as background (#841) ([`7f51f1e`](https://github.com/unfoldadmin/django-unfold/commit/7f51f1e2c937c7110f443ce160f7dfdff8c86d44))
