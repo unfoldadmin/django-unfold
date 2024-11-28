@@ -75,11 +75,21 @@ module.exports = {
     "md:border-r",
     "md:w-48",
     {
-      pattern: /bg-primary-+/
+      pattern: /col-span-+/,
+      variants: ["lg"],
+    },
+    {
+      pattern: /grid-cols-+/,
+      variants: ["lg"],
     },
     {
       pattern: /gap-+/,
       variants: ["lg"],
+    },
+    {
+      pattern:
+        /bg-(primary|green|emerald)-(50|100|200|300|400|500|600|700|800|900|950)/,
+      variants: ["dark"],
     },
     {
       pattern: /w-(1\/2|1\/3|2\/3|1\/4|2\/4|3\/4|1\/5|2\/5|3\/5|4\/5)/,
