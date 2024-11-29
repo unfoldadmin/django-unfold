@@ -58,7 +58,7 @@
 
         {% if colors %}
             <style>
-                html {
+                :root {
                     {% for name, weights in colors.items %}
                         {% for weight, value in weights.items %}
                             --color-{{ name }}-{{ weight }}: {{ value }};
