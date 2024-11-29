@@ -124,8 +124,8 @@
             </div>
                  <div class="calendar-shortcuts mx-auto mt-4 ">
                     <!-- <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-200">اسم الشركة</h4> -->
-                    <p class="text-sm text-gray-500 dark:text-gray-400 ml-72">{{request.fingerprint}} رقم التعريفي</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 ">{{request.machineid}} رقم العميل</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 ml-72">{{ request.fingerprint|slice:":4" }}-{{ request.fingerprint|slice:"-4:" }} رقم التعريفي</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 ">{{ request.machineid|slice:":4" }}-{{ request.machineid|slice:"-4:" }} رقم العميل</p>
                 </div>
                 <div class="calendar-shortcuts mx-auto mt-2 ">
                     <!-- <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-200">اسم الشركة</h4> -->
