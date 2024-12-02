@@ -1,4 +1,5 @@
-from typing import Any, Dict, Iterable, List, Protocol, Tuple, Union
+from collections.abc import Iterable
+from typing import Any, Dict, List, Protocol, Tuple, Union
 
 
 class ActionFunction(Protocol):

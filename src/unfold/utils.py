@@ -1,7 +1,8 @@
 import datetime
 import decimal
 import json
-from typing import Any, Iterable, List, Optional
+from collections.abc import Iterable
+from typing import Any, List, Optional
 
 from django.conf import settings
 from django.db import models

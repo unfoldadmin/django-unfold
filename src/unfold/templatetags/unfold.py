@@ -1,4 +1,5 @@
-from typing import Any, Dict, List, Mapping, Optional, Set, Union
+from collections.abc import Mapping
+from typing import Any, Dict, List, Optional, Set, Union
 
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
