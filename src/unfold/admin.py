@@ -240,6 +240,8 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     list_after_template = None
     change_form_before_template = None
     change_form_after_template = None
+    change_form_outer_before_template = None
+    change_form_outer_after_template = None
     compressed_fields = False
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
