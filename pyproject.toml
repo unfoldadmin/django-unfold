@@ -39,6 +39,7 @@ python-semantic-release = "^8.7"
 [tool.ruff]
 fix = true
 line-length = 88
+target-version = "py38"
 
 [tool.ruff.lint]
 select = [
