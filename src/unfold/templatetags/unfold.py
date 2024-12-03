@@ -10,6 +10,8 @@ from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
 from django.utils.safestring import SafeText
 
+from unfold.components import ComponentRegistry
+
 register = Library()
 
 
@@ -154,24 +156,37 @@ class RenderComponentNode(template.Node):
         template_name: str,
         nodelist: NodeList,
         extra_context: Optional[Dict] = None,
+        include_context: bool = False,
         *args,
         **kwargs,
     ):
         self.template_name = template_name
         self.nodelist = nodelist
         self.extra_context = extra_context or {}
+        self.include_context = include_context
         super().__init__(*args, **kwargs)
 
     def render(self, context: RequestContext) -> str:
-        result = self.nodelist.render(context)
+        values = {
+            name: var.resolve(context) for name, var in self.extra_context.items()
+        }
 
-        ctx = {name: var.resolve(context) for name, var in self.extra_context.items()}
-        ctx.update({"children": result})
+        values.update(
+            {
+                "children": self.nodelist.render(context),
+            }
+        )
+
+        if "component_class" in values:
+            values = ComponentRegistry.create_instance(
+                values["component_class"], request=context.request
+            ).get_context_data(**values)
+
+        if self.include_context:
+            values.update(context.flatten())
 
         return render_to_string(
-            self.template_name,
-            request=context.request,
-            context=ctx,
+            self.template_name, request=context.request, context=values
         )
 
 
@@ -202,17 +217,21 @@ def do_component(parser: Parser, token: Token) -> str:
                 raise TemplateSyntaxError(
                     '"with" in {bits[0]} tag needs at least one keyword argument.'
                 )
+        elif option == "include_context":
+            value = True
         else:
             raise TemplateSyntaxError(f"Unknown argument for {bits[0]} tag: {option}.")
 
         options[option] = value
 
+    include_context = options.get("include_context", False)
     nodelist = parser.parse(("endcomponent",))
     template_name = bits[1][1:-1]
+
     extra_context = options.get("with", {})
     parser.next_token()
 
-    return RenderComponentNode(template_name, nodelist, extra_context)
+    return RenderComponentNode(template_name, nodelist, extra_context, include_context)
 
 
 @register.filter
