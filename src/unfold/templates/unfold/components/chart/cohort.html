@@ -40,7 +40,15 @@
                     {% for col in row.cols %}
                         <td class="h-full">
                             <div class="flex flex-col h-full justify-center px-3 py-2.5 rounded-md {% if col.color %}{{ col.color }}{% else %}bg-gray-50 border border-dashed dark:bg-gray-800 dark:border-gray-700{% endif %}">
-                                {{ col.value }}
+                                <span>
+                                    {{ col.value }}
+                                </span>
+
+                                {% if col.subtitle %}
+                                    <span class="mt-0.5">
+                                        {{ col.subtitle }}
+                                    </span>
+                                {% endif %}
                             </div>
                         </td>
                     {% endfor %}
