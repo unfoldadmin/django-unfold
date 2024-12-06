@@ -69,7 +69,13 @@ module.exports = {
       textColor: ["hover"],
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    function ({ addVariant }) { 
+      addVariant('rtl', '[dir="rtl"] &');
+    }
+  
+  ],
   safelist: [
     "md:border-0",
     "md:border-r",
