@@ -46,11 +46,9 @@
                 {% endfor %}
 
                 {% if cl.model_admin.list_filter_submit %}
-                    <div class="bottom-4 absolute left-4 right-4 {% if not cl.model_admin.list_filter_sheet %}2xl:left-0 2xl:right-0 2xl:relative 2xl:mt-8{% endif %}">
-                        <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md self-end text-sm text-white w-full">
-                            {% trans "Apply Filters" %}
-                        </button>
-                    </div>
+                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium mb-4 mt-8 px-3 py-2 rounded-md self-end text-sm text-white w-full">
+                        {% trans "Apply Filters" %}
+                    </button>
                     </form>
                 {% endif %}
             </div>
