@@ -1,80 +1,12 @@
+{% load unfold %}
 
-<div class="form-row
-            {% for field in line %}{% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %} hidden{% endif %}{% endfor %}
-            {% if adminform.model_admin.compressed_fields %} border-b border-gray-200 -mx-3 px-3 pt-3 first:pt-0 dark:border-gray-800 last:border-b-0{% endif %}
-            {% if not line.fields|length == 1 %} flex flex-row flex-wrap gap-x-8{% endif %}
-            {% if not line.has_visible_field %} hidden{% endif %}
-            {% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
+<div class="{% fieldset_row_classes %}">
     {% for field in line %}
-        <div class="flex group {% if adminform.model_admin.compressed_fields %} field-row{% endif %}{% if not line.fields|length == 1 and not adminform.model_admin.compressed_fields %} lg:max-w-xs flex-grow{% endif %}{% if field.errors %} errors {% endif %}{% if not forloop.parentloop.last %} {% if adminform.model_admin.compressed_fields %}mb-3{% else %}mb-6{% endif %}{% else %} pb-3{% endif %} {% if adminform.model_admin.compressed_fields %}flex-col lg:flex-row lg:gap-2 {% else %}flex-col{% endif %}">
+        <div class="{% fieldset_line_classes %}">
             {% if field.is_checkbox %}
-                {% if adminform.model_admin.compressed_fields %}
-                    <div class="flex flex-col gap-4 py-2 lg:flex-row">
-                        <div class="font-medium flex items-start -ml-2 min-w-32 w-32 lg:min-w-48 lg:w-48">
-                            {{ field.label_tag }}
-                        </div>
-
-                        <div class="flex-grow">
-                            <div class="flex flex-col lg:flex-row">
-                                {{ field.field }}
-
-                                {% if field.field.help_text %}
-                                    <div class="lg:-mt-2 lg:ml-2">
-                                        {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
-                                    </div>
-                                {% endif %}
-                            </div>
-
-                            {% if field.errors %}
-                                <div class="mt-1 text-red-600 text-sm dark:text-red-500">
-                                    {{ field.errors }}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="flex flex-row">
-                        {{ field.field }}
-
-                        <div class="flex flex-col">
-                            {{ field.label_tag }}
-
-                            {% if field.field.help_text %}
-                                <div class="ml-2 -mt-1">
-                                    {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
-                                </div>
-                            {% endif %}
-
-                            {% if field.errors %}
-                                <div class="mt-1 text-red-600 text-sm dark:text-red-500">
-                                    {{ field.errors }}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endif %}
+                {% include "unfold/helpers/fieldset_row_checkbox.html" %}
             {% else %}
-                <div class="{% if adminform.model_admin.compressed_fields %}lg:min-w-48 lg:mt-2 lg:w-48{% endif %}">
-                    {{ field.label_tag }}
-                </div>
-
-                <div class="flex-grow">
-                    {% if field.is_readonly %}
-                        {% include "unfold/helpers/field_readonly_value.html" %}
-                    {% else %}
-                        {{ field.field }}
-                    {% endif %}
-
-                    {% if field.field.help_text and not field.is_checkbox %}
-                        {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
-                    {% endif %}
-
-                    {% if field.errors %}
-                        <div class="mt-1 text-red-600 text-sm dark:text-red-500">
-                            {{ field.errors }}
-                        </div>
-                    {% endif %}
-                </div>
+                {% include "unfold/helpers/fieldset_row_field.html" %}
             {% endif %}
         </div>
     {% endfor %}
