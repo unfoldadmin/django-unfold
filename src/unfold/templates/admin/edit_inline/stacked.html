@@ -25,7 +25,7 @@
             {% for inline_admin_form in inline_admin_formset %}
                 <div x-sort:item class="inline-related group inline-stacked {% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
                     {% if not inline_admin_formset.opts.hide_title or inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                        <h3 class="bg-gray-50 border-b border-gray-200 flex font-medium items-center gap-2 mb-3 px-3 py-2 text-sm dark:bg-white/[.02] dark:border-gray-800">
+                        <h3 class="bg-gray-50 border-b border-gray-200 flex font-medium items-center gap-2 px-3 py-2 text-sm dark:bg-white/[.02] dark:border-gray-800">
                             {% if inline_admin_formset.opts.ordering_field %}
                                 {% if inline_admin_form.original %}
                                     <span class="material-symbols-outlined cursor-pointer" x-sort:handle>drag_indicator</span>
@@ -83,7 +83,7 @@
                     {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
 
                     {% for fieldset in inline_admin_form %}
-                        <div class="px-3 -mb-5 {% if inline_admin_formset.opts.hide_title %}{% if not inline_admin_formset.formset.can_delete or not inline_admin_formset.has_delete_permission  %}pt-3{% endif %}{% endif %}">
+                        <div class="{% if inline_admin_formset.opts.hide_title %}{% if not inline_admin_formset.formset.can_delete or not inline_admin_formset.has_delete_permission  %}pt-3{% endif %}{% endif %}">
                             {% include 'admin/includes/fieldset.html' with stacked=1 %}
                         </div>
                     {% endfor %}

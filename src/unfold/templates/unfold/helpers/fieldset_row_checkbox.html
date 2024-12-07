@@ -1,0 +1,45 @@
+{% if adminform.model_admin.compressed_fields %}
+    <div class="flex flex-col gap-4 py-2 lg:flex-row">
+        <div class="font-medium flex items-start -ml-2 min-w-32 w-32 lg:min-w-48 lg:w-48">
+            {{ field.label_tag }}
+        </div>
+
+        <div class="flex-grow">
+            <div class="flex flex-col lg:flex-row">
+                {{ field.field }}
+
+                {% if field.field.help_text %}
+                    <div class="lg:-mt-2 lg:ml-2">
+                        {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if field.errors %}
+                <div class="mt-1 text-red-600 text-sm dark:text-red-500">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+    <div class="flex flex-row">
+        {{ field.field }}
+
+        <div class="flex flex-col">
+            {{ field.label_tag }}
+
+            {% if field.field.help_text %}
+                <div class="ml-2 -mt-1">
+                    {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
+                </div>
+            {% endif %}
+
+            {% if field.errors %}
+                <div class="mt-1 text-red-600 text-sm dark:text-red-500">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

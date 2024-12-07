@@ -270,3 +270,94 @@ def preserve_changelist_filters(context: Context) -> Dict[str, Dict[str, str]]:
     }
 
     return {"params": preserved_params}
+
+
+@register.simple_tag(takes_context=True)
+def fieldset_rows_classes(context: Context) -> str:
+    classes = [
+        "aligned",
+    ]
+
+    if not context.get("stacked"):
+        classes.extend(
+            [
+                "border",
+                "border-gray-200",
+                "mb-8",
+                "rounded-md",
+                "shadow-sm",
+                "dark:border-gray-800",
+            ]
+        )
+
+    return " ".join(set(classes))
+
+
+@register.simple_tag(takes_context=True)
+def fieldset_row_classes(context: Context) -> str:
+    classes = ["field-row"]
+
+    formset = context.get("inline_admin_formset", None)
+    adminform = context.get("adminform", None)
+    line = context.get("line")
+
+    # Hide the field in case of ordering field for sorting
+    for field in line:
+        if (
+            formset
+            and hasattr(field.field, "name")
+            and field.field.name == formset.opts.ordering_field
+            and formset.opts.hide_ordering_field
+        ):
+            classes.append("hidden")
+
+    # Compressed fields special styling
+    if adminform and adminform.model_admin.compressed_fields:
+        classes.extend(
+            [
+                "lg:border-b",
+                "lg:border-gray-200",
+                "dark:lg:border-gray-800",
+                "last:lg:border-b-0",
+            ]
+        )
+
+    if len(line.fields) > 1:
+        classes.extend(
+            [
+                "flex",
+                "flex-row",
+                "flex-wrap",
+            ]
+        )
+
+    if not line.has_visible_field:
+        classes.append("hidden")
+
+    return " ".join(set(classes))
+
+
+@register.simple_tag(takes_context=True)
+def fieldset_line_classes(context: Context) -> str:
+    classes = ["flex", "flex-col", "flex-grow", "group", "p-3"]
+    field = context.get("field")
+    adminform = context.get("adminform")
+
+    if hasattr(field.field, "name") and field.field.name:
+        classes.append(f"field-{field.field.name}")
+
+    if hasattr(field, "errors") and field.errors():
+        classes.append("errors")
+
+    if adminform.model_admin.compressed_fields:
+        classes.extend(
+            [
+                "lg:border-gray-200",
+                "lg:border-l",
+                "lg:flex-row",
+                "dark:lg:border-gray-800",
+                "first:lg:border-l-0",
+            ]
+        )
+
+    return " ".join(set(classes))
