@@ -16,7 +16,7 @@ In template you can use the default implementation of the cohort component by us
 ```html
 {% load unfold %}
 
-{% component "unfold/components/cohort.html" with component_class="MyCohortComponent" %}
+{% component "unfold/components/chart/cohort.html" with component_class="MyCohortComponent" %}
 {% endcomponent %}
 ```
 
@@ -25,7 +25,7 @@ If you don't want to use `component_class` parameter, you can prepare `data` in 
 ```html
 {% load unfold %}
 
-{% component "unfold/components/cohort.html" with data=my_data_variable data=my_data %}
+{% component "unfold/components/chart/cohort.html" with data=my_data_variable data=my_data %}
 {% endcomponent %}
 ```
 
