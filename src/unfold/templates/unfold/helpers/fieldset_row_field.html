@@ -1,0 +1,21 @@
+<div class="{% if adminform.model_admin.compressed_fields %}lg:min-w-48 lg:mt-2 lg:w-48{% endif %}">
+    {{ field.label_tag }}
+</div>
+
+<div class="flex-grow">
+    {% if field.is_readonly %}
+        {% include "unfold/helpers/field_readonly_value.html" %}
+    {% else %}
+        {{ field.field }}
+    {% endif %}
+
+    {% if field.field.help_text and not field.is_checkbox %}
+        {% include "unfold/helpers/help_text.html" with help_text=field.field.help_text %}
+    {% endif %}
+
+    {% if field.errors %}
+        <div class="mt-1 text-red-600 text-sm dark:text-red-500">
+            {{ field.errors }}
+        </div>
+    {% endif %}
+</div>
