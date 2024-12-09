@@ -1,19 +1,18 @@
 {% if messages %}
-    <ul>
+    <ul class="flex flex-col gap-4 mb-8">
         {% for message in messages %}
-            <li class="{{ message.tags }} mb-3 px-3 py-3 rounded-md text-sm last:mb-8
-                       {% if message.tags == 'success' %}
-                           bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400
-                       {% elif message.tags == 'warning' %}
-                           bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400
-                       {% elif message.tags == 'error' %}
-                           bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400
-                       {% elif message.tags == 'info' %}
-                           bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400
-                       {% else %}
-                           bg-gray-100 text-gray-700 dark:bg-gray-500/20 dark:text-gray-400
-                       {% endif %}">
-                {{ message|capfirst }}
+            <li class="*:!mb-0">
+                {% if message.tags == 'info' %}
+                    {% include "unfold/helpers/messages/info.html" with message=message %}
+                {% elif message.tags == 'success' %}
+                    {% include "unfold/helpers/messages/success.html" with message=message %}
+                {% elif message.tags == 'warning' %}
+                    {% include "unfold/helpers/messages/warning.html" with message=message %}
+                {% elif message.tags == 'error' %}
+                    {% include "unfold/helpers/messages/error.html" with message=message %}
+                {% else %}
+                    {% include "unfold/helpers/messages/debug.html" with message=message %}
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
