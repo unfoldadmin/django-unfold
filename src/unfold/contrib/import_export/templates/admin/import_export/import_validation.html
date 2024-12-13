@@ -1,21 +1,21 @@
 {% load i18n unfold %}
 
 {% block validation_errors %}
-    <div class="bg-red-50 border border-red-200 mb-4 mt-8 rounded shadow-sm text-red-500 text-sm dark:bg-red-500/20 dark:border-red-500/20">
-        <div class="border-b border-red-200 flex flex-row py-3 px-4 dark:border-red-500/20">
-            <h2 class="font-medium">
-                {% trans "Some rows failed to validate" %}
-            </h2>
-        </div>
+    {% capture as import_error silent %}
+        <span class="block font-semibold mb-2">
+            {% trans "Some rows failed to validate" %}
+        </span>
 
-        <div class="px-4 py-3">
-            <p>
-                {% trans "Please correct these errors in your data where possible, then reupload it using the form above." %}
-            </p>
-        </div>
+        <span class="block">
+            {% trans "Please correct these errors in your data where possible, then reupload it using the form above." %}
+        </span>
+    {% endcapture %}
+
+    <div class="mt-8">
+        {% include "unfold/helpers/messages/error.html" with error=import_error %}
     </div>
 
-    <table class="border-gray-200 border-spacing-none border-separate w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+    <table class="import-preview border-gray-200 border-spacing-none border-separate w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
         <thead class="hidden lg:table-header-group font-semibold text-gray-900 dark:text-gray-100">
             <tr>
                 <th class="align-middle capitalize px-3 py-2 text-left">
@@ -41,19 +41,24 @@
                         {{ row.number }}
                     </td>
 
-                    <td data-label="{% trans "Errors" %}" class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
-                        <div>
-                            <span class="bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">{{ row.error_count }}</span>
-                        </div>
+                    <td data-label="{% trans "Errors" %}" class="errors align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                        <span class="validation-error-count bg-red-600 font-semibold ml-2 px-1 rounded-sm text-xs text-white">{{ row.error_count }}</span>
 
-                        <div class="validation-error-container">
+                        <div class="validation-error-container rounded-md !bg-white border left-12 !m-0 !p-0 !top-3 dark:!bg-gray-800 dark:!border-gray-700 min-w-72">
                             <ul class="validation-error-list">
                                 {% for field_name, error_list in row.field_specific_errors.items %}
-                                    <li>
-                                        <span class="validation-error-field-label">{{ field_name }}</span>
-                                        <ul>
+                                    <li class="p-3">
+                                        <span class="validation-error-field-label !border-0 font-semibold mb-1 !text-font-important-light dark:!text-font-important-dark">
+                                            {{ field_name }}
+                                        </span>
+
+                                        <ul class="text-xs !m-0">
                                             {% for error in error_list %}
-                                                <li>{{ error }}</li>
+                                                <li class="!m-0">
+                                                    <p class="leading-normal">
+                                                        {{ error }}
+                                                    </p>
+                                                </li>
                                             {% endfor %}
                                         </ul>
                                     </li>

@@ -1,4 +1,18 @@
 
+## 0.43.0 (2024-12-09)
+
+- feat: cohort component subtitle (#892) ([`6e9032f`](https://github.com/unfoldadmin/django-unfold/commit/6e9032faff497f3aa78d52b7be456ed0fe4b25ae))
+- feat: changeform outer form templates (#891) ([`f6c9fc0`](https://github.com/unfoldadmin/django-unfold/commit/f6c9fc078dc58c89a083f0b3e19d288561b439d1))
+- feat: advanced components (#886) ([`299d22c`](https://github.com/unfoldadmin/django-unfold/commit/299d22ca516c4ffb01828bac3642d49e343173cb))
+- feat: sidebar collapse icon (#883) ([`3f463d2`](https://github.com/unfoldadmin/django-unfold/commit/3f463d2c4a3e2506255b0381162a97609241a340))
+- fix: fileinput sizing (#898) ([`9b2171c`](https://github.com/unfoldadmin/django-unfold/commit/9b2171cf8dae666e0eb5397d943f0072d09172a3))
+- fix: import export validation errors (#897) ([`add93a9`](https://github.com/unfoldadmin/django-unfold/commit/add93a9886fdc880e2ad5a9426b9353e9e51d415))
+- fix: filter button positioning (#893) ([`4b43714`](https://github.com/unfoldadmin/django-unfold/commit/4b43714b9ffa97f7008301f9643f6dae4d7f13a1))
+- fix: ruff target version (#890) ([`0746682`](https://github.com/unfoldadmin/django-unfold/commit/07466822507a0888ace2f2408a5d8c08361fa4b6))
+- docs: cohort correct file path (#896) ([`27d7003`](https://github.com/unfoldadmin/django-unfold/commit/27d700347cee4c39ce67cdddb5aed132d0ec7ba6))
+- docs: cohort tracker components (#895) ([`c02ec15`](https://github.com/unfoldadmin/django-unfold/commit/c02ec15ae23fbc0e5c9077bd34732f17fe3f9570))
+- docs: markdown migration (#894) ([`93ca3dd`](https://github.com/unfoldadmin/django-unfold/commit/93ca3dd7f8dc0ff919e4f0c367ff65be2dfcd58a))
+
 ## 0.42.0 (2024-11-26)
 
 - feat: tabs with filters (#876) ([`cce7d2e`](https://github.com/unfoldadmin/django-unfold/commit/cce7d2ebc570c81b4169c0cf049078b140239128))

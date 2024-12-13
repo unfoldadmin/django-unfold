@@ -13,7 +13,7 @@
         </div>
     {% endif %}
 
-    <div class="aligned {% if stacked %}mb-5{% else %}border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800{% endif %}">
+    <div class="{% fieldset_rows_classes %}">
         {% for line in fieldset %}
             {% include "unfold/helpers/fieldset_row.html" %}
         {% endfor %}
