@@ -354,6 +354,7 @@ def fieldset_line_classes(context: Context) -> str:
             [
                 "border-b",
                 "border-gray-200",
+                "lg:border-b-0",
                 "lg:border-l",
                 "lg:flex-row",
                 "dark:border-gray-800",

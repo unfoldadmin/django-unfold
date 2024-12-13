@@ -79,7 +79,7 @@
 
         <div class="flex -mx-4 module{% if cl.has_filters %} filtered{% endif %}" id="changelist" x-data="{ changeListWidth: 0 }">
             <div class="changelist-form-container flex flex-row flex-grow gap-6 min-w-0 px-4">
-                <div class="flex-grow pb-16 min-w-0" x-resize="changeListWidth = $width">
+                <div class="flex-grow min-w-0 lg:pb-16" x-resize="changeListWidth = $width">
                     {% block date_hierarchy %}
                         {% if cl.date_hierarchy %}
                             {% date_hierarchy cl %}
