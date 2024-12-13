@@ -352,10 +352,11 @@ def fieldset_line_classes(context: Context) -> str:
     if adminform.model_admin.compressed_fields:
         classes.extend(
             [
-                "lg:border-gray-200",
+                "border-b",
+                "border-gray-200",
                 "lg:border-l",
                 "lg:flex-row",
-                "dark:lg:border-gray-800",
+                "dark:border-gray-800",
                 "first:lg:border-l-0",
             ]
         )

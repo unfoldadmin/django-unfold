@@ -1,6 +1,4 @@
 window.addEventListener("load", (e) => {
-  submitSearch();
-
   fileInputUpdatePath();
 
   dateTimeShortcutsOverlay();
@@ -162,54 +160,6 @@ const fileInputUpdatePath = () => {
   });
 
   checkInputChanged();
-};
-
-/*************************************************************
- * Search form on changelist view
- *************************************************************/
-const submitSearch = () => {
-  const searchbar = document.getElementById("searchbar");
-  const searchbarSubmit = document.getElementById("searchbar-submit");
-
-  const getQueryParams = (searchString) => {
-    const queryParams = window.location.search
-      .replace("?", "")
-      .split("&")
-      .map((param) => param.split("="))
-      .reduce((values, [key, value]) => {
-        if (key && key !== "q") {
-          values[key] = value;
-        }
-
-        return values;
-      }, {});
-
-    if (searchString) {
-      queryParams["q"] = encodeURIComponent(searchString);
-    }
-
-    const result = Object.entries(queryParams)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
-
-    return `?${result}`;
-  };
-
-  if (searchbar !== null) {
-    searchbar.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        window.location = getQueryParams(e.target.value);
-        e.preventDefault();
-      }
-    });
-  }
-
-  if (searchbarSubmit !== null && searchbar !== null) {
-    searchbarSubmit.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.location = getQueryParams(searchbar.value);
-    });
-  }
 };
 
 /*************************************************************
