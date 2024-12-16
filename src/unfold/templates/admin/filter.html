@@ -1,6 +1,6 @@
 {% load i18n unfold %}
 
-<div class="mb-6">
+<div>
     <h3 class="font-semibold mb-2 text-font-important-light dark:text-font-important-dark">
         {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
     </h3>
@@ -12,20 +12,20 @@
     {% endfor %}
 
     {% if spec|class_name == "BooleanFieldListFilter" %}
-        <ul class="border-l-4 border-gray-200 flex pl-4 py-2  dark:border-gray-700">
+        <ul class="flex border min-w-20 rounded-md shadow-sm text-font-default-light dark:border-gray-700 dark:text-font-default-dark w-full">
             {% for choice in choices %}
-                <li class="{% if choice.selected %}font-medium text-primary-600 dark:text-primary-500 dark{% else %}hover:text-gray-700 dark:hover:text-gray-200{% endif %} pr-4">
-                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
+                <li class="basis-1/3 border-r border-gray-200 flex-grow truncate last:border-r-0 dark:border-gray-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-gray-700 dark:hover:text-gray-200{% endif %}">
+                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block px-3 py-2 text-center hover:text-primary-600 dark:hover:text-primary-500">
                         {{ choice.display }}
                     </a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <ul class="border-l-4 border-gray-200 flex flex-col pl-4 py-4 dark:border-gray-700">
+        <ul class="border flex flex-col rounded-md shadow-sm dark:border-gray-700">
             {% for choice in choices %}
-                <li class="mb-4 last:mb-0 {% if choice.selected %}font-medium text-primary-600 dark:text-primary-500 {% else %}hover:text-gray-700 dark:hover:text-gray-200{% endif %}">
-                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}">
+                <li class="border-b border-gray-200 last:border-b-0 dark:border-gray-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-gray-700 dark:hover:text-gray-200{% endif %}">
+                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block px-3 py-2 hover:text-primary-600 dark:hover:text-primary-500">
                         {{ choice.display }}
                     </a>
                 </li>

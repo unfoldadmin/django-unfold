@@ -25,7 +25,6 @@ from django.utils.translation import gettext_lazy as _
 from .widgets import (
     BASE_INPUT_CLASSES,
     INPUT_CLASSES,
-    SELECT_CLASSES,
     UnfoldAdminPasswordInput,
     UnfoldAdminRadioSelectWidget,
 )
@@ -40,7 +39,17 @@ class ActionForm(forms.Form):
         label="",
         widget=forms.Select(
             {
-                "class": " ".join([*SELECT_CLASSES, "max-w-full", "lg:!w-64"]),
+                "class": " ".join(
+                    [
+                        "appearance-none",
+                        "bg-white/20",
+                        "font-medium",
+                        "min-w-72",
+                        "rounded-md",
+                        "px-3",
+                        "py-2",
+                    ]
+                ),
                 "aria-label": _("Select action to run"),
                 "x-model": "action",
             }

@@ -6,28 +6,28 @@
             {% if group.items %}
                 {% has_nav_item_active group.items as has_active %}
 
-                <div class="hidden mb-3 has-[ol]:has-[li]:block" {% if group.collapsible %}x-data="{navigationOpen: {% if has_active %}true{% else %}false{% endif %}}"{% endif %}>
+                <div class="hidden mb-2 has-[ol]:has-[li]:block" {% if group.collapsible %}x-data="{navigationOpen: {% if has_active %}true{% else %}false{% endif %}}"{% endif %}>
                     {% if group.separator %}
                         <hr class="border-t border-gray-200 mx-6 my-2 dark:border-gray-800" />
                     {% endif %}
 
                     {% if group.title %}
-                        <h2 class="font-semibold flex flex-row items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark {% if group.collapsible %}cursor-pointer{% endif %}" {% if group.collapsible %}x-on:click="navigationOpen = !navigationOpen"{% endif %}>
+                        <h2 class="font-semibold flex flex-row group items-center mb-1 mx-3 py-1.5 px-3 select-none text-font-important-light text-sm dark:text-font-important-dark {% if group.collapsible %}cursor-pointer hover:text-primary-600 dark:hover:text-primary-500{% endif %}" {% if group.collapsible %}x-on:click="navigationOpen = !navigationOpen"{% endif %}>
                             {{ group.title }}
 
                             {% if group.collapsible %}
-                                <span class="material-symbols-outlined ml-auto text-gray-400 transition-all" x-bind:class="{'rotate-90': navigationOpen}">
+                                <span class="material-symbols-outlined ml-auto text-gray-400 transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
                                     chevron_right
                                 </span>
                             {% endif %}
                         </h2>
                     {% endif %}
 
-                    <ol class="px-6" {% if group.collapsible %}x-show="navigationOpen"{% endif %}>
+                    <ol class="flex flex-col gap-1 px-6" {% if group.collapsible %}x-show="navigationOpen"{% endif %}>
                         {% for item in group.items %}
                             {% if item.has_permission %}
                                 <li>
-                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="flex h-11 items-center -mx-3 px-3 py-2 rounded-md hover:text-primary-600 dark:hover:text-primary-500 {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
+                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="flex h-9.5 items-center -mx-3 px-3 rounded-md hover:text-primary-600 dark:hover:text-primary-500 {% if item.active %}bg-gray-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
                                         {% if item.icon %}
                                             <span class="material-symbols-outlined md-18 mr-3 w-4.5">
                                                 {{ item.icon }}
@@ -59,7 +59,7 @@
 
     {% if sidebar_show_all_applications %}
         <div class="mt-auto" x-data="{ openAllApplications: false }">
-            <a class="cursor-pointer flex items-center px-6 py-3 text-sm dark:text-font-default-dark" x-on:click="openAllApplications = !openAllApplications">
+            <a class="cursor-pointer flex items-center px-6 py-3 text-sm dark:text-font-default-dark hover:text-primary-600 dark:hover:text-primary-500" x-on:click="openAllApplications = !openAllApplications">
                 <span class="material-symbols-outlined md-18 mr-3">
                     apps
                 </span>
@@ -82,7 +82,7 @@
                             <ul>
                                 {% for model in app.models %}
                                     <li class="block mb-4 last:mb-0">
-                                        <a href="{{ model.admin_url }}" class="block truncate">
+                                        <a href="{{ model.admin_url }}" class="block truncate hover:text-primary-600 dark:hover:text-primary-500">
                                             {{ model.name }}
                                         </a>
                                     </li>
