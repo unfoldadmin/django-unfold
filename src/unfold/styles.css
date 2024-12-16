@@ -85,6 +85,10 @@ select:not([class*="bg-none"]):not([multiple]) {
   background-size: 1.125rem 1.125rem;
 }
 
+#changelist-actions select:not([class*="bg-none"]):not([multiple]) {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3e%3cpath fill='#ffffff' d='M24 31.4 11.3 18.7l2.85-2.8L24 25.8l9.85-9.85 2.85 2.8Z'/%3e%3c/svg%3e");
+}
+
 select:after {
   content: "";
   display: block;
@@ -100,6 +104,7 @@ table select {
   background-size: 1.125rem 1.125rem;
   background-position: right 0.5rem center;
 }
+
 
 table select:focus {
   @apply border-primary-600;

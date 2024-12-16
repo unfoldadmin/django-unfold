@@ -1,39 +1,45 @@
 {% load unfold_list i18n %}
 
-<div class="bg-gray-50 flex my-4 items-center p-3 rounded-md text-sm dark:bg-gray-800">
-    {% if pagination_required %}
-        {% for i in page_range %}
-            <div class="{% if forloop.last %}pr-2{% else %}pr-4{% endif %}">
-                {% paginator_number cl i %}
+<div {% if not is_popup %}id="submit-row"{% endif %} class="relative z-20">
+    <div class="{% if not is_popup %}lg:bottom-0 lg:fixed lg:left-0 lg:right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %}>
+        <div class="backdrop-blur-sm bg-white/80 flex items-center dark:bg-gray-900/80 {% if not is_popup %}lg:border-t lg:h-[71px] lg:py-2 relative scrollable-top lg:px-8 dark:border-gray-800{% endif %}">
+            <div class="flex flex-row items-center {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %}" x-bind:style="'width: ' + changeListWidth + 'px'">
+                {% if pagination_required %}
+                    {% for i in page_range %}
+                        <div class="{% if forloop.last %}pr-2{% else %}pr-4{% endif %}">
+                            {% paginator_number cl i %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="py-2">
+                    {% if pagination_required %}
+                        -
+                    {% endif %}
+
+                    {{ cl.result_count }}
+
+                    {% if cl.result_count == 1 %}
+                        {{ cl.opts.verbose_name }}
+                    {% else %}
+                        {{ cl.opts.verbose_name_plural }}
+                    {% endif %}
+                </div>
+
+                {% if show_all_url %}
+                    <a href="{{ show_all_url }}" class="showall ml-4 text-primary-600 dark:text-primary-500">
+                        {% translate 'Show all' %}
+                    </a>
+                {% endif %}
+
+                {% if cl.formset and cl.result_count %}
+                    <div class="ml-auto">
+                        <button type="submit" name="_save" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-md text-white w-full">
+                            {% translate 'Save' %}
+                        </button>
+                    </div>
+                {% endif %}
             </div>
-        {% endfor %}
-    {% endif %}
-
-    <div>
-        {% if pagination_required %}
-            -
-        {% endif %}
-
-        {{ cl.result_count }}
-
-        {% if cl.result_count == 1 %}
-            {{ cl.opts.verbose_name }}
-        {% else %}
-            {{ cl.opts.verbose_name_plural }}
-        {% endif %}
-    </div>
-
-    {% if show_all_url %}
-        <a href="{{ show_all_url }}" class="showall ml-4 text-primary-600 dark:text-primary-500">
-            {% translate 'Show all' %}
-        </a>
-    {% endif %}
-
-    {% if cl.formset and cl.result_count %}
-        <div class="ml-auto">
-            <button type="submit" name="_save" class="bg-primary-600 font-medium rounded-md px-3 py-1 text-white">
-                {% translate 'Save' %}
-            </button>
         </div>
-    {% endif %}
+    </div>
 </div>
