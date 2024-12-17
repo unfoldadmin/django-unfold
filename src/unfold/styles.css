@@ -264,6 +264,10 @@ table tr.selected th {
   @apply hidden;
 }
 
+.tabular-table .template tr {
+  @apply border-t border-gray-200 dark:border-gray-800;
+}
+
 .add-row {
   @apply align-middle bg-gray-50 px-3 py-5 font-normal text-right dark:bg-white/[.02];
 }

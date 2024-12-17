@@ -1,6 +1,6 @@
 {% load unfold %}
 
-<div class="{% fieldset_row_classes %}">
+<div class="{% fieldset_row_classes %} {% if forloop.last %}last{% endif %}">
     {% for field in line %}
         <div class="{% fieldset_line_classes %}">
             {% if field.is_checkbox %}

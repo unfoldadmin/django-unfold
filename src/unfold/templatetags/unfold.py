@@ -295,7 +295,10 @@ def fieldset_rows_classes(context: Context) -> str:
 
 @register.simple_tag(takes_context=True)
 def fieldset_row_classes(context: Context) -> str:
-    classes = ["field-row"]
+    classes = [
+        "field-row",
+        "group/row",
+    ]
 
     formset = context.get("inline_admin_formset", None)
     adminform = context.get("adminform", None)
@@ -339,7 +342,14 @@ def fieldset_row_classes(context: Context) -> str:
 
 @register.simple_tag(takes_context=True)
 def fieldset_line_classes(context: Context) -> str:
-    classes = ["flex", "flex-col", "flex-grow", "group", "p-3"]
+    classes = [
+        "field-line",
+        "flex",
+        "flex-col",
+        "flex-grow",
+        "group/line",
+        "p-3",
+    ]
     field = context.get("field")
     adminform = context.get("adminform")
 
@@ -354,6 +364,7 @@ def fieldset_line_classes(context: Context) -> str:
             [
                 "border-b",
                 "border-gray-200",
+                "group-[.last]/row:border-b-0",
                 "lg:border-b-0",
                 "lg:border-l",
                 "lg:flex-row",
