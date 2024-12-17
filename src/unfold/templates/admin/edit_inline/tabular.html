@@ -30,7 +30,7 @@
                         <tr>
                             {% for field in inline_admin_formset.fields %}
                                 {% if not field.widget.is_hidden %}
-                                    <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap dark:text-font-important-dark {% if inline_admin_formset.opts.ordering_field and field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %}hidden{% endif %}">
+                                    <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle font-semibold px-1.5 first:pl-3 last:pr-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap dark:text-font-important-dark {% if inline_admin_formset.opts.ordering_field and field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %}hidden{% endif %}">
                                         <span class="flex flex-row items-center">
                                             {{ field.label|capfirst }}
 
@@ -61,11 +61,11 @@
                             {% endif %}
 
                             {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                <tr>
+                                <tr class="bg-gray-50 dark:bg-white/[.02] lg:bg-transparent dark:lg:!bg-transparent">
                                     <td class="original" colspan="{{ inline_admin_form|cell_count }}">
                                         {% if not inline_admin_formset.opts.hide_title %}
                                             {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                                <p class="flex font-medium items-center px-3 pt-2 text-xs">
+                                                <p class="flex font-medium items-center px-3 text-xs py-2 lg:pb-0 lg:pt-2">
                                                     {% if inline_admin_form.original %}
                                                         <span>
                                                             {% with inline_title=inline_admin_form.original.get_inline_title %}
@@ -127,7 +127,7 @@
                                             {% with is_last_col=forloop.last %}
                                                 {% for field in line %}
                                                     {% if field.is_readonly or not field.field.is_hidden %}
-                                                        <td{% if field.field.name %} class="field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:font-text before:pr-4 lg:before:hidden font-normal px-3 lg:first:pl-3 lg:last:pr-3 lg:px-1.5 text-left lg:table-cell {% if field.field.is_hidden %} !hidden{% endif %} {% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %}!hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
+                                                        <td{% if field.field.name %} class="border-t border-gray-200 dark:border-gray-800 lg:border-t-0 min-h-[62.5px] field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:font-text before:pr-4 lg:before:hidden font-normal px-3 lg:first:pl-3 lg:last:pr-3 lg:px-1.5 text-left lg:table-cell {% if field.field.is_hidden %} !hidden{% endif %} {% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %}!hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
                                                             <div class="flex flex-row gap-3 items-center">
                                                                 {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
                                                                     {% if inline_admin_formset.opts.ordering_field %}
@@ -161,7 +161,7 @@
                                     {% endfor %}
 
                                     {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                        <td class="delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-font-default-light before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px before:dark:text-font-default-dark" data-label="{% trans "Remove" %}">
+                                        <td class="border-t border-gray-200 dark:border-gray-800 lg:border-t-0 min-h-[62.5px] delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:text-font-important-light before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px before:dark:text-font-important-dark" data-label="{% trans "Remove" %}">
                                             {% if inline_admin_form.original %}
                                                 <div class="flex flex-row lg:mt-3">
                                                     <div class="ml-auto">
