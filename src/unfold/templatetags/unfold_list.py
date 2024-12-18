@@ -369,6 +369,7 @@ def result_list(context: Dict[str, Any], cl: ChangeList) -> Dict[str, Any]:
         "num_sorted_fields": num_sorted_fields,
         "results": list(results(cl)),
         "actions_row": context.get("actions_row"),
+        "has_add_permission": cl.model_admin.has_add_permission(context["request"]),
     }
 
 
