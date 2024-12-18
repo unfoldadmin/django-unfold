@@ -102,19 +102,21 @@
             {% trans "This page yielded into no results. Create a new item or reset your filters." %}
         </p>
 
-        <div class="flex flex-col gap-4 justify-center w-full lg:flex-row">
-            {% if has_add_permission %}
-                <a href="{% add_preserved_filters add_url is_popup to_field %}" class="bg-primary-600 flex flex-row font-medium gap-2 items-center h-9.5 justify-center px-3 py-2 rounded-md text-white w-full lg:w-auto">
-                    <span class="material-symbols-outlined text-white">add</span> {{ title }}
-                </a>
-            {% endif %}
+        {% if has_add_permission or cl.has_filters %}
+            <div class="flex flex-col gap-4 justify-center w-full lg:flex-row">
+                {% if has_add_permission %}
+                    <a href="{% add_preserved_filters add_url is_popup to_field %}" class="bg-primary-600 flex flex-row font-medium gap-2 items-center h-9.5 justify-center px-3 py-2 rounded-md text-white w-full lg:w-auto">
+                        <span class="material-symbols-outlined text-white">add</span> {{ title }}
+                    </a>
+                {% endif %}
 
 
-            {% if cl.has_filters %}
-                <a href="{{ cl.clear_all_filters_qs }}" class="border flex flex-row font-medium gap-2 group/button h-9.5 items-center justify-center px-3 py-2 rounded-md transition-all w-full hover:text-primary-600 lg:w-auto dark:border-gray-700 dark:hover:bg-gray-900 dark:hover:text-primary-500">
-                    <span class="material-symbols-outlined group-hover/button:text-primary-600 dark:group-hover/button:text-gray-500 text-gray-400 dark:text-gray-500">filter_list_off</span> {% trans "Reset filters" %}
-                </a>
-            {% endif %}
-        </div>
+                {% if cl.has_filters %}
+                    <a href="{{ cl.clear_all_filters_qs }}" class="border flex flex-row font-medium gap-2 group/button h-9.5 items-center justify-center px-3 py-2 rounded-md transition-all w-full hover:text-primary-600 lg:w-auto dark:border-gray-700 dark:hover:bg-gray-900 dark:hover:text-primary-500">
+                        <span class="material-symbols-outlined group-hover/button:text-primary-600 dark:group-hover/button:text-gray-500 text-gray-400 dark:text-gray-500">filter_list_off</span> {% trans "Reset filters" %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endif %}
