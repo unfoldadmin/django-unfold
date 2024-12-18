@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load admin_urls i18n %}
 
 {% if result_hidden_fields %}
     <div class="hiddenfields">
@@ -84,5 +84,39 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+{% else %}
+    {% url cl.opts|admin_urlname:"add" as add_url %}
+    {% blocktranslate with name=cl.opts.verbose_name asvar title %}Add {{ name }}{% endblocktranslate %}
+
+    <div class="border flex flex-col items-center px-8 py-24 rounded-md shadow-sm dark:border-gray-800">
+        <div class="bg-gray-100 flex h-24 items-center justify-center mb-8 rounded-full w-24 dark:bg-gray-800">
+            <span class="material-symbols-outlined text-gray-500 !text-5xl dark:text-gray-400">inbox</span>
+        </div>
+
+        <h2 class="font-semibold mb-1 text-xl text-font-important-light dark:text-font-important-dark">
+            {% trans "No results found" %}
+        </h2>
+
+        <p class="mb-6 text-center">
+            {% trans "This page yielded into no results. Create a new item or reset your filters." %}
+        </p>
+
+        {% if has_add_permission or cl.has_filters %}
+            <div class="flex flex-col gap-4 justify-center w-full lg:flex-row">
+                {% if has_add_permission %}
+                    <a href="{% add_preserved_filters add_url is_popup to_field %}" class="bg-primary-600 flex flex-row font-medium gap-2 items-center h-9.5 justify-center px-3 py-2 rounded-md text-white w-full lg:w-auto">
+                        <span class="material-symbols-outlined text-white">add</span> {{ title }}
+                    </a>
+                {% endif %}
+
+
+                {% if cl.has_filters %}
+                    <a href="{{ cl.clear_all_filters_qs }}" class="border flex flex-row font-medium gap-2 group/button h-9.5 items-center justify-center px-3 py-2 rounded-md transition-all w-full hover:text-primary-600 lg:w-auto dark:border-gray-700 dark:hover:bg-gray-900 dark:hover:text-primary-500">
+                        <span class="material-symbols-outlined group-hover/button:text-primary-600 dark:group-hover/button:text-gray-500 text-gray-400 dark:text-gray-500">filter_list_off</span> {% trans "Reset filters" %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endif %}
