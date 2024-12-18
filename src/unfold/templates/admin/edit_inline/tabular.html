@@ -7,7 +7,7 @@
         <fieldset class="module relative {{ inline_admin_formset.classes }} min-w-0" aria-labelledby="{{ inline_admin_formset.formset.prefix }}-heading">
             {% if inline_admin_formset.is_collapsible %}<details><summary>{% endif %}
 
-            <h2 id="{{ inline_admin_formset.formset.prefix }}-heading" class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-font-important-light text-sm lg:-mx-4 dark:bg-white/[.02] dark:border dark:border-gray-800 dark:text-font-important-dark {% if inline_admin_formset.opts.tab %}hidden{% endif %} {% if inline_admin_formset.is_collapsible %} cursor-pointer{% endif %}">
+            <h2 id="{{ inline_admin_formset.formset.prefix }}-heading" class="bg-gray-100 border border-transparent font-semibold mb-6 px-4 py-3 rounded-md text-font-important-light text-sm lg:-mx-4 dark:bg-white/[.02]  dark:text-font-important-dark {% if inline_admin_formset.opts.tab %}hidden{% endif %} {% if inline_admin_formset.is_collapsible %} cursor-pointer{% endif %}">
                 {% if inline_admin_formset.formset.max_num == 1 %}
                     {{ inline_admin_formset.opts.verbose_name|capfirst }}
                 {% else %}
@@ -20,159 +20,16 @@
             {{ inline_admin_formset.formset.non_form_errors }}
 
             <div class="border border-gray-200 mb-6 overflow-x-auto rounded-md shadow-sm dark:border-gray-800" data-simplebar data-simplebar-auto-hide="false">
-                <table class="border-spacing-none border-separate w-full"
-                       {% if inline_admin_formset.opts.ordering_field %}
-                           data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}"
-                           x-on:end="sortRecords"
-                           x-sort.ghost
-                       {% endif %}>
-                    <thead class="hidden lg:table-header-group">
-                        <tr>
-                            {% for field in inline_admin_formset.fields %}
-                                {% if not field.widget.is_hidden %}
-                                    <th class="column-{{ field.name }}{% if field.required %} required{% endif %} align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap dark:text-font-important-dark dark:border-gray-800 {% if inline_admin_formset.opts.ordering_field and field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %}hidden{% endif %}">
-                                        <span class="flex flex-row items-center">
-                                            {{ field.label|capfirst }}
-
-                                            {% if field.help_text %}
-                                                <span class="cursor-pointer material-symbols-outlined ml-2 text-gray-400 dark:text-gray-500" title="{{ field.help_text|striptags }}">help</span>
-                                            {% endif %}
-                                        </span>
-                                    </th>
-                                {% endif %}
-                            {% endfor %}
-
-                            {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                <th class="align-middle border-b border-gray-200 font-semibold px-3 py-2 text-left text-font-important-light text-sm whitespace-nowrap lg:w-px dark:border-gray-800 dark:text-font-important-dark">
-                                    {% translate "Delete?" %}
-                                </th>
-                            {% endif %}
-                        </tr>
-                    </thead>
+                <table class="tabular-table w-full" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-on:end="sortRecords" x-sort.ghost{% endif %}>
+                    {% include "unfold/helpers/edit_inline/tabular_heading.html" %}
 
                     {% for inline_admin_form in inline_admin_formset %}
-                        <tbody x-sort:item>
-                            {% if inline_admin_form.form.non_field_errors %}
-                                <tr class="row-form-errors group inline-tabular">
-                                    <td colspan="{{ inline_admin_form|cell_count }}">
-                                        {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
-                                    </td>
-                                </tr>
-                            {% endif %}
+                        <tbody class="{% if inline_admin_form.original or inline_admin_form.show_url %}has_original {% else %}template{% endif %}" x-sort:item>
+                            {% include "unfold/helpers/edit_inline/tabular_error.html" %}
 
-                            {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                <tr>
-                                    <td class="original" colspan="{{ inline_admin_form|cell_count }}">
-                                        {% if not inline_admin_formset.opts.hide_title %}
-                                            {% if inline_admin_form.original or inline_admin_form.show_url %}
-                                                <p class="flex font-medium items-center px-3 pt-2 text-xs">
-                                                    {% if inline_admin_form.original %}
-                                                        <span>
-                                                            {% with inline_title=inline_admin_form.original.get_inline_title %}
-                                                                {% if inline_title %}
-                                                                    {{ inline_title }}
-                                                                {% else %}
-                                                                    {{ inline_admin_form.original }}
-                                                                {% endif %}
-                                                            {% endwith %}
-                                                        </span>
+                            {% include "unfold/helpers/edit_inline/tabular_title.html" %}
 
-                                                        {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
-                                                            <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="{{ inline_admin_formset.has_change_permission|yesno:'inlinechangelink,inlineviewlink' }} ml-2 text-primary-600 dark:text-primary-500">
-                                                                {% if inline_admin_formset.has_change_permission %}
-                                                                    {% translate "Change" %}
-                                                                {% else %}
-                                                                    {% translate "View" %}
-                                                                {% endif %}
-                                                            </a>
-                                                        {% endif %}
-                                                    {% endif %}
-
-                                                    {% if inline_admin_form.show_url %}
-                                                        <a href="{{ inline_admin_form.absolute_url }}" class="font-medium ml-2 text-primary-600 dark:text-primary-500">
-                                                            {% translate "View on site" %}
-                                                        </a>
-                                                    {% endif %}
-                                                </p>
-                                            {% endif %}
-                                        {% endif %}
-
-                                        {% if inline_admin_form.needs_explicit_pk_field %}
-                                            {{ inline_admin_form.pk_field.field }}
-                                        {% endif %}
-
-                                        {% if inline_admin_form.fk_field %}
-                                            {{ inline_admin_form.fk_field.field }}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endif %}
-
-                            <tr class="lg:border-b-0 form-row {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
-                                {% spaceless %}
-                                    {% for fieldset in inline_admin_form %}
-                                        {% for line in fieldset %}
-                                            {% for field in line %}
-                                                {% if not field.is_readonly and field.field.is_hidden %}
-                                                    {{ field.field }}
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    {% endfor %}
-                                {% endspaceless %}
-
-                                {% with is_last_row=forloop.last %}
-                                    {% for fieldset in inline_admin_form %}
-                                        {% for line in fieldset %}
-                                            {% with is_last_col=forloop.last %}
-                                                {% for field in line %}
-                                                    {% if field.is_readonly or not field.field.is_hidden %}
-                                                        <td{% if field.field.name %} class="field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} {% if is_last_row and not inline_admin_formset.has_add_permission %}{% if is_last_col %}border-0 {% else %}border-b lg:border-0{% endif %}{% else %}border-b{% endif %} border-gray-200 flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:font-text before:pr-4 lg:before:hidden font-normal px-3 text-left lg:table-cell dark:border-gray-800 {% if field.field.is_hidden %} !hidden{% endif %} {% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %}!hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
-                                                            <div class="flex flex-row gap-3 items-center">
-                                                                {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
-                                                                    {% if inline_admin_formset.opts.ordering_field %}
-                                                                        {% if inline_admin_form.original %}
-                                                                            <span class="material-symbols-outlined cursor-pointer" x-sort:handle>drag_indicator</span>
-                                                                        {% else %}
-                                                                            <span class="-mr-3" x-sort:handle></span>
-                                                                        {% endif %}
-                                                                    {% endif %}
-                                                                {% endif %}
-
-                                                                {% if field.is_readonly %}
-                                                                    {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
-                                                                {% else %}
-                                                                    {{ field.field }}
-
-                                                                    {% if field.field.errors|length > 0 %}
-                                                                        <div class="mt-1 text-red-600 text-sm dark:text-red-500">
-                                                                            {% for error in field.field.errors %}
-                                                                                {{ error }}
-                                                                            {% endfor %}
-                                                                        </div>
-                                                                    {% endif %}
-                                                                {% endif %}
-                                                            </div>
-                                                        </td>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endwith %}
-                                        {% endfor %}
-                                    {% endfor %}
-
-                                    {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-                                        <td class="delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 border-b border-gray-200 flex items-center before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-font-default-light before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px dark:border-gray-800 before:dark:text-font-default-dark" data-label="{% trans "Remove" %}">
-                                            {% if inline_admin_form.original %}
-                                                <div class="flex flex-row lg:mt-3">
-                                                    <div class="ml-auto">
-                                                        {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }}
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                        </td>
-                                    {% endif %}
-                                {% endwith %}
-                            </tr>
+                            {% include "unfold/helpers/edit_inline/tabular_row.html" %}
                         </tbody>
                     {% endfor %}
                 </table>

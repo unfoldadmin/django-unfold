@@ -252,9 +252,9 @@
     const showAddButton =
       maxForms.val() === "" || maxForms.val() - totalForms.val() > 0;
     if ($this.length && showAddButton) {
-      addButton.parent().show();
+      addButton.parent().parent().show(); // !CHANGED from original
     } else {
-      addButton.parent().hide();
+      addButton.parent().parent().hide(); // !CHANGED from original
     }
 
     return this;
