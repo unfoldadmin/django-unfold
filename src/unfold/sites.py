@@ -49,14 +49,23 @@ class UnfoldAdminSite(AdminSite):
             self.site_url = get_config(self.settings_name)["SITE_URL"]
 
     def get_urls(self) -> List[URLPattern]:
-        urlpatterns = [
-            path("search/", self.admin_view(self.search), name="search"),
-            path(
-                "toggle-sidebar/",
-                self.admin_view(self.toggle_sidebar),
-                name="toggle_sidebar",
-            ),
-        ] + super().get_urls()
+        extra_urls = []
+
+        if hasattr(self, "extra_urls") and callable(self.extra_urls):
+            extra_urls = self.extra_urls()
+
+        urlpatterns = (
+            [
+                path("search/", self.admin_view(self.search), name="search"),
+                path(
+                    "toggle-sidebar/",
+                    self.admin_view(self.toggle_sidebar),
+                    name="toggle_sidebar",
+                ),
+            ]
+            + extra_urls
+            + super().get_urls()
+        )
 
         return urlpatterns
 
@@ -119,6 +128,9 @@ class UnfoldAdminSite(AdminSite):
                 context.update({"environment": callback(request)})
             except ImportError:
                 pass
+
+        if hasattr(self, "extra_context") and callable(self.extra_context):
+            context = self.extra_context(context)
 
         return context
 
