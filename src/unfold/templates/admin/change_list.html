@@ -61,7 +61,7 @@
             {{ cl.formset.non_form_errors }}
         {% endif %}
 
-        <div class="flex flex-row gap-4 mb-4">
+        <div class="flex flex-col gap-4 mb-4 sm:flex-row">
             {% block search %}
                 {% search_form cl %}
             {% endblock %}
