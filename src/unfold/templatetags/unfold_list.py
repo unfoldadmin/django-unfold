@@ -55,6 +55,7 @@ ROW_CLASSES = [
     "before:content-[attr(data-label)]",
     "before:items-center",
     "before:font-semibold",
+    "before:text-font-important-light",
     "before:mr-auto",
     "first:border-t-0",
     "lg:before:hidden",
@@ -62,6 +63,7 @@ ROW_CLASSES = [
     "lg:py-3",
     "lg:table-cell",
     "dark:border-gray-800",
+    "dark:before:text-font-important-dark",
 ]
 
 CHECKBOX_CLASSES = [
@@ -77,11 +79,13 @@ CHECKBOX_CLASSES = [
     "before:content-[attr(data-label)]",
     "before:font-semibold",
     "before:mr-auto",
+    "before:text-font-important-light",
     "lg:before:hidden",
     "lg:border-t",
     "lg:border-gray-200",
     "lg:table-cell",
     "dark:lg:border-gray-800",
+    "dark:before:text-font-important-dark",
 ]
 
 
