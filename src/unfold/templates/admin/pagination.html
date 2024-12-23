@@ -1,7 +1,7 @@
 {% load unfold_list i18n %}
 
 <div {% if not is_popup %}id="submit-row"{% endif %} class="relative z-20">
-    <div class="{% if not is_popup %}lg:bottom-0 lg:fixed lg:left-0 lg:right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %} x-bind:style="'width: ' + mainWidth + 'px'">
+    <div class="{% if not is_popup %}max-w-full lg:bottom-0 lg:fixed lg:left-0 lg:right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %} x-bind:style="'width: ' + mainWidth + 'px'">
         <div class="lg:backdrop-blur-sm lg:bg-white/80 lg:flex lg:items-center lg:dark:bg-gray-900/80 {% if not is_popup %}lg:border-t lg:h-[71px] lg:py-2 lg:relative lg:scrollable-top lg:px-8 lg:dark:border-gray-800{% endif %}">
             <div class="flex flex-row items-center {% if not cl.model_admin.list_fullwidth %}lg:mx-auto{% endif %}" x-bind:style="'width: ' + changeListWidth + 'px'">
                 {% if pagination_required %}

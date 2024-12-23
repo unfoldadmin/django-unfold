@@ -1,8 +1,8 @@
 {% load i18n %}
 
-<div id="changelist-actions" class="actions flex flex-row gap-3 items-center {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %} text-white lg:flex-row lg:items-center"  x-bind:style="'width: ' + changeListWidth + 'px'">
+<div id="changelist-actions" class="actions flex flex-col gap-3 text-white sm:flex-row sm:items-center lg:items-center {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %}"  x-bind:style="'width: ' + changeListWidth + 'px'">
     {% block actions %}
-        <div class="flex flex-col gap-2 lg:flex-row" x-data="{action: ''}">
+        <div class="flex flex-row gap-2 lg:flex-row" x-data="{action: ''}">
             {% block actions-form %}
                 {% for field in action_form %}
                     {% if field.label %}
@@ -27,7 +27,7 @@
 
         {% block actions-counter %}
             {% if actions_selection_counter %}
-                <div class="flex flex-grow flex-row items-center">
+                <div class="flex flex-grow flex-col sm:flex-row sm:items-center">
                     <span class="action-counter" data-actions-icnt="{{ cl.result_list|length }}">
                         {{ selection_note }}
                     </span>
@@ -38,7 +38,7 @@
                         </span>
 
                         {% if not cl.model_admin.list_disable_select_all %}
-                            <div class="ml-auto">
+                            <div class="mt-3 sm:ml-auto sm:mt-0">
                                 <span class="question hidden">
                                     <a href="#" class="bg-white/20 block border border-transparent font-medium px-3 py-2 rounded-md text-white transition-colors hover:bg-white/30" title="{% translate "Click here to select the objects across all pages" %}">
                                         {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
