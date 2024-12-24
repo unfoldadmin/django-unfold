@@ -49,7 +49,7 @@ ROW_CLASSES = [
     "overflow-hidden",
     "px-3",
     "py-2",
-    "text-left",
+    #"text-left",
     "before:flex",
     "before:capitalize",
     "before:content-[attr(data-label)]",

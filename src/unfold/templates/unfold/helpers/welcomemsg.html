@@ -31,3 +31,14 @@
         {% endif %}
     </h1>
 </div>
+
+<div class="flex-grow font-semibold min-w-0 mr-3">
+    <h1 class="overflow-hidden text-ellipsis text-sm whitespace-nowrap xl:text-base text-font-important-light dark:text-font-important-dark">
+    {% if request.all_sites %}
+      {% trans "You browse all stores" %}
+    {% endif %}
+    {% if not request.all_sites %}
+      {{ request.site.name }}
+    {% endif %}
+    </h1>
+</div>
