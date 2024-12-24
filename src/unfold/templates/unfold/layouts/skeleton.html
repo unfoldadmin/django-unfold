@@ -34,6 +34,7 @@
         <script src="{% static 'unfold/js/alpine.anchor.js' %}" defer></script>
         <script src="{% static 'unfold/js/alpine.persist.js' %}" defer></script>
         <script src="{% static 'unfold/js/alpine.sort.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine.resize.js' %}" defer></script>
         <script src="{% static 'unfold/js/alpine.js' %}" defer></script>
         <script src="{% static 'unfold/js/htmx.js' %}"></script>
         <script src="{% static 'unfold/js/chart.js' %}"></script>
@@ -69,7 +70,7 @@
         {% endif %}
     </head>
 
-    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-gray-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
+    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-gray-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ mainWidth: 0, activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
         {% block base %}{% endblock %}
 
 
