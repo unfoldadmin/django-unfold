@@ -1,14 +1,7 @@
 {% load i18n %}
 
 <div class="relative z-50">
-    <div @click="sidebarMobileOpen = !sidebarMobileOpen"
-         class="fixed bottom-0 bg-gray-700 cursor-pointer flex items-center left-0 mb-2 ml-2 justify-center px-2 py-1 rounded-full shadow-sm text-xs text-white uppercase z-50 xl:hidden"
-         :class="{'ml-72 -translate-x-1/2': sidebarMobileOpen}">
-        {% trans "Menu" %}
-    </div>
-
-
-    <div :class="{'xl:block': sidebarDesktopOpen, 'xl:hidden': !sidebarDesktopOpen, 'max-xl:fixed': sidebarMobileOpen, 'hidden': !sidebarMobileOpen }">
+    <div class="fixed hidden xl:relative xl:block" x-bind:class="{'xl:!hidden': !sidebarDesktopOpen, '!block': sidebarMobileOpen}">
         {% include "unfold/helpers/navigation.html" %}
     </div>
 </div>
