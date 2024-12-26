@@ -38,6 +38,7 @@ module.exports = {
         sans: ["Inter", "sans-serif"],
       },
       height: {
+        4.5: "1.125rem",
         9.5: "2.375rem",
       },
       minHeight: {

@@ -1,13 +1,17 @@
 {% load i18n %}
 
 <div class="flex flex-row flex-grow font-semibold items-center min-w-0 mr-3">
-    <span class="cursor-pointer hidden flex-row items-center text-sm xl:flex">
-        <span class="material-symbols-outlined" hx-get="{% url "admin:toggle_sidebar" %}" hx-swap="none" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen">
+    <span class="cursor-pointer flex flex-row items-center">
+        <span class="material-symbols-outlined !hidden xl:!block" hx-get="{% url "admin:toggle_sidebar" %}" hx-swap="none" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen">
+            dock_to_right
+        </span>
+
+        <span class="material-symbols-outlined !block xl:!hidden" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
             dock_to_right
         </span>
     </span>
 
-    <span class="hidden bg-gray-200 h-5 mx-3 w-px xl:block dark:bg-gray-700"></span>
+    <span class="block bg-gray-200 h-5 mx-3 w-px dark:bg-gray-700"></span>
 
     <h1 class="overflow-hidden text-ellipsis text-sm whitespace-nowrap xl:text-base text-font-important-light dark:text-font-important-dark">
         {% if content_title %}

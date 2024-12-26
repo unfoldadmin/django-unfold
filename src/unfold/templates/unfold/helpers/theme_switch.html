@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="relative" x-data="{ openTheme: false }">
-    <a class="block cursor-pointer leading-none hover:text-gray-700  dark:hover:text-gray-200" x-on:click="openTheme = !openTheme">
+    <a class="block cursor-pointer h-4.5 leading-none hover:text-gray-700 dark:hover:text-gray-200" x-on:click="openTheme = !openTheme">
         <span class="material-symbols-outlined">
             <span x-text="adminTheme == 'dark' && 'dark_mode' || adminTheme == 'light' && 'light_mode' || 'computer'"></span>
         </span>
