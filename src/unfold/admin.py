@@ -278,23 +278,25 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         change_message = []
 
         if formsetObj is not None:
-            data = {'name': str(formsetObj._meta.verbose_name_plural),
-                    'object': f"{str(formsetObj)}({formsetObj.pk})", }
+            data = {
+                "name": str(formsetObj._meta.verbose_name_plural),
+                "object": f"{str(formsetObj)}({formsetObj.pk})",
+            }
         if add:
-            change_message.append({'added': data})
+            change_message.append({"added": data})
         elif form.changed_data:
-            
             message = []
             for field in changed_data:
                 initial = form.initial[field]
                 cleaned_data = form.cleaned_data[field]
-                
+
                 message.append(
-                    f"""[{form.fields[field].label}] "{str(initial)}" => "{str(cleaned_data)}" """)
-            data['fields'] = message
-            change_message.append({'changed': data})
+                    f"""[{form.fields[field].label}] "{str(initial)}" => "{str(cleaned_data)}" """
+                )
+            data["fields"] = message
+            change_message.append({"changed": data})
         return change_message
-	
+
     def construct_change_message(self, request, form, formsets, add=False):
         """
         Construct a JSON structure describing change details from a changed object and append it to change_messge in django_admin_log.
@@ -304,44 +306,47 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         if formsets:
             for formset in formsets:
                 formList = {}
-                
-                pkName = ''
+
+                pkName = ""
                 if formset.__len__() > 0:
                     pkName = formset.forms[0]._meta.model._meta.pk.name
-                    
+
                 for singleform in formset.forms:
                     try:
                         obj = singleform.cleaned_data[pkName]
-                        
-                        if(obj is None):
+
+                        if obj is None:
                             obj = singleform.initial.get(pkName)
-                            
-                        if(obj is not None):
+
+                        if obj is not None:
                             formList[getattr(obj, pkName)] = singleform
                     except Exception as e:
                         print(e)
 
                 for added_object in formset.new_objects:
-                    message = self.getLogMessage(
-                        None, True, formsetObj=added_object)
+                    message = self.getLogMessage(None, True, formsetObj=added_object)
                     change_message += message
-        
+
                 for changed_object, changed_fields in formset.changed_objects:
                     singleForm = formList[changed_object.pk]
                     message = self.getLogMessage(
-                        singleForm, False, formsetObj=changed_object)
+                        singleForm, False, formsetObj=changed_object
+                    )
                     change_message += message
-                    
-                    self.log_change(request, changed_object,
-                                    self.getLogMessage(singleForm, False))
-                                    
+
+                    self.log_change(
+                        request, changed_object, self.getLogMessage(singleForm, False)
+                    )
+
                 for deleted_object in formset.deleted_objects:
-                    change_message.append({
-                        'deleted': {
-                            'name': str(deleted_object._meta.verbose_name_plural),
-                            'object': str(deleted_object),
+                    change_message.append(
+                        {
+                            "deleted": {
+                                "name": str(deleted_object._meta.verbose_name_plural),
+                                "object": str(deleted_object),
+                            }
                         }
-                    })
+                    )
         return change_message
 
     def _filter_unfold_actions_by_permissions(
