@@ -582,12 +582,12 @@ fieldset details[open] > summary:after {
 /*******************************************************
  Htmx
  *******************************************************/
-.htmx-swapping:before {
+.htmx-indicator.htmx-swapping:before {
   @apply absolute bg-white bottom-0 left-0 opacity-80 transition-all right-0 top-0;
   content: "";
 }
 
-.htmx-swapping:after {
+.htmx-indicator.htmx-swapping:after {
   @apply absolute animate-spin h-4 inset-1/2 material-symbols-outlined md-16 text-gray-400 w-4;
   content: "sync";
 }
