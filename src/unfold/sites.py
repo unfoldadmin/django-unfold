@@ -130,7 +130,7 @@ class UnfoldAdminSite(AdminSite):
                 pass
 
         if hasattr(self, "extra_context") and callable(self.extra_context):
-            context = self.extra_context(context)
+            context = self.extra_context(context, request)
 
         return context
 
