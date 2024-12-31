@@ -76,6 +76,7 @@ module.exports = {
     "flex-grow",
     "pb-0",
     "w-96",
+    "max-w-96",
     "md:border-0",
     "md:border-r",
     "md:w-48",
