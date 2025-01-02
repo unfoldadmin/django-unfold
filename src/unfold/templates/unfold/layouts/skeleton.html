@@ -57,9 +57,11 @@
         {% block blockbots %}
             <meta name="robots" content="NONE,NOARCHIVE">
         {% endblock %}
+    </head>
 
+    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-gray-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ mainWidth: 0, activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
         {% if colors %}
-            <style>
+            <style id="unfold-theme-colors">
                 :root {
                     {% for name, weights in colors.items %}
                         {% for weight, value in weights.items %}
@@ -69,9 +71,7 @@
                 }
             </style>
         {% endif %}
-    </head>
 
-    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-gray-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ mainWidth: 0, activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
         {% block base %}{% endblock %}
 
         <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-gray-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
