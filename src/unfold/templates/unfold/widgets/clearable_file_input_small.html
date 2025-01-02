@@ -1,9 +1,9 @@
 {% load i18n static %}
 
 <div class="flex flex-row">
-    <div class="border flex items-center overflow-hidden rounded-md shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-gray-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
+    <div class="border flex items-center overflow-hidden rounded-md shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
         {% if widget.is_initial and not widget.required %}
-            <div class="bg-gray-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-gray-900 dark:border-r-gray-700">
+            <div class="bg-base-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-base-900 dark:border-r-gray-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
                     <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
@@ -14,7 +14,7 @@
             </div>
         {% endif %}
 
-        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white flex-grow font-medium min-w-0 px-3 py-2 text-ellipsis dark:bg-gray-900">
+        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white flex-grow font-medium min-w-0 px-3 py-2 text-ellipsis dark:bg-base-900">
 
         <div class="flex flex-none items-center leading-none self-stretch">
             <div class="hidden">
@@ -22,12 +22,12 @@
             </div>
 
             {% if widget.is_initial %}
-                <a href="{{ widget.value.url }}" class="border-r cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:border-gray-700 dark:text-gray-500 dark:hover:text-gray-200" target="_blank">
+                <a href="{{ widget.value.url }}" class="border-r cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
                     <span class="material-symbols-outlined">download</span>
                 </a>
             {% endif %}
 
-            <label for="{{ widget.attrs.id }}" class="cursor-pointer text-gray-400 px-3 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200">
+            <label for="{{ widget.attrs.id }}" class="cursor-pointer text-base-400 px-3 hover:text-base-700 dark:text-base-500 dark:hover:text-base-200">
                 <span class="material-symbols-outlined">file_upload</span>
             </label>
         </div>
@@ -35,7 +35,7 @@
 
     {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
         <div class="h-9.5 ml-3 relative w-9.5">
-            <div class="absolute border flex font-medium h-full items-center left-0 rounded-md justify-center shadow-sm text-gray-400 top-0 w-full z-10 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-500">
+            <div class="absolute border flex font-medium h-full items-center left-0 rounded-md justify-center shadow-sm text-base-400 top-0 w-full z-10 dark:bg-base-900 dark:border-base-700 dark:text-base-500">
                 ?
             </div>
 

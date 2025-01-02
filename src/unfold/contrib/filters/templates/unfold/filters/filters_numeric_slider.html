@@ -9,11 +9,11 @@
 
         {% if choice.min is not None and choice.max is not None and choice.step %}
             <div class="admin-numeric-filter-slider-tooltips">
-                <span class="admin-numeric-filter-slider-tooltip-from border cursor-not-allowed flex flex-grow flex-row items-center mr-auto rounded-md shadow-sm px-3 py-2 w-full dark:bg-gray-900 dark:border-gray-700 dark:text-font-default-dark">
+                <span class="admin-numeric-filter-slider-tooltip-from border cursor-not-allowed flex flex-grow flex-row items-center mr-auto rounded-md shadow-sm px-3 py-2 w-full dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark">
                     {{ choice.value_from }}
                 </span>
 
-                <span class="admin-numeric-filter-slider-tooltip-to border cursor-not-allowed flex flex-grow flex-row items-center rounded-md shadow-sm px-3 py-2 w-full dark:bg-gray-900 dark:border-gray-700 dark:text-font-default-dark">
+                <span class="admin-numeric-filter-slider-tooltip-to border cursor-not-allowed flex flex-grow flex-row items-center rounded-md shadow-sm px-3 py-2 w-full dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark">
                     {{ choice.value_to }}
                 </span>
             </div>

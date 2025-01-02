@@ -98,7 +98,7 @@ select:after {
  Table
  *******************************************************/
 table select {
-  @apply appearance-none bg-no-repeat border block cursor-pointer font-medium px-3 py-2 pr-5 rounded-md shadow-sm text-gray-500;
+  @apply appearance-none bg-no-repeat border block cursor-pointer font-medium px-3 py-2 pr-5 rounded-md shadow-sm text-base-500;
 
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgb(156, 163, 175)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 10l5 5 5-5H7z"/></svg>');
   background-size: 1.125rem 1.125rem;
@@ -123,15 +123,15 @@ table tr.selected th {
 }
 
 .datetimeshortcuts a {
-  @apply text-0 text-gray-400 transition hover:text-gray-700;
+  @apply text-0 text-base-400 transition hover:text-base-700;
 }
 
 .datetimeshortcuts a:first-child {
-  @apply hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200;
+  @apply hover:text-base-700 dark:text-base-500 dark:hover:text-base-200;
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply border-l flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700 dark:hover:text-white;
+  @apply border-l flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
   content: "timer";
 }
 
@@ -140,11 +140,11 @@ table tr.selected th {
 }
 
 .date-icon {
-  @apply block h-9 text-gray-400 transition-all w-9 hover:text-gray-700 dark:text-gray-500 dark:hover:text-white;
+  @apply block h-9 text-base-400 transition-all w-9 hover:text-base-700 dark:text-base-500 dark:hover:text-white;
 }
 
 .date-icon:after {
-  @apply border-l h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700;
+  @apply border-l h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700;
   content: "edit";
 }
 
@@ -153,11 +153,11 @@ table tr.selected th {
 }
 
 .clock-icon {
-  @apply block h-9 ml-2 w-9 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200;
+  @apply block h-9 ml-2 w-9 hover:text-base-700 dark:text-base-500 dark:hover:text-base-200;
 }
 
 .clock-icon:after {
-  @apply border-l h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-gray-700 dark:border-gray-700 dark:hover:text-white;
+  @apply border-l h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
   content: "edit";
 }
 
@@ -166,12 +166,12 @@ table tr.selected th {
 }
 
 .timezonewarning {
-  @apply absolute block items-center right-20 top-2.5 text-gray-500 truncate;
+  @apply absolute block items-center right-20 top-2.5 text-base-500 truncate;
   font-size: 0;
 }
 
 .timezonewarning:hover {
-  @apply bg-white bottom-px leading-9 left-px right-px px-3 rounded-md text-xs top-px dark:bg-gray-900;
+  @apply bg-white bottom-px leading-9 left-px right-px px-3 rounded-md text-xs top-px dark:bg-base-900;
 }
 
 .timezonewarning:hover:before {
@@ -179,7 +179,7 @@ table tr.selected th {
 }
 
 .timezonewarning:before {
-  @apply block cursor-pointer items-center justify-center material-symbols-outlined text-base text-center text-red-600 dark:border-gray-700;
+  @apply block cursor-pointer items-center justify-center material-symbols-outlined text-base text-center text-red-600 dark:border-base-700;
   content: "warning";
 }
 
@@ -191,37 +191,37 @@ table tr.selected th {
 }
 
 .selector select {
-  @apply bg-none flex-grow w-full dark:bg-gray-900;
+  @apply bg-none flex-grow w-full dark:bg-base-900;
 }
 
 .selector option {
-  @apply px-3 text-gray-500 text-sm truncate dark:text-gray-300;
+  @apply px-3 text-base-500 text-sm truncate dark:text-base-300;
 }
 
 .selector .list-footer-display {
-  @apply border-t py-2 text-center text-sm dark:border-gray-700;
+  @apply border-t py-2 text-center text-sm dark:border-base-700;
 }
 
 .selector-chosen,
 .selector-available {
-  @apply border flex flex-col flex-grow rounded-md self-stretch shadow-sm md:w-72 lg:w-96 dark:border-gray-700;
+  @apply border flex flex-col flex-grow rounded-md self-stretch shadow-sm md:w-72 lg:w-96 dark:border-base-700;
 }
 
 .selector-chosen h2,
 .selector-available h2 {
-  @apply border-b mb-3 py-2 px-3 text-sm text-gray-500 dark:border-gray-700 dark:text-gray-200;
+  @apply border-b mb-3 py-2 px-3 text-sm text-base-500 dark:border-base-700 dark:text-base-200;
 }
 
 .selector-filter {
   @apply flex;
 }
 .selector-filter input {
-  @apply bg-gray-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded-md text-gray-500 text-sm focus:outline-none dark:bg-gray-800 dark:text-gray-300;
+  @apply bg-base-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded-md text-base-500 text-sm focus:outline-none dark:bg-base-800 dark:text-base-300;
 }
 
 .selector-chooseall,
 .selector-clearall {
-  @apply block border-t py-2 text-center text-sm text-primary-500 dark:border-gray-700;
+  @apply block border-t py-2 text-center text-sm text-primary-500 dark:border-base-700;
 }
 
 .selector-clearall {
@@ -238,7 +238,7 @@ table tr.selected th {
 
 .selector-add:after,
 .selector-remove:after {
-  @apply inline-block material-symbols-outlined text-gray-400 w-5;
+  @apply inline-block material-symbols-outlined text-base-400 w-5;
 }
 
 .selector-add:after {
@@ -265,15 +265,15 @@ table tr.selected th {
 }
 
 .tabular-table .template tr {
-  @apply border-t border-gray-200 dark:border-gray-800;
+  @apply border-t border-base-200 dark:border-base-800;
 }
 
 .add-row {
-  @apply align-middle bg-gray-50 px-3 py-5 font-normal text-right dark:bg-white/[.02];
+  @apply align-middle bg-base-50 px-3 py-5 font-normal text-right dark:bg-white/[.02];
 }
 
 [data-inline-type="stacked"] .add-row {
-  @apply border-t border-gray-200 overflow-hidden dark:border-gray-800;
+  @apply border-t border-base-200 overflow-hidden dark:border-base-800;
 }
 
 .add-row td {
@@ -281,7 +281,7 @@ table tr.selected th {
 }
 
 .add-row a {
-  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center hover:text-gray-700 lg:float-right dark:bg-gray-900 dark:border-gray-700 dark:hover:text-gray-200;
+  @apply bg-white border block font-medium px-3 py-2 rounded-md text-center hover:text-base-700 lg:float-right dark:bg-base-900 dark:border-base-700 dark:hover:text-base-200;
 }
 
 .inline-deletelink {
@@ -300,7 +300,7 @@ h3 span:nth-child(3) {
  Autocomplete
  *******************************************************/
 .select2.select2-container {
-  @apply bg-white border max-w-2xl !min-h-9.5 relative rounded-md shadow-sm !w-full dark:bg-gray-900 dark:border-gray-700;
+  @apply bg-white border max-w-2xl !min-h-9.5 relative rounded-md shadow-sm !w-full dark:bg-base-900 dark:border-base-700;
 }
 
 .errors .select2.select2-container {
@@ -315,7 +315,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__rendered {
-  @apply font-medium h-9 px-3 py-2 text-gray-500 text-sm dark:text-gray-300;
+  @apply font-medium h-9 px-3 py-2 text-base-500 text-sm dark:text-base-300;
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -333,7 +333,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__clear:after {
-  @apply material-symbols-outlined text-gray-500;
+  @apply material-symbols-outlined text-base-500;
   content: "close";
   font-size: 14px;
 }
@@ -347,7 +347,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__arrow:after {
-  @apply left-0 leading-none m-0 material-symbols-outlined text-gray-500 text-lg;
+  @apply left-0 leading-none m-0 material-symbols-outlined text-base-500 text-lg;
   content: "expand_more";
 }
 
@@ -366,7 +366,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-search--dropdown
   .select2-search__field {
-  @apply bg-gray-50 border border-gray-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded-md shadow-sm text-gray-500 text-sm w-full dark:bg-gray-800 dark:border-gray-800 dark:text-gray-300;
+  @apply bg-base-50 border border-base-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded-md shadow-sm text-base-500 text-sm w-full dark:bg-base-800 dark:border-base-800 dark:text-base-300;
 }
 
 .select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--above {
@@ -378,7 +378,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--open .select2-dropdown {
-  @apply border-primary-600 ring ring-primary-300 pb-2 shadow-sm dark:bg-gray-900 dark:border-primary-700 after:block after:bg-white after:absolute after:border-l after:border-l-primary-600 after:border-r after:border-r-primary-600 after:h-1 after:-left-px after:-right-px after:-mt-1 after:top-0 dark:after:bg-gray-900 dark:after:border-l-primary-700 dark:after:border-r-primary-700 dark:ring-primary-700 dark:ring-opacity-50;
+  @apply border-primary-600 ring ring-primary-300 pb-2 shadow-sm dark:bg-base-900 dark:border-primary-700 after:block after:bg-white after:absolute after:border-l after:border-l-primary-600 after:border-r after:border-r-primary-600 after:h-1 after:-left-px after:-right-px after:-mt-1 after:top-0 dark:after:bg-base-900 dark:after:border-l-primary-700 dark:after:border-r-primary-700 dark:ring-primary-700 dark:ring-opacity-50;
 }
 
 .select2-container.select2-container--open .select2-dropdown--below {
@@ -391,7 +391,7 @@ h3 span:nth-child(3) {
 
 .select2-container.select2-container--admin-autocomplete
   .select2-results__option {
-  @apply block px-3 py-2 text-gray-500 text-sm transition-all dark:text-gray-300;
+  @apply block px-3 py-2 text-base-500 text-sm transition-all dark:text-base-300;
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -420,14 +420,14 @@ h3 span:nth-child(3) {
 .select2-container--admin-autocomplete
   .select2-selection--multiple
   li.select2-selection__choice {
-  @apply bg-gray-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-gray-600 hover:text-gray-700 truncate dark:bg-gray-800 dark:text-gray-300 dark:hover:text-gray-200;
+  @apply bg-base-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-base-600 hover:text-base-700 truncate dark:bg-base-800 dark:text-base-300 dark:hover:text-base-200;
 }
 
 .select2-container--admin-autocomplete
   .select2-selection--multiple
   li.select2-selection__choice
   .select2-selection__choice__remove {
-  @apply align-top text-0 hover:text-gray-600 dark:hover:text-gray-200;
+  @apply align-top text-0 hover:text-base-600 dark:hover:text-base-200;
 }
 
 .select2-container--admin-autocomplete
@@ -444,7 +444,7 @@ h3 span:nth-child(3) {
   .select2-selection--multiple
   li.select2-search--inline
   .select2-search__field {
-  @apply m-0 h-7 text-gray-500 text-sm;
+  @apply m-0 h-7 text-base-500 text-sm;
 }
 
 .select2.select2-container--open {
@@ -489,11 +489,11 @@ fieldset details[open] > summary:after {
  *******************************************************/
 .calendarbox,
 .clockbox {
-  @apply bg-white border rounded-md shadow-sm text-gray-500 text-sm w-80 z-50 dark:bg-gray-800 dark:border-gray-700 !fixed !left-1/2 !top-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply bg-white border rounded-md shadow-sm text-base-500 text-sm w-80 z-50 dark:bg-base-800 dark:border-base-700 !fixed !left-1/2 !top-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 .calendar caption {
-  @apply font-medium mb-3 py-3 text-gray-700 dark:text-gray-200;
+  @apply font-medium mb-3 py-3 text-base-700 dark:text-base-200;
 }
 
 .calendar table {
@@ -501,7 +501,7 @@ fieldset details[open] > summary:after {
 }
 
 .calendar table th {
-  @apply font-medium text-center text-gray-700 text-xs dark:text-gray-200;
+  @apply font-medium text-center text-base-700 text-xs dark:text-base-200;
 }
 
 .calendar table td {
@@ -509,11 +509,11 @@ fieldset details[open] > summary:after {
 }
 
 .calendar table td a {
-  @apply block flex h-8 items-center justify-center rounded-full transition-all w-8 dark:text-gray-300;
+  @apply block flex h-8 items-center justify-center rounded-full transition-all w-8 dark:text-base-300;
 }
 
 .calendar table td a:hover {
-  @apply bg-gray-100 text-gray-700;
+  @apply bg-base-100 text-base-700;
 }
 
 .calendar table td.today a {
@@ -525,11 +525,11 @@ fieldset details[open] > summary:after {
 }
 
 .calendar-shortcuts a {
-  @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-gray-500 text-xs transition-all w-1/3 dark:border-gray-700 dark:hover:border-gray-600 dark:text-gray-300 dark:hover:text-gray-200;
+  @apply border font-medium leading-none mx-1 px-2 py-2 rounded-md shadow-sm text-center text-base-500 text-xs transition-all w-1/3 dark:border-base-700 dark:hover:border-base-600 dark:text-base-300 dark:hover:text-base-200;
 }
 
 .calendar-cancel {
-  @apply block border-t py-2 text-center text-xs text-red-600 dark:border-gray-700 dark:text-red-500;
+  @apply block border-t py-2 text-center text-xs text-red-600 dark:border-base-700 dark:text-red-500;
 }
 
 .calendarnav-previous {
@@ -538,7 +538,7 @@ fieldset details[open] > summary:after {
 
 .calendarnav-next:after,
 .calendarnav-previous:after {
-  @apply border flex h-7 items-center justify-center material-symbols-outlined rounded-full text-gray-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-800;
+  @apply border flex h-7 items-center justify-center material-symbols-outlined rounded-full text-base-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-base-800 dark:border-base-700 dark:hover:border-base-800;
 
   content: "navigate_before";
   display: flex;
@@ -546,7 +546,7 @@ fieldset details[open] > summary:after {
 
 .calendarnav-next:hover:after,
 .calendarnav-previous:hover:after {
-  @apply dark:border-gray-600 dark:text-gray-200;
+  @apply dark:border-base-600 dark:text-base-200;
 }
 
 .calendarnav-next {
@@ -562,14 +562,14 @@ fieldset details[open] > summary:after {
  Timepicker
  *******************************************************/
 .clockbox {
-  @apply bg-white border rounded-md shadow-sm text-sm dark:bg-gray-800 dark:border-gray-700 z-50;
+  @apply bg-white border rounded-md shadow-sm text-sm dark:bg-base-800 dark:border-base-700 z-50;
 }
 
 .clockbox h2 {
-  @apply font-medium px-3 py-2 text-gray-700 dark:text-gray-200;
+  @apply font-medium px-3 py-2 text-base-700 dark:text-base-200;
 }
 .clockbox .timelist {
-  @apply pb-2 px-3 text-gray-500 dark:text-gray-300;
+  @apply pb-2 px-3 text-base-500 dark:text-base-300;
 }
 
 .clockbox .timelist li {
@@ -588,7 +588,7 @@ fieldset details[open] > summary:after {
 }
 
 .htmx-indicator.htmx-swapping:after {
-  @apply absolute animate-spin h-4 inset-1/2 material-symbols-outlined md-16 text-gray-400 w-4;
+  @apply absolute animate-spin h-4 inset-1/2 material-symbols-outlined md-16 text-base-400 w-4;
   content: "sync";
 }
 
@@ -596,7 +596,7 @@ fieldset details[open] > summary:after {
  Filters
  *******************************************************/
 #changelist-filter .admin-numeric-filter-slider .noUi-handle {
-  @apply bg-white border border-gray-200 cursor-pointer h-4 -right-4 rounded-full shadow-sm w-4 dark:bg-gray-200 dark:border-gray-200;
+  @apply bg-white border border-base-200 cursor-pointer h-4 -right-4 rounded-full shadow-sm w-4 dark:bg-base-200 dark:border-base-200;
 }
 
 #changelist-filter .admin-numeric-filter-slider .noUi-handle-upper {
@@ -612,7 +612,7 @@ fieldset details[open] > summary:after {
 }
 
 #changelist-filter .admin-numeric-filter-slider.noUi-target {
-  @apply bg-gray-200 border-0 h-1 shadow-none dark:bg-gray-600;
+  @apply bg-base-200 border-0 h-1 shadow-none dark:bg-base-600;
 }
 
 #changelist-filter .admin-numeric-filter-slider .noUi-connect {
@@ -620,14 +620,14 @@ fieldset details[open] > summary:after {
 }
 
 #changelist-filter .admin-numeric-filter-slider-tooltips {
-  @apply flex flex-row font-medium mb-5 space-x-4 text-gray-500 text-sm;
+  @apply flex flex-row font-medium mb-5 space-x-4 text-base-500 text-sm;
 }
 
 /*******************************************************
  Trix
  *******************************************************/
 trix-toolbar[id^="trix-toolbar-"] {
-  @apply sticky top-0 dark:bg-gray-900;
+  @apply sticky top-0 dark:bg-base-900;
 }
 
 .trix-active {
@@ -642,7 +642,7 @@ trix-toolbar[id^="trix-toolbar-"] {
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav {
-  @apply bg-gray-100 border-0 flex gap-2 m-0 mb-4 mr-auto p-1 rounded text-sm dark:bg-white/[.04] after:hidden;
+  @apply bg-base-100 border-0 flex gap-2 m-0 mb-4 mr-auto p-1 rounded text-sm dark:bg-white/[.04] after:hidden;
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav li {
@@ -650,18 +650,18 @@ trix-toolbar[id^="trix-toolbar-"] {
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav li a {
-  @apply bg-transparent border-0 flex flex-row font-medium items-center m-0 px-2.5 py-1 rounded text-gray-400 text-sm hover:bg-gray-700/[.04] hover:text-gray-700 dark:hover:bg-white/[.04] dark:hover:text-white;
+  @apply bg-transparent border-0 flex flex-row font-medium items-center m-0 px-2.5 py-1 rounded text-base-400 text-sm hover:bg-base-700/[.04] hover:text-base-700 dark:hover:bg-white/[.04] dark:hover:text-white;
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav li.ui-tabs-active a {
-  @apply flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-gray-700 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-white;
+  @apply flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-base-700 hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-white;
 }
 
 /*******************************************************
  Simplebar
  *******************************************************/
 .simplebar-track .simplebar-scrollbar::before {
-  @apply bg-gray-900/80  dark:bg-gray-400/80;
+  @apply bg-base-900/80  dark:bg-base-400/80;
 }
 
 .simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {

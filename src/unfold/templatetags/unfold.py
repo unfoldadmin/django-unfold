@@ -282,11 +282,11 @@ def fieldset_rows_classes(context: Context) -> str:
         classes.extend(
             [
                 "border",
-                "border-gray-200",
+                "border-base-200",
                 "mb-8",
                 "rounded-md",
                 "shadow-sm",
-                "dark:border-gray-800",
+                "dark:border-base-800",
             ]
         )
 
@@ -319,8 +319,8 @@ def fieldset_row_classes(context: Context) -> str:
         classes.extend(
             [
                 "lg:border-b",
-                "lg:border-gray-200",
-                "dark:lg:border-gray-800",
+                "lg:border-base-200",
+                "dark:lg:border-base-800",
                 "last:lg:border-b-0",
             ]
         )
@@ -363,12 +363,12 @@ def fieldset_line_classes(context: Context) -> str:
         classes.extend(
             [
                 "border-b",
-                "border-gray-200",
+                "border-base-200",
                 "group-[.last]/row:border-b-0",
                 "lg:border-b-0",
                 "lg:border-l",
                 "lg:flex-row",
-                "dark:border-gray-800",
+                "dark:border-base-800",
                 "first:lg:border-l-0",
             ]
         )
