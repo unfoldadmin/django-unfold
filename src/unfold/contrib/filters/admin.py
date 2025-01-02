@@ -80,8 +80,7 @@ class TextFilter(admin.SimpleListFilter):
             {
                 "form": self.form_class(
                     name=self.parameter_name,
-                    label=_("By %(filter_title)s") % {
-                        "filter_title": self.title},
+                    label=_("By %(filter_title)s") % {"filter_title": self.title},
                     data={self.parameter_name: self.value()},
                 ),
             },
@@ -104,8 +103,7 @@ class FieldTextFilter(ValueMixin, admin.FieldListFilter):
         return (
             {
                 "form": self.form_class(
-                    label=_("By %(filter_title)s") % {
-                        "filter_title": self.title},
+                    label=_("By %(filter_title)s") % {"filter_title": self.title},
                     name=self.lookup_kwarg,
                     data={self.lookup_kwarg: self.value()},
                 ),
@@ -122,8 +120,7 @@ class DropdownFilter(admin.SimpleListFilter):
         return (
             {
                 "form": self.form_class(
-                    label=_("By %(filter_title)s") % {
-                        "filter_title": self.title},
+                    label=_("By %(filter_title)s") % {"filter_title": self.title},
                     name=self.parameter_name,
                     choices=[self.all_option, *self.lookup_choices],
                     data={self.parameter_name: self.value()},
