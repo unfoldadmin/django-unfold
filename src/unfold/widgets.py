@@ -199,7 +199,7 @@ RADIO_CLASSES = [
     "focus:outline-offset-2",
     "focus:outline-primary-500",
     "after:absolute",
-    "after:bg-white",
+    "after:bg-transparent",
     "after:content-['']",
     "after:flex",
     "after:h-2",
