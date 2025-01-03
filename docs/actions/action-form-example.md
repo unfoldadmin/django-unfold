@@ -91,7 +91,7 @@ Template displaying the form. Please note that breadcrumbs are empty in this cas
 
 {% block content %}
     <form action="" method="post" novalidate>
-        <div class="aligned border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+        <div class="aligned border border-base-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-base-800">
             {% csrf_token %}
 
             {% for field in form %}

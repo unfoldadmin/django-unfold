@@ -6,7 +6,7 @@
 
         {% include "admin/import_export/resource_fields_list.html" with import_or_export="import" %}
 
-        <fieldset class="border border-gray-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-gray-800">
+        <fieldset class="border border-base-200 mb-8 rounded-md pt-3 px-3 shadow-sm dark:border-base-800">
             {% for field in form %}
                 {% if field.field.widget.attrs.readonly %}
                     {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}

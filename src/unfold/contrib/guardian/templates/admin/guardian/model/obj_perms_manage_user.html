@@ -33,7 +33,7 @@
 {% endif %}{% endblock %}
 
 {% block content %}
-    <div class="border border-gray-200 overflow-hidden rounded-md p-3 shadow-sm dark:border-gray-800">
+    <div class="border border-base-200 overflow-hidden rounded-md p-3 shadow-sm dark:border-base-800">
         <form method="post">
             {% csrf_token %}
 
@@ -45,7 +45,7 @@
 
             {% include "unfold/helpers/field.html" with field=form.permissions %}
 
-            <div class="bg-gray-50 border-t flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-gray-800">
+            <div class="bg-base-50 border-t flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-base-800">
                 <div class="ml-auto">
                     {% trans "Save" as title %}
                     {% include "unfold/helpers/submit.html" with title=title %}

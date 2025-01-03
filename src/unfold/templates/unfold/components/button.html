@@ -1,4 +1,4 @@
 <{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if name %}name="{{ name }}"{% endif %}
-class="border font-medium px-3 py-2 rounded-md text-center whitespace-nowrap {% if variant == "default" %}bg-white dark:border-gray-700 dark:bg-transparent dark:text-white{% else %}bg-primary-600 border-transparent text-white{% endif %}{% if class %} {{ class }}{% endif %}">
+class="border font-medium px-3 py-2 rounded-md text-center whitespace-nowrap {% if variant == "default" %}bg-white dark:border-base-700 dark:bg-transparent dark:text-white{% else %}bg-primary-600 border-transparent text-white{% endif %}{% if class %} {{ class }}{% endif %}">
 {{ children }}
 </{% if href %}a{% else %}button{% endif%}>

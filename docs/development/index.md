@@ -46,11 +46,11 @@ Some components like datepickers, calendars or selectors in admin was not possib
 
 | Component                         | Classes                                                |
 | --------------------------------- | ------------------------------------------------------ |
-| Regular text                      | text-gray-600 dark:text-gray-300                       |
-| Hover regular text                | text-gray-700 dark:text-gray-200                       |
-| Headings                          | font-semibold text-gray-900 dark:text-gray-100         |
-| Icon                              | text-gray-400 dark:text-gray-500                       |
-| Hover icon                        | hover:text-gray-500 dark:hover:text-gray-400           |
+| Regular text                      | text-base-600 dark:text-base-300                       |
+| Hover regular text                | text-base-700 dark:text-base-200                       |
+| Headings                          | font-semibold text-base-900 dark:text-base-100         |
+| Icon                              | text-base-400 dark:text-base-500                       |
+| Hover icon                        | hover:text-base-500 dark:hover:text-base-400           |
 
 ## Using VS Code with containers
 

@@ -1,8 +1,8 @@
 {% load admin_urls i18n import_export_tags unfold %}
 
 {% block preview %}
-    <table class="border-gray-200 border-spacing-none border-separate w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
-        <thead class="hidden lg:table-header-group text-gray-900 dark:text-gray-100">
+    <table class="border-base-200 border-spacing-none border-separate w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-base-800">
+        <thead class="hidden lg:table-header-group text-base-900 dark:text-base-100">
             <tr>
                 <th class="align-middle capitalize font-semibold px-3 py-2 text-left"></th>
 
@@ -16,8 +16,8 @@
 
         <tbody>
             {% for row in result.valid_rows %}
-                <tr class="{{ row.import_type }} {% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
-                    <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                <tr class="{{ row.import_type }} {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                    <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
                         {% if row.import_type == 'new' %}
                             {% trans "New" %}
                         {% elif row.import_type == 'skip' %}
@@ -30,7 +30,7 @@
                     </td>
 
                     {% for field in row.diff %}
-                        <td data-label="{{ result.diff_headers|index:forloop.counter0 }}" class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-gray-800">
+                        <td data-label="{{ result.diff_headers|index:forloop.counter0 }}" class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
                             {{ field }}
                         </td>
                     {% endfor %}
