@@ -1,7 +1,7 @@
 {% load i18n static %}
 
 <div class="flex flex-row">
-    <div class="border flex items-center overflow-hidden rounded-md shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
+    <div class="border flex items-center overflow-hidden rounded shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
         {% if widget.is_initial and not widget.required %}
             <div class="bg-base-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-base-900 dark:border-r-gray-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
@@ -35,11 +35,11 @@
 
     {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
         <div class="h-9.5 ml-3 relative w-9.5">
-            <div class="absolute border flex font-medium h-full items-center left-0 rounded-md justify-center shadow-sm text-base-400 top-0 w-full z-10 dark:bg-base-900 dark:border-base-700 dark:text-base-500">
+            <div class="absolute border flex font-medium h-full items-center left-0 rounded justify-center shadow-sm text-base-400 top-0 w-full z-10 dark:bg-base-900 dark:border-base-700 dark:text-base-500">
                 ?
             </div>
 
-            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-no-repeat block h-9.5 overflow-hidden relative rounded-md w-9.5 z-20" style="background-image: url('{{ widget.value.url }}')">
+            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-no-repeat block h-9.5 overflow-hidden relative rounded w-9.5 z-20" style="background-image: url('{{ widget.value.url }}')">
             </a>
         </div>
     {% endif %}

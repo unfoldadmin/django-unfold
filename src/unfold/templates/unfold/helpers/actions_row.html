@@ -9,9 +9,9 @@
                 </span>
 
                 <template x-teleport="body">
-                    <nav x-anchor.bottom-end.offset.4="$refs.rowDropdown{{ action_id }}" class="bg-white border flex flex-col leading-none py-1 rounded-md shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openActionsId{{ action_id }}" @click.outside="openActionsId{{ action_id }} = false">
+                    <nav x-anchor.bottom-end.offset.4="$refs.rowDropdown{{ action_id }}" class="bg-white border flex flex-col leading-none py-1 rounded shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openActionsId{{ action_id }}" @click.outside="openActionsId{{ action_id }} = false">
                         {% for action in actions %}
-                            <a href="{% url action.raw_path instance_pk %}" class="mx-1 px-3 py-2 rounded-md truncate hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
+                            <a href="{% url action.raw_path instance_pk %}" class="mx-1 px-3 py-2 rounded truncate hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
                                 {{ action.title }}
                             </a>
                         {% endfor %}

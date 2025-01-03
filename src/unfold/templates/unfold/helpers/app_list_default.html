@@ -3,8 +3,8 @@
 {% if app_list %}
     {% for app in app_list %}
         <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
-            <div class="bg-base-50 mb-6 rounded-md p-3 dark:bg-base-800">
-                <table class="border border-base-400/10 border-spacing-none border-separate rounded-md overflow-hidden shadow-sm w-full dark:border-base-800">
+            <div class="bg-base-50 mb-6 rounded p-3 dark:bg-base-800">
+                <table class="border border-base-400/10 border-spacing-none border-separate rounded overflow-hidden shadow-sm w-full dark:border-base-800">
                     <caption class="font-semibold mb-3 text-base-900 text-left dark:text-base-100">
                         <a href="{{ app.app_url }}" class="section" title="{% blocktranslate with name=app.name %}Models in the {{ name }} application{% endblocktranslate %}">
                             {{ app.name }}

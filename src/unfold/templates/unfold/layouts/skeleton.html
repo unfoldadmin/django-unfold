@@ -63,6 +63,10 @@
         {% if colors %}
             <style id="unfold-theme-colors">
                 :root {
+                    {% if border_radius %}
+                        --border-radius: {{ border_radius }};
+                    {% endif %}
+
                     {% for name, weights in colors.items %}
                         {% for weight, value in weights.items %}
                             --color-{{ name }}-{{ weight }}: {{ value }};
