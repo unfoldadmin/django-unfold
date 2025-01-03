@@ -9,7 +9,7 @@
                 {% if not is_hidden %}
                     {% if can_add_related or can_change_related or can_delete_related or can_view_related%}
                         {% if can_change_related %}
-                            <a class="related-widget-wrapper-link change-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-base-400 text-sm w-9.5 hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200"
+                            <a class="related-widget-wrapper-link change-related bg-white border border-base-200 cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-base-400 text-sm w-9.5 hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200"
                                id="change_id_{{ name }}"
                                data-popup="yes"
                                data-href-template="{{ change_related_template_url }}?{{ url_params }}"
@@ -19,7 +19,7 @@
                         {% endif %}
 
                         {% if can_add_related %}
-                            <a class="related-widget-wrapper-link add-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-base-400 text-sm w-9.5 hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200"
+                            <a class="related-widget-wrapper-link add-related bg-white border border-base-200  cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-base-400 text-sm w-9.5 hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200"
                                data-popup="yes"
                                id="add_id_{{ name }}"
                                href="{{ add_related_url }}?{{ url_params }}"
@@ -29,7 +29,7 @@
                         {% endif %}
 
                         {% if can_view_related %}
-                            <a class="related-widget-wrapper-link view-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-base-400 text-sm w-9.5 hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200"
+                            <a class="related-widget-wrapper-link view-related bg-white border border-base-200 cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-base-400 text-sm w-9.5 hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200"
                                id="view_id_{{ name }}"
                                data-href-template="{{ change_related_template_url }}?{{ view_related_url_params }}"
                                title="{% blocktranslate %}View selected {{ model }}{% endblocktranslate %}">
@@ -38,7 +38,7 @@
                         {% endif %}
 
                         {% if can_delete_related %}
-                            <a class="related-widget-wrapper-link delete-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm w-9.5 dark:bg-base-900 dark:border-base-700 dark:text-red-500"
+                            <a class="related-widget-wrapper-link delete-related bg-white border border-base-200 cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-red-600 text-sm w-9.5 dark:bg-base-900 dark:border-base-700 dark:text-red-500"
                                id="delete_id_{{ name }}"
                                data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
                                data-popup="yes"

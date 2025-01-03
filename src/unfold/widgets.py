@@ -52,6 +52,7 @@ CHECKBOX_LABEL_CLASSES = [
 
 BASE_CLASSES = [
     "border",
+    "border-base-200",
     "bg-white",
     "font-medium",
     "min-w-20",
