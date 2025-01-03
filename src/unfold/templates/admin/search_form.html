@@ -3,8 +3,8 @@
 {% if cl.search_fields %}
     <div id="toolbar">
         <form id="changelist-search" method="get" role="search">
-            <div class="bg-white border flex rounded overflow-hidden shadow-sm lg:w-96 focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-base-900 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
-                <input class="font-medium grow min-w-0 h-9 px-3 text-font-default-light text-sm focus:outline-none dark:bg-base-900 dark:text-font-default-dark placeholder-shown:truncate" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" placeholder="{% if cl.search_help_text %}{{ cl.search_help_text }}{% else %}{% trans "Type to search" %}{% endif %}" />
+            <div class="bg-white border border-base-200 flex rounded overflow-hidden shadow-sm lg:w-96 focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-base-900 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
+                <input class="font-medium grow min-w-0 h-9 px-3 text-font-default-light text-sm focus:outline-none dark:bg-base-900 dark:text-font-default-dark placeholder-shown:truncate placeholder-base-400" type="text" name="{{ search_var }}" value="{{ cl.query }}" id="searchbar" placeholder="{% if cl.search_help_text %}{{ cl.search_help_text }}{% else %}{% trans "Type to search" %}{% endif %}" />
 
                 <button type="submit" class="flex items-center px-2 focus:outline-none" id="searchbar-submit">
                     <span class="material-symbols-outlined md-18 text-base-400 dark:text-base-500">search</span>
