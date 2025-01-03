@@ -45,7 +45,7 @@
             </ul>
         </div>
     {% elif protected %}
-        <div class="border border-base-200 rounded-md shadow-sm dark:border-base-800">
+        <div class="border border-base-200 rounded shadow-sm dark:border-base-800">
             <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate %}Deleting the selected {{ objects_name }} would require deleting the following protected related objects:{% endblocktranslate %}
             </p>
@@ -59,7 +59,7 @@
             </div>
         </div>
     {% else %}
-        <div class="border border-base-200 rounded-md shadow-sm dark:border-base-800">
+        <div class="border border-base-200 rounded shadow-sm dark:border-base-800">
             <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate %}Are you sure you want to delete the selected {{ objects_name }}? All of the following objects and their related items will be deleted:{% endblocktranslate %}
             </p>

@@ -8,7 +8,7 @@
     </h2>
 
     {% if groups_perms.items %}
-        <table id="group-permissions" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-base-800">
+        <table id="group-permissions" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded lg:shadow-sm lg:dark:border-base-800">
             <thead class="hidden lg:table-header-group text-font-important-light dark:text-font-important-dark">
                 <tr>
                     <th class="align-middle font-semibold px-3 py-2 text-left">
@@ -29,7 +29,7 @@
 
             <tbody>
                 {% for group, group_perms in groups_perms.items %}
-                    <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                    <tr class="block border mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                         <th class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans "User" %}">
                             <span>
                                 {{ group }}
@@ -57,7 +57,7 @@
         </table>
     {% endif %}
 
-    <div class="border border-base-200 overflow-hidden rounded-md p-3 shadow-sm dark:border-base-800">
+    <div class="border border-base-200 overflow-hidden rounded p-3 shadow-sm dark:border-base-800">
         {% for field in group_form %}
             {% include "admin/guardian/model/field.html" %}
         {% endfor %}

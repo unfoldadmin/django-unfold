@@ -4,6 +4,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      borderRadius: {
+        DEFAULT: "var(--border-radius, 6px)",
+      },
       colors: {
         base: {
           50: "rgb(var(--color-base-50) / <alpha-value>)",

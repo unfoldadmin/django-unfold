@@ -6,7 +6,7 @@
             <span class="block bg-center bg-contain bg-no-repeat {% if not value.3.width %}w-16{% endif %} {% if not value.3.height %}h-12{% endif %}" style="background-image: url({{ value.3.path }}); {% if value.3.height %}height: {{ value.3.height }}px;{% endif %} {% if value.3.width %}width: {{ value.3.width }}px;{% endif %}">
             </span>
         {% else %}
-            <span class="bg-center bg-cover bg-white flex font-medium justify-center overflow-hidden dark:bg-base-900 dark:border-base-700 {% if value.3.squared %}rounded-sm{% else %}rounded-full{% endif %}{% if not value.3.borderless %} border{% endif %}{% if not value.3.width or not value.3.height %} h-8 max-w-8 min-w-8{% endif %}">
+            <span class="bg-center bg-cover bg-white flex font-medium justify-center overflow-hidden dark:bg-base-900 dark:border-base-700 {% if value.3.squared %}rounded{% else %}rounded-full{% endif %}{% if not value.3.borderless %} border{% endif %}{% if not value.3.width or not value.3.height %} h-8 max-w-8 min-w-8{% endif %}">
                 <img loading="lazy" src="{{ value.3.path }}" class="max-w-none object-cover" {% if value.3.width %}width="{{ value.3.width }}"{% endif %} {% if value.3.height %}height="{{ value.3.height }}"{% endif %} alt="{% trans "Record picture" %}" />
             </span>
         {% endif %}
