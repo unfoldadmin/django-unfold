@@ -3,7 +3,7 @@
 {% load admin_urls %}
 {% load getattribute from getattributes %}
 
-<table id="change-history" class="border-gray-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800">
+<table id="change-history" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-md lg:shadow-sm lg:dark:border-base-800">
     <thead class="hidden text-font-important-light lg:table-header-group dark:text-font-important-dark">
         <tr>
             <th class="align-middle font-semibold px-3 py-2 text-left ">
@@ -40,28 +40,28 @@
 
     <tbody>
         {% for record in historical_records %}
-            <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
-                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Object' %}">
+            <tr class="block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Object' %}">
                     <a href="{% url opts|admin_urlname:'simple_history' object.pk record.pk %}">
                         {{ record.history_object }}
                     </a>
                 </td>
 
                 {% for column in history_list_display %}
-                    <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans column %}">
+                    <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans column %}">
                         {{ record|getattribute:column }}
                     </th>
                 {% endfor %}
 
-                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Date/time' %}">
+                <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Date/time' %}">
                     {{ record.history_date }}
                 </td>
 
-                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Comment' %}">
+                <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Comment' %}">
                     {{ record.get_history_type_display }}
                 </td>
 
-                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Changed by' %}">
+                <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Changed by' %}">
                     {% if record.history_user %}
                         {% url admin_user_view record.history_user_id as admin_user_url %}
 
@@ -75,11 +75,11 @@
                     {% endif %}
                 </td>
 
-                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Change reason' %}">
+                <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Change reason' %}">
                     {{ record.history_change_reason }}
                 </td>
 
-                <td class="align-middle flex border-t border-gray-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-gray-800" data-label="{% trans 'Changes' %}">
+                <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Changes' %}">
                     {% block history_delta_changes %}
                         {% if record.history_delta_changes %}
                             <ul>

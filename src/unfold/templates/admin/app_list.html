@@ -20,14 +20,14 @@
                                     {% if not model.hidden %}
                                         <li class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path|urlencode %} current-model{% endif %}">
                                             {% if model.header %}
-                                                <h3 class="font-medium my-2 text-gray-900 text-sm dark:text-gray-200">
+                                                <h3 class="font-medium my-2 text-base-900 text-sm dark:text-base-200">
                                                     {{ model.header }}
                                                 </h3>
                                             {% endif %}
 
                                             {% if model.admin_url %}
                                                 <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}"
-                                                   class="flex items-center h-9.5 -mx-3 px-3 rounded-md truncate hover:text-primary-600 dark:hover:text-primary-500 {% if model.admin_url in request.path|urlencode %}bg-gray-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
+                                                   class="flex items-center h-9.5 -mx-3 px-3 rounded-md truncate hover:text-primary-600 dark:hover:text-primary-500 {% if model.admin_url in request.path|urlencode %}bg-base-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
                                                     {{ model.name }}
                                                 </a>
                                             {% else %}

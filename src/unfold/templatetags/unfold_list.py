@@ -42,7 +42,7 @@ ROW_CLASSES = [
     "align-middle",
     "flex",
     "border-t",
-    "border-gray-200",
+    "border-base-200",
     "font-normal",
     "gap-4",
     "min-w-0",
@@ -62,7 +62,7 @@ ROW_CLASSES = [
     "lg:first:border-t",
     "lg:py-3",
     "lg:table-cell",
-    "dark:border-gray-800",
+    "dark:border-base-800",
     "dark:before:text-font-important-dark",
 ]
 
@@ -82,9 +82,9 @@ CHECKBOX_CLASSES = [
     "before:text-font-important-light",
     "lg:before:hidden",
     "lg:border-t",
-    "lg:border-gray-200",
+    "lg:border-base-200",
     "lg:table-cell",
-    "dark:lg:border-gray-800",
+    "dark:lg:border-base-800",
     "dark:before:text-font-important-dark",
 ]
 
