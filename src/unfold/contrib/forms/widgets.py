@@ -19,7 +19,7 @@ WYSIWYG_CLASSES = [
     "group-[.errors]:border-red-600",
     "max-w-none",
     "p-4",
-    "rounded-b-md",
+    "rounded-b",
     "rounded-t-none",
     "text-base-500",
     "w-full",

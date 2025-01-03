@@ -284,7 +284,7 @@ def fieldset_rows_classes(context: Context) -> str:
                 "border",
                 "border-base-200",
                 "mb-8",
-                "rounded-md",
+                "rounded",
                 "shadow-sm",
                 "dark:border-base-800",
             ]
