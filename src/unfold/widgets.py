@@ -149,7 +149,7 @@ CHECKBOX_CLASSES = [
     "cursor-pointer",
     "h-4",
     "relative",
-    "rounded-md",
+    "rounded-[4px]",
     "shadow-sm",
     "w-4",
     "hover:border-base-400",
