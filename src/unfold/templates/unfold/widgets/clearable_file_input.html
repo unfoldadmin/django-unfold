@@ -8,9 +8,9 @@
     </div>
 {% endif %}
 
-<div class="border flex items-center overflow-hidden rounded shadow-sm text-sm max-w-2xl dark:border-base-700">
+<div class="border border-base-200 flex items-center overflow-hidden rounded shadow-sm text-sm max-w-2xl dark:border-base-700">
     {% if widget.is_initial and not widget.required %}
-        <div class="bg-base-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-base-700 dark:text-font-default-dark">
+        <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-base-700 dark:text-font-default-dark">
             <label for="{{ widget.checkbox_id }}" class="flex items-center">
                 <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
@@ -29,7 +29,7 @@
         </div>
 
         {% if widget.is_initial %}
-            <a href="{{ widget.value.url }}" class="border-r cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
+            <a href="{{ widget.value.url }}" class="border-r border-base-200 cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
                 <span class="material-symbols-outlined">download</span>
             </a>
         {% endif %}

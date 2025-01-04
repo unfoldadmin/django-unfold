@@ -1,9 +1,9 @@
 {% load i18n static %}
 
 <div class="flex flex-row">
-    <div class="border flex items-center overflow-hidden rounded shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
+    <div class="border border-base-200 flex items-center overflow-hidden rounded shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
         {% if widget.is_initial and not widget.required %}
-            <div class="bg-base-50 border-r flex flex-none items-center self-stretch px-3 dark:bg-base-900 dark:border-r-gray-700">
+            <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-base-900 dark:border-r-gray-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
                     <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
@@ -22,7 +22,7 @@
             </div>
 
             {% if widget.is_initial %}
-                <a href="{{ widget.value.url }}" class="border-r cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
+                <a href="{{ widget.value.url }}" class="border-r border-base-200 cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
                     <span class="material-symbols-outlined">download</span>
                 </a>
             {% endif %}
