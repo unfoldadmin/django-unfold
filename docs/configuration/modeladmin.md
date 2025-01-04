@@ -55,10 +55,13 @@ class CustomAdminClass(ModelAdmin):
     actions_detail = []  # Displayed at the top of for in object detail
     actions_submit_line = []  # Displayed near save in object detail
 
-    # Changeform templates
+    # Changeform templates (located inside the form)
     change_form_before_template = "some/template.html"
     change_form_after_template = "some/template.html"
 
+    # Located outside of the form
+    change_form_outer_before_template = "some/template.html"
+    change_form_outer_after_template = "some/template.html"
 
     formfield_overrides = {
         models.TextField: {
