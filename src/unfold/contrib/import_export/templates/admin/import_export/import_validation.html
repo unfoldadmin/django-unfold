@@ -36,7 +36,7 @@
 
         <tbody>
             {% for row in result.invalid_rows %}
-                <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border border-base-200 mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                     <td data-label="{% trans "Row" %}" class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
                         {{ row.number }}
                     </td>
@@ -44,7 +44,7 @@
                     <td data-label="{% trans "Errors" %}" class="errors align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
                         <span class="validation-error-count bg-red-600 font-semibold ml-2 px-1 rounded text-xs text-white">{{ row.error_count }}</span>
 
-                        <div class="validation-error-container rounded !bg-white border left-12 !m-0 !p-0 !top-3 dark:!bg-base-800 dark:!border-base-700 min-w-72">
+                        <div class="validation-error-container rounded !bg-white border border-base-200 left-12 !m-0 !p-0 !top-3 dark:!bg-base-800 dark:!border-base-700 min-w-72">
                             <ul class="validation-error-list">
                                 {% for field_name, error_list in row.field_specific_errors.items %}
                                     <li class="p-3">
