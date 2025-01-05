@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/devcontainers/python:3.12
 
 ENV PYTHONUNBUFFERED 1
 
-RUN pip install poetry
+RUN pip install poetry==1.8
 
 RUN poetry config virtualenvs.create false
 
