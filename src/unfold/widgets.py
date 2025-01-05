@@ -520,7 +520,7 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
             radio_style = VERTICAL
 
         self.radio_style = radio_style
-        self.attrs = {"class": " ".join(RADIO_CLASSES)}
+        self.attrs["class"] = " ".join([*RADIO_CLASSES, self.attrs.get("class", "")])
 
     def get_context(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context(*args, **kwargs)
