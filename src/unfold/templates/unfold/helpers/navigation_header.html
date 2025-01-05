@@ -1,0 +1,13 @@
+<div class="border-b border-base-200 mb-5 py-3 dark:border-base-800">
+    <div class="flex font-semibold gap-3 h-10 items-center px-6">
+        {% if site_logo %}
+            {% include "unfold/helpers/site_logo.html" %}
+        {% elif branding %}
+            {% include "unfold/helpers/site_icon.html" %}
+        {% endif %}
+
+        <div class="block cursor-pointer h-4.5 ml-auto xl:!hidden hover:text-base-700 dark:hover:text-base-200" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+    </div>
+</div>

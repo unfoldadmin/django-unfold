@@ -4,17 +4,22 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      borderRadius: {
+        DEFAULT: "var(--border-radius, 6px)",
+      },
       colors: {
-        font: {
-          "subtle-light": "rgb(var(--color-font-subtle-light) / <alpha-value>)",
-          "subtle-dark": "rgb(var(--color-font-subtle-dark) / <alpha-value>)",
-          "default-light":
-            "rgb(var(--color-font-default-light) / <alpha-value>)",
-          "default-dark": "rgb(var(--color-font-default-dark) / <alpha-value>)",
-          "important-light":
-            "rgb(var(--color-font-important-light) / <alpha-value>)",
-          "important-dark":
-            "rgb(var(--color-font-important-dark) / <alpha-value>)",
+        base: {
+          50: "rgb(var(--color-base-50) / <alpha-value>)",
+          100: "rgb(var(--color-base-100) / <alpha-value>)",
+          200: "rgb(var(--color-base-200) / <alpha-value>)",
+          300: "rgb(var(--color-base-300) / <alpha-value>)",
+          400: "rgb(var(--color-base-400) / <alpha-value>)",
+          500: "rgb(var(--color-base-500) / <alpha-value>)",
+          600: "rgb(var(--color-base-600) / <alpha-value>)",
+          700: "rgb(var(--color-base-700) / <alpha-value>)",
+          800: "rgb(var(--color-base-800) / <alpha-value>)",
+          900: "rgb(var(--color-base-900) / <alpha-value>)",
+          950: "rgb(var(--color-base-950) / <alpha-value>)",
         },
         primary: {
           50: "rgb(var(--color-primary-50) / <alpha-value>)",
@@ -29,6 +34,17 @@ module.exports = {
           900: "rgb(var(--color-primary-900) / <alpha-value>)",
           950: "rgb(var(--color-primary-950) / <alpha-value>)",
         },
+        font: {
+          "subtle-light": "rgb(var(--color-font-subtle-light) / <alpha-value>)",
+          "subtle-dark": "rgb(var(--color-font-subtle-dark) / <alpha-value>)",
+          "default-light":
+            "rgb(var(--color-font-default-light) / <alpha-value>)",
+          "default-dark": "rgb(var(--color-font-default-dark) / <alpha-value>)",
+          "important-light":
+            "rgb(var(--color-font-important-light) / <alpha-value>)",
+          "important-dark":
+            "rgb(var(--color-font-important-dark) / <alpha-value>)",
+        },
       },
       fontSize: {
         0: [0, 1],
@@ -38,6 +54,7 @@ module.exports = {
         sans: ["Inter", "sans-serif"],
       },
       height: {
+        4.5: "1.125rem",
         9.5: "2.375rem",
       },
       minHeight: {
@@ -71,6 +88,11 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/typography")],
   safelist: [
+    "border-l",
+    "flex-grow",
+    "pb-0",
+    "w-96",
+    "max-w-96",
     "md:border-0",
     "md:border-r",
     "md:w-48",

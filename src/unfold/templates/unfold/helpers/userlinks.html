@@ -8,6 +8,10 @@
                 {% include "unfold/helpers/label.html" with text=environment.0 type=environment.1 %}
             {% endif %}
 
+            {% if extra_userlinks %}
+                {{ extra_userlinks }}
+            {% endif %}
+
             {% include "unfold/helpers/stores.html" %}
             
 

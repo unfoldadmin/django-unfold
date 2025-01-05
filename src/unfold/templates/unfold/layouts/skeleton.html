@@ -10,6 +10,7 @@
 {% capture as nav_global silent %}{% block nav-global %}{% endblock %}{% endcapture %}
 {% capture as nav_global_side silent %}{% block nav-global-side %}{% endblock %}{% endcapture %}
 {% capture as actions_items silent %}{% block actions-items %}{% endblock %}{% endcapture %}
+{% capture as extra_userlinks silent %}{% block extra_userlinks %}{% endblock %}{% endcapture %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" {% if theme %}class="{{ theme }}"{% else %}x-data="{ adminTheme: $persist('auto').as('adminTheme') }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak{% endif %}>
@@ -56,10 +57,16 @@
         {% block blockbots %}
             <meta name="robots" content="NONE,NOARCHIVE">
         {% endblock %}
+    </head>
 
+    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-base-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ mainWidth: 0, activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
         {% if colors %}
-            <style>
+            <style id="unfold-theme-colors">
                 :root {
+                    {% if border_radius %}
+                        --border-radius: {{ border_radius }};
+                    {% endif %}
+
                     {% for name, weights in colors.items %}
                         {% for weight, value in weights.items %}
                             --color-{{ name }}-{{ weight }}: {{ value }};
@@ -68,11 +75,10 @@
                 }
             </style>
         {% endif %}
-    </head>
 
-    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-gray-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ mainWidth: 0, activeTab: 'general', sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = window.location.hash?.replace('#', '') || 'general'">
         {% block base %}{% endblock %}
 
+        <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-base-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
 
     <!-- Existing footer -->
     <footer style="width: 80%;justify-self: self-end; float: inline-end;">
