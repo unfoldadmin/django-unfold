@@ -56,6 +56,7 @@ BASE_CLASSES = [
     "bg-white",
     "font-medium",
     "min-w-20",
+    "placeholder-base-400",
     "rounded",
     "shadow-sm",
     "text-font-default-light",
