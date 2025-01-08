@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% if cl.is_facets_optional or cl.has_active_filters %}
+    <span id="changelist-filter-extra-actions" class="flex flex-row gap-2 items-center mt-2">
+        {% if cl.is_facets_optional %}
+            {% if cl.add_facets %}
+                <a href="{{ cl.remove_facet_link }}" class="hidelink border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200">
+                    {% trans "Hide counts" %}
+                </a>
+            {% else %}
+                <a href="{{ cl.add_facet_link }}" class="viewlink border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full lg:w-auto dark:border-base-700 dark:hover:text-base-200">
+                    {% trans "Show counts" %}
+                </a>
+            {% endif %}
+        {% endif %}
+
+        {% if cl.has_active_filters %}
+            <a href="{{ cl.clear_all_filters_qs }}" class="border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200">
+                {% trans "Clear all filters" %}
+            </a>
+        {% endif %}
+    </span>
+{% endif %}

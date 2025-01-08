@@ -61,6 +61,10 @@
     <div id="content-main">
         {% block form_before %}{% endblock %}
 
+        {% if adminform.model_admin.change_form_outer_before_template %}
+            {% include adminform.model_admin.change_form_outer_before_template %}
+        {% endif %}
+
         <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post" id="{{ opts.model_name }}_form" {% if adminform.model_admin.warn_unsaved_form %}class="warn-unsaved-form"{% endif %} novalidate>
             {% csrf_token %}
 
@@ -115,6 +119,10 @@
                 {% prepopulated_fields_js %}
             </div>
         </form>
+
+        {% if adminform.model_admin.change_form_outer_after_template %}
+            {% include adminform.model_admin.change_form_outer_after_template %}
+        {% endif %}
 
         {% block form_after %}{% endblock %}
     </div>

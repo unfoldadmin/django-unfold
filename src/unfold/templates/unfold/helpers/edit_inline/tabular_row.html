@@ -1,0 +1,27 @@
+<tr class="form-row {% if inline_admin_form.original or inline_admin_form.show_url %}has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}">
+    {% spaceless %}
+        {% for fieldset in inline_admin_form %}
+            {% for line in fieldset %}
+                {% for field in line %}
+                    {% if not field.is_readonly and field.field.is_hidden %}
+                        {{ field.field }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    {% endspaceless %}
+
+    {% for fieldset in inline_admin_form %}
+        {% for line in fieldset %}
+            {% for field in line %}
+                {% if field.is_readonly or not field.field.is_hidden %}
+                    <td{% if field.field.name %} class="min-h-[62.5px] field-{{ field.field.name }} group field-tabular {% if field.field.errors|length > 0 %} errors{% endif %}{% if inline_admin_form.original %} p-3 lg:py-3{% else %} py-3{% endif %}{% if field.is_checkbox %} align-middle{% else %} align-top{% endif %} flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:font-text before:pr-4 lg:before:hidden font-normal px-3 lg:first:pl-3 lg:last:pr-3 lg:px-1.5 text-left lg:table-cell {% if field.field.is_hidden %} !hidden{% endif %} {% if inline_admin_formset.opts.ordering_field and field.field.name == inline_admin_formset.opts.ordering_field and inline_admin_formset.opts.hide_ordering_field %}!hidden{% endif %}"{% endif %} data-label="{{ field.field.label }}">
+                        {% include "unfold/helpers/edit_inline/tabular_field.html" %}
+                    </td>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+
+    {% include "unfold/helpers/edit_inline/tabular_delete.html" %}
+</tr>

@@ -1,13 +1,15 @@
 {% load i18n %}
 
-{% if errors or error %}
-    <p class="errornote bg-red-100 mb-8 text-red-600 px-3 py-3 rounded-md text-sm dark:bg-red-500/20 dark:border-red-500/20 dark:text-red-500 group-[.inline-tabular]:mb-0 group-[.inline-tabular]:mt-3 group-[.inline-tabular]:mx-3 group-[.inline-stacked]:mb-3 group-[.inline-stacked]:mt-3 group-[.inline-stacked]:mx-3">
+{% if errors or error or message %}
+    <div class="errornote mb-3 px-3 py-3 rounded group-[.inline-tabular]:mb-0 group-[.inline-tabular]:mt-3 group-[.inline-tabular]:mx-3 group-[.inline-stacked]:mb-3 group-[.inline-stacked]:mt-3 group-[.inline-stacked]:mx-3 bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400">
         {% if error %}
             {{ error }}
+        {% elif message %}
+            {{ message }}
         {% else %}
             {% for error in errors %}
                 {{ error }}
             {% endfor %}
         {% endif %}
-    </p>
+    </div>
 {% endif %}

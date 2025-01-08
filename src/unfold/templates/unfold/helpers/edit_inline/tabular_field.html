@@ -1,0 +1,25 @@
+<div class="flex flex-row gap-3 items-center">
+    {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
+        {% if inline_admin_formset.opts.ordering_field %}
+            {% if inline_admin_form.original %}
+                <span class="material-symbols-outlined cursor-pointer" x-sort:handle>drag_indicator</span>
+            {% else %}
+                <span class="-mr-3" x-sort:handle></span>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% if field.is_readonly %}
+        {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
+    {% else %}
+        {{ field.field }}
+
+        {% if field.field.errors|length > 0 %}
+            <div class="mt-1 text-red-600 text-sm dark:text-red-500">
+                {% for error in field.field.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

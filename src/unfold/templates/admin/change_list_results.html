@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load admin_urls i18n %}
 
 {% if result_hidden_fields %}
     <div class="hiddenfields">
@@ -7,8 +7,8 @@
 {% endif %}
 
 {% if results %}
-    <div class="overflow-x-auto lg:border lg:rounded-md lg:shadow-sm lg:dark:border-gray-800 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
-        <table id="result_list" class="block border-gray-200 border-spacing-none border-separate w-full lg:table">
+    <div class="-mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:rounded lg:shadow-sm lg:dark:border-base-800 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
+        <table id="result_list" class="block border-base-200 border-spacing-none border-separate w-full lg:table">
             <thead>
                 <tr>
                     {% for header in result_headers %}
@@ -39,7 +39,7 @@
                                 {% if header.sortable %}
                                     {% if header.sort_priority > 0 %}
                                         <div class="sortoptions flex items-center ml-2">
-                                            <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
+                                            <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-base-400 hover:text-base-500 dark:text-base-500 dark:hover:text-base-400 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
                                                 {% if header.ascending %}
                                                     <span class="block material-symbols-outlined">arrow_circle_down</span>
                                                 {% else %}
@@ -47,7 +47,7 @@
                                                 {% endif %}
                                             </a>
 
-                                            <a class="sortremove flex items-center leading-none ml-1 text-gray-400 dark:text-gray-500 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                            <a class="sortremove flex items-center leading-none ml-1 text-base-400 dark:text-base-500 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
                                                 <span class="block material-symbols-outlined">cancel</span>
                                             </a>
                                         </div>
@@ -75,7 +75,7 @@
                         </tr>
                     {% endif %}
 
-                    <tr class="{% cycle '' 'bg-gray-50 dark:bg-white/[.02]' %} block border mb-3 rounded-md shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-gray-800">
+                    <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                         {% for item in result %}
                             {{ item }}
                         {% endfor %}
@@ -84,5 +84,39 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+{% else %}
+    {% url cl.opts|admin_urlname:"add" as add_url %}
+    {% blocktranslate with name=cl.opts.verbose_name asvar title %}Add {{ name }}{% endblocktranslate %}
+
+    <div class="border border-base-200 flex flex-col items-center px-8 py-24 rounded shadow-sm dark:border-base-800">
+        <div class="bg-base-100 flex h-24 items-center justify-center mb-8 rounded-full w-24 dark:bg-base-800">
+            <span class="material-symbols-outlined text-base-500 !text-5xl dark:text-base-400">inbox</span>
+        </div>
+
+        <h2 class="font-semibold mb-1 text-xl text-font-important-light dark:text-font-important-dark">
+            {% trans "No results found" %}
+        </h2>
+
+        <p class="mb-6 text-center">
+            {% trans "This page yielded into no results. Create a new item or reset your filters." %}
+        </p>
+
+        {% if has_add_permission or cl.has_filters %}
+            <div class="flex flex-col gap-4 justify-center w-full lg:flex-row">
+                {% if has_add_permission %}
+                    <a href="{% add_preserved_filters add_url is_popup to_field %}" class="bg-primary-600 flex flex-row font-medium gap-2 items-center h-9.5 justify-center px-3 py-2 rounded text-white w-full lg:w-auto">
+                        <span class="material-symbols-outlined text-white">add</span> {{ title }}
+                    </a>
+                {% endif %}
+
+
+                {% if cl.has_filters %}
+                    <a href="{{ cl.clear_all_filters_qs }}" class="border border-base-200 flex flex-row font-medium gap-2 group/button h-9.5 items-center justify-center px-3 py-2 rounded transition-all w-full hover:text-primary-600 lg:w-auto dark:border-base-700 dark:hover:bg-base-900 dark:hover:text-primary-500">
+                        <span class="material-symbols-outlined group-hover/button:text-primary-600 dark:group-hover/button:text-base-500 text-base-400 dark:text-base-500">filter_list_off</span> {% trans "Reset filters" %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endif %}

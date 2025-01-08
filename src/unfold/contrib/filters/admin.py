@@ -80,7 +80,7 @@ class TextFilter(admin.SimpleListFilter):
             {
                 "form": self.form_class(
                     name=self.parameter_name,
-                    label=_("By {}").format(self.title),
+                    label=_("By %(filter_title)s") % {"filter_title": self.title},
                     data={self.parameter_name: self.value()},
                 ),
             },
@@ -103,7 +103,7 @@ class FieldTextFilter(ValueMixin, admin.FieldListFilter):
         return (
             {
                 "form": self.form_class(
-                    label=_("By {}").format(self.title),
+                    label=_("By %(filter_title)s") % {"filter_title": self.title},
                     name=self.lookup_kwarg,
                     data={self.lookup_kwarg: self.value()},
                 ),
@@ -120,7 +120,7 @@ class DropdownFilter(admin.SimpleListFilter):
         return (
             {
                 "form": self.form_class(
-                    label=_("By {}").format(self.title),
+                    label=_("By %(filter_title)s") % {"filter_title": self.title},
                     name=self.parameter_name,
                     choices=[self.all_option, *self.lookup_choices],
                     data={self.parameter_name: self.value()},
@@ -147,7 +147,7 @@ class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFil
 
         yield {
             "form": self.form_class(
-                label=_("By {}").format(self.title),
+                label=_("By %(filter_title)s") % {"filter_title": self.title},
                 name=self.lookup_kwarg,
                 choices=choices,
                 data={self.lookup_kwarg: self.value()},
@@ -164,7 +164,7 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
     def choices(self, changelist: ChangeList):
         yield {
             "form": self.form_class(
-                label=_("By {}").format(self.title),
+                label=_("By %(filter_title)s") % {"filter_title": self.title},
                 name=self.lookup_kwarg,
                 choices=[self.all_option, *self.lookup_choices],
                 data={self.lookup_kwarg: self.value()},

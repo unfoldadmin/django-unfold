@@ -1,6 +1,6 @@
-<div class="border flex flex-col flex-grow overflow-hidden p-6 relative rounded-md shadow-sm dark:border-gray-800 {% if class %} {{ class }}{% endif %}">
+<div class="border flex flex-col flex-grow overflow-hidden p-6 relative rounded shadow-sm dark:border-base-800 {% if class %} {{ class }}{% endif %}">
     {% if title %}
-        <h2 class="border-b font-semibold mb-6 -mt-2 -mx-6 pb-4 px-6 text-font-important-light dark:text-font-important-dark dark:border-gray-800">
+        <h2 class="bg-base-50 border-b font-semibold mb-6 -mt-6 -mx-6 py-4 px-6 text-font-important-light dark:text-font-important-dark dark:border-base-800 dark:bg-white/[.02]">
             {{ title }}
         </h2>
     {% endif %}
@@ -9,7 +9,7 @@
         {{ children }}
 
         {% if label %}
-            <div class="absolute right-0 top-0">
+            <div class="absolute left-0 top-0">
                 {% include "unfold/helpers/label.html" with text=label type="primary" %}
             </div>
         {% endif %}
@@ -20,7 +20,7 @@
     </div>
 
     {% if footer %}
-        <div class="border-t flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-gray-800">
+        <div class="border-t flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-base-800">
             {{ footer }}
         </div>
     {% endif %}

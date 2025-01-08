@@ -35,7 +35,7 @@ from .exceptions import UnfoldException
 
 LABEL_CLASSES = [
     "block",
-    "font-medium",
+    "font-semibold",
     "mb-2",
     "text-font-important-light",
     "text-sm",
@@ -43,7 +43,7 @@ LABEL_CLASSES = [
 ]
 
 CHECKBOX_LABEL_CLASSES = [
-    "font-medium",
+    "font-semibold",
     "ml-2",
     "text-sm",
     "text-font-important-light",
@@ -52,10 +52,12 @@ CHECKBOX_LABEL_CLASSES = [
 
 BASE_CLASSES = [
     "border",
+    "border-base-200",
     "bg-white",
     "font-medium",
     "min-w-20",
-    "rounded-md",
+    "placeholder-base-400",
+    "rounded",
     "shadow-sm",
     "text-font-default-light",
     "text-sm",
@@ -65,8 +67,8 @@ BASE_CLASSES = [
     "focus:outline-none",
     "group-[.errors]:border-red-600",
     "group-[.errors]:focus:ring-red-200",
-    "dark:bg-gray-900",
-    "dark:border-gray-700",
+    "dark:bg-base-900",
+    "dark:border-base-700",
     "dark:text-font-default-dark",
     "dark:focus:border-primary-600",
     "dark:focus:ring-primary-700",
@@ -88,7 +90,7 @@ DATETIME_CLASSES = [*BASE_INPUT_CLASSES, "min-w-52"]
 
 COLOR_CLASSES = [*BASE_CLASSES, "h-9.5", "px-2", "py-2", "w-32"]
 
-INPUT_CLASSES_READONLY = [*BASE_INPUT_CLASSES, "bg-gray-50"]
+INPUT_CLASSES_READONLY = [*BASE_INPUT_CLASSES, "bg-base-50"]
 
 TEXTAREA_CLASSES = [
     *BASE_INPUT_CLASSES,
@@ -123,20 +125,20 @@ PROSE_CLASSES = [
     "prose-sm",
     "prose-blockquote:border-l-4",
     "prose-blockquote:not-italic",
-    "prose-pre:bg-gray-50",
+    "prose-pre:bg-base-50",
     "prose-pre:rounded",
     "prose-headings:font-medium",
     "prose-a:text-primary-600",
     "prose-headings:font-medium",
-    "prose-headings:text-gray-700",
+    "prose-headings:text-base-700",
     "prose-ol:list-decimal",
     "prose-ul:list-disc",
-    "prose-strong:text-gray-700",
-    "dark:prose-pre:bg-gray-800",
-    "dark:prose-blockquote:border-gray-700",
-    "dark:prose-blockquote:text-gray-300",
-    "dark:prose-headings:text-gray-200",
-    "dark:prose-strong:text-gray-200",
+    "prose-strong:text-base-700",
+    "dark:prose-pre:bg-base-800",
+    "dark:prose-blockquote:border-base-700",
+    "dark:prose-blockquote:text-base-300",
+    "dark:prose-headings:text-base-200",
+    "dark:prose-strong:text-base-200",
 ]
 
 CHECKBOX_CLASSES = [
@@ -144,16 +146,16 @@ CHECKBOX_CLASSES = [
     "bg-white",
     "block",
     "border",
-    "border-gray-300",
+    "border-base-300",
     "cursor-pointer",
     "h-4",
     "relative",
-    "rounded",
+    "rounded-[4px]",
     "shadow-sm",
     "w-4",
-    "hover:border-gray-400",
-    "dark:bg-gray-700",
-    "dark:border-gray-500",
+    "hover:border-base-400",
+    "dark:bg-base-700",
+    "dark:border-base-500",
     "dark:after:checked:text-white",
     "focus:outline",
     "focus:outline-1",
@@ -173,7 +175,7 @@ CHECKBOX_CLASSES = [
     "after:text-white",
     "after:transition-all",
     "after:w-4",
-    "after:dark:text-gray-700",
+    "after:dark:text-base-700",
     "checked:bg-primary-600",
     "checked:border-primary-600",
     "checked:transition-all",
@@ -185,21 +187,21 @@ RADIO_CLASSES = [
     "bg-white",
     "block",
     "border",
-    "border-gray-300",
+    "border-base-300",
     "cursor-pointer",
     "h-4",
     "relative",
     "rounded-full",
     "w-4",
-    "dark:bg-gray-700",
-    "dark:border-gray-500",
-    "hover:border-gray-400",
+    "dark:bg-base-700",
+    "dark:border-base-500",
+    "hover:border-base-400",
     "focus:outline",
     "focus:outline-1",
     "focus:outline-offset-2",
     "focus:outline-primary-500",
     "after:absolute",
-    "after:bg-white",
+    "after:bg-transparent",
     "after:content-['']",
     "after:flex",
     "after:h-2",
@@ -215,18 +217,18 @@ RADIO_CLASSES = [
     "after:-translate-y-1/2",
     "after:text-sm",
     "after:w-2",
-    "after:dark:text-gray-700",
+    "after:dark:text-base-700",
     "after:dark:bg-transparent",
     "checked:bg-primary-600",
     "checked:border-primary-600",
     "checked:transition-all",
     "checked:after:bg-white",
-    "checked:after:dark:bg-gray-200",
+    "checked:after:dark:bg-base-200",
 ]
 
 SWITCH_CLASSES = [
     "appearance-none",
-    "bg-gray-300",
+    "bg-base-300",
     "cursor-pointer",
     "h-5",
     "relative",
@@ -246,7 +248,7 @@ SWITCH_CLASSES = [
     "after:w-3",
     "checked:bg-green-500",
     "checked:after:left-4",
-    "dark:bg-gray-600",
+    "dark:bg-base-600",
     "dark:checked:bg-green-700",
 ]
 
@@ -519,7 +521,7 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
             radio_style = VERTICAL
 
         self.radio_style = radio_style
-        self.attrs = {"class": " ".join(RADIO_CLASSES)}
+        self.attrs["class"] = " ".join([*RADIO_CLASSES, self.attrs.get("class", "")])
 
     def get_context(self, *args, **kwargs) -> Dict[str, Any]:
         context = super().get_context(*args, **kwargs)

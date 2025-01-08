@@ -240,6 +240,8 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     list_after_template = None
     change_form_before_template = None
     change_form_after_template = None
+    change_form_outer_before_template = None
+    change_form_outer_after_template = None
     compressed_fields = False
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
@@ -472,7 +474,12 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             for action in self.get_actions_row(request)
         ]
 
-        extra_context.update({"actions_list": actions, "actions_row": actions_row})
+        extra_context.update(
+            {
+                "actions_list": actions,
+                "actions_row": actions_row,
+            }
+        )
 
         return super().changelist_view(request, extra_context)
 
