@@ -4,19 +4,6 @@
 
 @tailwind utilities;
 
-html {
-  --color-primary-50: theme("colors.purple.50");
-  --color-primary-100: theme("colors.purple.100");
-  --color-primary-200: theme("colors.purple.200");
-  --color-primary-300: theme("colors.purple.300");
-  --color-primary-400: theme("colors.purple.400");
-  --color-primary-500: theme("colors.purple.500");
-  --color-primary-600: theme("colors.purple.600");
-  --color-primary-700: theme("colors.purple.700");
-  --color-primary-800: theme("colors.purple.800");
-  --color-primary-900: theme("colors.purple.900");
-  --color-primary-950: theme("colors.purple.950");
-}
 
 /*******************************************************
  Classes
@@ -131,7 +118,7 @@ table tr.selected th {
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply border-l flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
+  @apply border-l border-base-200 flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
   content: "timer";
 }
 
@@ -144,7 +131,7 @@ table tr.selected th {
 }
 
 .date-icon:after {
-  @apply border-l h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700;
+  @apply border-l border-base-200 h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700;
   content: "edit";
 }
 
@@ -157,7 +144,7 @@ table tr.selected th {
 }
 
 .clock-icon:after {
-  @apply border-l h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
+  @apply border-l border-base-200 h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
   content: "edit";
 }
 
@@ -179,7 +166,7 @@ table tr.selected th {
 }
 
 .timezonewarning:before {
-  @apply block cursor-pointer items-center justify-center material-symbols-outlined text-base text-center text-red-600 dark:border-base-700;
+  @apply block border-base-200 cursor-pointer items-center justify-center material-symbols-outlined text-base text-center text-red-600 dark:border-base-700;
   content: "warning";
 }
 
@@ -199,17 +186,17 @@ table tr.selected th {
 }
 
 .selector .list-footer-display {
-  @apply border-t py-2 text-center text-sm dark:border-base-700;
+  @apply border-t border-base-200 py-2 text-center text-sm dark:border-base-700;
 }
 
 .selector-chosen,
 .selector-available {
-  @apply border flex flex-col flex-grow rounded self-stretch shadow-sm md:w-72 lg:w-96 dark:border-base-700;
+  @apply border border-base-200 flex flex-col flex-grow rounded self-stretch shadow-sm md:w-72 lg:w-96 dark:border-base-700;
 }
 
 .selector-chosen h2,
 .selector-available h2 {
-  @apply border-b mb-3 py-2 px-3 text-sm text-base-500 dark:border-base-700 dark:text-base-200;
+  @apply border-b border-base-200 mb-3 py-2 px-3 text-sm text-base-500 dark:border-base-700 dark:text-base-200;
 }
 
 .selector-filter {
@@ -221,7 +208,7 @@ table tr.selected th {
 
 .selector-chooseall,
 .selector-clearall {
-  @apply block border-t py-2 text-center text-sm text-primary-500 dark:border-base-700;
+  @apply block border-t border-base-200 py-2 text-center text-sm text-primary-500 dark:border-base-700;
 }
 
 .selector-clearall {
@@ -281,7 +268,7 @@ table tr.selected th {
 }
 
 .add-row a {
-  @apply bg-white border block font-medium px-3 py-2 rounded text-center hover:text-base-700 lg:float-right dark:bg-base-900 dark:border-base-700 dark:hover:text-base-200;
+  @apply bg-white border border-base-200 block font-medium px-3 py-2 rounded text-center hover:text-base-700 lg:float-right dark:bg-base-900 dark:border-base-700 dark:hover:text-base-200;
 }
 
 .inline-deletelink {
@@ -300,7 +287,7 @@ h3 span:nth-child(3) {
  Autocomplete
  *******************************************************/
 .select2.select2-container {
-  @apply bg-white border max-w-2xl !min-h-9.5 relative rounded shadow-sm !w-full dark:bg-base-900 dark:border-base-700;
+  @apply bg-white border border-base-200 max-w-2xl !min-h-9.5 relative rounded shadow-sm !w-full dark:bg-base-900 dark:border-base-700;
 }
 
 .errors .select2.select2-container {
@@ -489,7 +476,7 @@ fieldset details[open] > summary:after {
  *******************************************************/
 .calendarbox,
 .clockbox {
-  @apply bg-white border rounded shadow-sm text-base-500 text-sm w-80 z-50 dark:bg-base-800 dark:border-base-700 !fixed !left-1/2 !top-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply bg-white border border-base-200 rounded shadow-sm text-base-500 text-sm w-80 z-50 dark:bg-base-800 dark:border-base-700 !fixed !left-1/2 !top-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 .calendar caption {
@@ -525,11 +512,11 @@ fieldset details[open] > summary:after {
 }
 
 .calendar-shortcuts a {
-  @apply border font-medium leading-none mx-1 px-2 py-2 rounded shadow-sm text-center text-base-500 text-xs transition-all w-1/3 dark:border-base-700 dark:hover:border-base-600 dark:text-base-300 dark:hover:text-base-200;
+  @apply border border-base-200  font-medium leading-none mx-1 px-2 py-2 rounded shadow-sm text-center text-base-500 text-xs transition-all w-1/3 dark:border-base-700 dark:hover:border-base-600 dark:text-base-300 dark:hover:text-base-200;
 }
 
 .calendar-cancel {
-  @apply block border-t py-2 text-center text-xs text-red-600 dark:border-base-700 dark:text-red-500;
+  @apply block border-t border-base-200 py-2 text-center text-xs text-red-600 dark:border-base-700 dark:text-red-500;
 }
 
 .calendarnav-previous {
@@ -538,7 +525,7 @@ fieldset details[open] > summary:after {
 
 .calendarnav-next:after,
 .calendarnav-previous:after {
-  @apply border flex h-7 items-center justify-center material-symbols-outlined rounded-full text-base-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-base-800 dark:border-base-700 dark:hover:border-base-800;
+  @apply border border-base-200 flex h-7 items-center justify-center material-symbols-outlined rounded-full text-base-400 transition-all w-7 hover:border-primary-600 hover:text-primary-500 dark:bg-base-800 dark:border-base-700 dark:hover:border-base-800;
 
   content: "navigate_before";
   display: flex;
@@ -562,7 +549,7 @@ fieldset details[open] > summary:after {
  Timepicker
  *******************************************************/
 .clockbox {
-  @apply bg-white border rounded shadow-sm text-sm dark:bg-base-800 dark:border-base-700 z-50;
+  @apply bg-white border border-base-200 rounded shadow-sm text-sm dark:bg-base-800 dark:border-base-700 z-50;
 }
 
 .clockbox h2 {
