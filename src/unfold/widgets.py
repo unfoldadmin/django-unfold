@@ -223,7 +223,8 @@ RADIO_CLASSES = [
     "checked:border-primary-600",
     "checked:transition-all",
     "checked:after:bg-white",
-    "checked:after:dark:bg-base-200",
+    "checked:after:dark:bg-base-900",
+    "checked:hover:border-base-900/20",
 ]
 
 SWITCH_CLASSES = [

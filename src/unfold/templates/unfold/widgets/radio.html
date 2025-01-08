@@ -1,5 +1,5 @@
 {% with id=widget.attrs.id %}
-    <div{% if id %} id="{{ id }}"{% endif %} class="flex gap-2 {% if radio_style == 1 %} flex-row{% else %} flex-col{% endif %}">
+    <div{% if id %} id="{{ id }}"{% endif %} class="flex gap-2 {% if radio_style == 1 %} flex-row gap-4{% else %} flex-col{% endif %}">
         {% for group, options, index in widget.optgroups %}
             {% if group %}
                 <div>
