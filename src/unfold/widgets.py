@@ -26,9 +26,10 @@ from django.forms import (
     MultiWidget,
     NullBooleanSelect,
     NumberInput,
+    DateTimeInput,
     PasswordInput,
     Select,
-    SelectMultiple, DateTimeInput,
+    SelectMultiple,
 )
 from django.utils.translation import gettext_lazy as _
 
