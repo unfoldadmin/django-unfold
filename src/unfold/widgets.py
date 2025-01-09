@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any, Callable, Dict, Optional, Tuple, Union
 
 from django.contrib.admin.options import VERTICAL
@@ -27,7 +28,7 @@ from django.forms import (
     NumberInput,
     PasswordInput,
     Select,
-    SelectMultiple,
+    SelectMultiple, DateTimeInput,
 )
 from django.utils.translation import gettext_lazy as _
 
@@ -296,6 +297,25 @@ class UnfoldAdminIntegerRangeWidget(MultiWidget):
             return value.lower, value.upper
         return None, None
 
+
+class UnfoldAdminDateTimeRangeWidget(MultiWidget):
+    template_name = "unfold/widgets/range.html"
+
+    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+        if attrs is None:
+            attrs = {}
+
+        attrs["class"] = " ".join(INPUT_CLASSES)
+        attrs["type"] = "datetime-local"
+
+        _widgets = (DateTimeInput(attrs=attrs), DateTimeInput(attrs=attrs))
+
+        super().__init__(_widgets, attrs)
+
+    def decompress(self, value: Union[str, None]) -> Tuple[Optional[datetime], ...]:
+        if value:
+            return value.lower, value.upper
+        return None, None
 
 class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:

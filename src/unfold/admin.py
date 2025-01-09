@@ -40,6 +40,7 @@ from .widgets import (
     UnfoldAdminImageSmallFieldWidget,
     UnfoldAdminIntegerFieldWidget,
     UnfoldAdminIntegerRangeWidget,
+    UnfoldAdminDateTimeRangeWidget,
     UnfoldAdminMoneyWidget,
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminRadioSelectWidget,
@@ -57,7 +58,7 @@ from .widgets import (
 )
 
 try:
-    from django.contrib.postgres.fields import ArrayField, IntegerRangeField
+    from django.contrib.postgres.fields import ArrayField, IntegerRangeField, DateTimeRangeField
     from django.contrib.postgres.search import SearchVectorField
 
     HAS_PSYCOPG = True
@@ -102,6 +103,7 @@ if HAS_PSYCOPG:
             ArrayField: {"widget": UnfoldAdminTextareaWidget},
             SearchVectorField: {"widget": UnfoldAdminTextareaWidget},
             IntegerRangeField: {"widget": UnfoldAdminIntegerRangeWidget},
+            DateTimeRangeField: {"widget": UnfoldAdminDateTimeRangeWidget},
         }
     )
 
