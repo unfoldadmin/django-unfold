@@ -23,10 +23,10 @@ from django.db.models.fields.reverse_related import ForeignObjectRel
 from django.forms import (
     CheckboxInput,
     CheckboxSelectMultiple,
+    DateTimeInput,
     MultiWidget,
     NullBooleanSelect,
     NumberInput,
-    DateTimeInput,
     PasswordInput,
     Select,
     SelectMultiple,
@@ -317,6 +317,7 @@ class UnfoldAdminDateTimeRangeWidget(MultiWidget):
         if value:
             return value.lower, value.upper
         return None, None
+
 
 class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
     def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:

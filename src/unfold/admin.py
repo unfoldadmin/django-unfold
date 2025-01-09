@@ -33,6 +33,7 @@ from .typing import FieldsetsType
 from .widgets import (
     SELECT_CLASSES,
     UnfoldAdminBigIntegerFieldWidget,
+    UnfoldAdminDateTimeRangeWidget,
     UnfoldAdminDecimalFieldWidget,
     UnfoldAdminEmailInputWidget,
     UnfoldAdminFileFieldWidget,
@@ -40,7 +41,6 @@ from .widgets import (
     UnfoldAdminImageSmallFieldWidget,
     UnfoldAdminIntegerFieldWidget,
     UnfoldAdminIntegerRangeWidget,
-    UnfoldAdminDateTimeRangeWidget,
     UnfoldAdminMoneyWidget,
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminRadioSelectWidget,
@@ -58,7 +58,11 @@ from .widgets import (
 )
 
 try:
-    from django.contrib.postgres.fields import ArrayField, IntegerRangeField, DateTimeRangeField
+    from django.contrib.postgres.fields import (
+        ArrayField,
+        DateTimeRangeField,
+        IntegerRangeField,
+    )
     from django.contrib.postgres.search import SearchVectorField
 
     HAS_PSYCOPG = True
