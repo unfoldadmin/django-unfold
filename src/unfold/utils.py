@@ -143,7 +143,7 @@ def prettify_json(data: Any) -> Optional[str]:
 
     if isinstance(data, str):
         data = json.loads(data)
-    
+
     response = json.dumps(data, sort_keys=True, indent=4)
 
     return mark_safe(
