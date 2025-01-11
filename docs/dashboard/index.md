@@ -8,6 +8,17 @@ description: Customize admin dashboard with your own charts and components.
 
 Create `templates/admin/index.html` in your project and paste the base template below into it. By default, all your custom styles here are not compiled because CSS classes are located in your specific project. Here it is needed to set up the Tailwind for your project and all required instructions are located in [Project Level Tailwind Stylesheet](#project-level-tailwind-stylesheet) chapter.
 
+Ensure you have set up the template directory in `settings.py`
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / "templates"],  # Ensure this line is added
+        #....
+    }
+```
+
 ```html
 {% extends 'unfold/layouts/base_simple.html' %}
 
