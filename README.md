@@ -1,4 +1,4 @@
-![screenshot](https://github.com/user-attachments/assets/b5ec09b6-c8c7-454a-85af-1bba97593632)
+![screenshot](https://github.com/user-attachments/assets/87aaad04-f454-42aa-b9ac-e14d41f189ac)
 
 ## Unfold Django Admin Theme
 
@@ -39,8 +39,10 @@ Have you decided to start using Unfold but don’t have time to make the switch 
 - **Environment label**: Distinguishes between environments by displaying a label.
 - **Nonrelated inlines**: Displays nonrelated models as inlines in the change form.
 - **Favicons**: Built-in support for configuring various site favicons.
-- **Colors:** Allows customization of the default color scheme.
+- **Themes:** Allows customization of color scheme, background color, border radius, and more.
+- **Font colors:** Adjusts font colors for better readability.
 - **Changeform modes:** Displays fields in compressed mode in the change form.
+- **Language switcher:** Change language directly from the admin area.
 - **Parallel admin**: Supports [running the default admin](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold) alongside Unfold.
 - **Third party packages:** Default support for multiple popular applications.
 - **Configuration:** Most basic options can be changed in `settings.py`.
