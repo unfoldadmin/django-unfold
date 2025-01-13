@@ -1,4 +1,4 @@
-![screenshot](https://github.com/user-attachments/assets/b5ec09b6-c8c7-454a-85af-1bba97593632)
+![screenshot](https://github.com/user-attachments/assets/87aaad04-f454-42aa-b9ac-e14d41f189ac)
 
 ## Unfold Django Admin Theme
 
