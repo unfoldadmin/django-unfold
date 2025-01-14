@@ -285,6 +285,7 @@ const renderCharts = () => {
     }
 
     const parsedData = JSON.parse(chart.dataset.value);
+    const parsedOptions = JSON.parse(options);
 
     for (const key in parsedData.datasets) {
       const dataset = parsedData.datasets[key];
