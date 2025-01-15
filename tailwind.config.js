@@ -88,10 +88,10 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/typography"),
-    function ({ addVariant }) { 
+    function ({ addVariant }) {
       addVariant('rtl', '[dir="rtl"] &');
     }
-  
+
   ],
   safelist: [
     "border-2",
