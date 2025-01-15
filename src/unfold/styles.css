@@ -208,7 +208,7 @@ table tr.selected th {
 }
 
 input[type="search"]::-webkit-search-cancel-button {
-  @apply dark:invert;
+  @apply z-10 dark:invert;
 }
 
 .selector-chooseall,
