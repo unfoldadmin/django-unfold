@@ -14,7 +14,7 @@
                     {% for model in app.models %}
                         <tr class="bg-white dark:bg-base-900 model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %}">
                             {% if model.admin_url %}
-                                <th scope="row" class="font-normal p-3 rtl:text-righ text-left {% if not forloop.last %}border-b border-base-100 dark:border-base-800{% endif %}">
+                                <th scope="row" class="font-normal p-3 rtl:text-right text-left {% if not forloop.last %}border-b border-base-100 dark:border-base-800{% endif %}">
                                     <a href="{{ model.admin_url }}"{% if model.admin_url in request.path %} aria-current="page"{% endif %}>
                                         {{ model.name }}
                                     </a>
