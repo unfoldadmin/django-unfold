@@ -18,7 +18,7 @@
                 <input name="next" type="hidden" value="{{ redirect_to }}">
                 <input name="language" type="hidden" value="{{ language.code }}">
 
-                <button type="submit" class="block flex-grow mx-1 px-3 py-2 rounded text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200 {% if language.code == LANGUAGE_CODE %}text-primary-600 dark:text-primary-500 dark:hover:!text-primary-500 hover:!text-primary-600{% endif %}">
+                <button type="submit" class="block flex-grow mx-1 px-3 py-2 rounded rtl:text-right text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200 {% if language.code == LANGUAGE_CODE %}text-primary-600 dark:text-primary-500 dark:hover:!text-primary-500 hover:!text-primary-600{% endif %}">
                     {{ language.name_local }} ({{ language.code }})
                 </button>
             </form>
