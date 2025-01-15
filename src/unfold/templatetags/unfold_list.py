@@ -50,6 +50,7 @@ ROW_CLASSES = [
     "px-3",
     "py-2",
     "text-left",
+    "rtl:text-right",
     "before:flex",
     "before:capitalize",
     "before:content-[attr(data-label)]",
