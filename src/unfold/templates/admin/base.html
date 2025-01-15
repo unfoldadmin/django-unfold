@@ -10,7 +10,7 @@
             {% endblock %}
         {% endif %}
 
-        <div id="main" class="flex-grow min-w-0">
+        <div id="main" class="flex-grow min-w-0"  x-resize="mainWidth = $width">
             {% include "unfold/helpers/header.html" %}
 
             {% if not is_popup %}

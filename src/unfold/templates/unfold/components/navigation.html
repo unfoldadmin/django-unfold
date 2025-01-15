@@ -1,7 +1,7 @@
 {% if items %}
-    <nav class="bg-gray-100 flex gap-2 p-1 rounded text-sm dark:bg-white/[.04]{% if class %} {{ class }}{% endif %}">
+    <nav class="bg-base-100 flex gap-2 p-1 rounded text-sm dark:bg-white/[.04]{% if class %} {{ class }}{% endif %}">
         {% for item in items %}
-            <a href="{{ item.link }}" class="flex flex-row font-medium items-center px-2.5 py-1 rounded {% if item.active %} bg-white shadow-sm text-font-important-light hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-900 dark:text-font-important-dark{% else %}text-font-subtle-light dark:text-font-subtle-dark hover:bg-gray-700/[.04]  dark:hover:bg-white/[.04]{% endif %}">
+            <a href="{{ item.link }}" class="flex flex-row font-medium items-center px-2.5 py-1 rounded {% if item.active %} bg-white shadow-sm text-font-important-light hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-font-important-dark{% else %}text-font-subtle-light dark:text-font-subtle-dark hover:bg-base-700/[.04]  dark:hover:bg-white/[.04]{% endif %}">
                 {% if item.icon %}
                     <span class="material-symbols-outlined{% if item.title %} mr-2{% endif %}">{{ item.icon }}</span>
                 {% endif %}

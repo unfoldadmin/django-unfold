@@ -1,0 +1,13 @@
+{% load admin_list %}
+
+{% if actions_on_top %}
+    {% if cl.search_fields or action_form or cl.has_filters %}
+        <div class="bottom-0 left-0 right-0 hidden bg-primary-600 group-has-[input.action-select:checked]:flex fixed gap-3 lg:h-[71px] items-center p-3 z-50 lg:flex-row dark:bg-primary-500">
+            <div id="changelist-actions-wrapper" class="flex-grow lg:px-4" {% if not is_popup %}x-bind:class="{'xl:ml-0': !sidebarDesktopOpen, 'xl:ml-72': sidebarDesktopOpen}"{% endif %}>
+                {% if action_form %}
+                    {% admin_actions %}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,13 @@
+{% load i18n unfold %}
+
+{% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
+    <td class="border-t border-base-200 dark:border-base-800 lg:border-t-0 min-h-[62.5px] delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:text-font-important-light before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px before:dark:text-font-important-dark" data-label="{% trans "Remove" %}">
+        {% if inline_admin_form.original %}
+            <div class="flex flex-row lg:mt-3">
+                <div class="ml-auto">
+                    {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }}
+                </div>
+            </div>
+        {% endif %}
+    </td>
+{% endif %}

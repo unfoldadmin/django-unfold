@@ -42,7 +42,7 @@ ROW_CLASSES = [
     "align-middle",
     "flex",
     "border-t",
-    "border-gray-200",
+    "border-base-200",
     "font-normal",
     "gap-4",
     "min-w-0",
@@ -55,13 +55,15 @@ ROW_CLASSES = [
     "before:content-[attr(data-label)]",
     "before:items-center",
     "before:font-semibold",
+    "before:text-font-important-light",
     "before:mr-auto",
     "first:border-t-0",
     "lg:before:hidden",
     "lg:first:border-t",
     "lg:py-3",
     "lg:table-cell",
-    "dark:border-gray-800",
+    "dark:border-base-800",
+    "dark:before:text-font-important-dark",
 ]
 
 CHECKBOX_CLASSES = [
@@ -77,11 +79,13 @@ CHECKBOX_CLASSES = [
     "before:content-[attr(data-label)]",
     "before:font-semibold",
     "before:mr-auto",
+    "before:text-font-important-light",
     "lg:before:hidden",
     "lg:border-t",
-    "lg:border-gray-200",
+    "lg:border-base-200",
     "lg:table-cell",
-    "dark:lg:border-gray-800",
+    "dark:lg:border-base-800",
+    "dark:before:text-font-important-dark",
 ]
 
 
@@ -369,6 +373,7 @@ def result_list(context: Dict[str, Any], cl: ChangeList) -> Dict[str, Any]:
         "num_sorted_fields": num_sorted_fields,
         "results": list(results(cl)),
         "actions_row": context.get("actions_row"),
+        "has_add_permission": cl.model_admin.has_add_permission(context["request"]),
     }
 
 

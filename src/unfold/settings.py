@@ -14,13 +14,18 @@ CONFIG_DEFAULTS = {
     "SHOW_VIEW_ON_SITE": True,
     "SHOW_LANGUAGES": False,
     "COLORS": {
-        "font": {
-            "subtle-light": "107 114 128",  # text-gray-500
-            "subtle-dark": "156 163 175",  # text-gray-400
-            "default-light": "75 85 99",  # text-gray-600
-            "default-dark": "209 213 219",  # text-gray-300
-            "important-light": "17 24 39",  # text-gray-900
-            "important-dark": "243 244 246",  # text-gray-100
+        "base": {
+            "50": "249 250 251",
+            "100": "243 244 246",
+            "200": "229 231 235",
+            "300": "209 213 219",
+            "400": "156 163 175",
+            "500": "107 114 128",
+            "600": "75 85 99",
+            "700": "55 65 81",
+            "800": "31 41 55",
+            "900": "17 24 39",
+            "950": "3 7 18",
         },
         "primary": {
             "50": "250 245 255",
@@ -34,6 +39,14 @@ CONFIG_DEFAULTS = {
             "800": "107 33 168",
             "900": "88 28 135",
             "950": "59 7 100",
+        },
+        "font": {
+            "subtle-light": "var(--color-base-500)",  # text-base-500
+            "subtle-dark": "var(--color-base-400)",  # text-base-400
+            "default-light": "var(--color-base-600)",  # text-base-600
+            "default-dark": "var(--color-base-300)",  # text-base-300
+            "important-light": "var(--color-base-900)",  # text-base-900
+            "important-dark": "var(--color-base-100)",  # text-base-100
         },
     },
     "DASHBOARD_CALLBACK": None,

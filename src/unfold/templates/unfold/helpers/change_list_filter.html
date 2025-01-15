@@ -1,0 +1,31 @@
+{% load i18n admin_list unfold %}
+
+<div id="changelist-filter" class="backdrop-blur-sm bg-opacity-80 bg-base-900 flex inset-0 z-50 fixed {% if not cl.model_admin.list_filter_sheet %}2xl:pb-24 2xl:bg-transparent 2xl:relative 2xl:!block 2xl:z-10{% endif %}" hx-preserve x-show="filterOpen">
+    <label for="show-filters" id="changelist-filter-close" class="flex-grow {% if not cl.model_admin.list_filter_sheet %}2xl:hidden{% endif %}" x-on:click="filterOpen = false"></label>
+
+    <div class="bg-white flex m-4 overflow-hidden rounded shadow-sm w-80 dark:bg-base-800 {% if not cl.model_admin.list_filter_sheet %} 2xl:overflow-visible 2xl:border-0 2xl:shadow-none 2xl:sticky 2xl:top-4 2xl:dark:border-base-800 2xl:bg-transparent 2xl:dark:!bg-transparent 2xl:m-0{% endif %}">
+        <div class="flex-grow h-full overflow-auto relative {% if not cl.model_admin.list_filter_sheet %} 2xl:overflow-visible{% endif %}">
+            <div class="px-3 py-2.5 {% if not cl.model_admin.list_filter_sheet %}2xl:px-0{% endif %}">
+                {% if cl.model_admin.list_filter_submit %}
+                    <form id="filter-form" method="get">
+                        {% preserve_filters %}
+                {% endif %}
+
+                <div class="flex flex-col gap-4 *:mb-0">
+                    {% for spec in cl.filter_specs %}
+                        {% admin_list_filter cl spec %}
+                    {% endfor %}
+                </div>
+
+                {% if cl.model_admin.list_filter_submit %}
+                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium mt-6 px-3 py-2 rounded text-white w-full">
+                        {% trans "Apply Filters" %}
+                    </button>
+                    </form>
+                {% endif %}
+
+                {% include "unfold/helpers/change_list_filter_actions.html" %}
+            </div>
+        </div>
+    </div>
+</div>

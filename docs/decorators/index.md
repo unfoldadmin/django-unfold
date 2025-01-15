@@ -1,5 +1,5 @@
 ---
 title: Decorators
-order: 7
+order: 8
 description: Decorators to display fields in list view and change form.
 ---
