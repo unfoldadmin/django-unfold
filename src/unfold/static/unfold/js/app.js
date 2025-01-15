@@ -306,7 +306,7 @@ const renderCharts = () => {
       new Chart(ctx, {
         type: type || "bar",
         data: parsedData,
-        options: options ? parsedOptions : DEFAULT_CHART_OPTIONS,
+        options: options ? JSON.parse(options) : DEFAULT_CHART_OPTIONS,
       })
     );
   }
