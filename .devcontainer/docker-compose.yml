@@ -1,12 +1,13 @@
-version: "3.4"
-
 services:
   unfold:
+    command: bash -c "python tests/server/manage.py migrate && python tests/server/manage.py runserver 0.0.0.0:8000"
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/app
-      - ../src/unfold:/usr/local/lib/python3.12/site-packages/unfold
+      - ../src/unfold:/usr/local/lib/python3.13/site-packages/unfold
     env_file:
       - backend.env
+    ports:
+      - "8000:8000"

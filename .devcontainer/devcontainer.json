@@ -5,18 +5,13 @@
   "overrideCommand": true,
   "workspaceFolder": "/app",
   "forwardPorts": [8000],
-  "postCreateCommand": "python manage.py migrate",
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "latest"
-    }
-  },
+  "postCreateCommand": "python tests/server/manage.py migrate",
   "customizations": {
     "vscode": {
       "settings": {
         "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-          "source.organizeImports": "always"
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff"
         }
       },
       "extensions": [
