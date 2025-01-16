@@ -63,6 +63,13 @@
 }
 
 /*******************************************************
+ Search
+ *******************************************************/
+input[type="search"]::-webkit-search-cancel-button {
+  @apply z-10 dark:invert;
+}
+
+/*******************************************************
  Select
  *******************************************************/
 select:not([class*="bg-none"]):not([multiple]) {
@@ -202,6 +209,7 @@ table tr.selected th {
 .selector-filter {
   @apply flex;
 }
+
 .selector-filter input {
   @apply bg-base-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded text-base-500 text-sm focus:outline-none dark:bg-base-800 dark:text-base-300;
 }
