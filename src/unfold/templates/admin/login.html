@@ -34,18 +34,20 @@
 
                 {% include "unfold/helpers/messages.html" %}
 
-                {% include "unfold/helpers/messages/errornote.html" with errors=form.errors %}
+                <div class="flex flex-col gap-4 mb-8 *:mb-0">
+                    {% include "unfold/helpers/messages/errornote.html" with errors=form.errors %}
 
-                {% include "unfold/helpers/messages/error.html" with errors=form.non_field_errors %}
+                    {% include "unfold/helpers/messages/error.html" with errors=form.non_field_errors %}
 
-                {% if user.is_authenticated %}
-                    {% blocktranslate trimmed asvar message %}
-                        You are authenticated as {{ username }}, but are not authorized to
-                        access this page. Would you like to login to a different account?
-                    {% endblocktranslate %}
+                    {% if user.is_authenticated %}
+                        {% blocktranslate trimmed asvar message %}
+                            You are authenticated as {{ username }}, but are not authorized to
+                            access this page. Would you like to login to a different account?
+                        {% endblocktranslate %}
 
-                    {% include "unfold/helpers/messages/error.html" with error=message %}
-                {% endif %}
+                        {% include "unfold/helpers/messages/error.html" with error=message %}
+                    {% endif %}
+                </div>
 
                 {% block login_before %}{% endblock %}
 
