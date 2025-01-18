@@ -19,6 +19,16 @@ TEMPLATES = [
     }
 ```
 
+You will also need to include `django.contrib.humanize` in `settings.py` to use the `humanize` template tags.
+
+```python
+INSTALLED_APPS = [
+    # ...
+    'django.contrib.humanize',
+    # ...
+]
+```
+
 ```html
 {% extends 'unfold/layouts/base_simple.html' %}
 
