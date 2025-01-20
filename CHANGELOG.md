@@ -1,4 +1,20 @@
 
+## 0.45.0 (2025-01-20)
+
+- feat: improved devcontainer experience (#977) ([`5b68d95`](https://github.com/unfoldadmin/django-unfold/commit/5b68d95f85476635f9eaf18b864bd9cb682782cb))
+- fix: login form errors (#982) ([`88324b0`](https://github.com/unfoldadmin/django-unfold/commit/88324b052a01f94633f083644233ea82f00c297d))
+- fix: search input cancel button in Safari styling (#970) ([`5a10af1`](https://github.com/unfoldadmin/django-unfold/commit/5a10af1e13fa88fb53fcf26103565050ead8e8dc))
+- fix: custom chart options (#967) ([`52f85ae`](https://github.com/unfoldadmin/django-unfold/commit/52f85aebb2bd875da1614ba9947c0e551b0a6ccd))
+- fix: trix inlines (#963) ([`ec7b338`](https://github.com/unfoldadmin/django-unfold/commit/ec7b33862dacc351da56a3cf8dd0e47689f814b2))
+- fix: cohort chart safari height (#958) ([`b43b15e`](https://github.com/unfoldadmin/django-unfold/commit/b43b15eca441bf9521ba742411ad82cab9c9bdb0))
+- fix: actions dropdown options color (#952) ([`df4b55b`](https://github.com/unfoldadmin/django-unfold/commit/df4b55bf6e375b7bd5f88a29950e9ea23e27e4b5))
+- docs: unfold development in containers (#979) ([`99a4c6d`](https://github.com/unfoldadmin/django-unfold/commit/99a4c6de9aeb3e20493234117fb33656c4f4fc2e))
+- docs: tailwind configuration (#974) ([`aa2f81a`](https://github.com/unfoldadmin/django-unfold/commit/aa2f81ac8e933e72e6c5e502636618ff89e08949))
+- docs: dashboard TEAMPLATES configuration ([`43da532`](https://github.com/unfoldadmin/django-unfold/commit/43da532ff9487ee117f893ae06521ef0d0572d3c))
+- docs: theming options (#960) ([`2c2be1c`](https://github.com/unfoldadmin/django-unfold/commit/2c2be1c1499ee27f396b482df189db4fcd51b45f))
+- chore: src folder cleanup (#961) ([`2f27a01`](https://github.com/unfoldadmin/django-unfold/commit/2f27a013367481f36aa4267e912c0fbeca102408))
+- chore: theme description (#959) ([`997e5c0`](https://github.com/unfoldadmin/django-unfold/commit/997e5c073f321f954d26c71d5d3c04e4e42aeb90))
+
 ## 0.44.0 (2025-01-08)
 
 - feat: css vars support in charts (#945) ([`36f7dd3`](https://github.com/unfoldadmin/django-unfold/commit/36f7dd3eed5a00e5021fc479488cc9fdc3efd8b8))
