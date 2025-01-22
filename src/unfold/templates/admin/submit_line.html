@@ -27,14 +27,6 @@
                         </button>
                     {% endif %}
 
-                    {% if show_close %}
-                        {% url opts|admin_urlname:'changelist' as changelist_url %}
-
-                        <a href="{% add_preserved_filters changelist_url %}" class="border border-base-200 font-medium px-3 py-2 rounded transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
-                            {% translate 'Close' %}
-                        </a>
-                    {% endif %}
-
                     {% if show_save_and_add_another %}
                         <button type="submit" name="_addanother" class="border border-base-200 font-medium px-3 py-2 rounded transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
                             {% translate 'Save and add another' %}
@@ -47,15 +39,24 @@
                         </button>
                     {% endif %}
 
-                    {% if show_delete_link and original %}
-                        {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+                    <div class="flex flex-col gap-3 mr-auto w-full lg:flex-row lg:w-auto">
+                        {% if show_close or adminform.model_admin.change_form_show_cancel_button %}
+                            {% url opts|admin_urlname:'changelist' as changelist_url %}
 
-                        <p class="deletelink-box mr-auto w-full lg:w-auto">
-                            <a href="{% add_preserved_filters delete_url %}" class="bg-red-600 flex items-center justify-center font-medium h-9.5 ml-auto px-3 py-2 rounded text-white dark:bg-red-500/20 dark:text-red-500">
+                            <a href="{% add_preserved_filters changelist_url %}" class="border border-base-200 font-medium px-3 py-2 rounded text-center transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
+                                {% translate 'Close' %}
+                            </a>
+                        {% endif %}
+
+                        {% if show_delete_link and original %}
+                            {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+
+
+                            <a href="{% add_preserved_filters delete_url %}" class="bg-red-600 flex items-center justify-center font-medium h-9.5 ml-auto px-3 py-2 rounded text-center text-white w-full lg:w-auto dark:bg-red-500/20 dark:text-red-500">
                                 {% translate "Delete" %} {{ opts.verbose_name }}
                             </a>
-                        </p>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 {% endblock %}
             </div>
         </div>
