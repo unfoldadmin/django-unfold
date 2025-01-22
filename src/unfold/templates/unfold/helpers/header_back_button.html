@@ -1,0 +1,13 @@
+{% load admin_urls i18n %}
+
+{% if show_back_button %}
+    {% if opts and adminform %}
+        {% url opts|admin_urlname:'changelist' as link %}
+
+        <a href="{{ link }}" class="block h-4.5 mr-3" title="{% trans "Go back" %}">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+        </a>
+    {% endif %}
+{% endif %}
