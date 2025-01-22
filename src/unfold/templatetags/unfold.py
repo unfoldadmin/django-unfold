@@ -296,6 +296,7 @@ def fieldset_rows_classes(context: Context) -> str:
 @register.simple_tag(takes_context=True)
 def fieldset_row_classes(context: Context) -> str:
     classes = [
+        "form-row",
         "field-row",
         "group/row",
     ]
