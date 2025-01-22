@@ -95,6 +95,7 @@ class UnfoldAdminSite(AdminSite):
                     "SHOW_VIEW_ON_SITE"
                 ],
                 "show_languages": get_config(self.settings_name)["SHOW_LANGUAGES"],
+                "show_back_button": get_config(self.settings_name)["SHOW_BACK_BUTTON"],
                 "colors": self._process_colors(
                     get_config(self.settings_name)["COLORS"]
                 ),
