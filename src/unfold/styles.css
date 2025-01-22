@@ -637,7 +637,7 @@ trix-toolbar[id^="trix-toolbar-"] {
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav {
-  @apply bg-base-100 border-0 flex gap-2 m-0 mb-4 mr-auto p-1 rounded text-sm dark:bg-white/[.04] after:hidden;
+  @apply bg-base-100 border-0 flex gap-2 m-0 ml-3 mb-0 mt-3 mr-auto p-1 rounded text-sm dark:bg-white/[.04] after:hidden;
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav li {
