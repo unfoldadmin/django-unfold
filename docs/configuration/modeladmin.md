@@ -48,7 +48,6 @@ class CustomAdminClass(ModelAdmin):
     # Dsable select all action in changelist
     list_disable_select_all = False
 
-
     # Custom actions
     actions_list = []  # Displayed above the results list
     actions_row = []  # Displayed in a table row in results list
@@ -62,6 +61,9 @@ class CustomAdminClass(ModelAdmin):
     # Located outside of the form
     change_form_outer_before_template = "some/template.html"
     change_form_outer_after_template = "some/template.html"
+
+    # Display cancel button in submit line in changeform
+    change_form_show_cancel_button = True # show/hide cancel button in changeform, default: False
 
     formfield_overrides = {
         models.TextField: {
