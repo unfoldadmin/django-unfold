@@ -316,7 +316,11 @@ def fieldset_row_classes(context: Context) -> str:
             classes.append("hidden")
 
     # Compressed fields special styling
-    if adminform and adminform.model_admin.compressed_fields:
+    if (
+        adminform
+        and hasattr(adminform.model_admin, "compressed_fields")
+        and adminform.model_admin.compressed_fields
+    ):
         classes.extend(
             [
                 "lg:border-b",
@@ -360,7 +364,11 @@ def fieldset_line_classes(context: Context) -> str:
     if hasattr(field, "errors") and field.errors():
         classes.append("errors")
 
-    if adminform.model_admin.compressed_fields:
+    if (
+        adminform
+        and hasattr(adminform.model_admin, "compressed_fields")
+        and adminform.model_admin.compressed_fields
+    ):
         classes.extend(
             [
                 "border-b",
