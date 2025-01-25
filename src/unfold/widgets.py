@@ -718,8 +718,8 @@ class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
                     *INPUT_CLASSES,
                     attrs.get("class", "") if attrs else "",
                 ]
-            )
-            ** (attrs or {}),
+            ),
+            **(attrs or {}),
         }
         super().__init__(rel, admin_site, attrs, using)
 
