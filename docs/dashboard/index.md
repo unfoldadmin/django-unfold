@@ -27,10 +27,8 @@ TEMPLATES = [
 {% block breadcrumbs %}{% endblock %}
 
 {% block title %}
-    {% if subtitle %}
-        {{ subtitle }} |
-    {% endif %}
-
+    {% if environment and envirnoment.title_prefix %}{{ envirnoment.title_prefix }}{% endif %}
+    {% if subtitle %}{{ subtitle }} | {% endif %}
     {{ title }} | {{ site_title|default:_('Django site admin') }}
 {% endblock %}
 

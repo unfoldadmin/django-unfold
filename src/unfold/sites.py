@@ -69,6 +69,33 @@ class UnfoldAdminSite(AdminSite):
 
         return urlpatterns
 
+    def get_environment_context(self, request):
+        """
+        Build the envirnoment indicator needed template context if the envirnoment callback is set.
+        """
+        context = {}
+        environment_callback = get_config(self.settings_name)["ENVIRONMENT"]
+        if environment_callback and isinstance(environment_callback, str):
+            try:
+                callback = import_string(environment_callback)
+                environment = callback(request)
+                if isinstance(environment, list):
+                    # Handle old envirnoment callback return value
+                    label, color_accent = environment
+                    context.update(
+                        {
+                            "label": label,
+                            "color_accent": color_accent,
+                            "title_prefix": None,
+                        }
+                    )
+                else:
+                    context.update(environment)
+            except ImportError:
+                pass
+
+        return context
+
     def each_context(self, request: HttpRequest) -> Dict[str, Any]:
         context = super().each_context(request)
 
@@ -121,17 +148,9 @@ class UnfoldAdminSite(AdminSite):
                 "sidebar_navigation": self.get_sidebar_list(request)
                 if self.has_permission(request)
                 else [],
+                "environment": self.get_environment_context(request),
             }
         )
-
-        environment = get_config(self.settings_name)["ENVIRONMENT"]
-
-        if environment and isinstance(environment, str):
-            try:
-                callback = import_string(environment)
-                context.update({"environment": callback(request)})
-            except ImportError:
-                pass
 
         if hasattr(self, "extra_context") and callable(self.extra_context):
             return self.extra_context(context, request)

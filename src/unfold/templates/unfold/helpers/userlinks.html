@@ -4,7 +4,7 @@
     <div class="flex flex-row group items-center leading-none relative">
         <div class="flex gap-4 items-center">
             {% if environment %}
-                {% include "unfold/helpers/label.html" with text=environment.0 type=environment.1 %}
+                {% include "unfold/helpers/label.html" with text=environment.label type=environment.color_accent %}
             {% endif %}
 
             {% if extra_userlinks %}

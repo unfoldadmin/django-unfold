@@ -157,10 +157,19 @@ def dashboard_callback(request, context):
 
 def environment_callback(request):
     """
-    Callback has to return a list of two values represeting text value and the color
-    type of the label displayed in top right corner.
+    Callback has to return a list or a dict with the values represeting:
+    - the text of the label displayed in the top right corner.
+    - the color accent of that label.
+    - and optionally a prefix to be prepend in the browser tab title if needed.
     """
-    return ["Production", "danger"] # info, danger, warning, success
+    # Return a list with the label and color accent only for backward compatiblity
+    return ["Production", "danger"] # info, danger, warning, success    
+    # Return a dict containing the following keys
+    return {
+        "label": "Production",  # Accepts translated strings also for example _("Production")
+        "color_accent": "danger",
+        "title_prefix": "[PROD]",
+    }
 
 
 def badge_callback(request):
