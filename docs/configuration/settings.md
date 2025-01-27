@@ -163,7 +163,7 @@ def environment_callback(request):
     - and optionally a prefix to be prepend in the browser tab title if needed.
     """
     # Return a list with the label and color accent only for backward compatiblity
-    return ["Production", "danger"] # info, danger, warning, success    
+    return ["Production", "danger"] # info, danger, warning, success
     # Return a dict containing the following keys
     return {
         "label": "Production",  # Accepts translated strings also for example _("Production")
