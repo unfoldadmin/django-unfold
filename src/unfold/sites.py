@@ -231,6 +231,7 @@ class UnfoldAdminSite(AdminSite):
         self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
     ) -> HttpResponse:
         extra_context = {} if extra_context is None else extra_context
+        extra_context.update({"environment": self.get_environment_context(request)})
         image = self._get_value(
             get_config(self.settings_name)["LOGIN"].get("image"), request
         )
