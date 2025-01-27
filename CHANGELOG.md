@@ -1,4 +1,22 @@
 
+## 0.46.0 (2025-01-27)
+
+- feat: sheet filter sticky buttons (#1003) ([`02d36b1`](https://github.com/unfoldadmin/django-unfold/commit/02d36b1333b000a5c82a501a528ef8b955dd81cd))
+- feat: submit line cancel button (#990) ([`1976c29`](https://github.com/unfoldadmin/django-unfold/commit/1976c29655aada5e8245e4d8b0227fb4c00c632a))
+- feat: show changeform back button (#989) ([`8ca6214`](https://github.com/unfoldadmin/django-unfold/commit/8ca6214a234b72b04bf0cbe83501edee6fa7ccff))
+- fix: login form spacing (#1008) ([`d56ec79`](https://github.com/unfoldadmin/django-unfold/commit/d56ec7962382b5019c7e3db0fe299f004828f664))
+- fix: invalid HTML: &lt;h1&gt; Nested Inside &lt;span&gt; (#968) (#1000) ([`64de89d`](https://github.com/unfoldadmin/django-unfold/commit/64de89d6d1752c4cc36389d15ec3765aa03f48cd))
+- fix: unfold widgets attrs order (#1007) ([`c526eec`](https://github.com/unfoldadmin/django-unfold/commit/c526eec8635332aeac88d51383d903747a810fe0))
+- fix: TypeError on UnfoldForeignKeyRawIdWidget (#1004) (#1005) ([`37b52ac`](https://github.com/unfoldadmin/django-unfold/commit/37b52ac97f018e2743df76379b51de819be48f90))
+- fix: compressed fields check (#1002) ([`3821421`](https://github.com/unfoldadmin/django-unfold/commit/38214213150273cdcc436f2fbc77a5fe48ee5ce8))
+- fix: readonly field break word (#1001) ([`b8d0101`](https://github.com/unfoldadmin/django-unfold/commit/b8d0101effd4d647637a85e189864ac92b40ca89))
+- fix: widget css classes (#997) ([`b9ea7df`](https://github.com/unfoldadmin/django-unfold/commit/b9ea7df877af80da01de96aeccf250d802fdc56e))
+- fix: popup submitline button position (#994) ([`386f94d`](https://github.com/unfoldadmin/django-unfold/commit/386f94db25ed3982893da9756c1b7c66ccbdc704))
+- fix: inlines display logic (#972) ([`75ae3f7`](https://github.com/unfoldadmin/django-unfold/commit/75ae3f739ba9f67b264ac12605f308067475190d))
+- fix: modeltranslation tabs (#993) ([`1010048`](https://github.com/unfoldadmin/django-unfold/commit/1010048ca77aa4d0b268a9884b0bea4cee47bd69))
+- docs: missing page (#992) ([`8c94320`](https://github.com/unfoldadmin/django-unfold/commit/8c9432086d708852831dfb73e07ad7928094962e))
+- docs: dashboard link &amp; templatetags (#991) ([`42e4f0d`](https://github.com/unfoldadmin/django-unfold/commit/42e4f0d2c17afa71b099d0f94c00b54b419602ba))
+
 ## 0.45.0 (2025-01-20)
 
 - feat: improved devcontainer experience (#977) ([`5b68d95`](https://github.com/unfoldadmin/django-unfold/commit/5b68d95f85476635f9eaf18b864bd9cb682782cb))
