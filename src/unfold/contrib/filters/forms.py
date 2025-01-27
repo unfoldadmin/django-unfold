@@ -1,5 +1,6 @@
 from django import forms
-from django.forms import ChoiceField, MultipleChoiceField
+from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
+from django.forms import ChoiceField, ModelMultipleChoiceField, MultipleChoiceField
 from django.utils.translation import gettext_lazy as _
 
 from ...widgets import (
@@ -20,6 +21,50 @@ class SearchForm(forms.Form):
             required=False,
             widget=UnfoldAdminTextInputWidget,
         )
+
+
+class AutocompleteDropdownForm(forms.Form):
+    field = forms.ModelChoiceField
+    widget = AutocompleteSelect
+
+    def __init__(
+        self,
+        request,
+        name,
+        label,
+        choices,
+        field,
+        model_admin,
+        multiple=False,
+        *args,
+        **kwargs,
+    ):
+        super().__init__(*args, **kwargs)
+
+        if multiple:
+            self.field = ModelMultipleChoiceField
+            self.widget = AutocompleteSelectMultiple
+
+        self.fields[name] = self.field(
+            label=label,
+            required=False,
+            queryset=field.remote_field.model.objects.all(),
+            widget=self.widget(field, model_admin.admin_site),
+        )
+
+    class Media:
+        js = (
+            "admin/js/vendor/jquery/jquery.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "admin/js/autocomplete.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
 
 
 class DropdownForm(forms.Form):
