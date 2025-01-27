@@ -13,6 +13,8 @@ ALLOWED_HOSTS = ["localhost"]
 
 AUTH_USER_MODEL = "example.User"
 
+USE_TZ = False
+
 INSTALLED_APPS = [
     "unfold",
     "django.contrib.admin",
