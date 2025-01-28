@@ -2,9 +2,9 @@
 
 {% if show_back_button %}
     {% if opts and adminform %}
-        {% url opts|admin_urlname:'changelist' as link %}
+        {% url opts|admin_urlname:'changelist' as changelist_url %}
 
-        <a href="{{ link }}" class="block h-4.5 mr-3" title="{% trans "Go back" %}">
+        <a href="{% add_preserved_filters changelist_url %}" class="block h-4.5 mr-3" title="{% trans "Go back" %}">
             <span class="material-symbols-outlined">
                 arrow_back
             </span>
