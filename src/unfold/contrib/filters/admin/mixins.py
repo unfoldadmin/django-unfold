@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Generator, List, Optional, Tuple
 
 from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
@@ -7,7 +7,11 @@ from django.forms import ValidationError
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
-from unfold.contrib.filters.forms import DropdownForm, RangeNumericForm
+from unfold.contrib.filters.forms import (
+    AutocompleteDropdownForm,
+    DropdownForm,
+    RangeNumericForm,
+)
 
 
 class ValueMixin:
@@ -115,3 +119,24 @@ class RangeNumericMixin:
                 ),
             },
         )
+
+
+class AutocompleteMixin:
+    form_class = AutocompleteDropdownForm
+
+    def choices(
+        self, changelist: ChangeList
+    ) -> Generator[Dict[str, AutocompleteDropdownForm], None, None]:
+        print("REQUEST", self.request)
+        yield {
+            "form": self.form_class(
+                request=self.request,
+                label=_("By %(filter_title)s") % {"filter_title": self.title},
+                name=self.lookup_kwarg,
+                choices=(),
+                field=self.field,
+                model_admin=self.model_admin,
+                data={self.lookup_kwarg: self.value()},
+                multiple=self.multiple if hasattr(self, "multiple") else False,
+            ),
+        }
