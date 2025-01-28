@@ -27,7 +27,7 @@ Have you decided to start using Unfold but don’t have time to make the switch 
 - **Sidebar:** Simplifies the creation of sidebar navigation with icons, collapsibles, and more.
 - **Dark mode:** Supports both light and dark mode versions.
 - **Actions:** Offers multiple ways to define actions within different parts of the admin interface.
-- **Filters:** Custom dropdowns, numeric, datetime, and text fields.
+- **Filters:** Custom dropdowns, autocomplete, numeric, datetime, and text fields.
 - **Dashboard:** Includes helpers for creating custom dashboard pages.
 - **Components:** Reusable UI components such as cards, buttons, and charts.
 - **WYSIWYG widget:** Built-in support for WYSIWYG (Trix).

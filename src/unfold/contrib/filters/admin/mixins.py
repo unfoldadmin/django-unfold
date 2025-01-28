@@ -127,7 +127,6 @@ class AutocompleteMixin:
     def choices(
         self, changelist: ChangeList
     ) -> Generator[Dict[str, AutocompleteDropdownForm], None, None]:
-        print("REQUEST", self.request)
         yield {
             "form": self.form_class(
                 request=self.request,
