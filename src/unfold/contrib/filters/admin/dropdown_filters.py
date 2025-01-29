@@ -1,9 +1,12 @@
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Generator, List, Tuple, Type
 
 from django.contrib import admin
 from django.contrib.admin.views.main import ChangeList
+from django.db.models import Field, Model
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
+from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin.mixins import (
     DropdownMixin,
     MultiValueMixin,
@@ -34,16 +37,22 @@ class DropdownFilter(admin.SimpleListFilter):
 class MultipleDropdownFilter(DropdownFilter):
     multiple = True
 
-    def __init__(self, request, params, model, model_admin):
+    def __init__(
+        self,
+        request: HttpRequest,
+        params: Dict[str, Any],
+        model: Type[Model],
+        model_admin: ModelAdmin,
+    ) -> None:
         self.request = request
         super().__init__(request, params, model, model_admin)
 
-    def value(self):
+    def value(self) -> List[Any]:
         return self.request.GET.getlist(self.parameter_name)
 
 
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
-    def choices(self, changelist: ChangeList):
+    def choices(self, changelist: ChangeList) -> Generator[Dict[str, Any], None, None]:
         choices = [self.all_option, *self.field.flatchoices]
 
         yield {
@@ -62,11 +71,19 @@ class MultipleChoicesDropdownFilter(MultiValueMixin, ChoicesDropdownFilter):
 
 
 class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFilter):
-    def __init__(self, field, request, params, model, model_admin, field_path):
+    def __init__(
+        self,
+        field: Field,
+        request: HttpRequest,
+        params: Dict[str, str],
+        model: Type[Model],
+        model_admin: ModelAdmin,
+        field_path: str,
+    ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
         self.model_admin = model_admin
 
-    def choices(self, changelist: ChangeList):
+    def choices(self, changelist: ChangeList) -> Generator[Dict[str, Any], None, None]:
         yield {
             "form": self.form_class(
                 label=_("By %(filter_title)s") % {"filter_title": self.title},
