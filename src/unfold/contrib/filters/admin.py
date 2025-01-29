@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Tuple, Type
+from typing import Any, Optional
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
@@ -36,18 +36,18 @@ class ValueMixin:
         return (
             self.lookup_val[0]
             if self.lookup_val not in EMPTY_VALUES
-            and isinstance(self.lookup_val, List)
+            and isinstance(self.lookup_val, list)
             and len(self.lookup_val) > 0
             else self.lookup_val
         )
 
 
 class MultiValueMixin:
-    def value(self) -> Optional[List[str]]:
+    def value(self) -> Optional[list[str]]:
         return (
             self.lookup_val
             if self.lookup_val not in EMPTY_VALUES
-            and isinstance(self.lookup_val, List)
+            and isinstance(self.lookup_val, list)
             and len(self.lookup_val) > 0
             else self.lookup_val
         )
@@ -72,10 +72,10 @@ class TextFilter(admin.SimpleListFilter):
     def has_output(self) -> bool:
         return True
 
-    def lookups(self, request: HttpRequest, model_admin: ModelAdmin) -> Tuple:
+    def lookups(self, request: HttpRequest, model_admin: ModelAdmin) -> tuple:
         return ()
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "form": self.form_class(
@@ -96,10 +96,10 @@ class FieldTextFilter(ValueMixin, admin.FieldListFilter):
         self.lookup_val = params.get(self.lookup_kwarg)
         super().__init__(field, request, params, model, model_admin, field_path)
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [self.lookup_kwarg]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "form": self.form_class(
@@ -116,7 +116,7 @@ class DropdownFilter(admin.SimpleListFilter):
     form_class = DropdownForm
     all_option = ["", _("All")]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "form": self.form_class(
@@ -186,8 +186,8 @@ class SingleNumericFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -222,10 +222,10 @@ class SingleNumericFilter(admin.FieldListFilter):
     def value(self) -> Any:
         return self.used_parameters.get(self.parameter_name, None)
 
-    def expected_parameters(self) -> List[Optional[str]]:
+    def expected_parameters(self) -> list[Optional[str]]:
         return [self.parameter_name]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -242,7 +242,7 @@ class RangeNumericMixin:
     parameter_name = None
     template = "unfold/filters/filters_numeric_range.html"
 
-    def init_used_parameters(self, params: Dict[str, Any]) -> None:
+    def init_used_parameters(self, params: dict[str, Any]) -> None:
         if self.parameter_name + "_from" in params:
             value = params.pop(self.parameter_name + "_from")
 
@@ -284,13 +284,13 @@ class RangeNumericMixin:
         except (ValueError, ValidationError):
             return None
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [
             f"{self.parameter_name}_from",
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -314,8 +314,8 @@ class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
     def __init__(
         self,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
     ) -> None:
         super().__init__(request, params, model, model_admin)
@@ -327,7 +327,7 @@ class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
 
     def lookups(
         self, request: HttpRequest, model_admin: ModelAdmin
-    ) -> Tuple[Tuple[str, str], ...]:
+    ) -> tuple[tuple[str, str], ...]:
         return (("dummy", "dummy"),)
 
 
@@ -336,8 +336,8 @@ class RangeNumericFilter(RangeNumericMixin, admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -366,8 +366,8 @@ class SliderNumericFilter(RangeNumericFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -376,7 +376,7 @@ class SliderNumericFilter(RangeNumericFilter):
         self.field = field
         self.q = model_admin.get_queryset(request)
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         total = self.q.all().count()
         min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get("min", 0)
 
@@ -437,8 +437,8 @@ class RangeDateFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -482,13 +482,13 @@ class RangeDateFilter(admin.FieldListFilter):
         except (ValueError, ValidationError):
             return None
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [
             f"{self.parameter_name}_from",
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -518,8 +518,8 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -553,7 +553,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             value = value[0] if isinstance(value, list) else value
             self.used_parameters[self.field_path + "_to_1"] = value
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [
             f"{self.parameter_name}_from_0",
             f"{self.parameter_name}_from_1",
@@ -593,7 +593,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         except (ValueError, ValidationError):
             return None
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
