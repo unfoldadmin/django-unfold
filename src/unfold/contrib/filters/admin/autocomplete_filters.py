@@ -11,6 +11,6 @@ class AutocompleteSelectFilter(AutocompleteMixin, RelatedDropdownFilter):
 
 
 class AutocompleteSelectMultipleFilter(
-    MultipleRelatedDropdownFilter, AutocompleteMixin
+    AutocompleteMixin, MultipleRelatedDropdownFilter
 ):
     form_class = AutocompleteDropdownForm

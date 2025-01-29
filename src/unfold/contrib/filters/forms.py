@@ -179,7 +179,7 @@ class RangeDateForm(forms.Form):
         ]
 
     def __init__(self, name: str, *args, **kwargs) -> None:
-        self.name = kwargs.pop("name")
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[self.name + "_from"] = forms.DateField(
