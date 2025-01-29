@@ -1,7 +1,11 @@
 from django import forms
 from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
+from django.db.models import Field as ModelField
 from django.forms import ChoiceField, ModelMultipleChoiceField, MultipleChoiceField
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
+
+from unfold.admin import ModelAdmin
 
 from ...widgets import (
     INPUT_CLASSES,
@@ -13,7 +17,7 @@ from ...widgets import (
 
 
 class SearchForm(forms.Form):
-    def __init__(self, name, label, *args, **kwargs):
+    def __init__(self, name: str, label: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self.fields[name] = forms.CharField(
@@ -29,16 +33,16 @@ class AutocompleteDropdownForm(forms.Form):
 
     def __init__(
         self,
-        request,
-        name,
-        label,
-        choices,
-        field,
-        model_admin,
-        multiple=False,
+        request: HttpRequest,
+        name: str,
+        label: str,
+        choices: tuple,
+        field: ModelField,
+        model_admin: ModelAdmin,
+        multiple: bool = False,
         *args,
         **kwargs,
-    ):
+    ) -> None:
         super().__init__(*args, **kwargs)
 
         if multiple:
@@ -76,7 +80,15 @@ class DropdownForm(forms.Form):
     )
     field = ChoiceField
 
-    def __init__(self, name, label, choices, multiple=False, *args, **kwargs):
+    def __init__(
+        self,
+        name: str,
+        label: str,
+        choices: tuple,
+        multiple: bool = False,
+        *args,
+        **kwargs,
+    ) -> None:
         super().__init__(*args, **kwargs)
 
         if multiple:
@@ -111,7 +123,7 @@ class DropdownForm(forms.Form):
 
 
 class SingleNumericForm(forms.Form):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name: str, *args, **kwargs) -> None:
         name = kwargs.pop("name")
         super().__init__(*args, **kwargs)
 
@@ -127,7 +139,7 @@ class SingleNumericForm(forms.Form):
 class RangeNumericForm(forms.Form):
     name = None
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name: str, *args, **kwargs) -> None:
         self.name = kwargs.pop("name")
         super().__init__(*args, **kwargs)
 
@@ -166,7 +178,7 @@ class RangeDateForm(forms.Form):
             "unfold/filters/js/DateTimeShortcuts.js",
         ]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name: str, *args, **kwargs) -> None:
         self.name = kwargs.pop("name")
         super().__init__(*args, **kwargs)
 
@@ -201,7 +213,7 @@ class RangeDateTimeForm(forms.Form):
             "unfold/filters/js/DateTimeShortcuts.js",
         ]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name: str, *args, **kwargs) -> None:
         self.name = kwargs.pop("name")
         super().__init__(*args, **kwargs)
 

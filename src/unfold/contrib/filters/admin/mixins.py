@@ -122,8 +122,6 @@ class RangeNumericMixin:
 
 
 class AutocompleteMixin:
-    form_class = AutocompleteDropdownForm
-
     def choices(
         self, changelist: ChangeList
     ) -> Generator[Dict[str, AutocompleteDropdownForm], None, None]:
