@@ -71,7 +71,7 @@ class UnfoldAdminSite(AdminSite):
 
     def get_environment_context(self, request):
         """
-        Build the envirnoment indicator needed template context if the envirnoment callback is set.
+        Build the environment indicator needed template context if the environment callback is set.
         """
         context = {}
         environment_callback = get_config(self.settings_name)["ENVIRONMENT"]
@@ -80,7 +80,7 @@ class UnfoldAdminSite(AdminSite):
                 callback = import_string(environment_callback)
                 environment = callback(request)
                 if isinstance(environment, list):
-                    # Handle old envirnoment callback return value
+                    # Handle old environment callback return value
                     label, color_accent = environment
                     context.update(
                         {
