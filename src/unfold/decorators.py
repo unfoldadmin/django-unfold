@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, Iterable, Optional, Union
+from collections.abc import Iterable
+from typing import Any, Callable, Dict, Optional, Union
 
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import PermissionDenied
