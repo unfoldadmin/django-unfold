@@ -124,7 +124,7 @@ class DropdownForm(forms.Form):
 
 class SingleNumericForm(forms.Form):
     def __init__(self, name: str, *args, **kwargs) -> None:
-        name = kwargs.pop("name")
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[name] = forms.FloatField(
@@ -137,10 +137,8 @@ class SingleNumericForm(forms.Form):
 
 
 class RangeNumericForm(forms.Form):
-    name = None
-
     def __init__(self, name: str, *args, **kwargs) -> None:
-        self.name = kwargs.pop("name")
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[self.name + "_from"] = forms.FloatField(
@@ -170,8 +168,6 @@ class SliderNumericForm(RangeNumericForm):
 
 
 class RangeDateForm(forms.Form):
-    name = None
-
     class Media:
         js = [
             "admin/js/calendar.js",
@@ -205,8 +201,6 @@ class RangeDateForm(forms.Form):
 
 
 class RangeDateTimeForm(forms.Form):
-    name = None
-
     class Media:
         js = [
             "admin/js/calendar.js",
@@ -214,7 +208,7 @@ class RangeDateTimeForm(forms.Form):
         ]
 
     def __init__(self, name: str, *args, **kwargs) -> None:
-        self.name = kwargs.pop("name")
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[self.name + "_from"] = forms.SplitDateTimeField(
