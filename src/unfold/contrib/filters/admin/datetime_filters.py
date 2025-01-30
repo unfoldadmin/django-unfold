@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Type
+from typing import Any
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
@@ -30,8 +30,8 @@ class RangeDateFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -75,13 +75,13 @@ class RangeDateFilter(admin.FieldListFilter):
         except (ValueError, ValidationError):
             return None
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [
             f"{self.parameter_name}_from",
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -111,8 +111,8 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -146,7 +146,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             value = value[0] if isinstance(value, list) else value
             self.used_parameters[self.field_path + "_to_1"] = value
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [
             f"{self.parameter_name}_from_0",
             f"{self.parameter_name}_from_1",
@@ -186,7 +186,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         except (ValueError, ValidationError):
             return None
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "request": self.request,

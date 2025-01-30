@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple, Type
+from typing import Any
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
@@ -18,10 +18,10 @@ class TextFilter(admin.SimpleListFilter):
     def has_output(self) -> bool:
         return True
 
-    def lookups(self, request: HttpRequest, model_admin: ModelAdmin) -> Tuple:
+    def lookups(self, request: HttpRequest, model_admin: ModelAdmin) -> tuple:
         return ()
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "form": self.form_class(
@@ -41,8 +41,8 @@ class FieldTextFilter(ValueMixin, admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: Dict[str, str],
-        model: Type[Model],
+        params: dict[str, str],
+        model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
     ) -> None:
@@ -50,10 +50,10 @@ class FieldTextFilter(ValueMixin, admin.FieldListFilter):
         self.lookup_val = params.get(self.lookup_kwarg)
         super().__init__(field, request, params, model, model_admin, field_path)
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [self.lookup_kwarg]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "form": self.form_class(
