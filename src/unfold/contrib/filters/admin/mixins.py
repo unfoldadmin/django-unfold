@@ -1,4 +1,5 @@
-from typing import Any, Dict, Generator, List, Optional, Tuple
+from collections.abc import Generator
+from typing import Any, Dict, List, Optional, Tuple
 
 from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES

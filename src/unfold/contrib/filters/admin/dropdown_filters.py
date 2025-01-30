@@ -1,4 +1,5 @@
-from typing import Any, Dict, Generator, List, Tuple, Type
+from collections.abc import Generator
+from typing import Any, Dict, List, Tuple, Type
 
 from django.contrib import admin
 from django.contrib.admin.views.main import ChangeList
