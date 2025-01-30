@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 from django.conf import settings
 
@@ -72,7 +72,7 @@ def get_config(settings_name=None):
     if settings_name is None:
         settings_name = "UNFOLD"
 
-    def merge_dicts(dict1: Dict[str, Any], dict2: Dict[str, Any]) -> Dict[str, Any]:
+    def merge_dicts(dict1: dict[str, Any], dict2: dict[str, Any]) -> dict[str, Any]:
         result = dict1.copy()
 
         for key, value in dict2.items():
