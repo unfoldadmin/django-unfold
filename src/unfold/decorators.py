@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, Iterable, Optional, Union
+from collections.abc import Iterable
+from typing import Any, Callable, Optional, Union
 
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import PermissionDenied
@@ -15,7 +16,7 @@ def action(
     permissions: Optional[Iterable[str]] = None,
     description: Optional[str] = None,
     url_path: Optional[str] = None,
-    attrs: Optional[Dict[str, Any]] = None,
+    attrs: Optional[dict[str, Any]] = None,
 ) -> ActionFunction:
     def decorator(func: Callable) -> ActionFunction:
         def inner(
@@ -62,7 +63,7 @@ def display(
     ordering: Optional[Union[str, Combinable, BaseExpression]] = None,
     description: Optional[str] = None,
     empty_value: Optional[str] = None,
-    label: Optional[Union[bool, str, Dict[str, str]]] = None,
+    label: Optional[Union[bool, str, dict[str, str]]] = None,
     header: Optional[bool] = None,
 ) -> Callable:
     def decorator(func: Callable[[Model], Any]) -> Callable:

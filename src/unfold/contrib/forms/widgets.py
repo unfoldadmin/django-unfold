@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from django.core.validators import EMPTY_VALUES
 from django.forms import MultiWidget, Widget
@@ -46,7 +46,7 @@ class ArrayWidget(MultiWidget):
 
         return UnfoldAdminTextInputWidget()
 
-    def get_context(self, name: str, value: str, attrs: Dict) -> Dict:
+    def get_context(self, name: str, value: str, attrs: dict) -> dict:
         self._resolve_widgets(value)
         context = super().get_context(name, value, attrs)
         context.update(
@@ -56,7 +56,7 @@ class ArrayWidget(MultiWidget):
 
     def value_from_datadict(
         self, data: QueryDict, files: MultiValueDict, name: str
-    ) -> List:
+    ) -> list:
         values = []
 
         for item in data.getlist(name):
@@ -67,22 +67,22 @@ class ArrayWidget(MultiWidget):
 
     def value_omitted_from_data(
         self, data: QueryDict, files: MultiValueDict, name: str
-    ) -> List:
+    ) -> list:
         return data.getlist(name) not in [[""], *EMPTY_VALUES]
 
-    def decompress(self, value: Union[str, List]) -> List:
-        if isinstance(value, List):
+    def decompress(self, value: Union[str, list]) -> list:
+        if isinstance(value, list):
             return value
         elif isinstance(value, str):
             return value.split(",")
 
         return []
 
-    def _resolve_widgets(self, value: Optional[Union[List, str]]) -> None:
+    def _resolve_widgets(self, value: Optional[Union[list, str]]) -> None:
         if value is None:
             value = []
 
-        elif isinstance(value, List):
+        elif isinstance(value, list):
             self.widgets = [self.get_widget_instance() for item in value]
         else:
             self.widgets = [self.get_widget_instance() for item in value.split(",")]
@@ -101,7 +101,7 @@ class WysiwygWidget(Widget):
             "unfold/forms/js/trix.config.js",
         )
 
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(attrs)
 
         self.attrs.update(

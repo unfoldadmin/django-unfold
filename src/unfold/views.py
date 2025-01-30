@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
@@ -16,7 +16,7 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
         self.model_admin = model_admin
         super().__init__(**kwargs)
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         if not hasattr(self, "model_admin"):
             raise UnfoldException(
                 "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"

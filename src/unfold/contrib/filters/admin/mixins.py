@@ -1,4 +1,5 @@
-from typing import Any, Dict, Generator, List, Optional, Tuple
+from collections.abc import Generator
+from typing import Any, Optional
 
 from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
@@ -19,18 +20,18 @@ class ValueMixin:
         return (
             self.lookup_val[0]
             if self.lookup_val not in EMPTY_VALUES
-            and isinstance(self.lookup_val, List)
+            and isinstance(self.lookup_val, list)
             and len(self.lookup_val) > 0
             else self.lookup_val
         )
 
 
 class MultiValueMixin:
-    def value(self) -> Optional[List[str]]:
+    def value(self) -> Optional[list[str]]:
         return (
             self.lookup_val
             if self.lookup_val not in EMPTY_VALUES
-            and isinstance(self.lookup_val, List)
+            and isinstance(self.lookup_val, list)
             and len(self.lookup_val) > 0
             else self.lookup_val
         )
@@ -53,7 +54,7 @@ class RangeNumericMixin:
     parameter_name = None
     template = "unfold/filters/filters_numeric_range.html"
 
-    def init_used_parameters(self, params: Dict[str, Any]) -> None:
+    def init_used_parameters(self, params: dict[str, Any]) -> None:
         if self.parameter_name + "_from" in params:
             value = params.pop(self.parameter_name + "_from")
 
@@ -95,13 +96,13 @@ class RangeNumericMixin:
         except (ValueError, ValidationError):
             return None
 
-    def expected_parameters(self) -> List[str]:
+    def expected_parameters(self) -> list[str]:
         return [
             f"{self.parameter_name}_from",
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist: ChangeList) -> Tuple[Dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
         return (
             {
                 "request": self.request,
@@ -130,7 +131,7 @@ class AutocompleteMixin:
 
     def choices(
         self, changelist: ChangeList
-    ) -> Generator[Dict[str, AutocompleteDropdownForm], None, None]:
+    ) -> Generator[dict[str, AutocompleteDropdownForm], None, None]:
         yield {
             "form": self.form_class(
                 request=self.request,

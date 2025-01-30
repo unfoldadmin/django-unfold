@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Optional, Tuple, Union
+from typing import Any, Callable, Optional, Union
 
 from django.contrib.admin.options import VERTICAL
 from django.contrib.admin.sites import AdminSite
@@ -255,7 +255,7 @@ SWITCH_CLASSES = [
 
 
 class UnfoldAdminTextInputWidget(AdminTextInputWidget):
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -269,7 +269,7 @@ class UnfoldAdminTextInputWidget(AdminTextInputWidget):
 class UnfoldAdminURLInputWidget(AdminURLFieldWidget):
     template_name = "unfold/widgets/url.html"
 
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -281,7 +281,7 @@ class UnfoldAdminURLInputWidget(AdminURLFieldWidget):
 
 
 class UnfoldAdminColorInputWidget(AdminTextInputWidget):
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -294,7 +294,7 @@ class UnfoldAdminColorInputWidget(AdminTextInputWidget):
 
 
 class UnfoldAdminUUIDInputWidget(AdminUUIDInputWidget):
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -308,7 +308,7 @@ class UnfoldAdminUUIDInputWidget(AdminUUIDInputWidget):
 class UnfoldAdminIntegerRangeWidget(MultiWidget):
     template_name = "unfold/widgets/range.html"
 
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         if attrs is None:
             attrs = {}
 
@@ -320,14 +320,14 @@ class UnfoldAdminIntegerRangeWidget(MultiWidget):
 
         super().__init__(_widgets, attrs)
 
-    def decompress(self, value: Union[str, None]) -> Tuple[Optional[Callable], ...]:
+    def decompress(self, value: Union[str, None]) -> tuple[Optional[Callable], ...]:
         if value:
             return value.lower, value.upper
         return None, None
 
 
 class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -374,7 +374,7 @@ class UnfoldAdminDateWidget(AdminDateWidget):
     template_name = "unfold/widgets/date.html"
 
     def __init__(
-        self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
+        self, attrs: Optional[dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
             **(attrs or {}),
@@ -394,7 +394,7 @@ class UnfoldAdminSingleDateWidget(AdminDateWidget):
     template_name = "unfold/widgets/date.html"
 
     def __init__(
-        self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
+        self, attrs: Optional[dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
             **(attrs or {}),
@@ -414,7 +414,7 @@ class UnfoldAdminTimeWidget(AdminTimeWidget):
     template_name = "unfold/widgets/time.html"
 
     def __init__(
-        self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
+        self, attrs: Optional[dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
             **(attrs or {}),
@@ -434,7 +434,7 @@ class UnfoldAdminSingleTimeWidget(AdminTimeWidget):
     template_name = "unfold/widgets/time.html"
 
     def __init__(
-        self, attrs: Optional[Dict[str, Any]] = None, format: Optional[str] = None
+        self, attrs: Optional[dict[str, Any]] = None, format: Optional[str] = None
     ) -> None:
         attrs = {
             **(attrs or {}),
@@ -453,7 +453,7 @@ class UnfoldAdminSingleTimeWidget(AdminTimeWidget):
 class UnfoldAdminTextareaWidget(AdminTextareaWidget):
     template_name = "unfold/widgets/textarea.html"
 
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         attrs = attrs or {}
 
         super().__init__(
@@ -473,7 +473,7 @@ class UnfoldAdminTextareaWidget(AdminTextareaWidget):
 class UnfoldAdminExpandableTextareaWidget(AdminTextareaWidget):
     template_name = "unfold/widgets/textarea_expandable.html"
 
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         attrs = attrs or {}
 
         attrs.update({"rows": 2})
@@ -496,7 +496,7 @@ class UnfoldAdminExpandableTextareaWidget(AdminTextareaWidget):
 class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
     template_name = "unfold/widgets/split_datetime.html"
 
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         widgets = [UnfoldAdminDateWidget, UnfoldAdminTimeWidget]
         MultiWidget.__init__(self, widgets, attrs)
 
@@ -506,9 +506,9 @@ class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
 
     def __init__(
         self,
-        attrs: Optional[Dict[str, Any]] = None,
-        date_attrs: Optional[Dict[str, Any]] = None,
-        time_attrs: Optional[Dict[str, Any]] = None,
+        attrs: Optional[dict[str, Any]] = None,
+        date_attrs: Optional[dict[str, Any]] = None,
+        time_attrs: Optional[dict[str, Any]] = None,
         date_label: Optional[str] = None,
         time_label: Optional[str] = None,
     ) -> None:
@@ -522,8 +522,8 @@ class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
         MultiWidget.__init__(self, widgets, attrs)
 
     def get_context(
-        self, name: str, value: Any, attrs: Optional[Dict[str, Any]]
-    ) -> Dict[str, Any]:
+        self, name: str, value: Any, attrs: Optional[dict[str, Any]]
+    ) -> dict[str, Any]:
         context = super().get_context(name, value, attrs)
 
         if self.date_label is not None:
@@ -540,7 +540,7 @@ class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
 
 
 class UnfoldAdminIntegerFieldWidget(AdminIntegerFieldWidget):
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -552,7 +552,7 @@ class UnfoldAdminIntegerFieldWidget(AdminIntegerFieldWidget):
 
 
 class UnfoldAdminDecimalFieldWidget(AdminIntegerFieldWidget):
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -564,7 +564,7 @@ class UnfoldAdminDecimalFieldWidget(AdminIntegerFieldWidget):
 
 
 class UnfoldAdminBigIntegerFieldWidget(AdminBigIntegerFieldWidget):
-    def __init__(self, attrs: Optional[Dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
                 **(attrs or {}),
@@ -621,7 +621,7 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
         self.radio_style = radio_style
         self.attrs["class"] = " ".join([*RADIO_CLASSES, self.attrs.get("class", "")])
 
-    def get_context(self, *args, **kwargs) -> Dict[str, Any]:
+    def get_context(self, *args, **kwargs) -> dict[str, Any]:
         context = super().get_context(*args, **kwargs)
         context.update({"radio_style": self.radio_style})
         return context
@@ -666,7 +666,7 @@ except ImportError:
 
 class UnfoldBooleanWidget(CheckboxInput):
     def __init__(
-        self, attrs: Optional[Dict[str, Any]] = None, check_test: Callable = None
+        self, attrs: Optional[dict[str, Any]] = None, check_test: Callable = None
     ) -> None:
         if attrs is None:
             attrs = {}
@@ -684,7 +684,7 @@ class UnfoldBooleanWidget(CheckboxInput):
 
 class UnfoldBooleanSwitchWidget(CheckboxInput):
     def __init__(
-        self, attrs: Optional[Dict[str, Any]] = None, check_test: Callable = None
+        self, attrs: Optional[dict[str, Any]] = None, check_test: Callable = None
     ) -> None:
         super().__init__(
             attrs={
@@ -708,7 +708,7 @@ class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
         self,
         rel: ForeignObjectRel,
         admin_site: AdminSite,
-        attrs: Optional[Dict] = None,
+        attrs: Optional[dict] = None,
         using: Optional[Any] = None,
     ) -> None:
         attrs = {

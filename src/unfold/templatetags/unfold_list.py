@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
@@ -355,7 +355,7 @@ def results(cl: ChangeList):
             yield UnfoldResultList(pk_value, None, items_for_result(cl, res, None))
 
 
-def result_list(context: Dict[str, Any], cl: ChangeList) -> Dict[str, Any]:
+def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
     """
     Display the headers and data list together.
     """

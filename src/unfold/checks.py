@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any
 
 from django.contrib.admin.checks import ModelAdminChecks
 from django.contrib.admin.options import BaseModelAdmin
@@ -8,18 +8,18 @@ from .dataclasses import UnfoldAction
 
 
 class UnfoldModelAdminChecks(ModelAdminChecks):
-    def check(self, admin_obj: BaseModelAdmin, **kwargs) -> List[checks.Error]:
+    def check(self, admin_obj: BaseModelAdmin, **kwargs) -> list[checks.Error]:
         return [
             *super().check(admin_obj, **kwargs),
             *self._check_unfold_action_permission_methods(admin_obj),
         ]
 
-    def _check_unfold_action_permission_methods(self, obj: Any) -> List[checks.Error]:
+    def _check_unfold_action_permission_methods(self, obj: Any) -> list[checks.Error]:
         """
         Actions with an allowed_permission attribute require the ModelAdmin to
         implement a has_<perm>_permission() method for each permission.
         """
-        actions: List[UnfoldAction] = [
+        actions: list[UnfoldAction] = [
             *obj._get_base_actions_list(),
             *obj._get_base_actions_detail(),
             *obj._get_base_actions_row(),

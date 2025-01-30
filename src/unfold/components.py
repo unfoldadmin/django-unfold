@@ -1,13 +1,13 @@
-from typing import Any, Dict, Optional, Type
+from typing import Any, Optional
 
 from django.http import HttpRequest
 
 
 class ComponentRegistry:
-    _registry: Dict[str, Type] = {}
+    _registry: dict[str, type] = {}
 
     @classmethod
-    def register_class(cls, component_cls: Type) -> None:
+    def register_class(cls, component_cls: type) -> None:
         if not issubclass(component_cls, BaseComponent):
             raise ValueError(
                 f"Class '{component_cls.__name__}' must inherit from BaseComponent."
@@ -21,7 +21,7 @@ class ComponentRegistry:
         cls._registry[class_name] = component_cls
 
     @classmethod
-    def get_class(cls, class_name: str) -> Optional[Type]:
+    def get_class(cls, class_name: str) -> Optional[type]:
         return cls._registry.get(class_name)
 
     @classmethod
@@ -34,7 +34,7 @@ class ComponentRegistry:
         return component_cls(**kwargs)
 
 
-def register_component(cls: Type) -> Type:
+def register_component(cls: type) -> type:
     ComponentRegistry.register_class(cls)
     return cls
 

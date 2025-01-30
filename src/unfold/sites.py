@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
@@ -48,7 +48,7 @@ class UnfoldAdminSite(AdminSite):
         if get_config(self.settings_name)["SITE_URL"]:
             self.site_url = get_config(self.settings_name)["SITE_URL"]
 
-    def get_urls(self) -> List[URLPattern]:
+    def get_urls(self) -> list[URLPattern]:
         extra_urls = []
 
         if hasattr(self, "extra_urls") and callable(self.extra_urls):
@@ -69,7 +69,7 @@ class UnfoldAdminSite(AdminSite):
 
         return urlpatterns
 
-    def each_context(self, request: HttpRequest) -> Dict[str, Any]:
+    def each_context(self, request: HttpRequest) -> dict[str, Any]:
         context = super().each_context(request)
 
         context.update(
@@ -139,7 +139,7 @@ class UnfoldAdminSite(AdminSite):
         return context
 
     def index(
-        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
     ) -> TemplateResponse:
         app_list = self.get_app_list(request)
 
@@ -164,7 +164,7 @@ class UnfoldAdminSite(AdminSite):
         )
 
     def toggle_sidebar(
-        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
     ) -> HttpResponse:
         if "toggle_sidebar" not in request.session:
             request.session["toggle_sidebar"] = True
@@ -174,7 +174,7 @@ class UnfoldAdminSite(AdminSite):
         return HttpResponse(status=HTTPStatus.OK)
 
     def search(
-        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
     ) -> TemplateResponse:
         query = request.GET.get("s").lower()
         app_list = super().get_app_list(request)
@@ -209,7 +209,7 @@ class UnfoldAdminSite(AdminSite):
     @method_decorator(never_cache)
     @login_not_required
     def login(
-        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
     ) -> HttpResponse:
         extra_context = {} if extra_context is None else extra_context
         image = self._get_value(
@@ -233,7 +233,7 @@ class UnfoldAdminSite(AdminSite):
         return super().login(request, extra_context)
 
     def password_change(
-        self, request: HttpRequest, extra_context: Optional[Dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
     ) -> HttpResponse:
         from django.contrib.auth.views import PasswordChangeView
 
@@ -250,7 +250,7 @@ class UnfoldAdminSite(AdminSite):
         request.current_app = self.name
         return PasswordChangeView.as_view(**defaults)(request)
 
-    def get_sidebar_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
+    def get_sidebar_list(self, request: HttpRequest) -> list[dict[str, Any]]:
         navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
         tabs = get_config(self.settings_name)["TABS"]
         results = []
@@ -307,7 +307,7 @@ class UnfoldAdminSite(AdminSite):
 
         return results
 
-    def get_tabs_list(self, request: HttpRequest) -> List[Dict[str, Any]]:
+    def get_tabs_list(self, request: HttpRequest) -> list[dict[str, Any]]:
         tabs = get_config(self.settings_name)["TABS"]
 
         for tab in tabs:
@@ -331,8 +331,8 @@ class UnfoldAdminSite(AdminSite):
         return tabs
 
     def _get_mode_images(
-        self, images: Union[Dict[str, callable], callable, str], request: HttpRequest
-    ) -> Union[Dict[str, str], str, None]:
+        self, images: Union[dict[str, callable], callable, str], request: HttpRequest
+    ) -> Union[dict[str, str], str, None]:
         if isinstance(images, dict):
             if "light" in images and "dark" in images:
                 return {
@@ -377,7 +377,7 @@ class UnfoldAdminSite(AdminSite):
 
         return None
 
-    def _replace_values(self, target: Dict, source: Dict, request: HttpRequest):
+    def _replace_values(self, target: dict, source: dict, request: HttpRequest):
         for key in source.keys():
             if source[key] is not None and callable(source[key]):
                 target[key] = source[key](request)
@@ -387,8 +387,8 @@ class UnfoldAdminSite(AdminSite):
         return target
 
     def _process_favicons(
-        self, request: HttpRequest, favicons: List[Dict]
-    ) -> List[Favicon]:
+        self, request: HttpRequest, favicons: list[dict]
+    ) -> list[Favicon]:
         return [
             Favicon(
                 href=self._get_value(item["href"], request),
@@ -400,8 +400,8 @@ class UnfoldAdminSite(AdminSite):
         ]
 
     def _process_colors(
-        self, colors: Dict[str, Dict[str, str]]
-    ) -> Dict[str, Dict[str, str]]:
+        self, colors: dict[str, dict[str, str]]
+    ) -> dict[str, dict[str, str]]:
         for name, weights in colors.items():
             for weight, value in weights.items():
                 if value[0] != "#":
