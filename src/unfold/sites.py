@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Callable, Optional, Union, Dict
+from typing import Any, Callable, Dict, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
