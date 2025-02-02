@@ -1,6 +1,6 @@
 import copy
 from functools import update_wrapper
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Optional, Union
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -272,9 +272,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
     def _filter_unfold_actions_by_permissions(
         self,
         request: HttpRequest,
-        actions: List[UnfoldAction],
+        actions: list[UnfoldAction],
         object_id: Optional[Union[int, str]] = None,
-    ) -> List[UnfoldAction]:
+    ) -> list[UnfoldAction]:
         """Filter out any Unfold actions that the user doesn't have access to."""
         filtered_actions = []
         for action in actions:
@@ -299,12 +299,12 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
         return filtered_actions
 
-    def get_actions_list(self, request: HttpRequest) -> List[UnfoldAction]:
+    def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
         return self._filter_unfold_actions_by_permissions(
             request, self._get_base_actions_list()
         )
 
-    def _get_base_actions_list(self) -> List[UnfoldAction]:
+    def _get_base_actions_list(self) -> list[UnfoldAction]:
         """
         Returns all available list global actions, prior to any filtering
         """
@@ -312,23 +312,23 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
     def get_actions_detail(
         self, request: HttpRequest, object_id: int
-    ) -> List[UnfoldAction]:
+    ) -> list[UnfoldAction]:
         return self._filter_unfold_actions_by_permissions(
             request, self._get_base_actions_detail(), object_id
         )
 
-    def _get_base_actions_detail(self) -> List[UnfoldAction]:
+    def _get_base_actions_detail(self) -> list[UnfoldAction]:
         """
         Returns all available detail actions, prior to any filtering
         """
         return [self.get_unfold_action(action) for action in self.actions_detail or []]
 
-    def get_actions_row(self, request: HttpRequest) -> List[UnfoldAction]:
+    def get_actions_row(self, request: HttpRequest) -> list[UnfoldAction]:
         return self._filter_unfold_actions_by_permissions(
             request, self._get_base_actions_row()
         )
 
-    def _get_base_actions_row(self) -> List[UnfoldAction]:
+    def _get_base_actions_row(self) -> list[UnfoldAction]:
         """
         Returns all available row actions, prior to any filtering
         """
@@ -336,12 +336,12 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
 
     def get_actions_submit_line(
         self, request: HttpRequest, object_id: int
-    ) -> List[UnfoldAction]:
+    ) -> list[UnfoldAction]:
         return self._filter_unfold_actions_by_permissions(
             request, self._get_base_actions_submit_line(), object_id
         )
 
-    def _get_base_actions_submit_line(self) -> List[UnfoldAction]:
+    def _get_base_actions_submit_line(self) -> list[UnfoldAction]:
         """
         Returns all available submit row actions, prior to any filtering
         """
@@ -349,7 +349,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             self.get_unfold_action(action) for action in self.actions_submit_line or []
         ]
 
-    def get_custom_urls(self) -> Tuple[Tuple[str, str, View], ...]:
+    def get_custom_urls(self) -> tuple[tuple[str, str, View], ...]:
         """
         Method to get custom views for ModelAdmin with their urls
 
@@ -358,7 +358,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         """
         return () if self.custom_urls is None else self.custom_urls
 
-    def get_urls(self) -> List[URLPattern]:
+    def get_urls(self) -> list[URLPattern]:
         urls = super().get_urls()
 
         def wrap(view):
@@ -422,7 +422,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         request: HttpRequest,
         object_id: Optional[str] = None,
         form_url: str = "",
-        extra_context: Optional[Dict[str, bool]] = None,
+        extra_context: Optional[dict[str, bool]] = None,
     ) -> Any:
         if extra_context is None:
             extra_context = {}
@@ -451,7 +451,7 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         return super().changeform_view(request, object_id, form_url, extra_context)
 
     def changelist_view(
-        self, request: HttpRequest, extra_context: Optional[Dict[str, str]] = None
+        self, request: HttpRequest, extra_context: Optional[dict[str, str]] = None
     ) -> TemplateResponse:
         if extra_context is None:
             extra_context = {}

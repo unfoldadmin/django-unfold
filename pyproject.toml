@@ -11,7 +11,6 @@ packages = [{ include = "unfold", from = "src" }]
 keywords = ["django", "admin", "tailwind", "theme"]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -24,7 +23,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.9"
 django = ">=3.2"
 
 [tool.poetry.group.test.dependencies]
@@ -39,7 +38,6 @@ python-semantic-release = "^8.7"
 [tool.ruff]
 fix = true
 line-length = 88
-target-version = "py38"
 
 [tool.ruff.lint]
 select = [

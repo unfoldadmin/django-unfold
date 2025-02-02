@@ -1,6 +1,11 @@
 from django import forms
-from django.forms import ChoiceField, MultipleChoiceField
+from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
+from django.db.models import Field as ModelField
+from django.forms import ChoiceField, ModelMultipleChoiceField, MultipleChoiceField
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
+
+from unfold.admin import ModelAdmin
 
 from ...widgets import (
     INPUT_CLASSES,
@@ -12,7 +17,7 @@ from ...widgets import (
 
 
 class SearchForm(forms.Form):
-    def __init__(self, name, label, *args, **kwargs):
+    def __init__(self, name: str, label: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         self.fields[name] = forms.CharField(
@@ -20,6 +25,50 @@ class SearchForm(forms.Form):
             required=False,
             widget=UnfoldAdminTextInputWidget,
         )
+
+
+class AutocompleteDropdownForm(forms.Form):
+    field = forms.ModelChoiceField
+    widget = AutocompleteSelect
+
+    def __init__(
+        self,
+        request: HttpRequest,
+        name: str,
+        label: str,
+        choices: tuple,
+        field: ModelField,
+        model_admin: ModelAdmin,
+        multiple: bool = False,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+
+        if multiple:
+            self.field = ModelMultipleChoiceField
+            self.widget = AutocompleteSelectMultiple
+
+        self.fields[name] = self.field(
+            label=label,
+            required=False,
+            queryset=field.remote_field.model.objects.all(),
+            widget=self.widget(field, model_admin.admin_site),
+        )
+
+    class Media:
+        js = (
+            "admin/js/vendor/jquery/jquery.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "admin/js/autocomplete.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
 
 
 class DropdownForm(forms.Form):
@@ -31,7 +80,15 @@ class DropdownForm(forms.Form):
     )
     field = ChoiceField
 
-    def __init__(self, name, label, choices, multiple=False, *args, **kwargs):
+    def __init__(
+        self,
+        name: str,
+        label: str,
+        choices: tuple,
+        multiple: bool = False,
+        *args,
+        **kwargs,
+    ) -> None:
         super().__init__(*args, **kwargs)
 
         if multiple:
@@ -66,8 +123,8 @@ class DropdownForm(forms.Form):
 
 
 class SingleNumericForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        name = kwargs.pop("name")
+    def __init__(self, name: str, *args, **kwargs) -> None:
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[name] = forms.FloatField(
@@ -80,10 +137,8 @@ class SingleNumericForm(forms.Form):
 
 
 class RangeNumericForm(forms.Form):
-    name = None
-
-    def __init__(self, *args, **kwargs):
-        self.name = kwargs.pop("name")
+    def __init__(self, name: str, *args, **kwargs) -> None:
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[self.name + "_from"] = forms.FloatField(
@@ -113,16 +168,14 @@ class SliderNumericForm(RangeNumericForm):
 
 
 class RangeDateForm(forms.Form):
-    name = None
-
     class Media:
         js = [
             "admin/js/calendar.js",
             "unfold/filters/js/DateTimeShortcuts.js",
         ]
 
-    def __init__(self, *args, **kwargs):
-        self.name = kwargs.pop("name")
+    def __init__(self, name: str, *args, **kwargs) -> None:
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[self.name + "_from"] = forms.DateField(
@@ -148,16 +201,14 @@ class RangeDateForm(forms.Form):
 
 
 class RangeDateTimeForm(forms.Form):
-    name = None
-
     class Media:
         js = [
             "admin/js/calendar.js",
             "unfold/filters/js/DateTimeShortcuts.js",
         ]
 
-    def __init__(self, *args, **kwargs):
-        self.name = kwargs.pop("name")
+    def __init__(self, name: str, *args, **kwargs) -> None:
+        self.name = name
         super().__init__(*args, **kwargs)
 
         self.fields[self.name + "_from"] = forms.SplitDateTimeField(

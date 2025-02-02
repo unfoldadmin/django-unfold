@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="{% if cl.model_admin.list_filter_sheet %}bg-white border-t border-base-200 p-3 py-2.5 dark:bg-base-800 dark:border-base-700{% else %}mt-6{% endif %}">
+<div class="bg-white border-t border-base-200 p-3 py-2.5 dark:bg-base-800 dark:border-base-700{% if not cl.model_admin.list_filter_sheet %} 2xl:!border-t-0 2xl:!bg-transparent 2xl:px-0{% endif %}">
     {% if cl.model_admin.list_filter_submit %}
         <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded text-white w-full">
             {% trans "Apply Filters" %}
