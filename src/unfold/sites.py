@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Callable, Optional, Union
+from typing import Any, Callable, Optional, Union, Dict
 from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
@@ -69,7 +69,7 @@ class UnfoldAdminSite(AdminSite):
 
         return urlpatterns
 
-    def get_environment_context(self, request):
+    def get_environment_context(self, request: HttpRequest) -> Dict:
         """
         Build the environment indicator needed template context if the environment callback is set.
         """
