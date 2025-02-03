@@ -78,9 +78,9 @@ const filterForm = () => {
   }
 
   filterForm.addEventListener("formdata", (event) => {
-    for (const [key, value] of event.formData.entries()) {
+    Array.from(event.formData.entries()).forEach(([key, value]) => {
       if (value === "") event.formData.delete(key);
-    }
+    });
   });
 };
 
