@@ -34,6 +34,9 @@ def _get_tabs_list(
 
             continue
 
+        if "models" not in tab:
+            continue
+
         for tab_model in tab["models"]:
             if isinstance(tab_model, str):
                 if str(opts) == tab_model and page == "changelist":
@@ -47,7 +50,6 @@ def _get_tabs_list(
                 ):
                     tabs_list = tab["items"]
                     break
-
     return tabs_list
 
 
