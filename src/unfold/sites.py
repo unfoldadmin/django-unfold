@@ -13,6 +13,8 @@ from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 from django.views.decorators.cache import never_cache
 
+from unfold.dataclasses import Favicon
+
 try:
     from django.contrib.auth.decorators import login_not_required
 except ImportError:
@@ -21,7 +23,6 @@ except ImportError:
         return func
 
 
-from .dataclasses import Favicon
 from .settings import get_config
 from .utils import hex_to_rgb
 from .widgets import CHECKBOX_CLASSES, INPUT_CLASSES
@@ -38,15 +39,6 @@ class UnfoldAdminSite(AdminSite):
 
         if self.login_form is None:
             self.login_form = AuthenticationForm
-
-        if get_config(self.settings_name)["SITE_TITLE"]:
-            self.site_title = get_config(self.settings_name)["SITE_TITLE"]
-
-        if get_config(self.settings_name)["SITE_HEADER"]:
-            self.site_header = get_config(self.settings_name)["SITE_HEADER"]
-
-        if get_config(self.settings_name)["SITE_URL"]:
-            self.site_url = get_config(self.settings_name)["SITE_URL"]
 
     def get_urls(self) -> list[URLPattern]:
         extra_urls = []
@@ -72,66 +64,42 @@ class UnfoldAdminSite(AdminSite):
     def each_context(self, request: HttpRequest) -> dict[str, Any]:
         context = super().each_context(request)
 
-        context.update(
-            {
-                "form_classes": {
-                    "text_input": INPUT_CLASSES,
-                    "checkbox": CHECKBOX_CLASSES,
-                },
-                "site_logo": self._get_mode_images(
-                    get_config(self.settings_name)["SITE_LOGO"], request
-                ),
-                "site_icon": self._get_mode_images(
-                    get_config(self.settings_name)["SITE_ICON"], request
-                ),
-                "site_symbol": self._get_value(
-                    get_config(self.settings_name)["SITE_SYMBOL"], request
-                ),
-                "site_favicons": self._process_favicons(
-                    request, get_config(self.settings_name)["SITE_FAVICONS"]
-                ),
-                "show_history": get_config(self.settings_name)["SHOW_HISTORY"],
-                "show_view_on_site": get_config(self.settings_name)[
-                    "SHOW_VIEW_ON_SITE"
-                ],
-                "show_languages": get_config(self.settings_name)["SHOW_LANGUAGES"],
-                "show_back_button": get_config(self.settings_name)["SHOW_BACK_BUTTON"],
-                "colors": self._process_colors(
-                    get_config(self.settings_name)["COLORS"]
-                ),
-                "border_radius": get_config(self.settings_name).get(
-                    "BORDER_RADIUS", "6px"
-                ),
-                "tab_list": self.get_tabs_list(request),
-                "styles": [
-                    self._get_value(style, request)
-                    for style in get_config(self.settings_name)["STYLES"]
-                ],
-                "theme": get_config(self.settings_name).get("THEME"),
-                "scripts": [
-                    self._get_value(script, request)
-                    for script in get_config(self.settings_name)["SCRIPTS"]
-                ],
-                "sidebar_show_all_applications": get_config(self.settings_name)[
-                    "SIDEBAR"
-                ].get("show_all_applications"),
-                "sidebar_show_search": get_config(self.settings_name)["SIDEBAR"].get(
-                    "show_search"
-                ),
-                "sidebar_navigation": self.get_sidebar_list(request)
-                if self.has_permission(request)
-                else [],
-            }
-        )
+        sidebar_config = self._get_config("SIDEBAR", request)
+        data = {
+            "form_classes": {
+                "text_input": INPUT_CLASSES,
+                "checkbox": CHECKBOX_CLASSES,
+            },
+            "site_title": self._get_config("SITE_TITLE", request),
+            "site_header": self._get_config("SITE_HEADER", request),
+            "site_url": self._get_config("SITE_URL", request),
+            "site_logo": self._get_theme_images("SITE_LOGO", request),
+            "site_icon": self._get_theme_images("SITE_ICON", request),
+            "site_symbol": self._get_config("SITE_SYMBOL", request),
+            "site_favicons": self._get_favicons("SITE_FAVICONS", request),
+            "show_history": self._get_config("SHOW_HISTORY", request),
+            "show_view_on_site": self._get_config("SHOW_VIEW_ON_SITE", request),
+            "show_languages": self._get_config("SHOW_LANGUAGES", request),
+            "show_back_button": self._get_config("SHOW_BACK_BUTTON", request),
+            "theme": self._get_config("THEME", request),
+            "border_radius": self._get_config("BORDER_RADIUS", request),
+            "colors": self._get_colors("COLORS", request),
+            "environment": self._get_config("ENVIRONMENT", request),
+            "tab_list": self.get_tabs_list(request),
+            "styles": self._get_list("STYLES", request),
+            "scripts": self._get_list("SCRIPTS", request),
+            "sidebar_show_all_applications": self._get_value(
+                sidebar_config.get("show_all_applications"), request
+            ),
+            "sidebar_show_search": self._get_value(
+                sidebar_config.get("show_search"), request
+            ),
+            "sidebar_navigation": self.get_sidebar_list(request)
+            if self.has_permission(request)
+            else [],
+        }
 
-        environment = get_config(self.settings_name)["ENVIRONMENT"]
-
-        if environment and isinstance(environment, str):
-            try:
-                callback = import_string(environment)
-                context.update({"environment": callback(request)})
-            except ImportError:
-                pass
+        context.update(data)
 
         if hasattr(self, "extra_context") and callable(self.extra_context):
             return self.extra_context(context, request)
@@ -251,8 +219,10 @@ class UnfoldAdminSite(AdminSite):
         return PasswordChangeView.as_view(**defaults)(request)
 
     def get_sidebar_list(self, request: HttpRequest) -> list[dict[str, Any]]:
-        navigation = get_config(self.settings_name)["SIDEBAR"].get("navigation", [])
-        tabs = get_config(self.settings_name)["TABS"]
+        navigation = self._get_value(
+            self._get_config("SIDEBAR", request).get("navigation"), request
+        )
+        tabs = self._get_value(self._get_config("TABS", request), request) or []
         results = []
 
         for group in navigation:
@@ -330,20 +300,6 @@ class UnfoldAdminSite(AdminSite):
 
         return tabs
 
-    def _get_mode_images(
-        self, images: Union[dict[str, callable], callable, str], request: HttpRequest
-    ) -> Union[dict[str, str], str, None]:
-        if isinstance(images, dict):
-            if "light" in images and "dark" in images:
-                return {
-                    "light": self._get_value(images["light"], request),
-                    "dark": self._get_value(images["dark"], request),
-                }
-
-            return None
-
-        return self._get_value(images, request)
-
     def _call_permission_callback(
         self, callback: Union[str, Callable, None], request: HttpRequest
     ) -> bool:
@@ -363,20 +319,6 @@ class UnfoldAdminSite(AdminSite):
 
         return False
 
-    def _get_value(
-        self, instance: Union[str, Callable, None], *args: Any
-    ) -> Optional[str]:
-        if instance is None:
-            return None
-
-        if isinstance(instance, str):
-            return instance
-
-        if isinstance(instance, Callable):
-            return instance(*args)
-
-        return None
-
     def _replace_values(self, target: dict, source: dict, request: HttpRequest):
         for key in source.keys():
             if source[key] is not None and callable(source[key]):
@@ -385,31 +327,6 @@ class UnfoldAdminSite(AdminSite):
                 target[key] = source[key]
 
         return target
-
-    def _process_favicons(
-        self, request: HttpRequest, favicons: list[dict]
-    ) -> list[Favicon]:
-        return [
-            Favicon(
-                href=self._get_value(item["href"], request),
-                rel=item.get("rel"),
-                sizes=item.get("sizes"),
-                type=item.get("type"),
-            )
-            for item in favicons
-        ]
-
-    def _process_colors(
-        self, colors: dict[str, dict[str, str]]
-    ) -> dict[str, dict[str, str]]:
-        for name, weights in colors.items():
-            for weight, value in weights.items():
-                if value[0] != "#":
-                    continue
-
-                colors[name][weight] = " ".join(str(item) for item in hex_to_rgb(value))
-
-        return colors
 
     def _get_is_active(
         self, request: HttpRequest, link: str, is_tab: bool = False
@@ -437,3 +354,97 @@ class UnfoldAdminSite(AdminSite):
             return True
 
         return False
+
+    def _get_config(self, key: str, *args) -> Any:
+        config = get_config(self.settings_name)
+
+        if key in config and config[key]:
+            return self._get_value(config[key], *args)
+
+    def _get_theme_images(
+        self, key: str, *args: Any
+    ) -> Union[dict[str, str], str, None]:
+        images = self._get_config(key, *args)
+
+        if isinstance(images, dict):
+            if "light" in images and "dark" in images:
+                return {
+                    "light": self._get_value(images["light"], *args),
+                    "dark": self._get_value(images["dark"], *args),
+                }
+
+            return None
+
+        return images
+
+    def _get_colors(self, key: str, *args) -> dict[str, dict[str, str]]:
+        colors = self._get_config(key, *args)
+
+        def rgb_to_values(value: str) -> str:
+            return " ".join(
+                list(
+                    map(
+                        str.strip,
+                        value.removeprefix("rgb(").removesuffix(")").split(","),
+                    )
+                )
+            )
+
+        def hex_to_values(value: str) -> str:
+            return " ".join(str(item) for item in hex_to_rgb(value))
+
+        for name, weights in colors.items():
+            weights = self._get_value(weights, *args)
+            colors[name] = weights
+
+            for weight, value in weights.items():
+                if value[0] == "#":
+                    colors[name][weight] = hex_to_values(value)
+                elif value.startswith("rgb"):
+                    colors[name][weight] = rgb_to_values(value)
+
+        return colors
+
+    def _get_list(self, key: str, *args) -> list[Any]:
+        items = get_config(self.settings_name)[key]
+
+        if isinstance(items, list):
+            return [self._get_value(item, *args) for item in items]
+
+        return []
+
+    def _get_favicons(self, key: str, *args) -> list[Favicon]:
+        favicons = self._get_config(key, *args)
+
+        if not favicons:
+            return []
+
+        return [
+            Favicon(
+                href=self._get_value(item["href"], *args),
+                rel=item.get("rel"),
+                sizes=item.get("sizes"),
+                type=item.get("type"),
+            )
+            for item in favicons
+        ]
+
+    def _get_value(
+        self, value: Union[str, Callable, lazy, None], *args: Any
+    ) -> Optional[str]:
+        if value is None:
+            return None
+
+        if isinstance(value, str):
+            try:
+                callback = import_string(value)
+                return callback(*args)
+            except ImportError:
+                pass
+
+            return value
+
+        if isinstance(value, Callable):
+            return value(*args)
+
+        return value
