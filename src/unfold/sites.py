@@ -280,6 +280,9 @@ class UnfoldAdminSite(AdminSite):
     def get_tabs_list(self, request: HttpRequest) -> list[dict[str, Any]]:
         tabs = self._get_config("TABS", request)
 
+        if not tabs:
+            return []
+
         for tab in tabs:
             allowed_items = []
 
