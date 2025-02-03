@@ -16,7 +16,8 @@ def test_environment_empty_environment_callback():
     request = RequestFactory().get("/rand")
     request.user = AnonymousUser()
     context = admin_site.each_context(request)
-    assert "environment" not in context
+    assert "environment" in context
+    assert not context["environment"]
 
 
 @override_settings(
@@ -32,7 +33,11 @@ def test_environment_incorrect_environment_callback():
     request = RequestFactory().get("/rand")
     request.user = AnonymousUser()
     context = admin_site.each_context(request)
-    assert "environment" not in context
+    assert "environment" in context
+    assert (
+        context["environment"]
+        == "tests.test_environment.non_existing_environment_callback"
+    )
 
 
 @override_settings(
