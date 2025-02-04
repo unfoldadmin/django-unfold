@@ -9,8 +9,24 @@
         </p>
     {% endif %}
 
-    {% if historical_records %}
+    {% if page_obj.object_list %}
         {% include object_history_list_template %}
+        <div class="bg-base-50 flex my-4 items-center p-3 rounded dark:bg-base-800">
+            {% if pagination_required %}
+                {% for i in page_range %}
+                    <span class="pr-4">
+                        {% if i == page_obj.paginator.ELLIPSIS %}
+                            {{ page_obj.paginator.ELLIPSIS }}
+                        {% elif i == page_obj.number %}
+                            <span class="font-medium text-primary-600">{{ i }}</span>
+                        {% else %}
+                            <a href="?{{ page_var }}={{ i }}" {% if i == page_obj.paginator.num_pages %} class="end" {% endif %}>{{ i }}</a>
+                        {% endif %}
+                    </span>
+                {% endfor %}
+            {% endif %}
+            {{ page_obj.paginator.count }} {% blocktranslate count counter=page_obj.paginator.count %}entry{% plural %}entries{% endblocktranslate %}
+        </div>
     {% else %}
         <p class="mb-3 px-3 py-3 rounded text-sm last:mb-8 bg-amber-100 text-amber-600 dark:bg-amber-600/20 dark:border-amber-600/10">
             {% trans "This object doesn't have a change history." %}
