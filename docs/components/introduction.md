@@ -59,7 +59,7 @@ Below you can find a more complex example which is using multiple components and
 
 | Component                         | Description                    | Arguments                            |
 | --------------------------------- | ------------------------------ | ------------------------------------ |
-| unfold/components/button.html     | Basic button element           | submit                               |
+| unfold/components/button.html     | Basic button element           | class, name, href, submit            |
 | unfold/components/card.html       | Card component                 | class, title, footer, label, icon    |
 | unfold/components/chart/bar.html  | Bar chart implementation       | class, data, height, width           |
 | unfold/components/chart/line.html | Line chart implementation      | class, data, height, width           |
