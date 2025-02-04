@@ -39,7 +39,7 @@
     </thead>
 
     <tbody>
-        {% for record in historical_records %}
+        {% for record in page_obj %}
             <tr class="block border mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                 <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Object' %}">
                     <a href="{% url opts|admin_urlname:'simple_history' object.pk record.pk %}">
