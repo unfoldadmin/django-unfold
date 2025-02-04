@@ -25,8 +25,8 @@ from unfold.decorators import action
 class UserAdmin(ModelAdmin):
     actions_list = ["changelist_action"]
 
-    @action(description=_("Changelist action"), url_path="changelist-action")
-    def changelist_action(self, request: HttpRequest, permissions=["changelist_action"]):
+    @action(description=_("Changelist action"), url_path="changelist-action", permissions=["changelist_action"])
+    def changelist_action(self, request: HttpRequest):
         return redirect(
           reverse_lazy("admin:users_user_changelist")
         )
