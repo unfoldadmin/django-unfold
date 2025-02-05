@@ -1,7 +1,7 @@
 ---
-title: Fieldsets
-order: 2
-description: Fieldsets with tab navigation.
+title: Fieldsets tabs
+order: 3
+description: Learn how to organize Django admin fieldsets into tabs for better form organization and user experience by using CSS classes to group related fields into tabbed navigation.
 ---
 
 # Fieldsets tabs

@@ -8,7 +8,13 @@
                     {% for item in tabs_list %}
                         {% if item.has_permission %}
                             <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-base-800">
-                                <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="block px-3 py-2 md:py-4 md:px-0 dark:border-base-800 {% if item.active %} border-b font-semibold -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-500 md:border-primary-500 dark:md:!border-primary-600{% else %}font-medium hover:text-primary-600 dark:hover:text-primary-500{% endif %}">
+                                <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}"
+                                   class="block px-3 py-2 md:py-4 md:px-0 dark:border-base-800 {% if item.active and not item.inline %} border-b font-semibold -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-500 md:border-primary-500 dark:md:!border-primary-600{% else %}font-medium hover:text-primary-600 dark:hover:text-primary-500{% endif %}"
+                                   {% if item.inline %}
+                                       x-on:click="activeTab = '{{ item.inline }}'"
+                                       x-bind:class="{'border-b border-base-200 dark:border-base-800 md:border-primary-500 dark:md:!border-primary-600 font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ item.inline }}'}"
+                                   {% endif %}
+                                >
                                     {{ item.title }}
                                 </a>
                             </li>

@@ -1,10 +1,11 @@
 ---
-title: Changelist
+title: Changelist tabs
 order: 1
-description: Tab navigation in changelist view.
+description: Learn how to configure and customize tab navigation in Django Unfold admin changelist views, including model-specific tabs and permission-based access control.
 ---
 
 # Changelist tabs
+
 In changelist view, it is possible to add custom tab navigation. It can consist from various custom links which can point at another registered admin models. The configuration is done in `UNFOLD` dictionary in `settings.py`.
 
 ```python

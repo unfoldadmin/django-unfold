@@ -409,7 +409,6 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         )
 
     def _path_from_custom_url(self, custom_url) -> URLPattern:
-        # TODO: wrap()
         return path(
             custom_url[0],
             self.admin_site.admin_view(custom_url[2]),
