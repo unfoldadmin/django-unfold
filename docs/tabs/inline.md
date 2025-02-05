@@ -1,7 +1,7 @@
 ---
-title: Inlines
-order: 3
-description: Change form tab navigation from inlines.
+title: Inlines tabs
+order: 4
+description: Learn how to organize Django admin inlines into tabs by using the tab attribute in inline classes, enabling better form organization and user experience in changeform views.
 ---
 
 # Inlines tabs

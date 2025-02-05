@@ -278,7 +278,10 @@ class UnfoldAdminSite(AdminSite):
         return results
 
     def get_tabs_list(self, request: HttpRequest) -> list[dict[str, Any]]:
-        tabs = get_config(self.settings_name)["TABS"]
+        tabs = self._get_config("TABS", request)
+
+        if not tabs:
+            return []
 
         for tab in tabs:
             allowed_items = []
@@ -291,9 +294,11 @@ class UnfoldAdminSite(AdminSite):
                 if isinstance(item["link"], Callable):
                     item["link_callback"] = lazy(item["link"])(request)
 
-                item["active"] = self._get_is_active(
-                    request, item.get("link_callback") or item["link"], True
-                )
+                if "active" not in item:
+                    item["active"] = self._get_is_active(
+                        request, item.get("link_callback") or item["link"], True
+                    )
+
                 allowed_items.append(item)
 
             tab["items"] = allowed_items
@@ -341,7 +346,7 @@ class UnfoldAdminSite(AdminSite):
         if link_path == request.path == index_path:
             return True
 
-        if link_path in request.path and link_path != index_path:
+        if link_path != "" and link_path in request.path and link_path != index_path:
             query_params = parse_qs(urlparse(link).query)
             request_params = parse_qs(request.GET.urlencode())
 
