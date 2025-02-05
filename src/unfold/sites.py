@@ -1,3 +1,4 @@
+import copy
 from http import HTTPStatus
 from typing import Any, Callable, Optional, Union
 from urllib.parse import parse_qs, urlparse
@@ -278,7 +279,7 @@ class UnfoldAdminSite(AdminSite):
         return results
 
     def get_tabs_list(self, request: HttpRequest) -> list[dict[str, Any]]:
-        tabs = self._get_config("TABS", request)
+        tabs = copy.deepcopy(self._get_config("TABS", request))
 
         if not tabs:
             return []
@@ -298,6 +299,8 @@ class UnfoldAdminSite(AdminSite):
                     item["active"] = self._get_is_active(
                         request, item.get("link_callback") or item["link"], True
                     )
+                else:
+                    item["active"] = self._get_value(item["active"], request)
 
                 allowed_items.append(item)
 
