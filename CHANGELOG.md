@@ -1,4 +1,19 @@
 
+## 0.47.0 (2025-02-05)
+
+- feat: custom tab navigations (#1029) ([`e564d84`](https://github.com/unfoldadmin/django-unfold/commit/e564d84810b5a9c0a79ea24001cc16f2f9838137))
+- feat: Add pagination support for simple_history integration (#1037) ([`bec3555`](https://github.com/unfoldadmin/django-unfold/commit/bec3555e7e96cd8a3c0f7ea962f7f28a58d1aab8))
+- feat: settings callbacks (#1028) ([`a87d41b`](https://github.com/unfoldadmin/django-unfold/commit/a87d41b7ae0faac820b6b68a56085dfd80ed78d3))
+- feat: autocomplete filters (#1010) ([`cd448eb`](https://github.com/unfoldadmin/django-unfold/commit/cd448ebbee95faab794e2269e4d43b92200c719c))
+- fix: empty filter query params (#1027) (#1031) ([`d872753`](https://github.com/unfoldadmin/django-unfold/commit/d8727533b884e89dd3c78705cb78e31c77c93387))
+- fix: preserve back button filters (#1017) ([`43e7390`](https://github.com/unfoldadmin/django-unfold/commit/43e7390aa9b41f022fcc1bfb82f8ff9d4e39a8dd))
+- docs: ArrayWidget choices (#1039) ([`d11b994`](https://github.com/unfoldadmin/django-unfold/commit/d11b9948f6fcb49e6b150beab6d3651e5f0949b3))
+- docs: improved simple history installation guide (#1038) ([`d9fccc9`](https://github.com/unfoldadmin/django-unfold/commit/d9fccc9c3884c93ce3094afd4e2c4c9e60b138f9))
+- docs: changelist action permission usage (#1024) ([`2895e7c`](https://github.com/unfoldadmin/django-unfold/commit/2895e7c49053b620c5f6e533783fed7d591b3961))
+- docs: add missing arguments of button component (#1026) ([`684acac`](https://github.com/unfoldadmin/django-unfold/commit/684acacda22d7877cc431cd66fe8108690f94c5a))
+- docs: fixes syntax in display section (#1030) ([`97f2059`](https://github.com/unfoldadmin/django-unfold/commit/97f2059d68b3d9c838051c566a4fac5e14c34f0d))
+- chore: dropped python 3.8 support (#1021) ([`b398038`](https://github.com/unfoldadmin/django-unfold/commit/b398038e60dd2bf297f50e3a47b5dabf092e72e8))
+
 ## 0.46.0 (2025-01-27)
 
 - feat: sheet filter sticky buttons (#1003) ([`02d36b1`](https://github.com/unfoldadmin/django-unfold/commit/02d36b1333b000a5c82a501a528ef8b955dd81cd))
