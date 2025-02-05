@@ -299,6 +299,8 @@ class UnfoldAdminSite(AdminSite):
                     item["active"] = self._get_is_active(
                         request, item.get("link_callback") or item["link"], True
                     )
+                else:
+                    item["active"] = self._get_value(item["active"], request)
 
                 allowed_items.append(item)
 
