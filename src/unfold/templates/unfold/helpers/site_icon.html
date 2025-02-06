@@ -16,6 +16,14 @@
     </a>
 {% endif %}
 
-<div class="text-font-important-light tracking-tight dark:text-font-important-dark xl:text-base">
-    {{ branding }}
+<div class="flex flex-col gap-1">
+    <div class="text-font-important-light leading-none tracking-tight dark:text-font-important-dark *:leading-none {% if site_subheader %}xl:text-sm{% else %}xl:text-base{% endif %}">
+        {{ branding }}
+    </div>
+
+    {% if site_subheader %}
+        <div class="font-normal leading-none text-font-subtle-light text-xs dark:text-font-subtle-dark">
+            {{ site_subheader }}
+        </div>
+    {% endif %}
 </div>

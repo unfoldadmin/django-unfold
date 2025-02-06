@@ -73,6 +73,8 @@ class UnfoldAdminSite(AdminSite):
             },
             "site_title": self._get_config("SITE_TITLE", request),
             "site_header": self._get_config("SITE_HEADER", request),
+            "site_subheader": self._get_config("SITE_SUBHEADER", request),
+            "site_dropdown": self._get_config("SITE_DROPDOWN", request),
             "site_url": self._get_config("SITE_URL", request),
             "site_logo": self._get_theme_images("SITE_LOGO", request),
             "site_icon": self._get_theme_images("SITE_ICON", request),
