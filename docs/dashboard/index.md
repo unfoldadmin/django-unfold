@@ -35,11 +35,7 @@ TEMPLATES = [
 {% endblock %}
 
 {% block branding %}
-    <h1 id="site-name">
-        <a href="{% url 'admin:index' %}">
-            {{ site_header|default:_('Django administration') }}
-        </a>
-    </h1>
+    {% include "unfold/helpers/site_branding.html" %}
 {% endblock %}
 
 {% block content %}
