@@ -14,7 +14,7 @@ from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 from django.views.decorators.cache import never_cache
 
-from unfold.dataclasses import Favicon
+from unfold.dataclasses import DropdownItem, Favicon
 
 try:
     from django.contrib.auth.decorators import login_not_required
@@ -73,6 +73,8 @@ class UnfoldAdminSite(AdminSite):
             },
             "site_title": self._get_config("SITE_TITLE", request),
             "site_header": self._get_config("SITE_HEADER", request),
+            "site_subheader": self._get_config("SITE_SUBHEADER", request),
+            "site_dropdown": self._get_site_dropdown_items("SITE_DROPDOWN", request),
             "site_url": self._get_config("SITE_URL", request),
             "site_logo": self._get_theme_images("SITE_LOGO", request),
             "site_icon": self._get_theme_images("SITE_ICON", request),
@@ -435,6 +437,21 @@ class UnfoldAdminSite(AdminSite):
                 type=item.get("type"),
             )
             for item in favicons
+        ]
+
+    def _get_site_dropdown_items(self, key: str, *args) -> list[dict[str, Any]]:
+        items = self._get_config(key, *args)
+
+        if not items:
+            return []
+
+        return [
+            DropdownItem(
+                title=item.get("title"),
+                link=self._get_value(item["link"], *args),
+                icon=item.get("icon"),
+            )
+            for item in items
         ]
 
     def _get_value(

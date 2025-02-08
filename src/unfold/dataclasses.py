@@ -20,3 +20,10 @@ class Favicon:
     rel: Optional[str] = None
     type: Optional[str] = None
     sizes: Optional[str] = None
+
+
+@dataclass
+class DropdownItem:
+    title: str
+    link: Union[str, Callable]
+    icon: Optional[str] = None

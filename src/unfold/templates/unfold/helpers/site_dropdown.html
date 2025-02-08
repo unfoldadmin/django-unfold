@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if site_dropdown %}
+    <div class="absolute bg-white border flex flex-col left-3 py-1 rounded shadow-lg top-[73px] w-[264px] z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openDropdown" x-transition x-on:click.outside="openDropdown = false">
+        {% for item in site_dropdown %}
+            <a href="{{ item.link }}" class="flex items-center gap-3 max-h-[30px] mx-1 px-2 py-2 rounded hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+                {% if item.icon %}
+                    <span class="material-symbols-outlined">
+                        {{ item.icon }}
+                    </span>
+                {% endif %}
+
+                <span class="grow truncate">
+                    {{ item.title }}
+                </span>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

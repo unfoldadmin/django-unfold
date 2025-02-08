@@ -1,13 +1,23 @@
-<div class="border-b border-base-200 mb-5 py-3 dark:border-base-800">
-    <div class="flex font-semibold gap-3 h-10 items-center px-6">
+<div class="border-b border-base-200 flex gap-3 items-center h-[65px] mb-5 dark:border-base-800 px-3" {% if site_dropdown %}x-data="{ openDropdown: false }"{% endif %}>
+    <div class="bg-transparent border border-transparent flex font-semibold gap-3 grow -mx-px h-[48px] items-center px-3 {% if site_dropdown %}cursor-pointer rounded transition-all hover:bg-white hover:border-base-200 hover:shadow-sm hover:dark:bg-base-800 hover:dark:border-base-700{% endif %}"
+         x-on:click="openDropdown = !openDropdown"
+         x-bind:class="{'bg-white border-base-200 shadow-sm dark:bg-base-800 dark:border-base-700': openDropdown, 'bg-transparent border-transparent': !openDropdown}">
         {% if site_logo %}
             {% include "unfold/helpers/site_logo.html" %}
         {% elif branding %}
             {% include "unfold/helpers/site_icon.html" %}
         {% endif %}
 
-        <div class="block cursor-pointer h-4.5 ml-auto xl:!hidden hover:text-base-700 dark:hover:text-base-200" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
-            <span class="material-symbols-outlined">close</span>
-        </div>
+        {% if site_dropdown %}
+            <span class="material-symbols-outlined ml-auto select-none">
+                unfold_more
+            </span>
+        {% endif %}
     </div>
+
+    <span class="material-symbols-outlined block cursor-pointer h-4.5 xl:!hidden hover:text-base-700 dark:hover:text-base-200" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+        close
+    </span>
+
+    {% include "unfold/helpers/site_dropdown.html" %}
 </div>
