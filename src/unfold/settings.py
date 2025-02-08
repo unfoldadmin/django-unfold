@@ -5,6 +5,8 @@ from django.conf import settings
 CONFIG_DEFAULTS = {
     "SITE_TITLE": None,
     "SITE_HEADER": None,
+    "SITE_SUBHEADER": None,
+    "SITE_DROPDOWN": None,
     "SITE_URL": "/",
     "SITE_ICON": None,
     "SITE_SYMBOL": None,

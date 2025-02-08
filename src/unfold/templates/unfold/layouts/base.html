@@ -1,11 +1,7 @@
 {% extends "unfold/layouts/base_simple.html" %}
 
 {% block branding %}
-    <h1 id="site-name">
-        <a href="{% url 'admin:index' %}">
-            {{ site_header|default:_('Django administration') }}
-        </a>
-    </h1>
+    {% include "unfold/helpers/site_branding.html" %}
 {% endblock %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
