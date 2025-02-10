@@ -275,7 +275,9 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
         actions: list[UnfoldAction],
         object_id: Optional[Union[int, str]] = None,
     ) -> list[UnfoldAction]:
-        """Filter out any Unfold actions that the user doesn't have access to."""
+        """
+        Filters out actions that the user doesn't have access to.
+        """
         filtered_actions = []
         for action in actions:
             if not hasattr(action.method, "allowed_permissions"):
@@ -288,13 +290,13 @@ class ModelAdmin(ModelAdminMixin, BaseModelAdmin):
             )
 
             if object_id:
-                if any(
+                if all(
                     has_permission(request, object_id)
                     for has_permission in permission_checks
                 ):
                     filtered_actions.append(action)
             else:
-                if any(has_permission(request) for has_permission in permission_checks):
+                if all(has_permission(request) for has_permission in permission_checks):
                     filtered_actions.append(action)
 
         return filtered_actions

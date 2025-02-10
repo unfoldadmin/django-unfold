@@ -1,12 +1,12 @@
 ---
 title: Changelist row actions
-description: Changelist row actions for list view.
+description: Customize and add row-level actions to your Django admin changelist view with Unfold's powerful action system.
 order: 2
 ---
 
 # Changelist row actions
 
-These actions will appear on each row on the changelist page as a dropdown button containing all custom row actions.
+These actions will appear on seach row on the changelist page as a dropdown button containing all custom row actions. The permission callback for `actions_row` does not accept `object_id` as an argument. Actions can have permission set globally and it is not possible to control permission per row.
 
 ```python
 # admin.py
