@@ -29,7 +29,7 @@
             <div class="w-full sm:w-96">
                 <h1 class="font-semibold mb-10">
                     <span class="block text-font-important-light dark:text-font-important-dark">{% trans 'Welcome back to' %}</span>
-                    <span class="block text-primary-600 text-xl dark:text-primary-500">{{ site_title }}</span>
+                    <span class="block text-primary-600 text-xl dark:text-primary-500">{{ site_title|default:_('Django site admin') }}</span>
                 </h1>
 
                 {% include "unfold/helpers/messages.html" %}
