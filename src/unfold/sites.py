@@ -352,16 +352,15 @@ class UnfoldAdminSite(AdminSite):
             return True
 
         if link_path != "" and link_path in request.path and link_path != index_path:
+            if not is_tab:
+                return True
+            
+            # In case of tabs, we need to check if the query params are the same
             query_params = parse_qs(urlparse(link).query)
             request_params = parse_qs(request.GET.urlencode())
-
-            # In case of tabs, we need to check if the query params are the same
-            if is_tab and not all(
+            return all(
                 request_params.get(k) == v for k, v in query_params.items()
-            ):
-                return False
-
-            return True
+            )
 
         return False
 
