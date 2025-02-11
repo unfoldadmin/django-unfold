@@ -1,4 +1,11 @@
 
+## 0.48.0 (2025-02-11)
+
+- feat: site dropdown (#1046) ([`dfc545d`](https://github.com/unfoldadmin/django-unfold/commit/dfc545d49fee363af0d9afae27abb79f6a9b0ab9))
+- fix: login form default title (#1055) ([`e9d130d`](https://github.com/unfoldadmin/django-unfold/commit/e9d130d7e857cbe13a9b5c7619dfbeccb045f4df))
+- fix: disappearing filters on changelist (#999) (#1042) ([`fd859db`](https://github.com/unfoldadmin/django-unfold/commit/fd859dbdfff531700c24fa30cb40511937a341d8))
+- fix: active tab item (#1041) ([`8299c1a`](https://github.com/unfoldadmin/django-unfold/commit/8299c1a373ac252522a82557b9073c2f26f2053e))
+
 ## 0.47.0 (2025-02-05)
 
 - feat: custom tab navigations (#1029) ([`e564d84`](https://github.com/unfoldadmin/django-unfold/commit/e564d84810b5a9c0a79ea24001cc16f2f9838137))
