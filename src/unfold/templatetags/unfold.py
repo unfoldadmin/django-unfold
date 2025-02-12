@@ -9,8 +9,10 @@ from django.forms import Field
 from django.http import HttpRequest
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
+from django.template.defaultfilters import stringfilter
 from django.template.loader import render_to_string
 from django.utils.safestring import SafeText
+from django.utils.text import slugify as _slugify
 
 from unfold.components import ComponentRegistry
 
