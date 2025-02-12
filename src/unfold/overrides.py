@@ -3,87 +3,71 @@ import copy
 from django import forms
 from django.db import models
 
-from unfold.widgets import (
-    UnfoldAdminBigIntegerFieldWidget,
-    UnfoldAdminDecimalFieldWidget,
-    UnfoldAdminEmailInputWidget,
-    UnfoldAdminFileFieldWidget,
-    UnfoldAdminImageFieldWidget,
-    UnfoldAdminImageSmallFieldWidget,
-    UnfoldAdminIntegerFieldWidget,
-    UnfoldAdminIntegerRangeWidget,
-    UnfoldAdminMoneyWidget,
-    UnfoldAdminNullBooleanSelectWidget,
-    UnfoldAdminSingleDateWidget,
-    UnfoldAdminSingleTimeWidget,
-    UnfoldAdminSplitDateTimeWidget,
-    UnfoldAdminTextareaWidget,
-    UnfoldAdminTextInputWidget,
-    UnfoldAdminURLInputWidget,
-    UnfoldAdminUUIDInputWidget,
-    UnfoldBooleanSwitchWidget,
-)
-
-try:
-    from django.contrib.postgres.fields import ArrayField, IntegerRangeField
-    from django.contrib.postgres.search import SearchVectorField
-
-    HAS_PSYCOPG = True
-except ImportError:
-    HAS_PSYCOPG = False
-
-try:
-    from djmoney.models.fields import MoneyField
-
-    HAS_MONEY = True
-except ImportError:
-    HAS_MONEY = False
+from unfold import widgets
 
 FORMFIELD_OVERRIDES = {
     models.DateTimeField: {
         "form_class": forms.SplitDateTimeField,
-        "widget": UnfoldAdminSplitDateTimeWidget,
+        "widget": widgets.UnfoldAdminSplitDateTimeWidget,
     },
-    models.DateField: {"widget": UnfoldAdminSingleDateWidget},
-    models.TimeField: {"widget": UnfoldAdminSingleTimeWidget},
-    models.EmailField: {"widget": UnfoldAdminEmailInputWidget},
-    models.CharField: {"widget": UnfoldAdminTextInputWidget},
-    models.URLField: {"widget": UnfoldAdminURLInputWidget},
-    models.GenericIPAddressField: {"widget": UnfoldAdminTextInputWidget},
-    models.UUIDField: {"widget": UnfoldAdminUUIDInputWidget},
-    models.TextField: {"widget": UnfoldAdminTextareaWidget},
-    models.NullBooleanField: {"widget": UnfoldAdminNullBooleanSelectWidget},
-    models.BooleanField: {"widget": UnfoldBooleanSwitchWidget},
-    models.IntegerField: {"widget": UnfoldAdminIntegerFieldWidget},
-    models.BigIntegerField: {"widget": UnfoldAdminBigIntegerFieldWidget},
-    models.DecimalField: {"widget": UnfoldAdminDecimalFieldWidget},
-    models.FloatField: {"widget": UnfoldAdminDecimalFieldWidget},
-    models.FileField: {"widget": UnfoldAdminFileFieldWidget},
-    models.ImageField: {"widget": UnfoldAdminImageFieldWidget},
-    models.JSONField: {"widget": UnfoldAdminTextareaWidget},
-    models.DurationField: {"widget": UnfoldAdminTextInputWidget},
+    models.DateField: {"widget": widgets.UnfoldAdminSingleDateWidget},
+    models.TimeField: {"widget": widgets.UnfoldAdminSingleTimeWidget},
+    models.EmailField: {"widget": widgets.UnfoldAdminEmailInputWidget},
+    models.CharField: {"widget": widgets.UnfoldAdminTextInputWidget},
+    models.URLField: {"widget": widgets.UnfoldAdminURLInputWidget},
+    models.GenericIPAddressField: {"widget": widgets.UnfoldAdminTextInputWidget},
+    models.UUIDField: {"widget": widgets.UnfoldAdminUUIDInputWidget},
+    models.TextField: {"widget": widgets.UnfoldAdminTextareaWidget},
+    models.NullBooleanField: {"widget": widgets.UnfoldAdminNullBooleanSelectWidget},
+    models.BooleanField: {"widget": widgets.UnfoldBooleanSwitchWidget},
+    models.IntegerField: {"widget": widgets.UnfoldAdminIntegerFieldWidget},
+    models.BigIntegerField: {"widget": widgets.UnfoldAdminBigIntegerFieldWidget},
+    models.DecimalField: {"widget": widgets.UnfoldAdminDecimalFieldWidget},
+    models.FloatField: {"widget": widgets.UnfoldAdminDecimalFieldWidget},
+    models.FileField: {"widget": widgets.UnfoldAdminFileFieldWidget},
+    models.ImageField: {"widget": widgets.UnfoldAdminImageFieldWidget},
+    models.JSONField: {"widget": widgets.UnfoldAdminTextareaWidget},
+    models.DurationField: {"widget": widgets.UnfoldAdminTextInputWidget},
 }
 
-if HAS_PSYCOPG:
+######################################################################
+# Postgres
+######################################################################
+try:
+    from django.contrib.postgres.fields import ArrayField, IntegerRangeField
+    from django.contrib.postgres.search import SearchVectorField
+
     FORMFIELD_OVERRIDES.update(
         {
-            ArrayField: {"widget": UnfoldAdminTextareaWidget},
-            SearchVectorField: {"widget": UnfoldAdminTextareaWidget},
-            IntegerRangeField: {"widget": UnfoldAdminIntegerRangeWidget},
+            ArrayField: {"widget": widgets.UnfoldAdminTextareaWidget},
+            SearchVectorField: {"widget": widgets.UnfoldAdminTextareaWidget},
+            IntegerRangeField: {"widget": widgets.UnfoldAdminIntegerRangeWidget},
         }
     )
+except ImportError:
+    pass
 
-if HAS_MONEY:
+######################################################################
+# Django Money
+######################################################################
+try:
+    from djmoney.models.fields import MoneyField
+
     FORMFIELD_OVERRIDES.update(
         {
-            MoneyField: {"widget": UnfoldAdminMoneyWidget},
+            MoneyField: {"widget": widgets.UnfoldAdminMoneyWidget},
         }
     )
+except ImportError:
+    pass
 
+######################################################################
+# Inlines
+######################################################################
 FORMFIELD_OVERRIDES_INLINE = copy.deepcopy(FORMFIELD_OVERRIDES)
 
 FORMFIELD_OVERRIDES_INLINE.update(
     {
-        models.ImageField: {"widget": UnfoldAdminImageSmallFieldWidget},
+        models.ImageField: {"widget": widgets.UnfoldAdminImageSmallFieldWidget},
     }
 )

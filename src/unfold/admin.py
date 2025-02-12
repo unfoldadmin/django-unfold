@@ -37,10 +37,6 @@ helpers.AdminReadonlyField = UnfoldAdminReadonlyField
 
 class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     action_form = ActionForm
-    actions_list = ()
-    actions_row = ()
-    actions_detail = ()
-    actions_submit_line = ()
     custom_urls = ()
     add_fieldsets = ()
     list_horizontal_scrollbar_top = False

@@ -12,15 +12,8 @@ from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
+from unfold import widgets
 from unfold.overrides import FORMFIELD_OVERRIDES
-from unfold.widgets import (
-    SELECT_CLASSES,
-    UnfoldAdminNullBooleanSelectWidget,
-    UnfoldAdminRadioSelectWidget,
-    UnfoldAdminSelectWidget,
-    UnfoldAdminTextInputWidget,
-    UnfoldForeignKeyRawIdWidget,
-)
 
 
 class BaseModelAdminMixin:
@@ -39,11 +32,11 @@ class BaseModelAdminMixin:
     ) -> TypedChoiceField:
         if "widget" not in kwargs:
             if db_field.name in self.radio_fields:
-                kwargs["widget"] = UnfoldAdminRadioSelectWidget(
+                kwargs["widget"] = widgets.UnfoldAdminRadioSelectWidget(
                     radio_style=self.radio_fields[db_field.name]
                 )
             else:
-                kwargs["widget"] = UnfoldAdminSelectWidget()
+                kwargs["widget"] = widgets.UnfoldAdminSelectWidget()
 
         if "choices" not in kwargs:
             kwargs["choices"] = db_field.get_choices(
@@ -60,14 +53,14 @@ class BaseModelAdminMixin:
         # Overrides widgets for all related fields
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
-                kwargs["widget"] = UnfoldForeignKeyRawIdWidget(
+                kwargs["widget"] = widgets.UnfoldForeignKeyRawIdWidget(
                     db_field.remote_field, self.admin_site, using=db
                 )
             elif (
                 db_field.name not in self.get_autocomplete_fields(request)
                 and db_field.name not in self.radio_fields
             ):
-                kwargs["widget"] = UnfoldAdminSelectWidget()
+                kwargs["widget"] = widgets.UnfoldAdminSelectWidget()
                 kwargs["empty_label"] = _("Select value")
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
@@ -80,7 +73,7 @@ class BaseModelAdminMixin:
     ) -> ModelMultipleChoiceField:
         if "widget" not in kwargs:
             if db_field.name in self.raw_id_fields:
-                kwargs["widget"] = UnfoldAdminTextInputWidget()
+                kwargs["widget"] = widgets.UnfoldAdminTextInputWidget()
 
         form_field = super().formfield_for_manytomany(db_field, request, **kwargs)
 
@@ -89,7 +82,7 @@ class BaseModelAdminMixin:
             return None
 
         if isinstance(form_field.widget, SelectMultiple):
-            form_field.widget.attrs["class"] = " ".join(SELECT_CLASSES)
+            form_field.widget.attrs["class"] = " ".join(widgets.SELECT_CLASSES)
 
         return form_field
 
@@ -97,7 +90,7 @@ class BaseModelAdminMixin:
         self, db_field: Field, request: HttpRequest, **kwargs
     ) -> Optional[Field]:
         if "widget" not in kwargs:
-            kwargs["widget"] = UnfoldAdminNullBooleanSelectWidget()
+            kwargs["widget"] = widgets.UnfoldAdminNullBooleanSelectWidget()
 
         return db_field.formfield(**kwargs)
 
