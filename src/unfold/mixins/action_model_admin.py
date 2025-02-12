@@ -32,6 +32,7 @@ class ActionModelAdminMixin:
         actions_row = [
             {
                 "title": action.description,
+                "icon": action.icon,
                 "attrs": action.method.attrs,
                 # This is just a path name as string and in template is used in {% url %} tag
                 # with custom instance pk value
@@ -116,6 +117,7 @@ class ActionModelAdminMixin:
             description=self._get_action_description(method, action),
             path=getattr(method, "url_path", action),
             attrs=method.attrs if hasattr(method, "attrs") else None,
+            icon=method.icon if hasattr(method, "icon") else None,
         )
 
     def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
@@ -261,6 +263,7 @@ class ActionModelAdminMixin:
             """
             return {
                 "title": action.description,
+                "icon": action.icon,
                 "attrs": action.method.attrs,
                 "path": get_action_path(action),
             }
@@ -271,6 +274,7 @@ class ActionModelAdminMixin:
             """
             dropdown = {
                 "title": nav_item["title"],
+                "icon": nav_item.get("icon"),
                 "items": [],
             }
 

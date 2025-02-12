@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from typing import Any, Protocol, Union
+from typing import Any, Optional, Protocol, Union
 
 
 class ActionFunction(Protocol):
@@ -13,6 +13,7 @@ class ActionFunction(Protocol):
     short_description: str
     url_path: str
     attrs: dict[str, Any]
+    icon: Optional[str] = None
 
     def __call__(self, *args, **kwargs):
         pass

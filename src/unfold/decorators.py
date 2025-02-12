@@ -17,6 +17,7 @@ def action(
     description: Optional[str] = None,
     url_path: Optional[str] = None,
     attrs: Optional[dict[str, Any]] = None,
+    icon: Optional[str] = None,
 ) -> ActionFunction:
     def decorator(func: Callable) -> ActionFunction:
         def inner(
@@ -48,10 +49,16 @@ def action(
 
         if permissions is not None:
             inner.allowed_permissions = permissions
+
         if description is not None:
             inner.short_description = description
+
         if url_path is not None:
             inner.url_path = url_path
+
+        if icon is not None:
+            inner.icon = icon
+
         inner.attrs = attrs or {}
         return inner
 
