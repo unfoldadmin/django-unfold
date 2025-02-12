@@ -416,3 +416,9 @@ def fieldset_line_classes(context: Context) -> str:
         )
 
     return " ".join(set(classes))
+
+
+@register.filter(is_safe=True)
+@stringfilter
+def extended_slugify(value):
+    return _slugify(value, allow_unicode=True)
