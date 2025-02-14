@@ -177,6 +177,7 @@ CHECKBOX_CLASSES = [
     "after:w-4",
     "after:dark:text-base-700",
     "checked:bg-primary-600",
+    "checked:dark:bg-primary-600",
     "checked:border-primary-600",
     "checked:transition-all",
     "checked:hover:border-primary-600",
