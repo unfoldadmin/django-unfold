@@ -32,6 +32,25 @@ def test_actions_list(client, admin_user, user_model_admin_with_actions):
 
 
 @pytest.mark.django_db
+def test_actions_list_with_dropdown(client, admin_user, user_model_admin_with_actions):
+    client.force_login(admin_user)
+    response = client.get(reverse_lazy("admin:example_user_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Changelist dropdown for actions" in response.content.decode()
+    assert "Changelist action dropdown" in response.content.decode()
+
+    response = client.get(
+        reverse_lazy("admin:example_user_changelist_action_dropdown"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist action dropdown successfully executed" in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
 def test_actions_list_permission_true(
     client, admin_user, user_model_admin_with_actions
 ):
@@ -231,6 +250,31 @@ def test_actions_changeform(client, admin_user, user_model_admin_with_actions):
     )
     assert response.status_code == HTTPStatus.OK
     assert "Changeform action successfully executed" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_actions_changeform_with_dropdown(
+    client, admin_user, user_model_admin_with_actions
+):
+    client.force_login(admin_user)
+    response = client.get(
+        reverse_lazy("admin:example_user_change", args=(admin_user.pk,))
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Changeform dropdown for actions" in response.content.decode()
+    assert "Changeform action dropdown" in response.content.decode()
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changeform_action_dropdown", args=(admin_user.pk,)
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changeform action dropdown successfully executed" in response.content.decode()
+    )
 
 
 @pytest.mark.django_db

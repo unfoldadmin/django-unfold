@@ -57,6 +57,12 @@ def user_model_admin_with_actions():
             "changelist_action_permission_true",
             "changelist_action_permission_false",
             "changelist_action_multiple_different_permissions",
+            {
+                "title": "Changelist dropdown for actions",
+                "items": [
+                    "changelist_action_dropdown",
+                ],
+            },
         ]
         actions_row = [
             "changelist_row_action",
@@ -69,6 +75,12 @@ def user_model_admin_with_actions():
             "changeform_action_permission_true",
             "changeform_action_permission_false",
             "changeform_action_multiple_different_permissions",
+            {
+                "title": "Changeform dropdown for actions",
+                "items": [
+                    "changeform_action_dropdown",
+                ],
+            },
         ]
         actions_submit_line = [
             "submit_line_action",
@@ -80,6 +92,13 @@ def user_model_admin_with_actions():
         ######################################################################
         # Changelist actions
         ######################################################################
+        @action(description="Changelist action dropdown")
+        def changelist_action_dropdown(self, request):
+            messages.success(
+                request, "Changelist action dropdown successfully executed"
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
         @action(description="Changelist action")
         def changelist_action(self, request):
             messages.success(request, "Changelist action successfully executed")
@@ -180,6 +199,13 @@ def user_model_admin_with_actions():
         ######################################################################
         # Changeform actions
         ######################################################################
+        @action(description="Changeform action dropdown")
+        def changeform_action_dropdown(self, request, object_id):
+            messages.success(
+                request, "Changeform action dropdown successfully executed"
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
         @action(description="Changeform action")
         def changeform_action(self, request, object_id):
             messages.success(request, "Changeform action successfully executed")
