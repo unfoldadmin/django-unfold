@@ -12,6 +12,7 @@ class UnfoldAction:
     path: str
     attrs: Optional[dict] = None
     object_id: Optional[Union[int, str]] = None
+    icon: Optional[str] = None
 
 
 @dataclass

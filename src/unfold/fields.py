@@ -17,17 +17,18 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 
-from .settings import get_config
-from .utils import display_for_field, prettify_json
-from .widgets import CHECKBOX_LABEL_CLASSES, LABEL_CLASSES
+from unfold.mixins import BaseModelAdminMixin
+from unfold.settings import get_config
+from unfold.utils import display_for_field, prettify_json
+from unfold.widgets import CHECKBOX_LABEL_CLASSES, LABEL_CLASSES
 
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def label_tag(self) -> SafeText:
-        from .admin import ModelAdmin, ModelAdminMixin
+        from .admin import ModelAdmin
 
         if not isinstance(self.model_admin, ModelAdmin) and not isinstance(
-            self.model_admin, ModelAdminMixin
+            self.model_admin, BaseModelAdminMixin
         ):
             return super().label_tag()
 
