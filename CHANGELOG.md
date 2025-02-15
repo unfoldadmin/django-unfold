@@ -1,4 +1,8 @@
 
+## 0.49.1 (2025-02-15)
+
+- fix: create object actions (#1072) ([`a2699bf`](https://github.com/unfoldadmin/django-unfold/commit/a2699bf4c5e435ecf3fbe08558732f7530104c71))
+
 ## 0.49.0 (2025-02-15)
 
 - feat: actions icons (#1070) ([`5ee1041`](https://github.com/unfoldadmin/django-unfold/commit/5ee10419ddfb2e801dcc77ea5130de2c0f792f91))
