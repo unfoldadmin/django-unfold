@@ -99,6 +99,7 @@ module.exports = {
     "border-t-0",
     "flex-grow",
     "pb-0",
+    "tracking-normal",
     "h-3",
     "w-3",
     "w-96",
