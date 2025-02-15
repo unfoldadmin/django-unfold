@@ -32,7 +32,7 @@ Once we have this encoder, we will use it in the field definition in the `models
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-class CustomMoodel(models.Model):
+class CustomModel(models.Model):
     data = models.JSONField(_("data"), null=True, blank=True, encoder=PrettyJSONEncoder)
 ```
 
@@ -45,7 +45,7 @@ from django.contrib import admin
 from unfold.admin import ModelAdmin
 
 
-@admin.register(CustomMoodel)
+@admin.register(CustomModel)
 class CustomAdminClass(ModelAdmin):
     readonly_fields = ["data"]
 ```
