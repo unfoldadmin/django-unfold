@@ -179,6 +179,7 @@ CHECKBOX_CLASSES = [
     "checked:bg-primary-600",
     "checked:dark:bg-primary-600",
     "checked:border-primary-600",
+    "checked:dark:border-primary-600",
     "checked:transition-all",
     "checked:hover:border-primary-600",
 ]
