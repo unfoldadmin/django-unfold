@@ -1,4 +1,17 @@
 
+## 0.49.0 (2025-02-15)
+
+- feat: actions icons (#1070) ([`5ee1041`](https://github.com/unfoldadmin/django-unfold/commit/5ee10419ddfb2e801dcc77ea5130de2c0f792f91))
+- feat: dropdown actions (#1063) ([`902c7ab`](https://github.com/unfoldadmin/django-unfold/commit/902c7abf6c277f138f43b5f5e355dff716f67f9b))
+- fix: checkbox border color (#1071) ([`b465652`](https://github.com/unfoldadmin/django-unfold/commit/b465652c0dafe8a521dd127234a7823b196afe2d))
+- fix: checkbox focus dark mode (#1069) ([`72f0b3c`](https://github.com/unfoldadmin/django-unfold/commit/72f0b3c4f3a61ef51ce1e33ffbd8edf9023fffaf))
+- fix: empty site dropdown (#1067) ([`d1cae7a`](https://github.com/unfoldadmin/django-unfold/commit/d1cae7ad9765917acce93d717978bded9af55924))
+- fix: site dropdown truncate (#1064) ([`69e72c9`](https://github.com/unfoldadmin/django-unfold/commit/69e72c9a09e40c915c3d994c2b36076b372d930a))
+- fix: actions permissions evaluation (#1052) ([`65dc4a6`](https://github.com/unfoldadmin/django-unfold/commit/65dc4a6a37d62764c8c9c696e9d57ecf3f8a3d7f))
+- fix: default site config (#1058) ([`8fbb4a5`](https://github.com/unfoldadmin/django-unfold/commit/8fbb4a5d9417382a5e87573ed631b590a023f5b2))
+- docs: JsonField model name typo ([`22784f7`](https://github.com/unfoldadmin/django-unfold/commit/22784f74fcf2f835ba835fc5add7da6ac35c36cf))
+- chore: font update (#1056) ([`661fb32`](https://github.com/unfoldadmin/django-unfold/commit/661fb32884c4aae6f8951464f539bb9823811fa1))
+
 ## 0.48.0 (2025-02-11)
 
 - feat: site dropdown (#1046) ([`dfc545d`](https://github.com/unfoldadmin/django-unfold/commit/dfc545d49fee363af0d9afae27abb79f6a9b0ab9))

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.48.0"
+version = "0.49.0"
 description = "Modern Django admin theme for seamless interface development"
 license = "MIT"
 readme = "README.md"
