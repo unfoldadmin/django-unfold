@@ -68,24 +68,25 @@ class ActionModelAdminMixin:
         """
         extra_context = extra_context or {}
 
-        # `actions_submit_line` is a list of actions that are displayed in the submit line they
-        # are displayed as form buttons
-        actions_submit_line = self.get_actions_submit_line(request, object_id)
+        if object_id:
+            # `actions_submit_line` is a list of actions that are displayed in the submit line they
+            # are displayed as form buttons
+            actions_submit_line = self.get_actions_submit_line(request, object_id)
 
-        # `actions_detail` may contain custom structure with dropdowns so it is needed
-        # to use `_get_actions_navigation` to build the final structure for the template
-        actions_detail = self._get_actions_navigation(
-            self.actions_detail,
-            self.get_actions_detail(request, object_id),
-            object_id,
-        )
+            # `actions_detail` may contain custom structure with dropdowns so it is needed
+            # to use `_get_actions_navigation` to build the final structure for the template
+            actions_detail = self._get_actions_navigation(
+                self.actions_detail,
+                self.get_actions_detail(request, object_id),
+                object_id,
+            )
 
-        extra_context.update(
-            {
-                "actions_submit_line": actions_submit_line,
-                "actions_detail": actions_detail,
-            }
-        )
+            extra_context.update(
+                {
+                    "actions_submit_line": actions_submit_line,
+                    "actions_detail": actions_detail,
+                }
+            )
 
         return super().changeform_view(request, object_id, form_url, extra_context)
 
