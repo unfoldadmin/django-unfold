@@ -12,7 +12,13 @@
                     {% endif %}
 
                     {% for action in actions_submit_line %}
-                        <button type="submit" {% if not action.attrs.name %}name="{{ action.action_name }}"{% endif %} class="border border-base-200 font-medium px-3 py-2 rounded transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200 dark:hover:bg-base-900" {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}>
+                        <button type="submit" {% if not action.attrs.name %}name="{{ action.action_name }}"{% endif %} class="border border-base-200 flex font-medium gap-2 items-center px-3 py-2 rounded transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200 dark:hover:bg-base-900" {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}>
+                            {% if action.icon %}
+                                <span class="material-symbols-outlined">
+                                    {{ action.icon }}
+                                </span>
+                            {% endif %}
+
                             {{ action.description }}
                         </button>
                     {% endfor %}
