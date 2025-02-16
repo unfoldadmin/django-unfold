@@ -4,7 +4,7 @@
     <a {% if link %}href="{{ link }}"{% endif %}class="cursor-pointer flex items-center gap-2 px-4 py-2 text-left whitespace-nowrap hover:text-primary-600 dark:hover:text-primary-500"{% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %} {% if not link %}x-on:click="actionDropdownOpen = !actionDropdownOpen" x-bind:class="{'text-primary-600 dark:text-primary-500': actionDropdownOpen }"{% endif %}>
 
         {% if action.icon %}
-            <span class="material-symbols-outlined -ml-1">
+            <span class="material-symbols-outlined">
                 {{ action.icon }}
             </span>
         {% endif %}
@@ -12,7 +12,7 @@
         {{ title }}
 
         {% if not link %}
-            <span class="material-symbols-outlined -mr-1 rotate-90">
+            <span class="material-symbols-outlined rotate-90">
                 chevron_right
             </span>
         {% endif %}
@@ -23,7 +23,7 @@
             {% for item in action.items %}
                 <a href="{{ item.path }}" class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"{% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}>
                     {% if item.icon %}
-                        <span class="material-symbols-outlined -ml-1">
+                        <span class="material-symbols-outlined">
                             {{ item.icon }}
                         </span>
                     {% endif %}
