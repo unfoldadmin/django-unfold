@@ -436,54 +436,53 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
     else:
         variant = action["variant"]
 
-    match variant:
-        case ActionVariant.PRIMARY:
-            classes.extend(
-                [
-                    "border-primary-600",
-                    "bg-primary-600",
-                    "text-white",
-                ]
-            )
-        case ActionVariant.DANGER:
-            classes.extend(
-                [
-                    "border-red-600",
-                    "bg-red-600",
-                    "text-white",
-                ]
-            )
-        case ActionVariant.SUCCESS:
-            classes.extend(
-                [
-                    "border-green-600",
-                    "bg-green-600",
-                    "text-white",
-                ]
-            )
-        case ActionVariant.INFO:
-            classes.extend(
-                [
-                    "border-blue-600",
-                    "bg-blue-600",
-                    "text-white",
-                ]
-            )
-        case ActionVariant.WARNING:
-            classes.extend(
-                [
-                    "border-orange-600",
-                    "bg-orange-600",
-                    "text-white",
-                ]
-            )
-        case _:
-            classes.extend(
-                [
-                    "border-base-200",
-                    "hover:text-primary-600",
-                    "dark:border-base-700",
-                ]
-            )
+    if variant == ActionVariant.PRIMARY:
+        classes.extend(
+            [
+                "border-primary-600",
+                "bg-primary-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.DANGER:
+        classes.extend(
+            [
+                "border-red-600",
+                "bg-red-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.SUCCESS:
+        classes.extend(
+            [
+                "border-green-600",
+                "bg-green-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.INFO:
+        classes.extend(
+            [
+                "border-blue-600",
+                "bg-blue-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.WARNING:
+        classes.extend(
+            [
+                "border-orange-600",
+                "bg-orange-600",
+                "text-white",
+            ]
+        )
+    else:
+        classes.extend(
+            [
+                "border-base-200",
+                "hover:text-primary-600",
+                "dark:border-base-700",
+            ]
+        )
 
     return " ".join(set(classes))
