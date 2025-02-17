@@ -6,7 +6,7 @@ description: WysiwygWidget for TextField
 
 # Unfold widget WysiwygWidget
 
-To use WysiwygWidget, you need to have `unfold.contrib.forms` in `INSTALLED_APPS` which is required dependency. The WYSIWYG widget is based on [django-ckeditor](https://github.com/django-ckeditor/django-ckeditor).
+To use WysiwygWidget, you need to have `unfold.contrib.forms` in `INSTALLED_APPS` which is required dependency. The WYSIWYG widget is based on [Trix editor](https://trix-editor.org/).
 
 ```python
 # settings.py
