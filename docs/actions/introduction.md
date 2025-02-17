@@ -22,7 +22,7 @@ from unfold.decorators import action  # Import @action decorator from Unfold
 class UserAdmin(ModelAdmin):
     actions_list = ["custom_action"]
 
-    @action(description="Custom action")
+    @action(description="Custom action", icon="person")
     def custom_action(self, request: HttpRequest, queryset: QuerySet):
         pass
 ```

@@ -32,5 +32,6 @@ class UserAdmin(ModelAdmin):
         )
 
     def has_changelist_action_permission(self, request: HttpRequest):
-        pass
+        # Write your own bussiness logic. Code below will always display an action.
+        return True
 ```
