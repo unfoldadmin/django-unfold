@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Callable, Optional, Union
 
+from unfold.enums import ActionVariant
+
 from .typing import ActionFunction
 
 
@@ -13,6 +15,7 @@ class UnfoldAction:
     attrs: Optional[dict] = None
     object_id: Optional[Union[int, str]] = None
     icon: Optional[str] = None
+    variant: Optional[ActionVariant] = ActionVariant.DEFAULT
 
 
 @dataclass
