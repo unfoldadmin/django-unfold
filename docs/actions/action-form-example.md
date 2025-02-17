@@ -1,7 +1,7 @@
 ---
 title: Action with form example
 description: Actions containing custom form example.
-order: 5
+order: 7
 ---
 
 # Action with form example
