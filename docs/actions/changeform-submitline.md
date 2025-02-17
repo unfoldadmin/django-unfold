@@ -36,5 +36,6 @@ class UserAdmin(ModelAdmin):
         obj.save()
 
     def has_changeform_submitline_action_permission(self, request: HttpRequest, object_id: Union[str, int]):
-        pass
+        # Write your own bussiness logic. Code below will always display an action.
+        return True
 ```
