@@ -7,6 +7,8 @@ from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
 
+from unfold.enums import ActionVariant
+
 from .typing import ActionFunction
 
 
@@ -18,6 +20,7 @@ def action(
     url_path: Optional[str] = None,
     attrs: Optional[dict[str, Any]] = None,
     icon: Optional[str] = None,
+    variant: Optional[ActionVariant] = ActionVariant.DEFAULT,
 ) -> ActionFunction:
     def decorator(func: Callable) -> ActionFunction:
         def inner(
@@ -58,6 +61,11 @@ def action(
 
         if icon is not None:
             inner.icon = icon
+
+        if variant is not None:
+            inner.variant = variant
+        else:
+            inner.variant = ActionVariant.DEFAULT
 
         inner.attrs = attrs or {}
         return inner

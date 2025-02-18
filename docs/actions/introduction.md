@@ -1,7 +1,7 @@
 ---
 title: Introduction to actions
 order: 0
-description: Run custom admin actions from different places.
+description: Create and customize powerful Django admin actions with Unfold, featuring icon support and color variants for enhanced user experience.
 ---
 
 # Actions
@@ -16,7 +16,7 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from unfold.admin import ModelAdmin
-from unfold.decorators import action  # Import @action decorator from Unfold
+from unfold.decorators import action
 
 @admin.register(User)
 class UserAdmin(ModelAdmin):
@@ -25,6 +25,50 @@ class UserAdmin(ModelAdmin):
     @action(description="Custom action", icon="person")
     def custom_action(self, request: HttpRequest, queryset: QuerySet):
         pass
+```
+
+## Icon support
+
+Unfold supports custom icons for actions. Icons are supported for all actions types. You can set the icon for an action by providing `icon` parameter to the `@action` decorator.
+
+```python
+# admin.py
+
+from django.db.models import QuerySet
+from django.http import HttpRequest
+
+from unfold.decorators import action
+
+@action(description="Custom action", icon="person")
+def custom_action(self, request: HttpRequest, queryset: QuerySet):
+    pass
+```
+
+## Action variants
+
+In Unfold it is possible to change a color of the action. Unfold supports different variants of actions. You can set the variant for an action by providing `variant` parameter to the `@action` decorator.
+
+```python
+# admin.py
+
+from django.db.models import QuerySet
+from django.http import HttpRequest
+
+from unfold.decorators import action
+# Import ActionVariant enum from Unfold to set action variant
+from unfold.enums import ActionVariant
+
+# class ActionVariant(Enum):
+#     DEFAULT = "default"
+#     PRIMARY = "primary"
+#     SUCCESS = "success"
+#     INFO = "info"
+#     WARNING = "warning"
+#     DANGER = "danger"
+
+@action(description="Custom action", variant=ActionVariant.PRIMARY)
+def custom_action(self, request: HttpRequest, queryset: QuerySet):
+    pass
 ```
 
 ## Actions overview

@@ -1,8 +1,11 @@
 {% load unfold %}
 
-<li class="border-b flex-grow relative text-center md:border-b-0 md:border-r last:border-0 dark:border-base-700" {% if not link %}x-data="{actionDropdownOpen: false}"{% endif %}>
-    <a {% if link %}href="{{ link }}"{% endif %}class="cursor-pointer flex items-center gap-2 px-4 py-2 text-left whitespace-nowrap hover:text-primary-600 dark:hover:text-primary-500"{% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %} {% if not link %}x-on:click="actionDropdownOpen = !actionDropdownOpen" x-bind:class="{'text-primary-600 dark:text-primary-500': actionDropdownOpen }"{% endif %}>
-
+<li class="{% action_item_classes action %}" {% if not link %}x-data="{actionDropdownOpen: false}" x-ref="actionDropdown{{ action.method_name }}"{% endif %}>
+    <a {% if link %}href="{{ link }}"{% endif %}class="cursor-pointer flex items-center gap-2 px-3 py-2 text-left whitespace-nowrap" {% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}
+       {% if not link %}
+           x-on:click="actionDropdownOpen = !actionDropdownOpen"
+           x-bind:class="{'{% if action.variant.value == "default" %}text-primary-600 dark:text-primary-500{% endif %}': actionDropdownOpen }"
+       {% endif %}>
         {% if action.icon %}
             <span class="material-symbols-outlined">
                 {{ action.icon }}
@@ -12,27 +15,29 @@
         {{ title }}
 
         {% if not link %}
-            <span class="material-symbols-outlined rotate-90">
+            <span class="material-symbols-outlined ml-auto rotate-90">
                 chevron_right
             </span>
         {% endif %}
     </a>
 
     {% if not link %}
-        <nav class="absolute bg-white border flex flex-col -mr-px py-1 right-0 rounded shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-transition x-show="actionDropdownOpen" x-on:click.outside="actionDropdownOpen = false">
-            {% for item in action.items %}
-                <a href="{{ item.path }}" class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"{% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}>
-                    {% if item.icon %}
-                        <span class="material-symbols-outlined">
-                            {{ item.icon }}
-                        </span>
-                    {% endif %}
+        <template x-teleport="body">
+            <nav x-anchor.bottom-end.offset.4="$refs.actionDropdown{{ action.method_name }}" class="absolute bg-white border flex flex-col -mr-px py-1 right-0 rounded shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-transition x-show="actionDropdownOpen" x-on:click.outside="actionDropdownOpen = false">
+                {% for item in action.items %}
+                    <a href="{{ item.path }}" class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"{% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}>
+                        {% if item.icon %}
+                            <span class="material-symbols-outlined">
+                                {{ item.icon }}
+                            </span>
+                        {% endif %}
 
-                    <span class="grow truncate">
-                        {{ item.title }}
-                    </span>
-                </a>
-            {% endfor %}
-        </nav>
+                        <span class="grow truncate">
+                            {{ item.title }}
+                        </span>
+                    </a>
+                {% endfor %}
+            </nav>
+        </template>
     {% endif %}
 </li>

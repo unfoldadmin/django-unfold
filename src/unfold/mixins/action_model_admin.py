@@ -7,6 +7,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 
 from unfold.dataclasses import UnfoldAction
+from unfold.enums import ActionVariant
 from unfold.exceptions import UnfoldException
 
 
@@ -119,6 +120,7 @@ class ActionModelAdminMixin:
             path=getattr(method, "url_path", action),
             attrs=method.attrs if hasattr(method, "attrs") else None,
             icon=method.icon if hasattr(method, "icon") else None,
+            variant=method.variant if hasattr(method, "variant") else None,
         )
 
     def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
@@ -265,6 +267,7 @@ class ActionModelAdminMixin:
             return {
                 "title": action.description,
                 "icon": action.icon,
+                "variant": action.variant,
                 "attrs": action.method.attrs,
                 "path": get_action_path(action),
             }
@@ -276,6 +279,7 @@ class ActionModelAdminMixin:
             dropdown = {
                 "title": nav_item["title"],
                 "icon": nav_item.get("icon"),
+                "variant": nav_item.get("variant", ActionVariant.DEFAULT),
                 "items": [],
             }
 
