@@ -50,7 +50,8 @@ UNFOLD = {
     "SHOW_HISTORY": True, # show/hide "History" button, default: True
     "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
     "SHOW_BACK_BUTTON": False, # show/hide "Back" button on changeform in header, default: False
-    "ENVIRONMENT": "sample_app.environment_callback",
+    "ENVIRONMENT": "sample_app.environment_callback", # environment name in header
+    "ENVIRONMENT_TITLE_PREFIX": "sample_app.environment_title_prefix_callback", # environment name prefix in title tag
     "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
     "THEME": "dark", # Force theme: "dark" or "light". Will disable theme switcher
     "LOGIN": {
