@@ -14,9 +14,8 @@
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" {% if theme %}class="{{ theme }}"{% endif %} x-data="{ adminTheme: {% if theme %}'{{ theme }}'{% else %}$persist('auto').as('adminTheme'){% endif %} }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak>
-
     <head>
-        <title>{% block title %}{% endblock %}</title>
+        <title>{{ environment_title_prefix|default:"" }} {% block title %}{% endblock %}</title>
 
         <link href="{% static "unfold/fonts/inter/styles.css" %}" rel="stylesheet">
         <link href="{% static "unfold/fonts/material-symbols/styles.css" %}" rel="stylesheet">

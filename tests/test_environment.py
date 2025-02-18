@@ -10,6 +10,10 @@ def environment_callback(request):
     return ["Testing Environment", "warning"]
 
 
+def environment_title_prefix_callback(request):
+    return "[TEST]"
+
+
 @override_settings(UNFOLD={**CONFIG_DEFAULTS})
 def test_environment_empty_environment_callback():
     admin_site = UnfoldAdminSite()
@@ -55,3 +59,20 @@ def test_environment_correct_environment_callback():
     context = admin_site.each_context(request)
     assert "environment" in context
     assert context["environment"] == ["Testing Environment", "warning"]
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "ENVIRONMENT_TITLE_PREFIX": "tests.test_environment.environment_title_prefix_callback",
+        },
+    }
+)
+def test_environment_title_prefix_correct_environment_callback():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    request.user = AnonymousUser()
+    context = admin_site.each_context(request)
+    assert "environment_title_prefix" in context
+    assert context["environment_title_prefix"] == "[TEST]"

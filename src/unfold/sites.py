@@ -88,6 +88,9 @@ class UnfoldAdminSite(AdminSite):
             "border_radius": self._get_config("BORDER_RADIUS", request),
             "colors": self._get_colors("COLORS", request),
             "environment": self._get_config("ENVIRONMENT", request),
+            "environment_title_prefix": self._get_config(
+                "ENVIRONMENT_TITLE_PREFIX", request
+            ),
             "tab_list": self.get_tabs_list(request),
             "styles": self._get_list("STYLES", request),
             "scripts": self._get_list("SCRIPTS", request),
