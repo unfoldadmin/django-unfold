@@ -65,7 +65,7 @@ def test_environment_correct_environment_callback():
     UNFOLD={
         **CONFIG_DEFAULTS,
         **{
-            "ENVIRONMENT": "tests.test_environment.environment_title_prefix_callback",
+            "ENVIRONMENT_TITLE_PREFIX": "tests.test_environment.environment_title_prefix_callback",
         },
     }
 )
