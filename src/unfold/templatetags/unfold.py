@@ -13,6 +13,8 @@ from django.template.loader import render_to_string
 from django.utils.safestring import SafeText
 
 from unfold.components import ComponentRegistry
+from unfold.dataclasses import UnfoldAction
+from unfold.enums import ActionVariant
 
 register = Library()
 
@@ -412,6 +414,74 @@ def fieldset_line_classes(context: Context) -> str:
                 "lg:flex-row",
                 "dark:border-base-800",
                 "first:lg:border-l-0",
+            ]
+        )
+
+    return " ".join(set(classes))
+
+
+@register.simple_tag(takes_context=True)
+def action_item_classes(context: Context, action: UnfoldAction) -> str:
+    classes = [
+        "border",
+        "-ml-px",
+        "max-md:first:rounded-t",
+        "max-md:last:rounded-b",
+        "md:first:rounded-l",
+        "md:last:rounded-r",
+    ]
+
+    if "variant" not in action:
+        variant = ActionVariant.DEFAULT
+    else:
+        variant = action["variant"]
+
+    if variant == ActionVariant.PRIMARY:
+        classes.extend(
+            [
+                "border-primary-600",
+                "bg-primary-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.DANGER:
+        classes.extend(
+            [
+                "border-red-600",
+                "bg-red-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.SUCCESS:
+        classes.extend(
+            [
+                "border-green-600",
+                "bg-green-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.INFO:
+        classes.extend(
+            [
+                "border-blue-600",
+                "bg-blue-600",
+                "text-white",
+            ]
+        )
+    elif variant == ActionVariant.WARNING:
+        classes.extend(
+            [
+                "border-orange-600",
+                "bg-orange-600",
+                "text-white",
+            ]
+        )
+    else:
+        classes.extend(
+            [
+                "border-base-200",
+                "hover:text-primary-600",
+                "dark:border-base-700",
             ]
         )
 
