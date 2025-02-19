@@ -43,4 +43,28 @@ class UserAdmin(ModelAdmin):
     model = User
 ```
 
-Note: If you use the default `django.contrib.admin.AdminSite` you will receive a `NoReverseMatch` error because the default admin site does not contain all URL patterns required by Unfold.
+**Note**: If you use the default `django.contrib.admin.AdminSite` you will receive a `NoReverseMatch` error because the default admin site does not contain all URL patterns required by Unfold.
+
+## Overriding the default admin site
+
+If you want to override the default admin site by setting the `default_site` attribute of a custom `django.contrib.admin.apps.AdminConfig` class, you must install unfold using `unfold.apps.AppConfig` instead of just "unfold".
+
+```python
+# settings.py
+
+INSTALLED_APPS = [
+    "unfold.apps.BasicAppConfig", # <- Custom app config, not overriding default admin
+    # some other apps
+    "django.contrib.admin",
+    "your_app",
+]
+```
+
+```python
+# apps.py
+from django.contrib.admin.apps import AdminConfig
+
+
+class MyAdminConfig(AdminConfig):
+    default_site = "myproject.sites.CustomAdminSite"
+```
