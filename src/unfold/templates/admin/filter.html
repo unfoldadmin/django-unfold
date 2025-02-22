@@ -11,7 +11,7 @@
         {% endif %}
     {% endfor %}
 
-    {% if spec|class_name == "BooleanFieldListFilter" %}
+    {% if spec|class_name == "BooleanFieldListFilter" or spec.horizontal %}
         <ul class="dark:bg-base-900 border border-base-200 flex min-w-20 rounded shadow-sm text-font-default-light dark:border-base-700 dark:text-font-default-dark w-full">
             {% for choice in choices %}
                 <li class="basis-1/3 border-r border-base-200 flex-grow truncate last:border-r-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
