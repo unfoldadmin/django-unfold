@@ -61,7 +61,7 @@ class AutocompleteDropdownForm(forms.Form):
             "admin/js/vendor/jquery/jquery.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
-            "admin/js/autocomplete.js",
+            "admin/js/select2.init.js",
         )
         css = {
             "screen": (
