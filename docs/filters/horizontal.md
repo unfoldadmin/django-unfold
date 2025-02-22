@@ -20,13 +20,13 @@ from unfold.admin import ModelAdmin
 
 User = get_user_model()
 
-class HorizontalFieldListFilter(ChoicesFieldListFilter):
+class HorizontalChoicesFieldListFilter(ChoicesFieldListFilter):
     horizontal = True # Enable horizontal layout
 
 
 @admin.register(User)
 class UserAdmin(ModelAdmin):
     list_filter = (
-        ["other_model_field", HorizontalFieldListFilter],
+        ["other_model_field", HorizontalChoicesFieldListFilter],
     )
 ```
