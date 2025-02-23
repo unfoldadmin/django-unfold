@@ -83,6 +83,7 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
     ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
         self.model_admin = model_admin
+        self.request = request
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
         yield {
