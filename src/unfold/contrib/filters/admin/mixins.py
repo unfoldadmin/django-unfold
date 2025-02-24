@@ -125,6 +125,9 @@ class RangeNumericMixin:
 
 
 class AutocompleteMixin:
+    def has_output(self) -> bool:
+        return True
+
     def field_choices(
         self, field: Field, request: HttpRequest, model_admin: ModelAdmin
     ) -> list[tuple[str, str]]:
