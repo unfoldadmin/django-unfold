@@ -377,13 +377,11 @@ class SliderNumericFilter(RangeNumericFilter):
         self.q = model_admin.get_queryset(request)
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
-        total = self.q.all().count()
-        min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get("min", 0)
+        total = self.q.count()
+        min_value = self.q.aggregate(min=Min(self.parameter_name)).get("min", 0)
 
         if total > 1:
-            max_value = (
-                self.q.all().aggregate(max=Max(self.parameter_name)).get("max", 0)
-            )
+            max_value = self.q.aggregate(max=Max(self.parameter_name)).get("max", 0)
         else:
             max_value = None
 
