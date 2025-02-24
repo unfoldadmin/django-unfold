@@ -227,7 +227,6 @@
 
     // !CHANGED from original. Business logic for tabular inlines is different.
     if ($this.parent().is("tbody")) {
-      $this;
       $this
         .parent()
         .parent()
