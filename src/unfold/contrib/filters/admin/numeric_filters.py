@@ -150,9 +150,7 @@ class SliderNumericFilter(RangeNumericFilter):
         min_value = self.q.aggregate(min=Min(self.parameter_name)).get("min", 0)
 
         if total > 1:
-            max_value = (
-                self.q.aggregate(max=Max(self.parameter_name)).get("max", 0)
-            )
+            max_value = self.q.aggregate(max=Max(self.parameter_name)).get("max", 0)
         else:
             max_value = None
 
