@@ -20,6 +20,7 @@ from unfold.forms import ActionForm
 from unfold.mixins import ActionModelAdminMixin, BaseModelAdminMixin
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
 from unfold.typing import FieldsetsType
+from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
 checkbox = UnfoldBooleanWidget(
@@ -169,8 +170,6 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         return res
 
     def get_changelist(self, request, **kwargs):
-        from unfold.compat import ChangeList
-
         return ChangeList
 
 
