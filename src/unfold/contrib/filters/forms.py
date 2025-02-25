@@ -52,7 +52,7 @@ class AutocompleteDropdownForm(forms.Form):
         self.fields[name] = self.field(
             label=label,
             required=False,
-            queryset=field.remote_field.model.objects.all(),
+            queryset=field.remote_field.model.objects,
             widget=self.widget(field, model_admin.admin_site),
         )
 
@@ -61,7 +61,7 @@ class AutocompleteDropdownForm(forms.Form):
             "admin/js/vendor/jquery/jquery.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
-            "admin/js/select2.init.js",
+            "unfold/js/select2.init.js",
         )
         css = {
             "screen": (

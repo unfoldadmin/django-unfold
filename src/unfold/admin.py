@@ -20,6 +20,7 @@ from unfold.forms import ActionForm
 from unfold.mixins import ActionModelAdminMixin, BaseModelAdminMixin
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
 from unfold.typing import FieldsetsType
+from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
 checkbox = UnfoldBooleanWidget(
@@ -167,6 +168,9 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         if "next" in request.GET:
             return redirect(request.GET["next"])
         return res
+
+    def get_changelist(self, request, **kwargs):
+        return ChangeList
 
 
 class TabularInline(BaseModelAdminMixin, BaseTabularInline):
