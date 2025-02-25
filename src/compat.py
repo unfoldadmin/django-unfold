@@ -1,7 +1,9 @@
 import django
-from django.contrib.admin.views.main import ChangeList as DjangoChangeList, PAGE_VAR, ERROR_FLAG
+from django.contrib.admin.views.main import ERROR_FLAG, PAGE_VAR
+from django.contrib.admin.views.main import ChangeList as DjangoChangeList
 
 if django.VERSION < (5, 0):
+
     class ChangeList(DjangoChangeList):
         def __init__(self, request, *args, **kwargs):
             super().__init__(request, *args, **kwargs)
