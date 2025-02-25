@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
-from django.db.models import Max, Min, Model, QuerySet
+from django.db.models import Count, Max, Min, Model, QuerySet
 from django.db.models.fields import (
     AutoField,
     DecimalField,
@@ -146,13 +146,13 @@ class SliderNumericFilter(RangeNumericFilter):
         self.q = model_admin.get_queryset(request)
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
-        total = self.q.count()
-        min_value = self.q.aggregate(min=Min(self.parameter_name)).get("min", 0)
-
-        if total > 1:
-            max_value = self.q.aggregate(max=Max(self.parameter_name)).get("max", 0)
-        else:
-            max_value = None
+        aggregates = self.q.aggregate(
+            min=Min(self.parameter_name),
+            max=Max(self.parameter_name),
+            total=Count("pk"),
+        )
+        min_value = aggregates.get("min", 0)
+        max_value = aggregates.get("max", 0) if aggregates["total"] > 1 else None
 
         if isinstance(self.field, (FloatField, DecimalField)):
             decimals = self.MAX_DECIMALS
@@ -160,6 +160,9 @@ class SliderNumericFilter(RangeNumericFilter):
         else:
             decimals = 0
             step = self.STEP if self.STEP else 1
+
+        value_from = self.used_parameters.get(self.parameter_name + "_from", min_value)
+        value_to = self.used_parameters.get(self.parameter_name + "_to", max_value)
 
         return (
             {
@@ -169,26 +172,19 @@ class SliderNumericFilter(RangeNumericFilter):
                 "request": self.request,
                 "min": min_value,
                 "max": max_value,
-                "value_from": self.used_parameters.get(
-                    self.parameter_name + "_from", min_value
-                ),
-                "value_to": self.used_parameters.get(
-                    self.parameter_name + "_to", max_value
-                ),
+                "value_from": value_from,
+                "value_to": value_to,
                 "form": self.form_class(
                     name=self.parameter_name,
                     data={
-                        self.parameter_name + "_from": self.used_parameters.get(
-                            self.parameter_name + "_from", min_value
-                        ),
-                        self.parameter_name + "_to": self.used_parameters.get(
-                            self.parameter_name + "_to", max_value
-                        ),
+                        self.parameter_name + "_from": value_from,
+                        self.parameter_name + "_to": value_to,
                     },
                 ),
             },
         )
 
-    def _get_min_step(self, precision: int) -> float:
+    @staticmethod
+    def _get_min_step(precision: int) -> float:
         result_format = f"{{:.{precision - 1}f}}"
         return float(result_format.format(0) + "1")
