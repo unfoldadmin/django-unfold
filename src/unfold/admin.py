@@ -168,6 +168,11 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
             return redirect(request.GET["next"])
         return res
 
+    def get_changelist(self, request, **kwargs):
+        from unfold.compat import ChangeList
+
+        return ChangeList
+
 
 class TabularInline(BaseModelAdminMixin, BaseTabularInline):
     formfield_overrides = FORMFIELD_OVERRIDES_INLINE
