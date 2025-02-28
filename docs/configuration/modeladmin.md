@@ -48,6 +48,9 @@ class CustomAdminClass(ModelAdmin):
     # Disable select all action in changelist
     list_disable_select_all = False
 
+    # Set to False to hide text for boolean fields in changelist
+    list_boolean_text = True
+
     # Custom actions
     actions_list = []  # Displayed above the results list
     actions_row = []  # Displayed in a table row in results list
