@@ -231,7 +231,12 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                 elif header:
                     result_repr = display_for_header(value, empty_value_display)
                 else:
-                    result_repr = display_for_value(value, empty_value_display, boolean)
+                    result_repr = display_for_value(
+                        value,
+                        empty_value_display,
+                        boolean,
+                        cl.model_admin.list_boolean_text,
+                    )
 
                 if isinstance(value, (datetime.date, datetime.time)):
                     row_classes.append("nowrap")
@@ -243,7 +248,12 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                     else:
                         result_repr = field_val
                 else:
-                    result_repr = display_for_field(value, f, empty_value_display)
+                    result_repr = display_for_field(
+                        value,
+                        f,
+                        empty_value_display,
+                        cl.model_admin.list_boolean_text,
+                    )
                 if isinstance(
                     f, (models.DateField, models.TimeField, models.ForeignKey)
                 ):
