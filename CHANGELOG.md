@@ -1,4 +1,26 @@
 
+## 0.50.0 (2025-03-03)
+
+- feat: horizontal choices filter attribute (#1092) ([`24b9f16`](https://github.com/unfoldadmin/django-unfold/commit/24b9f16c660fbca3a3da3edb936505713345477b))
+- feat: environment title prefix (#1081) ([`6316427`](https://github.com/unfoldadmin/django-unfold/commit/63164271485dae1889dd4b7d2f9b6787c52bac65))
+- feat: action variants (#1077) ([`610e4fd`](https://github.com/unfoldadmin/django-unfold/commit/610e4fdc4866fd2db9ea402ae3e12c96daf72b6d))
+- feat: compact search/filter section (#1065) ([`a430c52`](https://github.com/unfoldadmin/django-unfold/commit/a430c52a2990a6f8706b283a92fcea8c2305dd3c))
+- fix: filter_params when Django &lt; 5.0 (#1108) ([`c7c0a15`](https://github.com/unfoldadmin/django-unfold/commit/c7c0a15ce4fe6a5d34656f640fd7965b8bf75853))
+- fix: autocomplete filter query (#1101) ([`98c8802`](https://github.com/unfoldadmin/django-unfold/commit/98c8802ae01a11a16c8f8822fea8044b8cb63d9c))
+- fix: tabular inlines total forms (#1097) ([`dc19434`](https://github.com/unfoldadmin/django-unfold/commit/dc19434d148ed048d5294e462971768de26fc373))
+- fix: select2 init (#1094) ([`3f50191`](https://github.com/unfoldadmin/django-unfold/commit/3f50191f18b204605b2e2f9e2087fac8639eadb9))
+- fix: autocomplete mixin request param (#1093) ([`635f529`](https://github.com/unfoldadmin/django-unfold/commit/635f529ffa3da701c6b34b2b9877bd2e22f7c761))
+- fix: permissions selector width (#1084) ([`342da3c`](https://github.com/unfoldadmin/django-unfold/commit/342da3cd9e71bc551ffcda6b7e2e160012b69505))
+- fix: tab navigation inline anchor (#1075) ([`9dd1489`](https://github.com/unfoldadmin/django-unfold/commit/9dd14897d01851320a054c79dca73d0d149e2402))
+- fix: filter button hover state (#1074) ([`cb291ee`](https://github.com/unfoldadmin/django-unfold/commit/cb291eed8f674ff72b24713ca871feab9752b4f6))
+- docs: overriding the default admin site (#1082) ([`2cd48e2`](https://github.com/unfoldadmin/django-unfold/commit/2cd48e263f3eea888ea258b2d89831ca3d3dbdb1))
+- docs: wysiwyg editor name (#1079) ([`52c3632`](https://github.com/unfoldadmin/django-unfold/commit/52c3632c3a1c50998089f3955283d36195f3b135))
+- docs: custom page (#1078) ([`597a0d3`](https://github.com/unfoldadmin/django-unfold/commit/597a0d35732fdafa0d01ce6d62ba5439aebc1fea))
+- docs: dropdown actions (#1076) ([`ea195d3`](https://github.com/unfoldadmin/django-unfold/commit/ea195d3ed11c9bf9ad64813f90f43d3b5bb521f6))
+- chore: remove unnecessary filter file (#1102) ([`61e14c5`](https://github.com/unfoldadmin/django-unfold/commit/61e14c56adba1c37127b1875db50781d1db5e25b))
+- chore: actions list order (#1083) ([`5b0dde4`](https://github.com/unfoldadmin/django-unfold/commit/5b0dde47a782d27a4553023cdf524ca3de193d12))
+- chore: readme update (#1073) ([`80ed4a2`](https://github.com/unfoldadmin/django-unfold/commit/80ed4a2709c68d8921524050033565bf8c136498))
+
 ## 0.49.1 (2025-02-15)
 
 - fix: create object actions (#1072) ([`a2699bf`](https://github.com/unfoldadmin/django-unfold/commit/a2699bf4c5e435ecf3fbe08558732f7530104c71))
