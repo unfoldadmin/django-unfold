@@ -27,8 +27,16 @@ class TableSection(BaseSection):
         headers = []
         rows = []
 
-        for model_field in results.model._meta.fields:
-            for field in self.fields:
+        for field in self.fields:
+            if hasattr(self, field):
+                if hasattr(getattr(self, field), "short_description"):
+                    headers.append(getattr(self, field).short_description)
+                else:
+                    headers.append(field)
+
+                continue
+
+            for model_field in results.model._meta.fields:
                 if field == "pk":
                     field = "id"
 
@@ -39,7 +47,10 @@ class TableSection(BaseSection):
             row = []
 
             for field in self.fields:
-                row.append(display_for_field(getattr(result, field), field, "-"))
+                try:
+                    row.append(display_for_field(getattr(result, field), field, "-"))
+                except AttributeError:
+                    row.append(getattr(self, field)(result))
 
             rows.append(row)
 
