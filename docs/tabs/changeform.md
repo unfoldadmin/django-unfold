@@ -22,7 +22,7 @@ UNFOLD = {
             # Which changeform models are going to display tab navigation
             "models": [
                 {
-                    "app_label.model_name_in_lowercase",
+                    "name": "app_label.model_name_in_lowercase",
                     "detail": True, # Displays tab navigation on changeform page
                 },
             ],
