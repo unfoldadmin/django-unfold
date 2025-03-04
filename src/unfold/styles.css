@@ -662,3 +662,22 @@ trix-toolbar[id^="trix-toolbar-"] {
 .simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
   @apply top-9
 }
+
+/*******************************************************
+ django-parler
+ *******************************************************/
+div.parler-language-tabs {
+    @apply flex gap-2 lg:gap-4 mb-6 px-4 py-3 flex-row lg:-mx-4 m-0 p-1 rounded text-sm bg-base-100 border-0 border-b-0 dark:bg-white/[.04] after:hidden
+}
+
+div.parler-language-tabs span {
+    @apply top-auto;
+}
+
+div.parler-language-tabs span.available {
+    @apply flex flex-row items-center m-0 px-2.5 py-1 rounded text-sm text-base-400 font-medium bg-transparent border-0 border-transparent hover:bg-base-700/[.04] hover:text-base-700 dark:hover:bg-white/[.04] dark:hover:text-white;
+}
+
+div.parler-language-tabs span.current {
+    @apply items-center px-2.5 py-1 rounded text-base-700 font-medium bg-white border-transparent shadow-sm hover:bg-white dark:bg-base-900 dark:text-white dark:hover:bg-base-900;
+}
