@@ -16,6 +16,7 @@ from django.contrib.admin.views.main import (
 )
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.db.models import Model
 from django.forms import Form
 from django.http import HttpRequest
 from django.template import Library
@@ -26,13 +27,13 @@ from django.utils.html import format_html
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from ..utils import (
+from unfold.utils import (
     display_for_field,
     display_for_header,
     display_for_label,
     display_for_value,
 )
-from ..widgets import UnfoldBooleanWidget
+from unfold.widgets import UnfoldBooleanWidget
 
 register = Library()
 
@@ -336,23 +337,22 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
 
 class UnfoldResultList(ResultList):
     def __init__(
-        self, instance_pk: Union[int, str], form: Optional[Form], *items: Any
+        self,
+        instance: Model,
+        form: Optional[Form],
+        *items: Any,
     ) -> None:
-        self.instance_pk = instance_pk
+        self.instance = instance
         super().__init__(form, *items)
 
 
 def results(cl: ChangeList):
     if cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms):
-            pk = cl.lookup_opts.pk.attname
-            pk_value = getattr(res, pk)
-            yield UnfoldResultList(pk_value, form, items_for_result(cl, res, form))
+            yield UnfoldResultList(res, form, items_for_result(cl, res, form))
     else:
         for res in cl.result_list:
-            pk = cl.lookup_opts.pk.attname
-            pk_value = getattr(res, pk)
-            yield UnfoldResultList(pk_value, None, items_for_result(cl, res, None))
+            yield UnfoldResultList(res, None, items_for_result(cl, res, None))
 
 
 def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
