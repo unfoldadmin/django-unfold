@@ -7,9 +7,9 @@
         </h3>
     {% endif %}
 
-    <div class="{% if card_included == 1 %}-m-6{% else %} flex flex-col grow lg:border lg:border-base-200 lg:overflow-hidden lg:rounded lg:shadow-sm{% endif %} lg:dark:border-base-800">
+    <div class="{% if card_included == 1 %}-m-6{% else %} bg-white flex flex-col grow lg:border lg:border-base-200 lg:overflow-hidden lg:rounded lg:shadow-sm{% endif %} lg:dark:border-base-800 dark:bg-base-900">
         <div {% if height %} class="min-h-[37px]" style="max-height: {{ height }}px;" data-simplebar{% endif %}>
-            <table class="bg-white block border-spacing-none border-separate w-full lg:table dark:bg-base-900">
+            <table class="block border-spacing-none border-separate w-full lg:table">
                 {% if table.headers %}
                     <thead class="text-base-900 dark:text-base-100 {% if height %}sticky top-0{% endif %}">
                         <tr class="bg-base-50 dark:bg-white/[.02]">

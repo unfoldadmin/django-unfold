@@ -101,7 +101,7 @@
                             <td colspan="{{ result|length|add:1 }}" class="bg-base-200/10 border-t border-base-200 relative shadow-inner p-3 dark:border-base-800">
                                 <div class="absolute bg-primary-600 h-full left-0 top-0 w-0.5"></div>
 
-                                <div class="grid gap-3">
+                                <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">
                                     {% for section in cl.model_admin.list_sections %}
                                         {% render_section cl.model_admin.list_sections|index:forloop.counter0 result.instance %}
                                     {% endfor %}

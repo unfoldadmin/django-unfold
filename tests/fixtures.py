@@ -10,6 +10,7 @@ from django.utils.timezone import now
 from unfold.admin import ModelAdmin
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
+from unfold.sections import TableSection, TemplateSection
 from unfold.sites import UnfoldAdminSite
 
 User = get_user_model()
@@ -40,6 +41,31 @@ def user_model_admin():
 @pytest.fixture
 def user_changelist(admin_request, user_model_admin):
     return user_model_admin.get_changelist_instance(admin_request)
+
+
+@pytest.fixture
+def user_model_admin_with_sections():
+    admin.site.unregister(User)
+
+    class RelatedTableSection(TableSection):
+        verbose_name = "Related log entries"
+        related_name = "logentry_set"
+        columns = [
+            "object_id",
+        ]
+
+    class SomeTemplateSection(TemplateSection):
+        template_name = "section_template.html"
+
+    @admin.register(User)
+    class UserModelAdmin(BaseUserAdmin, ModelAdmin):
+        form = UserChangeForm
+        add_form = UserCreationForm
+        change_password_form = AdminPasswordChangeForm
+        list_sections = [
+            SomeTemplateSection,
+            RelatedTableSection,
+        ]
 
 
 @pytest.fixture

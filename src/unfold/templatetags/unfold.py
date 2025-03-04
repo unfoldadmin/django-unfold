@@ -220,14 +220,17 @@ class RenderComponentNode(template.Node):
 
         if "component_class" in values:
             values = ComponentRegistry.create_instance(
-                values["component_class"], request=context.request
+                values["component_class"],
+                request=context.request if hasattr(context, "request") else None,
             ).get_context_data(**values)
 
         if self.include_context:
             values.update(context.flatten())
 
         return render_to_string(
-            self.template_name, request=context.request, context=values
+            self.template_name,
+            request=context.request if hasattr(context, "request") else None,
+            context=values,
         )
 
 
