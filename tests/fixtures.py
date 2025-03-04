@@ -44,7 +44,7 @@ def user_changelist(admin_request, user_model_admin):
 
 
 @pytest.fixture
-def user_model_admin_with_sections():
+def user_model_admin_with_actions():
     admin.site.unregister(User)
 
     class RelatedTableSection(TableSection):
@@ -66,18 +66,6 @@ def user_model_admin_with_sections():
             SomeTemplateSection,
             RelatedTableSection,
         ]
-
-
-@pytest.fixture
-def user_model_admin_with_actions():
-    admin.site.unregister(User)
-
-    @admin.register(User)
-    class UserModelAdmin(BaseUserAdmin, ModelAdmin):
-        form = UserChangeForm
-        add_form = UserCreationForm
-        change_password_form = AdminPasswordChangeForm
-
         actions_list = [
             "changelist_action",
             "changelist_action_permission_true",
