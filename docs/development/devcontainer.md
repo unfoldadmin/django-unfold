@@ -10,7 +10,9 @@ Unfold already contains prepared support for VS Code development. After cloning 
 
 ## Development server
 
-VS Code will build an image and install Python dependencies. After the installation is complete, VS Code will start a container where you can develop directly. Unfold contains an example development application with basic Unfold configuration available in the `tests/server` directory. To start a development Django server, navigate to the `tests/server` folder and run `python manage.py runserver 0.0.0.0:8000`. Make sure to run this command from the VS Code terminal that is connected to the running container.
+VS Code will build an image and install Python dependencies. After the installation is complete, VS Code will start a container where you can develop directly. Unfold contains an example development application with basic Unfold configuration available in the `tests/server` directory.
+
+To start a development Django server, navigate to the `tests/server` folder and create a superuser by running `python tests/server/manage.py createsuperuser`. Then run `python manage.py runserver 0.0.0.0:8000`. Make sure to run this command from the VS Code terminal that is connected to the running container. You can then open your browser to http://localhost:8000/admin/ and log in using the user you just created.
 
 **Note:** This is not a production-ready server. Use it only for running tests or developing features & fixes.
 

@@ -40,6 +40,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     action_form = ActionForm
     custom_urls = ()
     add_fieldsets = ()
+    list_boolean_text = True
     list_horizontal_scrollbar_top = False
     list_filter_submit = False
     list_filter_sheet = True

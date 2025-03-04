@@ -15,8 +15,11 @@ from django.utils.safestring import SafeText, mark_safe
 from .exceptions import UnfoldException
 
 
-def _boolean_icon(field_val: Any) -> str:
-    return render_to_string("unfold/helpers/boolean.html", {"value": field_val})
+def _boolean_icon(field_val: Any, list_boolean_text: bool = True) -> str:
+    return render_to_string(
+        "unfold/helpers/boolean.html",
+        {"value": field_val, "list_boolean_text": list_boolean_text},
+    )
 
 
 def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
@@ -63,10 +66,13 @@ def display_for_label(value: Any, empty_value_display: str, label: Any) -> SafeT
 
 
 def display_for_value(
-    value: Any, empty_value_display: str, boolean: bool = False
+    value: Any,
+    empty_value_display: str,
+    boolean: bool = False,
+    list_boolean_text: bool = True,
 ) -> str:
     if boolean:
-        return _boolean_icon(value)
+        return _boolean_icon(value, list_boolean_text)
     elif value is None:
         return empty_value_display
     elif isinstance(value, bool):
@@ -83,7 +89,9 @@ def display_for_value(
         return str(value)
 
 
-def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
+def display_for_field(
+    value: Any, field: Any, empty_value_display: str, list_boolean_text: bool = True
+) -> str:
     if getattr(field, "flatchoices", None):
         try:
             return dict(field.flatchoices).get(value, empty_value_display)
@@ -93,7 +101,7 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
             value = make_hashable(value)
             return dict(flatchoices).get(value, empty_value_display)
     elif isinstance(field, models.BooleanField):
-        return _boolean_icon(value)
+        return _boolean_icon(value, list_boolean_text)
     elif value is None or value == "":
         return empty_value_display
     elif isinstance(field, models.DateTimeField):
