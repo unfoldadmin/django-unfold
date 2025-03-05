@@ -1,3 +1,4 @@
+from django.contrib.admin.utils import label_for_field, lookup_field
 from django.db.models import Model
 from django.http import HttpRequest
 from django.template.loader import render_to_string
@@ -27,30 +28,24 @@ class TableSection(BaseSection):
         headers = []
         rows = []
 
-        for field in self.fields:
-            if hasattr(self, field):
-                if hasattr(getattr(self, field), "short_description"):
-                    headers.append(getattr(self, field).short_description)
+        for field_name in self.fields:
+            if hasattr(self, field_name):
+                if hasattr(getattr(self, field_name), "short_description"):
+                    headers.append(getattr(self, field_name).short_description)
                 else:
-                    headers.append(field)
-
-                continue
-
-            for model_field in results.model._meta.fields:
-                if field == "pk":
-                    field = "id"
-
-                if model_field.name == field:
-                    headers.append(model_field.verbose_name)
+                    headers.append(field_name)
+            else:
+                headers.append(label_for_field(field_name, results.model))
 
         for result in results.all():
             row = []
 
-            for field in self.fields:
-                try:
-                    row.append(display_for_field(getattr(result, field), field, "-"))
-                except AttributeError:
-                    row.append(getattr(self, field)(result))
+            for field_name in self.fields:
+                if hasattr(self, field_name):
+                    row.append(getattr(self, field_name)(result))
+                else:
+                    field, attr, value = lookup_field(field_name, result)
+                    row.append(display_for_field(value, field, "-"))
 
             rows.append(row)
 
