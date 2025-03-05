@@ -25,7 +25,7 @@ If you don't want to use `component_class` parameter, you can prepare `data` in 
 ```html
 {% load unfold %}
 
-{% component "unfold/components/chart/cohort.html" with data=my_data_variable data=my_data %}
+{% component "unfold/components/chart/cohort.html" with data=my_data_variable %}
 {% endcomponent %}
 ```
 
@@ -76,13 +76,13 @@ DATA = {
         },
         # Second row
         {
-        "header": {
             # Row heading
-            "title": "Title",
+            "header": {
+                "title": "Title",
                 "subtitle": "something",  # Optional
             },
-            # Col 1 cell value
             "cols": [
+                # Col 1 cell value
                 {
                     "value": "1",
                 }
