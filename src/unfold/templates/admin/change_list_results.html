@@ -1,4 +1,4 @@
-{% load admin_urls i18n %}
+{% load admin_urls i18n unfold %}
 
 {% if result_hidden_fields %}
     <div class="hiddenfields">
@@ -11,6 +11,10 @@
         <table id="result_list" class="block border-base-200 border-spacing-none border-separate w-full lg:table">
             <thead>
                 <tr>
+                    {% if cl.model_admin.list_sections|length > 0 %}
+                        <th></th>
+                    {% endif %}
+
                     {% for header in result_headers %}
                         <th class="align-middle font-semibold py-2 text-left text-font-important-light dark:text-font-important-dark whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
                             <div class="flex items-center">
@@ -65,8 +69,8 @@
                 </tr>
             </thead>
 
-            <tbody class="block lg:table-row-group">
-                {% for result in results %}
+            {% for result in results %}
+                <tbody class="block lg:table-row-group" x-data="{rowOpen: false}">
                     {% if result.form and result.form.non_field_errors %}
                         <tr>
                             <td class="text-left" colspan="{{ result|length }}">
@@ -76,13 +80,37 @@
                     {% endif %}
 
                     <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                        {% if cl.model_admin.list_sections|length > 0 %}
+                            <td class="align-middle border-t border-base-200 cursor-pointer pl-3 relative select-none text-center dark:border-base-800 w-0" x-on:click="rowOpen = !rowOpen">
+                                <div class="absolute bg-primary-600 -bottom-px left-0 top-0 w-0.5 z-10" x-show="rowOpen"></div>
+                                <span class="material-symbols-outlined !block -rotate-90 transition-all" x-bind:class="rowOpen && 'rotate-0'">
+                                    expand_more
+                                </span>
+                            </td>
+                        {% endif %}
+
                         {% for item in result %}
                             {{ item }}
                         {% endfor %}
-                        {% include 'unfold/helpers/actions_row.html' with actions=actions_row instance_pk=result.instance_pk %}
+
+                        {% include 'unfold/helpers/actions_row.html' with actions=actions_row instance_pk=result.instance.pk %}
                     </tr>
-                {% endfor %}
-            </tbody>
+
+                    {% if cl.model_admin.list_sections|length > 0 %}
+                        <tr x-show="rowOpen">
+                            <td colspan="{{ result|length|add:1 }}" class="bg-base-200/10 border-t border-base-200 relative shadow-inner p-3 dark:border-base-800">
+                                <div class="absolute bg-primary-600 h-full left-0 top-0 w-0.5"></div>
+
+                                <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">
+                                    {% for section in cl.model_admin.list_sections %}
+                                        {% render_section cl.model_admin.list_sections|index:forloop.counter0 result.instance %}
+                                    {% endfor %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            {% endfor %}
         </table>
     </div>
 {% else %}
