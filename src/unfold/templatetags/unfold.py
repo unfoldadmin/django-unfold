@@ -4,6 +4,7 @@ from typing import Any, Optional, Union
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
 from django.contrib.admin.views.main import ChangeList
+from django.db.models import Model
 from django.db.models.options import Options
 from django.forms import Field
 from django.http import HttpRequest
@@ -83,6 +84,11 @@ def tab_list(context: RequestContext, page: str, opts: Optional[Options] = None)
         request=context["request"],
         context=data,
     )
+
+
+@register.simple_tag(name="render_section", takes_context=True)
+def render_section(context: Context, section_class, instance: Model) -> str:
+    return section_class(context.request, instance).render()
 
 
 @register.simple_tag(name="has_nav_item_active")
@@ -214,14 +220,17 @@ class RenderComponentNode(template.Node):
 
         if "component_class" in values:
             values = ComponentRegistry.create_instance(
-                values["component_class"], request=context.request
+                values["component_class"],
+                request=context.request if hasattr(context, "request") else None,
             ).get_context_data(**values)
 
         if self.include_context:
             values.update(context.flatten())
 
         return render_to_string(
-            self.template_name, request=context.request, context=values
+            self.template_name,
+            request=context.request if hasattr(context, "request") else None,
+            context=values,
         )
 
 
