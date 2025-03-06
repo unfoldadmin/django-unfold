@@ -29,3 +29,8 @@ repos:
     hooks:
       - id: djhtml
         files: .*/templates/.*\.html$
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: 1.23.1
+    hooks:
+      - id: django-upgrade
+        args: ['--target-version', '4.2']
