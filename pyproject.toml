@@ -24,7 +24,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.9"
-django = ">=3.2"
+django = ">=4.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3"
@@ -89,7 +89,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{38,39,310,311,312,313}-django{32,41,42,50,51}
+        python{39,310,311,312,313}-django{42,50,51}
 
     [testenv]
     skip_install = true
