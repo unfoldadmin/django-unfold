@@ -63,6 +63,7 @@ Below you can find a more complex example which is using multiple components and
 | unfold/components/card.html       | Card component                 | class, title, footer, label, icon    |
 | unfold/components/chart/bar.html  | Bar chart implementation       | class, data, height, width           |
 | unfold/components/chart/line.html | Line chart implementation      | class, data, height, width           |
+| unfold/components/cohort.html     | Cohort component               | data                                 |
 | unfold/components/container.html  | Wrapper for settings max width | class                                |
 | unfold/components/flex.html       | Flex items                     | class, col                           |
 | unfold/components/icon.html       | Icon element                   | class                                |
@@ -73,7 +74,6 @@ Below you can find a more complex example which is using multiple components and
 | unfold/components/text.html       | Paragraph of text              | class                                |
 | unfold/components/title.html      | Basic heading element          | class                                |
 | unfold/components/tracker.html    | Tracker component              | data                                 |
-| unfold/components/cohort.html     | Cohort component               | data                                 |
 
 
 ## Table component example
