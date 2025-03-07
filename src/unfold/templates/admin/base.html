@@ -11,6 +11,10 @@
         {% endif %}
 
         <div id="main" class="flex-grow min-w-0"  x-resize="mainWidth = $width">
+            {% if environment and environment.2 %}
+                {% include "unfold/helpers/stripe.html" with text=environment.0 type=environment.1 %}
+            {% endif %}
+
             {% include "unfold/helpers/header.html" %}
 
             {% if not is_popup %}

@@ -167,10 +167,15 @@ def dashboard_callback(request, context):
 
 def environment_callback(request):
     """
-    Callback has to return a list of two values represeting text value and the color
-    type of the label displayed in top right corner.
+    Callback has to return a list of three values represeting text value and the color
+    type of the label displayed in top right corner. Third value indicates whether the
+    stripe should be displayed on top of the page or not.
     """
-    return ["Production", "danger"] # info, danger, warning, success
+    return [
+        "Production",  # Text value
+        "danger",      # info, danger, warning, success, primary
+        True           # Show stripe
+    ]
 
 
 def badge_callback(request):
