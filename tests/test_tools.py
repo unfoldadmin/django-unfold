@@ -15,9 +15,9 @@ def tools_config_callback(request):
                 "name": "Test Tool",
                 "url": "http://test.com",
                 "icon": "code",
-                "new_tab": True
+                "new_tab": True,
             }
-        ]
+        ],
     }
 
 
@@ -34,13 +34,7 @@ def test_tools_empty_config():
 @override_settings(
     UNFOLD={
         **CONFIG_DEFAULTS,
-        **{
-            "TOOLS_CONFIG": {
-                "show_tools": False,
-                "title": "Custom Tools",
-                "tools": []
-            }
-        },
+        **{"TOOLS_CONFIG": {"show_tools": False, "title": "Custom Tools", "tools": []}},
     }
 )
 def test_tools_custom_config():
@@ -66,9 +60,9 @@ def test_tools_custom_config():
                         "name": "Test Tool",
                         "url": "http://test.com",
                         "icon": "code",
-                        "new_tab": True
+                        "new_tab": True,
                     }
-                ]
+                ],
             }
         },
     }
@@ -100,15 +94,15 @@ def test_tools_with_items():
                         "name": "Tool 1",
                         "url": "http://tool1.com",
                         "icon": "code",
-                        "new_tab": True
+                        "new_tab": True,
                     },
                     {
                         "name": "Tool 2",
                         "url": "http://tool2.com",
                         "icon": "bug_report",
-                        "new_tab": False
-                    }
-                ]
+                        "new_tab": False,
+                    },
+                ],
             }
         },
     }
