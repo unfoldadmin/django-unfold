@@ -1,4 +1,16 @@
 
+## 0.51.0 (2025-03-10)
+
+- feat: django-upgrade support in pre-commit ([`67cdb8e`](https://github.com/unfoldadmin/django-unfold/commit/67cdb8eae4e5fe0839f591ecbc90bd9d624ba8af))
+- feat: expandable changelist rows / related tables and templates (#1117) ([`0a92919`](https://github.com/unfoldadmin/django-unfold/commit/0a92919ab3b0976229ea21b8f90b59bb3d360069))
+- fix: responsive sections (#1134) ([`bd17ba0`](https://github.com/unfoldadmin/django-unfold/commit/bd17ba007238236c1c026ff065ccbbb4b4eda567))
+- fix: table dark mode (#1133) ([`2655ae5`](https://github.com/unfoldadmin/django-unfold/commit/2655ae53476a3aed2a21d56914ce3c4c734008cb))
+- fix: clear all filters button dark mode hover contrast (#1043) (#1105) ([`fde2f3f`](https://github.com/unfoldadmin/django-unfold/commit/fde2f3f022b0d9420a71d466e1903797569b2f40))
+- fix: remove horizontal padding for horizontal filter options ([`1494b95`](https://github.com/unfoldadmin/django-unfold/commit/1494b95756178a02f1f143411515438df3bddfcc))
+- docs: cohort component details (#1124) ([`14e222a`](https://github.com/unfoldadmin/django-unfold/commit/14e222a1147c04175ba4dfaed14f4624c918f6a3))
+- docs: missing key in tabs navigation for changeform ([`9bae680`](https://github.com/unfoldadmin/django-unfold/commit/9bae680216a07e5c5b23a07a6accf0a6213b5494))
+- chore: dropping django 3.2/4.0/4.1 support (#1130) ([`0572d6f`](https://github.com/unfoldadmin/django-unfold/commit/0572d6f9c29c61ec7a8dc09c9f3f6c4103a6b21c))
+
 ## 0.50.0 (2025-03-03)
 
 - feat: horizontal choices filter attribute (#1092) ([`24b9f16`](https://github.com/unfoldadmin/django-unfold/commit/24b9f16c660fbca3a3da3edb936505713345477b))
