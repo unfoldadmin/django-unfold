@@ -103,6 +103,8 @@ class UnfoldAdminSite(AdminSite):
             "sidebar_navigation": self.get_sidebar_list(request)
             if self.has_permission(request)
             else [],
+            "tools_config": self._get_config("TOOLS_CONFIG", request),
+            "show_tools": self._get_config("TOOLS_CONFIG", request).get("show_tools"),
         }
 
         context.update(data)

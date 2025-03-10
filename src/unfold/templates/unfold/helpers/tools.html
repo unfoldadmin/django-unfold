@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="relative" x-data="{ openTools: false }">
+    <a class="block cursor-pointer h-4.5 leading-none hover:text-base-700 dark:hover:text-base-200" x-on:click="openTools = !openTools">
+        <span class="material-symbols-outlined">deployed_code</span>
+    </a>
+
+
+    <nav class="absolute bg-white border flex flex-col leading-none py-1 -right-2 rounded shadow-lg top-7 w-40 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openTools" x-transition x-on:click.outside="openTools = false">
+        <div class="border-b border-gray-100 flex flex-row flex-shrink-0 items-start justify-start mb-1 pb-1 dark:border-gray-700">
+            <span class="block mx-1 px-3 py-2 truncate text-primary-600 dark:text-primary-500">
+                {{ tools_config.title }}
+            </span>
+        </div>
+
+        {% for tool in tools_config.tools %}
+            <a href="{{ tool.url }}"
+               {% if tool.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+               class="cursor-pointer flex flex-row leading-none mx-1 px-3 py-1.5 rounded hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200 text-base-600 dark:text-base-300 hover:!text-primary-600 dark:hover:!text-primary-500">
+                <span class="material-symbols-outlined mr-2">{{ tool.icon }}</span>
+                <span class="leading-none self-center">{% trans tool.name %}</span>
+            </a>
+        {% endfor %}
+    </nav>
+</div>
