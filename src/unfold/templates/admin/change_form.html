@@ -58,7 +58,7 @@
 {% endblock %}
 
 {% block content %}
-    <div id="content-main">
+    <div id="content-main" x-data="{ changeFormWidth: 0 }" x-resize="changeFormWidth = $width">
         {% block form_before %}{% endblock %}
 
         {% if adminform.model_admin.change_form_outer_before_template %}
