@@ -103,8 +103,26 @@ class BaseModelAdminMixin:
         formfield = super().formfield_for_dbfield(db_field, request, **kwargs)
 
         if formfield and isinstance(formfield.widget, RelatedFieldWidgetWrapper):
-            formfield.widget.template_name = (
-                "unfold/widgets/related_widget_wrapper.html"
+            related_modeladmin = self.admin_site._registry.get(
+                db_field.remote_field.model
+            )
+            wrapper_kwargs = {}
+            if related_modeladmin:
+                wrapper_kwargs.update(
+                    can_add_related=related_modeladmin.has_add_permission(request),
+                    can_change_related=related_modeladmin.has_change_permission(
+                        request
+                    ),
+                    can_delete_related=related_modeladmin.has_delete_permission(
+                        request
+                    ),
+                    can_view_related=related_modeladmin.has_view_permission(request),
+                )
+            formfield.widget = widgets.UnfoldRelatedFieldWidgetWrapper(
+                formfield.widget.widget,
+                db_field.remote_field,
+                self.admin_site,
+                **wrapper_kwargs,
             )
 
         return formfield
