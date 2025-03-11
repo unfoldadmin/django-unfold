@@ -702,6 +702,16 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
 class UnfoldRelatedFieldWidgetWrapper(RelatedFieldWidgetWrapper):
     template_name = "unfold/widgets/related_widget_wrapper.html"
 
+    def get_context(self, *args, **kwargs) -> dict[str, Any]:
+        context = super().get_context(*args, **kwargs)
+
+        rel_opts = self.rel.model._meta
+        info = (rel_opts.app_label, rel_opts.model_name)
+        if self.can_view_related:
+            context["related_url"] = self.get_related_url(info, "changelist")
+
+        return context
+
 
 class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
     template_name = "unfold/widgets/foreign_key_raw_id.html"

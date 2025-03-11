@@ -53,13 +53,19 @@
     return showAdminPopup(triggeringLink, /^lookup_/, true);
   }
 
-  function dismissRelatedLookupPopup(win, chosenId) {
+  function dismissRelatedLookupPopup(win, chosenId, chosenName) {
     const name = removePopupIndex(win.name);
     const elem = document.getElementById(name);
-    if (elem.classList.contains("vManyToManyRawIdAdminField") && elem.value) {
-      elem.value += "," + chosenId;
-    } else {
-      document.getElementById(name).value = chosenId;
+    const elemName = elem.nodeName.toUpperCase();
+    if (elemName === 'SELECT') {
+      elem.options[elem.options.length] = new Option(chosenName, chosenId, true, true);
+      elem.dispatchEvent(new Event('change', { 'bubbles': true }));
+    } else if (elemName === 'INPUT') {
+      if (elem.classList.contains('vManyToManyRawIdAdminField') && elem.value) {
+        elem.value += ',' + chosenId;
+      } else {
+        document.getElementById(name).value = chosenId;
+      }
     }
     const index = relatedWindows.indexOf(win);
     if (index > -1) {
@@ -259,7 +265,7 @@
     setPopupIndex();
     $("a[data-popup-opener]").on("click", function (event) {
       event.preventDefault();
-      opener.dismissRelatedLookupPopup(window, $(this).data("popup-opener"));
+      opener.dismissRelatedLookupPopup(window, $(this).data("popup-opener"), $(this).text());
     });
     $("body").on(
       "click",
