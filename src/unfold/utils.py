@@ -6,6 +6,7 @@ from typing import Any, Optional
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Model
 from django.template.loader import render_to_string
 from django.utils import formats, timezone
 from django.utils.hashable import make_hashable
@@ -30,6 +31,19 @@ def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
                 "value": value,
             },
         )
+    )
+
+
+def display_for_dropdown(
+    result: Model, field_name: str, value: Iterable, empty_value_display: str
+) -> SafeText:
+    return render_to_string(
+        "unfold/helpers/display_dropdown.html",
+        {
+            "instance": result,
+            "field_name": field_name,
+            "value": value,
+        },
     )
 
 

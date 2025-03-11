@@ -1,0 +1,50 @@
+{% with dropdown_id=instance.pk|cut:"-"|add:field_name %}
+    {% with total=value.items|length %}
+        <div x-data="{ openDropdownId{{ dropdown_id }}: false }">
+            <div class="flex flex-row gap-1.5 items-center {% if total > 0 %}cursor-pointer{% endif %}"
+                 {% if total > 0 %}
+                     x-ref="rowDropdown{{ dropdown_id }}"
+                     x-on:click="openDropdownId{{ dropdown_id }} = !openDropdownId{{ dropdown_id }}""
+                                                                                                 {% endif %}>
+
+                                                                                                 {% if total > 0 %}
+                                                                                                     <span class="material-symbols-outlined">
+                                                                                                                                                                 unfold_more
+                                                                                                                                                                 </span>
+                                                                                                                                                             {% endif %}
+
+                                                                                                                                                             {{ value.title }}
+                                                                                                                                                             </div>
+
+                                                                                                                                                             {% if total > 0 %}
+                                                                                                                                                                 <template x-teleport="body">
+                                                                                                                                                                                                                 <nav class="bg-white border overflow-y-auto overflow-x-hidden flex flex-col py-1 rounded shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700"
+                                                                                                                                                                                                                                                                                                                                                                                                       {% if value.width or value.height %}
+                                                                                                                                                                                                                                                                                                                                                                                                           style="
+                         {% if value.width %}
+                             width: {{ value.width }}px;
+                         {% endif %}
+                         {% if value.height %}
+                             height: {{ value.height }}px;
+                         {% endif %}
+                          "
+                      {% endif %}
+                      data-simplebar
+                      x-cloak
+                      x-transition
+                      x-anchor.bottom-start.offset.4="$refs.rowDropdown{{ dropdown_id }}"
+                                                                                        x-show="openDropdownId{{ dropdown_id }}"
+                                                             x-on:click.outside="openDropdownId{{ dropdown_id }} = false">
+                                                                                 {% for item in value.items %}
+                                                                                     <a {% if item.link %}href="{{ item.link }}"{% endif %} class="flex items-center gap-2 mx-1 px-3 py-2 max-h-[30px] rounded hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200">
+                                                                                                                                                                                                                                                                                                          <span class="grow truncate">
+                                                                                                                                                                                                                                                                                                                                                              {{ item.title }}
+                                                                                                                                                                                                                                                                                                                                                              </span>
+                                                                                                                                                                                                                                                                                                                                                              </a>
+                                                                                                                                                                                                                                                                                                                                                          {% endfor %}
+                                                                                                                                                                                                                                                                                                                                                          </nav>
+                                                                                                                                                                                                                                                                                                                                                          </template>
+                                                                                                                                                                                                                                                                                                                                                      {% endif %}
+                                                                                                                                                                                                                                                                                                                                                      </div>
+                                                                                                                                                                                                                                                                                                                                              {% endwith %}
+                                                                                                                                                                                                                                                                                                                                          {% endwith %}

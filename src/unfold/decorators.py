@@ -84,6 +84,7 @@ def display(
     ordering: Optional[Union[str, Combinable, BaseExpression]] = None,
     description: Optional[str] = None,
     empty_value: Optional[str] = None,
+    dropdown: Optional[bool] = None,
     label: Optional[Union[bool, str, dict[str, str]]] = None,
     header: Optional[bool] = None,
 ) -> Callable:
@@ -107,6 +108,8 @@ def display(
             func.label = label
         if header is not None:
             func.header = header
+        if dropdown is not None:
+            func.dropdown = dropdown
 
         return func
 
