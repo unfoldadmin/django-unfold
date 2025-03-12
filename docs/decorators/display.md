@@ -6,11 +6,11 @@ order: 1
 
 # Unfold @display decorator
 
-Unfold introduces it's own `unfold.decorators.display` decorator. By default it has exactly same behavior as native `django.contrib.admin.decorators.display` but it adds same customizations which helps to extends default logic.
+Unfold introduces its own `unfold.decorators.display` decorator. By default, it has exactly the same behavior as the native `django.contrib.admin.decorators.display` but it adds customizations which help to extend the default logic.
 
-`@display(label=True)`, `@display(label={"value1": "success"})` displays a result as a label. This option fits for different types of statuses. Label can be either boolean indicating we want to use label with default color or dict where the dict is responsible for displaying labels in different colors. At the moment these color combinations are supported: success(green), info(blue), danger(red) and warning(orange).
+`@display(label=True)`, `@display(label={"value1": "success"})` displays a result as a label. This option fits for different types of statuses. The label can be either a boolean indicating we want to use a label with the default color, or a dict where the dict is responsible for displaying labels in different colors. At the moment these color combinations are supported: success (green), info (blue), danger (red) and warning (orange).
 
-`@display(header=True)` displays in results list two information in one table cell. Good example is when we want to display customer information, first line is going to be customer's name and right below the name display corresponding email address. Method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`. There is a third optional argument, which is type of the string and its value is displayed in a circle before first two values on the front end. Its optimal usage is for displaying initials.
+`@display(header=True)` displays two pieces of information in one table cell in the results list. A good example is when we want to display customer information - the first line will be the customer's name and right below the name, the corresponding email address is displayed. A method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`. There is a third optional argument, which is the type of string and its value is displayed in a circle before the first two values on the front end. Its optimal usage is for displaying initials.
 
 ```python
 # admin.py
