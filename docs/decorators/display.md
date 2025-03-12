@@ -80,3 +80,80 @@ class UserAdmin(ModelAdmin):
             }
         ]
 ```
+
+## Dropdown support
+
+For the changelist, it is possible to apply `dropdown=True` which will display a clickable link. After clicking on the link, a dropdown will appear. There are two supported options for rendering the content of the dropdown:
+
+- Providing a list of `items`. This will render a classic list of items, which is a good option for displaying a list of related objects.
+- Defining the `content` attribute which will display your custom content in the dropdown. This is handy for rendering complex layouts in the dropdown.
+
+### Rendering list of options
+
+The following example demonstrates how to create a dropdown with a list of items. The dropdown configuration accepts these options:
+
+- `title` (required) - The text displayed in the column that users click to open the dropdown
+- `items` (required) - List of items to display in the dropdown menu. Each item should have:
+  - `title` - Text to display for the item
+  - `link` (optional) - URL the item links to
+- `striped` (optional) - Boolean to enable alternating background colors for items
+- `height` (optional) - Maximum height in pixels before scrolling is enabled
+- `width` (optional) - Width of the dropdown in pixels
+
+The dropdown will be positioned below the clicked element and will close when clicking outside or selecting an item.
+
+
+```python
+class UserAdmin(ModelAdmin):
+    list_display = [
+        "display_dropdown",
+    ]
+
+    @display(description=_("Status"), dropdown=True)
+    def display_dropdown(self, obj):
+        return {
+            # Clickable title displayed in the column
+            "title": "Custom dropdown title",
+            # Striped design for the items
+            "striped": True,  # Optional
+            # Dropdown height. Will display scrollbar for longer content
+            "height": 200,  # Optional
+            # Dropdown width
+            "width": 240,  # Optional
+            "items": [
+                {
+                    "title": "First title",
+                    "link": "#"  # Optional
+                },
+                {
+                    "title": "Second title",
+                    "link": "#"  # Optional
+                },
+            ]
+        }
+```
+
+### Custom dropdown template
+
+You can also render a custom template inside a dropdown. Just pass the `content` parameter with template content. If you want to render more complex content, use `render_to_string`.
+
+The dropdown configuration accepts these options when using custom template content:
+
+- `title` (required) - The text displayed in the column that users click to open the dropdown
+- `content` (required) - HTML content or template string to display in the dropdown
+
+The dropdown will be positioned below the clicked element and will close when clicking outside. The content can include any valid HTML or Django template syntax.
+
+```python
+class UserAdmin(ModelAdmin):
+    list_display = [
+        "display_dropdown",
+    ]
+
+    @display(description=_("Status"), dropdown=True)
+    def display_dropdown(self, obj):
+        return {
+            "title": "Custom dropdown title",
+            "content": "template content",
+        }
+```
