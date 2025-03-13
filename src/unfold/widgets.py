@@ -493,7 +493,10 @@ class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
     template_name = "unfold/widgets/split_datetime.html"
 
     def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
-        widgets = [UnfoldAdminDateWidget, UnfoldAdminTimeWidget]
+        widgets = [
+            UnfoldAdminDateWidget(attrs={"placeholder": _("Date")}),
+            UnfoldAdminTimeWidget(attrs={"placeholder": _("Time")}),
+        ]
         MultiWidget.__init__(self, widgets, attrs)
 
 
