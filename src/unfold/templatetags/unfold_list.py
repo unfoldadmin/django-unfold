@@ -1,4 +1,5 @@
 import datetime
+from collections.abc import Generator
 from typing import Any, Optional, Union
 
 from django.contrib.admin.templatetags.admin_list import (
@@ -18,7 +19,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Model
 from django.forms import Form
-from django.http import HttpRequest
 from django.template import Library
 from django.template.base import Parser, Token
 from django.template.loader import render_to_string
@@ -28,6 +28,7 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from unfold.utils import (
+    display_for_dropdown,
     display_for_field,
     display_for_header,
     display_for_label,
@@ -189,11 +190,9 @@ def result_headers(cl):
         }
 
 
-def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
-    """
-    Generate the actual list of data.
-    """
-
+def items_for_result(
+    cl: ChangeList, result: Model, form
+) -> Generator[SafeText, None, None]:
     def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
             return False
@@ -226,9 +225,14 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                 boolean = getattr(attr, "boolean", False)
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)
+                dropdown = getattr(attr, "dropdown", False)
 
                 if label:
                     result_repr = display_for_label(value, empty_value_display, label)
+                elif dropdown:
+                    result_repr = display_for_dropdown(
+                        result, field_name, value, empty_value_display
+                    )
                 elif header:
                     result_repr = display_for_header(value, empty_value_display)
                 else:
