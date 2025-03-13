@@ -369,6 +369,7 @@ def fieldset_row_classes(context: Context) -> str:
             [
                 "lg:border-b",
                 "lg:border-base-200",
+                "lg:border-dashed",
                 "dark:lg:border-base-800",
                 "last:lg:border-b-0",
             ]
@@ -397,7 +398,8 @@ def fieldset_line_classes(context: Context) -> str:
         "flex-col",
         "flex-grow",
         "group/line",
-        "p-3",
+        "px-3",
+        "py-2.5",
     ]
     field = context.get("field")
     adminform = context.get("adminform")
@@ -417,6 +419,7 @@ def fieldset_line_classes(context: Context) -> str:
             [
                 "border-b",
                 "border-base-200",
+                "border-dashed",
                 "group-[.last]/row:border-b-0",
                 "lg:border-b-0",
                 "lg:border-l",
