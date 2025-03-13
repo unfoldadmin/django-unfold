@@ -68,6 +68,9 @@ CONFIG_DEFAULTS = {
         "redirect_after": None,
     },
     "EXTENSIONS": {"modeltranslation": {"flags": {}}},
+    "TOOLS_CONFIG": {
+        "show_tools": False,
+    },
 }
 
 
