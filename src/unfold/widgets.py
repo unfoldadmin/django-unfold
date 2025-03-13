@@ -104,6 +104,7 @@ TEXTAREA_CLASSES = [
 ]
 
 TEXTAREA_EXPANDABLE_CLASSES = [
+    "block",
     "field-sizing-content",
     "!max-w-2xl",
 ]
