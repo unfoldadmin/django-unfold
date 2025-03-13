@@ -141,7 +141,7 @@ class AutocompleteMixin:
         yield {
             "form": self.form_class(
                 request=self.request,
-                label=_("By %(filter_title)s") % {"filter_title": self.title},
+                label=_(" By %(filter_title)s ") % {"filter_title": self.title},
                 name=self.lookup_kwarg,
                 choices=(),
                 field=self.field,
