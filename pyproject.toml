@@ -30,6 +30,7 @@ django = ">=4.2"
 pytest = "^8.3"
 pytest-django = "^4.9"
 tox = "^4.21"
+django-money = "^3.5.3"
 
 
 [tool.poetry.group.dev.dependencies]
