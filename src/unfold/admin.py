@@ -42,6 +42,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     add_fieldsets = ()
     list_horizontal_scrollbar_top = False
     list_filter_submit = False
+    list_filter_buttons_top = False
     list_filter_sheet = True
     list_fullwidth = False
     list_disable_select_all = False

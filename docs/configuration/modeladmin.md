@@ -36,6 +36,9 @@ class CustomAdminClass(ModelAdmin):
     # Display submit button in filters
     list_filter_submit = False
 
+    # Display submit/clear all filters buttons at top of list filters, instead of the bottom
+    list_filter_buttons_top = False
+
     # Display changelist in fullwidth
     list_fullwidth = False
 
