@@ -1,21 +1,24 @@
+import json
 from collections.abc import Mapping
 from typing import Any, Optional, Union
 
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
 from django.contrib.admin.views.main import ChangeList
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import Field
+from django.forms import BoundField, Field
 from django.http import HttpRequest
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
-from django.utils.safestring import SafeText
+from django.utils.safestring import SafeText, mark_safe
 
 from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
+from unfold.widgets import UnfoldAdminSplitDateTimeWidget
 
 register = Library()
 
@@ -107,7 +110,10 @@ def class_name(value: Any) -> str:
 
 @register.filter
 def index(indexable: Mapping[int, Any], i: int) -> Any:
-    return indexable[i]
+    try:
+        return indexable[i]
+    except (KeyError, TypeError):
+        return None
 
 
 @register.filter
@@ -498,3 +504,47 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
         )
 
     return " ".join(set(classes))
+
+
+@register.filter
+def changeform_data(adminform: AdminForm) -> str:
+    fields = []
+
+    for fieldset in adminform:
+        for line in fieldset:
+            for field in line:
+                if isinstance(field.field, dict):
+                    continue
+
+                if isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget):
+                    for index, _widget in enumerate(field.field.field.widget.widgets):
+                        fields.append(
+                            f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
+                        )
+                else:
+                    fields.append(field.field.name)
+
+    return mark_safe(json.dumps({field: "" for field in fields}))
+
+
+@register.filter(takes_context=True)
+def changeform_condition(field: BoundField) -> BoundField:
+    if isinstance(field.field, dict):
+        return field
+
+    if isinstance(field.field.field.widget, RelatedFieldWidgetWrapper):
+        field.field.field.widget.widget.attrs["x-model.fill"] = field.field.name
+        field.field.field.widget.widget.attrs["x-init"] = mark_safe(
+            f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
+        )
+    elif isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget):
+        for index, widget in enumerate(field.field.field.widget.widgets):
+            field_name = (
+                f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
+            )
+
+            widget.attrs["x-model.fill"] = field_name
+    else:
+        field.field.field.widget.attrs["x-model.fill"] = field.field.name
+
+    return field
