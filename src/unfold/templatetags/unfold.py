@@ -352,7 +352,6 @@ def fieldset_row_classes(context: Context) -> str:
     ]
 
     formset = context.get("inline_admin_formset", None)
-    adminform = context.get("adminform", None)
     line = context.get("line")
 
     # Hide the field in case of ordering field for sorting
@@ -364,22 +363,6 @@ def fieldset_row_classes(context: Context) -> str:
             and formset.opts.hide_ordering_field
         ):
             classes.append("hidden")
-
-    # Compressed fields special styling
-    if (
-        adminform
-        and hasattr(adminform.model_admin, "compressed_fields")
-        and adminform.model_admin.compressed_fields
-    ):
-        classes.extend(
-            [
-                "lg:border-b",
-                "lg:border-base-200",
-                "lg:border-dashed",
-                "dark:lg:border-base-800",
-                "last:lg:border-b-0",
-            ]
-        )
 
     if len(line.fields) > 1:
         classes.extend(
@@ -427,7 +410,6 @@ def fieldset_line_classes(context: Context) -> str:
                 "border-base-200",
                 "border-dashed",
                 "group-[.last]/row:border-b-0",
-                "lg:border-b-0",
                 "lg:border-l",
                 "lg:flex-row",
                 "dark:border-base-800",
