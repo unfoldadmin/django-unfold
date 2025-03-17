@@ -1,4 +1,16 @@
 
+## 0.52.0 (2025-03-17)
+
+- feat: compressed fields subtle separator (#1153) ([`56f1678`](https://github.com/unfoldadmin/django-unfold/commit/56f1678716898e06980d8ad51cb6185522080302))
+- feat: placeholder labels for split datetime widget (#1150) ([`d4bd1bf`](https://github.com/unfoldadmin/django-unfold/commit/d4bd1bf624b782bee9ba2f305e7000a7ee8bbb92))
+- feat: better expandable textarea - field sizing (#1149) ([`498d716`](https://github.com/unfoldadmin/django-unfold/commit/498d716c9f6832bfe369c6f22535eb0769c4e3d2))
+- feat: changelist dropdowns in display decorator ([`1a12d4c`](https://github.com/unfoldadmin/django-unfold/commit/1a12d4c0b119f0f3bcc5d61fb8a98847f55e1c6b))
+- fix: compressed fields label width (#1152) ([`44f88b1`](https://github.com/unfoldadmin/django-unfold/commit/44f88b133f030964ea80855840c8f6f831d198d9))
+- fix: textarea block display (#1151) ([`9ccc79b`](https://github.com/unfoldadmin/django-unfold/commit/9ccc79b6c9d8435f1d7455134b5464fea3ae5ca8))
+- fix: submit line content width (#1140) ([`2173def`](https://github.com/unfoldadmin/django-unfold/commit/2173def7aba7a8a7cfb43522135a2cb2b7c9243d))
+- fix: select2 font colors (#1139) ([`25f15a6`](https://github.com/unfoldadmin/django-unfold/commit/25f15a67358d97fcb4856f3ed844cb244e39d4bf))
+- fix: messages html tag from p to div (#1137) ([`7ed23be`](https://github.com/unfoldadmin/django-unfold/commit/7ed23be11d9d5f549de486b038f1b355e1e562a7))
+
 ## 0.51.0 (2025-03-10)
 
 - feat: django-upgrade support in pre-commit ([`67cdb8e`](https://github.com/unfoldadmin/django-unfold/commit/67cdb8eae4e5fe0839f591ecbc90bd9d624ba8af))
