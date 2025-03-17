@@ -2,12 +2,24 @@
 
 <div class="{% fieldset_row_classes %} {% if forloop.last %}last{% endif %}">
     {% for field in line %}
-        <div class="{% fieldset_line_classes %}">
-            {% if field.is_checkbox %}
-                {% include "unfold/helpers/fieldset_row_checkbox.html" %}
-            {% else %}
-                {% include "unfold/helpers/fieldset_row_field.html" %}
-            {% endif %}
-        </div>
+        {% with adminform.model_admin.conditional_fields|index:field.field.name as conditional_display %}
+            <div class="{% fieldset_line_classes %}" {% if has_conditional_display and conditional_display %}x-show="{{ conditional_display }}"{% endif %}>
+                {% if has_conditional_display %}
+                    {% with field|changeform_condition as field %}
+                        {% if field.is_checkbox %}
+                            {% include "unfold/helpers/fieldset_row_checkbox.html" %}
+                        {% else %}
+                            {% include "unfold/helpers/fieldset_row_field.html" %}
+                        {% endif %}
+                    {% endwith %}
+                {% else %}
+                    {% if field.is_checkbox %}
+                        {% include "unfold/helpers/fieldset_row_checkbox.html" %}
+                    {% else %}
+                        {% include "unfold/helpers/fieldset_row_field.html" %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endwith %}
     {% endfor %}
 </div>
