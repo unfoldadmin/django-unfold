@@ -15,6 +15,13 @@ from django.utils.safestring import SafeText, mark_safe
 
 from .exceptions import UnfoldException
 
+try:
+    from djmoney.models.fields import MoneyField
+    from djmoney.money import Money
+except ImportError:
+    MoneyField = None
+    Money = None
+
 
 def _boolean_icon(field_val: Any) -> str:
     return render_to_string("unfold/helpers/boolean.html", {"value": field_val})
@@ -89,6 +96,8 @@ def display_for_value(
         return formats.localize(timezone.template_localtime(value))
     elif isinstance(value, (datetime.date, datetime.time)):
         return formats.localize(value)
+    elif Money is not None and isinstance(value, Money):
+        return str(value)
     elif isinstance(value, (int, decimal.Decimal, float)):
         return formats.number_format(value)
     elif isinstance(value, (list, tuple)):
@@ -114,6 +123,8 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return formats.localize(timezone.template_localtime(value))
     elif isinstance(field, (models.DateField, models.TimeField)):
         return formats.localize(value)
+    elif MoneyField is not None and isinstance(field, MoneyField):
+        return str(value)
     elif isinstance(field, models.DecimalField):
         return formats.number_format(value, field.decimal_places)
     elif isinstance(field, (models.IntegerField, models.FloatField)):
