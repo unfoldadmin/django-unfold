@@ -9,6 +9,7 @@ from django.db.models import (
     ManyToManyRel,
     OneToOneField,
 )
+from django.forms import fields
 from django.forms.utils import flatatt
 from django.template.defaultfilters import linebreaksbr
 from django.urls import NoReverseMatch, reverse
@@ -139,7 +140,9 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                     and value is not None
                 ):
                     result_repr = self.get_admin_url(f.remote_field, value)
-                elif isinstance(f, models.JSONField):
+                elif isinstance(f, models.JSONField) or isinstance(
+                    f.formfield(), fields.JSONField
+                ):
                     formatted_output = prettify_json(value)
 
                     if formatted_output:

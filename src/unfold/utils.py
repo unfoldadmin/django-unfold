@@ -7,6 +7,7 @@ from typing import Any, Optional
 from django.conf import settings
 from django.db import models
 from django.db.models import Model
+from django.forms import fields
 from django.template.loader import render_to_string
 from django.utils import formats, timezone
 from django.utils.hashable import make_hashable
@@ -129,7 +130,10 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return formats.number_format(value, field.decimal_places)
     elif isinstance(field, (models.IntegerField, models.FloatField)):
         return formats.number_format(value)
-    elif isinstance(field, models.FileField) and value:
+    elif (
+        isinstance(field, models.FileField)
+        or isinstance(field.formfield(), fields.JSONField)
+    ) and value:
         return format_html('<a href="{}">{}</a>', value.url, value)
     elif isinstance(field, models.JSONField) and value:
         try:
