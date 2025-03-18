@@ -6,6 +6,7 @@ from typing import Any, Optional
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Model
 from django.template.loader import render_to_string
 from django.utils import formats, timezone
 from django.utils.hashable import make_hashable
@@ -13,6 +14,13 @@ from django.utils.html import format_html
 from django.utils.safestring import SafeText, mark_safe
 
 from .exceptions import UnfoldException
+
+try:
+    from djmoney.models.fields import MoneyField
+    from djmoney.money import Money
+except ImportError:
+    MoneyField = None
+    Money = None
 
 
 def _boolean_icon(field_val: Any) -> str:
@@ -30,6 +38,19 @@ def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
                 "value": value,
             },
         )
+    )
+
+
+def display_for_dropdown(
+    result: Model, field_name: str, value: Iterable, empty_value_display: str
+) -> SafeText:
+    return render_to_string(
+        "unfold/helpers/display_dropdown.html",
+        {
+            "instance": result,
+            "field_name": field_name,
+            "value": value,
+        },
     )
 
 
@@ -75,6 +96,8 @@ def display_for_value(
         return formats.localize(timezone.template_localtime(value))
     elif isinstance(value, (datetime.date, datetime.time)):
         return formats.localize(value)
+    elif Money is not None and isinstance(value, Money):
+        return str(value)
     elif isinstance(value, (int, decimal.Decimal, float)):
         return formats.number_format(value)
     elif isinstance(value, (list, tuple)):
@@ -100,6 +123,8 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return formats.localize(timezone.template_localtime(value))
     elif isinstance(field, (models.DateField, models.TimeField)):
         return formats.localize(value)
+    elif MoneyField is not None and isinstance(field, MoneyField):
+        return str(value)
     elif isinstance(field, models.DecimalField):
         return formats.number_format(value, field.decimal_places)
     elif isinstance(field, (models.IntegerField, models.FloatField)):

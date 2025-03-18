@@ -1,0 +1,33 @@
+{% with dropdown_id=instance.pk|cut:"-"|add:field_name %}
+    {% with total=value.items|length %}
+        <div x-data="{ openDropdownId{{ dropdown_id }}: false }">
+            <div class="flex flex-row gap-1.5 items-center {% if total > 0 or value.content %}cursor-pointer{% endif %}" {% if total > 0 or value.content %}x-ref="rowDropdown{{ dropdown_id }}" x-on:click="openDropdownId{{ dropdown_id }} = !openDropdownId{{ dropdown_id }}"{% endif %}>
+                {% if total > 0 or value.content %}
+                    <span class="material-symbols-outlined">unfold_more</span>
+                {% endif %}
+
+                <span>
+                    {{ value.title }}
+                </span>
+            </div>
+
+            {% if total > 0 or value.content %}
+                <template x-teleport="body">
+                    {% if value.content %}
+                        <div class="bg-white border overflow-y-auto overflow-x-hidden p-3 rounded shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" data-simplebar x-cloak x-transition x-anchor.bottom-start.offset.4="$refs.rowDropdown{{ dropdown_id }}" x-show="openDropdownId{{ dropdown_id }}"x-on:click.outside="openDropdownId{{ dropdown_id }} = false" {% if value.width or value.height %}style="{% if value.width %}width: {{ value.width }}px;{% endif %}{% if value.height %}height: {{ value.height }}px;{% endif %}"{% endif %}>
+                            {{ value.content }}
+                        </div>
+                    {% else %}
+                        <nav class="bg-white border overflow-y-auto overflow-x-hidden flex flex-col py-1 rounded shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" data-simplebar x-cloak x-transition x-anchor.bottom-start.offset.4="$refs.rowDropdown{{ dropdown_id }}" x-show="openDropdownId{{ dropdown_id }}"x-on:click.outside="openDropdownId{{ dropdown_id }} = false" {% if value.width or value.height %}style="{% if value.width %}width: {{ value.width }}px;{% endif %}{% if value.height %}height: {{ value.height }}px;{% endif %}"{% endif %}>
+                            {% for item in value.items %}
+                                <{% if item.link %}a{% else %}span{% endif %} {% if item.link %}href="{{ item.link }}"{% endif %} class="flex items-center gap-2 mx-1 px-3 py-2 max-h-[30px] rounded hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200 {% if value.striped %}{% cycle '' 'bg-base-50 dark:bg-white/[.04]' %}{% endif %}">
+                                <span class="grow truncate">{{ item.title }}</span>
+                                </{% if item.link %}a{% else %}span{% endif %}>
+                            {% endfor %}
+                        </nav>
+                    {% endif %}
+                </template>
+            {% endif %}
+        </div>
+    {% endwith %}
+{% endwith %}

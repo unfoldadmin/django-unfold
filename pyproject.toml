@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.49.1"
+version = "0.52.0"
 description = "Modern Django admin theme for seamless interface development"
 license = "MIT"
 readme = "README.md"
@@ -24,12 +24,13 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.9"
-django = ">=3.2"
+django = ">=4.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3"
 pytest-django = "^4.9"
 tox = "^4.21"
+django-money = "^3.5.3"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -89,7 +90,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{38,39,310,311,312,313}-django{32,41,42,50,51}
+        python{39,310,311,312,313}-django{42,50,51}
 
     [testenv]
     skip_install = true

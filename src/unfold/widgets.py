@@ -104,12 +104,9 @@ TEXTAREA_CLASSES = [
 ]
 
 TEXTAREA_EXPANDABLE_CLASSES = [
-    "absolute",
-    "bottom-0",
-    "left-0",
-    "right-0",
-    "top-0",
-    "h-full",
+    "block",
+    "field-sizing-content",
+    "!max-w-2xl",
 ]
 
 SELECT_CLASSES = [
@@ -472,9 +469,7 @@ class UnfoldAdminTextareaWidget(AdminTextareaWidget):
         )
 
 
-class UnfoldAdminExpandableTextareaWidget(AdminTextareaWidget):
-    template_name = "unfold/widgets/textarea_expandable.html"
-
+class UnfoldAdminExpandableTextareaWidget(UnfoldAdminTextareaWidget):
     def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         attrs = attrs or {}
 
@@ -499,7 +494,10 @@ class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
     template_name = "unfold/widgets/split_datetime.html"
 
     def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
-        widgets = [UnfoldAdminDateWidget, UnfoldAdminTimeWidget]
+        widgets = [
+            UnfoldAdminDateWidget(attrs={"placeholder": _("Date")}),
+            UnfoldAdminTimeWidget(attrs={"placeholder": _("Time")}),
+        ]
         MultiWidget.__init__(self, widgets, attrs)
 
 

@@ -1,4 +1,5 @@
 import datetime
+from collections.abc import Generator
 from typing import Any, Optional, Union
 
 from django.contrib.admin.templatetags.admin_list import (
@@ -16,8 +17,8 @@ from django.contrib.admin.views.main import (
 )
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.db.models import Model
 from django.forms import Form
-from django.http import HttpRequest
 from django.template import Library
 from django.template.base import Parser, Token
 from django.template.loader import render_to_string
@@ -26,13 +27,14 @@ from django.utils.html import format_html
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from ..utils import (
+from unfold.utils import (
+    display_for_dropdown,
     display_for_field,
     display_for_header,
     display_for_label,
     display_for_value,
 )
-from ..widgets import UnfoldBooleanWidget
+from unfold.widgets import UnfoldBooleanWidget
 
 register = Library()
 
@@ -188,11 +190,9 @@ def result_headers(cl):
         }
 
 
-def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
-    """
-    Generate the actual list of data.
-    """
-
+def items_for_result(
+    cl: ChangeList, result: Model, form
+) -> Generator[SafeText, None, None]:
     def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
             return False
@@ -225,9 +225,14 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
                 boolean = getattr(attr, "boolean", False)
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)
+                dropdown = getattr(attr, "dropdown", False)
 
                 if label:
                     result_repr = display_for_label(value, empty_value_display, label)
+                elif dropdown:
+                    result_repr = display_for_dropdown(
+                        result, field_name, value, empty_value_display
+                    )
                 elif header:
                     result_repr = display_for_header(value, empty_value_display)
                 else:
@@ -336,23 +341,22 @@ def items_for_result(cl: ChangeList, result: HttpRequest, form) -> SafeText:
 
 class UnfoldResultList(ResultList):
     def __init__(
-        self, instance_pk: Union[int, str], form: Optional[Form], *items: Any
+        self,
+        instance: Model,
+        form: Optional[Form],
+        *items: Any,
     ) -> None:
-        self.instance_pk = instance_pk
+        self.instance = instance
         super().__init__(form, *items)
 
 
 def results(cl: ChangeList):
     if cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms):
-            pk = cl.lookup_opts.pk.attname
-            pk_value = getattr(res, pk)
-            yield UnfoldResultList(pk_value, form, items_for_result(cl, res, form))
+            yield UnfoldResultList(res, form, items_for_result(cl, res, form))
     else:
         for res in cl.result_list:
-            pk = cl.lookup_opts.pk.attname
-            pk_value = getattr(res, pk)
-            yield UnfoldResultList(pk_value, None, items_for_result(cl, res, None))
+            yield UnfoldResultList(res, None, items_for_result(cl, res, None))
 
 
 def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
