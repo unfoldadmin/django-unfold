@@ -506,7 +506,7 @@ def changeform_data(adminform: AdminForm) -> str:
                 else:
                     fields.append(field.field.name)
 
-    return mark_safe(json.dumps({field: "" for field in fields}))
+    return mark_safe(json.dumps(dict.fromkeys(fields, "")))
 
 
 @register.filter(takes_context=True)
