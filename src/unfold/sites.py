@@ -231,14 +231,16 @@ class UnfoldAdminSite(AdminSite):
         tabs = self._get_value(self._get_config("TABS", request), request) or []
         results = []
 
-        for group in navigation:
+        for group in copy.deepcopy(navigation):
             allowed_items = []
 
             for item in group["items"]:
-                item["active"] = False
-                item["active"] = self._get_is_active(
-                    request, item.get("link_callback") or item["link"]
-                )
+                if "active" in item:
+                    item["active"] = self._get_value(item["active"], request)
+                else:
+                    item["active"] = self._get_is_active(
+                        request, item.get("link_callback") or item["link"]
+                    )
 
                 # Checks if any tab item is active and then marks the sidebar link as active
                 for tab in tabs:
@@ -342,7 +344,7 @@ class UnfoldAdminSite(AdminSite):
         return target
 
     def _get_is_active(
-        self, request: HttpRequest, link: str, is_tab: bool = False
+        self, request: HttpRequest, link: Union[str, Callable], is_tab: bool = False
     ) -> bool:
         if not isinstance(link, str):
             link = str(link)
