@@ -213,12 +213,18 @@ def user_model_admin_with_actions():
         ######################################################################
         # Changeform actions
         ######################################################################
-        @action(description="Changeform action dropdown")
+        @action(
+            description="Changeform action dropdown",
+            permissions=["changeform_action_dropdown"],
+        )
         def changeform_action_dropdown(self, request, object_id):
             messages.success(
                 request, "Changeform action dropdown successfully executed"
             )
             return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        def has_changeform_action_dropdown_permission(self, request, object_id):
+            return True
 
         @action(description="Changeform action")
         def changeform_action(self, request, object_id):
