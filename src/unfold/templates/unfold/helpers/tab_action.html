@@ -25,7 +25,7 @@
         <template x-teleport="body">
             <nav x-anchor.bottom-end.offset.4="$refs.actionDropdown{{ action.method_name }}" class="absolute bg-white border flex flex-col -mr-px py-1 right-0 rounded shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-transition x-show="actionDropdownOpen" x-on:click.outside="actionDropdownOpen = false">
                 {% for item in action.items %}
-                    <a href="{{ item.path }}" class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"{% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}>
+                    <a href="{{ item.path }}" class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"{% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=item.attrs %}>
                         {% if item.icon %}
                             <span class="material-symbols-outlined">
                                 {{ item.icon }}
