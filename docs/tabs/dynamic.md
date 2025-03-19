@@ -41,7 +41,8 @@ def tabs_callback(request: HttpRequest) -> list[dict[str, Any]]:
                 {
                     "title": _("Your custom title"),
                     "link": reverse_lazy("admin:app_label_model_name_changelist"),
-                    "is_active": True # Configure active tab
+                    "active": True # Configure active tab
+                    # "active": lambda request: True
                 },
             ],
         },
