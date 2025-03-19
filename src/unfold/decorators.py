@@ -37,13 +37,19 @@ def action(
                 # Permissions methods have following syntax: has_<some>_permission(self, request, obj=None):
                 # But obj is not examined by default in django admin and it would also require additional
                 # fetch from database, therefore it is not supported yet
-                has_object_argument = (
-                    func.__name__ in model_admin.actions_detail
-                    or func.__name__ in model_admin.actions_submit_line
+                has_detail_action = func.__name__ in model_admin._extract_action_names(
+                    model_admin.actions_detail
                 )
+                has_submit_line_action = (
+                    func.__name__
+                    in model_admin._extract_action_names(
+                        model_admin.actions_submit_line
+                    )
+                )
+
                 if not all(
                     has_permission(request, kwargs.get("object_id"))
-                    if has_object_argument
+                    if has_detail_action or has_submit_line_action
                     else has_permission(request)
                     for has_permission in permission_checks
                 ):
