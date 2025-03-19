@@ -367,9 +367,8 @@ def fieldset_row_classes(context: Context) -> str:
     if len(line.fields) > 1:
         classes.extend(
             [
-                "flex",
-                "flex-row",
-                "flex-wrap",
+                "grid",
+                f"lg:grid-cols-{len(line.fields)}",
             ]
         )
 
