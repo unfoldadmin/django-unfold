@@ -2,7 +2,7 @@
 
 <div id="changelist-actions" class="actions flex flex-col gap-3 text-white sm:flex-row sm:items-center lg:items-center {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %}"  x-bind:style="'width: ' + changeListWidth + 'px'">
     {% block actions %}
-        <div class="flex flex-row gap-2 lg:flex-row" x-data="{action: ''}">
+        <div class="flex flex-row gap-2 lg:flex-row min-w-0" x-data="{action: ''}">
             {% block actions-form %}
                 {% for field in action_form %}
                     {% if field.label %}
@@ -19,7 +19,7 @@
             {% endblock %}
 
             {% block actions-submit %}
-                <button type="submit" x-show="action" class="bg-primary-900 cursor-pointer flex font-medium items-center justify-center px-3 py-2 rounded text-sm text-white whitespace-nowrap" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+                <button type="submit" x-show="action" class="bg-primary-900 cursor-pointer font-medium px-3 py-2 rounded text-sm text-white whitespace-nowrap text-ellipsis inline-block min-w-[50px] sm:min-w-[10%] max-w-fit overflow-hidden" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
                     {% trans "Run" %}
                 </button>
             {% endblock %}
