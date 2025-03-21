@@ -4,27 +4,11 @@
     <div class="{% if not is_popup %}max-w-full lg:bottom-0 lg:fixed lg:left-0 lg:right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %} x-bind:style="'width: ' + mainWidth + 'px'">
         <div class="lg:backdrop-blur-sm lg:bg-white/80 lg:flex lg:items-center lg:dark:bg-base-900/80 {% if not is_popup %}lg:border-t lg:border-base-200 lg:h-[71px] lg:py-2 lg:relative lg:scrollable-top lg:px-8 lg:dark:border-base-800{% endif %}">
             <div class="flex flex-row items-center {% if not cl.model_admin.list_fullwidth %}lg:mx-auto{% endif %}" x-bind:style="'width: ' + changeListWidth + 'px'">
-                {% if pagination_required %}
-                    {% for i in page_range %}
-                        <div class="{% if forloop.last %}pr-2{% else %}pr-4{% endif %}">
-                            {% paginator_number cl i %}
-                        </div>
-                    {% endfor %}
+                {% if cl.paginator.template_name %}
+                    {% include cl.paginator.template_name %}
+                {% else %}
+                    {% include "unfold/helpers/pagination_default.html" %}
                 {% endif %}
-
-                <div class="py-4">
-                    {% if pagination_required %}
-                        -
-                    {% endif %}
-
-                    {{ cl.result_count }}
-
-                    {% if cl.result_count == 1 %}
-                        {{ cl.opts.verbose_name }}
-                    {% else %}
-                        {{ cl.opts.verbose_name_plural }}
-                    {% endif %}
-                </div>
 
                 {% if show_all_url %}
                     <a href="{{ show_all_url }}" class="showall ml-4 text-primary-600 dark:text-primary-500">
