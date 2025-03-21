@@ -1,0 +1,5 @@
+{% spaceless %}
+<a href="{{ href }}" class="text-primary-600 underline font-medium"{% if on_new_tab %} target="_blank"{% endif %}>
+    {{ children }}
+</a>
+{% endspaceless %}

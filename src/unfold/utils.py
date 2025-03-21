@@ -27,6 +27,10 @@ def _boolean_icon(field_val: Any) -> str:
     return render_to_string("unfold/helpers/boolean.html", {"value": field_val})
 
 
+def _link(href: str, name: str, on_new_tab: bool = False) -> str:
+    return render_to_string("unfold/components/link.html", {"href": href, "children": name, "on_new_tab": on_new_tab})
+
+
 def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
     if not isinstance(value, list) and not isinstance(value, tuple):
         raise UnfoldException("Display header requires list or tuple")

@@ -102,6 +102,8 @@ def display(
             )
         if boolean is not None:
             func.boolean = boolean
+        if link is not None:
+            func.link = link
         if image is not None:
             func.image = image
         if ordering is not None:

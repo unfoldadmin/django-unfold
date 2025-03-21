@@ -223,6 +223,7 @@ def items_for_result(
                 if field_name == "action_checkbox":
                     row_classes = CHECKBOX_CLASSES
                 boolean = getattr(attr, "boolean", False)
+                link = getattr(attr, "link", False)
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)
                 dropdown = getattr(attr, "dropdown", False)
@@ -236,7 +237,7 @@ def items_for_result(
                 elif header:
                     result_repr = display_for_header(value, empty_value_display)
                 else:
-                    result_repr = display_for_value(value, empty_value_display, boolean)
+                    result_repr = display_for_value(value, empty_value_display, boolean, link)
 
                 if isinstance(value, (datetime.date, datetime.time)):
                     row_classes.append("nowrap")
