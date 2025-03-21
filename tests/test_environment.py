@@ -7,7 +7,7 @@ from unfold.sites import UnfoldAdminSite
 
 
 def environment_callback(request):
-    return ["Testing Environment", "warning"]
+    return ["Testing Environment", "warning", True]
 
 
 def environment_title_prefix_callback(request):
@@ -58,7 +58,7 @@ def test_environment_correct_environment_callback():
     request.user = AnonymousUser()
     context = admin_site.each_context(request)
     assert "environment" in context
-    assert context["environment"] == ["Testing Environment", "warning"]
+    assert context["environment"] == ["Testing Environment", "warning", True]
 
 
 @override_settings(
