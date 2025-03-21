@@ -237,7 +237,9 @@ def items_for_result(
                 elif header:
                     result_repr = display_for_header(value, empty_value_display)
                 else:
-                    result_repr = display_for_value(value, empty_value_display, boolean, link)
+                    result_repr = display_for_value(
+                        value, empty_value_display, boolean, link
+                    )
 
                 if isinstance(value, (datetime.date, datetime.time)):
                     row_classes.append("nowrap")

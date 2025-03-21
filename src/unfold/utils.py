@@ -28,7 +28,10 @@ def _boolean_icon(field_val: Any) -> str:
 
 
 def _link(href: str, name: str, on_new_tab: bool = False) -> str:
-    return render_to_string("unfold/components/link.html", {"href": href, "children": name, "on_new_tab": on_new_tab})
+    return render_to_string(
+        "unfold/components/link.html",
+        {"href": href, "children": name, "on_new_tab": on_new_tab},
+    )
 
 
 def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
