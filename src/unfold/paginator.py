@@ -2,8 +2,8 @@ from django.core.paginator import Paginator
 from django.utils.functional import cached_property
 
 
-class DumbPaginator(Paginator):
-    template_name = "unfold/helpers/pagination_dumb.html"
+class InfinitePaginator(Paginator):
+    template_name = "unfold/helpers/pagination_infinite.html"
 
     @cached_property
     def count(self):

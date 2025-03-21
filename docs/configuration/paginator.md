@@ -1,17 +1,17 @@
 ---
 title: Paginator
 order: 4
-description: Learn how to optimize performance for large datasets in Django Unfold admin using the custom DumbPaginator that avoids expensive COUNT operations.
+description: Learn how to optimize performance for large datasets in Django Unfold admin using the custom InfinitePaginator that avoids expensive COUNT operations.
 ---
 
 
 # Paginator
 
-Django Unfold provides a specialized paginator called `DumbPaginator` designed specifically for handling large datasets efficiently. When working with tables containing millions of records, standard Django pagination can become slow due to expensive `COUNT` queries that calculate the total number of records.
+Django Unfold provides a specialized paginator called `InfinitePaginator` designed specifically for handling large datasets efficiently. When working with tables containing millions of records, standard Django pagination can become slow due to expensive `COUNT` queries that calculate the total number of records.
 
-## DumbPaginator
+## InfinitePaginator
 
-The `DumbPaginator` offers several advantages for large dataset management:
+The `InfinitePaginator` offers several advantages for large dataset management:
 
 - Eliminates expensive `COUNT` operations on the database
 - Displays simplified navigation with only "Previous" and "Next" links
@@ -20,14 +20,14 @@ The `DumbPaginator` offers several advantages for large dataset management:
 
 ## Implementation
 
-To use the `DumbPaginator` in your admin interface, simply configure your ModelAdmin class as follows:
+To use the `InfinitePaginator` in your admin interface, simply configure your ModelAdmin class as follows:
 
 ```python
 from unfold.admin import ModelAdmin
-from unfold.paginator import DumbPaginator
+from unfold.paginator import InfinitePaginator
 
 
 class YourAdmin(ModelAdmin):
-    paginator = DumbPaginator
+    paginator = InfinitePaginator
     show_full_result_count = False
 ```
