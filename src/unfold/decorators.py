@@ -93,6 +93,7 @@ def display(
     dropdown: Optional[bool] = None,
     label: Optional[Union[bool, str, dict[str, str]]] = None,
     header: Optional[bool] = None,
+    link: Optional[bool] = None,
 ) -> Callable:
     def decorator(func: Callable[[Model], Any]) -> Callable:
         if boolean is not None and empty_value is not None:
