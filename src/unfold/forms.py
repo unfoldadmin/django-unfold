@@ -50,8 +50,9 @@ class ActionForm(forms.Form):
                         "pr-8",
                         "rounded",
                         "text-white",
+                        "truncate",
                         "*:text-base-700",
-                        "lg:min-w-72",
+                        "lg:w-72",
                     ]
                 ),
                 "aria-label": _("Select action to run"),
