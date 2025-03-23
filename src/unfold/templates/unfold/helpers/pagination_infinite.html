@@ -1,0 +1,11 @@
+{% load unfold_list i18n %}
+
+<div class="flex flex-row gap-4">
+    <a {% if cl.page_num != 1 %}href="?p={{ cl.page_num|add:-1 }}"{% endif %} class="{% if cl.page_num != 1 %}hover:text-primary-600 dark:hover:text-primary-500{% endif %}">
+        {% trans "Previous" %}
+    </a>
+
+    <a href="?p={{ cl.page_num|add:1 }}" class="hover:text-primary-600 dark:hover:text-primary-500">
+        {% trans "Next" %}
+    </a>
+</div>
