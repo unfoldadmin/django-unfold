@@ -29,6 +29,5 @@ class RelatedCheckboxFilter(MultiValueMixin, admin.RelatedFieldListFilter):
                 name=self.lookup_kwarg,
                 choices=self.lookup_choices,
                 data={self.lookup_kwarg: self.value()},
-                multiple=self.multiple if hasattr(self, "multiple") else False,
             ),
         }
