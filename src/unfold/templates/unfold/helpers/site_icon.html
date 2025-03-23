@@ -2,29 +2,29 @@
 
 {% if site_icon %}
     <div class="shrink-0">
-        <a href="{% url "admin:index" %}">
-            {% if site_icon.light and site_icon.dark %}
-                <img src="{{ site_icon.dark }}" alt="{% trans 'Home' %}" class="h-8 hidden dark:block"/>
+        <{% if site_dropdown %}span{% else %}a href="{% url "admin:index" %}"{% endif %}>
+        {% if site_icon.light and site_icon.dark %}
+            <img src="{{ site_icon.dark }}" alt="{% trans 'Home' %}" class="h-8 hidden dark:block"/>
 
-                <img src="{{ site_icon.light }}" alt="{% trans 'Home' %}" class="block h-8 dark:hidden" />
-            {% else %}
-                <img src="{{ site_icon }}" class="h-8" alt="{% trans 'Home' %}" />
-            {% endif %}
-        </a>
+            <img src="{{ site_icon.light }}" alt="{% trans 'Home' %}" class="block h-8 dark:hidden" />
+        {% else %}
+            <img src="{{ site_icon }}" class="h-8" alt="{% trans 'Home' %}" />
+        {% endif %}
+    </{% if site_dropdown %}span{% else %}a{% endif %}>
     </div>
 {% else %}
-    <a href="{% url "admin:index" %}" class="bg-primary-600 flex h-8 items-center justify-center rounded text-white text-xs w-8">
-        <span class="material-symbols-outlined md-18">{% if site_symbol %}{{ site_symbol }}{% else %}settings{% endif %}</span>
-    </a>
+    <{% if site_dropdown %}span{% else %}a href="{% url "admin:index" %}"{% endif %} class="bg-primary-600 flex h-8 items-center justify-center rounded shrink-0 text-white text-xs w-8">
+    <span class="material-symbols-outlined md-18">{% if site_symbol %}{{ site_symbol }}{% else %}settings{% endif %}</span>
+    </{% if site_dropdown %}span{% else %}a{% endif %}>
 {% endif %}
 
-<div class="flex flex-col grow min-w-0">
-    <div class="text-font-important-light leading-normal tracking-tight dark:text-font-important-dark *:leading-none {% if site_subheader %}xl:text-sm{% else %}xl:text-base{% endif %}">
+<div class="flex flex-col gap-0.5 grow justify-center min-w-0">
+    <div class="text-font-important-light leading-normal tracking-tight dark:text-font-important-dark *:leading-none *:truncate {% if site_subheader %}xl:text-sm{% else %}xl:text-base{% endif %}">
         {{ branding }}
     </div>
 
     {% if site_subheader %}
-        <div class="font-normal leading-normal text-font-subtle-light text-xs truncate dark:text-font-subtle-dark">
+        <div class="font-normal text-font-subtle-light text-xs leading-none dark:text-font-subtle-dark">
             {{ site_subheader }}
         </div>
     {% endif %}
