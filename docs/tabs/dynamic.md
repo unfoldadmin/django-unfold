@@ -44,10 +44,17 @@ def tabs_callback(request: HttpRequest) -> list[dict[str, Any]]:
                     "active": True # Configure active tab
                     # "active": lambda request: True
                 },
+                {
+                    "title": _("Inline tab"),
+                    "link": reverse_lazy("admin:app_label_model_name_changelist"),
+                    "inline": "corresponding-fragment-url"
+                },
             ],
         },
     ],
 ```
+
+**Note:** For rendering tabs associated with inlines, you should use the `inline` parameter and set its value to the corresponding inline fragment URL. This ensures that the tab correctly links to and displays the inline content when clicked. The inline fragment URL typically corresponds to the slugified verbose name of the inline model.
 
 ## Rendering tabs in custom templates
 
