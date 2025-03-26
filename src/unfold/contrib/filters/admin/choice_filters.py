@@ -40,9 +40,8 @@ class CheckboxFilter(RadioFilter):
     all_option = None
 
 
-class ChoicesRadioFilter(ValueMixin, admin.ChoicesFieldListFilter):
-    form_class = RadioForm
-    all_option = ["", _("All")]
+class ChoicesMixin:
+    template = "unfold/filters/filters_field.html"
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
         if self.all_option:
@@ -60,7 +59,12 @@ class ChoicesRadioFilter(ValueMixin, admin.ChoicesFieldListFilter):
         }
 
 
-class ChoicesCheckboxFilter(RadioFilter):
+class ChoicesRadioFilter(ValueMixin, ChoicesMixin, admin.ChoicesFieldListFilter):
+    form_class = RadioForm
+    all_option = ["", _("All")]
+
+
+class ChoicesCheckboxFilter(ValueMixin, ChoicesMixin, admin.ChoicesFieldListFilter):
     form_class = CheckboxForm
     all_option = None
 
