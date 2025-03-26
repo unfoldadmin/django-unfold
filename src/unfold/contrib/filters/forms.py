@@ -13,6 +13,7 @@ from unfold.admin import ModelAdmin
 from unfold.widgets import (
     INPUT_CLASSES,
     UnfoldAdminCheckboxSelectMultiple,
+    UnfoldAdminRadioSelectWidget,
     UnfoldAdminSelectMultipleWidget,
     UnfoldAdminSelectWidget,
     UnfoldAdminSplitDateTimeVerticalWidget,
@@ -95,6 +96,11 @@ class CheckboxForm(forms.Form):
             choices=choices,
             widget=self.widget,
         )
+
+
+class RadioForm(CheckboxForm):
+    field = ChoiceField
+    widget = UnfoldAdminRadioSelectWidget
 
 
 class DropdownForm(forms.Form):
