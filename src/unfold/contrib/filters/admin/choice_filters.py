@@ -93,7 +93,7 @@ class BooleanRadioFilter(ValueMixin, admin.BooleanFieldListFilter):
         }
 
 
-class MultipleRelatedCheckboxFilter(MultiValueMixin, admin.RelatedFieldListFilter):
+class RelatedCheckboxFilter(MultiValueMixin, admin.RelatedFieldListFilter):
     template = "unfold/filters/filters_field.html"
     form_class = CheckboxForm
 

@@ -50,15 +50,15 @@ class SampleModelAdmin(ModelAdmin):
 
 ## Checkbox related field filter
 
-The `MultipleRelatedCheckboxFilter` is designed to work with foreign key relationships in your models. This filter displays related objects as a list of checkboxes, allowing users to select multiple values simultaneously. It's particularly useful when filtering by related models where you want to provide a more visual and accessible interface than a standard dropdown.
+The `RelatedCheckboxFilter` is designed to work with foreign key relationships in your models. This filter displays related objects as a list of checkboxes, allowing users to select multiple values simultaneously. It's particularly useful when filtering by related models where you want to provide a more visual and accessible interface than a standard dropdown.
 
 ```python
-from unfold.contrib.filters.admin import MultipleRelatedCheckboxFilter
+from unfold.contrib.filters.admin import RelatedCheckboxFilter
 
 
 class SampleModelAdmin(ModelAdmin):
     list_filter = [
-        ("country", MultipleRelatedCheckboxFilter)
+        ("country", RelatedCheckboxFilter)
     ]
 ```
 
