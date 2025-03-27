@@ -2,7 +2,7 @@ from unfold.contrib.filters.admin.dropdown_filters import (
     MultipleRelatedDropdownFilter,
     RelatedDropdownFilter,
 )
-from unfold.contrib.filters.admin.mixins import AutocompleteMixin
+from unfold.contrib.filters.admin.mixins import AutocompleteMixin, MultiValueMixin
 from unfold.contrib.filters.forms import AutocompleteDropdownForm
 
 
@@ -11,6 +11,6 @@ class AutocompleteSelectFilter(AutocompleteMixin, RelatedDropdownFilter):
 
 
 class AutocompleteSelectMultipleFilter(
-    AutocompleteMixin, MultipleRelatedDropdownFilter
+    MultiValueMixin, AutocompleteMixin, MultipleRelatedDropdownFilter
 ):
     form_class = AutocompleteDropdownForm
