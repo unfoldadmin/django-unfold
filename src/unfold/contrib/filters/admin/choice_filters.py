@@ -9,7 +9,7 @@ from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 from unfold.contrib.filters.admin.mixins import MultiValueMixin, ValueMixin
-from unfold.contrib.filters.forms import CheckboxForm, RadioForm
+from unfold.contrib.filters.forms import CheckboxForm, HorizontalRadioForm, RadioForm
 
 
 class RadioFilter(admin.SimpleListFilter):
@@ -71,7 +71,7 @@ class ChoicesCheckboxFilter(ValueMixin, ChoicesMixin, admin.ChoicesFieldListFilt
 
 class BooleanRadioFilter(ValueMixin, admin.BooleanFieldListFilter):
     template = "unfold/filters/filters_field.html"
-    form_class = RadioForm
+    form_class = HorizontalRadioForm
     all_option = ["", _("All")]
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:

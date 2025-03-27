@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.admin.options import HORIZONTAL
 from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
 from django.db.models import Field as ModelField
 from django.forms import (
@@ -101,6 +102,11 @@ class CheckboxForm(forms.Form):
 class RadioForm(CheckboxForm):
     field = ChoiceField
     widget = UnfoldAdminRadioSelectWidget
+
+
+class HorizontalRadioForm(RadioForm):
+    horizontal = True
+    widget = UnfoldAdminRadioSelectWidget(radio_style=HORIZONTAL)
 
 
 class DropdownForm(forms.Form):
