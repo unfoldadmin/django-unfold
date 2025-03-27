@@ -112,3 +112,18 @@ class RelatedCheckboxFilter(MultiValueMixin, admin.RelatedFieldListFilter):
                 data={self.lookup_kwarg: self.value()},
             ),
         }
+
+
+class AllValuesCheckboxFilter(MultiValueMixin, admin.AllValuesFieldListFilter):
+    template = "unfold/filters/filters_field.html"
+    form_class = CheckboxForm
+
+    def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+        yield {
+            "form": self.form_class(
+                label=_(" By %(filter_title)s ") % {"filter_title": self.title},
+                name=self.lookup_kwarg,
+                choices=[[i, val] for i, val in enumerate(self.lookup_choices)],
+                data={self.lookup_kwarg: self.value()},
+            ),
+        }

@@ -3,6 +3,7 @@ from unfold.contrib.filters.admin.autocomplete_filters import (
     AutocompleteSelectMultipleFilter,
 )
 from unfold.contrib.filters.admin.choice_filters import (
+    AllValuesCheckboxFilter,
     BooleanRadioFilter,
     CheckboxFilter,
     ChoicesCheckboxFilter,
@@ -30,6 +31,7 @@ from unfold.contrib.filters.admin.numeric_filters import (
 from unfold.contrib.filters.admin.text_filters import FieldTextFilter, TextFilter
 
 __all__ = [
+    "AllValuesCheckboxFilter",
     "BooleanRadioFilter",
     "CheckboxFilter",
     "ChoicesCheckboxFilter",
