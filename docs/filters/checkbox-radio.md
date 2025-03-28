@@ -62,6 +62,21 @@ class SampleModelAdmin(ModelAdmin):
     ]
 ```
 
+
+## Displaying all values in field
+
+The `AllValuesCheckboxFilter` provides a checkbox interface that automatically displays all distinct values found in the database column for the specified field. This filter functions similarly to Django's built-in `AllValuesFieldListFilter`, but enhances the user experience by presenting all available options as checkboxes instead of a dropdown menu. This approach allows users to see all possible values at once and select multiple options simultaneously, making it particularly useful for fields with a moderate number of distinct values that users frequently need to filter by.
+
+```python
+from unfold.contrib.filters.admin import AllValuesCheckboxFilter
+
+
+class SampleModelAdmin(ModelAdmin):
+    list_filter = [
+        ("option", AllValuesCheckboxFilter)
+    ]
+```
+
 ## Custom checkbox or radio filter
 
 For custom filtering requirements, Unfold allows you to create your own checkbox or radio filters by extending the base filter classes. This gives you complete control over the filter's behavior, appearance, and the underlying query logic.
