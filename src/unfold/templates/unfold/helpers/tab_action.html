@@ -15,8 +15,23 @@
         {{ title }}
 
         {% if not link %}
-            <span class="material-symbols-outlined ml-auto rotate-90">
-                chevron_right
+            <span class="border-l border-base-200 flex items-center select-none self-stretch ml-1 -mr-1 -my-2 pl-2
+                         {% if action.variant.value == "primary" %}
+                             border-primary-700 dark:border-primary-500
+                         {% elif action.variant.value == "danger" %}
+                             border-red-700 dark:border-red-500
+                         {% elif action.variant.value == "success" %}
+                             border-green-700 dark:border-green-500
+                         {% elif action.variant.value == "info" %}
+                             border-blue-700 dark:border-blue-500
+                         {% elif action.variant.value == "warning" %}
+                             border-orange-700 dark:border-orange-500
+                         {% else %}
+                             border-base-200 dark:border-base-700
+                         {% endif %}">
+                <span class="material-symbols-outlined ml-auto rotate-90 transition-transform" x-bind:class="{'!-rotate-90': actionDropdownOpen }">
+                    chevron_right
+                </span>
             </span>
         {% endif %}
     </a>

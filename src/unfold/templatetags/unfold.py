@@ -438,41 +438,46 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
     if variant == ActionVariant.PRIMARY:
         classes.extend(
             [
-                "border-primary-600",
+                "border-primary-700",
                 "bg-primary-600",
                 "text-white",
+                "dark:border-primary-500",
             ]
         )
     elif variant == ActionVariant.DANGER:
         classes.extend(
             [
-                "border-red-600",
+                "border-red-700",
                 "bg-red-600",
                 "text-white",
+                "dark:border-red-500",
             ]
         )
     elif variant == ActionVariant.SUCCESS:
         classes.extend(
             [
-                "border-green-600",
+                "border-green-700",
                 "bg-green-600",
                 "text-white",
+                "dark:border-green-500",
             ]
         )
     elif variant == ActionVariant.INFO:
         classes.extend(
             [
-                "border-blue-600",
+                "border-blue-700",
                 "bg-blue-600",
                 "text-white",
+                "dark:border-blue-500",
             ]
         )
     elif variant == ActionVariant.WARNING:
         classes.extend(
             [
-                "border-orange-600",
+                "border-orange-700",
                 "bg-orange-600",
                 "text-white",
+                "dark:border-orange-500",
             ]
         )
     else:
@@ -480,6 +485,7 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
             [
                 "border-base-200",
                 "hover:text-primary-600",
+                "dark:hover:text-primary-500",
                 "dark:border-base-700",
             ]
         )
