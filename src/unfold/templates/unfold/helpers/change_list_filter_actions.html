@@ -1,31 +1,33 @@
 {% load i18n %}
 
-<div class="bg-white border-t border-base-200 p-3 py-2.5 dark:bg-base-800 dark:border-base-700{% if not cl.model_admin.list_filter_sheet %} 2xl:!border-t-0 2xl:!bg-transparent 2xl:px-0{% endif %}">
-    {% if cl.model_admin.list_filter_submit %}
-        <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded text-white w-full">
-            {% trans "Apply Filters" %}
-        </button>
-    {% endif %}
+{% if cl.model_admin.list_filter_submit or cl.is_facets_optional or cl.has_active_filters %}
+    <div class="bg-white border-t border-base-200 p-3 py-2.5 dark:bg-base-800 dark:border-base-700{% if not cl.model_admin.list_filter_sheet %} 2xl:!border-t-0 2xl:!bg-transparent 2xl:px-0{% endif %}">
+        {% if cl.model_admin.list_filter_submit %}
+            <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded text-white w-full">
+                {% trans "Apply Filters" %}
+            </button>
+        {% endif %}
 
-    {% if cl.is_facets_optional or cl.has_active_filters %}
-        <span id="changelist-filter-extra-actions" class="flex flex-row gap-2 items-center mt-2">
-            {% if cl.is_facets_optional %}
-                {% if cl.add_facets %}
-                    <a href="{{ cl.remove_facet_link }}" class="hidelink border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200">
-                        {% trans "Hide counts" %}
-                    </a>
-                {% else %}
-                    <a href="{{ cl.add_facet_link }}" class="viewlink border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full lg:w-auto dark:border-base-700 dark:hover:text-base-200">
-                        {% trans "Show counts" %}
+        {% if cl.is_facets_optional or cl.has_active_filters %}
+            <span id="changelist-filter-extra-actions" class="flex flex-row gap-2 items-center mt-2">
+                {% if cl.is_facets_optional %}
+                    {% if cl.add_facets %}
+                        <a href="{{ cl.remove_facet_link }}" class="hidelink border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200">
+                            {% trans "Hide counts" %}
+                        </a>
+                    {% else %}
+                        <a href="{{ cl.add_facet_link }}" class="viewlink border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full lg:w-auto dark:border-base-700 dark:hover:text-base-200">
+                            {% trans "Show counts" %}
+                        </a>
+                    {% endif %}
+                {% endif %}
+
+                {% if cl.has_active_filters %}
+                    <a href="{{ cl.clear_all_filters_qs }}" class="border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full lg:w-auto dark:border-base-700 dark:hover:text-base-200">
+                        {% trans "Clear all filters" %}
                     </a>
                 {% endif %}
-            {% endif %}
-
-            {% if cl.has_active_filters %}
-                <a href="{{ cl.clear_all_filters_qs }}" class="border flex-grow font-medium px-3 py-2 rounded text-center transition-all w-full lg:w-auto dark:border-base-700 dark:hover:text-base-200">
-                    {% trans "Clear all filters" %}
-                </a>
-            {% endif %}
-        </span>
-    {% endif %}
-</div>
+            </span>
+        {% endif %}
+    </div>
+{% endif %}
