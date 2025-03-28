@@ -119,6 +119,11 @@ class AllValuesCheckboxFilter(MultiValueMixin, admin.AllValuesFieldListFilter):
     form_class = CheckboxForm
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+        choices = [[i, val] for i, val in enumerate(self.lookup_choices)]
+
+        if len(choices) == 0:
+            return
+
         yield {
             "form": self.form_class(
                 label=_(" By %(filter_title)s ") % {"filter_title": self.title},
