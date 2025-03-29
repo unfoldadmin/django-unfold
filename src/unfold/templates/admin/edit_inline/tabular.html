@@ -18,9 +18,8 @@
             {% if inline_admin_formset.is_collapsible %}</summary>{% endif %}
 
             {{ inline_admin_formset.formset.non_form_errors }}
-
             <div class="border border-base-200 mb-6 overflow-x-auto rounded shadow-sm dark:border-base-800" data-simplebar data-simplebar-auto-hide="false">
-                <table class="tabular-table w-full" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-on:end="sortRecords" x-sort.ghost{% endif %}>
+                <table class="tabular-table w-full [&>tbody:nth-child(odd)]:bg-base-50 [&>tbody:nth-child(odd)]:dark:bg-white/[.02]" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-on:end="sortRecords" x-sort.ghost{% endif %}>
                     {% include "unfold/helpers/edit_inline/tabular_heading.html" %}
 
                     {% for inline_admin_form in inline_admin_formset %}
