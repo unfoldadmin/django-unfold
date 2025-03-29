@@ -264,12 +264,13 @@ table tr.selected th {
   @apply hidden;
 }
 
+.tabular-table tbody.has_original,
 .tabular-table .template tr {
   @apply border-t border-base-200 dark:border-base-800;
 }
 
 .add-row {
-  @apply align-middle bg-base-50 px-3 py-5 font-normal text-right dark:bg-white/[.02];
+  @apply align-middle bg-white px-3 py-5 font-normal text-right dark:bg-base-900;
 }
 
 [data-inline-type="stacked"] .add-row {
