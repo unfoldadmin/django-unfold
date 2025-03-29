@@ -100,7 +100,7 @@
 
                     {% if cl.model_admin.list_sections|length > 0 %}
                         <tr class="block mb-3 lg:table-row" x-show="rowOpen">
-                            <td colspan="{{ result|length|add:1 }}" class="border bg-base-200/10 block border-base-200 relative rounded p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800">
+                            <td colspan="{{ result|length|add:2 }}" class="border bg-base-200/10 block border-base-200 relative rounded p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800">
                                 <div class="absolute bg-primary-600 h-full hidden left-0 top-0 w-0.5 lg:block"></div>
 
                                 <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">
