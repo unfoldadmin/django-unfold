@@ -1,14 +1,20 @@
 from django import forms
+from django.contrib.admin.options import HORIZONTAL
 from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
 from django.db.models import Field as ModelField
-from django.forms import ChoiceField, ModelMultipleChoiceField, MultipleChoiceField
+from django.forms import (
+    ChoiceField,
+    ModelMultipleChoiceField,
+    MultipleChoiceField,
+)
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 from unfold.admin import ModelAdmin
-
-from ...widgets import (
+from unfold.widgets import (
     INPUT_CLASSES,
+    UnfoldAdminCheckboxSelectMultiple,
+    UnfoldAdminRadioSelectWidget,
     UnfoldAdminSelectMultipleWidget,
     UnfoldAdminSelectWidget,
     UnfoldAdminSplitDateTimeVerticalWidget,
@@ -69,6 +75,38 @@ class AutocompleteDropdownForm(forms.Form):
                 "admin/css/autocomplete.css",
             ),
         }
+
+
+class CheckboxForm(forms.Form):
+    field = MultipleChoiceField
+    widget = UnfoldAdminCheckboxSelectMultiple
+
+    def __init__(
+        self,
+        name: str,
+        label: str,
+        choices: tuple,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+
+        self.fields[name] = self.field(
+            label=label,
+            required=False,
+            choices=choices,
+            widget=self.widget,
+        )
+
+
+class RadioForm(CheckboxForm):
+    field = ChoiceField
+    widget = UnfoldAdminRadioSelectWidget
+
+
+class HorizontalRadioForm(RadioForm):
+    horizontal = True
+    widget = UnfoldAdminRadioSelectWidget(radio_style=HORIZONTAL)
 
 
 class DropdownForm(forms.Form):
