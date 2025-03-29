@@ -96,12 +96,23 @@
         .removeClass(options.emptyCssClass)
         .addClass(options.formCssClass)
         .attr("id", options.prefix + "-" + nextIndex);
+
       addInlineDeleteButton(row);
       row.find("*").each(function () {
         updateElementIndex(this, options.prefix, totalForms.val());
       });
+
       // Insert the new form when it has been fully edited.
-      row.insertBefore($(template));
+      // !CHANGED from original
+      if ($(template).parent().is("tbody")) {
+        row
+          .wrap('<tbody class="template"></tbody>')
+          .parent()
+          .insertBefore($(template).parent());
+      } else {
+        row.insertBefore($(template));
+      }
+
       // Update number of total forms.
       $(totalForms).val(parseInt(totalForms.val(), 10) + 1);
       nextIndex += 1;
@@ -183,7 +194,13 @@
       if (prevRow.length && prevRow.hasClass("row-form-errors")) {
         prevRow.remove();
       }
-      row.remove();
+
+      // !CHANGED from original
+      if (deleteButton.parent().parent().parent().parent().is("tbody")) {
+        row.parent().remove();
+      } else {
+        row.remove();
+      }
       nextIndex -= 1;
       // Pass the deleted form to the post-delete callback, if provided.
       if (options.removed) {
@@ -245,8 +262,11 @@
     }
 
     // Create the delete buttons for all unsaved inlines:
+    // !CHANGED from original, added parent() and used find() instead of filter()
     $this
-      .filter(
+      .parent()
+      .parent()
+      .find(
         "." +
           options.formCssClass +
           ":not(.has_original):not(." +
