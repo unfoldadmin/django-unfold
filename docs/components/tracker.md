@@ -37,8 +37,10 @@ Below you can see an example of a component class that prepares the data for the
 ```python
 # admin.py
 
-from unfold.components import BaseComponent
+from unfold.components import BaseComponent, register_component
 
+
+@register_component
 class MyTrackerComponent(BaseComponent):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
