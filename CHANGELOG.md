@@ -1,4 +1,14 @@
 
+## 0.54.0 (2025-03-31)
+
+- feat: checkbox &amp; radio filters (#1178) ([`9913a45`](https://github.com/unfoldadmin/django-unfold/commit/9913a455f5b8b2d76c069401b6e0c4fa97d82c26))
+- feat: polished action border colors (#1180) ([`975b4a8`](https://github.com/unfoldadmin/django-unfold/commit/975b4a8b5a203f2300e22f24570817da5c7e502d))
+- fix: sections colspan for rows with actions (#1191) ([`5af868e`](https://github.com/unfoldadmin/django-unfold/commit/5af868e29eaeb0f5dd94c34656091dc2ec7168b5))
+- fix: tabular inline stripes / delete link (#1190) ([`eef631a`](https://github.com/unfoldadmin/django-unfold/commit/eef631a400cc3a78effba523cf81f0b7caa72c94))
+- fix: changelist filter adjusted paddings (#1179) ([`dbc330d`](https://github.com/unfoldadmin/django-unfold/commit/dbc330d9d32c907207c42e5cef9627d622056aa9))
+- docs: detailed cohort description + component class (#1192) ([`db36133`](https://github.com/unfoldadmin/django-unfold/commit/db36133cb8535dac713ed89f9fb2ec1759779073))
+- docs: configuring inlines to display in dynamic tabs (#1182) ([`5c2b3a2`](https://github.com/unfoldadmin/django-unfold/commit/5c2b3a258429e3f9eb3d10dd7ce15aa5468e721c))
+
 ## 0.53.0 (2025-03-24)
 
 - feat: new InfinitePaginator for large tables (#1169) ([`3ecb2d0`](https://github.com/unfoldadmin/django-unfold/commit/3ecb2d0c2e6a211285c21e86652b0b8417c05e5f))
