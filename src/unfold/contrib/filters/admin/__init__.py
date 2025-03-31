@@ -20,6 +20,7 @@ from unfold.contrib.filters.admin.dropdown_filters import (
     DropdownFilter,
     MultipleChoicesDropdownFilter,
     MultipleDropdownFilter,
+    MultipleRelatedDropdownFilter,
     RelatedDropdownFilter,
 )
 from unfold.contrib.filters.admin.numeric_filters import (
@@ -43,6 +44,7 @@ __all__ = [
     "DropdownFilter",
     "RelatedDropdownFilter",
     "MultipleDropdownFilter",
+    "MultipleRelatedDropdownFilter",
     "RelatedCheckboxFilter",
     "FieldTextFilter",
     "TextFilter",
