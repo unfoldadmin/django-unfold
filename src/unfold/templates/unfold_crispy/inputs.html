@@ -1,0 +1,7 @@
+{% if inputs %}
+    <div class="border border-base-200 rounded flex flex-col gap-2 justify-end p-3 lg:flex-row dark:border-base-800 {{ field_class }}">
+        {% for input in inputs %}
+            {% include "unfold_crispy/layout/baseinput.html" %}
+        {% endfor %}
+    </div>
+{% endif %}

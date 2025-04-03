@@ -33,6 +33,20 @@ from django.utils.translation import gettext_lazy as _
 
 from .exceptions import UnfoldException
 
+BUTTON_CLASSES = [
+    "border",
+    "cursor-pointer",
+    "font-medium",
+    "px-3",
+    "py-2",
+    "rounded",
+    "text-center",
+    "whitespace-nowrap",
+    "bg-primary-600",
+    "border-transparent",
+    "text-white",
+]
+
 LABEL_CLASSES = [
     "block",
     "font-semibold",
@@ -254,6 +268,28 @@ SWITCH_CLASSES = [
     "dark:checked:bg-green-700",
 ]
 
+FILE_CLASSES = [
+    "border",
+    "border-base-200",
+    "flex",
+    "grow",
+    "items-center",
+    "overflow-hidden",
+    "rounded",
+    "shadow-sm",
+    "max-w-2xl",
+    "focus-within:ring",
+    "group-[.errors]:border-red-600",
+    "group-[.errors]:focus-within:ring-red-200",
+    "focus-within:ring-primary-300",
+    "focus-within:border-primary-600",
+    "dark:border-base-700",
+    "dark:focus-within:border-primary-600",
+    "dark:focus-within:ring-primary-700",
+    "dark:group-[.errors]:border-red-500",
+    "dark:group-[.errors]:focus-within:ring-red-600/40",
+]
+
 
 class UnfoldAdminTextInputWidget(AdminTextInputWidget):
     def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
@@ -342,9 +378,11 @@ class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
 class FileFieldMixin:
     def get_context(self, name, value, attrs):
         widget = super().get_context(name, value, attrs)
+
         widget["widget"].update(
             {
                 "class": " ".join([*CHECKBOX_CLASSES, *["form-check-input"]]),
+                "file_wrapper_class": " ".join(FILE_CLASSES),
                 "file_input_class": " ".join(
                     [
                         self.attrs.get("class", ""),
@@ -356,6 +394,7 @@ class FileFieldMixin:
                 ),
             }
         )
+
         return widget
 
 
@@ -389,6 +428,13 @@ class UnfoldAdminDateWidget(AdminDateWidget):
             "size": "10",
         }
         super().__init__(attrs=attrs, format=format)
+
+    class Media:
+        js = [
+            "admin/js/core.js",
+            "admin/js/calendar.js",
+            "admin/js/admin/DateTimeShortcuts.js",
+        ]
 
 
 class UnfoldAdminSingleDateWidget(AdminDateWidget):
@@ -429,6 +475,13 @@ class UnfoldAdminTimeWidget(AdminTimeWidget):
             "size": "8",
         }
         super().__init__(attrs=attrs, format=format)
+
+    class Media:
+        js = [
+            "admin/js/core.js",
+            "admin/js/calendar.js",
+            "admin/js/admin/DateTimeShortcuts.js",
+        ]
 
 
 class UnfoldAdminSingleTimeWidget(AdminTimeWidget):
@@ -501,6 +554,13 @@ class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
             UnfoldAdminTimeWidget(attrs={"placeholder": _("Time")}),
         ]
         MultiWidget.__init__(self, widgets, attrs)
+
+    class Media:
+        js = [
+            "admin/js/core.js",
+            "admin/js/calendar.js",
+            "admin/js/admin/DateTimeShortcuts.js",
+        ]
 
 
 class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
@@ -596,6 +656,17 @@ class UnfoldAdminSelectWidget(Select):
         attrs["class"] = " ".join(
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
         )
+        super().__init__(attrs, choices)
+
+
+class UnfoldAdminSelect2Widget(Select):
+    def __init__(self, attrs=None, choices=()):
+        if attrs is None:
+            attrs = {}
+
+        attrs["data-theme"] = "admin-autocomplete"
+        attrs["class"] = "unfold-admin-autocomplete admin-autocomplete"
+
         super().__init__(attrs, choices)
 
 
