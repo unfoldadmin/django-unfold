@@ -1,0 +1,5 @@
+{% if field.help_text %}
+    <div {% if field.id_for_label %}id="{{ field.id_for_label }}_helptext" {% endif %}class="leading-relaxed mt-2 text-xs">
+        {{ field.help_text|safe }}
+    </div>
+{% endif %}
