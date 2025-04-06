@@ -3,6 +3,7 @@
 ## Unfold Django Admin Theme
 
 [![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
+[![Discord](https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da)](https://discord.gg/9sQj9MEbNz)
 [![Build](https://img.shields.io/github/actions/workflow/status/unfoldadmin/django-unfold/release.yml?style=for-the-badge)](https://github.com/unfoldadmin/django-unfold/actions?query=workflow%3Arelease)
 ![Pre Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=for-the-badge)
 ![Code Style - Ruff](https://img.shields.io/badge/code%20style-ruff-30173D.svg?style=for-the-badge)
@@ -19,26 +20,31 @@ Transform your Django admin into a powerful, modern administrative interface wit
 
 Need assistance with implementing Unfold or require custom Django development? Professional consulting and development services are available to help transform your Django admin interface and enhance your web applications. Whether migrating from the native Django admin to Unfold or seeking expert technical guidance, reach out to discuss your project requirements and explore development possibilities. [Get in touch](https://unfoldadmin.com/consulting?utm_medium=github&utm_source=unfold) to learn more about available services.
 
+## Unfold Studio
+
+Unfold Studio is a theme customizer for Django admin that helps you create a branded interface. You can customize colors, upload your logo, and adjust the style without coding. The tool is currently in development, and [you can join the waitlist](https://unfoldadmin.com/studio/) to be notified when it's available.
+
 ## Fresh Features & Enhancements
 
-- **Autocomplete filters:** Enhance filter functionality with built-in autocomplete support
+- **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form
+- **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load
+- **Checkbox & radio filters:** Enhanced filter options with checkbox and radio interfaces for intuitive filtering
 - **Site dropdown:** Configurable dropdown menu in the header area for managing custom navigation links
 - **Dropdown actions:** Organize action items in customizable dropdown menus
-- **Custom tab navigation:** Create flexible, structured tab navigation with customizable routing
-
 
 ## Core Features & Capabilities
 
 - **Visual Interface**: Provides a modern user interface based on the Tailwind CSS framework.
-- **Sidebar Navigation**: Simplifies the creation of sidebar menus with icons, collapsible sections, and more.
-- **Dark Mode Support**: Includes both light and dark mode themes.
-- **Flexible Actions**: Provides multiple ways to define actions throughout the admin interface.
-- **Advanced Filters**: Features custom dropdowns, autocomplete, numeric, datetime, and text field filters.
-- **Dashboard Tools**: Includes helpers for building custom dashboard pages.
-- **UI Components**: Offers reusable interface components such as cards, buttons, and charts.
-- **WYSIWYG Editor**: Built-in support for WYSIWYG editing through Trix.
+- **Sidebar navigation**: Simplifies the creation of sidebar menus with icons, collapsible sections, and more.
+- **Dark mode support**: Includes both light and dark mode themes.
+- **Flexible actions**: Provides multiple ways to define actions throughout the admin interface.
+- **Advanced filters**: Features custom dropdowns, autocomplete, numeric, datetime, and text field filters.
+- **Dashboard tools**: Includes helpers for building custom dashboard pages.
+- **UI components**: Offers reusable interface components such as cards, buttons, and charts.
+- **WYSIWYG editor**: Built-in support for WYSIWYG editing through Trix.
 - **Array widget:** Built-in widget for `django.contrib.postgres.fields.ArrayField`
 - **Inline tabs:** Group inlines into tab navigation in the change form
+- **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form
 - **Model tabs:** Allow defining custom tab navigation for models
 - **Fieldset tabs:** Merge multiple fieldsets into tabs in the change form
 - **Sortable inlines:** Allow sorting inlines by dragging and dropping
@@ -49,6 +55,7 @@ Need assistance with implementing Unfold or require custom Django development? P
 - **Font colors:** Adjust font colors for better readability
 - **Changeform modes:** Display fields in compressed mode in the change form
 - **Language switcher:** Allow changing language directly from the admin area
+- **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load
 - **Parallel admin:** Supports [running the default admin](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold) alongside Unfold.
 - **Third-party packages:** Provides default support for multiple popular applications.
 - **Configuration:** Allows basic options to be changed in `settings.py`.
