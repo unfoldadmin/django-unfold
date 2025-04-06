@@ -90,7 +90,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{39,310,311,312,313}-django{42,50,51}
+        python{39,310,311,312,313}-django{42,50,51,52}
 
     [testenv]
     skip_install = true
