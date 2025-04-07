@@ -1,7 +1,7 @@
 {% load i18n static %}
 
 <div class="flex flex-row">
-    <div class="border border-base-200 flex items-center overflow-hidden rounded shadow-sm text-sm max-w-2xl w-full focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
+    <div class="{{ widget.file_wrapper_class }}">
         {% if widget.is_initial and not widget.required %}
             <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-base-900 dark:border-r-gray-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">

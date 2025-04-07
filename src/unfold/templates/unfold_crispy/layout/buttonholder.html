@@ -1,0 +1,3 @@
+<div {% if buttonholder.css_id %}id="{{ buttonholder.css_id }}"{% endif %} class="buttonHolder group-[.fieldset]:border-t group-[.fieldset]:border-base-200 group-[.fieldset]:flex group-[.fieldset]:flex-row group-[.fieldset]:justify-end group-[.fieldset]:-mx-3 group-[.fieldset]:pt-3 group-[.fieldset]:px-3{% if buttonholder.css_class %} {{ buttonholder.css_class }}{% endif %}">
+    {{ fields_output|safe }}
+</div>

@@ -8,7 +8,7 @@
     </div>
 {% endif %}
 
-<div class="border border-base-200 flex items-center overflow-hidden rounded shadow-sm text-sm max-w-2xl dark:border-base-700">
+<div class="{{ widget.file_wrapper_class }}">
     {% if widget.is_initial and not widget.required %}
         <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-base-700 dark:text-font-default-dark">
             <label for="{{ widget.checkbox_id }}" class="flex items-center">
