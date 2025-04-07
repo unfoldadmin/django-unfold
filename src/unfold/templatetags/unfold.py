@@ -12,12 +12,14 @@ from django.forms import BoundField, Field
 from django.http import HttpRequest
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
+from django.template.defaultfilters import stringfilter
 from django.template.loader import render_to_string
 from django.utils.safestring import SafeText, mark_safe
 
 from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
+from unfold.translit import slugify as _slugify
 from unfold.widgets import UnfoldAdminSplitDateTimeWidget
 
 register = Library()
@@ -535,3 +537,9 @@ def changeform_condition(field: BoundField) -> BoundField:
         field.field.field.widget.attrs["x-model.fill"] = field.field.name
 
     return field
+
+
+@register.filter(is_safe=True, name="slugify")
+@stringfilter
+def slugify(value):
+    return _slugify(value)
