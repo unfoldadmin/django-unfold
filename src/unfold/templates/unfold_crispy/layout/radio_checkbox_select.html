@@ -1,0 +1,21 @@
+{% load crispy_forms_filters l10n %}
+
+<div class="flex flex-col gap-2 {% if field_class %}{{ field_class }}{% endif %}"{% if flat_attrs %} {{ flat_attrs }}{% endif %}>
+    {% for group, options, index in field|optgroups %}
+        {% if group %}
+            <strong>{{ group }}</strong>
+        {% endif %}
+
+        {% for option in options %}
+            <div>
+                <label for="{{ option.attrs.id }}" class="flex flex-row items-center gap-2">
+                    <input type="{{ option.type }}" class="{% if field.errors %}errors{% endif %} {% if option.type == "radio" %}{{ form_classes.radio }}{% else %}{{ form_classes.checkbox }}{% endif %}" name="{{ field.html_name }}" value="{{ option.value|unlocalize }}" {% include "unfold_crispy/layout/attrs.html" with widget=option %}>
+
+                    {{ option.label|unlocalize }}
+                </label>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+{% include 'unfold_crispy/layout/help_text_and_errors.html' %}

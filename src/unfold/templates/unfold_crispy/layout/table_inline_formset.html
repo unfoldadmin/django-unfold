@@ -1,0 +1,100 @@
+{% load crispy_forms_tags crispy_forms_utils crispy_forms_field i18n %}
+
+{% specialspaceless %}
+    {% if formset_tag %}
+        <form {{ flat_attrs }} method="{{ form_method }}" {% if formset.is_multipart %} enctype="multipart/form-data"{% endif %}>
+    {% endif %}
+
+    {% if formset_method|lower == 'post' and not disable_csrf %}
+        {% csrf_token %}
+    {% endif %}
+
+    <div class="overflow-x-auto border border-base-200 rounded shadow-sm dark:border-base-800" {% if form_id %} id="{{ form_id }}"{% endif %}>
+        {{ formset.management_form|crispy }}
+
+        <table class="w-full">
+            <thead>
+                {% if formset.readonly and not formset.queryset.exists %}
+                {% else %}
+                    <tr>
+                        {% for field in formset.forms.0 %}
+                            {% if field.label and not field.is_hidden %}
+                                <th for="{{ field.auto_id }}" class="align-middle font-semibold py-2 text-left text-font-important-light dark:text-font-important-dark whitespace-nowrap px-3 {% if field.name == "DELETE" %}w-0{% endif %}">
+                                    {{ field.label }}{% if field.field.required and not field|is_checkbox %} <span class="asteriskField">*</span>{% endif %}
+                                </th>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+            </thead>
+
+            <tbody {% if formset_id %}id="{{ formset_id }}-rows"{% endif %}>
+                {% for form in formset %}
+                    {% if form_show_errors and form.non_field_errors and not form.is_extra %}
+                        <tr>
+                            <td colspan="100%" class="border-t border-base-200 px-3 pt-3 dark:border-base-800">
+                                {% include "unfold_crispy/errors.html" %}
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                    <tr>
+                        {% for field in form %}
+                            {% include 'unfold_crispy/field.html' with tag="td" form_show_labels=False %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+            {% if form_add and formset_id %}
+                <tbody>
+                    <tr class="empty-form">
+                        {% for field in formset.empty_form %}
+                            {% include 'unfold_crispy/field.html' with tag="td" form_show_labels=False %}
+                        {% endfor %}
+                    </tr>
+
+                    <tr id="{{ formset_id }}-add-row-wrapper">
+                        <td colspan="100%" class="border-t border-base-200 p-3 dark:border-base-800">
+                            <div class="flex justify-end">
+                                <button type="button" id="{{ formset_id }}-add-row-button" class="border border-base-200 font-medium px-3 py-2 rounded transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:hover:text-base-200 dark:hover:bg-base-900">
+                                    {% trans "Add row" %}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            {% endif %}
+        </table>
+
+        {% include "unfold_crispy/inputs.html" %}
+    </div>
+
+    {% if formset_tag %}
+        </form>
+    {% endif %}
+
+    {% if form_add and formset_id %}
+        <script>
+            document.getElementById('{{ formset_id }}-add-row-button').addEventListener('click', function() {
+                const formTotalEl = document.querySelector(`#{{ formset_id }} input[name*="TOTAL_FORMS"]`)
+                const formCount = parseInt(formTotalEl.value);
+                const newForm = document.querySelector('#{{ formset_id }} .empty-form').cloneNode(true);
+
+                newForm.classList.remove('empty-form');
+                newForm.innerHTML = newForm.innerHTML.replaceAll(/__prefix__/g, formCount);
+
+                document.getElementById('{{ formset_id }}-rows').insertBefore(
+                    newForm,
+                    document.getElementById("#{{ formset_id }}-add-row-wrapper")
+                )
+
+                formTotalEl.value = formCount + 1;
+
+                newForm.dispatchEvent(new CustomEvent('formset:added', {
+                    bubbles: true
+                }));
+            });
+        </script>
+    {% endif %}
+{% endspecialspaceless %}

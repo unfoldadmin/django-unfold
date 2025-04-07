@@ -1,0 +1,3 @@
+{% if form.non_field_errors %}
+    {% include "unfold/helpers/messages/error.html" with errors=form.non_field_errors %}
+{% endif %}
