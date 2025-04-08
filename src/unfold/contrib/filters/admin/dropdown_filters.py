@@ -86,11 +86,25 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
         self.request = request
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+        add_facets = changelist.add_facets
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+
+        if add_facets:
+            choices = [self.all_option]
+
+            for pk_val, val in self.lookup_choices:
+                if add_facets:
+                    count = facet_counts[f"{pk_val}__c"]
+                    choice = (pk_val, f"{val} ({count})")
+                    choices.append(choice)
+        else:
+            choices = [self.all_option, *self.lookup_choices]
+
         yield {
             "form": self.form_class(
                 label=_(" By %(filter_title)s ") % {"filter_title": self.title},
                 name=self.lookup_kwarg,
-                choices=[self.all_option, *self.lookup_choices],
+                choices=choices,
                 data={self.lookup_kwarg: self.value()},
                 multiple=self.multiple if hasattr(self, "multiple") else False,
             ),
