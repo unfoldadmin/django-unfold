@@ -74,31 +74,3 @@ Below you can find a more complex example which is using multiple components and
 | unfold/components/text.html       | Paragraph of text              | class                                |
 | unfold/components/title.html      | Basic heading element          | class                                |
 | unfold/components/tracker.html    | Tracker component              | data                                 |
-
-
-## Table component example
-
-```python
-from typing import Dict
-from django.http import HttpRequest
-
-
-def dashboard_callback(request: HttpRequest) -> Dict:
-    return {
-        "table_data": {
-            "headers": ["col 1", "col 2"],
-            "rows": [
-                ["a", "b"],
-                ["c", "d"],
-            ]
-        }
-    }
-```
-
-```html
-{% load unfold %}
-
-{% component "unfold/components/card.html" with title="Card title" %}
-    {% component "unfold/components/table.html" with table=table_data card_included=1 striped=1 %}{% endcomponent %}
-{% endcomponent %}
-```
