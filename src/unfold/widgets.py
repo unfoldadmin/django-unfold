@@ -669,6 +669,20 @@ class UnfoldAdminSelect2Widget(Select):
 
         super().__init__(attrs, choices)
 
+    class Media:
+        js = (
+            "admin/js/vendor/jquery/jquery.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "unfold/js/select2.init.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
+
 
 class UnfoldAdminSelectMultipleWidget(SelectMultiple):
     def __init__(self, attrs=None, choices=()):
