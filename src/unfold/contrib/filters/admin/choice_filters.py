@@ -126,10 +126,9 @@ class RelatedCheckboxFilter(MultiValueMixin, admin.RelatedFieldListFilter):
             choices = []
 
             for pk_val, val in self.lookup_choices:
-                if add_facets:
-                    count = facet_counts[f"{pk_val}__c"]
-                    choice = (pk_val, f"{val} ({count})")
-                    choices.append(choice)
+                count = facet_counts[f"{pk_val}__c"]
+                choice = (pk_val, f"{val} ({count})")
+                choices.append(choice)
         else:
             choices = self.lookup_choices
 
@@ -148,7 +147,18 @@ class AllValuesCheckboxFilter(MultiValueMixin, admin.AllValuesFieldListFilter):
     form_class = CheckboxForm
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        choices = [[i, val] for i, val in enumerate(self.lookup_choices)]
+        add_facets = changelist.add_facets
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+
+        if add_facets:
+            choices = []
+
+            for i, val in enumerate(self.lookup_choices):
+                count = facet_counts[f"{i}__c"]
+                choice = (val, f"{val} ({count})")
+                choices.append(choice)
+        else:
+            choices = [[val, val] for _i, val in enumerate(self.lookup_choices)]
 
         if len(choices) == 0:
             return
@@ -157,7 +167,7 @@ class AllValuesCheckboxFilter(MultiValueMixin, admin.AllValuesFieldListFilter):
             "form": self.form_class(
                 label=_(" By %(filter_title)s ") % {"filter_title": self.title},
                 name=self.lookup_kwarg,
-                choices=[[i, val] for i, val in enumerate(self.lookup_choices)],
+                choices=choices,
                 data={self.lookup_kwarg: self.value()},
             ),
         }
