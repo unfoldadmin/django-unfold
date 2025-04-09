@@ -120,7 +120,7 @@ TEXTAREA_CLASSES = [
 TEXTAREA_EXPANDABLE_CLASSES = [
     "block",
     "field-sizing-content",
-    "!max-w-2xl",
+    "min-h-[38px]",
 ]
 
 SELECT_CLASSES = [
