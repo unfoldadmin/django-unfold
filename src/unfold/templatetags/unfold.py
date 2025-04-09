@@ -8,7 +8,7 @@ from django.contrib.admin.views.main import ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import BoundField, Field
+from django.forms import BoundField, CheckboxSelectMultiple, Field
 from django.http import HttpRequest
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
@@ -18,7 +18,7 @@ from django.utils.safestring import SafeText, mark_safe
 from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
-from unfold.widgets import UnfoldAdminSplitDateTimeWidget
+from unfold.widgets import UnfoldAdminMoneyWidget, UnfoldAdminSplitDateTimeWidget
 
 register = Library()
 
@@ -495,7 +495,7 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
 
 @register.filter
 def changeform_data(adminform: AdminForm) -> str:
-    fields = []
+    fields = {}
 
     for fieldset in adminform:
         for line in fieldset:
@@ -503,15 +503,19 @@ def changeform_data(adminform: AdminForm) -> str:
                 if isinstance(field.field, dict):
                     continue
 
-                if isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget):
+                if isinstance(
+                    field.field.field.widget, UnfoldAdminSplitDateTimeWidget
+                ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
                     for index, _widget in enumerate(field.field.field.widget.widgets):
-                        fields.append(
+                        fields[
                             f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
-                        )
+                        ] = None
+                elif isinstance(field.field.field.widget, CheckboxSelectMultiple):
+                    fields[field.field.name] = []
                 else:
-                    fields.append(field.field.name)
+                    fields[field.field.name] = None
 
-    return mark_safe(json.dumps(dict.fromkeys(fields, "")))
+    return mark_safe(json.dumps(fields))
 
 
 @register.filter(takes_context=True)
@@ -524,7 +528,9 @@ def changeform_condition(field: BoundField) -> BoundField:
         field.field.field.widget.widget.attrs["x-init"] = mark_safe(
             f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
         )
-    elif isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget):
+    elif isinstance(
+        field.field.field.widget, UnfoldAdminSplitDateTimeWidget
+    ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
         for index, widget in enumerate(field.field.field.widget.widgets):
             field_name = (
                 f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
