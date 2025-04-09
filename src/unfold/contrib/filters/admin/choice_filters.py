@@ -8,7 +8,11 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
-from unfold.contrib.filters.admin.mixins import MultiValueMixin, ValueMixin
+from unfold.contrib.filters.admin.mixins import (
+    ChoicesMixin,
+    MultiValueMixin,
+    ValueMixin,
+)
 from unfold.contrib.filters.forms import CheckboxForm, HorizontalRadioForm, RadioForm
 
 
@@ -18,10 +22,23 @@ class RadioFilter(admin.SimpleListFilter):
     all_option = ["", _("All")]
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
+        add_facets = changelist.add_facets
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+        choices = []
+
         if self.all_option:
-            choices = [self.all_option, *self.lookup_choices]
+            choices = [self.all_option]
+
+        if add_facets:
+            for i, (lookup, title) in enumerate(self.lookup_choices):
+                if (count := facet_counts.get(f"{i}__c", -1)) != -1:
+                    title = f"{title} ({count})"
+                else:
+                    title = f"{title} (-)"
+
+                choices.append((lookup, title))
         else:
-            choices = self.lookup_choices
+            choices.extend(self.lookup_choices)
 
         return (
             {
@@ -39,24 +56,8 @@ class CheckboxFilter(RadioFilter):
     form_class = CheckboxForm
     all_option = None
 
-
-class ChoicesMixin:
-    template = "unfold/filters/filters_field.html"
-
-    def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        if self.all_option:
-            choices = [self.all_option, *self.field.flatchoices]
-        else:
-            choices = self.field.flatchoices
-
-        yield {
-            "form": self.form_class(
-                label=_(" By %(filter_title)s ") % {"filter_title": self.title},
-                name=self.lookup_kwarg,
-                choices=choices,
-                data={self.lookup_kwarg: self.value()},
-            ),
-        }
+    def value(self) -> list[Any]:
+        return self.request.GET.getlist(self.parameter_name)
 
 
 class ChoicesRadioFilter(ValueMixin, ChoicesMixin, admin.ChoicesFieldListFilter):
@@ -64,7 +65,9 @@ class ChoicesRadioFilter(ValueMixin, ChoicesMixin, admin.ChoicesFieldListFilter)
     all_option = ["", _("All")]
 
 
-class ChoicesCheckboxFilter(ValueMixin, ChoicesMixin, admin.ChoicesFieldListFilter):
+class ChoicesCheckboxFilter(
+    MultiValueMixin, ChoicesMixin, admin.ChoicesFieldListFilter
+):
     form_class = CheckboxForm
     all_option = None
 
@@ -75,13 +78,25 @@ class BooleanRadioFilter(ValueMixin, admin.BooleanFieldListFilter):
     all_option = ["", _("All")]
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        choices = [
-            self.all_option,
-            *[
-                ("1", _("Yes")),
-                ("0", _("No")),
-            ],
-        ]
+        add_facets = changelist.add_facets
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+
+        if add_facets:
+            choices = [
+                self.all_option,
+                *[
+                    ("1", f"{_('Yes')} ({facet_counts['true__c']})"),
+                    ("0", f"{_('No')} ({facet_counts['false__c']})"),
+                ],
+            ]
+        else:
+            choices = [
+                self.all_option,
+                *[
+                    ("1", _("Yes")),
+                    ("0", _("No")),
+                ],
+            ]
 
         yield {
             "form": self.form_class(
@@ -104,11 +119,24 @@ class RelatedCheckboxFilter(MultiValueMixin, admin.RelatedFieldListFilter):
         return queryset
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+        add_facets = changelist.add_facets
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+
+        if add_facets:
+            choices = []
+
+            for pk_val, val in self.lookup_choices:
+                count = facet_counts[f"{pk_val}__c"]
+                choice = (pk_val, f"{val} ({count})")
+                choices.append(choice)
+        else:
+            choices = self.lookup_choices
+
         yield {
             "form": self.form_class(
                 label=_(" By %(filter_title)s ") % {"filter_title": self.title},
                 name=self.lookup_kwarg,
-                choices=self.lookup_choices,
+                choices=choices,
                 data={self.lookup_kwarg: self.value()},
             ),
         }
@@ -119,7 +147,18 @@ class AllValuesCheckboxFilter(MultiValueMixin, admin.AllValuesFieldListFilter):
     form_class = CheckboxForm
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        choices = [[i, val] for i, val in enumerate(self.lookup_choices)]
+        add_facets = changelist.add_facets
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+
+        if add_facets:
+            choices = []
+
+            for i, val in enumerate(self.lookup_choices):
+                count = facet_counts[f"{i}__c"]
+                choice = (val, f"{val} ({count})")
+                choices.append(choice)
+        else:
+            choices = [[val, val] for _i, val in enumerate(self.lookup_choices)]
 
         if len(choices) == 0:
             return
@@ -128,7 +167,7 @@ class AllValuesCheckboxFilter(MultiValueMixin, admin.AllValuesFieldListFilter):
             "form": self.form_class(
                 label=_(" By %(filter_title)s ") % {"filter_title": self.title},
                 name=self.lookup_kwarg,
-                choices=[[i, val] for i, val in enumerate(self.lookup_choices)],
+                choices=choices,
                 data={self.lookup_kwarg: self.value()},
             ),
         }

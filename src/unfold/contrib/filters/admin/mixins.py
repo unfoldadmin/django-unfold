@@ -51,6 +51,31 @@ class DropdownMixin:
         return queryset
 
 
+class ChoicesMixin:
+    template = "unfold/filters/filters_field.html"
+
+    def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+        add_facets = changelist.add_facets
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+        choices = [self.all_option] if self.all_option else []
+
+        for i, choice in enumerate(self.field.flatchoices):
+            if add_facets:
+                count = facet_counts[f"{i}__c"]
+                choice = (choice[0], f"{choice[1]} ({count})")
+
+            choices.append(choice)
+
+        yield {
+            "form": self.form_class(
+                label=_(" By %(filter_title)s ") % {"filter_title": self.title},
+                name=self.lookup_kwarg,
+                choices=choices,
+                data={self.lookup_kwarg: self.value()},
+            ),
+        }
+
+
 class RangeNumericMixin:
     request = None
     parameter_name = None
