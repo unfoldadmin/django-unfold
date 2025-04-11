@@ -64,6 +64,11 @@ Unfold Studio is a theme customizer for Django admin that helps you create a bra
 
 ## Credits
 
-- Icons: [Material Symbols](https://github.com/google/material-design-icons)
-- Font: [Inter](https://github.com/rsms/inter)
-- Charts: [Chart.js](https://github.com/chartjs/Chart.js)
+- **Icons**: [Material Symbols](https://github.com/google/material-design-icons) - Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+- **Font**: [Inter](https://github.com/rsms/inter) - Licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL).
+- **Charts**: [Chart.js](https://github.com/chartjs/Chart.js) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- **JavaScript Framework**: [Alpine.js](https://github.com/alpinejs/alpine) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- **AJAX calls**: [HTMX](https://htmx.org/) - Licensed under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause).
+- **Custom Scrollbars**: [SimpleBar](https://github.com/Grsmto/simplebar) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- **Range Slider**: [noUiSlider](https://github.com/leongersen/noUiSlider) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- **Number Formatting**: [wNumb](https://github.com/leongersen/wnumb) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
