@@ -1,4 +1,20 @@
 
+## 0.55.0 (2025-04-11)
+
+- feat: autoload Unfold select2 widget media by default (#1210) ([`f0644e6`](https://github.com/unfoldadmin/django-unfold/commit/f0644e688145eacde5a7f8ded5e3fec4074a3fea))
+- feat: facet filters (#1205) ([`f9f7331`](https://github.com/unfoldadmin/django-unfold/commit/f9f73312954617463a470bc48c296343da10cf35))
+- feat: button component support for custom attrs (#1203) ([`5f5f01d`](https://github.com/unfoldadmin/django-unfold/commit/5f5f01d86110e937a49759385738b14ae9921799))
+- feat: crispy forms templatepack (#1195) ([`bf0cffa`](https://github.com/unfoldadmin/django-unfold/commit/bf0cffaca732db542da89ff70cc3d45bde2d824e))
+- fix: expandable textarea sizing (#1209) ([`1829a58`](https://github.com/unfoldadmin/django-unfold/commit/1829a585d0977ae01fbc3b2e2429129a2c90c17e))
+- fix: checkbox &amp; radio conditional fields (#1208) ([`5504251`](https://github.com/unfoldadmin/django-unfold/commit/55042510e9f0bba71fb044279549352b7a2278ec))
+- docs: button component (#1204) ([`be44ee6`](https://github.com/unfoldadmin/django-unfold/commit/be44ee6681b58c72cc668e6b5a8e7071369e844b))
+- docs: table component (#1202) ([`8aa6044`](https://github.com/unfoldadmin/django-unfold/commit/8aa604467598daae372aaa56cf5ce5a9cf302086))
+- chore: credits (#1215) ([`06c0a45`](https://github.com/unfoldadmin/django-unfold/commit/06c0a457beb9eb296ba647c0e1d184d0533dcfa3))
+- chore: icons update (#1214) ([`833c7f1`](https://github.com/unfoldadmin/django-unfold/commit/833c7f162f53cc2d94d3f1f17a4125b496094708))
+- chore: alpine update (#1207) ([`b8a9a0d`](https://github.com/unfoldadmin/django-unfold/commit/b8a9a0ddaf73a192c05508fecdb2caac88d5eb02))
+- chore: updated README features (#1199) ([`15089d5`](https://github.com/unfoldadmin/django-unfold/commit/15089d548591fdcb6f45f7a57c47b13cc5861ce2))
+- chore: django 5.2 in tox config (#1198) ([`5a1eb1b`](https://github.com/unfoldadmin/django-unfold/commit/5a1eb1b3d33bd8a131429ce3c1f6a141c95dc9b9))
+
 ## 0.54.0 (2025-03-31)
 
 - feat: checkbox &amp; radio filters (#1178) ([`9913a45`](https://github.com/unfoldadmin/django-unfold/commit/9913a455f5b8b2d76c069401b6e0c4fa97d82c26))
