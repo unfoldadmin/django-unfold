@@ -1,4 +1,10 @@
 
+## 0.55.1 (2025-04-11)
+
+- fix: use the same translation for all By {filter_title} (#1220) ([`6e57a36`](https://github.com/unfoldadmin/django-unfold/commit/6e57a3685e746e28038695674ee12cc6451631da))
+- fix: proper attributions (#1219) ([`57bf4c4`](https://github.com/unfoldadmin/django-unfold/commit/57bf4c44ec8b5fedf4a3cfce71b84a3842296203))
+- chore: inter font update ([`7ff4558`](https://github.com/unfoldadmin/django-unfold/commit/7ff45586c93bdc28d4ccd99a4604c375062ee156))
+
 ## 0.55.0 (2025-04-11)
 
 - feat: autoload Unfold select2 widget media by default (#1210) ([`f0644e6`](https://github.com/unfoldadmin/django-unfold/commit/f0644e688145eacde5a7f8ded5e3fec4074a3fea))
