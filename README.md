@@ -61,3 +61,9 @@ Unfold Studio is a theme customizer for Django admin that helps you create a bra
 - **Configuration:** Allows basic options to be changed in `settings.py`.
 - **Dependencies:** Built entirely on `django.contrib.admin`.
 - **VS Code:** Project configuration and development container included.
+
+## Credits
+
+- Icons: [Material Symbols](https://github.com/google/material-design-icons)
+- Font: [Inter](https://github.com/rsms/inter)
+- Charts: [Chart.js](https://github.com/chartjs/Chart.js)
