@@ -197,10 +197,10 @@ class RangeNumericForm(forms.Form):
 
 class SliderNumericForm(RangeNumericForm):
     class Media:
-        css = {"all": ("unfold/filters/css/nouislider.min.css",)}
+        css = {"all": ("unfold/filters/css/nouislider/nouislider.min.css",)}
         js = (
-            "unfold/filters/js/wNumb.min.js",
-            "unfold/filters/js/nouislider.min.js",
+            "unfold/filters/js/wnumb/wNumb.min.js",
+            "unfold/filters/js/nouislider/nouislider.min.js",
             "unfold/filters/js/admin-numeric-filter.js",
         )
 
