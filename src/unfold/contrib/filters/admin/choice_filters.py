@@ -22,7 +22,7 @@ class RadioFilter(admin.SimpleListFilter):
     all_option = ["", _("All")]
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
-        add_facets = changelist.add_facets
+        add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
         choices = []
 
@@ -78,7 +78,7 @@ class BooleanRadioFilter(ValueMixin, admin.BooleanFieldListFilter):
     all_option = ["", _("All")]
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        add_facets = changelist.add_facets
+        add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
 
         if add_facets:
@@ -119,7 +119,7 @@ class RelatedCheckboxFilter(MultiValueMixin, admin.RelatedFieldListFilter):
         return queryset
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        add_facets = changelist.add_facets
+        add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
 
         if add_facets:
@@ -147,7 +147,7 @@ class AllValuesCheckboxFilter(MultiValueMixin, admin.AllValuesFieldListFilter):
     form_class = CheckboxForm
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        add_facets = changelist.add_facets
+        add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
 
         if add_facets:
