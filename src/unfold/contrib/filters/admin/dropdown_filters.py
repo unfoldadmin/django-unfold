@@ -86,7 +86,7 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
         self.request = request
 
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        add_facets = changelist.add_facets
+        add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
 
         if add_facets:
