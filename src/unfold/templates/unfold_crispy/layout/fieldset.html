@@ -1,0 +1,9 @@
+<fieldset {% if fieldset.css_id %}id="{{ fieldset.css_id }}"{% endif %} class="fieldset group flex flex-col gap-5 grow rounded border-base-200 shadow-sm aligned border p-3 relative dark:border-base-800 {% if fieldset.css_class %} {{ fieldset.css_class }}{% endif %}" {{ fieldset.flat_attrs }}>
+    {% if legend %}
+        <legend class="border-b border-base-200 font-semibold float-left pb-3 -mx-3 px-3 text-font-important-light dark:text-font-important-dark dark:border-base-800">
+            {{ legend|safe }}
+        </legend>
+    {% endif %}
+
+    {{ fields|safe }}
+</fieldset>

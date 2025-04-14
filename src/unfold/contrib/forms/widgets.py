@@ -95,9 +95,9 @@ class WysiwygWidget(Widget):
     template_name = "unfold/forms/wysiwyg.html"
 
     class Media:
-        css = {"all": ("unfold/forms/css/trix.css",)}
+        css = {"all": ("unfold/forms/css/trix/trix.css",)}
         js = (
-            "unfold/forms/js/trix.js",
+            "unfold/forms/js/trix/trix.js",
             "unfold/forms/js/trix.config.js",
         )
 

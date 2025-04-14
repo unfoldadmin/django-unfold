@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.54.0"
+version = "0.55.1"
 description = "Modern Django admin theme for seamless interface development"
 license = "MIT"
 readme = "README.md"
@@ -90,7 +90,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{39,310,311,312,313}-django{42,50,51}
+        python{39,310,311,312,313}-django{42,50,51,52}
 
     [testenv]
     skip_install = true
