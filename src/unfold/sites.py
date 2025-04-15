@@ -95,6 +95,7 @@ class UnfoldAdminSite(AdminSite):
             "show_view_on_site": self._get_config("SHOW_VIEW_ON_SITE", request),
             "show_languages": self._get_config("SHOW_LANGUAGES", request),
             "show_back_button": self._get_config("SHOW_BACK_BUTTON", request),
+            "sticky_header": self._get_config("STICKY_HEADER", request),
             "theme": self._get_config("THEME", request),
             "border_radius": self._get_config("BORDER_RADIUS", request),
             "colors": self._get_colors("COLORS", request),

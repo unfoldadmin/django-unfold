@@ -62,6 +62,7 @@ CONFIG_DEFAULTS = {
         "show_all_applications": False,
         "navigation": {},
     },
+    "STICKY_HEADER": False,
     "TABS": [],
     "LOGIN": {
         "image": None,
