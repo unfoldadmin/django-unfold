@@ -31,9 +31,9 @@
             {% for inline in inlines_list %}
                 <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-base-800">
                     <a class="block cursor-pointer font-medium px-3 py-2 md:py-4 md:px-0"
-                       href="#{{ inline.opts.verbose_name|slugify }}"
-                       x-on:click="activeTab = '{{ inline.opts.verbose_name|slugify }}'"
-                       x-bind:class="{'border-b border-base-200 dark:border-base-800 md:border-primary-500 dark:md:!border-primary-600 font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ inline.opts.verbose_name|slugify }}', 'hover:text-primary-600 dark:hover:text-primary-500 dark:border-base-800': activeTab != '{{ inline.opts.verbose_name|slugify }}'}">
+                       href="#{{ inline.formset.prefix|slugify }}"
+                       x-on:click="activeTab = '{{ inline.formset.prefix|slugify }}'"
+                       x-bind:class="{'border-b border-base-200 dark:border-base-800 md:border-primary-500 dark:md:!border-primary-600 font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ inline.formset.prefix|slugify }}', 'hover:text-primary-600 dark:hover:text-primary-500 dark:border-base-800': activeTab != '{{ inline.formset.prefix|slugify }}'}">
                         {% if inline.formset.max_num == 1 %}
                             {{ inline.opts.verbose_name|capfirst }}
                         {% else %}
