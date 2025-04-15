@@ -51,6 +51,77 @@ def test_actions_list_with_dropdown(client, admin_user, user_model_admin_with_ac
 
 
 @pytest.mark.django_db
+def test_actions_list_mixed_permissions_true(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(reverse_lazy("admin:example_user_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Changelist action with mixed permissions true" in response.content.decode()
+
+    response = client.get(
+        reverse_lazy("admin:example_user_changelist_action_mixed_permissions_true"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist action with mixed permissions true successfully executed"
+        in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_actions_list_mixed_permissions_false(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(reverse_lazy("admin:example_user_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist action with mixed permissions false"
+        not in response.content.decode()
+    )
+
+    response = client.get(
+        reverse_lazy("admin:example_user_changelist_action_mixed_permissions_false"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert (
+        "Changelist action with mixed permissions false successfully executed"
+        not in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_actions_list_mixed_permissions_perm_not_granted(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(reverse_lazy("admin:example_user_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist action with mixed permissions perm not granted"
+        not in response.content.decode()
+    )
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changelist_action_mixed_permissions_perm_not_granted"
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert (
+        "Changelist action with mixed permissions perm not granted successfully executed"
+        not in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
 def test_actions_list_permission_true(
     client, admin_user, user_model_admin_with_actions
 ):
@@ -144,6 +215,86 @@ def test_actions_row(client, admin_user, user_model_admin_with_actions):
     )
     assert response.status_code == HTTPStatus.OK
     assert "Changelist row action successfully executed" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_actions_row_mixed_permissions_true(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(reverse_lazy("admin:example_user_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist row action with mixed permissions true" in response.content.decode()
+    )
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changelist_row_action_mixed_permissions_true",
+            args=(staff_user.pk,),
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist row action with mixed permissions true successfully executed"
+        in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_actions_row_mixed_permissions_false(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(reverse_lazy("admin:example_user_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist row action with mixed permissions false"
+        not in response.content.decode()
+    )
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changelist_row_action_mixed_permissions_false",
+            args=(staff_user.pk,),
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert (
+        "Changelist row action with mixed permissions false successfully executed"
+        not in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_actions_row_mixed_permissions_perm_not_granted(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(reverse_lazy("admin:example_user_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changelist row action with mixed permissions perm not granted"
+        not in response.content.decode()
+    )
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changelist_row_action_mixed_permissions_perm_not_granted",
+            args=(staff_user.pk,),
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert (
+        "Changelist row action with mixed permissions perm not granted successfully executed"
+        not in response.content.decode()
+    )
 
 
 @pytest.mark.django_db
@@ -278,6 +429,90 @@ def test_actions_changeform_with_dropdown(
 
 
 @pytest.mark.django_db
+def test_actions_changeform_mixed_permissions_true(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,))
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Changeform action with mixed permissions true" in response.content.decode()
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changeform_action_mixed_permissions_true",
+            args=(staff_user.pk,),
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changeform action with mixed permissions true successfully executed"
+        in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_actions_changeform_mixed_permissions_false(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,))
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changeform action with mixed permissions false"
+        not in response.content.decode()
+    )
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changeform_action_mixed_permissions_false",
+            args=(staff_user.pk,),
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert (
+        "Changeform action with mixed permissions false successfully executed"
+        not in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_actions_changeform_mixed_permissions_perm_not_granted(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,))
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Changeform action with mixed permissions perm not granted"
+        not in response.content.decode()
+    )
+
+    response = client.get(
+        reverse_lazy(
+            "admin:example_user_changeform_action_mixed_permissions_perm_not_granted",
+            args=(staff_user.pk,),
+        ),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert (
+        "Changeform action with mixed permissions perm not granted successfully executed"
+        not in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
 def test_actions_changeform_permission_true(
     client, admin_user, user_model_admin_with_actions
 ):
@@ -385,6 +620,108 @@ def test_submit_line(client, admin_user, user_model_admin_with_actions):
 
     assert response.status_code == HTTPStatus.OK
     assert "Submit line action successfully executed" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_submit_line_mixed_permissions_true(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,))
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "Submit line action with mixed permissions true" in response.content.decode()
+
+    response = client.post(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,)),
+        {
+            "username": staff_user.username,
+            "date_joined_0": "2025-01-01",
+            "date_joined_1": "12:00",
+            "is_active": True,
+            "is_staff": True,
+            "is_superuser": True,
+            "example_user_submit_line_action_mixed_permissions_true": "1",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Submit line action with mixed permissions true successfully executed"
+        in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_submit_line_mixed_permissions_false(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,))
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Submit line action with mixed permissions false"
+        not in response.content.decode()
+    )
+
+    response = client.post(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,)),
+        {
+            "username": staff_user.username,
+            "date_joined_0": "2025-01-01",
+            "date_joined_1": "12:00",
+            "is_active": True,
+            "is_staff": True,
+            "is_superuser": True,
+            "example_user_submit_line_action_mixed_permissions_false": "1",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Submit line action with mixed permissions false successfully executed"
+        not in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_submit_line_mixed_permissions_perm_not_granted(
+    client, staff_user, user_model_admin_with_actions
+):
+    client.force_login(staff_user)
+    response = client.get(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,))
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Submit line action with mixed permissions perm not granted"
+        not in response.content.decode()
+    )
+
+    response = client.post(
+        reverse_lazy("admin:example_user_change", args=(staff_user.pk,)),
+        {
+            "username": staff_user.username,
+            "date_joined_0": "2025-01-01",
+            "date_joined_1": "12:00",
+            "is_active": True,
+            "is_staff": True,
+            "is_superuser": True,
+            "example_user_submit_line_action_mixed_permissions_perm_not_granted": "1",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        "Submit line action with mixed permissions perm not granted successfully executed"
+        not in response.content.decode()
+    )
 
 
 @pytest.mark.django_db
