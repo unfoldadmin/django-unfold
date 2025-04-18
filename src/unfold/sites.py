@@ -417,7 +417,7 @@ class UnfoldAdminSite(AdminSite):
             )
 
         def hex_to_values(value: str) -> str:
-            return " ".join(str(item) for item in hex_to_rgb(value))
+            return ", ".join(str(item) for item in hex_to_rgb(value))
 
         for name, weights in colors.items():
             weights = self._get_value(weights, *args)

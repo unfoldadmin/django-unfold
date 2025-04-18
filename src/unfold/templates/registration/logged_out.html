@@ -4,7 +4,7 @@
 
 {% block base %}
     <div id="page" class="flex min-h-screen">
-        <div class="flex flex-grow items-center justify-center mx-auto px-4">
+        <div class="flex grow items-center justify-center mx-auto px-4">
             <div class="w-full sm:w-96">
                 <h1 class="font-semibold mb-4 text-xl">
                     <span class="block leading-relaxed text-base-700 dark:text-base-200">
@@ -16,7 +16,7 @@
                     {% translate "Thanks for spending some quality time with the web site today." %}
                 </p>
 
-                <a href="{% url "admin:index" %}" class="bg-primary-600 block border border-transparent font-semibold py-2 rounded text-sm text-center text-white w-full">
+                <a href="{% url "admin:index" %}" class="bg-primary-600 block border border-transparent font-semibold py-2 rounded-default text-sm text-center text-white w-full">
                     {% translate "Log in again" %}
                 </a>
             </div>

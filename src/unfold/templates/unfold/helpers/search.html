@@ -2,7 +2,7 @@
 
 {% if sidebar_show_search %}
     <div class="mb-2.5 mx-3 relative" x-data="{openSearchResults: false}">
-        <div class="bg-white border border-base-200 flex items-center overflow-hidden rounded shadow-sm focus-within:ring focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-base-900 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700 dark:focus-within:ring-opacity-50">
+        <div class="bg-white border border-base-200 flex items-center overflow-hidden rounded-default shadow-xs focus-within:ring-3 focus-within:ring-primary-300 focus-within:border-primary-600 dark:bg-base-900 dark:border-base-700 dark:focus-within:border-primary-600 dark:focus-within:ring-primary-700/50">
             <span class="material-symbols-outlined md-18 pl-3 text-base-400">manage_search</span>
 
             <input type="search"
@@ -14,7 +14,7 @@
                    hx-trigger="keyup changed delay:500ms, search"
                    hx-target="#search-results"
                    hx-indicator=".htmx-indicator"
-                   class="flex-grow font-medium overflow-hidden pl-2 pr-3 py-2 text-font-default-light text-sm placeholder-base-400 focus:outline-none dark:bg-base-900 dark:text-font-default-dark"
+                   class="grow font-medium overflow-hidden pl-2 pr-3 py-2 text-font-default-light text-sm placeholder-base-400 focus:outline-hidden dark:bg-base-900 dark:text-font-default-dark"
                    placeholder="{% translate 'Search apps and models...' %}" aria-label="{% translate 'Filter navigation items' %}" />
             <div class="absolute opacity-0 htmx-indicator mt-0.5 right-2 top-2">
                 <span class="animate-spin material-symbols-outlined md-18 text-base-300">sync</span>
