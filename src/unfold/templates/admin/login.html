@@ -90,7 +90,9 @@
                 {% endif %}
 
                 {% if not theme %}
-                    {% include "unfold/helpers/theme_switch.html" %}
+                    <div class="ml-auto">
+                        {% include "unfold/helpers/theme_switch.html" %}
+                    </div>
                 {% endif %}
             </div>
         </div>
