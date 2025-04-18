@@ -407,7 +407,7 @@ class UnfoldAdminSite(AdminSite):
         colors = self._get_config(key, *args)
 
         def rgb_to_values(value: str) -> str:
-            return " ".join(
+            return ", ".join(
                 list(
                     map(
                         str.strip,
@@ -428,6 +428,11 @@ class UnfoldAdminSite(AdminSite):
                     colors[name][weight] = hex_to_values(value)
                 elif value.startswith("rgb"):
                     colors[name][weight] = rgb_to_values(value)
+                elif isinstance(value, str) and all(
+                    part.isdigit() for part in value.split()
+                ):
+                    colors[name][weight] = ", ".join(value.split(" "))
+                pass
 
         return colors
 
