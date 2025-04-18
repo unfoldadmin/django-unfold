@@ -15,7 +15,7 @@
         {% include "unfold/helpers/messages/error.html" with error=import_error %}
     </div>
 
-    <table class="import-preview border-base-200 border-spacing-none border-separate w-full lg:border lg:rounded lg:shadow-sm lg:dark:border-base-800">
+    <table class="import-preview border-base-200 border-spacing-none border-separate w-full lg:border lg:rounded-default lg:shadow-xs lg:dark:border-base-800">
         <thead class="hidden lg:table-header-group font-semibold text-base-900 dark:text-base-100">
             <tr>
                 <th class="align-middle capitalize px-3 py-2 text-left">
@@ -36,25 +36,25 @@
 
         <tbody>
             {% for row in result.invalid_rows %}
-                <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border border-base-200 mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border border-base-200 mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                     <td data-label="{% trans "Row" %}" class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
                         {{ row.number }}
                     </td>
 
                     <td data-label="{% trans "Errors" %}" class="errors align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
-                        <span class="validation-error-count bg-red-600 font-semibold ml-2 px-1 rounded text-xs text-white">{{ row.error_count }}</span>
+                        <span class="validation-error-count bg-red-600 font-semibold ml-2 px-1 rounded-default text-xs text-white">{{ row.error_count }}</span>
 
-                        <div class="validation-error-container rounded !bg-white border border-base-200 left-12 !m-0 !p-0 !top-3 dark:!bg-base-800 dark:!border-base-700 min-w-72">
+                        <div class="validation-error-container rounded-default bg-white! border border-base-200 left-12 m-0! p-0! top-3! dark:bg-base-800! dark:border-base-700! min-w-72">
                             <ul class="validation-error-list">
                                 {% for field_name, error_list in row.field_specific_errors.items %}
                                     <li class="p-3">
-                                        <span class="validation-error-field-label !border-0 font-semibold mb-1 !text-font-important-light dark:!text-font-important-dark">
+                                        <span class="validation-error-field-label border-0! font-semibold mb-1 text-font-important-light! dark:text-font-important-dark!">
                                             {{ field_name }}
                                         </span>
 
-                                        <ul class="text-xs !m-0">
+                                        <ul class="text-xs m-0!">
                                             {% for error in error_list %}
-                                                <li class="!m-0">
+                                                <li class="m-0!">
                                                     <p class="leading-normal">
                                                         {{ error }}
                                                     </p>

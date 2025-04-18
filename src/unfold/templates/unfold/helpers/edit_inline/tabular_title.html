@@ -1,7 +1,7 @@
 {% load admin_modify admin_urls i18n %}
 
 {% if inline_admin_form.original or inline_admin_form.show_url %}
-    <tr class="border-b border-base-200 dark:border-base-800 bg-base-50 dark:bg-white/[.02] lg:bg-transparent lg:border-0 dark:lg:!bg-transparent">
+    <tr class="border-b border-base-200 dark:border-base-800 bg-base-50 dark:bg-white/[.02] lg:bg-transparent lg:border-0 dark:lg:bg-transparent!">
         <td class="original" colspan="{{ inline_admin_form|cell_count }}">
             {% if not inline_admin_formset.opts.hide_title %}
                 {% if inline_admin_form.original or inline_admin_form.show_url %}

@@ -7,7 +7,7 @@
         </h3>
     {% endif %}
 
-    <div class="{% if card_included == 1 %}-m-6{% else %} bg-white flex flex-col grow lg:border lg:border-base-200 lg:overflow-hidden lg:rounded lg:shadow-sm{% endif %} lg:dark:border-base-800 dark:bg-base-900">
+    <div class="{% if card_included == 1 %}-m-6{% else %} bg-white flex flex-col grow lg:border lg:border-base-200 lg:overflow-hidden lg:rounded-default lg:shadow-xs{% endif %} lg:dark:border-base-800 dark:bg-base-900">
         <div {% if height %}style="max-height: {{ height }}px;" data-simplebar{% endif %}>
             <table class="block border-spacing-none border-separate w-full lg:table">
                 {% if table.headers %}
@@ -25,7 +25,7 @@
                 {% if table.rows %}
                     <tbody class="block lg:table-row-group">
                         {% for row in table.rows %}
-                            <tr class="{% if striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} {% if not card_included == 1 %}border mb-3 rounded shadow-sm{% else %}border-b{% endif %} lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                            <tr class="{% if striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} {% if not card_included == 1 %}border mb-3 rounded-default shadow-xs{% else %}border-b{% endif %} lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                                 {% for cell in row %}
                                     <td class="px-3 py-2 align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800 {% if card_included == 1 %}lg:first:pl-6 lg:last:pr-6{% endif %}" {% if table.headers %}data-label="{{ table.headers|index:forloop.counter0 }}"{% endif %}>
                                         {{ cell }}
@@ -39,7 +39,7 @@
         </div>
 
         {% if not table.rows %}
-            <p class="bg-white border border-base-200 flex grow items-center justify-center py-2 rounded shadow-sm dark:bg-base-900 lg:border-0 lg:rounded-none lg:shadow-none">
+            <p class="bg-white border border-base-200 flex grow items-center justify-center py-2 rounded-default shadow-xs dark:bg-base-900 lg:border-0 lg:rounded-none lg:shadow-none">
                 {% trans "No data" %}
             </p>
         {% endif %}

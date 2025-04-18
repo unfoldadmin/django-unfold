@@ -48,7 +48,7 @@ class ActionForm(forms.Form):
                         "px-3",
                         "py-2",
                         "pr-8",
-                        "rounded",
+                        "rounded-default",
                         "text-white",
                         "truncate",
                         "*:text-base-700",

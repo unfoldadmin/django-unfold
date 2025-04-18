@@ -12,7 +12,7 @@
     {% if field.is_readonly %}
         {% include "unfold/helpers/field_readonly_value.html" with tabular=1 %}
     {% else %}
-        <div class="flex flex-col">
+        <div class="flex flex-col grow">
             {{ field.field }}
 
             {% if field.field.errors|length > 0 %}

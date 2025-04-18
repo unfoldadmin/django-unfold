@@ -14,7 +14,7 @@
             </div>
         {% endif %}
 
-        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white flex-grow font-medium min-w-0 px-3 py-2 text-ellipsis dark:bg-base-900">
+        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white grow font-medium min-w-0 px-3 py-2 text-ellipsis dark:bg-base-900">
 
         <div class="flex flex-none items-center leading-none self-stretch">
             <div class="hidden">
@@ -34,12 +34,12 @@
     </div>
 
     {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
-        <div class="h-9.5 ml-3 relative w-9.5">
-            <div class="absolute border flex font-medium h-full items-center left-0 rounded justify-center shadow-sm text-base-400 top-0 w-full z-10 dark:bg-base-900 dark:border-base-700 dark:text-base-500">
+        <div class="h-[38px] ml-3 relative w-[38px]">
+            <div class="absolute border flex font-medium h-full items-center left-0 rounded-default justify-center shadow-xs text-base-400 top-0 w-full z-10 dark:bg-base-900 dark:border-base-700 dark:text-base-500">
                 ?
             </div>
 
-            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-no-repeat block h-9.5 overflow-hidden relative rounded w-9.5 z-20" style="background-image: url('{{ widget.value.url }}')">
+            <a href="{{ widget.value.url }}" target="_blank" class="bg-center bg-cover bg-no-repeat block h-[38px] overflow-hidden relative rounded-default w-[38px] z-20" style="background-image: url('{{ widget.value.url }}')">
             </a>
         </div>
     {% endif %}

@@ -1,5 +1,5 @@
 <div class="overflow-auto w-full" data-simplebar>
-    <table class="w-full">
+    <table class="border-separate w-full">
         <thead>
             <tr>
                 <th></th>
@@ -39,7 +39,7 @@
 
                     {% for col in row.cols %}
                         <td class="h-full">
-                            <div class="flex flex-col h-[66px] justify-center px-3 py-2.5 rounded {% if col.color %}{{ col.color }}{% else %}bg-base-50 border border-dashed dark:bg-base-800 dark:border-base-700{% endif %}">
+                            <div class="flex flex-col h-[66px] justify-center px-3 py-2.5 rounded-default {% if col.color %}{{ col.color }}{% else %}bg-base-50 border border-base-200 border-dashed dark:bg-base-800 dark:border-base-700{% endif %}">
                                 <span>
                                     {{ col.value }}
                                 </span>

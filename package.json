@@ -2,13 +2,12 @@
 	"name": "django-unfold",
 	"description": "Modern Django admin theme for seamless interface development",
 	"scripts": {
-		"tailwind:build": "tailwindcss -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --minify",
-		"tailwind:watch": "tailwindcss -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify"
-	},
-	"dependencies": {
-		"tailwindcss": "^3.4.17"
+		"tailwind:build": "npx @tailwindcss/cli -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --minify",
+		"tailwind:watch": "npx @tailwindcss/cli -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify"
 	},
 	"devDependencies": {
+		"tailwindcss": "^4.1.4",
+		"@tailwindcss/cli": "^4.1.4",
 		"@tailwindcss/typography": "^0.5.16"
 	}
 }

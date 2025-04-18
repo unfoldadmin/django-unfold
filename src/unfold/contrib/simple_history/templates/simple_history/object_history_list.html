@@ -3,7 +3,7 @@
 {% load admin_urls %}
 {% load getattribute from getattributes %}
 
-<table id="change-history" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded lg:shadow-sm lg:dark:border-base-800">
+<table id="change-history" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-default lg:shadow-xs lg:dark:border-base-800">
     <thead class="hidden text-font-important-light lg:table-header-group dark:text-font-important-dark">
         <tr>
             <th class="align-middle font-semibold px-3 py-2 text-left ">
@@ -40,7 +40,7 @@
 
     <tbody>
         {% for record in page_obj %}
-            <tr class="block border mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+            <tr class="block border mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                 <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans 'Object' %}">
                     <a href="{% url opts|admin_urlname:'simple_history' object.pk record.pk %}">
                         {{ record.history_object }}
