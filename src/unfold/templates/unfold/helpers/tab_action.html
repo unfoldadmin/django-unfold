@@ -1,7 +1,7 @@
 {% load unfold %}
 
 <li class="{% action_item_classes action %}" {% if not link %}x-data="{actionDropdownOpen: false}" x-ref="actionDropdown{{ action.method_name }}"{% endif %}>
-    <a {% if link %}href="{{ link }}"{% endif %}class="cursor-pointer flex items-center gap-2 px-3 py-2 text-left whitespace-nowrap" {% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}
+    <a {% if link %}href="{{ link }}"{% endif %}class="cursor-pointer flex grow items-center gap-2 px-3 py-2 text-left whitespace-nowrap" {% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}
        {% if not link %}
            x-on:click="actionDropdownOpen = !actionDropdownOpen"
            x-bind:class="{'{% if action.variant.value == "default" %}text-primary-600 dark:text-primary-500{% endif %}': actionDropdownOpen }"
@@ -15,7 +15,7 @@
         {{ title }}
 
         {% if not link %}
-            <span class="border-l border-base-200 flex items-center select-none self-stretch ml-1 -mr-1 -my-2 pl-2
+            <span class="border-l border-base-200 flex items-center select-none self-stretch ml-auto -mr-1 -my-2 pl-2
                          {% if action.variant.value == "primary" %}
                              border-primary-700 dark:border-primary-500
                          {% elif action.variant.value == "danger" %}

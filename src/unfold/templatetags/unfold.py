@@ -323,6 +323,17 @@ def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
 
 
 @register.simple_tag(takes_context=True)
+def element_classes(context: Context, key: str) -> str:
+    if key in context.get("element_classes", {}):
+        if isinstance(context["element_classes"][key], list | tuple):
+            return " ".join(context["element_classes"][key])
+
+        return context["element_classes"][key]
+
+    return ""
+
+
+@register.simple_tag(takes_context=True)
 def fieldset_rows_classes(context: Context) -> str:
     classes = [
         "aligned",

@@ -5,6 +5,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @source inline("2xl:!block !block flex-grow pb-0 tracking-normal h-3 w-3 w-96 max-w-96 md:w-48");
+@source inline("{md:,}sticky");
 @source inline("border-0 border-2 border-l border-b-0 border-l-0 border-r-0 border-t-0 md:border-0 md:border-r");
 @source inline("{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
 @source inline("{hover:,dark:,}border-base-{50,{100..900..100},950}");
