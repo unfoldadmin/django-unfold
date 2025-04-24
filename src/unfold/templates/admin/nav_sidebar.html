@@ -1,7 +1,7 @@
-{% load i18n %}
+{% load i18n unfold %}
 
 <div class="relative z-50">
-    <div class="fixed hidden xl:relative xl:block" x-bind:class="{'xl:hidden!': !sidebarDesktopOpen, 'block!': sidebarMobileOpen}">
+    <div class="fixed hidden xl:relative xl:block {% element_classes 'navigation_wrapper' %}" x-bind:class="{'xl:hidden!': !sidebarDesktopOpen, 'block!': sidebarMobileOpen}">
         {% include "unfold/helpers/navigation.html" %}
     </div>
 </div>
