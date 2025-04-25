@@ -221,6 +221,15 @@ table tr.selected th {
   @apply flex flex-col grow items-center md:flex-row;
 }
 
+.selector .selector-available-title label,
+.selector .selector-chosen-title label {
+  @apply block border-b border-base-200 font-semibold mb-3 py-2 px-4 text-sm text-font-important-light dark:border-base-700 dark:text-font-important-dark;
+}
+
+.selector .helptext {
+  @apply border-b border-base-200 mb-3 px-4 pb-3 dark:border-base-700;
+}
+
 .selector select {
   @apply bg-none grow w-full dark:bg-base-900;
 }
