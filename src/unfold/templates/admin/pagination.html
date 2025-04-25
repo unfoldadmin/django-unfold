@@ -1,6 +1,6 @@
 {% load unfold unfold_list i18n %}
 
-<div class="flex flex-row grow items-center {% if not cl.model_admin.list_fullwidth %}container mx-auto{% endif %}">
+<div class="flex flex-row grow items-center lg:h-[64px] {% if not cl.model_admin.list_fullwidth %}container mx-auto{% endif %}">
     {% if cl.paginator.template_name %}
         {% include cl.paginator.template_name %}
     {% else %}

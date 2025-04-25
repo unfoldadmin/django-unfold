@@ -1,17 +1,13 @@
 {% load i18n unfold %}
 
-<div class="relative min-w-[288px] transition-width w-[288px] z-30">
-    <nav id="nav-sidebar" class="border-r border-base-200 bottom-0 fixed max-h-screen top-0 transition-width w-[288px] dark:border-base-800 {% element_classes 'navigation' %}">
-        <div class="flex flex-col min-h-screen min-w-[288px]">
-            {% include "unfold/helpers/navigation_header.html" %}
+<nav class="flex flex-col min-h-screen {% element_classes 'navigation_inner' %}">
+    {% include "unfold/helpers/navigation_header.html" %}
 
-            {% include "unfold/helpers/search.html" %}
+    {% include "unfold/helpers/search.html" %}
 
-            {% if sidebar_navigation|length > 0 %}
-                {% include "unfold/helpers/app_list.html" with app_list=available_apps %}
-            {% else %}
-                {% include "admin/app_list.html" with app_list=available_apps show_changelinks=False %}
-            {% endif %}
-        </div>
-    </nav>
-</div>
+    {% if sidebar_navigation|length > 0 %}
+        {% include "unfold/helpers/app_list.html" with app_list=available_apps %}
+    {% else %}
+        {% include "admin/app_list.html" with app_list=available_apps show_changelinks=False %}
+    {% endif %}
+</nav>

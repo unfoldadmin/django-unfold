@@ -2,8 +2,8 @@
 @plugin '@tailwindcss/typography';
 @custom-variant dark (&:where(.dark, .dark *));
 
-@source inline("2xl:flex 2xl:relative pb-0 tracking-normal h-3 -mr-3 mr-3 pr-3 py-3 min-w-80 w-3 w-96 max-w-96 md:w-48");
-@source inline("{md:,}sticky {2xl:,}relative rounded-b-default rounded-l-default rounded-t-default bottom-3 top-3 right-3");
+@source inline("2xl:flex 2xl:relative pb-0 tracking-normal h-3 mb-6 -mr-3 mr-3 pr-3 py-3 min-w-80 w-3 h-[64px] w-[65px]! w-96 max-w-96 md:w-48");
+@source inline("{md:,}sticky {2xl:,}relative rounded-b-default rounded-l-default rounded-t-default left-[65px] dark:hover:bg-white/[.06] bottom-3 top-3 right-3 translate-x-1/4 -translate-y-1/4");
 @source inline("{dark:,}border-transparent border-0 border-2 border-l border-b-0 border-l-0 border-r-0 border-t-0 m-3 my-3 pr-3 md:border-0 md:border-r");
 @source inline("{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
 @source inline("{hover:,dark:,}border-base-{50,{100..900..100},950}");
@@ -76,7 +76,7 @@
 }
 
 @utility scrollable-top {
-  @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-gray-100 after:h-4 after:left-0 after:right-0 after:-top-4 dark:after:bg-none;
+  @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-gray-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
 }
 
 @utility md-16 {
@@ -162,7 +162,7 @@ table tr.selected th {
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply border-l border-base-200 flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
+  @apply border-l border-base-200 flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
   content: "timer";
 }
 
@@ -175,7 +175,7 @@ table tr.selected th {
 }
 
 .date-icon:after {
-  @apply border-l border-base-200 h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700;
+  @apply border-l border-base-200 h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-center w-9 hover:text-base-700 dark:border-base-700;
   content: "edit";
 }
 
