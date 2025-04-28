@@ -13,9 +13,9 @@ from unfold.widgets import (
 
 WYSIWYG_CLASSES = [
     *PROSE_CLASSES,
-    "!border",
-    "!border-base-200",
-    "!border-t-0",
+    "border!",
+    "border-base-200!",
+    "border-t-0!",
     "group-[.errors]:border-red-600",
     "max-w-none",
     "p-4",
@@ -24,9 +24,9 @@ WYSIWYG_CLASSES = [
     "text-base-500",
     "w-full",
     "focus:outline-hidden",
-    "dark:!border-base-700",
-    "dark:!text-base-300",
-    "dark:group-[.errors]:!border-red-500",
+    "dark:border-base-700!",
+    "dark:text-base-300!",
+    "dark:group-[.errors]:border-red-500!",
 ]
 
 
