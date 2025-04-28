@@ -1,6 +1,6 @@
 {% extends 'unfold/layouts/skeleton.html' %}
 
-{% load i18n %}
+{% load i18n unfold %}
 
 {% block base %}
     <div id="page" class="flex min-h-screen">
@@ -10,7 +10,7 @@
             {% endblock %}
         {% endif %}
 
-        <div id="main" class="grow min-w-0">
+        <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 {% element_classes 'main' %}">
             {% block content_before %}
                 {% include "unfold/helpers/header.html" %}
             {% endblock %}
