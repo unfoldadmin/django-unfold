@@ -2,21 +2,21 @@
 
 <div {% if not is_popup %}id="submit-row"{% endif %} class="relative z-20 {% if not is_popup %} mt-20 lg:mt-8{% endif %}">
     <div class="{% if not is_popup %}bottom-0 fixed left-0 right-0{% endif %}" {% if not is_popup %}x-bind:class="{'xl:left-0': !sidebarDesktopOpen, 'xl:left-72': sidebarDesktopOpen}"{% endif %}>
-        <div class="bg-white dark:bg-base-900 {% if not is_popup %}border-t border-base-200 px-4 py-4 relative scrollable-top lg:px-8 dark:border-base-800{% endif %}">
+        <div class="bg-white dark:bg-base-900 {% if not is_popup %}border-t border-base-200 px-4 py-4 relative scrollable-top dark:border-base-800{% endif %}">
             <div class="container flex flex-col-reverse gap-3 items-center mx-auto lg:flex-row-reverse">
                 {% if not revert_disabled %}
-                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded text-sm text-white w-full lg:w-auto"  name="_save" {{ onclick_attrib }}>
+                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-default text-sm text-white w-full lg:w-auto"  name="_save" {{ onclick_attrib }}>
                         {% trans 'Revert' %}
                     </button>
                 {% endif %}
 
                 {% if change_history %}
-                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded text-sm text-white w-full lg:w-auto"  name="_change_history" {{ onclick_attrib }}>
+                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-default text-sm text-white w-full lg:w-auto"  name="_change_history" {{ onclick_attrib }}>
                         {% trans 'Change History' %}
                     </button>
                 {% endif %}
 
-                <a href="{{ history_url }}" class="border border-base-200 font-medium mr-auto px-3 py-2 rounded text-sm text-base-500 text-center transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:text-font-default-dark dark:hover:text-base-200 dark:hover:bg-base-900">
+                <a href="{{ history_url }}" class="border border-base-200 font-medium mr-auto px-3 py-2 rounded-default text-sm text-base-500 text-center transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:text-font-default-dark dark:hover:text-base-200 dark:hover:bg-base-900">
                     {% trans 'Close' %}
                 </a>
             </div>

@@ -9,7 +9,7 @@
 {% else %}
     {% with field=field|add_css_class:form_classes.checkbox %}
         {% if tag == "td" %}
-            <div class="flex items-center justify-center h-9.5">
+            <div class="flex items-center justify-center h-[38px]">
                 {% crispy_field field %}
             </div>
         {% else %}

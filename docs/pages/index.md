@@ -52,7 +52,7 @@ The template is straightforward, extend from `unfold/layouts/base.html` and the 
 {% load admin_urls i18n unfold %}
 
 {% block breadcrumbs %}{% if not is_popup %}
-    <div class="px-4 lg:px-8">
+    <div class="px-4">
         <div class="container mb-6 mx-auto -my-3 lg:mb-12">
             <ul class="flex flex-wrap">
                 {% url 'admin:index' as link %}

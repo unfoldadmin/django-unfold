@@ -4,16 +4,16 @@
     <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-base-500 dark:before:text-base-300 lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800 lg:w-px">
         {% with action_id=instance_pk|cut:"-" %}
             <div class="group/action leading-none relative" x-data="{ openActionsId{{ action_id }}: false }">
-                <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 !leading-7 rounded text-center text-base-400 w-7 group-hover/action:bg-base-100 group-hover/action:text-base-700 dark:text-font-default-dark group-hover/action:dark:bg-base-800 group-hover/action:dark:text-white"
+                <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 leading-7! justify-center rounded-default text-center text-base-400 w-7 group-hover/action:bg-base-100 group-hover/action:text-base-700 dark:text-font-default-dark dark:group-hover/action:bg-base-800 dark:group-hover/action:text-white"
                       x-on:click="openActionsId{{ action_id }} = !openActionsId{{ action_id }}"
                       x-bind:class="{'bg-base-100 text-base-700 dark:bg-base-800 dark:text-white': openActionsId{{ action_id }} }">
                     more_horiz
                 </span>
 
                 <template x-teleport="body">
-                    <nav x-anchor.bottom-end.offset.4="$refs.rowDropdown{{ action_id }}" class="bg-white border flex flex-col py-1 rounded shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openActionsId{{ action_id }}" x-transition x-on:click.outside="openActionsId{{ action_id }} = false">
+                    <nav x-anchor.bottom-end.offset.4="$refs.rowDropdown{{ action_id }}" class="bg-white border border-base-200 flex flex-col py-1 rounded-default shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openActionsId{{ action_id }}" x-transition x-on:click.outside="openActionsId{{ action_id }} = false">
                         {% for action in actions %}
-                            <a href="{% url action.raw_path instance_pk %}" class="flex items-center gap-2 mx-1 px-3 py-2 max-h-[30px] rounded hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
+                            <a href="{% url action.raw_path instance_pk %}" class="flex items-center gap-2 mx-1 px-3 py-2 max-h-[30px] rounded-default hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
                                 {% if action.icon %}
                                     <span class="material-symbols-outlined">
                                         {{ action.icon }}

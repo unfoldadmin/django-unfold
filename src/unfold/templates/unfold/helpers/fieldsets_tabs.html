@@ -3,7 +3,7 @@
 {% with tabs=adminform|tabs %}
     {% if tabs %}
         <div x-data="{openTab: null}" x-show="activeTab == 'general'">
-            <ul class="bg-base-100 flex gap-10 mb-6 px-4 py-3 rounded text-font-default-light lg:-mx-4 dark:bg-white/[.02] dark:text-font-default-dark">
+            <ul class="bg-base-100 flex gap-10 mb-6 px-4 py-3 rounded-default text-font-default-light 2xl:-mx-4 dark:bg-white/[.02] dark:text-font-default-dark">
                 {% for fieldset in tabs %}
                     <li>
                         <a class="cursor-pointer font-semibold hover:text-base-700 dark:hover:text-white"

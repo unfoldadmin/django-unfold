@@ -7,7 +7,7 @@
 {% endif %}
 
 {% if results %}
-    <div class="-mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:rounded lg:shadow-sm lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
+    <div class="{% if cl.search_fields or cl.has_filters %}lg:rounded-b-default{% else %}lg:rounded-default{% endif %} -mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:shadow-xs lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
         <table id="result_list" class="block border-base-200 border-spacing-none border-separate w-full lg:table">
             <thead>
                 <tr>
@@ -79,13 +79,13 @@
                         </tr>
                     {% endif %}
 
-                    <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border mb-3 rounded shadow-sm lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                    <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border border-base-200 mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                         {% if cl.model_admin.list_sections|length > 0 %}
                             <td class="align-middle cursor-pointer flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:py-3 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px"
                                 data-label="{% trans "Expand row" %}"
                                 x-on:click="rowOpen = !rowOpen">
                                 <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-10 lg:block" x-show="rowOpen"></div>
-                                <span class="material-symbols-outlined select-none !block -rotate-90 transition-all" x-bind:class="rowOpen && 'rotate-0'">
+                                <span class="material-symbols-outlined select-none block! -rotate-90 transition-all" x-bind:class="rowOpen && 'rotate-0'">
                                     expand_more
                                 </span>
                             </td>
@@ -100,7 +100,7 @@
 
                     {% if cl.model_admin.list_sections|length > 0 %}
                         <tr class="block mb-3 lg:table-row" x-show="rowOpen">
-                            <td colspan="{{ result|length|add:2 }}" class="border bg-base-200/10 block border-base-200 relative rounded p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800">
+                            <td colspan="{{ result|length|add:2 }}" class="border bg-base-200/10 block border-base-200 relative rounded-default p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800">
                                 <div class="absolute bg-primary-600 h-full hidden left-0 top-0 w-0.5 lg:block"></div>
 
                                 <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">

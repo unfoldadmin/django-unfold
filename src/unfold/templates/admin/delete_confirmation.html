@@ -10,7 +10,7 @@
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation{% endblock %}
 
 {% block breadcrumbs %}
-    <div class="px-4 lg:px-8">
+    <div class="px-4">
         <div class="container mb-6 mx-auto -my-3 lg:mb-12">
             <ul class="flex flex-wrap">
                 {% url 'admin:index' as link %}
@@ -32,7 +32,7 @@
 
 {% block content %}
     {% if perms_lacking %}
-        <div class="border border-base-200 rounded shadow-sm dark:border-base-800">
+        <div class="border border-base-200 rounded-default shadow-xs dark:border-base-800">
             <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would result in deleting related objects, but your account doesn't have permission to delete the following types of objects:{% endblocktranslate %}
             </p>
@@ -48,7 +48,7 @@
             </div>
         </div>
     {% elif protected %}
-        <div class="border border-base-200 rounded shadow-sm dark:border-base-800">
+        <div class="border border-base-200 rounded-default shadow-xs dark:border-base-800">
             <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate with escaped_object=object %}Deleting the {{ object_name }} '{{ escaped_object }}' would require deleting the following protected related objects:{% endblocktranslate %}
             </p>
@@ -64,7 +64,7 @@
             </div>
         </div>
     {% else %}
-        <div class="border border-base-200 rounded shadow-sm dark:border-base-800">
+        <div class="border border-base-200 rounded-default shadow-xs dark:border-base-800">
             <p class="font-semibold p-4 text-font-important-light dark:text-font-important-dark">
                 {% blocktranslate with escaped_object=object %}Are you sure you want to delete the {{ object_name }} "{{ escaped_object }}"? All of the following related items will be deleted:{% endblocktranslate %}
             </p>

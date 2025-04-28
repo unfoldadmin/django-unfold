@@ -3,7 +3,7 @@
 {% load admin_urls i18n guardian_tags  %}
 
 {% block breadcrumbs %}{% if not is_popup %}
-    <div class="px-4 lg:px-8">
+    <div class="px-4">
         <div class="container mb-6 mx-auto -my-3 lg:mb-12">
             <ul class="flex flex-wrap">
                 {% url 'admin:index' as link %}
@@ -29,7 +29,9 @@
 {% block content %}
     {% include "unfold/guardian/user_form.html" %}
 
-    <hr class="my-12 dark:border-base-800"/>
+    <hr class="border-base-200 my-12 dark:border-base-800"/>
 
     {% include "unfold/guardian/group_form.html" %}
 {% endblock %}
+
+{% block footer %}{% endblock%}

@@ -4,14 +4,14 @@
 
 {% if admin_log %}
     <div id="content-related" class="lg:w-96">
-        <div id="recent-actions-module" class="module bg-base-50 rounded p-3 dark:bg-base-800">
+        <div id="recent-actions-module" class="module bg-base-50 rounded-default p-3 dark:bg-base-800">
             <h2 class="mb-3 font-semibold text-base-900 dark:text-base-100">
                 {% translate 'Recent actions' %}
             </h2>
 
             <ul class="actionlist">
                 {% for entry in admin_log %}
-                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} border border-base-400/10 bg-white mb-3 p-3 rounded shadow-sm last:mb-0 dark:bg-base-900">
+                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
                         <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
                             {% if entry.is_deletion or not entry.get_admin_url %}
                                 {{ entry.object_repr }}

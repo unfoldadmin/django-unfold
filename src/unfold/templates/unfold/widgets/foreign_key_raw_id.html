@@ -1,19 +1,19 @@
-<div class="flex flex-row flex-grow">
+<div class="flex flex-row grow">
     {% include 'django/forms/widgets/input.html' %}
 
     {% if related_url %}
-        <a href="{{ related_url }}" class="related-lookup view-related bg-white border cursor-pointer flex items-center h-9.5 justify-center ml-2 rounded shadow-sm shrink-0 text-base-400 text-sm w-9.5 hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" id="lookup_id_{{ widget.name }}">
-            <span class="material-symbols-outlined text-sm">search</span>
+        <a href="{{ related_url }}" class="related-lookup view-related bg-white border border-base-200 cursor-pointer flex items-center h-[38px] justify-center ml-2 rounded-default shadow-xs shrink-0 text-base-400 text-sm w-[38px] hover:text-base-700 dark:bg-base-900 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" id="lookup_id_{{ widget.name }}">
+            <span class="material-symbols-outlined">search</span>
         </a>
     {% endif %}
 
     {% if link_url %}
-        <a href="{{ link_url }}" title="{{ link_label }}" class="flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-primary-600 text-sm truncate dark:text-primary-500">
+        <a href="{{ link_url }}" title="{{ link_label }}" class="flex items-center h-[38px] justify-center ml-4 rounded-default shrink-0 text-primary-600 text-sm truncate dark:text-primary-500">
             {{ link_label }}
         </a>
     {% else %}
         {% if link_label %}
-            <span title="{{ link_label }}" class="flex items-center h-9.5 justify-center ml-4 rounded shrink-0 text-sm truncate">
+            <span title="{{ link_label }}" class="flex items-center h-[38px] justify-center ml-4 rounded-default shrink-0 text-sm truncate">
                 {{ link_label }}
             </span>
         {% endif %}
