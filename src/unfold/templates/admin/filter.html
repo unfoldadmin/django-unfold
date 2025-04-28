@@ -12,9 +12,9 @@
     {% endfor %}
 
     {% if spec|class_name == "BooleanFieldListFilter" or spec.horizontal %}
-        <ul class="dark:bg-base-900 border border-base-200 flex min-w-20 rounded shadow-sm text-font-default-light dark:border-base-700 dark:text-font-default-dark w-full">
+        <ul class="dark:bg-base-900 border border-base-200 flex min-w-20 rounded-default shadow-xs text-font-default-light dark:border-base-700 dark:text-font-default-dark w-full">
             {% for choice in choices %}
-                <li class="basis-1/3 border-r border-base-200 flex-grow truncate last:border-r-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
+                <li class="basis-1/3 border-r border-base-200 grow truncate last:border-r-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
                     <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block py-2 text-center hover:text-primary-600 dark:hover:text-primary-500">
                         {{ choice.display }}
                     </a>
@@ -22,7 +22,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <ul class="border flex flex-col rounded shadow-sm dark:border-base-700">
+        <ul class="border border-base-200 flex flex-col rounded-default shadow-xs dark:border-base-700">
             {% for choice in choices %}
                 <li class="border-b border-base-200 last:border-b-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
                     <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block px-3 py-2 hover:text-primary-600 dark:hover:text-primary-500">

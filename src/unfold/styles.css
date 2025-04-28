@@ -1,51 +1,94 @@
-@tailwind base;
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@custom-variant dark (&:where(.dark, .dark *));
 
-@tailwind components;
+@source inline("2xl:flex 2xl:relative pb-0 tracking-normal h-3 mb-6 -mr-3 mr-3 pr-3 py-3 max-w-80 min-w-80 w-3 h-[64px] w-[65px]! w-96 max-w-96 md:w-48");
+@source inline("{md:,}sticky {2xl:,}relative rounded-b-default rounded-l-default rounded-t-default left-[65px] dark:hover:bg-white/[.06] bottom-3 top-3 right-3 translate-x-1/4 -translate-y-1/4");
+@source inline("{dark:,}border-transparent border-0 border-2 border-l border-b-0 border-l-0 border-r-0 border-t-0 m-3 my-3 pr-3 md:border-0 md:border-r lg:border-r-0");
+@source inline("{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
+@source inline("{hover:,dark:,}border-base-{50,{100..900..100},950}");
+@source inline("{md:,lg:,}w-{1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5}");
+@source inline("{md:,lg:,}gap-{0.5,{1..12}}");
+@source inline("{md:,lg:,}grid-cols-{1..12}");
+@source inline("{md:,lg:,}col-span-{1..12}");
 
-@tailwind utilities;
-
-@layer utilities {
-  .field-sizing-content {
-      field-sizing: content;
-  }
+@theme {
+  --font-sans: 'Inter', sans-serif;
 }
 
-/*******************************************************
- Classes
- *******************************************************/
-.column-fill-auto {
-  column-fill: auto;
+@theme inline{
+  --radius-default: var(--border-radius, 6px);
+
+  --color-primary-50: rgb(var(--color-primary-50));
+  --color-primary-100: rgb(var(--color-primary-100));
+  --color-primary-200: rgb(var(--color-primary-200));
+  --color-primary-300: rgb(var(--color-primary-300));
+  --color-primary-400: rgb(var(--color-primary-400));
+  --color-primary-500: rgb(var(--color-primary-500));
+  --color-primary-600: rgb(var(--color-primary-600));
+  --color-primary-700: rgb(var(--color-primary-700));
+  --color-primary-800: rgb(var(--color-primary-800));
+  --color-primary-900: rgb(var(--color-primary-900));
+  --color-primary-950: rgb(var(--color-primary-950));
+
+  --color-base-50: rgb(var(--color-base-50));
+  --color-base-100: rgb(var(--color-base-100));
+  --color-base-200: rgb(var(--color-base-200));
+  --color-base-300: rgb(var(--color-base-300));
+  --color-base-400: rgb(var(--color-base-400));
+  --color-base-500: rgb(var(--color-base-500));
+  --color-base-600: rgb(var(--color-base-600));
+  --color-base-700: rgb(var(--color-base-700));
+  --color-base-800: rgb(var(--color-base-800));
+  --color-base-900: rgb(var(--color-base-900));
+  --color-base-950: rgb(var(--color-base-950));
+
+  --color-font-subtle-light: rgb(var(--color-font-subtle-light));
+  --color-font-subtle-dark: rgb(var(--color-font-subtle-dark));
+  --color-font-default-light: rgb(var(--color-font-default-light));
+  --color-font-default-dark: rgb(var(--color-font-default-dark));
+  --color-font-important-light: rgb(var(--color-font-important-light));
+  --color-font-important-dark: rgb(var(--color-font-important-dark));
+}
+
+@utility field-sizing-content {
+  field-sizing: content;
+}
+
+@utility border-spacing-none {
+  border-spacing: 0;
+}
+
+@utility material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@utility scrollable-top {
+  @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-gray-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
+}
+
+@utility md-16 {
+  font-size: 16px;
+}
+
+@utility md-18 {
+  font-size: 18px;
 }
 
 [x-cloak] {
-  @apply !hidden;
-}
-
-@layer utilities {
-  .border-spacing-none {
-    border-spacing: 0;
-  }
-
-  .material-symbols-outlined {
-    font-family: "Material Symbols Outlined";
-    font-weight: normal;
-    font-style: normal;
-    font-size: 18px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -moz-font-feature-settings: "liga";
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  .scrollable-top:after {
-    @apply absolute bg-gradient-to-t from-gray-100 h-4 left-0 right-0 -top-4 dark:bg-none;
-    content: "";
-  }
+  @apply hidden!;
 }
 
 .asteriskField {
@@ -54,17 +97,6 @@
 
 .sortable-ghost {
   @apply opacity-50;
-}
-
-/*******************************************************
- Icons
- *******************************************************/
-.md-16 {
-  font-size: 16px;
-}
-
-.md-18 {
-  font-size: 18px;
 }
 
 /*******************************************************
@@ -97,7 +129,7 @@ select:after {
  Table
  *******************************************************/
 table select {
-  @apply appearance-none bg-no-repeat border border-base-200 block cursor-pointer font-medium px-3 py-2 pr-5 rounded shadow-sm text-base-500;
+  @apply appearance-none bg-no-repeat border border-base-200 block cursor-pointer font-medium px-3 py-2 pr-5 rounded-default shadow-xs text-base-500;
 
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgb(156, 163, 175)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 10l5 5 5-5H7z"/></svg>');
   background-size: 1.125rem 1.125rem;
@@ -118,11 +150,11 @@ table tr.selected th {
  Datetime
  *******************************************************/
 .datetimeshortcuts {
-  @apply absolute flex flex-row-reverse items-center right-0 text-0 top-px;
+  @apply absolute flex flex-row-reverse items-center right-0 text-[0px] top-px;
 }
 
 .datetimeshortcuts a {
-  @apply text-0 text-base-400 transition hover:text-base-700;
+  @apply text-[0px] text-base-400 transition hover:text-base-700;
 }
 
 .datetimeshortcuts a:first-child {
@@ -130,7 +162,7 @@ table tr.selected th {
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply border-l border-base-200 flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
+  @apply border-l border-base-200 flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
   content: "timer";
 }
 
@@ -143,7 +175,7 @@ table tr.selected th {
 }
 
 .date-icon:after {
-  @apply border-l border-base-200 h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700;
+  @apply border-l border-base-200 h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-center w-9 hover:text-base-700 dark:border-base-700;
   content: "edit";
 }
 
@@ -170,7 +202,7 @@ table tr.selected th {
 }
 
 .timezonewarning:hover {
-  @apply bg-white bottom-px leading-9 left-px right-px px-3 rounded text-xs top-px dark:bg-base-900;
+  @apply bg-white bottom-px leading-9 left-px right-px px-3 rounded-default text-xs top-px dark:bg-base-900;
 }
 
 .timezonewarning:hover:before {
@@ -186,11 +218,20 @@ table tr.selected th {
  Selector
  *******************************************************/
 .selector {
-  @apply flex flex-col flex-grow items-center md:flex-row;
+  @apply flex flex-col grow items-center md:flex-row;
+}
+
+.selector .selector-available-title label,
+.selector .selector-chosen-title label {
+  @apply block border-b border-base-200 font-semibold mb-3 py-2 px-4 text-sm text-font-important-light dark:border-base-700 dark:text-font-important-dark;
+}
+
+.selector .helptext {
+  @apply border-b border-base-200 mb-3 px-4 pb-3 dark:border-base-700;
 }
 
 .selector select {
-  @apply bg-none flex-grow w-full dark:bg-base-900;
+  @apply bg-none grow w-full dark:bg-base-900;
 }
 
 .selector option {
@@ -203,7 +244,7 @@ table tr.selected th {
 
 .selector-chosen,
 .selector-available {
-  @apply border border-base-200 flex flex-col flex-grow rounded self-stretch shadow-sm md:w-72 lg:w-96 dark:border-base-700;
+  @apply border border-base-200 flex flex-col grow rounded-default self-stretch shadow-xs md:w-72 lg:w-96 dark:border-base-700;
 }
 
 .selector-chosen h2,
@@ -216,7 +257,7 @@ table tr.selected th {
 }
 
 .selector-filter input {
-  @apply bg-base-100 block flex-grow font-medium mb-3 mx-3 px-3 py-2 rounded text-base-500 text-sm focus:outline-none dark:bg-base-800 dark:text-base-300;
+  @apply bg-base-100 block grow font-medium mb-3 mx-3 px-3 py-2 rounded-default text-base-500 text-sm focus:outline-hidden dark:bg-base-800 dark:text-base-300;
 }
 
 .selector-chooseall,
@@ -229,7 +270,7 @@ table tr.selected th {
 }
 
 .selector-chooser {
-  @apply flex flex-col my-4 text-0 w-14;
+  @apply flex flex-col my-4 text-[0px] w-14;
 }
 
 .selector-chooser li {
@@ -250,7 +291,7 @@ table tr.selected th {
 }
 
 .related-widget-wrapper {
-  @apply !flex-nowrap;
+  @apply flex-nowrap!;
 }
 
 .related-widget-wrapper-link {
@@ -282,7 +323,7 @@ table tr.selected th {
 }
 
 .add-row a {
-  @apply bg-white border border-base-200 block font-medium px-3 py-2 rounded text-center hover:text-base-700 lg:float-right dark:bg-base-900 dark:border-base-700 dark:hover:text-base-200;
+  @apply bg-white border border-base-200 block font-medium px-3 py-2 rounded-default text-center hover:text-base-700 lg:float-right dark:bg-base-900 dark:border-base-700 dark:hover:text-base-200;
 }
 
 .inline-deletelink {
@@ -301,7 +342,7 @@ h3 span:nth-child(3) {
  Autocomplete
  *******************************************************/
 .select2.select2-container {
-  @apply bg-white border border-base-200 max-w-2xl !min-h-9.5 relative rounded shadow-sm !w-full dark:bg-base-900 dark:border-base-700;
+  @apply bg-white border border-base-200 max-w-2xl min-h-[38px]! relative rounded-default shadow-xs w-full! dark:bg-base-900 dark:border-base-700;
 }
 
 .errors .select2.select2-container {
@@ -325,7 +366,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__clear {
-  @apply flex items-center h-9 -mt-2 text-0;
+  @apply flex items-center h-9 -mt-2 text-[0px];
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -367,7 +408,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-search--dropdown
   .select2-search__field {
-  @apply bg-base-50 border border-base-200 border-solid flex-grow font-medium mx-0 outline-none px-3 py-2 rounded shadow-sm text-font-default-light text-sm w-full dark:bg-base-800 dark:border-base-800 dark:text-font-default-dark;
+  @apply bg-base-50 border border-base-200 border-solid grow font-medium mx-0 outline-hidden px-3 py-2 rounded-default shadow-xs text-font-default-light text-sm w-full dark:bg-base-800 dark:border-base-800 dark:text-font-default-dark;
 }
 
 .select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--above {
@@ -379,7 +420,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--open .select2-dropdown {
-  @apply border-primary-600 ring ring-primary-300 pb-2 shadow-sm dark:bg-base-900 dark:border-primary-700 after:block after:bg-white after:absolute after:border-l after:border-l-primary-600 after:border-r after:border-r-primary-600 after:h-1 after:-left-px after:-right-px after:-mt-1 after:top-0 dark:after:bg-base-900 dark:after:border-l-primary-700 dark:after:border-r-primary-700 dark:ring-primary-700 dark:ring-opacity-50;
+  @apply border-primary-600 ring-3 ring-primary-300 pb-2 shadow-xs dark:bg-base-900 dark:border-primary-700 after:block after:bg-white after:absolute after:border-l after:border-l-primary-600 after:border-r after:border-r-primary-600 after:h-1 after:-left-px after:-right-px after:-mt-1 after:top-0 dark:after:bg-base-900 dark:after:border-l-primary-700 dark:after:border-r-primary-700 dark:ring-primary-700/50;
 }
 
 .select2-container.select2-container--open .select2-dropdown--below {
@@ -387,7 +428,7 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--open .select2-dropdown--above {
-  @apply rounded-b-none rounded after:bottom-0 after:-mb-1 after:mt-0 after:top-auto;
+  @apply rounded-b-none rounded-default after:bottom-0 after:-mb-1 after:mt-0 after:top-auto;
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -433,14 +474,14 @@ h3 span:nth-child(3) {
   .select2-selection--multiple
   li.select2-selection__choice
   .select2-selection__choice__remove {
-  @apply align-top text-0 hover:text-base-600 dark:hover:text-base-200;
+  @apply align-top text-[0px] hover:text-base-600 dark:hover:text-base-200;
 }
 
 .select2-container--admin-autocomplete
   .select2-selection--multiple
   li.select2-selection__choice
   .select2-selection__choice__remove:after {
-  @apply h-7 !leading-7 material-symbols-outlined;
+  @apply h-7 leading-7! material-symbols-outlined;
 
   content: "close";
   font-size: 14px;
@@ -454,7 +495,7 @@ h3 span:nth-child(3) {
 }
 
 .select2.select2-container--open {
-  @apply border-b-0 border-primary-600 relative ring ring-primary-300 dark:border-primary-700 dark:ring-primary-700 dark:ring-opacity-50;
+  @apply border-b-0 border-primary-600 relative ring-3 ring-primary-300 dark:border-primary-700 dark:ring-primary-700/50;
 }
 
 /*******************************************************
@@ -495,7 +536,7 @@ fieldset details[open] > summary:after {
  *******************************************************/
 .calendarbox,
 .clockbox {
-  @apply bg-white border border-base-200 rounded shadow-sm text-base-500 text-sm w-80 z-50 dark:bg-base-800 dark:border-base-700 !fixed !left-1/2 !top-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply bg-white border border-base-200 rounded-default shadow-xs text-base-500 text-sm w-80 z-50 dark:bg-base-800 dark:border-base-700 fixed! left-1/2! top-1/2! -translate-x-1/2 -translate-y-1/2;
 }
 
 .calendar caption {
@@ -527,11 +568,11 @@ fieldset details[open] > summary:after {
 }
 
 .calendar-shortcuts {
-  @apply flex flex-row justify-center mb-3 px-1 rounded-b text-0;
+  @apply flex flex-row justify-center mb-3 px-1 rounded-b text-[0px];
 }
 
 .calendar-shortcuts a {
-  @apply border border-base-200  font-medium leading-none mx-1 px-2 py-2 rounded shadow-sm text-center text-base-500 text-xs transition-all w-1/3 dark:border-base-700 dark:hover:border-base-600 dark:text-base-300 dark:hover:text-base-200;
+  @apply border border-base-200  font-medium leading-none mx-1 px-2 py-2 rounded-default shadow-xs text-center text-base-500 text-xs transition-all w-1/3 dark:border-base-700 dark:hover:border-base-600 dark:text-base-300 dark:hover:text-base-200;
 }
 
 .calendar-cancel {
@@ -539,7 +580,7 @@ fieldset details[open] > summary:after {
 }
 
 .calendarnav-previous {
-  @apply absolute block ml-2 mt-2 left-0 text-0 top-0;
+  @apply absolute block ml-2 mt-2 left-0 text-[0px] top-0;
 }
 
 .calendarnav-next:after,
@@ -556,7 +597,7 @@ fieldset details[open] > summary:after {
 }
 
 .calendarnav-next {
-  @apply absolute block mr-2 mt-2 right-0 text-0 top-0;
+  @apply absolute block mr-2 mt-2 right-0 text-[0px] top-0;
 }
 
 .calendarnav-next:after {
@@ -568,7 +609,7 @@ fieldset details[open] > summary:after {
  Timepicker
  *******************************************************/
 .clockbox {
-  @apply bg-white border border-base-200 rounded shadow-sm text-sm dark:bg-base-800 dark:border-base-700 z-50;
+  @apply bg-white border border-base-200 rounded-default shadow-xs text-sm dark:bg-base-800 dark:border-base-700 z-50;
 }
 
 .clockbox h2 {
@@ -602,7 +643,7 @@ fieldset details[open] > summary:after {
  Filters
  *******************************************************/
 #changelist-filter .admin-numeric-filter-slider .noUi-handle {
-  @apply bg-white border border-base-200 cursor-pointer h-4 -right-4 rounded-full shadow-sm w-4 dark:bg-base-200 dark:border-base-200;
+  @apply bg-white border border-base-200 cursor-pointer h-4 -right-4 rounded-full shadow-xs w-4 dark:bg-base-200 dark:border-base-200;
 }
 
 #changelist-filter .admin-numeric-filter-slider .noUi-handle-upper {
@@ -648,7 +689,7 @@ trix-toolbar[id^="trix-toolbar-"] {
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav {
-  @apply bg-base-100 border-0 flex gap-2 m-0 ml-3 mb-0 mt-3 mr-auto p-1 rounded text-sm dark:bg-white/[.04] after:hidden;
+  @apply bg-base-100 border-0 flex gap-2 m-0 ml-3 mb-0 mt-3 mr-auto p-1 rounded-default text-sm dark:bg-white/[.04] after:hidden;
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav li {
@@ -656,11 +697,11 @@ trix-toolbar[id^="trix-toolbar-"] {
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav li a {
-  @apply bg-transparent border-0 flex flex-row font-medium items-center m-0 px-2.5 py-1 rounded text-base-400 text-sm hover:bg-base-700/[.04] hover:text-base-700 dark:hover:bg-white/[.04] dark:hover:text-white;
+  @apply bg-transparent border-0 flex flex-row font-medium items-center m-0 px-2.5 py-1 rounded-default text-base-400 text-sm hover:bg-base-700/[.04] hover:text-base-700 dark:hover:bg-white/[.04] dark:hover:text-white;
 }
 
 .ui-tabs.ui-widget .ui-tabs-nav li.ui-tabs-active a {
-  @apply flex flex-row font-medium items-center px-2.5 py-1 rounded  bg-white shadow-sm text-base-700 hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-white;
+  @apply flex flex-row font-medium items-center px-2.5 py-1 rounded-default  bg-white shadow-xs text-base-700 hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-white;
 }
 
 /*******************************************************

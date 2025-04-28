@@ -58,7 +58,7 @@
         {% endblock %}
     </head>
 
-    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-base-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ mainWidth: 0, {% if opts %}activeTab: 'general',{% endif %} sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = {% if opts %}window.location.hash?.replace('#', '') || 'general'{% else %}''{% endif %}">
+    <body class="antialiased bg-base-50 font-sans text-font-default-light text-sm dark:bg-base-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{{% if opts %}activeTab: 'general',{% endif %} sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = {% if opts %}window.location.hash?.replace('#', '') || 'general'{% else %}''{% endif %}">
         {% if colors %}
             <style id="unfold-theme-colors">
                 :root {
@@ -77,7 +77,7 @@
 
         {% block base %}{% endblock %}
 
-        <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-base-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
+        <div id="modal-overlay" class="backdrop-blur-xs bg-base-900/80 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
         <script src="{% static 'unfold/js/simplebar/simplebar.js' %}"></script>
     </body>
 

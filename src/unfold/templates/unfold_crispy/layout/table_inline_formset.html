@@ -9,7 +9,7 @@
         {% csrf_token %}
     {% endif %}
 
-    <div class="overflow-x-auto border border-base-200 rounded shadow-sm dark:border-base-800" {% if form_id %} id="{{ form_id }}"{% endif %}>
+    <div class="overflow-x-auto border border-base-200 rounded-default shadow-xs dark:border-base-800" {% if form_id %} id="{{ form_id }}"{% endif %}>
         {{ formset.management_form|crispy }}
 
         <table class="w-full">
@@ -57,7 +57,7 @@
                     <tr id="{{ formset_id }}-add-row-wrapper">
                         <td colspan="100%" class="border-t border-base-200 p-3 dark:border-base-800">
                             <div class="flex justify-end">
-                                <button type="button" id="{{ formset_id }}-add-row-button" class="border border-base-200 font-medium px-3 py-2 rounded transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:hover:text-base-200 dark:hover:bg-base-900">
+                                <button type="button" id="{{ formset_id }}-add-row-button" class="border border-base-200 font-medium px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:hover:text-base-200 dark:hover:bg-base-900">
                                     {% trans "Add row" %}
                                 </button>
                             </div>

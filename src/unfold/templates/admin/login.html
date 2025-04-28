@@ -25,7 +25,7 @@
 
 {% block base %}
     <div id="page" class="flex min-h-screen">
-        <div class="flex flex-grow items-center justify-center mx-auto px-4 relative">
+        <div class="flex grow items-center justify-center mx-auto px-4 relative">
             <div class="w-full sm:w-96">
                 <h1 class="font-semibold mb-10">
                     <span class="block text-font-important-light dark:text-font-important-dark">{% trans 'Welcome back to' %}</span>
@@ -63,7 +63,7 @@
                     {% url 'admin_password_reset' as password_reset_url %}
 
                     <div class="submit-row">
-                        <button type="submit" class="bg-primary-600 border border-transparent flex flex-row font-semibold group items-center justify-center py-2 rounded text-sm text-white w-full">
+                        <button type="submit" class="bg-primary-600 border border-transparent flex flex-row font-semibold group items-center justify-center py-2 rounded-default text-sm text-white w-full">
                             {% translate 'Log in' %}
 
                             <i class="material-symbols-outlined ml-2 relative right-0 text-lg transition-all group-hover:-right-1">arrow_forward</i>
@@ -72,7 +72,7 @@
 
                     {% if password_reset_url %}
                         <div class="password-reset-link">
-                            <a href="{{ password_reset_url }}" class="border border-base-200 font-medium hidden mt-4 px-3 py-2 rounded text-center text-sm text-base-500 transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:text-font-default-dark dark:hover:text-base-200 dark:hover:bg-base-900">
+                            <a href="{{ password_reset_url }}" class="border border-base-200 font-medium hidden mt-4 px-3 py-2 rounded-default text-center text-sm text-base-500 transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:text-font-default-dark dark:hover:text-base-200 dark:hover:bg-base-900">
                                 {% translate 'Forgotten your password or username?' %}
                             </a>
                         </div>
@@ -98,7 +98,7 @@
         </div>
 
         {% if image %}
-            <div class="bg-cover flex-grow hidden max-w-3xl xl:max-w-4xl xl:block" style="background-image: url('{{ image }}')">
+            <div class="bg-cover grow hidden max-w-3xl xl:max-w-4xl xl:block" style="background-image: url('{{ image }}')">
             </div>
         {% endif %}
     </div>

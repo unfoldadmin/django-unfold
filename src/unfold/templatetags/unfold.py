@@ -323,6 +323,17 @@ def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
 
 
 @register.simple_tag(takes_context=True)
+def element_classes(context: Context, key: str) -> str:
+    if key in context.get("element_classes", {}):
+        if isinstance(context["element_classes"][key], list | tuple):
+            return " ".join(context["element_classes"][key])
+
+        return context["element_classes"][key]
+
+    return ""
+
+
+@register.simple_tag(takes_context=True)
 def fieldset_rows_classes(context: Context) -> str:
     classes = [
         "aligned",
@@ -334,8 +345,8 @@ def fieldset_rows_classes(context: Context) -> str:
                 "border",
                 "border-base-200",
                 "mb-8",
-                "rounded",
-                "shadow-sm",
+                "rounded-default",
+                "shadow-xs",
                 "dark:border-base-800",
             ]
         )
@@ -384,7 +395,7 @@ def fieldset_line_classes(context: Context) -> str:
         "field-line",
         "flex",
         "flex-col",
-        "flex-grow",
+        "grow",
         "group/line",
         "px-3",
         "py-2.5",
@@ -412,7 +423,7 @@ def fieldset_line_classes(context: Context) -> str:
                 "lg:border-l",
                 "lg:flex-row",
                 "dark:border-base-800",
-                "first:lg:border-l-0",
+                "lg:first:border-l-0",
             ]
         )
 
@@ -423,11 +434,12 @@ def fieldset_line_classes(context: Context) -> str:
 def action_item_classes(context: Context, action: UnfoldAction) -> str:
     classes = [
         "border",
+        "border-base-200",
         "-ml-px",
-        "max-md:first:rounded-t",
-        "max-md:last:rounded-b",
-        "md:first:rounded-l",
-        "md:last:rounded-r",
+        "max-md:first:rounded-t-default",
+        "max-md:last:rounded-b-default",
+        "md:first:rounded-l-default",
+        "md:last:rounded-r-default",
     ]
 
     if "variant" not in action:

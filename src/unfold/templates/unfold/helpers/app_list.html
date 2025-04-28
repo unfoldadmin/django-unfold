@@ -1,7 +1,7 @@
 {% load i18n unfold %}
 
 {% if sidebar_navigation %}
-    <div class="h-0 flex-grow overflow-auto" data-simplebar>
+    <div class="h-0 grow overflow-auto" data-simplebar>
         {% for group in sidebar_navigation %}
             {% if group.items %}
                 {% has_nav_item_active group.items as has_active %}
@@ -16,7 +16,7 @@
                             {{ group.title }}
 
                             {% if group.collapsible %}
-                                <span class="material-symbols-outlined ml-auto text-base-400 transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
+                                <span class="material-symbols-outlined ml-auto transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
                                     chevron_right
                                 </span>
                             {% endif %}
@@ -27,9 +27,9 @@
                         {% for item in group.items %}
                             {% if item.has_permission %}
                                 <li>
-                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="flex h-9.5 items-center -mx-3 px-3 rounded hover:text-primary-600 dark:hover:text-primary-500 {% if item.active %}bg-base-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
+                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 {% if item.active %}bg-base-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
                                         {% if item.icon %}
-                                            <span class="material-symbols-outlined md-18 mr-3 w-4.5">
+                                            <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
                                                 {{ item.icon }}
                                             </span>
                                         {% endif %}
@@ -39,7 +39,7 @@
                                         </span>
 
                                         {% if item.badge %}
-                                            <span class="bg-red-600 font-semibold ml-2 px-1 relative rounded-sm text-xs text-white">
+                                            <span class="bg-red-600 font-semibold ml-2 px-1 relative rounded-xs text-xs text-white">
                                                 {% if item.badge_callback %}
                                                     {{ item.badge_callback }}
                                                 {% else %}
@@ -59,7 +59,7 @@
 
     {% if sidebar_show_all_applications %}
         <div class="mt-auto" x-data="{ openAllApplications: false }">
-            <a class="cursor-pointer flex items-center px-6 py-3 text-sm dark:text-font-default-dark hover:text-primary-600 dark:hover:text-primary-500" x-on:click="openAllApplications = !openAllApplications">
+            <a class="cursor-pointer flex items-center h-[64px] px-6 py-3 text-sm dark:text-font-default-dark hover:text-primary-600 dark:hover:text-primary-500" x-on:click="openAllApplications = !openAllApplications">
                 <span class="material-symbols-outlined md-18 mr-3">
                     apps
                 </span>
@@ -70,7 +70,7 @@
             </a>
 
             <div class="absolute bottom-0 left-0 right-0 top-0 z-50 md:left-72" x-cloak x-show="openAllApplications">
-                <div class="absolute bg-base-900 bg-opacity-80 backdrop-blur-sm bottom-0 left-0 right-0 top-0 z-10 w-screen"></div>
+                <div class="absolute bg-base-900/80 backdrop-blur-xs bottom-0 left-0 right-0 top-0 z-10 w-screen"></div>
 
                 <div class="bg-white flex flex-col h-full overflow-x-hidden overflow-y-auto py-5 px-8 relative text-sm w-80 z-20 dark:bg-base-900 dark:border-r dark:border-base-800" x-on:click.outside="openAllApplications = false" x-on:keydown.escape.window="openAllApplications = false">
                     {% for app in app_list %}

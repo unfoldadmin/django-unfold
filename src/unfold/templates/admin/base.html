@@ -1,22 +1,22 @@
 {% extends 'unfold/layouts/skeleton.html' %}
 
-{% load i18n unfold %}
+{% load admin_list i18n unfold %}
 
 {% block base %}
-    <div id="page" class="flex min-h-screen">
+    <div id="page" class="flex max-w-full min-h-screen dark:bg-base-950/20 {% element_classes 'page' %}">
         {% if not is_popup and is_nav_sidebar_enabled %}
             {% block nav-sidebar %}
                 {% include "admin/nav_sidebar.html" %}
             {% endblock %}
         {% endif %}
 
-        <div id="main" class="flex-grow min-w-0"  x-resize="mainWidth = $width">
+        <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 {% element_classes 'main' %}">
             {% include "unfold/helpers/header.html" %}
 
             {% if not is_popup %}
                 {% spaceless %}
                     {% block breadcrumbs %}
-                        <div class="px-4 lg:px-8">
+                        <div class="px-4">
                             <div class="container mb-12 mx-auto -my-3">
                                 <ul class="flex flex-wrap">
                                     {% url 'admin:index' as link %}
@@ -31,14 +31,14 @@
             {% endif %}
 
             {% block messages %}
-                <div class="px-4 lg:px-8">
+                <div class="px-4">
                     <div class="{% if not cl.model_admin.list_fullwidth %}container{% endif %} mx-auto">
                         {% include "unfold/helpers/messages.html" %}
                     </div>
                 </div>
             {% endblock messages %}
 
-            <div class="px-4 pb-8 lg:px-8">
+            <div class="px-4 pb-8 grow">
                 <div id="content" class="{% if not cl.model_admin.list_fullwidth %}container{% endif %} mx-auto {% block coltype %}colM{% endblock %}">
                     {% if cl %}
                         {% tab_list "changelist" cl.opts %}
