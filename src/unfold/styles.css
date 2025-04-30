@@ -349,6 +349,14 @@ h3 span:nth-child(3) {
   @apply bg-white border border-base-200 max-w-2xl min-h-[38px]! relative rounded-default shadow-xs w-full! dark:bg-base-900 dark:border-base-700;
 }
 
+.select2-selection {
+  @apply outline-none;
+}
+
+.select2.select2-container.select2-container--focus{
+  @apply outline-2 outline-primary-600 -outline-offset-2;
+}
+
 .errors .select2.select2-container {
   @apply border-red-600;
 }
