@@ -396,6 +396,7 @@ def fieldset_line_classes(context: Context) -> str:
         "flex",
         "flex-col",
         "grow",
+        "group",
         "group/line",
         "px-3",
         "py-2.5",
