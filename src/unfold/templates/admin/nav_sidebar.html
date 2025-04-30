@@ -2,8 +2,8 @@
 
 <div class="relative z-50">
     <div class="fixed hidden xl:relative xl:block w-[288px] {% element_classes 'navigation_wrapper' %}" x-bind:class="{'xl:hidden!': !sidebarDesktopOpen, 'block!': sidebarMobileOpen}">
-        <div class="relative z-30">
-            <div id="nav-sidebar" class="bg-gray-50 border-r border-base-200 bottom-0 fixed max-h-screen top-0 w-[288px] dark:border-base-800 {% element_classes 'navigation' %}">
+        <div class="bg-gray-50 relative z-30 dark:bg-gray-900">
+            <div id="nav-sidebar" class="border-r border-base-200 bottom-0 fixed max-h-screen top-0 w-[288px] dark:border-base-800 dark:bg-base-950/20 {% element_classes 'navigation' %}">
                 {% if templates.navigation %}
                     {% include templates.navigation %}
                 {% else %}
