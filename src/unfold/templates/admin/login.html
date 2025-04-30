@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block base %}
-    <div id="page" class="flex min-h-screen">
+    <div id="page" class="bg-white flex min-h-screen dark:bg-base-900 ">
         <div class="flex grow items-center justify-center mx-auto px-4 relative">
             <div class="w-full sm:w-96">
                 <h1 class="font-semibold mb-10">
@@ -66,7 +66,7 @@
                         <button type="submit" class="bg-primary-600 border border-transparent flex flex-row font-semibold group items-center justify-center py-2 rounded-default text-sm text-white w-full">
                             {% translate 'Log in' %}
 
-                            <i class="material-symbols-outlined ml-2 relative right-0 text-lg transition-all group-hover:-right-1">arrow_forward</i>
+                            <span class="material-symbols-outlined ml-2 relative right-0 text-base transition-all group-hover:-right-1">arrow_forward</span>
                         </button>
                     </div>
 

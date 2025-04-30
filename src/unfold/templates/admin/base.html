@@ -3,7 +3,7 @@
 {% load admin_list i18n unfold %}
 
 {% block base %}
-    <div id="page" class="flex max-w-full min-h-screen dark:bg-base-950/20 {% element_classes 'page' %}">
+    <div id="page" class="flex max-w-full min-h-screen {% element_classes 'page' %}">
         {% if not is_popup and is_nav_sidebar_enabled %}
             {% block nav-sidebar %}
                 {% include "admin/nav_sidebar.html" %}
