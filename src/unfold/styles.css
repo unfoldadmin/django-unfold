@@ -9,7 +9,7 @@
 @source inline("{-,}m{t,r,b,l,x,y,}-{0..4} {-,}p{t,r,b,l,x,y,}-{0..4}");
 @source inline("{md:,lg:,}border-{0,2} {md:,lg:,}border-{t,r,b,l}-{0,2}");
 @source inline("{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
-@source inline("{hover:,dark:,}border-base-{50,{100..900..100},950}");
+@source inline("{hover:,dark:,}border-base-{50,{100..900..100},950} {hover:,dark:,}border-transparent");
 @source inline("{hover:,dark:,}bg-base-{50,{100..900..100},950}");
 @source inline("{md:,lg:,}w-{1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5}");
 @source inline("{md:,lg:,}gap-{0.5,{1..12}}");
@@ -347,6 +347,14 @@ h3 span:nth-child(3) {
  *******************************************************/
 .select2.select2-container {
   @apply bg-white border border-base-200 max-w-2xl min-h-[38px]! relative rounded-default shadow-xs w-full! dark:bg-base-900 dark:border-base-700;
+}
+
+.select2-selection {
+  @apply outline-none;
+}
+
+.select2.select2-container.select2-container--focus{
+  @apply outline-2 outline-primary-600 -outline-offset-2;
 }
 
 .errors .select2.select2-container {
