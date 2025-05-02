@@ -436,9 +436,10 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
     classes = [
         "border",
         "border-base-200",
-        "-ml-px",
+        "max-md:-mt-px",
         "max-md:first:rounded-t-default",
         "max-md:last:rounded-b-default",
+        "md:-ml-px",
         "md:first:rounded-l-default",
         "md:last:rounded-r-default",
     ]

@@ -17,7 +17,7 @@
         <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white grow font-medium min-w-0 px-3 py-2 text-ellipsis dark:bg-base-900">
 
         <div class="flex flex-none items-center leading-none self-stretch">
-            <div class="opacity-0">
+            <div class="opacity-0 w-[0px]">
                 <input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %} />
             </div>
 
