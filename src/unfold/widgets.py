@@ -85,6 +85,7 @@ BASE_CLASSES = [
     "dark:text-font-default-dark",
     "dark:group-[.errors]:border-red-500",
     "dark:focus:group-[.errors]:outline-red-500",
+    "dark:scheme-dark",
 ]
 
 BASE_INPUT_CLASSES = [
