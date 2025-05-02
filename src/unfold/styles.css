@@ -234,7 +234,7 @@ table tr.selected th {
 }
 
 .selector select {
-  @apply bg-none grow w-full dark:bg-base-900;
+  @apply bg-none grow w-full dark:bg-base-900 dark:scheme-dark;
 }
 
 .selector option {
