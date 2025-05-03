@@ -15,20 +15,26 @@
             {% for error in errors %}
                 <li x-data="{ open: false }">
                     <div class="bg-red-50 border border-red-200 cursor-pointer mb-4 rounded-default shadow-xs text-red-500 dark:bg-red-500/20 dark:border-red-500/20" x-on:click="open = ! open">
-                        <div class="border-b border-red-200 flex flex-row font-semibold py-3 px-4 dark:border-red-500/20">
-                            {% trans "Line number" %}: {{ line }} - {{ error.error }}
-                        </div>
+                        {% if "message" in import_error_display %}
+                            <div class="border-b border-red-200 flex flex-row font-semibold py-3 px-4 dark:border-red-500/20">
+                                {% trans "Line number" %}: {{ line }} - {{ error.error }}
+                            </div>
+                        {% endif %}
 
-                        <div class="px-4 py-3">
-                            <code>
-                                {{ error.row.values|join:", " }}
-                            </code>
-                        </div>
+                        {% if "row" in import_error_display %}
+                            <div class="px-4 py-3">
+                                <code>
+                                    {{ error.row.values|join:", " }}
+                                </code>
+                            </div>
+                        {% endif %}
                     </div>
 
-                    <div class="block border border-base-200 leading-relaxed mb-4 rounded-default p-4 traceback dark:border-base-800 dark:text-font-default-dark " x-show="open">
-                        {{ error.traceback|linebreaks }}
-                    </div>
+                    {% if "traceback" in import_error_display %}
+                        <div class="block border border-base-200 leading-relaxed mb-4 rounded-default p-4 traceback dark:border-base-800 dark:text-font-default-dark " x-show="open">
+                            {{ error.traceback|linebreaks }}
+                        </div>
+                    {% endif %}
                 </li>
             {% endfor %}
         {% endfor %}
