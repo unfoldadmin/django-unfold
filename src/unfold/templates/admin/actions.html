@@ -2,7 +2,7 @@
 
 <div id="changelist-actions" class="actions flex flex-col gap-3 text-white sm:flex-row sm:items-center lg:items-center {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %}"  x-bind:style="'width: ' + changeListWidth + 'px'">
     {% block actions %}
-        <div class="flex flex-row gap-2 lg:flex-row" x-data="{action: ''}">
+        <div class="group primary flex flex-row gap-2 lg:flex-row" x-data="{action: ''}">
             {% block actions-form %}
                 {% for field in action_form %}
                     {% if field.label %}

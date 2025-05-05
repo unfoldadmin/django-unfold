@@ -1,0 +1,9 @@
+<div class="grow relative max-w-2xl">
+    <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
+        <optgroup label="{{ group_name }}">{% endif %}{% for option in group_choices %}
+            {% include option.template_name with widget=option %}{% endfor %}{% if group_name %}
+                </optgroup>{% endif %}{% endfor %}
+    </select>
+
+    <span class="material-symbols-outlined absolute group-[.primary]:text-white -ml-[31px] pointer-events-none text-base-400 top-0 top-1/2 hover:text-base-700 dark:text-base-500 dark:hover:text-base-200 -translate-y-1/2">expand_more</span>
+</div>
