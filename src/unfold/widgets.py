@@ -86,6 +86,7 @@ BASE_CLASSES = [
     "dark:group-[.errors]:border-red-500",
     "dark:focus:group-[.errors]:outline-red-500",
     "dark:scheme-dark",
+    "group-[.primary]:border-transparent",
 ]
 
 BASE_INPUT_CLASSES = [
@@ -633,6 +634,8 @@ class UnfoldAdminBigIntegerFieldWidget(AdminBigIntegerFieldWidget):
 
 
 class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
+    template_name = "unfold/widgets/select.html"
+
     def __init__(self, attrs=None):
         if attrs is None:
             attrs = {}
@@ -644,6 +647,8 @@ class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
 
 
 class UnfoldAdminSelectWidget(Select):
+    template_name = "unfold/widgets/select.html"
+
     def __init__(self, attrs=None, choices=()):
         if attrs is None:
             attrs = {}

@@ -2,7 +2,7 @@
     {{ field.label_tag }}
 </div>
 
-<div class="grow">
+<div class="grow relative">
     {% if field.is_readonly %}
         {% include "unfold/helpers/field_readonly_value.html" %}
     {% else %}

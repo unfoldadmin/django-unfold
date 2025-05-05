@@ -24,18 +24,18 @@
     <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white grow font-medium min-w-0 px-3 py-2 text-ellipsis dark:bg-base-900">
 
     <div class="bg-white flex flex-none items-center leading-none self-stretch dark:bg-base-900">
-        <div class="opacity-0 w-[0px]">
+        <div class="opacity-0 overflow-hidden w-[0px]">
             <input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %} />
         </div>
 
         {% if widget.is_initial %}
             <a href="{{ widget.value.url }}" class="border-r border-base-200 cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
-                <span class="material-symbols-outlined">download</span>
+                <span class="block material-symbols-outlined">download</span>
             </a>
         {% endif %}
 
         <label for="{{ widget.attrs.id }}" class="cursor-pointer text-base-400 px-3 hover:text-base-700 dark:text-base-500 dark:hover:text-base-200">
-            <span class="material-symbols-outlined">upload</span>
+            <span class="block material-symbols-outlined">upload</span>
         </label>
     </div>
 </div>
