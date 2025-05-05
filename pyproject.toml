@@ -58,7 +58,7 @@ ignore = [
 
 [tool.semantic_release]
 tag_format = "{version}"
-major_on_zero = true
+major_on_zero = false
 version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [tool.semantic_release.changelog]
