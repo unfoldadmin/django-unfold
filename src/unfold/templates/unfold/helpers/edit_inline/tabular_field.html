@@ -16,7 +16,7 @@
             {{ field.field }}
 
             {% if field.field.errors|length > 0 %}
-                <div class="mt-1 text-red-600 text-sm dark:text-red-500">
+                <div class="mt-2 text-red-600 text-xs dark:text-red-500">
                     {% for error in field.field.errors %}
                         {{ error }}
                     {% endfor %}
