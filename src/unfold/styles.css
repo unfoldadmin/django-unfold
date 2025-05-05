@@ -157,7 +157,7 @@ table tr.selected th {
  Datetime
  *******************************************************/
 .datetimeshortcuts {
-  @apply absolute flex flex-row-reverse items-center right-0 text-[0px] top-px;
+  @apply absolute flex flex-row-reverse items-center right-px text-[0px] top-px;
 }
 
 .datetimeshortcuts a {
@@ -169,38 +169,17 @@ table tr.selected th {
 }
 
 .datetimeshortcuts a:first-child:after {
-  @apply border-l border-base-200 flex h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
-  content: "timer";
+  @apply content-['update'] flex h-9 items-center justify-center leading-none material-symbols-outlined px-3 py-2 text-center hover:text-base-700 dark:border-base-700 dark:hover:text-base-700;
 }
 
 .datetimeshortcuts a:first-child:after {
   @apply flex;
 }
 
+.clock-icon,
 .date-icon {
-  @apply block h-9 text-base-400 transition-all w-9 hover:text-base-700 dark:text-base-500 dark:hover:text-white;
-}
-
-.date-icon:after {
-  @apply border-l border-base-200 h-9 items-center justify-center leading-none material-symbols-outlined py-2 text-center w-9 hover:text-base-700 dark:border-base-700;
-  content: "edit";
-}
-
-.date-icon:after {
-  @apply flex dark:hover:text-white;
-}
-
-.clock-icon {
-  @apply block h-9 ml-2 w-9 hover:text-base-700 dark:text-base-500 dark:hover:text-base-200;
-}
-
-.clock-icon:after {
-  @apply border-l border-base-200 h-9 items-center justify-center material-symbols-outlined py-2 text-base text-center w-9 hover:text-base-700 dark:border-base-700 dark:hover:text-white;
-  content: "edit";
-}
-
-.clock-icon:after {
-  @apply flex;
+  @apply block text-base-400 transition-all hover:text-base-700 dark:text-base-500 dark:hover:text-base-200;
+  @apply after:border-r after:border-base-200 after:content-['today'] after:material-symbols-outlined after:px-3 dark:after:border-base-700;
 }
 
 .timezonewarning {
@@ -385,7 +364,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__clear {
-  @apply flex items-center h-9 -mt-2 text-[0px];
+  @apply flex items-center h-9 -mt-2 text-[0px] after:text-base-400 hover:after:text-base-700 dark:hover:after:text-base-200 dark:after:text-base-500;
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -394,9 +373,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__clear:after {
-  @apply material-symbols-outlined text-base-500;
-  content: "close";
-  font-size: 14px;
+  @apply material-symbols-outlined transition-all content-['close'] text-[18px] ;
 }
 
 .select2-container.select2-container--admin-autocomplete
@@ -408,7 +385,7 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--single
   .select2-selection__arrow:after {
-  @apply left-0 leading-none m-0 material-symbols-outlined text-base-500 text-lg;
+  @apply left-0 leading-none m-0 material-symbols-outlined text-base-400 text-lg;
   content: "expand_more";
 }
 
@@ -468,8 +445,9 @@ h3 span:nth-child(3) {
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--multiple
   .select2-selection__clear {
-  @apply m-0 mr-2 top-0;
+  @apply m-0 mr-3 top-0;
 }
+
 
 .select2-container.select2-container--admin-autocomplete
   .select2-selection--multiple
