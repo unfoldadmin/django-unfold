@@ -106,7 +106,7 @@
       // !CHANGED from original
       if ($(template).parent().is("tbody")) {
         row
-          .wrap('<tbody class="template"></tbody>')
+          .wrap('<tbody class="template" x-sort:item></tbody>')
           .parent()
           .insertBefore($(template).parent());
       } else {
