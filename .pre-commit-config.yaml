@@ -12,14 +12,14 @@ repos:
       - id: trailing-whitespace
         exclude: CHANGELOG.md
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.7
+    rev: v0.11.8
     hooks:
       - id: ruff
         args:
           - --fix
       - id: ruff-format
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v4.0.0
+    rev: v4.1.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
