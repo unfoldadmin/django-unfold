@@ -90,6 +90,10 @@
   font-size: 18px;
 }
 
+.errorlist {
+  @apply *:before:align-bottom *:before:content-['warning'] *:before:material-symbols-outlined *:before:mr-1;
+}
+
 [x-cloak] {
   @apply hidden!;
 }
