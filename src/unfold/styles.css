@@ -161,11 +161,11 @@ table tr.selected th {
 }
 
 .datetimeshortcuts a {
-  @apply text-[0px] text-base-400 transition hover:text-base-700;
+  @apply flex items-center h-9 text-[0px] text-base-400 transition hover:text-base-700;
 }
 
 .datetimeshortcuts a:first-child {
-  @apply hover:text-base-700 dark:text-base-500 dark:hover:text-base-200;
+  @apply hidden;
 }
 
 .datetimeshortcuts a:first-child:after {
@@ -179,7 +179,15 @@ table tr.selected th {
 .clock-icon,
 .date-icon {
   @apply block text-base-400 transition-all hover:text-base-700 dark:text-base-500 dark:hover:text-base-200;
-  @apply after:border-r after:border-base-200 after:content-['today'] after:material-symbols-outlined after:px-3 dark:after:border-base-700;
+  @apply after:border-base-200 after:material-symbols-outlined after:px-3 dark:after:border-base-700;
+}
+
+.date-icon:after {
+  content: "calendar_today";
+}
+
+.clock-icon:after {
+  content: "schedule";
 }
 
 .timezonewarning {
