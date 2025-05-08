@@ -316,19 +316,27 @@ class ActionModelAdminMixin:
                 filtered_actions.append(action)
                 continue
 
-            permission_checks = (
-                getattr(self, f"has_{permission}_permission")
-                for permission in action.method.allowed_permissions
-            )
+            permission_rules = []
 
-            if object_id:
-                if all(
-                    has_permission(request, object_id)
-                    for has_permission in permission_checks
-                ):
-                    filtered_actions.append(action)
-            else:
-                if all(has_permission(request) for has_permission in permission_checks):
-                    filtered_actions.append(action)
+            for permission in action.method.allowed_permissions:
+                if "." in permission:
+                    permission_rules.append(permission)
+                else:
+                    permission_rules.append(
+                        getattr(self, f"has_{permission}_permission")
+                    )
+
+            permission_checks = []
+
+            for permission_rule in permission_rules:
+                if isinstance(permission_rule, str) and "." in permission_rule:
+                    permission_checks.append(request.user.has_perm(permission_rule))
+                elif object_id:
+                    permission_checks.append(permission_rule(request, object_id))
+                else:
+                    permission_checks.append(permission_rule(request))
+
+            if all(permission_checks):
+                filtered_actions.append(action)
 
         return filtered_actions
