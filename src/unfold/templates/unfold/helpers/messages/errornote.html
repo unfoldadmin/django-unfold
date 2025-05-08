@@ -2,10 +2,6 @@
 
 {% if errors %}
     <p class="errornote bg-red-100 mb-8 text-red-700 px-3 py-3 rounded-default dark:bg-red-500/20 dark:border-red-500/20 dark:text-red-400">
-        {% if errors.items|length == 1 %}
-            {% translate "Please correct the error below." %}
-        {% else %}
-            {% translate "Please correct the errors below." %}
-        {% endif %}
+        {% blocktranslate count counter=errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
     </p>
 {% endif %}
