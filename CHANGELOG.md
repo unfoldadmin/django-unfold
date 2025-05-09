@@ -1,4 +1,16 @@
 
+## 0.57.0 (2025-05-09)
+
+- feat: crispy formsets support (#1275) ([`17ff8c5`](https://github.com/unfoldadmin/django-unfold/commit/17ff8c579bbb33a3dba91fd20083b2da311116df))
+- feat: simplified datetime widget icons (#1269) ([`7be4522`](https://github.com/unfoldadmin/django-unfold/commit/7be4522c946a104ae1f72a6261bba0e46931c4d5))
+- feat: crispy forms horizontal rule (#1271) ([`91187b1`](https://github.com/unfoldadmin/django-unfold/commit/91187b19feedb13659c246b0f2f2d6ccfa5b98e6))
+- feat: multiple select2 widget (#1272) ([`f3fb5a2`](https://github.com/unfoldadmin/django-unfold/commit/f3fb5a2ebdbba20020ed309fd5ad45966d389926))
+- feat: redesigned input icons (#1264) ([`1bf08bf`](https://github.com/unfoldadmin/django-unfold/commit/1bf08bfe636ba8baf95bc37a28bb86dc9195800a))
+- feat: redesigned form errors (#1262) ([`f0aec64`](https://github.com/unfoldadmin/django-unfold/commit/f0aec64d01d1ddf0c119fd8621de0b87edec0b03))
+- fix: correct template tag/variable syntax in skeleton layout (#1268) ([`ac7972f`](https://github.com/unfoldadmin/django-unfold/commit/ac7972f32ae088b79536c06a7a2f3859d874a6c3))
+- fix: missing pluralization in form error message translation (#1273) ([`89f57a8`](https://github.com/unfoldadmin/django-unfold/commit/89f57a8d77c5c65afd186e04ec2e9833a767d369))
+- fix: border color for readonly fields in light mode (#1270) ([`c7c7b6f`](https://github.com/unfoldadmin/django-unfold/commit/c7c7b6fb0f173598d3671e4e884d7c603d891d13))
+
 ## 0.56.0 (2025-05-05)
 
 - feat: improved input focus (#1247) ([`8fa21d4`](https://github.com/unfoldadmin/django-unfold/commit/8fa21d4c7969becc6084d82e403883494f0ee774))
