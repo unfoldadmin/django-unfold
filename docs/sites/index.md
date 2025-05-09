@@ -72,3 +72,27 @@ from django.contrib.admin.apps import AdminConfig
 class MyAdminConfig(AdminConfig):
     default_site = "myproject.sites.CustomAdminSite"
 ```
+
+## Non-model based views in admin site:
+
+```python
+from django.shortcuts import render
+from django.urls import path
+from unfold.sites import UnfoldAdminSite
+
+class MyAdminSite(UnfoldAdminSite):
+    def get_urls(self):
+        urls = super().get_urls()
+        urls += [
+            path('my_custom_view/', self.admin_view(self.my_custom_view), name='my_custom_view'),
+        ]
+        return urls
+
+    def my_custom_view(self, request):
+        template = 'admin/my-custom-view-template.html'
+        context = self.each_context(request)
+        # Use the context in your view logic or template rendering
+        return render(request, template, context)
+
+admin_site = MyAdminSite()
+```
