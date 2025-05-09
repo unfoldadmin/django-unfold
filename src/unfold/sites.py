@@ -382,7 +382,6 @@ class UnfoldAdminSite(AdminSite):
             ):
                 return False
 
-            print("LINK", link, request.path, is_tab)
             return True
 
         return False
