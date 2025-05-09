@@ -9,7 +9,9 @@
         {% csrf_token %}
     {% endif %}
 
-    <div class="overflow-x-auto border border-base-200 rounded-default shadow-xs dark:border-base-800" {% if form_id %} id="{{ form_id }}"{% endif %}>
+    {% include "unfold_crispy/errors_formset.html" %}
+
+    <div class="overflow-x-auto border border-base-200 mb-8 rounded-default shadow-xs dark:border-base-800" {% if form_id %} id="{{ form_id }}"{% endif %}>
         {{ formset.management_form|crispy }}
 
         <table class="w-full">
@@ -66,9 +68,9 @@
                 </tbody>
             {% endif %}
         </table>
-
-        {% include "unfold_crispy/inputs.html" %}
     </div>
+
+    {% include "unfold_crispy/inputs.html" %}
 
     {% if formset_tag %}
         </form>
