@@ -109,6 +109,11 @@ def class_name(value: Any) -> str:
 
 
 @register.filter
+def is_list(value: Any) -> str:
+    return isinstance(value, list)
+
+
+@register.filter
 def index(indexable: Mapping[int, Any], i: int) -> Any:
     try:
         return indexable[i]
