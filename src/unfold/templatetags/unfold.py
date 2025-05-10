@@ -114,6 +114,15 @@ def is_list(value: Any) -> str:
 
 
 @register.filter
+def has_active_item(items: list[dict]) -> bool:
+    for item in items:
+        if "active" in item and item["active"]:
+            return True
+
+    return False
+
+
+@register.filter
 def index(indexable: Mapping[int, Any], i: int) -> Any:
     try:
         return indexable[i]

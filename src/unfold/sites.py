@@ -248,41 +248,32 @@ class UnfoldAdminSite(AdminSite):
 
         return results
 
-    def _get_navigation_items(self, request, items, tabs):
+    def _get_navigation_items(
+        self, request: HttpRequest, items: list[dict], tabs: list[dict] = None
+    ) -> list:
         allowed_items = []
 
         for item in items:
-            if "items" in item:
-                item["items"] = self._get_navigation_items(request, item["items"], tabs)
+            link = item.get("link")
 
             if "active" in item:
                 item["active"] = self._get_value(item["active"], request)
             else:
                 item["active"] = self._get_is_active(
-                    request, item.get("link_callback") or item["link"]
+                    request, item.get("link_callback") or link
                 )
 
             # Checks if any tab item is active and then marks the sidebar link as active
-            for tab in tabs:
-                has_primary_link = False
-                has_tab_link_active = False
+            if (
+                tabs
+                and (is_active := self._get_is_tab_active(request, tabs, link))
+                and is_active
+            ):
+                item["active"] = True
 
-                for tab_item in tab["items"]:
-                    if item["link"] == tab_item["link"]:
-                        has_primary_link = True
-                        continue
-
-                    if self._get_is_active(
-                        request, tab_item.get("link_callback") or tab_item["link"]
-                    ):
-                        has_tab_link_active = True
-                        break
-
-                if has_primary_link and has_tab_link_active:
-                    item["active"] = True
-
-            if isinstance(item["link"], Callable):
-                item["link_callback"] = lazy(item["link"])(request)
+            # Link callback
+            if isinstance(link, Callable):
+                item["link_callback"] = lazy(link)(request)
 
             # Permission callback
             item["has_permission"] = self._call_permission_callback(
@@ -296,6 +287,10 @@ class UnfoldAdminSite(AdminSite):
                     item["badge_callback"] = lazy(callback)(request)
                 except ImportError:
                     pass
+
+            # Process nested items
+            if "items" in item:
+                item["items"] = self._get_navigation_items(request, item["items"])
 
             allowed_items.append(item)
 
@@ -383,6 +378,29 @@ class UnfoldAdminSite(AdminSite):
                 return False
 
             return True
+
+        return False
+
+    def _get_is_tab_active(
+        self, request: HttpRequest, tabs: list[dict], link: str
+    ) -> bool:
+        for tab in tabs:
+            has_primary_link = False
+            has_tab_link_active = False
+
+            for tab_item in tab["items"]:
+                if link == tab_item["link"]:
+                    has_primary_link = True
+                    continue
+
+                if self._get_is_active(
+                    request, tab_item.get("link_callback") or tab_item["link"]
+                ):
+                    has_tab_link_active = True
+                    break
+
+            if has_primary_link and has_tab_link_active:
+                return True
 
         return False
 
