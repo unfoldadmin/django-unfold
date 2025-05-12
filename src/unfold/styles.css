@@ -347,7 +347,11 @@ h3 span:nth-child(3) {
   @apply outline-none;
 }
 
-.select2.select2-container.select2-container--focus{
+.select2.select2-container--open {
+  @apply border-b-0 border-primary-600 relative outline-2 -outline-offset-2 outline-primary-600;
+}
+
+.select2.select2-container.select2-container--focus {
   @apply outline-2 outline-primary-600 -outline-offset-2;
 }
 
@@ -355,152 +359,97 @@ h3 span:nth-child(3) {
   @apply border-red-600;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single {
+.select2-container.select2-container--admin-autocomplete .select2-selection--single {
   @apply h-auto;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__rendered {
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__rendered {
   @apply font-medium h-9 px-3 py-2 text-font-default-light text-sm dark:text-font-default-dark;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  .select2-selection__clear,
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__clear {
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__clear,
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear {
   @apply flex items-center h-9 -mt-2 text-[0px] after:text-base-400 hover:after:text-base-700 dark:hover:after:text-base-200 dark:after:text-base-500;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  .select2-selection__clear:after,
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__clear:after {
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__clear:after,
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__clear:after {
   @apply material-symbols-outlined transition-all content-['close'] text-[18px] ;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__arrow {
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow {
   @apply flex h-9 items-center mr-2 -mt-px;
+  @apply after:left-0 after:leading-none after:m-0 after:material-symbols-outlined after:text-base-400 after:text-lg dark:after:text-base-500;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__arrow:after {
-  @apply left-0 leading-none m-0 material-symbols-outlined text-base-400 text-lg;
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow:after {
   content: "expand_more";
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__arrow
-  b {
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow b {
   @apply hidden;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-search--dropdown {
-  @apply flex px-3 py-2;
+.select2-container.select2-container--admin-autocomplete .select2-search--dropdown {
+  @apply border-b border-base-200 py-1.5 px-1 relative dark:border-base-700 before:absolute before:content-['search'] before:material-symbols-outlined before:left-4 before:top-2.5 before:text-base-400 before:text-lg dark:before:text-base-500;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-search--dropdown
-  .select2-search__field {
-  @apply bg-base-50 border border-base-200 border-solid grow font-medium mx-0 outline-hidden px-3 py-2 rounded-default shadow-xs text-font-default-light text-sm w-full dark:bg-base-800 dark:border-base-800 dark:text-font-default-dark;
+.select2-container.select2-container--admin-autocomplete .select2-search--dropdown .select2-search__field {
+  @apply bg-base-100 border-0 border-base-200 border-solid grow font-medium mx-0 outline-hidden px-3 py-2 pl-9 rounded-default text-font-default-light text-sm w-full dark:bg-base-800 dark:border-base-800 dark:text-font-default-dark;
 }
 
-.select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--above {
-  @apply rounded-t-none;
-}
-
-.select2-container.select2-container--admin-autocomplete.select2-container--open.select2-container--below {
-  @apply rounded-b-none;
+.select2-container .select2-results__options {
+  @apply py-1;
 }
 
 .select2-container.select2-container--open .select2-dropdown {
-  @apply border border-transparent outline-2 -outline-offset-2 outline-primary-600 pb-2 shadow-xs dark:bg-base-900;
+  @apply bg-white border border-base-200 rounded-default shadow-xs dark:border-base-700 dark:bg-base-900;
 }
 
 .select2-container.select2-container--open .select2-dropdown--below {
-  @apply rounded-t-none rounded-b -top-0.5;
+  @apply mt-1;
 }
 
 .select2-container.select2-container--open .select2-dropdown--above {
-  @apply rounded-b-none rounded-default -bottom-0.5;
+  @apply mb-1;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-results__option {
-  @apply block px-3 py-2 text-font-default-light text-sm transition-all dark:text-font-default-dark;
+.select2-container.select2-container--admin-autocomplete .select2-results__option {
+  @apply block mb-0.5 mx-1 px-2 py-2 rounded-default text-font-default-light transition-all hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-800 dark:hover:text-base-200 dark:text-font-default-dark last:mb-0;
+}
+.select2-container.select2-container--admin-autocomplete .select2-results__option[aria-selected="true"] {
+  @apply text-primary-600 dark:text-primary-500 flex items-center text-primary-600 dark:text-primary-500 after:content-['check'] after:material-symbols-outlined after:ml-auto;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-results__option[aria-selected="true"] {
-  @apply text-primary-600 dark:text-primary-500;
-}
-
-.select2-container.select2-container--admin-autocomplete
-  .select2-results__option--highlighted[aria-selected="true"] {
-  @apply text-primary-600 dark:text-primary-500;
-}
-
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  .select2-selection__clear {
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__clear {
   @apply m-0 mr-3 top-0;
 }
 
-
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  .select2-selection__rendered {
+.select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__rendered {
   @apply pl-1 pr-6 py-0 pt-1;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__rendered {
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__rendered {
   @apply pr-8;
 }
 
-.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  li.select2-selection__choice {
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice {
   @apply bg-base-100 block font-medium h-7 leading-7 m-0 mr-1 mb-1 px-2 shadow-inner text-sm text-base-600 hover:text-base-700 truncate dark:bg-base-800 dark:text-base-300 dark:hover:text-base-200;
 }
 
-.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  li.select2-selection__choice
-  .select2-selection__choice__remove {
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove {
   @apply align-top text-[0px] hover:text-base-600 dark:hover:text-base-200;
 }
 
-.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  li.select2-selection__choice
-  .select2-selection__choice__remove:after {
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-selection__choice .select2-selection__choice__remove:after {
   @apply h-7 leading-7! material-symbols-outlined;
 
   content: "close";
   font-size: 14px;
 }
 
-.select2-container--admin-autocomplete
-  .select2-selection--multiple
-  li.select2-search--inline
-  .select2-search__field {
-  @apply m-0 h-7 text-base-500 text-sm;
-}
-
-.select2.select2-container--open {
-  @apply border-b-0 border-primary-600 relative outline-2 -outline-offset-2 outline-primary-600;
+.select2-container--admin-autocomplete .select2-selection--multiple li.select2-search--inline .select2-search__field {
+  @apply m-0 h-7 ml-2 text-base-500 text-sm;
 }
 
 /*******************************************************
