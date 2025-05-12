@@ -359,14 +359,11 @@ h3 span:nth-child(3) {
   @apply border-red-600;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single {
+.select2-container.select2-container--admin-autocomplete .select2-selection--single {
   @apply h-auto;
 }
 
-.select2-container.select2-container--admin-autocomplete
-  .select2-selection--single
-  .select2-selection__rendered {
+.select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__rendered {
   @apply font-medium h-9 px-3 py-2 text-font-default-light text-sm dark:text-font-default-dark;
 }
 
@@ -382,10 +379,10 @@ h3 span:nth-child(3) {
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow {
   @apply flex h-9 items-center mr-2 -mt-px;
+  @apply after:left-0 after:leading-none after:m-0 after:material-symbols-outlined after:text-base-400 after:text-lg dark:after:text-base-500;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--single .select2-selection__arrow:after {
-  @apply left-0 leading-none m-0 material-symbols-outlined text-base-400 text-lg;
   content: "expand_more";
 }
 
@@ -394,40 +391,34 @@ h3 span:nth-child(3) {
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-search--dropdown {
-  @apply border-b border-base-200 p-1.5 relative before:absolute before:content-['search'] before:material-symbols-outlined before:left-4 before:top-2.5 before:text-base-400 before:text-lg dark:before:text-base-500;
+  @apply border-b border-base-200 py-1.5 px-1 relative dark:border-base-700 before:absolute before:content-['search'] before:material-symbols-outlined before:left-4 before:top-2.5 before:text-base-400 before:text-lg dark:before:text-base-500;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-search--dropdown .select2-search__field {
   @apply bg-base-100 border-0 border-base-200 border-solid grow font-medium mx-0 outline-hidden px-3 py-2 pl-9 rounded-default text-font-default-light text-sm w-full dark:bg-base-800 dark:border-base-800 dark:text-font-default-dark;
-
 }
-
 
 .select2-container .select2-results__options {
   @apply py-1;
 }
 
 .select2-container.select2-container--open .select2-dropdown {
-  @apply border border-base-200 rounded-default shadow-xs dark:border-base-800;
+  @apply bg-white border border-base-200 rounded-default shadow-xs dark:border-base-700 dark:bg-base-900;
 }
 
 .select2-container.select2-container--open .select2-dropdown--below {
-  @apply top-1;
+  @apply mt-1;
 }
 
 .select2-container.select2-container--open .select2-dropdown--above {
-  @apply bottom-1;
+  @apply mb-1;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-results__option {
-  @apply block mb-0.5 mx-1 px-2 py-2 rounded-default text-font-default-light text-sm transition-all hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200 last:mb-0;
+  @apply block mb-0.5 mx-1 px-2 py-2 rounded-default text-font-default-light transition-all hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-800 dark:hover:text-base-200 dark:text-font-default-dark last:mb-0;
 }
 .select2-container.select2-container--admin-autocomplete .select2-results__option[aria-selected="true"] {
-  @apply text-primary-600 dark:text-primary-500;
-}
-
-.select2-container.select2-container--admin-autocomplete .select2-results__option--highlighted[aria-selected="true"] {
-  @apply text-primary-600 dark:text-primary-500;
+  @apply text-primary-600 dark:text-primary-500 flex items-center text-primary-600 dark:text-primary-500 after:content-['check'] after:material-symbols-outlined after:ml-auto;
 }
 
 .select2-container.select2-container--admin-autocomplete .select2-selection--multiple .select2-selection__clear {
