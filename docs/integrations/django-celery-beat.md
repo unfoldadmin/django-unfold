@@ -14,6 +14,7 @@ In the source code below you can find a short code snippet to unregister all `dj
 # admin.py
 from django.contrib import admin
 from unfold.admin import ModelAdmin
+from unfold.widgets import UnfoldAdminSelectWidget, UnfoldAdminTextInputWidget
 
 from django_celery_beat.models import (
     ClockedSchedule,
