@@ -6,7 +6,9 @@ description: Learn how to configure and customize tab navigation in Django Unfol
 
 # Changelist tabs
 
-In changelist view, it is possible to add custom tab navigation. It can consist from various custom links which can point at another registered admin models. The configuration is done in `UNFOLD` dictionary in `settings.py`.
+Django Unfold provides powerful tab navigation capabilities for changelist views, allowing you to create an organized and intuitive interface. You can enhance your admin interface by adding multiple tabs that can link to various registered admin models or custom views. The tab navigation system is highly configurable and can be customized to match your specific administrative needs. All configuration settings are managed through the `UNFOLD` dictionary under `TABS` key in your project's `settings.py` file, making it easy to maintain and update your tab structure as your application evolves.
+
+[![Changelist Tabs](/static/docs/tabs/changelist-tabs.webp)](/static/docs/tabs/changelist-tabs.webp)
 
 ```python
 # settings.py

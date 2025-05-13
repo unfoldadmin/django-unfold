@@ -1,14 +1,16 @@
 ---
 title: Dropdown filter
 order: 3
-description: Dropdown filters for list view.
+description: Enhance your Django admin interface with Unfold's dropdown filters, featuring choices-based and relationship-based filtering options. Learn how to implement and customize dropdown filters for improved data filtering and management.
 ---
 
 # Dropdown filters
 
-Dropdown filters will display a select field with a list of options. Unfold contains two types of dropdowns: `ChoicesDropdownFilter` and `RelatedDropdownFilter`.
+Dropdown filters enhance your Django admin interface by providing select fields with customizable lists of options. Unfold offers two primary types of dropdown filters: `ChoicesDropdownFilter` and `RelatedDropdownFilter`, each serving different use cases.
 
-The difference between them is that `ChoicesDropdownFilter` will collect a list of options based on the `choices` attribute of the model field so most commonly it will be used in combination with `CharField` with specified `choices`.  On the other hand, `RelatedDropdownFilter` needs a one-to-many or many-to-many foreign key to display options.
+The key distinction between these filters lies in how they source their options. The `ChoicesDropdownFilter` generates its list of options by utilizing the `choices` attribute defined on a model field. This makes it particularly well-suited for use with `CharField` fields that have predefined choices. In contrast, the `RelatedDropdownFilter` is designed to work with one-to-many or many-to-many foreign key relationships, automatically populating the dropdown with related model instances. This flexibility allows you to create intuitive filtering interfaces based on your data model structure.
+
+[![Related dropdown filter](/static/docs/filters/related-dropdown-filter.webp)](/static/docs/filters/related-dropdown-filter.webp)
 
 ```python
 # admin.py

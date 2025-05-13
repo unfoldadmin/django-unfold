@@ -6,7 +6,9 @@ description: Learn how to organize Django admin inlines into tabs by using the t
 
 # Inlines tabs
 
-Inlines can be grouped into tab navigation by specifying `tab` attribute in the inline class. This behavior is enabled on changeform pages and it is not possible to add other custom tabs into tab navigation without writing custom code.
+Django Unfold allows you to organize inline forms into tab navigation by setting the `tab` attribute to `True` in your inline class definition. This feature is specifically designed for changeform pages, providing a cleaner and more organized interface when dealing with multiple inline forms. Please note that without implementing custom code, it is not possible to add other types of custom tabs to this navigation system. The tab navigation for inlines works independently from the main tab system and is specifically tailored for managing related model instances.
+
+[![Inline Tabs](/static/docs/tabs/inline-tabs.webp)](/static/docs/tabs/inline-tabs.webp)
 
 ```python
 # admin.py

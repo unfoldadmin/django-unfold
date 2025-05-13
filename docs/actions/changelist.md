@@ -1,12 +1,14 @@
 ---
 title: Changelist actions
-description: Changelist actions for list view.
+description: Implement and customize changelist actions in Django Unfold admin interface, featuring standalone action buttons, permissions handling, and model-wide operations for efficient data management.
 order: 1
 ---
 
 # Changelist actions
 
-These actions will appear at the top of the changelist page as buttons. Please not that these actions are not displayed in the actions dropdown which is provided by default in Django. Changelist action will not reciver any queryset or object ids, because it is meant to be used for general actions for given model.
+Changelist actions appear as buttons at the top of the changelist page, providing quick access to model-wide operations. Unlike standard Django actions that appear in the default actions dropdown, these actions are displayed as standalone buttons. It's important to note that changelist actions do not receive a queryset or object IDs as parameters, as they are designed for performing general operations on the model level rather than on specific selected objects. This makes them ideal for tasks like bulk imports, exports, or other model-wide administrative functions.
+
+[![Changelist actions](/static/docs/actions/changelist-actions.webp)](/static/docs/actions/changelist-actions.webp)
 
 ```python
 # admin.py

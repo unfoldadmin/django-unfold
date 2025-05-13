@@ -1,16 +1,18 @@
 ---
 title: Text filter
 order: 1
-description: Text filters for list view.
+description: Implement powerful text-based filtering in Django Unfold's admin interface with FieldTextFilter for simple field searches and TextFilter for complex custom filtering logic, complete with examples and configuration options.
 ---
 
 # Text filters
 
-Text input field which allows filtering by the free string submitted by the user. There are two different variants of this filter: `FieldTextFilter` and `TextFilter`.
+The text input field provides a flexible filtering mechanism that allows users to search using any string they input. Unfold offers two distinct variants of this filter: `FieldTextFilter` and `TextFilter`, each serving different use cases.
 
-`FieldTextFilter` requires just a model field name and the filter will make `__icontains` search on this field. There are no other things to configure so the integration in `list_filter` will be just one new row looking like `("model_field_name", FieldTextFilter)`.
+The `FieldTextFilter` is straightforward to implement, requiring only a model field name. It automatically performs a case-insensitive search (using `__icontains`) on the specified field. Configuration is minimal - you simply need to add a tuple containing the model field name and `FieldTextFilter` to your `list_filter` configuration, like this: `("model_field_name", FieldTextFilter)`.
 
-In the case of the `TextFilter`, it is needed to write a whole new class inheriting from `TextFilter` with a custom implementation of the `queryset` method and the `parameter_name` attribute. This attribute will be a representation of the search query parameter name in URI. The benefit of the `TextFilter` is the possibility of writing complex queries.
+For more complex filtering requirements, the `TextFilter` offers greater flexibility. To use it, you'll need to create a new class that inherits from `TextFilter` and implement a custom `queryset` method. You'll also need to specify a `parameter_name` attribute, which defines how the search parameter will appear in the URL. The main advantage of `TextFilter` is its ability to handle sophisticated query logic, allowing you to create highly customized filtering behavior.
+
+[![Text filter](/static/docs/filters/text-filter.webp)](/static/docs/filters/text-filter.webp)
 
 ```python
 from django.contrib import admin

@@ -1,14 +1,14 @@
 ---
 title: Introduction to components
 order: 0
-description: Components overview for in Unfold theme
+description: Comprehensive guide to Django Unfold's component system, featuring nested templates, dynamic data handling, and customizable layouts. Learn how to build powerful admin dashboards using reusable components with seamless design system integration.
 ---
 
 # Introduction to components
 
-Unfold provides a set of already predefined templates to speed up overall dashboard development. These templates contain predefined design which matches global design style so there is no need to spend any time adjusting styles.
+Unfold comes with a comprehensive set of predefined templates designed to accelerate dashboard development. These templates feature carefully crafted designs that seamlessly integrate with the global design system, eliminating the need for time-consuming style adjustments.
 
-The biggest benefit of Unfold components is the possibility to nest them inside one template file provides an unlimited amount of possible combinations. Then each component includes `children` variable which contains a value specified in the parent component. Except for `children` variable, components can have multiple variables coming from the parent template as component variables. These parameters can be specified in the same as parameters when using `{% include with param1=value1 param2=value2 %}` template tag.
+One of the most powerful features of Unfold components is their ability to be nested within a single template file, enabling virtually unlimited layout combinations. Each component has access to a `children` variable that contains content specified by its parent component. Beyond the `children` variable, components can receive multiple variables from their parent template as component parameters. These parameters can be passed in the same way as Django template parameters using the `{% include with param1=value1 param2=value2 %}` template tag syntax. This flexibility allows for highly customizable and reusable component structures while maintaining clean and organized templates.
 
 ```html
 {% load unfold %}
@@ -22,7 +22,7 @@ The biggest benefit of Unfold components is the possibility to nest them inside 
 </div>
 ```
 
-Below you can find a more complex example which is using multiple components and processing them based on the passed variables from the `DASHBOARD_CALLBACK`.
+Let's explore a more sophisticated example that demonstrates how multiple components can work together seamlessly. This example showcases component nesting and dynamic data processing, where components receive and handle variables passed from the `DASHBOARD_CALLBACK`. The example below illustrates how to create a complex, interactive dashboard layout while maintaining clean and readable code structure.
 
 ```html
 {% load i18n unfold %}

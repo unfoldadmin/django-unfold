@@ -1,12 +1,12 @@
 ---
 title: Settings options
 order: 1
-description: All available settings.py options for Unfold configuration.
+description: Configure Django Unfold admin interface with settings.py options. Customize site title, header, logo, icons, environment, and UI elements. Learn all available configuration options for tailoring your admin experience.
 ---
 
 # Settings options
 
-The `UNFOLD` dictionary contains all available options to configure the admin interface. By default, there is not need to set any options. The admin interface will work as expected. Below you can find full list of available options.
+The `UNFOLD` dictionary provides a comprehensive set of configuration options for customizing the Django admin interface. While the admin interface works perfectly well with default settings and requires no additional configuration, you have the flexibility to customize various aspects of its behavior and appearance. Below you'll find a complete list of all available configuration options that can be defined in your settings file.
 
 ```python
 # settings.py
@@ -67,30 +67,30 @@ UNFOLD = {
     "BORDER_RADIUS": "6px",
     "COLORS": {
         "base": {
-            "50": "249 250 251",
-            "100": "243 244 246",
-            "200": "229 231 235",
-            "300": "209 213 219",
-            "400": "156 163 175",
-            "500": "107 114 128",
-            "600": "75 85 99",
-            "700": "55 65 81",
-            "800": "31 41 55",
-            "900": "17 24 39",
-            "950": "3 7 18",
+            "50": "249, 250, 251",
+            "100": "243, 244, 246",
+            "200": "229, 231, 235",
+            "300": "209, 213, 219",
+            "400": "156, 163, 175",
+            "500": "107, 114, 128",
+            "600": "75, 85, 99",
+            "700": "55, 65, 81",
+            "800": "31, 41, 55",
+            "900": "17, 24, 39",
+            "950": "3, 7, 18",
         },
         "primary": {
-            "50": "250 245 255",
-            "100": "243 232 255",
-            "200": "233 213 255",
-            "300": "216 180 254",
-            "400": "192 132 252",
-            "500": "168 85 247",
-            "600": "147 51 234",
-            "700": "126 34 206",
-            "800": "107 33 168",
-            "900": "88 28 135",
-            "950": "59 7 100",
+            "50": "250, 245, 255",
+            "100": "243, 232, 255",
+            "200": "233, 213, 255",
+            "300": "216, 180, 254",
+            "400": "192, 132, 252",
+            "500": "168, 85, 247",
+            "600": "147, 51, 234",
+            "700": "126, 34, 206",
+            "800": "107, 33, 168",
+            "900": "88, 28, 135",
+            "950": "59, 7, 100",
         },
         "font": {
             "subtle-light": "var(--color-base-500)",  # text-base-500
