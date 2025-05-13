@@ -8,8 +8,7 @@ from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
 
 from unfold.enums import ActionVariant
-
-from .typing import ActionFunction
+from unfold.typing import ActionFunction
 
 
 def action(
