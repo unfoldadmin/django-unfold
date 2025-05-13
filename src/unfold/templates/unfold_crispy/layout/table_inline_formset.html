@@ -15,20 +15,22 @@
         {{ formset.management_form|crispy }}
 
         <table class="w-full">
-            <thead>
-                {% if formset.readonly and not formset.queryset.exists %}
-                {% else %}
-                    <tr>
-                        {% for field in formset.forms.0 %}
-                            {% if field.label and not field.is_hidden %}
-                                <th for="{{ field.auto_id }}" class="align-middle font-semibold py-2 text-left text-font-important-light dark:text-font-important-dark whitespace-nowrap px-3 {% if field.name == "DELETE" %}w-0{% endif %}">
-                                    {{ field.label }}{% if field.field.required and not field|is_checkbox %} <span class="asteriskField">*</span>{% endif %}
-                                </th>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
-                {% endif %}
-            </thead>
+            {% if not form_show_labels %}
+                <thead>
+                    {% if formset.readonly and not formset.queryset.exists %}
+                    {% else %}
+                        <tr>
+                            {% for field in formset.forms.0 %}
+                                {% if field.label and not field.is_hidden %}
+                                    <th for="{{ field.auto_id }}" class="align-middle font-semibold py-2 text-left text-font-important-light dark:text-font-important-dark whitespace-nowrap px-3 {% if field.name == "DELETE" %}w-0{% endif %}">
+                                        {{ field.label }}{% if field.field.required and not field|is_checkbox %} <span class="asteriskField">*</span>{% endif %}
+                                    </th>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+                </thead>
+            {% endif %}
 
             <tbody {% if formset_id %}id="{{ formset_id }}-rows"{% endif %}>
                 {% for form in formset %}
@@ -42,7 +44,7 @@
 
                     <tr>
                         {% for field in form %}
-                            {% include 'unfold_crispy/field.html' with tag="td" form_show_labels=False %}
+                            {% include 'unfold_crispy/field.html' with tag="td" %}
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -52,7 +54,7 @@
                 <tbody>
                     <tr class="empty-form">
                         {% for field in formset.empty_form %}
-                            {% include 'unfold_crispy/field.html' with tag="td" form_show_labels=False %}
+                            {% include 'unfold_crispy/field.html' with tag="td" %}
                         {% endfor %}
                     </tr>
 
