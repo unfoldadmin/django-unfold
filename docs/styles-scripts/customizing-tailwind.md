@@ -1,12 +1,16 @@
 ---
 title: Customizing Tailwind stylesheet
 order: 1
-description: How to customize Tailwind stylesheet to match Unfold design.
+description: Configure and customize Tailwind CSS in your Django project to match Unfold's design system, with detailed steps for color schemes, dark mode support, and component styling for a cohesive admin interface.
 ---
 
 # Loading Tailwind stylesheet in Django project
 
 When creating a custom dashboard or adding custom components, you may need to add your own styles to provide styling for new elements. The way styles can be loaded is described in the previous section. Once the styles are loaded, you can write CSS selectors with properties. This is sufficient if you don't need to use Tailwind.
+
+For Unfold version 0.56 and above, we strongly recommend writing your own custom CSS styles directly rather than attempting to set up and configure Tailwind in your project. This approach is simpler, more maintainable, and helps avoid potential conflicts with Unfold's built-in Tailwind configuration. By writing custom CSS, you maintain full control over your styling while ensuring compatibility with Unfold's existing design system.
+
+## Tailwind 3.x for Unfold below 0.56
 
 Before starting with the Tailwind configuration at the project level, you need to install Tailwind CSS into your project by running `npm install tailwindcss` in the project directory. Don't forget to add `package.json` and `package-lock.json` to your repository.
 

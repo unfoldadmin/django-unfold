@@ -1,12 +1,12 @@
 ---
 title: Introduction to inlines
 order: 0
-description: Custom inline classes for Unfold admin.
+description: Implement and customize Django Unfold's inline classes for enhanced admin interfaces, including stacked and tabular inlines with improved styling and configuration options.
 ---
 
 # Inlines
 
-Unfold inlines are derived from Django inlines, and they are used to add extra styling and configuration options. Native inline classes `StackedInline` and `TabularInline` are going work but the styling will not match default Unfold design thus it is recommended to use inlines derived from Unfold.
+Unfold inlines are built upon Django's inline functionality, providing enhanced styling capabilities and additional configuration options. While Django's native inline classes (`StackedInline` and `TabularInline`) will function correctly, they won't match Unfold's default design aesthetic. For the best visual consistency and full feature set, it is strongly recommended to use Unfold's own inline classes instead of the standard Django ones.
 
 ```python
 # admin.py

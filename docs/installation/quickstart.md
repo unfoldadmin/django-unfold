@@ -1,12 +1,12 @@
 ---
 title: Quickstart
 order: 1
-description: Quickstard installation guide for Unfold.
+description: Step-by-step guide to install and configure Django Unfold admin interface in your Django project, including package installation, INSTALLED_APPS configuration, and ModelAdmin setup.
 ---
 
 # Quickstart
 
-The installation process is minimal. Everything that is needed after installation is to put new application at the beginning of **INSTALLED_APPS**. The default admin configuration in urls.py can stay as it is, and no changes are required.
+The installation process is straightforward. After installing the package, you only need to add the Unfold application to the beginning of your **INSTALLED_APPS** setting. The default admin configuration in urls.py can remain unchanged.
 
 ```python
 # settings.py
@@ -23,14 +23,15 @@ INSTALLED_APPS = [
 ]
 ```
 
-In case you need installation command below are the versions for `pip` and `poetry` which needs to be executed in shell.
+To install Django Unfold in your project, you can use any of the popular Python package managers. Below are the installation commands for `pip`, `uv`, and `poetry`. Execute the appropriate command in your terminal based on your preferred package manager:
 
 ```bash
 pip install django-unfold
+uv add django-unfold
 poetry add django-unfold
 ```
 
-Just for an example below is the minimal admin configuration in terms of adding Unfold into URL paths.
+Below is an example of the minimal URL configuration needed to integrate Unfold into your Django project:
 
 ```python
 # urls.py
@@ -46,7 +47,7 @@ urlpatterns = [
 
 ## ModelAdmin inheritance
 
-After installation, it is required that admin classes are going to inherit from custom `unfold.admin.ModelAdmin`. The default `django.contrib.admin.ModelAdmin` will not work with Unfold and it will cause unstyles forms and missing functionality.
+After installation, your admin classes must inherit from `unfold.admin.ModelAdmin` instead of the default `django.contrib.admin.ModelAdmin`. Using the default admin class will result in unstyled forms and missing Unfold functionality.
 
 ```python
 # admin.py

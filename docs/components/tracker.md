@@ -1,16 +1,18 @@
 ---
 title: Component - Tracker
 order: 3
-description: Tracker component in Unfold theme
+description: Implement and customize the Tracker component in Django Unfold with visual data representation, grid layouts, color customization, and tooltips for enhanced data visualization
 ---
 
 # Tracker component
 
-The tracker component is a visual representation of data points. It's useful for displaying activity or progress over time. Each cell in the tracker can be colored differently and can include a tooltip for additional information.
+The tracker component provides a visual representation of data points in a grid-like format. It's particularly effective for displaying activity patterns, progress tracking, or data distribution over time periods. Each individual cell within the tracker can be customized with different colors to represent various states or values, and can be enhanced with tooltips to provide additional context or detailed information when users hover over them. This makes it an ideal choice for creating heatmaps, activity logs, or contribution graphs similar to those found in platforms like GitHub.
+
+[![Cohort](/static/docs/components/tracker.webp)](/static/docs/components/tracker.webp)
 
 ## Default tracker component implementation in template
 
-You can use the default implementation of the tracker component in your template with the following code. Like the cohort component, you can either use a component class to prepare the data or pass the data directly.
+The tracker component can be easily integrated into your template using one of two approaches. Similar to the cohort component, you have the flexibility to either utilize a component class for data preparation or directly pass the data to the component. The default implementation provides a straightforward way to get started with tracking visualizations in your Django admin interface.
 
 Using component class:
 
@@ -32,7 +34,7 @@ Using data directly:
 
 ## Custom tracker data preparation in component class
 
-Below you can see an example of a component class that prepares the data for the tracker component. The component in template will receive the `data` parameter that is passed to the `get_context_data` method.
+Let's examine an example of a component class that handles data preparation for the tracker component. When implementing this class, you'll need to create a method that prepares and structures the data appropriately. The component in your template will receive this data through the `data` parameter, which is passed to the `get_context_data` method. This approach provides a clean separation between data preparation logic and presentation, making your code more maintainable and easier to test.
 
 ```python
 # admin.py

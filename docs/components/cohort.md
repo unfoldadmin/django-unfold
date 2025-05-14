@@ -8,6 +8,7 @@ description: A powerful visualization component for cohort analysis that display
 
 The cohort component is a powerful visualization tool that presents cohort analysis data in a structured table format. It enables you to track and analyze how groups of users (cohorts) behave over specific time periods, making it particularly valuable for measuring retention, engagement patterns, and user lifecycle metrics. Unfold provides a ready-to-use implementation of this component that requires minimal setup. To use it, you only need to provide the `data` parameter - a dictionary containing the cohort information with a specific structure that defines headers, rows, and cell values for the analysis table.
 
+[![Cohort](/static/docs/components/cohort.webp)](/static/docs/components/cohort.webp)
 
 ## Default cohort component implementation in template
 

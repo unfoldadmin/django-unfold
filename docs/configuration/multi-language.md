@@ -1,12 +1,14 @@
 ---
 title: Multi-language
 order: 14
-description: Add support for multiple languages in django admin.
+description: Learn how to configure multi-language support in Django Unfold admin panel with language switching, URL patterns, middleware setup, and internationalization settings for a fully localized admin interface.
 ---
 
 # Multi-language support
 
-To add support for multiple languages in django admin, you need to add `django.middleware.locale.LocaleMiddleware` to `MIDDLEWARE` and set `USE_I18N` to `True`. Then you need to define `LANGUAGE_CODE` and `LANGUAGES`. After these changes your site will be prepared for multiple languages.
+To enable multi-language support in your Django admin interface, you'll need to make several configuration changes in your settings. First, add the `django.middleware.locale.LocaleMiddleware` to your `MIDDLEWARE` setting - this middleware handles language selection based on user preferences. Next, enable internationalization by setting `USE_I18N = True`. You'll also need to specify your default language using `LANGUAGE_CODE` and define the available languages in the `LANGUAGES` setting. Once you've made these configuration changes, your Django admin site will be fully prepared to handle multiple languages and provide language-switching capabilities to your users.
+
+[![Unfold site dropdown](/static/docs/configuration/unfold-multilanguage.webp)](/static/docs/configuration/unfold-multilanguage.webp)
 
 ```python
 # settings.py

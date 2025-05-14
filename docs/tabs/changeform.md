@@ -6,9 +6,11 @@ description: Learn how to configure and customize tab navigation in Django Unfol
 
 # Changeform tabs
 
-In changeform view, it is possible to add custom tab navigation. It can consist from various custom links which can point at another registered admin models. The configuration is done in `UNFOLD` dictionary in `settings.py`.
+Django Unfold provides the ability to enhance your changeform views with custom tab navigation. This powerful feature allows you to create an organized and intuitive interface by adding multiple tabs that can link to various registered admin models or custom views. The tab navigation system is highly configurable and can be customized to match your specific administrative needs. All configuration settings are managed through the `UNFOLD` dictionary under `TABS` key in your project's `settings.py` file, making it easy to maintain and update your tab structure as your application evolves.
 
-Actually, the changeform tab navigation configuration is the same as the changelist tab navigation configuration. The only difference is that in `models` section it is required to specify model name as dictionary with `detail` key set to `True`.
+[![Changeform Tabs](/static/docs/tabs/changeform-tabs.webp)](/static/docs/tabs/changeform-tabs.webp)
+
+The changeform tab navigation uses the same configuration structure as changelist tabs, with one key difference: in the `models` section, each model must be specified as a dictionary with `detail` set to `True` to enable tabs on the changeform view.
 
 ```python
 # settings.py
