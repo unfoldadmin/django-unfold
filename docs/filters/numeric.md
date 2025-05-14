@@ -1,12 +1,14 @@
 ---
 title: Numeric filter
 order: 4
-description: Numeric filters for list view.
+description: Enhance your Django admin interface with Unfold's numeric filtering capabilities, including single field, range, and slider filters for precise data filtering. Learn how to implement and customize various numeric filter types with examples and configuration options.
 ---
 
 # Numeric filters
 
-Currently, Unfold implements numeric filters inside `unfold.contrib.filters` application. In order to use these filters, it is required to add this application into `INSTALLED_APPS` in `settings.py` right after `unfold` application.
+Unfold provides numeric filtering capabilities through its `unfold.contrib.filters` application. To utilize these powerful filtering features in your project, you'll need to add this application to your `INSTALLED_APPS` configuration in `settings.py`. Make sure to place it immediately after the `unfold` application to ensure proper functionality and dependency resolution.
+
+[![Numeric filter](/static/docs/filters/numeric-filter.webp)](/static/docs/filters/numeric-filter.webp)
 
 ```python
 # admin.py

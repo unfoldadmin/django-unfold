@@ -18,6 +18,8 @@ Unfold provides specialized filters for model fields that have predefined choice
 - When using the radio button filter (`ChoicesRadioFilter`), an "All" option is automatically added at the beginning of the list, allowing users to clear their selection
 - The checkbox filter (`ChoicesCheckboxFilter`) allows for selecting multiple options simultaneously
 
+[![Choices checkbox filter](/static/docs/filters/choices-checkbox-filter.webp)](/static/docs/filters/choices-checkbox-filter.webp)
+
 These filters are particularly useful when you have a reasonable number of choices that would benefit from being all visible at once, rather than hidden in a dropdown menu.
 
 ```python
@@ -33,6 +35,8 @@ class SampleModelAdmin(ModelAdmin):
 ## Radio filter for BooleanField
 
 For boolean fields (`django.db.models.BooleanField`), Unfold provides a specialized filter called `BooleanRadioFilter`. This filter enhances the user experience by displaying the boolean options (Yes/No) as radio inputs, making it more intuitive and visually appealing compared to the default dropdown.
+
+[![Boolean radio filter](/static/docs/filters/boolean-radio-filter.webp)](/static/docs/filters/boolean-radio-filter.webp)
 
 The `BooleanRadioFilter` automatically includes an "All" option, allowing users to clear their selection and view all records regardless of the boolean field value. This is particularly useful when filtering through large datasets where you need to toggle between filtered and unfiltered views.
 
@@ -66,6 +70,8 @@ class SampleModelAdmin(ModelAdmin):
 ## Displaying all values in field
 
 The `AllValuesCheckboxFilter` provides a checkbox interface that automatically displays all distinct values found in the database column for the specified field. This filter functions similarly to Django's built-in `AllValuesFieldListFilter`, but enhances the user experience by presenting all available options as checkboxes instead of a dropdown menu. This approach allows users to see all possible values at once and select multiple options simultaneously, making it particularly useful for fields with a moderate number of distinct values that users frequently need to filter by.
+
+[![All values checkbox filter](/static/docs/filters/all-values-checkbox-filter.webp)](/static/docs/filters/all-values-checkbox-filter.webp)
 
 ```python
 from unfold.contrib.filters.admin import AllValuesCheckboxFilter

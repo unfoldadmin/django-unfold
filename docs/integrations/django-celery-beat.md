@@ -1,14 +1,14 @@
 ---
 title: django-celery-beat
 order: 0
-description: Integration with django-celery-beat.
+description: Integration with django-celery-beat, a Django scheduler for periodic tasks. Learn how to properly integrate it with Unfold admin interface to maintain consistent styling and functionality across your admin panel.
 ---
 
 # django-celery-beat
 
-In general, django-celery-beat does not have any components that require special styling. The default changelist templates are not inheriting from Unfold's `ModelAdmin` but they are using default `ModelAdmin` coming from `django.contrib.admin` which is causing some design discrepancies in the changelist.
+In general, django-celery-beat does not have any components that require special styling. However, there is an integration issue to be aware of. The default changelist templates in django-celery-beat are not inheriting from Unfold's `ModelAdmin` class but instead are using the default `ModelAdmin` class from `django.contrib.admin`. This inconsistency causes noticeable design discrepancies in the changelist views, breaking the uniform appearance of your admin interface. To maintain a consistent look and feel throughout your admin panel, you'll need to override these admin classes as shown in the code example below.
 
-In the source code below you can find a short code snippet to unregister all `django-celery-beat` admin classes and register them with the proper parent `ModelAdmin` class.
+In the source code below, you can find a short code snippet that demonstrates how to unregister all `django-celery-beat` admin classes and register them with the proper parent `ModelAdmin` class.
 
 ```python
 # admin.py
@@ -69,3 +69,9 @@ class SolarScheduleAdmin(ModelAdmin):
 class ClockedScheduleAdmin(BaseClockedScheduleAdmin, ModelAdmin):
     pass
 ```
+
+For comprehensive information about installation, configuration, and usage of django-celery-beat, please refer to the [official documentation](https://django-celery-beat.readthedocs.io/en/latest/). The documentation covers everything from basic setup to advanced scheduling patterns and task management.
+
+[![Django Celery Beat](/static/docs/integrations/django-celery-beat.webp)](/static/docs/integrations/django-celery-beat.webp)
+
+A live demo of the [django-celery-beat integration with Unfold](https://demo.unfoldadmin.com/en/admin/django_celery_beat/periodictask/) is available. This demo showcases how Unfold seamlessly integrates with django-celery-beat's task scheduling interface, providing an enhanced user experience for managing periodic tasks and schedules.

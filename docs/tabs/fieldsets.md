@@ -8,6 +8,8 @@ description: Learn how to organize Django admin fieldsets into tabs for better f
 
 When the change form contains a lot of fieldsets, sometimes it is better to group them into tabs so it will not be needed to scroll. To mark a fieldset for tab navigation it is required to add a `tab` CSS class to the fieldset. Once the fieldset contains `tab` class it will be recognized in a template and grouped into tab navigation. Each tab must contain its name. If the name is not available, it will be not included in the tab navigation.
 
+[![Fieldsets Tabs](/static/docs/tabs/fieldsets-tabs.webp)](/static/docs/tabs/fieldsets-tabs.webp)
+
 ```python
 # admin.py
 

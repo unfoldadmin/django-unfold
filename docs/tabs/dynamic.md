@@ -8,6 +8,8 @@ description: Learn how to dynamically generate tab navigation in Django Unfold a
 
 Unfold provides a way to dynamically generate tab navigation. It is possible to use your own logic to generate tab navigation. The tab navigation configuration can be defined as importable string which will call a function with `HttpRequest` object as an argument. In this function it is possible to build own tabs navigation structure.
 
+[![Dynamic Tabs](/static/docs/tabs/dynamic-tabs.webp)](/static/docs/tabs/dynamic-tabs.webp)
+
 ```python
 # settings.py
 

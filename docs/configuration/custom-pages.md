@@ -47,7 +47,7 @@ The template is straightforward, extend from `unfold/layouts/base.html` and the 
 - Tab list: in case your project has dynamic tabs, you can use `tab_list` helper to display them
 
 ```html
-{% extends "unfold/layouts/base.html" %}
+{% extends "admin/base.html" %}
 
 {% load admin_urls i18n unfold %}
 

@@ -1,16 +1,20 @@
 ---
 title: Display
-description: Custom Unfold @display decorator.
+description: Enhance Django admin display fields with Unfold's @display decorator, featuring label-based styling, header formatting, and advanced customization options for improved data presentation and visual organization.
 order: 1
 ---
 
 # Unfold @display decorator
 
-Unfold introduces its own `unfold.decorators.display` decorator. By default, it has exactly the same behavior as the native `django.contrib.admin.decorators.display` but it adds customizations which help to extend the default logic.
+Unfold provides its own enhanced version of the display decorator through `unfold.decorators.display`. While maintaining complete compatibility with Django's native `django.contrib.admin.decorators.display`, this decorator introduces additional customization options that extend the default functionality in powerful ways.
 
-`@display(label=True)`, `@display(label={"value1": "success"})` displays a result as a label. This option fits for different types of statuses. The label can be either a boolean indicating we want to use a label with the default color, or a dict where the dict is responsible for displaying labels in different colors. At the moment these color combinations are supported: success (green), info (blue), danger (red) and warning (orange).
+The decorator supports label-based display through two main approaches: `@display(label=True)` or `@display(label={"value1": "success"})`. This feature is particularly useful for displaying status indicators and other categorical information. When using `label=True`, the decorator will render the value with a default color scheme. Alternatively, you can pass a dictionary to customize the colors for different values. The supported color schemes include:
+- success (green) - for positive or completed states
+- info (blue) - for informational or neutral states
+- warning (orange) - for cautionary states
+- danger (red) - for critical or error states
 
-`@display(header=True)` displays two pieces of information in one table cell in the results list. A good example is when we want to display customer information - the first line will be the customer's name and right below the name, the corresponding email address is displayed. A method with such a decorator is supposed to return a list with two elements `return "Full name", "E-mail address"`. There is a third optional argument, which is the type of string and its value is displayed in a circle before the first two values on the front end. Its optimal usage is for displaying initials.
+For more complex display needs, `@display(header=True)` enables showing two distinct pieces of information within a single table cell in the results list. This is especially valuable when presenting related information together - for instance, showing a customer's name on the first line followed by their email address below. Methods using this decorator should return a tuple or list containing two elements, like `return "Full name", "E-mail address"`. Additionally, you can provide a third optional argument that displays a circular badge containing text (such as initials) before the two main values, creating a visually appealing and informative layout.
 
 ```python
 # admin.py
@@ -83,24 +87,24 @@ class UserAdmin(ModelAdmin):
 
 ## Dropdown support
 
-For the changelist, it is possible to apply `dropdown=True` which will display a clickable link. After clicking on the link, a dropdown will appear. There are two supported options for rendering the content of the dropdown:
+In the changelist view, you can enhance any field by applying `dropdown=True` to create an interactive dropdown menu. When enabled, the field will be displayed as a clickable link that reveals a dropdown menu when clicked. Unfold provides two flexible approaches for rendering dropdown content:
 
-- Providing a list of `items`. This will render a classic list of items, which is a good option for displaying a list of related objects.
-- Defining the `content` attribute which will display your custom content in the dropdown. This is handy for rendering complex layouts in the dropdown.
+- You can provide a list of `items` to generate a traditional dropdown menu. This approach is particularly useful when you need to display a collection of related objects or actions in an organized list format.
+- Alternatively, you can use the `content` attribute to render custom HTML content within the dropdown. This gives you complete control over the dropdown's layout and styling, making it ideal for more complex UI requirements.
 
-### Rendering list of options
+### Creating a list-based Dropdown
 
-The following example demonstrates how to create a dropdown with a list of items. The dropdown configuration accepts these options:
+The following example illustrates how to implement a dropdown menu with a list of clickable items. The dropdown configuration supports several customization options:
 
-- `title` (required) - The text displayed in the column that users click to open the dropdown
-- `items` (required) - List of items to display in the dropdown menu. Each item should have:
-  - `title` - Text to display for the item
-  - `link` (optional) - URL the item links to
-- `striped` (optional) - Boolean to enable alternating background colors for items
-- `height` (optional) - Maximum height in pixels before scrolling is enabled
-- `width` (optional) - Width of the dropdown in pixels
+- `title` (required) - The text that appears in the column header and serves as the dropdown trigger
+- `items` (required) - An array of menu items to be displayed in the dropdown. Each item requires:
+  - `title` - The text label for the menu item
+  - `link` (optional) - A URL or path that the item will link to when clicked
+- `striped` (optional) - When set to true, adds alternating background colors to list items for better visual separation
+- `height` (optional) - Sets a maximum height in pixels, after which the content becomes scrollable
+- `width` (optional) - Defines the dropdown's width in pixels for precise layout control
 
-The dropdown will be positioned below the clicked element and will close when clicking outside or selecting an item.
+The dropdown menu automatically positions itself below the trigger element and includes built-in behavior to close when clicking outside the menu or selecting an item.
 
 
 ```python
@@ -135,14 +139,14 @@ class UserAdmin(ModelAdmin):
 
 ### Custom dropdown template
 
-You can also render a custom template inside a dropdown. Just pass the `content` parameter with template content. If you want to render more complex content, use `render_to_string`.
+For more advanced use cases, you can render a custom template within the dropdown menu. This is achieved by passing the `content` parameter containing your template content. For complex templates or dynamic content, it's recommended to use Django's `render_to_string` function to generate the HTML output.
 
-The dropdown configuration accepts these options when using custom template content:
+When implementing a custom template dropdown, the configuration accepts the following parameters:
 
-- `title` (required) - The text displayed in the column that users click to open the dropdown
-- `content` (required) - HTML content or template string to display in the dropdown
+- `title` (required) - The text that appears in the column header and acts as the dropdown trigger button
+- `content` (required) - The HTML content or template string that will be rendered inside the dropdown menu
 
-The dropdown will be positioned below the clicked element and will close when clicking outside. The content can include any valid HTML or Django template syntax.
+The dropdown menu is automatically positioned directly beneath the trigger element and includes built-in functionality to close when users click outside of it. You have complete flexibility in terms of content - the dropdown can contain any valid HTML markup or Django template syntax, allowing you to create rich, interactive dropdown interfaces.
 
 ```python
 class UserAdmin(ModelAdmin):
