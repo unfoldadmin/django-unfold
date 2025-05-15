@@ -1,4 +1,3 @@
-
 ## 0.57.0 (2025-05-09)
 
 - feat: crispy formsets support (#1275) ([`17ff8c5`](https://github.com/unfoldadmin/django-unfold/commit/17ff8c579bbb33a3dba91fd20083b2da311116df))
@@ -13,6 +12,7 @@
 
 ## 0.56.0 (2025-05-05)
 
+- **Breaking change:** feat!: tailwind 4 (#1234) ([`078dcbb`](https://github.com/unfoldadmin/django-unfold/commit/078dcbb7d4908fd1502cdb1a2172a6fd45d060a7))
 - feat: improved input focus (#1247) ([`8fa21d4`](https://github.com/unfoldadmin/django-unfold/commit/8fa21d4c7969becc6084d82e403883494f0ee774))
 - fix: responsive sidebar background color (#1258) ([`93ac1a4`](https://github.com/unfoldadmin/django-unfold/commit/93ac1a4ce024887262c8e62fccaeafa2b65d9ab8))
 - fix: import export v4 import display (#1257) ([`7fd73d0`](https://github.com/unfoldadmin/django-unfold/commit/7fd73d0c1d3128a0b694b06eb945d3029423c599))
@@ -731,6 +731,7 @@
 
 ## 0.6.6 (2023-06-23)
 
+- **Breaking change:** feat!: Actions permissions (#57) ([`8894441`](https://github.com/unfoldadmin/django-unfold/commit/8894441c1ab665e0090c2bd79b7e76b0241fc88f))
 - feat: userlinks templates refactoring ([`b86d78d`](https://github.com/unfoldadmin/django-unfold/commit/b86d78d5de2fadd56d6e5aab7653ffb55af95190))
 - feat: date/time fields redesign ([`a68af6b`](https://github.com/unfoldadmin/django-unfold/commit/a68af6baa007542787d7a385d8ed5ee1431b626a))
 - feat: test flow (#80) ([`d6e9d90`](https://github.com/unfoldadmin/django-unfold/commit/d6e9d90eb85ee4559e2616f3d98e49fe5f6cdc04))
