@@ -10,7 +10,7 @@
 @source inline("{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
 @source inline("{hover:,dark:,}border-base-{50,{100..900..100},950} {hover:,dark:,}border-transparent");
 @source inline("{hover:,dark:,}bg-base-{50,{100..900..100},950}");
-@source inline("{md:,lg:,}w-{1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5}");
+@source inline("{md:,lg:,}w-{1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5,1/6,2/6,3/6,4/6,5/6,1/7,2/7,3/7,4/7,5/7,6/7}");
 @source inline("{md:,lg:,}gap-{0.5,{1..12}}");
 @source inline("{md:,lg:,}grid-cols-{1..12}");
 @source inline("{md:,lg:,}col-span-{1..12}");

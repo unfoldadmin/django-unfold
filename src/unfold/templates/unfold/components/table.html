@@ -1,6 +1,6 @@
 {% load i18n unfold %}
 
-<div class="flex flex-col">
+<div class="flex flex-col {% if class %}{{ class }}{% endif %}">
     {% if title %}
         <h3 class="font-semibold mb-1 text-font-important-light text-sm dark:text-font-important-dark">
             {{ title }}
