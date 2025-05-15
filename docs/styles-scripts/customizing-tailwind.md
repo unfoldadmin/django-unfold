@@ -10,6 +10,44 @@ When creating a custom dashboard or adding custom components, you may need to ad
 
 For Unfold version 0.56 and above, we strongly recommend writing your own custom CSS styles directly rather than attempting to set up and configure Tailwind in your project. This approach is simpler, more maintainable, and helps avoid potential conflicts with Unfold's built-in Tailwind configuration. By writing custom CSS, you maintain full control over your styling while ensuring compatibility with Unfold's existing design system.
 
+## Tailwind 4.x for Unfold 0.57+
+
+Tailwind 4 introduces a significant change in how configuration is managed. Unlike previous versions that relied on a separate `tailwind.config.js` file, Tailwind 4 consolidates all settings and configurations directly within your main CSS file. This new approach simplifies the setup process and provides a more streamlined development experience.
+
+To get started with Tailwind in your project, you'll need to install both the Tailwind CSS framework and its CLI tool. The CLI tool is essential for compiling your Tailwind styles into production-ready CSS. Install them using npm with the following command:
+
+```sh
+npm i tailwindcss @tailwindcss/cli
+```
+
+Create a new `styles.css` file in your project directory and add a single import statement at the top. This simplified configuration demonstrates how dramatically Tailwind 4 has evolved compared to the more complex configuration required in Tailwind 3. The new approach requires just one line of code:
+
+```css
+/* styles.css */
+@import 'tailwindcss';
+```
+
+After setting up your configuration, compile the styles using the CLI tool. The resulting CSS file can then be added to your `UNFOLD["STYLES"]` settings to apply your custom Tailwind styles across the admin interface.
+
+```sh
+npx @tailwindcss/cli -i styles.css -o your_project/static/css/styles.css --minify
+```
+
+```python
+# settings.py
+
+from django.templatetags.static import static
+
+
+UNFOLD = {
+    "STYLES": [
+        lambda request: static("css/styles.css"),
+    ],
+}
+```
+
+
+
 ## Tailwind 3.x for Unfold below 0.56
 
 Before starting with the Tailwind configuration at the project level, you need to install Tailwind CSS into your project by running `npm install tailwindcss` in the project directory. Don't forget to add `package.json` and `package-lock.json` to your repository.
