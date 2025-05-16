@@ -12,6 +12,7 @@
 
 {% for version, release in context.history.released.items() -%}
   ## {{ version.as_tag() }} ({{ release.tagged_date.strftime("%Y-%m-%d") }})
+
   {% for type_ in priority %}
     {% set commits = release["elements"][type_] -%}
     {% for commit in commits -%}
