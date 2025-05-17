@@ -28,13 +28,12 @@ django = ">=4.2"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3"
-pytest-django = "^4.9"
-tox = "^4.21"
-django-money = "^3.5.3"
-
+pytest-django = "^4.11"
+tox = "^4.26"
+django-money = "^3.5"
 
 [tool.poetry.group.dev.dependencies]
-python-semantic-release = "^8.7"
+python-semantic-release = "^9.21"
 
 [tool.ruff]
 fix = true
