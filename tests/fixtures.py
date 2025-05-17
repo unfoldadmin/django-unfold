@@ -2,6 +2,7 @@ import pytest
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Permission
 from django.shortcuts import redirect
 from django.test import RequestFactory
 from django.urls import reverse_lazy
@@ -24,6 +25,24 @@ def admin_user():
         password="password",
         date_joined=now(),
     )
+
+
+@pytest.fixture
+def staff_user():
+    view_user_permission = Permission.objects.get(codename="view_user")
+    change_user_permission = Permission.objects.get(codename="change_user")
+
+    user = User.objects.create_user(
+        username="staff@example.com",
+        email="staff@example.com",
+        password="password",
+        date_joined=now(),
+    )
+    user.is_staff = True
+    user.save()
+    user.user_permissions.add(view_user_permission)
+    user.user_permissions.add(change_user_permission)
+    return user
 
 
 @pytest.fixture
@@ -68,6 +87,9 @@ def user_model_admin_with_actions():
         ]
         actions_list = [
             "changelist_action",
+            "changelist_action_mixed_permissions_true",
+            "changelist_action_mixed_permissions_false",
+            "changelist_action_mixed_permissions_perm_not_granted",
             "changelist_action_permission_true",
             "changelist_action_permission_false",
             "changelist_action_multiple_different_permissions",
@@ -80,12 +102,18 @@ def user_model_admin_with_actions():
         ]
         actions_row = [
             "changelist_row_action",
+            "changelist_row_action_mixed_permissions_true",
+            "changelist_row_action_mixed_permissions_false",
+            "changelist_row_action_mixed_permissions_perm_not_granted",
             "changelist_row_action_permission_true",
             "changelist_row_action_permission_false",
             "changelist_row_action_multiple_different_permissions",
         ]
         actions_detail = [
             "changeform_action",
+            "changeform_action_mixed_permissions_true",
+            "changeform_action_mixed_permissions_false",
+            "changeform_action_mixed_permissions_perm_not_granted",
             "changeform_action_permission_true",
             "changeform_action_permission_false",
             "changeform_action_multiple_different_permissions",
@@ -98,6 +126,9 @@ def user_model_admin_with_actions():
         ]
         actions_submit_line = [
             "submit_line_action",
+            "submit_line_action_mixed_permissions_true",
+            "submit_line_action_mixed_permissions_false",
+            "submit_line_action_mixed_permissions_perm_not_granted",
             "submit_line_action_permission_true",
             "submit_line_action_permission_false",
             "submit_line_action_multiple_different_permissions",
@@ -116,6 +147,39 @@ def user_model_admin_with_actions():
         @action(description="Changelist action")
         def changelist_action(self, request):
             messages.success(request, "Changelist action successfully executed")
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changelist action with mixed permissions true",
+            permissions=["changelist_action_true", "example.view_user"],
+        )
+        def changelist_action_mixed_permissions_true(self, request):
+            messages.success(
+                request,
+                "Changelist action with mixed permissions true successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changelist action with mixed permissions false",
+            permissions=["changelist_action_false", "example.view_user"],
+        )
+        def changelist_action_mixed_permissions_false(self, request):
+            messages.success(
+                request,
+                "Changelist action with mixed permissions false successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changelist action with mixed permissions perm not granted",
+            permissions=["changelist_action_true", "example.delete_user"],
+        )
+        def changelist_action_mixed_permissions_perm_not_granted(self, request):
+            messages.success(
+                request,
+                "Changelist action with mixed permissions perm not granted successfully executed",
+            )
             return redirect(reverse_lazy("admin:example_user_changelist"))
 
         @action(
@@ -164,6 +228,41 @@ def user_model_admin_with_actions():
         @action(description="Changelist row action")
         def changelist_row_action(self, request, object_id):
             messages.success(request, "Changelist row action successfully executed")
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changelist row action with mixed permissions true",
+            permissions=["changelist_row_action_true", "example.view_user"],
+        )
+        def changelist_row_action_mixed_permissions_true(self, request, object_id):
+            messages.success(
+                request,
+                "Changelist row action with mixed permissions true successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changelist row action with mixed permissions false",
+            permissions=["changelist_row_action_false", "example.view_user"],
+        )
+        def changelist_row_action_mixed_permissions_false(self, request, object_id):
+            messages.success(
+                request,
+                "Changelist row action with mixed permissions false successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changelist row action with mixed permissions perm not granted",
+            permissions=["changelist_row_action_true", "example.delete_user"],
+        )
+        def changelist_row_action_mixed_permissions_perm_not_granted(
+            self, request, object_id
+        ):
+            messages.success(
+                request,
+                "Changelist row action with mixed permissions perm not granted successfully executed",
+            )
             return redirect(reverse_lazy("admin:example_user_changelist"))
 
         @action(
@@ -226,6 +325,41 @@ def user_model_admin_with_actions():
         def has_changeform_action_dropdown_permission(self, request, object_id):
             return True
 
+        @action(
+            description="Changeform action with mixed permissions true",
+            permissions=["example.view_user", "changeform_action_true"],
+        )
+        def changeform_action_mixed_permissions_true(self, request, object_id):
+            messages.success(
+                request,
+                "Changeform action with mixed permissions true successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changeform action with mixed permissions false",
+            permissions=["example.view_user", "changeform_action_false"],
+        )
+        def changeform_action_mixed_permissions_false(self, request, object_id):
+            messages.success(
+                request,
+                "Changeform action with mixed permissions false successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Changeform action with mixed permissions perm not granted",
+            permissions=["example.delete_user", "changeform_action_true"],
+        )
+        def changeform_action_mixed_permissions_perm_not_granted(
+            self, request, object_id
+        ):
+            messages.success(
+                request,
+                "Changeform action with mixed permissions perm not granted successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
         @action(description="Changeform action")
         def changeform_action(self, request, object_id):
             messages.success(request, "Changeform action successfully executed")
@@ -279,6 +413,39 @@ def user_model_admin_with_actions():
         @action(description="Submit line action")
         def submit_line_action(self, request, obj):
             messages.success(request, "Submit line action successfully executed")
+
+        @action(
+            description="Submit line action with mixed permissions true",
+            permissions=["submit_line_action_true", "example.view_user"],
+        )
+        def submit_line_action_mixed_permissions_true(self, request, obj):
+            messages.success(
+                request,
+                "Submit line action with mixed permissions true successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Submit line action with mixed permissions false",
+            permissions=["submit_line_action_false", "example.view_user"],
+        )
+        def submit_line_action_mixed_permissions_false(self, request, obj):
+            messages.success(
+                request,
+                "Submit line action with mixed permissions false successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
+
+        @action(
+            description="Submit line action with mixed permissions perm not granted",
+            permissions=["submit_line_action_true", "example.delete_user"],
+        )
+        def submit_line_action_mixed_permissions_perm_not_granted(self, request, obj):
+            messages.success(
+                request,
+                "Submit line action with mixed permissions perm not granted successfully executed",
+            )
+            return redirect(reverse_lazy("admin:example_user_changelist"))
 
         @action(
             description="Submit line action permission true",
