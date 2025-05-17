@@ -150,7 +150,7 @@ def hex_to_rgb(hex_color: str) -> list[int]:
     return (r, g, b)
 
 
-def prettify_json(data: Any) -> Optional[str]:
+def prettify_json(data: Any, encoder: Any) -> Optional[str]:
     try:
         from pygments import highlight
         from pygments.formatters import HtmlFormatter
@@ -167,7 +167,7 @@ def prettify_json(data: Any) -> Optional[str]:
         )
         return highlight(response, JsonLexer(), formatter)
 
-    response = json.dumps(data, sort_keys=True, indent=4)
+    response = json.dumps(data, sort_keys=True, indent=4, cls=encoder)
 
     return mark_safe(
         f'<div class="block dark:hidden">{format_response(response, "colorful")}</div>'
