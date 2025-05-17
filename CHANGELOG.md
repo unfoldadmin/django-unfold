@@ -12,8 +12,8 @@
 
 ## 0.56.0 (2025-05-05)
 
-- **Breaking change:** feat!: tailwind 4 (#1234) ([`078dcbb`](https://github.com/unfoldadmin/django-unfold/commit/078dcbb7d4908fd1502cdb1a2172a6fd45d060a7))
 - feat: improved input focus (#1247) ([`8fa21d4`](https://github.com/unfoldadmin/django-unfold/commit/8fa21d4c7969becc6084d82e403883494f0ee774))
+- **BREAKING** feat!: tailwind 4 (#1234) ([`078dcbb`](https://github.com/unfoldadmin/django-unfold/commit/078dcbb7d4908fd1502cdb1a2172a6fd45d060a7))
 - fix: responsive sidebar background color (#1258) ([`93ac1a4`](https://github.com/unfoldadmin/django-unfold/commit/93ac1a4ce024887262c8e62fccaeafa2b65d9ab8))
 - fix: import export v4 import display (#1257) ([`7fd73d0`](https://github.com/unfoldadmin/django-unfold/commit/7fd73d0c1d3128a0b694b06eb945d3029423c599))
 - fix: input dark color scheme (#1253) ([`b6c3a7b`](https://github.com/unfoldadmin/django-unfold/commit/b6c3a7beccf8d96c065df0357ffd9ff9379d6364))
@@ -731,7 +731,6 @@
 
 ## 0.6.6 (2023-06-23)
 
-- **Breaking change:** feat!: Actions permissions (#57) ([`8894441`](https://github.com/unfoldadmin/django-unfold/commit/8894441c1ab665e0090c2bd79b7e76b0241fc88f))
 - feat: userlinks templates refactoring ([`b86d78d`](https://github.com/unfoldadmin/django-unfold/commit/b86d78d5de2fadd56d6e5aab7653ffb55af95190))
 - feat: date/time fields redesign ([`a68af6b`](https://github.com/unfoldadmin/django-unfold/commit/a68af6baa007542787d7a385d8ed5ee1431b626a))
 - feat: test flow (#80) ([`d6e9d90`](https://github.com/unfoldadmin/django-unfold/commit/d6e9d90eb85ee4559e2616f3d98e49fe5f6cdc04))
@@ -739,6 +738,7 @@
 - feat(docs): credits ([`c97cf83`](https://github.com/unfoldadmin/django-unfold/commit/c97cf83eefb21db42ab3d3b1df339d00a8cce1ad))
 - feat: import export support (#67) ([`576d428`](https://github.com/unfoldadmin/django-unfold/commit/576d428d6bc04107413340732b08ece71687e59c))
 - feat: homepage link ([`e1a2713`](https://github.com/unfoldadmin/django-unfold/commit/e1a27139f3b497303ecfaa55899985b6162766b1))
+- **BREAKING** feat!: Actions permissions (#57) ([`8894441`](https://github.com/unfoldadmin/django-unfold/commit/8894441c1ab665e0090c2bd79b7e76b0241fc88f))
 - feat: htmx &amp; alpinejs update ([`9578bbe`](https://github.com/unfoldadmin/django-unfold/commit/9578bbe8fe187eac56f5a90d5757db99c127e6aa))
 - feat: Multielement rows support (#58) ([`a44c93b`](https://github.com/unfoldadmin/django-unfold/commit/a44c93ba32abf7328443884fe45cf194dd0bfb70))
 - feat: hide history section if empty ([`e1da167`](https://github.com/unfoldadmin/django-unfold/commit/e1da167c53ece9d31e6c039b6fa5eae9d2239e72))
@@ -881,4 +881,3 @@
 - chore: version ([`c1ba672`](https://github.com/unfoldadmin/django-unfold/commit/c1ba672998c670ed58771f67386f3a28ca89c743))
 - chore: improved screenshots ([`bbd2fce`](https://github.com/unfoldadmin/django-unfold/commit/bbd2fceed968120c67a265f8f2a700dae61abd3d))
 - chore(deps): bump django from 3.2.14 to 3.2.15 ([`676d963`](https://github.com/unfoldadmin/django-unfold/commit/676d96374036478b94c9e7c7c1aedc4025c5ebb5))
-
