@@ -3,7 +3,7 @@
 {% if cl.model_admin.list_filter_submit or cl.is_facets_optional or cl.has_active_filters %}
     <div class="bg-white border-t border-base-200 p-3 py-2.5 dark:bg-base-800 dark:border-base-700{% if not cl.model_admin.list_filter_sheet %} 2xl:border-t-0! 2xl:bg-transparent! 2xl:px-0{% endif %}">
         {% if cl.model_admin.list_filter_submit %}
-            <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-default text-white w-full">
+            <button type="submit" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-white w-full">
                 {% trans "Apply Filters" %}
             </button>
         {% endif %}
