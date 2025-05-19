@@ -17,7 +17,7 @@
         {{ inline_admin_formset.formset.management_form }}
         {% include "unfold/helpers/messages/error.html" with errors=inline_admin_formset.formset.non_form_errors %}
 
-        <div class="border border-base-200 mb-6 overflow-hidden rounded-default shadow-xs w-full dark:border-base-800 *:border-t *:first:border-t-0 *:border-base-200 dark:*:border-base-800"
+        <div class="border border-base-200 mb-6 overflow-hidden rounded-default shadow-xs w-full dark:border-base-800 *:border-t first-of-type:border-t-0 *:border-base-200 dark:*:border-base-800"
              {% if inline_admin_formset.opts.ordering_field %}
                  data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-on:end="sortRecords" x-sort.ghost
              {% endif %}>
