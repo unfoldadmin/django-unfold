@@ -43,15 +43,17 @@ class ActionForm(forms.Form):
                 "class": " ".join(
                     [
                         "appearance-none",
-                        "bg-white/20",
+                        "!bg-white/20",
                         "font-medium",
                         "grow",
                         "px-3",
                         "py-2",
                         "pr-8",
                         "rounded-default",
-                        "text-white",
+                        "!text-white",
                         "truncate",
+                        "!outline-primary-400",
+                        "dark:!outline-primary-700",
                         "*:text-base-700",
                         "lg:w-72",
                     ]
