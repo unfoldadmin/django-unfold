@@ -140,7 +140,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 ):
                     result_repr = self.get_admin_url(f.remote_field, value)
                 elif isinstance(f, models.JSONField):
-                    formatted_output = prettify_json(value)
+                    formatted_output = prettify_json(value, f.encoder)
 
                     if formatted_output:
                         return formatted_output
