@@ -25,6 +25,22 @@ class Button(ButtonClassesMixin, BaseInput):
     input_type = "button"
 
 
+class FieldsetSubheader(LayoutObject):
+    template = "unfold_crispy/layout/fieldset_subheader.html"
+
+    def __init__(self, title=None, *args, **kwargs):
+        self.title = title
+        super().__init__(*args, **kwargs)
+
+    def render(self, form, context, template_pack=TEMPLATE_PACK, **kwargs):
+        return render_to_string(
+            self.template,
+            {
+                "title": self.title,
+            },
+        )
+
+
 class Hr(LayoutObject):
     template = "unfold_crispy/layout/hr.html"
 
