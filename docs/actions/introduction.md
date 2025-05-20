@@ -27,6 +27,43 @@ class UserAdmin(ModelAdmin):
         pass
 ```
 
+## Permissions
+
+Unfold provides two distinct ways to handle permissions for actions:
+
+1. **ModelAdmin Method-based Permissions**
+   - Define a permission check method in your ModelAdmin class
+   - The method name should follow the pattern `has_{permission_name}_permission`
+   - This method receives the request and can optionally receive the object instance
+   - Example: `has_custom_action_permission` for a permission named "custom_action"
+
+2. **Django Built-in Permissions**
+   - Use Django's permission system with the format `app_label.permission_codename`
+   - These are standard Django permissions defined in your models
+   - **Note:** When using built-in permissions (containing a dot in the string), the permission check will not receive the object instance during detail view checks
+
+```python
+from django.contrib import admin
+from django.contrib.auth.models import User
+
+from unfold.admin import ModelAdmin
+from unfold.decorators import action
+
+
+@admin.register(User)
+class UserAdmin(ModelAdmin):
+    @action(
+        description="Custom action",
+        permissions=["custom_action", "auth.view_user"]  # Using both permission types
+    )
+    def custom_action(self, request, queryset):
+        pass
+
+    def has_custom_action_permission(self, request, obj=None):
+        # Custom permission logic here
+        return request.user.is_superuser
+```
+
 ## Icon support
 
 Unfold supports custom icons for actions. Icons are supported for all actions types. You can set the icon for an action by providing `icon` parameter to the `@action` decorator.
