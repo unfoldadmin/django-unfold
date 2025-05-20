@@ -12,7 +12,7 @@
             <span id="changelist-filter-extra-actions" class="flex flex-row gap-2 items-center mt-2">
                 {% if cl.is_facets_optional %}
                     {% if cl.add_facets %}
-                        <a href="{{ cl.remove_facet_link }}" class="hidelink border grow font-medium px-3 py-2 rounded-default text-center transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200">
+                        <a href="{{ cl.remove_facet_link }}" class="hidelink border border-base-200 grow font-medium px-3 py-2 rounded-default text-center transition-all w-full lg:w-auto dark:border-base-700 dark:hover:text-base-200">
                             {% trans "Hide counts" %}
                         </a>
                     {% else %}
