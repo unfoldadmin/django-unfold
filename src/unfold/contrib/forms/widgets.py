@@ -13,9 +13,9 @@ from unfold.widgets import (
 
 WYSIWYG_CLASSES = [
     *PROSE_CLASSES,
-    "border",
-    "border-base-200",
-    "border-t-0",
+    "border!",
+    "border-base-200!",
+    "border-t-0!",
     "group-[.errors]:border-red-600",
     "max-w-none",
     "p-4",
@@ -23,10 +23,10 @@ WYSIWYG_CLASSES = [
     "rounded-t-none",
     "text-base-500",
     "w-full",
-    "focus:outline-none",
-    "dark:border-base-700",
-    "dark:text-base-300",
-    "dark:group-[.errors]:border-red-500",
+    "focus:outline-hidden",
+    "dark:border-base-700!",
+    "dark:text-base-300!",
+    "dark:group-[.errors]:border-red-500!",
 ]
 
 
@@ -95,9 +95,9 @@ class WysiwygWidget(Widget):
     template_name = "unfold/forms/wysiwyg.html"
 
     class Media:
-        css = {"all": ("unfold/forms/css/trix.css",)}
+        css = {"all": ("unfold/forms/css/trix/trix.css",)}
         js = (
-            "unfold/forms/js/trix.js",
+            "unfold/forms/js/trix/trix.js",
             "unfold/forms/js/trix.config.js",
         )
 

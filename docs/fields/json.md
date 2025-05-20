@@ -1,18 +1,19 @@
 ---
 title: JsonField
 order: 0
-description: JsonField display options in Unfold
+description: Implement and customize JSON field formatting and syntax highlighting in Django Unfold admin interface, with PrettyJSONEncoder for basic formatting and enhanced display through Pygments integration.
 ---
 
 # JsonField formatting and syntax highlighting
 
-At the moment, Unfold provides some basic JSON formatting and syntax highlighting but only in case the JSON field is in admin configuration in `readonly_fields` list. Otherwise, the field is displayed as plain text by using `UnfoldAdminTextareaWidget`.
+Unfold currently provides basic JSON formatting and syntax highlighting, but only when the JSON field is included in the admin configuration's `readonly_fields` list. For fields not marked as read-only, Unfold displays them as plain text using the `UnfoldAdminTextareaWidget`.
 
-Once the JSON field is in `readonly_fields` and at the same time Pygments library is installed (`pip install pygments`), the field is displayed with syntax highlighting and formatting. If Pygments is not installed, the field is displayed without formatting as it is. If the library is not available, Unfold will NOT throw any errors.
+When a JSON field is both marked as read-only and the Pygments library is installed (via `pip install pygments`), Unfold will display the field with syntax highlighting and proper formatting. If Pygments is not installed, the field will be displayed without any formatting. Note that the absence of Pygments will not cause any errors in Unfold's functionality.
 
 ## Basic formatting without Pygments
 
-Without the Pygments library, it is still possible to add at least some basic formatting to the JSON field by using example `PrettyJSONEncoder` encoder below.
+Even without the Pygments library installed, you can still achieve basic JSON formatting by using the `PrettyJSONEncoder` encoder shown in the example below.
+
 ```python
 # encoders.py
 
@@ -24,7 +25,7 @@ class PrettyJSONEncoder(json.JSONEncoder):
         super().__init__(*args, indent=4, sort_keys=True, **kwargs)
 ```
 
-Once we have this encoder, we will use it in the field definition in the `models.py` file. This encoder will format JSON when the field value is saved to the database so if you check the raw value in the database, it will be formatted.
+After creating the encoder, we can apply it to a field definition in the `models.py` file. When a value is saved to the database, this encoder will automatically format the JSON data. As a result, the raw value stored in the database will be properly formatted.
 
 ```python
 # models.py
@@ -36,7 +37,7 @@ class CustomModel(models.Model):
     data = models.JSONField(_("data"), null=True, blank=True, encoder=PrettyJSONEncoder)
 ```
 
-Again, we need to register the model in the admin.py file and make sure the new JSON field is in `readonly_fields` list to make sure it will be display with formatted content.
+Finally, register the model in admin.py and include the JSON field in the `readonly_fields` list to ensure it displays with proper formatting.
 
 ```python
 # admin.py

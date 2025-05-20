@@ -1,4 +1,109 @@
 
+## 0.58.0 (2025-05-19)
+
+- feat: card titles (#1297) ([`b87f957`](https://github.com/unfoldadmin/django-unfold/commit/b87f957c276dfae7a7fad3ab4351b19fd6606afe))
+- feat: radio/checkbox focus outline size (#1295) ([`498403a`](https://github.com/unfoldadmin/django-unfold/commit/498403ae48995191c94d30efe8c76d9835b6fd8b))
+- feat: respect form_show_labels in crispy formsets (#1290) ([`33b1683`](https://github.com/unfoldadmin/django-unfold/commit/33b16831832663653e65f81ba5d09587396763d4))
+- feat: redesigned select2 dropdown (#1282) ([`40d389b`](https://github.com/unfoldadmin/django-unfold/commit/40d389b9939f6619d67070f3f13f13ceea5ee6fe))
+- feat: linked card component (#1281) ([`9c2948c`](https://github.com/unfoldadmin/django-unfold/commit/9c2948c4703b0bab7ca9c8c7d1eeda758b6e2393))
+- fix: button pointers (#1307) ([`a83e1cb`](https://github.com/unfoldadmin/django-unfold/commit/a83e1cbc3af2ec18a6070947df488835bfe499f0))
+- fix: tailwind default border color (#1305) ([`ee1209a`](https://github.com/unfoldadmin/django-unfold/commit/ee1209a48374c0ab1221d539d177a4e301e5616b))
+- fix: semantic release breaking changes (#1301) ([`5b1b443`](https://github.com/unfoldadmin/django-unfold/commit/5b1b443ba81d350af0b67449ae4a2e5825161568))
+- fix: polished table component design (#1296) ([`38bef74`](https://github.com/unfoldadmin/django-unfold/commit/38bef74493ab0568a49994eab7d0a6de4a1ad677))
+- fix: django import export form alignment (#1284) ([`8e614ed`](https://github.com/unfoldadmin/django-unfold/commit/8e614ede4889bb9399c3348d36d30c2d8e949e71))
+- docs: tailwind 4 configuration (#1300) ([`8194197`](https://github.com/unfoldadmin/django-unfold/commit/819419731ca4ef835fbd1e0740745b843f794aec))
+- docs: refactored structure (#1294) ([`7167a00`](https://github.com/unfoldadmin/django-unfold/commit/7167a00af8ba9e678bacbaf4243c188d888a4d82))
+- docs: add missing imports on django-celery-beat.md (#1285) ([`79c31ed`](https://github.com/unfoldadmin/django-unfold/commit/79c31ed277350315ab08f679f34606f40e496e54))
+- chore: tailwind version update (#1306) ([`f1f76cc`](https://github.com/unfoldadmin/django-unfold/commit/f1f76cc29dea801f9a5dcf440ec874e772365f60))
+- chore: semantic release update (#1302) ([`5c1125d`](https://github.com/unfoldadmin/django-unfold/commit/5c1125d219ac747fa61cb81137547290eab2c704))
+- chore: removal of unnecessary forms.css stylesheet (#1283) ([`0a836be`](https://github.com/unfoldadmin/django-unfold/commit/0a836be7500a543e623eeb96dde5a7bfc97bafb0))
+- chore: sidebar id attribute (#1280) ([`c9a9f67`](https://github.com/unfoldadmin/django-unfold/commit/c9a9f6712770832ea7cc9fc0e1a7fd4ea54e4dd7))
+- chore: navigation items processing (#1277) ([`aeab467`](https://github.com/unfoldadmin/django-unfold/commit/aeab467e1cfdb63be7b828bb42c1241711cc5e38))
+- chore(deps): bump django from 4.2.20 to 4.2.21 (#1279) ([`818d388`](https://github.com/unfoldadmin/django-unfold/commit/818d388c0075a2bd5cf4b42cf58e7c3ef58003a5))
+
+## 0.57.0 (2025-05-09)
+
+- feat: crispy formsets support (#1275) ([`17ff8c5`](https://github.com/unfoldadmin/django-unfold/commit/17ff8c579bbb33a3dba91fd20083b2da311116df))
+- feat: simplified datetime widget icons (#1269) ([`7be4522`](https://github.com/unfoldadmin/django-unfold/commit/7be4522c946a104ae1f72a6261bba0e46931c4d5))
+- feat: crispy forms horizontal rule (#1271) ([`91187b1`](https://github.com/unfoldadmin/django-unfold/commit/91187b19feedb13659c246b0f2f2d6ccfa5b98e6))
+- feat: multiple select2 widget (#1272) ([`f3fb5a2`](https://github.com/unfoldadmin/django-unfold/commit/f3fb5a2ebdbba20020ed309fd5ad45966d389926))
+- feat: redesigned input icons (#1264) ([`1bf08bf`](https://github.com/unfoldadmin/django-unfold/commit/1bf08bfe636ba8baf95bc37a28bb86dc9195800a))
+- feat: redesigned form errors (#1262) ([`f0aec64`](https://github.com/unfoldadmin/django-unfold/commit/f0aec64d01d1ddf0c119fd8621de0b87edec0b03))
+- fix: correct template tag/variable syntax in skeleton layout (#1268) ([`ac7972f`](https://github.com/unfoldadmin/django-unfold/commit/ac7972f32ae088b79536c06a7a2f3859d874a6c3))
+- fix: missing pluralization in form error message translation (#1273) ([`89f57a8`](https://github.com/unfoldadmin/django-unfold/commit/89f57a8d77c5c65afd186e04ec2e9833a767d369))
+- fix: border color for readonly fields in light mode (#1270) ([`c7c7b6f`](https://github.com/unfoldadmin/django-unfold/commit/c7c7b6fb0f173598d3671e4e884d7c603d891d13))
+
+## 0.56.0 (2025-05-05)
+
+- feat: improved input focus (#1247) ([`8fa21d4`](https://github.com/unfoldadmin/django-unfold/commit/8fa21d4c7969becc6084d82e403883494f0ee774))
+- **BREAKING** feat!: tailwind 4 (#1234) ([`078dcbb`](https://github.com/unfoldadmin/django-unfold/commit/078dcbb7d4908fd1502cdb1a2172a6fd45d060a7))
+- fix: responsive sidebar background color (#1258) ([`93ac1a4`](https://github.com/unfoldadmin/django-unfold/commit/93ac1a4ce024887262c8e62fccaeafa2b65d9ab8))
+- fix: import export v4 import display (#1257) ([`7fd73d0`](https://github.com/unfoldadmin/django-unfold/commit/7fd73d0c1d3128a0b694b06eb945d3029423c599))
+- fix: input dark color scheme (#1253) ([`b6c3a7b`](https://github.com/unfoldadmin/django-unfold/commit/b6c3a7beccf8d96c065df0357ffd9ff9379d6364))
+- fix: responsive improvements (#1252) ([`5454843`](https://github.com/unfoldadmin/django-unfold/commit/54548435e5d1c0d011d80649d7132fdfba1857c8))
+- fix: select2 focus (#1248) ([`ba1ee3a`](https://github.com/unfoldadmin/django-unfold/commit/ba1ee3a953501aa273ed80bd3036b4bff697c64c))
+- fix: tabular sorting input focus (#1246) ([`51e66dc`](https://github.com/unfoldadmin/django-unfold/commit/51e66dcfdbabc3de9ffc3c353b5a2b5d25f56aca))
+- chore: major semantic release configuration (#1261) ([`36bdfda`](https://github.com/unfoldadmin/django-unfold/commit/36bdfdaa58271f01ab175cb64f238bf065dd2ea4))
+
+## 0.55.3 (2025-04-22)
+
+- fix: default site url (#1233) ([`7fb87b7`](https://github.com/unfoldadmin/django-unfold/commit/7fb87b7b42519c0b898b7dd2de5c8f1f717d2138))
+- fix: inline tabs formset prefix as fragment (#1229) ([`7529256`](https://github.com/unfoldadmin/django-unfold/commit/75292566e00ca1694e3177594feb9afb497b23e5))
+- chore: release flow python version (#1218) ([`5558443`](https://github.com/unfoldadmin/django-unfold/commit/55584435e6e149f9020a458cb2dc0b0311a1b217))
+
+## 0.55.2 (2025-04-15)
+
+- fix: force inline tab anchor slugify (#1227) ([`b40980a`](https://github.com/unfoldadmin/django-unfold/commit/b40980afe6d848b11c725fc111e322f8c6da4e3f))
+- fix: filter media loading (#1226) ([`df821d7`](https://github.com/unfoldadmin/django-unfold/commit/df821d7bf55cfa641d7e3508c39faa65d1bad45e))
+- fix: disable facet filters for django 4.2 (#1222) ([`62959b2`](https://github.com/unfoldadmin/django-unfold/commit/62959b21d57f3eb455a9d5ba38eb0b31be40c1bf))
+
+## 0.55.1 (2025-04-11)
+
+- fix: use the same translation for all By {filter_title} (#1220) ([`6e57a36`](https://github.com/unfoldadmin/django-unfold/commit/6e57a3685e746e28038695674ee12cc6451631da))
+- fix: proper attributions (#1219) ([`57bf4c4`](https://github.com/unfoldadmin/django-unfold/commit/57bf4c44ec8b5fedf4a3cfce71b84a3842296203))
+- chore: inter font update ([`7ff4558`](https://github.com/unfoldadmin/django-unfold/commit/7ff45586c93bdc28d4ccd99a4604c375062ee156))
+
+## 0.55.0 (2025-04-11)
+
+- feat: autoload Unfold select2 widget media by default (#1210) ([`f0644e6`](https://github.com/unfoldadmin/django-unfold/commit/f0644e688145eacde5a7f8ded5e3fec4074a3fea))
+- feat: facet filters (#1205) ([`f9f7331`](https://github.com/unfoldadmin/django-unfold/commit/f9f73312954617463a470bc48c296343da10cf35))
+- feat: button component support for custom attrs (#1203) ([`5f5f01d`](https://github.com/unfoldadmin/django-unfold/commit/5f5f01d86110e937a49759385738b14ae9921799))
+- feat: crispy forms templatepack (#1195) ([`bf0cffa`](https://github.com/unfoldadmin/django-unfold/commit/bf0cffaca732db542da89ff70cc3d45bde2d824e))
+- fix: expandable textarea sizing (#1209) ([`1829a58`](https://github.com/unfoldadmin/django-unfold/commit/1829a585d0977ae01fbc3b2e2429129a2c90c17e))
+- fix: checkbox &amp; radio conditional fields (#1208) ([`5504251`](https://github.com/unfoldadmin/django-unfold/commit/55042510e9f0bba71fb044279549352b7a2278ec))
+- docs: button component (#1204) ([`be44ee6`](https://github.com/unfoldadmin/django-unfold/commit/be44ee6681b58c72cc668e6b5a8e7071369e844b))
+- docs: table component (#1202) ([`8aa6044`](https://github.com/unfoldadmin/django-unfold/commit/8aa604467598daae372aaa56cf5ce5a9cf302086))
+- chore: credits (#1215) ([`06c0a45`](https://github.com/unfoldadmin/django-unfold/commit/06c0a457beb9eb296ba647c0e1d184d0533dcfa3))
+- chore: icons update (#1214) ([`833c7f1`](https://github.com/unfoldadmin/django-unfold/commit/833c7f162f53cc2d94d3f1f17a4125b496094708))
+- chore: alpine update (#1207) ([`b8a9a0d`](https://github.com/unfoldadmin/django-unfold/commit/b8a9a0ddaf73a192c05508fecdb2caac88d5eb02))
+- chore: updated README features (#1199) ([`15089d5`](https://github.com/unfoldadmin/django-unfold/commit/15089d548591fdcb6f45f7a57c47b13cc5861ce2))
+- chore: django 5.2 in tox config (#1198) ([`5a1eb1b`](https://github.com/unfoldadmin/django-unfold/commit/5a1eb1b3d33bd8a131429ce3c1f6a141c95dc9b9))
+
+## 0.54.0 (2025-03-31)
+
+- feat: checkbox &amp; radio filters (#1178) ([`9913a45`](https://github.com/unfoldadmin/django-unfold/commit/9913a455f5b8b2d76c069401b6e0c4fa97d82c26))
+- feat: polished action border colors (#1180) ([`975b4a8`](https://github.com/unfoldadmin/django-unfold/commit/975b4a8b5a203f2300e22f24570817da5c7e502d))
+- fix: sections colspan for rows with actions (#1191) ([`5af868e`](https://github.com/unfoldadmin/django-unfold/commit/5af868e29eaeb0f5dd94c34656091dc2ec7168b5))
+- fix: tabular inline stripes / delete link (#1190) ([`eef631a`](https://github.com/unfoldadmin/django-unfold/commit/eef631a400cc3a78effba523cf81f0b7caa72c94))
+- fix: changelist filter adjusted paddings (#1179) ([`dbc330d`](https://github.com/unfoldadmin/django-unfold/commit/dbc330d9d32c907207c42e5cef9627d622056aa9))
+- docs: detailed cohort description + component class (#1192) ([`db36133`](https://github.com/unfoldadmin/django-unfold/commit/db36133cb8535dac713ed89f9fb2ec1759779073))
+- docs: configuring inlines to display in dynamic tabs (#1182) ([`5c2b3a2`](https://github.com/unfoldadmin/django-unfold/commit/5c2b3a258429e3f9eb3d10dd7ce15aa5468e721c))
+
+## 0.53.0 (2025-03-24)
+
+- feat: new InfinitePaginator for large tables (#1169) ([`3ecb2d0`](https://github.com/unfoldadmin/django-unfold/commit/3ecb2d0c2e6a211285c21e86652b0b8417c05e5f))
+- feat: active callback for sidebar navigation (#1165) ([`3d981f3`](https://github.com/unfoldadmin/django-unfold/commit/3d981f33a07c31118f4bfe652ad77d4ab5c4fd89))
+- feat: conditional fields display (#1156) ([`e496d6c`](https://github.com/unfoldadmin/django-unfold/commit/e496d6cd6bb0499aa7133dc21912a2efb4965cbe))
+- fix: truncate long text in action dropdown (#1176) ([`5b45827`](https://github.com/unfoldadmin/django-unfold/commit/5b458270ecd492e13ec43c53fa0a6ee1fa0028d8))
+- fix: site dropdown event propagation (#1175) ([`842fd50`](https://github.com/unfoldadmin/django-unfold/commit/842fd503645c314cd49902d2db70905b17751110))
+- fix: typo on user creation popup form (#1166) ([`a56ecfe`](https://github.com/unfoldadmin/django-unfold/commit/a56ecfe84d8cbde492e94507b92ac081b9b79125))
+- fix: action attrs not being applied to details dropdown actions (#1162) ([`f5ea4d1`](https://github.com/unfoldadmin/django-unfold/commit/f5ea4d1a573abc90b3a69f2d62e5a6796235bf29))
+- fix: display form lines in grid (#1164) ([`cc7f786`](https://github.com/unfoldadmin/django-unfold/commit/cc7f786375e4262d9ee650ffaa6556456d2f0629))
+- fix: changeform dropdown actions permissions (#1163) ([`34fa2ed`](https://github.com/unfoldadmin/django-unfold/commit/34fa2ed94645a984b4bd60768d911c06bbf35129))
+- fix: add support for django-money in display_for_field ([`5cc06c6`](https://github.com/unfoldadmin/django-unfold/commit/5cc06c6b1adab2adc8d73885918fb3322e0d2f90))
+- fix: use the same translation for all &#34;By {filter_title}&#34; (#1146) ([`de5dd99`](https://github.com/unfoldadmin/django-unfold/commit/de5dd99b668a08a43433cd555f9de8e105e571fd))
+- chore: lint only on pull request (#1177) ([`7adee94`](https://github.com/unfoldadmin/django-unfold/commit/7adee94099cc28118bfdc995b633ec34ba911bed))
+
 ## 0.52.0 (2025-03-17)
 
 - feat: compressed fields subtle separator (#1153) ([`56f1678`](https://github.com/unfoldadmin/django-unfold/commit/56f1678716898e06980d8ad51cb6185522080302))
@@ -656,6 +761,7 @@
 - feat(docs): credits ([`c97cf83`](https://github.com/unfoldadmin/django-unfold/commit/c97cf83eefb21db42ab3d3b1df339d00a8cce1ad))
 - feat: import export support (#67) ([`576d428`](https://github.com/unfoldadmin/django-unfold/commit/576d428d6bc04107413340732b08ece71687e59c))
 - feat: homepage link ([`e1a2713`](https://github.com/unfoldadmin/django-unfold/commit/e1a27139f3b497303ecfaa55899985b6162766b1))
+- **BREAKING** feat!: Actions permissions (#57) ([`8894441`](https://github.com/unfoldadmin/django-unfold/commit/8894441c1ab665e0090c2bd79b7e76b0241fc88f))
 - feat: htmx &amp; alpinejs update ([`9578bbe`](https://github.com/unfoldadmin/django-unfold/commit/9578bbe8fe187eac56f5a90d5757db99c127e6aa))
 - feat: Multielement rows support (#58) ([`a44c93b`](https://github.com/unfoldadmin/django-unfold/commit/a44c93ba32abf7328443884fe45cf194dd0bfb70))
 - feat: hide history section if empty ([`e1da167`](https://github.com/unfoldadmin/django-unfold/commit/e1da167c53ece9d31e6c039b6fa5eae9d2239e72))
@@ -798,4 +904,3 @@
 - chore: version ([`c1ba672`](https://github.com/unfoldadmin/django-unfold/commit/c1ba672998c670ed58771f67386f3a28ca89c743))
 - chore: improved screenshots ([`bbd2fce`](https://github.com/unfoldadmin/django-unfold/commit/bbd2fceed968120c67a265f8f2a700dae61abd3d))
 - chore(deps): bump django from 3.2.14 to 3.2.15 ([`676d963`](https://github.com/unfoldadmin/django-unfold/commit/676d96374036478b94c9e7c7c1aedc4025c5ebb5))
-

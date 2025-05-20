@@ -11,7 +11,7 @@
 
 {% if not is_popup %}
     {% block breadcrumbs %}
-        <div class="px-4 lg:px-8">
+        <div class="px-4">
             <div class="container mb-6 mx-auto -my-3 lg:mb-12">
                 <ul class="flex flex-wrap">
                     {% url 'admin:index' as link %}
@@ -58,7 +58,7 @@
 {% endblock %}
 
 {% block content %}
-    <div id="content-main" x-data="{ changeFormWidth: 0 }" x-resize="changeFormWidth = $width">
+    <div id="content-main">
         {% block form_before %}{% endblock %}
 
         {% if adminform.model_admin.change_form_outer_before_template %}
@@ -111,8 +111,6 @@
                     {% include adminform.model_admin.change_form_after_template %}
                 {% endif %}
 
-                {% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
-
                 {% block admin_change_form_document_ready %}
                     <script id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}"{% if adminform and add %} data-model-name="{{ opts.model_name }}"{% endif %} async></script>
                 {% endblock %}
@@ -127,4 +125,8 @@
 
         {% block form_after %}{% endblock %}
     </div>
+{% endblock %}
+
+{% block footer %}
+    {% block submit_buttons_bottom %}{% submit_row %}{% endblock %}
 {% endblock %}

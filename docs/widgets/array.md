@@ -15,9 +15,11 @@ INSTALLED_APPS = [
 ]
 ```
 
-Below you can see how to use ArrayWidget in your admin class. In this example, all `ArrayField` fields will use `ArrayWidget` to render input fields. If `choices` are provided for the widget, a dropdown list will be used instead of a text input.
+The example below demonstrates how to implement ArrayWidget in your Django admin class. By using the `formfield_overrides` setting, you can configure all `ArrayField` fields to utilize the `ArrayWidget` for rendering input fields. The widget provides flexibility in how the data is displayed - when `choices` are specified, it automatically switches from a standard text input to a dropdown list interface, allowing users to select from predefined options. This makes it particularly useful for managing array data that should be constrained to a specific set of values.
 
-When it comes to providing choices for the widget, by default the widget does not have any information about the field's choices, so it is mandatory to provide them manually. You can do this in the `get_form` method where the widget is initialized with the `choices` parameter.
+[![Array widget](/static/docs/widgets/array.webp)](/static/docs/widgets/array.webp)
+
+When implementing the ArrayWidget with choices, it's important to note that the widget itself doesn't automatically inherit or detect any choice options from the field definition. This means you'll need to explicitly provide the choices when initializing the widget. The recommended approach is to override the `get_form` method in your ModelAdmin class, where you can initialize the widget with the desired `choices` parameter. This gives you full control over what options are available in the dropdown list and ensures that the widget properly constrains user input to valid selections. The choices can be defined using Django's TextChoices class or any other compatible choices format.
 
 ```python
 # admin.py

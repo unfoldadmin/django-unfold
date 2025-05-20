@@ -12,14 +12,14 @@ repos:
       - id: trailing-whitespace
         exclude: CHANGELOG.md
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.0
+    rev: v0.11.10
     hooks:
       - id: ruff
         args:
           - --fix
       - id: ruff-format
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v4.0.0
+    rev: v4.2.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
@@ -30,7 +30,7 @@ repos:
       - id: djhtml
         files: .*/templates/.*\.html$
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.23.1
+    rev: 1.25.0
     hooks:
       - id: django-upgrade
         args: ['--target-version', '4.2']

@@ -24,9 +24,16 @@ except ImportError:
         return func
 
 
-from .settings import get_config
-from .utils import hex_to_rgb
-from .widgets import CHECKBOX_CLASSES, INPUT_CLASSES
+from unfold.settings import get_config
+from unfold.utils import hex_to_rgb
+from unfold.widgets import (
+    BUTTON_CLASSES,
+    CHECKBOX_CLASSES,
+    FILE_CLASSES,
+    INPUT_CLASSES,
+    RADIO_CLASSES,
+    SWITCH_CLASSES,
+)
 
 
 class UnfoldAdminSite(AdminSite):
@@ -34,7 +41,7 @@ class UnfoldAdminSite(AdminSite):
     settings_name = "UNFOLD"
 
     def __init__(self, name: str = "admin") -> None:
-        from .forms import AuthenticationForm
+        from unfold.forms import AuthenticationForm
 
         super().__init__(name)
 
@@ -68,12 +75,16 @@ class UnfoldAdminSite(AdminSite):
         sidebar_config = self._get_config("SIDEBAR", request)
         data = {
             "form_classes": {
-                "text_input": INPUT_CLASSES,
-                "checkbox": CHECKBOX_CLASSES,
+                "text_input": " ".join(INPUT_CLASSES),
+                "checkbox": " ".join(CHECKBOX_CLASSES),
+                "button": " ".join(BUTTON_CLASSES),
+                "radio": " ".join(RADIO_CLASSES),
+                "switch": " ".join(SWITCH_CLASSES),
+                "file": " ".join(FILE_CLASSES),
             },
-            "site_title": self._get_config("SITE_TITLE", request) or self.site_title,
-            "site_header": self._get_config("SITE_HEADER", request) or self.site_header,
-            "site_url": self._get_config("SITE_URL", request) or self.site_url,
+            "site_title": self._get_config("SITE_TITLE", request),
+            "site_header": self._get_config("SITE_HEADER", request),
+            "site_url": self._get_config("SITE_URL", request),
             "site_subheader": self._get_config("SITE_SUBHEADER", request),
             "site_dropdown": self._get_site_dropdown_items("SITE_DROPDOWN", request),
             "site_logo": self._get_theme_images("SITE_LOGO", request),
@@ -232,58 +243,58 @@ class UnfoldAdminSite(AdminSite):
         results = []
 
         for group in copy.deepcopy(navigation):
-            allowed_items = []
-
-            for item in group["items"]:
-                if "active" in item:
-                    item["active"] = self._get_value(item["active"], request)
-                else:
-                    item["active"] = self._get_is_active(
-                        request, item.get("link_callback") or item["link"]
-                    )
-
-                # Checks if any tab item is active and then marks the sidebar link as active
-                for tab in tabs:
-                    has_primary_link = False
-                    has_tab_link_active = False
-
-                    for tab_item in tab["items"]:
-                        if item["link"] == tab_item["link"]:
-                            has_primary_link = True
-                            continue
-
-                        if self._get_is_active(
-                            request, tab_item.get("link_callback") or tab_item["link"]
-                        ):
-                            has_tab_link_active = True
-                            break
-
-                    if has_primary_link and has_tab_link_active:
-                        item["active"] = True
-
-                if isinstance(item["link"], Callable):
-                    item["link_callback"] = lazy(item["link"])(request)
-
-                # Permission callback
-                item["has_permission"] = self._call_permission_callback(
-                    item.get("permission"), request
-                )
-
-                # Badge callbacks
-                if "badge" in item and isinstance(item["badge"], str):
-                    try:
-                        callback = import_string(item["badge"])
-                        item["badge_callback"] = lazy(callback)(request)
-                    except ImportError:
-                        pass
-
-                allowed_items.append(item)
-
-            group["items"] = allowed_items
-
+            group["items"] = self._get_navigation_items(request, group["items"], tabs)
             results.append(group)
 
         return results
+
+    def _get_navigation_items(
+        self, request: HttpRequest, items: list[dict], tabs: list[dict] = None
+    ) -> list:
+        allowed_items = []
+
+        for item in items:
+            link = item.get("link")
+
+            if "active" in item:
+                item["active"] = self._get_value(item["active"], request)
+            else:
+                item["active"] = self._get_is_active(
+                    request, item.get("link_callback") or link
+                )
+
+            # Checks if any tab item is active and then marks the sidebar link as active
+            if (
+                tabs
+                and (is_active := self._get_is_tab_active(request, tabs, link))
+                and is_active
+            ):
+                item["active"] = True
+
+            # Link callback
+            if isinstance(link, Callable):
+                item["link_callback"] = lazy(link)(request)
+
+            # Permission callback
+            item["has_permission"] = self._call_permission_callback(
+                item.get("permission"), request
+            )
+
+            # Badge callbacks
+            if "badge" in item and isinstance(item["badge"], str):
+                try:
+                    callback = import_string(item["badge"])
+                    item["badge_callback"] = lazy(callback)(request)
+                except ImportError:
+                    pass
+
+            # Process nested items
+            if "items" in item:
+                item["items"] = self._get_navigation_items(request, item["items"])
+
+            allowed_items.append(item)
+
+        return allowed_items
 
     def get_tabs_list(self, request: HttpRequest) -> list[dict[str, Any]]:
         tabs = copy.deepcopy(self._get_config("TABS", request))
@@ -370,6 +381,29 @@ class UnfoldAdminSite(AdminSite):
 
         return False
 
+    def _get_is_tab_active(
+        self, request: HttpRequest, tabs: list[dict], link: str
+    ) -> bool:
+        for tab in tabs:
+            has_primary_link = False
+            has_tab_link_active = False
+
+            for tab_item in tab["items"]:
+                if link == tab_item["link"]:
+                    has_primary_link = True
+                    continue
+
+                if self._get_is_active(
+                    request, tab_item.get("link_callback") or tab_item["link"]
+                ):
+                    has_tab_link_active = True
+                    break
+
+            if has_primary_link and has_tab_link_active:
+                return True
+
+        return False
+
     def _get_config(self, key: str, *args) -> Any:
         config = get_config(self.settings_name)
 
@@ -396,7 +430,7 @@ class UnfoldAdminSite(AdminSite):
         colors = self._get_config(key, *args)
 
         def rgb_to_values(value: str) -> str:
-            return " ".join(
+            return ", ".join(
                 list(
                     map(
                         str.strip,
@@ -406,7 +440,7 @@ class UnfoldAdminSite(AdminSite):
             )
 
         def hex_to_values(value: str) -> str:
-            return " ".join(str(item) for item in hex_to_rgb(value))
+            return ", ".join(str(item) for item in hex_to_rgb(value))
 
         for name, weights in colors.items():
             weights = self._get_value(weights, *args)
@@ -417,6 +451,11 @@ class UnfoldAdminSite(AdminSite):
                     colors[name][weight] = hex_to_values(value)
                 elif value.startswith("rgb"):
                     colors[name][weight] = rgb_to_values(value)
+                elif isinstance(value, str) and all(
+                    part.isdigit() for part in value.split()
+                ):
+                    colors[name][weight] = ", ".join(value.split(" "))
+                pass
 
         return colors
 

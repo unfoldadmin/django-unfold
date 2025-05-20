@@ -29,15 +29,15 @@
         {% endfor %}
 
         <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
-        <link href="{% static 'unfold/css/simplebar.css' %}" rel="stylesheet">
+        <link href="{% static 'unfold/css/simplebar/simplebar.css' %}" rel="stylesheet">
 
-        <script src="{% static 'unfold/js/alpine.anchor.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine.persist.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine.sort.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine.resize.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine.js' %}" defer></script>
-        <script src="{% static 'unfold/js/htmx.js' %}"></script>
-        <script src="{% static 'unfold/js/chart.js' %}"></script>
+        <script src="{% static 'unfold/js/alpine/alpine.anchor.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine/alpine.persist.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine/alpine.sort.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine/alpine.resize.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine/alpine.js' %}" defer></script>
+        <script src="{% static 'unfold/js/htmx/htmx.js' %}"></script>
+        <script src="{% static 'unfold/js/chart/chart.js' %}"></script>
 
         {% for script in scripts %}
             <script src="{{ script }}"></script>
@@ -58,7 +58,7 @@
         {% endblock %}
     </head>
 
-    <body class="antialiased bg-white font-sans text-font-default-light text-sm dark:bg-base-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ mainWidth: 0, {% if opts %}activeTab: 'general',{% endif %} sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = {% if opts %}window.location.hash?.replace('#', '') || 'general'{% else %}''{% endif %}">
+    <body class="antialiased bg-base-50 font-sans text-font-default-light text-sm dark:bg-base-900 dark:text-font-default-dark {% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}" data-admin-utc-offset="{% now "Z" %}" x-data="{ {% if opts %}activeTab: 'general',{% endif %} sidebarMobileOpen: false, sidebarDesktopOpen: {% if request.session.toggle_sidebar == False %}false{% else %}true{% endif %} }" x-init="activeTab = {% if opts %}window.location.hash?.replace('#', '') || 'general'{% else %}''{% endif %}">
         {% if colors %}
             <style id="unfold-theme-colors">
                 :root {
@@ -77,8 +77,8 @@
 
         {% block base %}{% endblock %}
 
-        <div id="modal-overlay" class="backdrop-blur-sm bg-opacity-80 bg-base-900 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
-        <script src="{% static 'unfold/js/simplebar.js' %}"></script>
+        <div id="modal-overlay" class="backdrop-blur-xs bg-base-900/80 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-50"></div>
+        <script src="{% static 'unfold/js/simplebar/simplebar.js' %}"></script>
     </body>
 
 </html>

@@ -8,6 +8,8 @@ description: Learn how to dynamically generate tab navigation in Django Unfold a
 
 Unfold provides a way to dynamically generate tab navigation. It is possible to use your own logic to generate tab navigation. The tab navigation configuration can be defined as importable string which will call a function with `HttpRequest` object as an argument. In this function it is possible to build own tabs navigation structure.
 
+[![Dynamic Tabs](/static/docs/tabs/dynamic-tabs.webp)](/static/docs/tabs/dynamic-tabs.webp)
+
 ```python
 # settings.py
 
@@ -44,10 +46,17 @@ def tabs_callback(request: HttpRequest) -> list[dict[str, Any]]:
                     "active": True # Configure active tab
                     # "active": lambda request: True
                 },
+                {
+                    "title": _("Inline tab"),
+                    "link": reverse_lazy("admin:app_label_model_name_changelist"),
+                    "inline": "corresponding-fragment-url"
+                },
             ],
         },
     ],
 ```
+
+**Note:** For rendering tabs associated with inlines, you should use the `inline` parameter and set its value to the corresponding inline fragment URL. This ensures that the tab correctly links to and displays the inline content when clicked. The inline fragment URL typically corresponds to the slugified verbose name of the inline model.
 
 ## Rendering tabs in custom templates
 

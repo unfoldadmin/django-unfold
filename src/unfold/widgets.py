@@ -33,6 +33,20 @@ from django.utils.translation import gettext_lazy as _
 
 from .exceptions import UnfoldException
 
+BUTTON_CLASSES = [
+    "border",
+    "cursor-pointer",
+    "font-medium",
+    "px-3",
+    "py-2",
+    "rounded-default",
+    "text-center",
+    "whitespace-nowrap",
+    "bg-primary-600",
+    "border-transparent",
+    "text-white",
+]
+
 LABEL_CLASSES = [
     "block",
     "font-semibold",
@@ -57,24 +71,22 @@ BASE_CLASSES = [
     "font-medium",
     "min-w-20",
     "placeholder-base-400",
-    "rounded",
-    "shadow-sm",
+    "rounded-default",
+    "shadow-xs",
     "text-font-default-light",
     "text-sm",
-    "focus:ring",
-    "focus:ring-primary-300",
-    "focus:border-primary-600",
-    "focus:outline-none",
+    "focus:outline-2",
+    "focus:-outline-offset-2",
+    "focus:outline-primary-600",
     "group-[.errors]:border-red-600",
-    "group-[.errors]:focus:ring-red-200",
+    "focus:group-[.errors]:outline-red-600",
     "dark:bg-base-900",
     "dark:border-base-700",
     "dark:text-font-default-dark",
-    "dark:focus:border-primary-600",
-    "dark:focus:ring-primary-700",
-    "dark:focus:ring-opacity-50",
     "dark:group-[.errors]:border-red-500",
-    "dark:group-[.errors]:focus:ring-red-600/40",
+    "dark:focus:group-[.errors]:outline-red-500",
+    "dark:scheme-dark",
+    "group-[.primary]:border-transparent",
 ]
 
 BASE_INPUT_CLASSES = [
@@ -88,7 +100,7 @@ INPUT_CLASSES = [*BASE_INPUT_CLASSES, "max-w-2xl"]
 
 DATETIME_CLASSES = [*BASE_INPUT_CLASSES, "min-w-52"]
 
-COLOR_CLASSES = [*BASE_CLASSES, "h-9.5", "px-2", "py-2", "w-32"]
+COLOR_CLASSES = [*BASE_CLASSES, "h-[38px]", "px-2", "py-2", "w-32"]
 
 INPUT_CLASSES_READONLY = [*BASE_INPUT_CLASSES, "bg-base-50"]
 
@@ -106,7 +118,7 @@ TEXTAREA_CLASSES = [
 TEXTAREA_EXPANDABLE_CLASSES = [
     "block",
     "field-sizing-content",
-    "!max-w-2xl",
+    "min-h-[38px]",
 ]
 
 SELECT_CLASSES = [
@@ -123,7 +135,7 @@ PROSE_CLASSES = [
     "prose-blockquote:border-l-4",
     "prose-blockquote:not-italic",
     "prose-pre:bg-base-50",
-    "prose-pre:rounded",
+    "prose-pre:rounded-default",
     "prose-headings:font-medium",
     "prose-a:text-primary-600",
     "prose-headings:font-medium",
@@ -146,21 +158,22 @@ CHECKBOX_CLASSES = [
     "border-base-300",
     "cursor-pointer",
     "h-4",
+    "min-w-4",
     "relative",
     "rounded-[4px]",
-    "shadow-sm",
+    "shadow-xs",
     "w-4",
     "hover:border-base-400",
     "dark:bg-base-700",
     "dark:border-base-500",
-    "dark:after:checked:text-white",
+    "dark:checked:after:text-white",
     "focus:outline",
-    "focus:outline-1",
+    "focus:outline-2",
     "focus:outline-offset-2",
     "focus:outline-primary-500",
     "after:absolute",
     "after:content-['done']",
-    "after:!flex",
+    "after:flex!",
     "after:h-4",
     "after:items-center",
     "after:justify-center",
@@ -168,15 +181,15 @@ CHECKBOX_CLASSES = [
     "after:material-symbols-outlined",
     "after:-ml-px",
     "after:-mt-px",
-    "after:!text-sm",
+    "after:text-sm!",
     "after:text-white",
     "after:transition-all",
     "after:w-4",
-    "after:dark:text-base-700",
+    "dark:after:text-base-700",
     "checked:bg-primary-600",
-    "checked:dark:bg-primary-600",
+    "dark:checked:bg-primary-600",
     "checked:border-primary-600",
-    "checked:dark:border-primary-600",
+    "dark:checked:border-primary-600",
     "checked:transition-all",
     "checked:hover:border-primary-600",
 ]
@@ -189,6 +202,7 @@ RADIO_CLASSES = [
     "border-base-300",
     "cursor-pointer",
     "h-4",
+    "min-w-4",
     "relative",
     "rounded-full",
     "w-4",
@@ -196,7 +210,7 @@ RADIO_CLASSES = [
     "dark:border-base-500",
     "hover:border-base-400",
     "focus:outline",
-    "focus:outline-1",
+    "focus:outline-2",
     "focus:outline-offset-2",
     "focus:outline-primary-500",
     "after:absolute",
@@ -216,13 +230,13 @@ RADIO_CLASSES = [
     "after:-translate-y-1/2",
     "after:text-sm",
     "after:w-2",
-    "after:dark:text-base-700",
-    "after:dark:bg-transparent",
+    "dark:after:text-base-700",
+    "dark:after:bg-transparent",
     "checked:bg-primary-600",
     "checked:border-primary-600",
     "checked:transition-all",
     "checked:after:bg-white",
-    "checked:after:dark:bg-base-900",
+    "dark:checked:after:bg-base-900",
     "checked:hover:border-base-900/20",
 ]
 
@@ -242,7 +256,7 @@ SWITCH_CLASSES = [
     "after:bg-red-300",
     "after:h-3",
     "after:rounded-full",
-    "after:shadow-sm",
+    "after:shadow-xs",
     "after:left-1",
     "after:top-1",
     "after:w-3",
@@ -250,6 +264,26 @@ SWITCH_CLASSES = [
     "checked:after:left-4",
     "dark:bg-base-600",
     "dark:checked:bg-green-700",
+]
+
+FILE_CLASSES = [
+    "border",
+    "border-base-200",
+    "flex",
+    "grow",
+    "items-center",
+    "overflow-hidden",
+    "rounded-default",
+    "shadow-xs",
+    "max-w-2xl",
+    "focus-within:outline-2",
+    "focus-within:-outline-offset-2",
+    "focus-within:outline-primary-600",
+    "group-[.errors]:border-red-600",
+    "focus-within:group-[.errors]:outline-red-500",
+    "dark:border-base-700",
+    "dark:group-[.errors]:border-red-500",
+    "dark:focus-within:group-[.errors]:outline-red-500",
 ]
 
 
@@ -340,9 +374,11 @@ class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
 class FileFieldMixin:
     def get_context(self, name, value, attrs):
         widget = super().get_context(name, value, attrs)
+
         widget["widget"].update(
             {
                 "class": " ".join([*CHECKBOX_CLASSES, *["form-check-input"]]),
+                "file_wrapper_class": " ".join(FILE_CLASSES),
                 "file_input_class": " ".join(
                     [
                         self.attrs.get("class", ""),
@@ -354,6 +390,7 @@ class FileFieldMixin:
                 ),
             }
         )
+
         return widget
 
 
@@ -387,6 +424,13 @@ class UnfoldAdminDateWidget(AdminDateWidget):
             "size": "10",
         }
         super().__init__(attrs=attrs, format=format)
+
+    class Media:
+        js = [
+            "admin/js/core.js",
+            "admin/js/calendar.js",
+            "admin/js/admin/DateTimeShortcuts.js",
+        ]
 
 
 class UnfoldAdminSingleDateWidget(AdminDateWidget):
@@ -427,6 +471,13 @@ class UnfoldAdminTimeWidget(AdminTimeWidget):
             "size": "8",
         }
         super().__init__(attrs=attrs, format=format)
+
+    class Media:
+        js = [
+            "admin/js/core.js",
+            "admin/js/calendar.js",
+            "admin/js/admin/DateTimeShortcuts.js",
+        ]
 
 
 class UnfoldAdminSingleTimeWidget(AdminTimeWidget):
@@ -499,6 +550,13 @@ class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
             UnfoldAdminTimeWidget(attrs={"placeholder": _("Time")}),
         ]
         MultiWidget.__init__(self, widgets, attrs)
+
+    class Media:
+        js = [
+            "admin/js/core.js",
+            "admin/js/calendar.js",
+            "admin/js/admin/DateTimeShortcuts.js",
+        ]
 
 
 class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
@@ -576,6 +634,8 @@ class UnfoldAdminBigIntegerFieldWidget(AdminBigIntegerFieldWidget):
 
 
 class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
+    template_name = "unfold/widgets/select.html"
+
     def __init__(self, attrs=None):
         if attrs is None:
             attrs = {}
@@ -587,6 +647,8 @@ class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
 
 
 class UnfoldAdminSelectWidget(Select):
+    template_name = "unfold/widgets/select.html"
+
     def __init__(self, attrs=None, choices=()):
         if attrs is None:
             attrs = {}
@@ -595,6 +657,31 @@ class UnfoldAdminSelectWidget(Select):
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
         )
         super().__init__(attrs, choices)
+
+
+class UnfoldAdminSelect2Widget(Select):
+    def __init__(self, attrs=None, choices=()):
+        if attrs is None:
+            attrs = {}
+
+        attrs["data-theme"] = "admin-autocomplete"
+        attrs["class"] = "unfold-admin-autocomplete admin-autocomplete"
+
+        super().__init__(attrs, choices)
+
+    class Media:
+        js = (
+            "admin/js/vendor/jquery/jquery.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "unfold/js/select2.init.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
 
 
 class UnfoldAdminSelectMultipleWidget(SelectMultiple):
@@ -606,6 +693,31 @@ class UnfoldAdminSelectMultipleWidget(SelectMultiple):
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
         )
         super().__init__(attrs, choices)
+
+
+class UnfoldAdminSelect2MultipleWidget(SelectMultiple):
+    def __init__(self, attrs=None, choices=()):
+        if attrs is None:
+            attrs = {}
+
+        attrs["data-theme"] = "admin-autocomplete"
+        attrs["class"] = "unfold-admin-autocomplete admin-autocomplete"
+
+        super().__init__(attrs, choices)
+
+    class Media:
+        js = (
+            "admin/js/vendor/jquery/jquery.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "unfold/js/select2.init.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
 
 
 class UnfoldAdminRadioSelectWidget(AdminRadioSelect):

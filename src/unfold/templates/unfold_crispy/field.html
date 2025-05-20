@@ -1,0 +1,23 @@
+{% load crispy_forms_field unfold %}
+
+{% if field.is_hidden %}
+    {{ field }}
+{% else %}
+    <{% if tag %}{{ tag }}{% else %}div{% endif %} id="div_{{ field.auto_id }}" class="group {% if tag == "td" %}align-top border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden px-3 py-3 text-left dark:border-base-800 dark:before:text-font-important-dark {% if form_show_labels and forloop.parentloop.first %}border-t-0{% endif %}{% endif %} {% if field.errors %}errors{% endif %} {% if field_class %} {{ field_class }}{% endif %} {% if field|is_checkbox and tag == "td" %}flex flex-row gap-2 items-center{% else %}{% if 'form-horizontal' in form_class %} row{% endif %}{% endif %}{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">
+    {% if field.label and not field|is_checkbox and form_show_labels %}
+        <label {% if field.id_for_label %}for="{{ field.id_for_label }}"{% endif %} class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark {% if label_class %} {{ label_class }}{% endif %}">
+            {{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}
+        </label>
+    {% endif %}
+
+    {% if field|is_checkboxselectmultiple or field|is_radioselect %}
+        {% include 'unfold_crispy/layout/radio_checkbox_select.html' %}
+    {% elif field|is_checkbox  %}
+        {% include 'unfold_crispy/layout/checkbox.html' %}
+    {% else %}
+        {% crispy_field field %}
+
+        {% include 'unfold_crispy/layout/help_text_and_errors.html' %}
+    {% endif %}
+    </{% if tag %}{{ tag }}{% else %}div{% endif %}>
+{% endif %}

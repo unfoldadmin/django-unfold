@@ -1,12 +1,12 @@
 ---
 title: Action with form example
-description: Actions containing custom form example.
+description: Create custom form actions in Django Unfold's admin interface with form handling, widget customization, and date/time input fields for enhanced user interaction and data collection.
 order: 7
 ---
 
 # Action with form example
 
-Below is an example of an action that will display a form after clicking on the action button on the detail object page.
+This example demonstrates how to create an action that displays a custom form when triggered from the detail object page. When a user clicks the action button, they will be presented with a form interface where they can input additional data needed for the action. This pattern is particularly useful when you need to collect extra information before executing the action's main functionality.
 
 ```python
 # admin.py
@@ -91,7 +91,7 @@ Template displaying the form. Please note that breadcrumbs are empty in this cas
 
 {% block content %}
     <form action="" method="post" novalidate>
-        <div class="aligned border border-base-200 mb-8 rounded pt-3 px-3 shadow-sm dark:border-base-800">
+        <div class="aligned border border-base-200 mb-8 rounded-default pt-3 px-3 shadow-sm dark:border-base-800">
             {% csrf_token %}
 
             {% for field in form %}

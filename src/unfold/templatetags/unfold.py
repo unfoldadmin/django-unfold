@@ -8,7 +8,7 @@ from django.contrib.admin.views.main import ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import BoundField, Field
+from django.forms import BoundField, CheckboxSelectMultiple, Field
 from django.http import HttpRequest
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
@@ -18,7 +18,7 @@ from django.utils.safestring import SafeText, mark_safe
 from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
-from unfold.widgets import UnfoldAdminSplitDateTimeWidget
+from unfold.widgets import UnfoldAdminMoneyWidget, UnfoldAdminSplitDateTimeWidget
 
 register = Library()
 
@@ -106,6 +106,20 @@ def has_nav_item_active(items: list) -> bool:
 @register.filter
 def class_name(value: Any) -> str:
     return value.__class__.__name__
+
+
+@register.filter
+def is_list(value: Any) -> str:
+    return isinstance(value, list)
+
+
+@register.filter
+def has_active_item(items: list[dict]) -> bool:
+    for item in items:
+        if "active" in item and item["active"]:
+            return True
+
+    return False
 
 
 @register.filter
@@ -323,6 +337,17 @@ def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
 
 
 @register.simple_tag(takes_context=True)
+def element_classes(context: Context, key: str) -> str:
+    if key in context.get("element_classes", {}):
+        if isinstance(context["element_classes"][key], list | tuple):
+            return " ".join(context["element_classes"][key])
+
+        return context["element_classes"][key]
+
+    return ""
+
+
+@register.simple_tag(takes_context=True)
 def fieldset_rows_classes(context: Context) -> str:
     classes = [
         "aligned",
@@ -334,8 +359,8 @@ def fieldset_rows_classes(context: Context) -> str:
                 "border",
                 "border-base-200",
                 "mb-8",
-                "rounded",
-                "shadow-sm",
+                "rounded-default",
+                "shadow-xs",
                 "dark:border-base-800",
             ]
         )
@@ -384,7 +409,8 @@ def fieldset_line_classes(context: Context) -> str:
         "field-line",
         "flex",
         "flex-col",
-        "flex-grow",
+        "grow",
+        "group",
         "group/line",
         "px-3",
         "py-2.5",
@@ -412,7 +438,7 @@ def fieldset_line_classes(context: Context) -> str:
                 "lg:border-l",
                 "lg:flex-row",
                 "dark:border-base-800",
-                "first:lg:border-l-0",
+                "lg:first:border-l-0",
             ]
         )
 
@@ -423,11 +449,13 @@ def fieldset_line_classes(context: Context) -> str:
 def action_item_classes(context: Context, action: UnfoldAction) -> str:
     classes = [
         "border",
-        "-ml-px",
-        "max-md:first:rounded-t",
-        "max-md:last:rounded-b",
-        "md:first:rounded-l",
-        "md:last:rounded-r",
+        "border-base-200",
+        "max-md:-mt-px",
+        "max-md:first:rounded-t-default",
+        "max-md:last:rounded-b-default",
+        "md:-ml-px",
+        "md:first:rounded-l-default",
+        "md:last:rounded-r-default",
     ]
 
     if "variant" not in action:
@@ -438,41 +466,46 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
     if variant == ActionVariant.PRIMARY:
         classes.extend(
             [
-                "border-primary-600",
+                "border-primary-700",
                 "bg-primary-600",
                 "text-white",
+                "dark:border-primary-500",
             ]
         )
     elif variant == ActionVariant.DANGER:
         classes.extend(
             [
-                "border-red-600",
+                "border-red-700",
                 "bg-red-600",
                 "text-white",
+                "dark:border-red-500",
             ]
         )
     elif variant == ActionVariant.SUCCESS:
         classes.extend(
             [
-                "border-green-600",
+                "border-green-700",
                 "bg-green-600",
                 "text-white",
+                "dark:border-green-500",
             ]
         )
     elif variant == ActionVariant.INFO:
         classes.extend(
             [
-                "border-blue-600",
+                "border-blue-700",
                 "bg-blue-600",
                 "text-white",
+                "dark:border-blue-500",
             ]
         )
     elif variant == ActionVariant.WARNING:
         classes.extend(
             [
-                "border-orange-600",
+                "border-orange-700",
                 "bg-orange-600",
                 "text-white",
+                "dark:border-orange-500",
             ]
         )
     else:
@@ -480,6 +513,7 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
             [
                 "border-base-200",
                 "hover:text-primary-600",
+                "dark:hover:text-primary-500",
                 "dark:border-base-700",
             ]
         )
@@ -489,7 +523,7 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
 
 @register.filter
 def changeform_data(adminform: AdminForm) -> str:
-    fields = []
+    fields = {}
 
     for fieldset in adminform:
         for line in fieldset:
@@ -497,15 +531,19 @@ def changeform_data(adminform: AdminForm) -> str:
                 if isinstance(field.field, dict):
                     continue
 
-                if isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget):
+                if isinstance(
+                    field.field.field.widget, UnfoldAdminSplitDateTimeWidget
+                ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
                     for index, _widget in enumerate(field.field.field.widget.widgets):
-                        fields.append(
+                        fields[
                             f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
-                        )
+                        ] = None
+                elif isinstance(field.field.field.widget, CheckboxSelectMultiple):
+                    fields[field.field.name] = []
                 else:
-                    fields.append(field.field.name)
+                    fields[field.field.name] = None
 
-    return mark_safe(json.dumps(dict.fromkeys(fields, "")))
+    return mark_safe(json.dumps(fields))
 
 
 @register.filter(takes_context=True)
@@ -518,7 +556,9 @@ def changeform_condition(field: BoundField) -> BoundField:
         field.field.field.widget.widget.attrs["x-init"] = mark_safe(
             f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
         )
-    elif isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget):
+    elif isinstance(
+        field.field.field.widget, UnfoldAdminSplitDateTimeWidget
+    ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
         for index, widget in enumerate(field.field.field.widget.widgets):
             field_name = (
                 f"{field.field.name}{field.field.field.widget.widgets_names[index]}"

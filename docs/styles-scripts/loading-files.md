@@ -1,12 +1,12 @@
 ---
 title: Loading styles and scripts
 order: 0
-description: Settings.py configuration for loading custom styles and scripts files in Unfold.
+description: Configure and manage custom CSS and JavaScript files in Django Unfold admin interface through settings.py, with guidance on static file handling and deployment best practices.
 ---
 
 # Loading styles and scripts
 
-To add custom styles, for example for a custom dashboard, you can load them via the **STYLES** key in the **UNFOLD** dictionary in settings.py. This key accepts a list of strings or lambda functions that will be loaded on all pages. JavaScript files can be loaded using a similar approach with the **SCRIPTS** key.
+Custom styles, such as those needed for a custom dashboard, can be loaded by configuring the **STYLES** key within the **UNFOLD** dictionary in your settings.py file. This key accepts a list of either strings or lambda functions, and the specified files will be loaded across all pages. For JavaScript files, you can use the same approach by utilizing the **SCRIPTS** key.
 
 ```python
 # settings.py

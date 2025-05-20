@@ -22,11 +22,12 @@ from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from .widgets import (
+from unfold.widgets import (
     BASE_INPUT_CLASSES,
     INPUT_CLASSES,
     UnfoldAdminPasswordInput,
     UnfoldAdminRadioSelectWidget,
+    UnfoldAdminSelectWidget,
 )
 
 
@@ -37,7 +38,7 @@ class UnfoldReadOnlyPasswordHashWidget(ReadOnlyPasswordHashWidget):
 class ActionForm(forms.Form):
     action = forms.ChoiceField(
         label="",
-        widget=forms.Select(
+        widget=UnfoldAdminSelectWidget(
             {
                 "class": " ".join(
                     [
@@ -48,10 +49,11 @@ class ActionForm(forms.Form):
                         "px-3",
                         "py-2",
                         "pr-8",
-                        "rounded",
+                        "rounded-default",
                         "text-white",
+                        "truncate",
                         "*:text-base-700",
-                        "lg:min-w-72",
+                        "lg:w-72",
                     ]
                 ),
                 "aria-label": _("Select action to run"),

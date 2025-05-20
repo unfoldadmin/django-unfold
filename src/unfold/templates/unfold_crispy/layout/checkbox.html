@@ -1,0 +1,19 @@
+{% load crispy_forms_field unfold %}
+
+{% if form_show_labels %}
+    <label for="{{ field.id_for_label }}" class="flex flex-row gap-3 items-center {% if tag == "td" %}mt-9{% endif %}">
+        {% crispy_field field 'class' form_classes.switch %} <span>{{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}</span>
+    </label>
+
+    {% include 'unfold_crispy/layout/help_text_and_errors.html' %}
+{% else %}
+    {% with field=field|add_css_class:form_classes.switch %}
+        {% if tag == "td" %}
+            <div class="flex items-center justify-center h-[38px]">
+                {% crispy_field field %}
+            </div>
+        {% else %}
+            {% crispy_field field %}
+        {% endif %}
+    {% endwith %}
+{% endif %}

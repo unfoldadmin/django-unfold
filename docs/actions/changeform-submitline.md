@@ -1,12 +1,14 @@
 ---
 title: Changeform submitline actions
-description: Changeform submitline actions for detail view.
+description: Implement and customize submit line actions in Django Unfold's admin detail view, featuring automatic form saving, permission handling, and object-specific operations for streamlined data management.
 order: 4
 ---
 
 # Changeform submitline actions
 
-Submit row actions work a bit differently when compared to other custom Unfold actions. These actions first invoke form save (same as if you hit `Save` button) and then lets you perform additional logic on already saved instance.
+[![Changeform submitline actions](/static/docs/actions/changeform-submitline-actions.webp)](/static/docs/actions/changeform-submitline-actions.webp)
+
+Changeform submitline actions operate differently from other custom actions in Unfold. When triggered, these actions first save the form data (equivalent to clicking the 'Save' button) before executing any additional logic. This means that by the time your custom action code runs, you'll be working with an already saved instance of the model. This workflow ensures data consistency by guaranteeing that all form changes are properly saved before any custom operations are performed.
 
 ```python
 # admin.py

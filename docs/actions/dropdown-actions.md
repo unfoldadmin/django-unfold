@@ -6,9 +6,11 @@ order: 6
 
 # Dropdown actions
 
-Unfold supports displaying actions in dropdown menu. This is useful when you have a lot of actions to display and you want to keep the UI clean so you can group them in dropdown. Unfold supports this functionality of the box for `actions_list` and `actions_detail` actions. Remaining actions for `actions_submit_line` and `actions_row` are not supported.
+Django Unfold provides built-in support for organizing actions into dropdown menus, offering a clean and efficient way to handle multiple actions in your admin interface. This feature is particularly valuable when you need to manage numerous actions while maintaining a tidy and organized user interface. The dropdown functionality is available out of the box for both `actions_list` and `actions_detail` actions, allowing you to group related actions together in an intuitive menu structure. However, please note that this dropdown functionality is not currently supported for `actions_submit_line` and `actions_row` actions.
 
-The dropdown menu is defined by providing a `dict` with `title` and `items` keys. `items` key is a list of actions that will be displayed in the dropdown menu. Optionally you can provide `icon` key to set the icon for the dropdown.
+[![Dropdown actions](/static/docs/actions/dropdown-actions.webp)](/static/docs/actions/dropdown-actions.webp)
+
+To implement a dropdown menu, you'll need to provide a dictionary containing two required keys: `title` and `items`. The `title` key defines the text that will appear as the dropdown button label, while the `items` key accepts a list of action names that will be displayed as menu options when the dropdown is expanded. For additional customization, you can include an optional `icon` key to display an icon alongside the dropdown title, enhancing the visual appeal and usability of your interface.
 
 ```python
 # admin.py

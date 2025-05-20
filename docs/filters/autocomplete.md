@@ -1,14 +1,16 @@
 ---
 title: Autocomplete filter
 order: 5
-description: Autocomplete filters for changelist view.
+description: Enhance your Django admin interface with Unfold's autocomplete filters, featuring single and multiple selection capabilities for ForeignKey and ManyToManyField relationships. Learn how to implement and configure autocomplete filtering with search functionality for improved data management.
 ---
 
 # Autocomplete filters
 
-Unfold provides two different types of autocomplete filters: `AutocompleteSelectFilter` and `AutocompleteSelectMultipleFilter`. Both of them are implemented in `unfold.contrib.filters` so make sure this app is in your `INSTALLED_APPS` in `settings.py`.
+Unfold enhances Django's filtering capabilities by providing two distinct types of autocomplete filters: `AutocompleteSelectFilter` for single selection and `AutocompleteSelectMultipleFilter` for multiple selections. Both filters are implemented within the `unfold.contrib.filters` package, so you'll need to ensure this app is properly included in your `INSTALLED_APPS` configuration within `settings.py`.
 
-All the referenced fields must be `ForeignKey` or `ManyToManyField` fields and the same time the referenced admin model must have defined `search_fields` attribute otherwise the application will raise an error.
+For these filters to work correctly, there are two key requirements: First, the fields you want to filter must be either `ForeignKey` or `ManyToManyField` relationships. Second, the referenced admin model must have the `search_fields` attribute properly defined to enable the search functionality. If either of these requirements is not met, the application will raise an error to alert you of the misconfiguration.
+
+[![Autocomplete select filter](/static/docs/filters/autocomplete-select-filter.webp)](/static/docs/filters/autocomplete-select-filter.webp)
 
 ```python
 # admin.py

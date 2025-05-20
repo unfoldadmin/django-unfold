@@ -1,0 +1,7 @@
+{% if inputs %}
+    <div class="flex flex-col gap-2 justify-end lg:flex-row {{ field_class }}">
+        {% for input in inputs %}
+            {% include "unfold_crispy/layout/baseinput.html" %}
+        {% endfor %}
+    </div>
+{% endif %}

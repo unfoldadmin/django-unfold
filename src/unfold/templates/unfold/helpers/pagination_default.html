@@ -1,0 +1,23 @@
+{% load unfold_list %}
+
+{% if pagination_required %}
+    {% for i in page_range %}
+        <div class="{% if forloop.last %}pr-2{% else %}pr-4{% endif %}">
+            {% paginator_number cl i %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="py-4">
+    {% if pagination_required %}
+        -
+    {% endif %}
+
+    {{ cl.result_count }}
+
+    {% if cl.result_count == 1 %}
+        {{ cl.opts.verbose_name }}
+    {% else %}
+        {{ cl.opts.verbose_name_plural }}
+    {% endif %}
+</div>

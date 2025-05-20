@@ -1,0 +1,3 @@
+<div {% if div.css_id %}id="{{ div.css_id }}"{% endif %} class="flex flex-col gap-5 grow lg:flex-row {{ div.css_class|default:'' }}" {{ div.flat_attrs }}>
+    {{ fields|safe }}
+</div>

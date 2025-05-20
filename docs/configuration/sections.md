@@ -1,12 +1,14 @@
 ---
 title: Sections (Expandable rows)
 order: 8
-description:
+description: Learn how to implement expandable rows in Django Unfold admin changelists using sections. Configure TableSection and TemplateSection to display related data and custom content with optimized database queries.
 ---
 
 # Sections - expandable changelist rows
 
 Unfold implements special functionality for handling expandable rows in changelists called sections. Once the `list_sections` attribute is configured, rows in the changelist will display an arrow button at the beginning of the row which can be used to show additional content.
+
+[![Unfold Sections](/static/docs/configuration/unfold-sections.webp)](/static/docs/configuration/unfold-sections.webp)
 
 The `list_sections` attribute consists of Python classes inheriting from `TableSection` or `TemplateSection` defined in `unfold.sections`. These classes are responsible for rendering the content in the expandable area.
 

@@ -1,0 +1,7 @@
+{% if form_show_errors and field.errors %}
+    <ul class="errorlist">
+        {% for error in field.errors %}
+            <li id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="mt-2 text-red-600 text-xs dark:text-red-500">{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

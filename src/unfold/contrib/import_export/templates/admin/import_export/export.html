@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    <div class="px-4 lg:px-8">
+    <div class="px-4">
         <div class="container mb-6 mx-auto -my-3 lg:mb-12">
             <ul class="flex flex-wrap">
                 {% url 'admin:index' as link %}
@@ -37,7 +37,7 @@
         {% csrf_token %}
 
         {% if form.initial.export_items %}
-            <p class="bg-blue-50 mb-4 text-blue-500 px-3 py-3 rounded text-sm dark:bg-blue-500/20 dark:border-blue-500/10">
+            <p class="bg-blue-50 mb-4 text-blue-500 px-3 py-3 rounded-default text-sm dark:bg-blue-500/20 dark:border-blue-500/10">
                 {% blocktranslate count len=form.initial.export_items|length %}
                     Export {{ len }} selected item.
                 {% plural %}
@@ -52,7 +52,7 @@
 
         {{ form.non_field_errors }}
 
-        <fieldset class="border border-base-200 mb-4 rounded pt-3 px-3 shadow-sm dark:border-base-800">
+        <fieldset class="border border-base-200 mb-4 rounded-default pt-3 px-3 shadow-xs dark:border-base-800">
             {% for field in form.visible_fields %}
                 <div {% if field.field.is_selectable_field %}class="selectable-field-export-row" resource-index="{{ field.field.resource_index }}"{% endif %}>
                     {% if field.field.initial_field %}
@@ -75,7 +75,7 @@
             {% endfor %}
         </fieldset>
 
-        <button type="submit" class="bg-primary-600 border border-transparent font-medium px-3 py-2 rounded text-sm text-white">
+        <button type="submit" class="bg-primary-600 border border-transparent font-medium px-3 py-2 rounded-default text-sm text-white">
             {% translate 'Submit' %}
         </button>
     </form>

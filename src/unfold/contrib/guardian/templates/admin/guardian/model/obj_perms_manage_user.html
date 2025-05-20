@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}{% if not is_popup %}
-    <div class="px-4 lg:px-8">
+    <div class="px-4">
         <div class="container mb-6 mx-auto -my-3 lg:mb-12">
             <ul class="flex flex-wrap">
                 {% url 'admin:index' as link %}
@@ -33,7 +33,7 @@
 {% endif %}{% endblock %}
 
 {% block content %}
-    <div class="border border-base-200 overflow-hidden rounded p-3 shadow-sm dark:border-base-800">
+    <div class="border border-base-200 overflow-hidden rounded-default p-3 shadow-xs dark:border-base-800">
         <form method="post">
             {% csrf_token %}
 
@@ -45,7 +45,7 @@
 
             {% include "unfold/helpers/field.html" with field=form.permissions %}
 
-            <div class="bg-base-50 border-t flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-base-800">
+            <div class="bg-base-50 border-t border-base-200 flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-base-800">
                 <div class="ml-auto">
                     {% trans "Save" as title %}
                     {% include "unfold/helpers/submit.html" with title=title %}
@@ -54,3 +54,5 @@
         </form>
     </div>
 {% endblock %}
+
+{% block footer %}{% endblock%}
