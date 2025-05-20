@@ -29,13 +29,19 @@ def action(
             **kwargs,
         ) -> Optional[HttpResponse]:
             if permissions:
-                permission_checks = (
-                    getattr(model_admin, f"has_{permission}_permission")
-                    for permission in permissions
-                )
-                # Permissions methods have following syntax: has_<some>_permission(self, request, obj=None):
-                # But obj is not examined by default in django admin and it would also require additional
-                # fetch from database, therefore it is not supported yet
+                permission_rules = []
+
+                for permission in permissions:
+                    if "." in permission:
+                        permission_rules.append(permission)
+                    else:
+                        # Permissions methods have following syntax: has_<some>_permission(self, request, obj=None):
+                        # But obj is not examined by default in django admin and it would also require additional
+                        # fetch from database, therefore it is not supported yet
+                        permission_rules.append(
+                            getattr(model_admin, f"has_{permission}_permission")
+                        )
+
                 has_detail_action = func.__name__ in model_admin._extract_action_names(
                     model_admin.actions_detail
                 )
@@ -46,12 +52,19 @@ def action(
                     )
                 )
 
-                if not all(
-                    has_permission(request, kwargs.get("object_id"))
-                    if has_detail_action or has_submit_line_action
-                    else has_permission(request)
-                    for has_permission in permission_checks
-                ):
+                permission_checks = []
+
+                for permission_rule in permission_rules:
+                    if isinstance(permission_rule, str) and "." in permission_rule:
+                        permission_checks.append(request.user.has_perm(permission_rule))
+                    elif has_detail_action or has_submit_line_action:
+                        permission_checks.append(
+                            permission_rule(request, kwargs.get("object_id"))
+                        )
+                    else:
+                        permission_checks.append(permission_rule(request))
+
+                if not all(permission_checks):
                     raise PermissionDenied
             return func(model_admin, request, *args, **kwargs)
 
@@ -73,6 +86,7 @@ def action(
             inner.variant = ActionVariant.DEFAULT
 
         inner.attrs = attrs or {}
+        inner.original_function_name = func.__name__
         return inner
 
     if function is None:
