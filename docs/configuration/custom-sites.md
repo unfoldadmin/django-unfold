@@ -71,4 +71,15 @@ from django.contrib.admin.apps import AdminConfig
 
 class MyAdminConfig(AdminConfig):
     default_site = "myproject.sites.CustomAdminSite"
+
+    def get_urls(self):
+        urls = super().get_urls()
+        urls += [
+            path("my-custom-view/", self.admin_view(self.my_custom_view), name="my_custom_view"),
+        ]
+        return urls
+
+    def my_custom_view(self, request, extra_context = None):
+        # Your custom business logic
+        pass
 ```
