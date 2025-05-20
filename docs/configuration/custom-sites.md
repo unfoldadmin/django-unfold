@@ -75,7 +75,7 @@ class MyAdminConfig(AdminConfig):
     def get_urls(self):
         urls = super().get_urls()
         urls += [
-            path("my-custom-view/", self.admin_view(self.my_custom_view), name='my_custom_view'),
+            path("my-custom-view/", self.admin_view(self.my_custom_view), name="my_custom_view"),
         ]
         return urls
 
