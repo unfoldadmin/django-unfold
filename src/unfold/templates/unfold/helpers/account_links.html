@@ -18,10 +18,18 @@
             </a>
         {% endif %}
 
-        {% if user.has_usable_password %}
-            <a href="{% url 'admin:password_change' %}" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
-                {% translate 'Change password' %}
-            </a>
+        {% if account_links %}
+            {% for link in account_links %}
+                <a href="{{ link.link }}" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+                    {{ link.title }}
+                </a>
+            {% endfor %}
+        {% else %}
+            {% if user.has_usable_password %}
+                <a href="{% url 'admin:password_change' %}" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+                    {% translate 'Change password' %}
+                </a>
+            {% endif %}
         {% endif %}
 
         <div class="border-t border-base-200 mt-1 pt-1 dark:border-base-700">
