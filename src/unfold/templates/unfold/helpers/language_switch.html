@@ -4,24 +4,25 @@
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
 
+{% if show_languages %}
+    <div class="relative" x-data="{ openLanguageLinks: false }">
+        <a class="block cursor-pointer h-[18px] hover:text-base-700 dark:hover:text-base-200" x-on:click="openLanguageLinks = !openLanguageLinks">
+            <span class="material-symbols-outlined">translate</span>
+        </a>
 
-<div class="relative" x-data="{ openLanguageLinks: false }">
-    <a class="block cursor-pointer h-[18px] hover:text-base-700 dark:hover:text-base-200" x-on:click="openLanguageLinks = !openLanguageLinks">
-        <span class="material-symbols-outlined">translate</span>
-    </a>
+        <div class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 -right-2 rounded-default shadow-lg top-7 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openLanguageLinks" x-transition x-on:click.outside="openLanguageLinks = false">
+            {% for language in languages %}
+                <form action="{% url 'set_language' %}" method="post" class="flex w-full">
+                    {% csrf_token %}
 
-    <div class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 -right-2 rounded-default shadow-lg top-7 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openLanguageLinks" x-transition x-on:click.outside="openLanguageLinks = false">
-        {% for language in languages %}
-            <form action="{% url 'set_language' %}" method="post" class="flex w-full">
-                {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <input name="language" type="hidden" value="{{ language.code }}">
 
-                <input name="next" type="hidden" value="{{ redirect_to }}">
-                <input name="language" type="hidden" value="{{ language.code }}">
-
-                <button type="submit" class="block grow mx-1 px-3 py-2 rounded-default text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200 {% if language.code == LANGUAGE_CODE %}text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!{% endif %}">
-                    {{ language.name_local }} ({{ language.code }})
-                </button>
-            </form>
-        {% endfor %}
+                    <button type="submit" class="block grow mx-1 px-3 py-2 rounded-default text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200 {% if language.code == LANGUAGE_CODE %}text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!{% endif %}">
+                        {{ language.name_local }} ({{ language.code }})
+                    </button>
+                </form>
+            {% endfor %}
+        </div>
     </div>
-</div>
+{% endif %}

@@ -11,13 +11,9 @@
                 {{ extra_userlinks }}
             {% endif %}
 
-            {% if show_languages %}
-                {% include "unfold/helpers/language_switch.html" %}
-            {% endif %}
+            {% include "unfold/helpers/language_switch.html" %}
 
-            {% if not theme %}
-                {% include "unfold/helpers/theme_switch.html" %}
-            {% endif %}
+            {% include "unfold/helpers/theme_switch.html" %}
 
             {% include "unfold/helpers/account_links.html" %}
         </div>
