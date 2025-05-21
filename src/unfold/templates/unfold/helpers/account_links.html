@@ -6,7 +6,7 @@
     </a>
 
     <nav class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 -right-2 rounded-default shadow-lg top-7 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openUserLinks" x-transition x-on:click.outside="openUserLinks = false">
-        <div class="border-b border-base-100 flex flex-row shrink-0 items-start justify-start mb-1 pb-1 dark:border-base-700">
+        <div class="border-b border-base-200 flex flex-row shrink-0 items-start justify-start mb-1 pb-1 dark:border-base-700">
             <span class="block mx-1 px-3 py-2 truncate">
                 {% firstof user.get_short_name user.get_username %}
             </span>
@@ -36,7 +36,7 @@
             <form id="logout-form" method="post" action="{% url 'admin:logout' %}" class="mx-1">
                 {% csrf_token %}
 
-                <button type="submit" class="bg-none block px-3 py-2 text-left text-red-500 rounded-default w-full hover:bg-red-100 dark:hover:bg-red-500/20 dark:hover:text-red-500">
+                <button type="submit" class="bg-none block cursor-pointer px-3 py-2 text-left text-red-500 rounded-default w-full hover:bg-red-100 dark:hover:bg-red-500/20 dark:hover:text-red-500">
                     {% translate 'Log out' %}
                 </button>
             </form>
