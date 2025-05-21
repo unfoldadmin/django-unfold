@@ -4,7 +4,7 @@ from typing import Any, Optional, Union
 
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
-from django.contrib.admin.views.main import ChangeList
+from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.db.models import Model
 from django.db.models.options import Options
@@ -569,3 +569,8 @@ def changeform_condition(field: BoundField) -> BoundField:
         field.field.field.widget.attrs["x-model.fill"] = field.field.name
 
     return field
+
+
+@register.simple_tag
+def infinite_paginator_url(cl, i):
+    return cl.get_query_string({PAGE_VAR: i})
