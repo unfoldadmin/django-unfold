@@ -102,6 +102,13 @@ class UnfoldAdminSite(AdminSite):
             "environment_title_prefix": self._get_config(
                 "ENVIRONMENT_TITLE_PREFIX", request
             ),
+            "languages_list": self._get_value(
+                self._get_config("LANGUAGES", request).get("navigation"), request
+            ),
+            "languages_action": self._get_value(
+                self._get_config("LANGUAGES", request).get("action"), request
+            ),
+            "account_links": self._get_account_links(request),
             "tab_list": self.get_tabs_list(request),
             "styles": self._get_list("STYLES", request),
             "scripts": self._get_list("SCRIPTS", request),
@@ -295,6 +302,23 @@ class UnfoldAdminSite(AdminSite):
             allowed_items.append(item)
 
         return allowed_items
+
+    def _get_account_links(self, request: HttpRequest) -> list[dict[str, Any]]:
+        links = []
+
+        navigation = self._get_value(
+            get_config(self.settings_name)["ACCOUNT"].get("navigation"), request
+        )
+
+        for item in navigation:
+            links.append(
+                {
+                    "title": self._get_value(item["title"], request),
+                    "link": self._get_value(item["link"], request),
+                }
+            )
+
+        return links
 
     def get_tabs_list(self, request: HttpRequest) -> list[dict[str, Any]]:
         tabs = copy.deepcopy(self._get_config("TABS", request))
