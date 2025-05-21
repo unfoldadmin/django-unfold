@@ -57,10 +57,17 @@ CONFIG_DEFAULTS = {
     "ENVIRONMENT_TITLE_PREFIX": None,
     "STYLES": [],
     "SCRIPTS": [],
+    "ACCOUNT": {
+        "navigation": [],
+    },
+    "LANGUAGES": {
+        "action": None,
+        "navigation": [],
+    },
     "SIDEBAR": {
         "show_search": False,
         "show_all_applications": False,
-        "navigation": {},
+        "navigation": [],
     },
     "TABS": [],
     "LOGIN": {
