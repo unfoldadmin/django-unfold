@@ -123,9 +123,10 @@ TEXTAREA_EXPANDABLE_CLASSES = [
 
 SELECT_CLASSES = [
     *BASE_INPUT_CLASSES,
-    "pr-8",
+    "pr-8!",
     "max-w-2xl",
     "appearance-none",
+    "truncate",
 ]
 
 PROSE_CLASSES = [
