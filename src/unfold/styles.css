@@ -145,18 +145,6 @@ select:after {
 /*******************************************************
  Table
  *******************************************************/
-table select {
-  @apply appearance-none bg-no-repeat border border-base-200 block cursor-pointer font-medium px-3 py-2 pr-5 rounded-default shadow-xs text-base-500;
-
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgb(156, 163, 175)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M7 10l5 5 5-5H7z"/></svg>');
-  background-size: 1.125rem 1.125rem;
-  background-position: right 0.5rem center;
-}
-
-
-table select:focus {
-  @apply border-primary-600;
-}
 
 table tr.selected td,
 table tr.selected th {
