@@ -62,6 +62,7 @@ UNFOLD = {
 By default, Django Unfold will automatically detect and display all available languages configured in your Django project's `LANGUAGES` setting. However, there are scenarios where you might want to customize which languages appear in the language selector or how they are presented to users. Django Unfold provides flexible configuration options that allow you to override the default language detection behavior and provide your own custom list of languages for the navigation interface.
 
 This customization capability is particularly useful when you want to:
+
 - Display only a subset of your configured languages in the admin interface
 - Present languages in a specific order that differs from your Django settings
 - Use custom language names or translations that better suit your admin users
