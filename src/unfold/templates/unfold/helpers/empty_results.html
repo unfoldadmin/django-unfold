@@ -25,8 +25,8 @@
             {% endif %}
 
 
-            {% if cl.has_filters %}
-                <a href="{{ cl.clear_all_filters_qs }}" class="border border-base-200 flex flex-row font-medium gap-2 group/button h-[38px] items-center justify-center px-3 py-2 rounded-default w-full hover:text-primary-600 lg:w-auto dark:border-base-700 dark:hover:bg-base-900 dark:hover:text-primary-500">
+            {% if cl.has_filters or cl.query %}
+                <a href="?" class="border border-base-200 flex flex-row font-medium gap-2 group/button h-[38px] items-center justify-center px-3 py-2 rounded-default w-full hover:text-primary-600 lg:w-auto dark:border-base-700 dark:hover:bg-base-900 dark:hover:text-primary-500">
                     <span class="material-symbols-outlined ml-1">filter_list_off</span> {% trans "Reset filters" %}
                 </a>
             {% endif %}
