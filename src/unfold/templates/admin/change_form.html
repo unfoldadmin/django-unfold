@@ -93,8 +93,9 @@
                                 {% include 'admin/includes/fieldset.html' %}
                             {% endif %}
                         {% endfor %}
+
+                        {% include "unfold/helpers/fieldsets_tabs.html" %}
                     {% endwith %}
-                    {% include "unfold/helpers/fieldsets_tabs.html" %}
                 {% endblock %}
 
                 {% block after_field_sets %}{% endblock %}
