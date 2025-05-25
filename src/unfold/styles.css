@@ -1,6 +1,14 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
-@custom-variant dark (&:where(.dark, .dark *));
+
+@custom-variant dark {
+  @media not print {
+      &:where(.dark, .dark *) {
+          @slot
+      }
+  }
+}
+
 @source inline("h-3 w-3 h-[64px] w-[65px]! left-[65px] dark:hover:bg-white/[.06] translate-x-1/4 -translate-y-1/4");
 @source inline("{-,}{top,bottom,left,right}-{0..6}");
 @source inline("rounded rounded-{t,r,b,l} rounded-{t,r,b,l}-default");
