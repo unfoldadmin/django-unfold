@@ -760,8 +760,13 @@ try:
         template_name = "unfold/widgets/split_money.html"
 
         def __init__(self, *args, **kwargs):
+            if "attrs" in kwargs:
+                attrs = kwargs.pop("attrs")
+            else:
+                attrs = {}
+
             super().__init__(
-                amount_widget=UnfoldAdminTextInputWidget,
+                amount_widget=UnfoldAdminTextInputWidget(attrs=attrs),
                 currency_widget=UnfoldAdminSelectWidget(
                     choices=CURRENCY_CHOICES,
                     attrs={
