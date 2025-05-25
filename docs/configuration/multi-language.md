@@ -56,3 +56,45 @@ UNFOLD = {
     "SHOW_LANGUAGES": True,
 }
 ```
+
+## Overriding language options
+
+By default, Django Unfold will automatically detect and display all available languages configured in your Django project's `LANGUAGES` setting. However, there are scenarios where you might want to customize which languages appear in the language selector or how they are presented to users. Django Unfold provides flexible configuration options that allow you to override the default language detection behavior and provide your own custom list of languages for the navigation interface.
+
+This customization capability is particularly useful when you want to:
+- Display only a subset of your configured languages in the admin interface
+- Present languages in a specific order that differs from your Django settings
+- Use custom language names or translations that better suit your admin users
+- Implement dynamic language selection based on user permissions or other criteria
+- Integrate with external language management systems or APIs
+
+The language override functionality gives you complete control over both the languages that appear in the selector and how the language switching mechanism behaves within the admin interface.
+
+```python
+from django.utils.translation import get_language_info
+
+UNFOLD = {
+    "LANGUAGES": {
+        # Hardcoded list of languages
+        "navigation": [
+            {
+                'bidi': False,
+                'code': 'de',
+                'name': 'German',
+                'name_local':
+                'Deutsch',
+                'name_translated': 'German'
+            },
+        ],
+
+        # Using a callback to generate list of languages
+        # "navigation": "your_app.utils.languages_callback",
+
+        # In case you want to have some custom form handling
+        # "actions": reverse_lazy("custom_form_submit")
+    }
+}
+
+# def languages_callback(request):
+#     return [get_language_info(lang) for lang in ["en", "de", "fr"]]
+```
