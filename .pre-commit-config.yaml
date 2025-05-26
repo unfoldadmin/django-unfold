@@ -12,7 +12,7 @@ repos:
       - id: trailing-whitespace
         exclude: CHANGELOG.md
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.10
+    rev: v0.11.11
     hooks:
       - id: ruff
         args:
@@ -25,7 +25,7 @@ repos:
         stages: [commit-msg]
         args: []
   - repo: https://github.com/rtts/djhtml
-    rev: 3.0.7
+    rev: 3.0.8
     hooks:
       - id: djhtml
         files: .*/templates/.*\.html$
