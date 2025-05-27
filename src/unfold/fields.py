@@ -19,7 +19,11 @@ from django.utils.text import capfirst
 
 from unfold.settings import get_config
 from unfold.utils import display_for_field, prettify_json
-from unfold.widgets import CHECKBOX_LABEL_CLASSES, LABEL_CLASSES
+from unfold.widgets import (
+    CHECKBOX_LABEL_CLASSES,
+    INPUT_CLASSES,
+    LABEL_CLASSES,
+)
 
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
@@ -161,6 +165,17 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
 
 class UnfoldAdminField(helpers.AdminField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        try:
+            from location_field.widgets import LocationWidget
+
+            if isinstance(self.field.field.widget, LocationWidget):
+                self.field.field.widget.attrs["class"] = " ".join(INPUT_CLASSES)
+        except ImportError:
+            pass
+
     def label_tag(self) -> SafeText:
         classes = []
 
