@@ -1,3 +1,4 @@
+from collections.abc import Generator
 from typing import Optional
 
 from django import forms
@@ -12,10 +13,15 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth.models import User
 
+from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
+
 try:
     from django.contrib.auth.forms import AdminUserCreationForm as BaseUserCreationForm
 except ImportError:
     from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+from django.contrib.admin.helpers import AdminForm as BaseAdminForm
+from django.contrib.admin.helpers import Fieldline as BaseFieldline
+from django.contrib.admin.helpers import Fieldset as BaseFieldset
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.http import HttpRequest
@@ -146,3 +152,36 @@ class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
         self.fields["new_password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
         self.fields["new_password2"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
+
+
+class AdminForm(BaseAdminForm):
+    def __iter__(self) -> Generator["Fieldset", None, None]:
+        for name, options in self.fieldsets:
+            yield Fieldset(
+                self.form,
+                name,
+                readonly_fields=self.readonly_fields,
+                model_admin=self.model_admin,
+                **options,
+            )
+
+
+class Fieldset(BaseFieldset):
+    def __iter__(self) -> Generator["Fieldline", None, None]:
+        for field in self.fields:
+            yield Fieldline(
+                self.form, field, self.readonly_fields, model_admin=self.model_admin
+            )
+
+
+class Fieldline(BaseFieldline):
+    def __iter__(
+        self,
+    ) -> Generator["UnfoldAdminReadonlyField | UnfoldAdminField", None, None]:
+        for i, field in enumerate(self.fields):
+            if field in self.readonly_fields:
+                yield UnfoldAdminReadonlyField(
+                    self.form, field, is_first=(i == 0), model_admin=self.model_admin
+                )
+            else:
+                yield UnfoldAdminField(self.form, field, is_first=(i == 0))
