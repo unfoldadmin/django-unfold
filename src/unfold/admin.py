@@ -16,7 +16,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from unfold.checks import UnfoldModelAdminChecks
-from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 from unfold.forms import ActionForm
 from unfold.mixins import ActionModelAdminMixin, BaseModelAdminMixin
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
@@ -31,10 +30,6 @@ checkbox = UnfoldBooleanWidget(
     },
     lambda value: False,
 )
-
-helpers.AdminField = UnfoldAdminField
-
-helpers.AdminReadonlyField = UnfoldAdminReadonlyField
 
 
 class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):

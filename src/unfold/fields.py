@@ -17,7 +17,6 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import capfirst
 
-from unfold.mixins import BaseModelAdminMixin
 from unfold.settings import get_config
 from unfold.utils import display_for_field, prettify_json
 from unfold.widgets import CHECKBOX_LABEL_CLASSES, LABEL_CLASSES
@@ -25,25 +24,13 @@ from unfold.widgets import CHECKBOX_LABEL_CLASSES, LABEL_CLASSES
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def label_tag(self) -> SafeText:
-        from .admin import ModelAdmin
-
-        if not isinstance(self.model_admin, ModelAdmin) and not isinstance(
-            self.model_admin, BaseModelAdminMixin
-        ):
-            return super().label_tag()
-
         attrs = {
             "class": " ".join(LABEL_CLASSES + ["mb-2"]),
         }
 
         label = self.field["label"]
 
-        return format_html(
-            "<label{}>{}{}</label>",
-            flatatt(attrs),
-            capfirst(label),
-            self.form.label_suffix,
-        )
+        return format_html("<label{}>{}</label>", flatatt(attrs), capfirst(label))
 
     def is_json(self) -> bool:
         field, obj, model_admin = (
@@ -176,10 +163,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 class UnfoldAdminField(helpers.AdminField):
     def label_tag(self) -> SafeText:
         classes = []
-        if not self.field.field.widget.__class__.__name__.startswith(
-            "Unfold"
-        ) and not self.field.field.widget.template_name.startswith("unfold"):
-            return super().label_tag()
 
         # TODO load config from current AdminSite (override Fieldline.__iter__ method)
         for lang, flag in get_config()["EXTENSIONS"]["modeltranslation"][
