@@ -288,7 +288,47 @@ FILE_CLASSES = [
 ]
 
 
-class UnfoldAdminTextInputWidget(AdminTextInputWidget):
+class UnfoldPrefixSuffixMixin:
+    def get_context(self, name, value, attrs):
+        widget = {}
+
+        if "prefix" in self.attrs:
+            widget["prefix"] = self.attrs["prefix"]
+            del self.attrs["prefix"]
+
+        if "prefix_icon" in self.attrs:
+            widget["prefix_icon"] = self.attrs["prefix_icon"]
+            self.attrs["class"] = " ".join([self.attrs["class"], "pl-9"])
+            del self.attrs["prefix_icon"]
+
+        if "suffix" in self.attrs:
+            widget["suffix"] = self.attrs["suffix"]
+            del self.attrs["suffix"]
+
+        if "suffix_icon" in self.attrs:
+            widget["suffix_icon"] = self.attrs["suffix_icon"]
+            self.attrs["class"] = " ".join([self.attrs["class"], "pr-9"])
+            del self.attrs["suffix_icon"]
+
+        widget.update(
+            {
+                "name": name,
+                "is_hidden": self.is_hidden,
+                "required": self.is_required,
+                "value": self.format_value(value),
+                "attrs": self.build_attrs(self.attrs, attrs),
+                "template_name": self.template_name,
+            }
+        )
+
+        return {
+            "widget": widget,
+        }
+
+
+class UnfoldAdminTextInputWidget(UnfoldPrefixSuffixMixin, AdminTextInputWidget):
+    template_name = "unfold/widgets/text.html"
+
     def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
         super().__init__(
             attrs={
