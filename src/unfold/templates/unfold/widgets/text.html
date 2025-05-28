@@ -1,0 +1,28 @@
+
+<div class="max-w-2xl relative">
+    {% if widget.prefix %}
+        <span class="absolute left-3 top-0 bottom-0 flex items-center justify-center">
+            {{ widget.prefix }}
+        </span>
+    {% endif %}
+
+    {% if widget.prefix_icon %}
+        <span class="material-symbols-outlined absolute left-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500">
+            {{ widget.prefix_icon }}
+        </span>
+    {% endif %}
+
+    {% include "django/forms/widgets/input.html" %}
+
+    {% if widget.suffix %}
+        <span class="absolute right-3 top-0 bottom-0 flex items-center justify-center">
+            {{ widget.suffix }}
+        </span>
+    {% endif %}
+
+    {% if widget.suffix_icon %}
+        <span class="material-symbols-outlined absolute right-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500">
+            {{ widget.suffix_icon }}
+        </span>
+    {% endif %}
+</div>
