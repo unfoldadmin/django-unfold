@@ -35,9 +35,10 @@ class BaseModelAdminMixin:
         form_url: str = "",
         extra_context: Optional[dict[str, bool]] = None,
     ) -> Any:
-        from unfold.forms import AdminForm
+        from unfold.forms import AdminForm, Fieldline
 
         helpers.AdminForm = AdminForm
+        helpers.Fieldline = Fieldline
         return super().changeform_view(request, object_id, form_url, extra_context)
 
     def formfield_for_choice_field(
