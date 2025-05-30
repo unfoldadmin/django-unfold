@@ -50,9 +50,11 @@
             {% url 'admin_password_reset' as password_reset_url %}
             {% url 'admin:admin_password_reset' as unfold_password_reset_url %}
 
-            {% component "unfold/components/button.html" with href=password_reset_url|default:unfold_password_reset_url variant="secondary" class="password-reset-linkw-full" %}
-                {% translate 'Forgotten your password or username?' %}
-            {% endcomponent %}
+            {% if password_reset_url or unfold_password_reset_url %}
+                {% component "unfold/components/button.html" with href=password_reset_url|default:unfold_password_reset_url variant="secondary" class="password-reset-link w-full" %}
+                    {% translate 'Forgotten your password or username?' %}
+                {% endcomponent %}
+            {% endif %}
         </div>
     </form>
 
