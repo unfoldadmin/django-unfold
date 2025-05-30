@@ -4,15 +4,12 @@ from typing import Any, Callable, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
-from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
-from django.utils.decorators import method_decorator
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
-from django.views.decorators.cache import never_cache
 
 from unfold.dataclasses import DropdownItem, Favicon
 
@@ -91,6 +88,9 @@ class UnfoldAdminSite(AdminSite):
             "site_icon": self._get_theme_images("SITE_ICON", request),
             "site_symbol": self._get_config("SITE_SYMBOL", request),
             "site_favicons": self._get_favicons("SITE_FAVICONS", request),
+            "login_image": self._get_value(
+                get_config(self.settings_name)["LOGIN"].get("image"), request
+            ),
             "show_history": self._get_config("SHOW_HISTORY", request),
             "show_view_on_site": self._get_config("SHOW_VIEW_ON_SITE", request),
             "show_languages": self._get_config("SHOW_LANGUAGES", request),
@@ -197,32 +197,6 @@ class UnfoldAdminSite(AdminSite):
                 "results": results,
             },
         )
-
-    @method_decorator(never_cache)
-    @login_not_required
-    def login(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
-    ) -> HttpResponse:
-        extra_context = {} if extra_context is None else extra_context
-        image = self._get_value(
-            get_config(self.settings_name)["LOGIN"].get("image"), request
-        )
-
-        redirect_field_name = self._get_value(
-            get_config(self.settings_name)["LOGIN"].get("redirect_after"), request
-        )
-
-        if image not in EMPTY_VALUES:
-            extra_context.update(
-                {
-                    "image": image,
-                }
-            )
-
-        if redirect_field_name not in EMPTY_VALUES:
-            extra_context.update({REDIRECT_FIELD_NAME: redirect_field_name})
-
-        return super().login(request, extra_context)
 
     def password_change(
         self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None

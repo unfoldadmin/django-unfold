@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<div class="border-b border-base-200 mb-8 pb-6 dark:border-base-800">
+    <h1 class="font-semibold">
+        {% if subtitle %}
+            <span class="block text-font-important-light dark:text-font-important-dark">{{ subtitle }} </span>
+        {% endif %}
+
+        <span class="block text-primary-600 text-xl dark:text-primary-500">{{ title }}</span>
+    </h1>
+</div>
