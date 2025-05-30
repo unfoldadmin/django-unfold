@@ -1,0 +1,37 @@
+{% extends 'unfold/layouts/skeleton.html' %}
+
+{% load i18n static unfold %}
+
+
+{% block bodyclass %}{{ block.super }}bg-base-50 login dark:bg-base-900{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}
+    {{ title }} | {{ site_title }}
+{% endblock %}
+
+{% block base %}
+    <div id="page" class="bg-white flex min-h-screen dark:bg-base-900 ">
+        <div class="flex grow items-center justify-center mx-auto px-4 relative">
+            <div class="w-full sm:w-96">
+                {% block content %}{% endblock %}
+            </div>
+
+            {% include "unfold/helpers/unauthenticated_header.html" %}
+        </div>
+
+        {% if login_image %}
+            <div class="bg-cover grow hidden max-w-3xl xl:max-w-4xl xl:block" style="background-image: url('{{ login_image }}')">
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

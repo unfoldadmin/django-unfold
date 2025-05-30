@@ -1,105 +1,62 @@
-{% extends 'unfold/layouts/skeleton.html' %}
+{% extends 'unfold/layouts/unauthenticated.html' %}
 
-{% load i18n static %}
+{% load i18n static unfold %}
 
 {% block extrastyle %}
     {{ block.super }}
     {{ form.media }}
 {% endblock %}
 
-{% block bodyclass %}{{ block.super }}bg-base-50 login dark:bg-base-900{% endblock %}
-
-{% block usertools %}{% endblock %}
-
-{% block nav-global %}{% endblock %}
-
-{% block nav-sidebar %}{% endblock %}
-
-{% block content_title %}{% endblock %}
-
-{% block breadcrumbs %}{% endblock %}
-
 {% block title %}
     {{ title }} | {{ site_title }}
 {% endblock %}
 
-{% block base %}
-    <div id="page" class="bg-white flex min-h-screen dark:bg-base-900 ">
-        <div class="flex grow items-center justify-center mx-auto px-4 relative">
-            <div class="w-full sm:w-96">
-                <h1 class="font-semibold mb-10">
-                    <span class="block text-font-important-light dark:text-font-important-dark">{% trans 'Welcome back to' %}</span>
-                    <span class="block text-primary-600 text-xl dark:text-primary-500">{{ site_title|default:_('Django site admin') }}</span>
-                </h1>
+{% block content %}
+    {% include "unfold/helpers/unauthenticated_title.html" with title=site_title|default:_('Django site admin') subtitle=_('Welcome back to') %}
 
-                {% include "unfold/helpers/messages.html" %}
+    {% include "unfold/helpers/messages.html" %}
 
-                {% if form.errors or form.non_field_errors %}
-                    <div class="flex flex-col gap-4 mb-8 *:mb-0">
-                        {% include "unfold/helpers/messages/errornote.html" with errors=form.errors %}
+    {% if form.errors or form.non_field_errors %}
+        <div class="flex flex-col gap-4 mb-8 *:mb-0">
+            {% include "unfold/helpers/messages/errornote.html" with errors=form.errors %}
 
-                        {% include "unfold/helpers/messages/error.html" with errors=form.non_field_errors %}
+            {% include "unfold/helpers/messages/error.html" with errors=form.non_field_errors %}
 
-                        {% if user.is_authenticated %}
-                            {% blocktranslate trimmed asvar message %}
-                                You are authenticated as {{ username }}, but are not authorized to
-                                access this page. Would you like to login to a different account?
-                            {% endblocktranslate %}
+            {% if user.is_authenticated %}
+                {% blocktranslate trimmed asvar message %}
+                    You are authenticated as {{ username }}, but are not authorized to
+                    access this page. Would you like to login to a different account?
+                {% endblocktranslate %}
 
-                            {% include "unfold/helpers/messages/error.html" with error=message %}
-                        {% endif %}
-                    </div>
-                {% endif %}
-
-                {% block login_before %}{% endblock %}
-
-                <form action="{{ app_path }}" method="post" id="login-form">
-                    {% csrf_token %}
-
-                    {% include "unfold/helpers/field.html" with field=form.username %}
-
-                    {% include "unfold/helpers/field.html" with field=form.password %}
-
-                    {% url 'admin_password_reset' as password_reset_url %}
-
-                    <div class="submit-row">
-                        <button type="submit" class="bg-primary-600 border border-transparent cursor-pointer flex flex-row font-semibold group items-center justify-center py-2 rounded-default text-sm text-white w-full">
-                            {% translate 'Log in' %}
-
-                            <span class="material-symbols-outlined ml-2 relative right-0 text-base transition-all group-hover:-right-1">arrow_forward</span>
-                        </button>
-                    </div>
-
-                    {% if password_reset_url %}
-                        <div class="password-reset-link">
-                            <a href="{{ password_reset_url }}" class="border border-base-200 font-medium hidden mt-4 px-3 py-2 rounded-default text-center text-sm text-base-500 transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:text-font-default-dark dark:hover:text-base-200 dark:hover:bg-base-900">
-                                {% translate 'Forgotten your password or username?' %}
-                            </a>
-                        </div>
-                    {% endif %}
-                </form>
-
-                {% block login_after %}{% endblock %}
-            </div>
-
-            <div class="absolute flex flex-row items-center justify-between left-0 m-4 right-0 top-0">
-                {% if site_url %}
-                    <a href="{{ site_url }}" class="flex font-medium items-center text-sm text-primary-600 dark:text-primary-500">
-                        <span class="material-symbols-outlined mr-2">arrow_back</span> {% trans 'Return to site' %}
-                    </a>
-                {% endif %}
-
-                {% if not theme %}
-                    <div class="ml-auto">
-                        {% include "unfold/helpers/theme_switch.html" %}
-                    </div>
-                {% endif %}
-            </div>
+                {% include "unfold/helpers/messages/error.html" with error=message %}
+            {% endif %}
         </div>
+    {% endif %}
 
-        {% if image %}
-            <div class="bg-cover grow hidden max-w-3xl xl:max-w-4xl xl:block" style="background-image: url('{{ image }}')">
-            </div>
-        {% endif %}
-    </div>
+    {% block login_before %}{% endblock %}
+
+    <form action="{{ app_path }}" method="post" id="login-form">
+        {% csrf_token %}
+
+        {% include "unfold/helpers/field.html" with field=form.username %}
+
+        {% include "unfold/helpers/field.html" with field=form.password %}
+
+        <div class="flex flex-col gap-3 mt-6">
+            {% component "unfold/components/button.html" with submit=1 variant="primary" class="submit-row w-full" %}
+                {% translate 'Log in' %} <span class="material-symbols-outlined ml-2 relative right-0 transition-all group-hover:-right-1">arrow_forward</span>
+            {% endcomponent %}
+
+            {% url 'admin_password_reset' as password_reset_url %}
+            {% url 'admin:admin_password_reset' as unfold_password_reset_url %}
+
+            {% if password_reset_url or unfold_password_reset_url %}
+                {% component "unfold/components/button.html" with href=password_reset_url|default:unfold_password_reset_url variant="secondary" class="password-reset-link w-full" %}
+                    {% translate 'Forgotten your password or username?' %}
+                {% endcomponent %}
+            {% endif %}
+        </div>
+    </form>
+
+    {% block login_after %}{% endblock %}
 {% endblock %}
