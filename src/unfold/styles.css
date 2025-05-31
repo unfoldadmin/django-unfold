@@ -197,7 +197,7 @@ table tr.selected th {
 }
 
 .timezonewarning {
-  @apply absolute block items-center right-20 top-2.5 text-base-500 truncate;
+  @apply absolute block items-center right-11 top-2 text-base-500 truncate;
   font-size: 0;
 }
 
