@@ -218,7 +218,7 @@ table tr.selected th {
  Selector
  *******************************************************/
 .selector {
-  @apply flex flex-col grow items-center md:flex-row;
+  @apply flex flex-col grow items-center max-w-5xl md:flex-row;
 }
 
 .selector .selector-available-title label,
