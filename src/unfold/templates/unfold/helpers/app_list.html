@@ -57,7 +57,7 @@
         {% endfor %}
     </div>
 
-    {% if sidebar_show_all_applications %}
+    {% if sidebar_show_all_applications and app_list|length > 0 %}
         <div class="mt-auto" x-data="{ openAllApplications: false }">
             <a class="cursor-pointer flex items-center h-[64px] px-6 py-3 text-sm dark:text-font-default-dark hover:text-primary-600 dark:hover:text-primary-500" x-on:click="openAllApplications = !openAllApplications">
                 <span class="material-symbols-outlined md-18 mr-3">
