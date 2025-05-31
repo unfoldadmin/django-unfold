@@ -22,7 +22,7 @@ except ImportError:
 
 
 from unfold.settings import get_config
-from unfold.utils import hex_to_rgb
+from unfold.utils import hex_to_rgb, move_model_to_app
 from unfold.widgets import (
     BUTTON_CLASSES,
     CHECKBOX_CLASSES,
@@ -129,6 +129,22 @@ class UnfoldAdminSite(AdminSite):
             return self.extra_context(context, request)
 
         return context
+
+    def get_app_list(
+        self, request: HttpRequest, app_label: Optional[str] = None
+    ) -> list[dict[str, Any]]:
+        app_list = super().get_app_list(request, app_label)
+
+        for override in self._get_config("SIDEBAR", request).get("app_overrides", []):
+            app_list = move_model_to_app(
+                override["model"], override["target_app"], app_list
+            )
+
+        if len(self._get_config("SIDEBAR", request).get("app_overrides", [])) > 0:
+            for app in app_list:
+                app["models"].sort(key=lambda x: x["name"])
+
+        return app_list
 
     def index(
         self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
