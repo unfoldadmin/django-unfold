@@ -189,3 +189,36 @@ def parse_datetime_str(value: str) -> Optional[datetime.datetime]:
             return datetime.datetime.strptime(value, format)
         except (ValueError, TypeError):
             continue
+
+
+def move_model_to_app(
+    model_path: str, target_app_label: str, app_list: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    model_data = None
+    source_app_index = None
+
+    for app_index, app in enumerate(app_list):
+        for model in app.get("models", []):
+            if model["model"]._meta.label == model_path:
+                model_data = model
+                source_app_index = app_index
+                break
+        if model_data:
+            break
+
+    if not model_data:
+        return app_list
+
+    target_app_index = None
+    for app_index, app in enumerate(app_list):
+        if app.get("app_label") == target_app_label:
+            target_app_index = app_index
+            break
+
+    if target_app_index is None:
+        return app_list
+
+    app_list[source_app_index]["models"].remove(model_data)
+    app_list[target_app_index]["models"].append(model_data)
+
+    return app_list

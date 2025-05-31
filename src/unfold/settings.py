@@ -67,6 +67,7 @@ CONFIG_DEFAULTS = {
     "SIDEBAR": {
         "show_search": False,
         "show_all_applications": False,
+        "app_overrides": [],
         "navigation": [],
     },
     "TABS": [],
