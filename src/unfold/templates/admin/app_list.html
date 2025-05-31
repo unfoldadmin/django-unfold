@@ -44,5 +44,8 @@
         {% endfor %}
     </div>
 {% else %}
-    <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
+    <p>
+        {% trans "You don’t have permission to view or edit anything." as error_message %}
+        {% include "unfold/helpers/messages/error.html" with error=error_message %}
+    </p>
 {% endif %}
