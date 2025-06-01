@@ -113,6 +113,12 @@ UNFOLD = {
     "SIDEBAR": {
         "show_search": False,  # Search in applications and models names
         "show_all_applications": False,  # Dropdown with all applications and models
+        "app_overrides": [
+            {
+                "model": "account.EmailAddress",
+                "target_app": "formula",  # Move this model to "formula" app
+            },
+        ],
         "navigation": [
             {
                 "title": _("Navigation"),
