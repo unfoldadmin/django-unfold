@@ -289,12 +289,19 @@ const renderCharts = () => {
     for (const key in parsedData.datasets) {
       const dataset = parsedData.datasets[key];
       const processColor = (colorProp) => {
-        if (dataset?.[colorProp]?.startsWith("var(")) {
-          const cssVar = dataset[colorProp].match(/var\((.*?)\)/)[1];
-          const color = getComputedStyle(document.documentElement)
-            .getPropertyValue(cssVar)
-            .trim();
-          dataset[colorProp] = `rgb(${color})`;
+        if (dataset[colorProp]) {
+          const props = Array.isArray(dataset[colorProp])
+            ? dataset[colorProp]
+            : [dataset[colorProp]];
+          for (const prop of props) {
+            if (prop.startsWith("var(")) {
+              const cssVar = dataset[prop].match(/var\((.*?)\)/)[1];
+              const color = getComputedStyle(document.documentElement)
+                .getPropertyValue(cssVar)
+                .trim();
+              dataset[prop] = `rgb(${color})`;
+            }
+          }
         }
       };
 
