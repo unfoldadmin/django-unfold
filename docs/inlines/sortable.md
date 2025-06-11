@@ -8,7 +8,7 @@ description: Implement sortable inlines in Django Unfold to enable drag-and-drop
 
 Django Unfold provides a powerful sorting capability for inlines through the `ordering_field` attribute in the inline class. When specified, this field determines the sorting order of inlines within the admin panel. For enhanced UI customization, you can optionally hide the ordering field from the interface by setting `hide_ordering_field` to `True`.
 
-[![Sortable inlines](/static/docs/inlines/sortable-inlines.webp)](/static/docs/tabs/sortable-inlines.webp)
+[![Sortable inlines](/static/docs/inlines/sortable-inlines.webp)](/static/docs/inlines/sortable-inlines.webp)
 
 
 Important considerations when implementing sortable inlines:

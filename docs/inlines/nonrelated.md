@@ -8,7 +8,7 @@ description: Implement nonrelated inlines in Django Unfold to display and manage
 
 Django Unfold provides a powerful feature for displaying inlines that don't have a direct relationship (no foreign key) with the main model in the changeform view. These nonrelated inlines are available through the `unfold.contrib.inlines` module. To use this functionality, ensure that you have included the module in your project's `INSTALLED_APPS` configuration within settings.py. This feature allows you to display and manage related data even when there isn't a traditional database relationship between the models.
 
-[![Nonrelated inlines](/static/docs/inlines/nonrelated-inlines.webp)](/static/docs/tabs/nonrelated-inlines.webp)
+[![Nonrelated inlines](/static/docs/inlines/nonrelated-inlines.webp)](/static/docs/inlines/nonrelated-inlines.webp)
 
 ```python
 from django.contrib.auth.models import User
