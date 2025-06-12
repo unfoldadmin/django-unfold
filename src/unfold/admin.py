@@ -206,6 +206,7 @@ class BaseInlineMixin:
     ordering_field = None
     per_page = None
     hide_ordering_field = False
+    collapsible = False
 
 
 class TabularInline(BaseInlineMixin, BaseModelAdminMixin, BaseTabularInline):

@@ -21,13 +21,7 @@
             <div>-</div>
 
             <div>
-                {{ page_obj.paginator.count }}
-
-                {% if page_obj.paginator.count == 1 %}
-                    {{ inline_admin_formset.opts.verbose_name }}
-                {% else %}
-                    {{ inline_admin_formset.opts.verbose_name_plural }}
-                {% endif %}
+                {{ page_obj.paginator.count }} {% if page_obj.paginator.count == 1 %}{{ inline_admin_formset.opts.verbose_name }}{% else %}{{ inline_admin_formset.opts.verbose_name_plural }}{% endif %}
             </div>
         </div>
     {% endif %}

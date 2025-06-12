@@ -29,6 +29,7 @@ django = ">=4.2"
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3"
 pytest-django = "^4.11"
+pytest-factoryboy = "^2.7.0"
 tox = "^4.26"
 django-money = "^3.5"
 
