@@ -3,8 +3,10 @@ from typing import Any, Callable, Optional
 from django.db.models import Model, QuerySet
 from django.forms import BaseModelFormSet, ModelForm, modelformset_factory
 
+from unfold.forms import PaginationFormSetMixin
 
-class NonrelatedInlineModelFormSet(BaseModelFormSet):
+
+class NonrelatedInlineModelFormSet(PaginationFormSetMixin, BaseModelFormSet):
     def __init__(
         self,
         instance: Optional[Model] = None,
