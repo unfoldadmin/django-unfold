@@ -26,11 +26,11 @@ Unfold Studio is a theme customizer for Django admin that helps you create a bra
 
 ## Fresh Features & Enhancements
 
+- **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance
 - **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form
 - **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load
 - **Checkbox & radio filters:** Enhanced filter options with checkbox and radio interfaces for intuitive filtering
 - **Site dropdown:** Configurable dropdown menu in the header area for managing custom navigation links
-- **Dropdown actions:** Organize action items in customizable dropdown menus
 
 ## Core Features & Capabilities
 
@@ -50,6 +50,7 @@ Unfold Studio is a theme customizer for Django admin that helps you create a bra
 - **Sortable inlines:** Allow sorting inlines by dragging and dropping
 - **Environment label:** Distinguish between environments by displaying a label
 - **Nonrelated inlines:** Display nonrelated models as inlines in the change form
+- **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance
 - **Favicons:** Built-in support for configuring various site favicons
 - **Themes:** Allow customization of color scheme, background color, border radius, and more
 - **Font colors:** Adjust font colors for better readability

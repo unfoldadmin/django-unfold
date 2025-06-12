@@ -3,7 +3,7 @@
 <fieldset class="module{% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
     {% if fieldset.name and "tab" not in fieldset.classes %}
         {% if stacked == 1 %}
-            <h2 class="bg-base-50 border-b border-base-200 border-t border-dashed font-semibold text-font-important-light px-3 py-2 dark:text-font-important-dark dark:bg-white/[.02] dark:border-base-800">
+            <h2 class="border-b border-base-200 border-t border-dashed font-semibold text-font-important-light px-3 py-4.5 dark:text-font-important-dark dark:border-base-800">
                 {{ fieldset.name }}
             </h2>
         {% else %}

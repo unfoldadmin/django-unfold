@@ -12,6 +12,11 @@ from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.forms import BaseGenericInlineFormSet
+from django.core.paginator import Page, Paginator
+from django.db.models import QuerySet
+from django.forms import BaseInlineFormSet
+from django.http import HttpRequest
 
 from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 
@@ -24,7 +29,6 @@ from django.contrib.admin.helpers import Fieldline as BaseFieldline
 from django.contrib.admin.helpers import Fieldset as BaseFieldset
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
-from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -185,3 +189,54 @@ class Fieldline(BaseFieldline):
                 )
             else:
                 yield UnfoldAdminField(self.form, field, is_first=(i == 0))
+
+
+class PaginationFormSetMixin:
+    queryset: Optional[QuerySet] = None
+    request: Optional[HttpRequest] = None
+    per_page: Optional[int] = None
+
+    def __init__(
+        self,
+        request: Optional[HttpRequest] = None,
+        per_page: Optional[int] = None,
+        *args,
+        **kwargs,
+    ):
+        self.request = request
+        self.per_page = per_page
+
+        super().__init__(*args, **kwargs)
+
+        if self.per_page:
+            self.paginator = Paginator(self.queryset, self.per_page)
+            self.page = self.get_page(self.paginator, self.get_page_num())
+            self._queryset = self.page.object_list
+
+    def get_pagination_key(self) -> str:
+        return f"{self.prefix}-page"
+
+    def get_page_num(self) -> int:
+        page = self.request.GET.get(self.get_pagination_key())
+        if page and page.isnumeric() and page > "0":
+            return int(page)
+
+        page = self.request.POST.get(self.get_pagination_key())
+        if page and page.isnumeric() and page > "0":
+            return int(page)
+
+        return 1
+
+    def get_page(self, paginator: Paginator, page: int) -> Page:
+        if page <= paginator.num_pages:
+            return paginator.page(page)
+
+        return paginator.page(1)
+
+
+class PaginationInlineFormSet(PaginationFormSetMixin, BaseInlineFormSet):
+    pass
+
+
+class PaginationGenericInlineFormSet(PaginationFormSetMixin, BaseGenericInlineFormSet):
+    pass
