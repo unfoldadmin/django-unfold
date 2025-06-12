@@ -578,7 +578,9 @@ def infinite_paginator_url(cl, i):
 
 
 @register.simple_tag
-def elided_page_range(paginator: Paginator, number: int) -> Optional[list[int | str]]:
+def elided_page_range(
+    paginator: Paginator, number: int
+) -> Optional[list[Union[int, str]]]:
     if not paginator or not number:
         return None
 
