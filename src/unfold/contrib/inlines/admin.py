@@ -12,10 +12,15 @@ from django.http import HttpRequest
 from django.utils.text import get_text_list
 from django.utils.translation import gettext_lazy as _
 
-from unfold.admin import StackedInline, TabularInline
-
-from .checks import NonrelatedModelAdminChecks
-from .forms import NonrelatedInlineModelFormSet, nonrelated_inline_formset_factory
+from unfold.admin import (
+    StackedInline,
+    TabularInline,
+)
+from unfold.contrib.inlines.checks import NonrelatedModelAdminChecks
+from unfold.contrib.inlines.forms import (
+    NonrelatedInlineModelFormSet,
+    nonrelated_inline_formset_factory,
+)
 
 
 class NonrelatedInlineMixin:
@@ -135,8 +140,8 @@ class NonrelatedInlineMixin:
 
 
 class NonrelatedStackedInline(NonrelatedInlineMixin, StackedInline):
-    pass
+    formset = NonrelatedInlineModelFormSet
 
 
 class NonrelatedTabularInline(NonrelatedInlineMixin, TabularInline):
-    pass
+    formset = NonrelatedInlineModelFormSet

@@ -1,0 +1,28 @@
+{% load i18n admin_urls unfold %}
+
+{% with page_obj=inline_admin_formset.formset.page has_tab=inline_admin_formset.opts.tab pagination_key=inline_admin_formset.formset.get_pagination_key %}
+    {% elided_page_range page_obj.paginator page_obj.number as elided_page_range %}
+    <input type="hidden" name="{{ inline_admin_formset.formset.get_pagination_key }}" value="{{ page_obj.number }}" />
+
+    {% if page_obj.paginator.count and page_obj.paginator.num_pages > 1%}
+        <div class="flex items-center gap-2 mb-6">
+            {% for i in elided_page_range %}
+                {% if i == page_obj.paginator.ELLIPSIS %}
+                    <span>{{ page_obj.paginator.ELLIPSIS }}</span>
+                {% elif i == page_obj.number %}
+                    <span class="font-medium text-primary-600">{{ i }}</span>
+                {% else %}
+                    <a href="?{% querystring_params pagination_key i %}{% if has_tab %}#{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}">
+                        {{ i }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            <div>-</div>
+
+            <div>
+                {{ page_obj.paginator.count }} {% if page_obj.paginator.count == 1 %}{{ inline_admin_formset.opts.verbose_name }}{% else %}{{ inline_admin_formset.opts.verbose_name_plural }}{% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endwith %}
