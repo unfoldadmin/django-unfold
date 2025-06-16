@@ -6,10 +6,11 @@ from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
+from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
 from django.forms import BoundField, CheckboxSelectMultiple, Field
-from django.http import HttpRequest
+from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
@@ -574,3 +575,32 @@ def changeform_condition(field: BoundField) -> BoundField:
 @register.simple_tag
 def infinite_paginator_url(cl, i):
     return cl.get_query_string({PAGE_VAR: i})
+
+
+@register.simple_tag
+def elided_page_range(
+    paginator: Paginator, number: int
+) -> Optional[list[Union[int, str]]]:
+    if not paginator or not number:
+        return None
+
+    return paginator.get_elided_page_range(number=number)
+
+
+@register.simple_tag(takes_context=True)
+def querystring_params(
+    context: RequestContext, query_key: str, query_value: str
+) -> str:
+    request = context.get("request")
+    result = QueryDict(mutable=True)
+
+    for key, values in request.GET.lists():
+        if key == query_key:
+            continue
+
+        for value in values:
+            result[key] = value
+
+    result[query_key] = query_value
+
+    return result.urlencode()

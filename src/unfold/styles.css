@@ -319,7 +319,7 @@ table tr.selected th {
 }
 
 [data-inline-type="stacked"] .add-row {
-  @apply border-t border-base-200 overflow-hidden dark:border-base-800;
+  @apply overflow-hidden;
 }
 
 .add-row td {
