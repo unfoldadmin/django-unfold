@@ -1,4 +1,20 @@
 
+## 0.60.0 (2025-06-16)
+
+- feat: paginated inlines (#1373) ([`c939fce`](https://github.com/unfoldadmin/django-unfold/commit/c939fce9a7d03a84dce9e81756cb1d89b6dc1194))
+- feat: login page refactoring (#1359) ([`ff5a0c0`](https://github.com/unfoldadmin/django-unfold/commit/ff5a0c0c5e9e49be87f1f3e68e79296c671f1b6e))
+- feat: input prefix/suffix support (#1349) ([`7c0bcd4`](https://github.com/unfoldadmin/django-unfold/commit/7c0bcd41362b4ba07b7ba7b993a3b274723ad70f))
+- feat: location field support (#1343) ([`34ec946`](https://github.com/unfoldadmin/django-unfold/commit/34ec946dd62836355b98907ac6a00776436962b6))
+- feat: unfold field labels (#1342) ([`ba4c20b`](https://github.com/unfoldadmin/django-unfold/commit/ba4c20b56bccb7bf28aaca65b28892dd0ceb9aa4))
+- fix: no apps permissions design (#1363) ([`fdb679e`](https://github.com/unfoldadmin/django-unfold/commit/fdb679e81698b53cee8915d78c42f00a5e017ad9))
+- fix: permission selector max width (#1362) ([`20445fc`](https://github.com/unfoldadmin/django-unfold/commit/20445fc3b2231744335c723fe3dfa0aec4754c1e))
+- fix: timezone warning icon position (#1361) ([`7e636dd`](https://github.com/unfoldadmin/django-unfold/commit/7e636dd556d9f9d511636aac5d7b995124e1013f))
+- fix: hide all application if no results found (#1360) ([`e603ea4`](https://github.com/unfoldadmin/django-unfold/commit/e603ea48d3b9c851e344488e2b1397f0e4bc994e))
+- fix: inline labels (#1352) ([`9653b56`](https://github.com/unfoldadmin/django-unfold/commit/9653b56c68c98d3b0860a07fb422f00dea21f34d))
+- fix: related widget action (#1347) ([`f5cdb9b`](https://github.com/unfoldadmin/django-unfold/commit/f5cdb9bb5bb07deff0d94fd3e58c0dcc5fa9d8c8))
+- fix: button component cursor (#1339) ([`ad81ca2`](https://github.com/unfoldadmin/django-unfold/commit/ad81ca2c33c1d08bd8c99e1e99b5f1ea162d6465))
+- docs: inline images paths (#1371) ([`fa7d5db`](https://github.com/unfoldadmin/django-unfold/commit/fa7d5db4f962834f7c03d0f97de14be3b56ef8a6))
+
 ## 0.59.0 (2025-05-26)
 
 - feat: override languages and users link in header (#1320) ([`08a7a55`](https://github.com/unfoldadmin/django-unfold/commit/08a7a55e4968e5fe99dd421b296597719dbb2de7))
