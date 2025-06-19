@@ -290,7 +290,8 @@ FILE_CLASSES = [
 
 class UnfoldPrefixSuffixMixin:
     def get_context(self, name, value, attrs):
-        widget = {}
+        context = super().get_context(name, value, attrs)
+        widget = context["widget"]
 
         if "prefix" in self.attrs:
             widget["prefix"] = self.attrs["prefix"]
