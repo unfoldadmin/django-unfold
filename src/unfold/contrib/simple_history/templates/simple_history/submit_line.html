@@ -5,13 +5,13 @@
         <div class="bg-white dark:bg-base-900 {% if not is_popup %}border-t border-base-200 px-4 py-4 relative scrollable-top dark:border-base-800{% endif %}">
             <div class="container flex flex-col-reverse gap-3 items-center mx-auto lg:flex-row-reverse">
                 {% if not revert_disabled %}
-                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-default text-sm text-white w-full lg:w-auto"  name="_save" {{ onclick_attrib }}>
+                    <button type="submit" form="{{ opts.model_name }}_form" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-sm text-white w-full lg:w-auto"  name="_save" {{ onclick_attrib }}>
                         {% trans 'Revert' %}
                     </button>
                 {% endif %}
 
                 {% if change_history %}
-                    <button type="submit" class="bg-primary-600 block border border-transparent font-medium px-3 py-2 rounded-default text-sm text-white w-full lg:w-auto"  name="_change_history" {{ onclick_attrib }}>
+                    <button type="submit" form="{{ opts.model_name }}_form" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-sm text-white w-full lg:w-auto"  name="_change_history" {{ onclick_attrib }}>
                         {% trans 'Change History' %}
                     </button>
                 {% endif %}
