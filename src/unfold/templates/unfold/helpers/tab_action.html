@@ -1,11 +1,12 @@
 {% load unfold %}
 
-<li class="{% action_item_classes action %}" {% if not link %}x-data="{actionDropdownOpen: false}" x-ref="actionDropdown{{ action.method_name }}"{% endif %}>
+<li class="{% action_item_classes action %}" {% if not link and action.items|length > 0 %}x-data="{actionDropdownOpen: false}" x-ref="actionDropdown{{ action.method_name }}"{% endif %}>
     <a {% if link %}href="{{ link }}"{% endif %}class="cursor-pointer flex grow items-center gap-2 px-3 py-2 text-left whitespace-nowrap" {% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}
        {% if not link %}
            x-on:click="actionDropdownOpen = !actionDropdownOpen"
            x-bind:class="{'{% if action.variant.value == "default" %}text-primary-600 dark:text-primary-500{% endif %}': actionDropdownOpen }"
        {% endif %}>
+
         {% if action.icon %}
             <span class="material-symbols-outlined">
                 {{ action.icon }}
@@ -14,7 +15,7 @@
 
         {{ title }}
 
-        {% if not link %}
+        {% if not link and action.items|length > 0 %}
             <span class="border-l border-base-200 flex items-center select-none self-stretch ml-auto -mr-1 -my-2 pl-2
                          {% if action.variant.value == "primary" %}
                              border-primary-700 dark:border-primary-500
@@ -36,7 +37,7 @@
         {% endif %}
     </a>
 
-    {% if not link %}
+    {% if not link and action.items|length > 0 %}
         <template x-teleport="body">
             <nav x-anchor.bottom-end.offset.4="$refs.actionDropdown{{ action.method_name }}" class="absolute bg-white border border-base-200 flex flex-col -mr-px py-1 right-0 rounded-default shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-transition x-show="actionDropdownOpen" x-on:click.outside="actionDropdownOpen = false">
                 {% for item in action.items %}
