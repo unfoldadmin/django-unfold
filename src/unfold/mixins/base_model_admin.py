@@ -33,7 +33,7 @@ class BaseModelAdminMixin:
         request: HttpRequest,
         object_id: Optional[str] = None,
         form_url: str = "",
-        extra_context: Optional[dict[str, bool]] = None,
+        extra_context: Optional[dict[str, Any]] = None,
     ) -> Any:
         from unfold.forms import AdminForm, Fieldline
 
