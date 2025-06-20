@@ -16,16 +16,20 @@ Transform your Django admin into a powerful, modern administrative interface wit
 - **Turbo:** A Django & Next.js boilerplate implementing Unfold is available at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo?utm_medium=github&utm_source=unfold).
 - **Discord:** Join our Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
 
-## Consulting services
+## Profesional tools & services
+
+Looking for professional help with your Django or Unfold project? We offer a range of tools and services to support your development process:
+
+### Consulting services
 
 Professional consulting services for Django applications — from architecture and performance optimization to feature development and Unfold integration.
 Ideal for teams looking to scale, modernize, or customize their Django projects with expert support. Learn more at [unfoldadmin.com/consulting](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold).
 
-## Support package
+### Support package
 
 If you need assistance with integrating or customizing Unfold, support packages are available. They include live 1:1 calls, implementation review, and ongoing Discord-based support — fixed price, no ongoing commitment. Learn more at [unfoldadmin.com/support](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold).
 
-## Unfold Studio
+### Unfold Studio
 
 Unfold Studio lets you visually customize your Django admin without writing code — update colors, logos, sidebar, and interface styles to match your brand in minutes. Give your admin a polished, professional look that feels truly yours. Available at [unfoldadmin.com/studio](https://unfoldadmin.com/studio).
 
