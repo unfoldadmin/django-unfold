@@ -104,7 +104,12 @@ class BaseModelAdminMixin:
         self, db_field: Field, request: HttpRequest, **kwargs
     ) -> Optional[Field]:
         if "widget" not in kwargs:
-            kwargs["widget"] = widgets.UnfoldAdminNullBooleanSelectWidget()
+            if db_field.choices:
+                kwargs["widget"] = widgets.UnfoldAdminSelectWidget(
+                    choices=db_field.choices
+                )
+            else:
+                kwargs["widget"] = widgets.UnfoldAdminNullBooleanSelectWidget()
 
         return db_field.formfield(**kwargs)
 
