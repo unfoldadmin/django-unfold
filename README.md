@@ -23,7 +23,7 @@ Ideal for teams looking to scale, modernize, or customize their Django projects 
 
 ## Support package
 
-If you need assistance with integrating or customizing Unfold, [support packages](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold) are available. They include live 1:1 calls, implementation review, and ongoing Discord-based support — fixed price, no ongoing commitment.
+If you need assistance with integrating or customizing Unfold, support packages are available. They include live 1:1 calls, implementation review, and ongoing Discord-based support — fixed price, no ongoing commitment. Learn more at [unfoldadmin.com/support](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold).
 
 ## Unfold Studio
 
