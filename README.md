@@ -27,7 +27,7 @@ If you need assistance with integrating or customizing Unfold, support packages 
 
 ## Unfold Studio
 
-Unfold Studio lets you visually customize your Django admin without writing code — update colors, logos, and styles to match your brand in minutes. Give your admin a polished, professional look. Available at [unfoldadmin.com/studio](https://unfoldadmin.com/studio/?utm_medium=github&utm_source=unfold).
+Unfold Studio lets you visually customize your Django admin without writing code — update colors, logos, sidebar, and interface styles to match your brand in minutes. Give your admin a polished, professional look that feels truly yours. Available at [unfoldadmin.com/studio](https://unfoldadmin.com/studio).
 
 ## Fresh Features & Enhancements
 
