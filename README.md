@@ -1,6 +1,6 @@
 ![screenshot](https://github.com/user-attachments/assets/87aaad04-f454-42aa-b9ac-e14d41f189ac)
 
-## Unfold Django Admin Theme
+## Unfold - Django Admin Theme
 
 [![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
 [![Discord](https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da)](https://discord.gg/9sQj9MEbNz)
