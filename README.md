@@ -16,13 +16,18 @@ Transform your Django admin into a powerful, modern administrative interface wit
 - **Turbo:** A Django & Next.js boilerplate implementing Unfold is available at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo?utm_medium=github&utm_source=unfold).
 - **Discord:** Join our Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
 
-## Django & Unfold Development Services
+## Consulting services
 
-Need assistance with implementing Unfold or require custom Django development? Professional consulting and development services are available to help transform your Django admin interface and enhance your web applications. Whether migrating from the native Django admin to Unfold or seeking expert technical guidance, reach out to discuss your project requirements and explore development possibilities. [Get in touch](https://unfoldadmin.com/consulting?utm_medium=github&utm_source=unfold) to learn more about available services.
+Professional consulting services for Django applications — from architecture and performance optimization to feature development and Unfold integration.
+Ideal for teams looking to scale, modernize, or customize their Django projects with expert support. Learn more at [unfoldadmin.com/consulting](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold).
+
+## Support package
+
+If you need assistance with integrating or customizing Unfold, [support packages](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold) are available. They include live 1:1 calls, implementation review, and ongoing Discord-based support — fixed price, no ongoing commitment.
 
 ## Unfold Studio
 
-Unfold Studio is a theme customizer for Django admin that helps you create a branded interface. You can customize colors, upload your logo, and adjust the style without coding. The tool is currently in development, and [you can join the waitlist](https://unfoldadmin.com/studio/) to be notified when it's available.
+Unfold Studio lets you visually customize your Django admin without writing code — update colors, logos, and styles to match your brand in minutes. Give your admin a polished, professional look. Available at [unfoldadmin.com/studio](https://unfoldadmin.com/studio/?utm_medium=github&utm_source=unfold).
 
 ## Fresh Features & Enhancements
 
