@@ -26,6 +26,12 @@
                 <div x-sort:item class="inline-related group inline-stacked {% if inline_admin_form.original or inline_admin_form.show_url %} has_original{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form last-related{% endif %}" id="{{ inline_admin_formset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}" {% if inline_admin_formset.opts.collapsible and inline_admin_form.original %}x-data="{ open: {% if inline_admin_form.errors %}true{% else %}false{% endif %} }"{% endif %}>
                     {% if not inline_admin_formset.opts.hide_title or inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
                         <h3 class="border-b border-base-200 flex font-medium items-center gap-2 px-3 py-2 text-sm dark:border-base-800 {% if inline_admin_formset.opts.collapsible and inline_admin_form.original %}cursor-pointer{% endif %}" {% if inline_admin_formset.opts.collapsible and inline_admin_form.original %}x-on:click="open = !open"{% endif %}>
+                            {% if inline_admin_formset.opts.collapsible and inline_admin_form.original %}
+                                <span class="material-symbols-outlined select-none block! -rotate-90 transition-all" x-bind:class="open && 'rotate-0'">
+                                    expand_more
+                                </span>
+                            {% endif %}
+
                             {% if inline_admin_formset.opts.ordering_field %}
                                 {% if inline_admin_form.original %}
                                     <span class="material-symbols-outlined cursor-pointer" x-sort:handle>drag_indicator</span>
