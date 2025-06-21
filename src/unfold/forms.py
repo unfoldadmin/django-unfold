@@ -1,5 +1,5 @@
 from collections.abc import Generator
-from typing import Optional
+from typing import Optional, Union
 
 from django import forms
 from django.contrib.admin.forms import (
@@ -181,7 +181,7 @@ class Fieldset(BaseFieldset):
 class Fieldline(BaseFieldline):
     def __iter__(
         self,
-    ) -> Generator["UnfoldAdminReadonlyField | UnfoldAdminField", None, None]:
+    ) -> Generator[Union["UnfoldAdminReadonlyField", "UnfoldAdminField"], None, None]:
         for i, field in enumerate(self.fields):
             if field in self.readonly_fields:
                 yield UnfoldAdminReadonlyField(
