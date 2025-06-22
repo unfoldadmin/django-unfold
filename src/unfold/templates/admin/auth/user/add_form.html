@@ -3,10 +3,6 @@
 
 {% block form_top %}
     <p class="bg-blue-50 border-blue-200 mb-8 p-3 rounded-default text-blue-500 text-sm dark:bg-blue-500/20 dark:border-blue-500/10">
-        {% if not is_popup %}
-            {% translate 'First, enter a username and password. Then, you’ll be able to edit more user options.' %}
-        {% else %}
-            {% translate "Enter a username and password." %}
-        {% endif %}
+        {% translate "After you've created a user, you’ll be able to edit more user options." %}
         <p>
 {% endblock %}
