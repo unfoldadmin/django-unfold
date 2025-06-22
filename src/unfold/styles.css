@@ -479,7 +479,7 @@ fieldset details > summary {
 }
 
 fieldset details > summary:after {
-  @apply material-symbols-outlined absolute right-3 top-3.5;
+  @apply material-symbols-outlined absolute cursor-pointer right-3 top-3.5;
   content: "expand_more";
 }
 

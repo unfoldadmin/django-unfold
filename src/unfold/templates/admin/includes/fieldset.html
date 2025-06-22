@@ -1,17 +1,21 @@
 {% load unfold %}
 
-<fieldset class="module{% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
+<fieldset class="module relative {% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
+    {% if fieldset.is_collapsible %}<details><summary>{% endif %}
+
     {% if fieldset.name and "tab" not in fieldset.classes %}
         {% if stacked == 1 %}
-            <h2 class="border-b border-base-200 border-t border-dashed font-semibold text-font-important-light px-3 py-4.5 dark:text-font-important-dark dark:border-base-800">
+            <h2 class="border-b border-base-200 border-t border-dashed font-semibold text-font-important-light px-3 py-4.5 dark:text-font-important-dark dark:border-base-800 {% if fieldset.is_collapsible %}cursor-pointer{% endif %}">
                 {{ fieldset.name }}
             </h2>
         {% else %}
-            <h2 class="bg-base-100 font-semibold mb-6 px-4 py-3 rounded-default text-font-important-light text-sm 2xl:-mx-4 dark:bg-white/[.02] dark:text-font-important-dark">
+            <h2 class="bg-base-100 font-semibold mb-6 px-4 py-3 rounded-default text-font-important-light text-sm 2xl:-mx-4 dark:bg-white/[.02] dark:text-font-important-dark {% if fieldset.is_collapsible %}cursor-pointer{% endif %}">
                 {{ fieldset.name }}
             </h2>
         {% endif %}
     {% endif %}
+
+    {% if fieldset.is_collapsible %}</summary>{% endif %}
 
     {% if fieldset.description %}
         <div class="leading-relaxed mb-4 max-w-4xl text-sm">
@@ -24,4 +28,6 @@
             {% include "unfold/helpers/fieldset_row.html" %}
         {% endfor %}
     </div>
+
+    {% if fieldset.name and fieldset.is_collapsible %}</details>{% endif %}
 </fieldset>
