@@ -59,6 +59,8 @@
 
 {% block content %}
     <div id="content-main">
+        {% include "unfold/helpers/popup_header.html" %}
+
         {% block form_before %}{% endblock %}
 
         {% if adminform.model_admin.change_form_outer_before_template %}
