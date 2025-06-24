@@ -67,7 +67,7 @@
             {% include adminform.model_admin.change_form_outer_before_template %}
         {% endif %}
 
-        <form {% if adminform.model_admin.conditional_fields %}x-data='{{ adminform|changeform_data }}'{% endif %} {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post" id="{{ opts.model_name }}_form" {% if adminform.model_admin.warn_unsaved_form %}class="warn-unsaved-form"{% endif %} novalidate>
+        <form {% if adminform.model_admin.conditional_fields %}x-data='{{ adminform|changeform_data }}'{% endif %} {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}"{% else %}x-bind:value="activeTab && activeTab !== 'general' ? '#' + activeTab : ''" {% endif %}method="post" id="{{ opts.model_name }}_form" {% if adminform.model_admin.warn_unsaved_form %}class="warn-unsaved-form"{% endif %} novalidate>
             {% csrf_token %}
 
             {% if adminform.model_admin.change_form_before_template %}
