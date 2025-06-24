@@ -9,7 +9,7 @@
                         <a class="block cursor-pointer font-semibold px-2.5 py-2 rounded-default hover:text-base-700 dark:hover:text-white"
                            x-on:click="openTab = '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'"
                            x-bind:class="openTab == '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %} ? 'bg-white text-font-important-light shadow-xs dark:bg-base-900 dark:text-font-important-dark' : ''">
-                            {{ fieldset.name }}
+                            {% if fieldset|fieldset_has_error %} <span class="material-symbols-outlined text-red-500 align-text-bottom">warning</span> {% endif %}{{ fieldset.name }}
                         </a>
                     </li>
                 {% endfor %}
