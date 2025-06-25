@@ -85,9 +85,6 @@
                     <input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">
                 {% endif %}
 
-                {% include "unfold/helpers/messages/errornote.html" with errors=errors %}
-                {% include "unfold/helpers/messages/error.html" with errors=adminform.form.non_field_errors %}
-
                 {% block field_sets %}
                     {% with has_conditional_display=adminform.model_admin.conditional_fields %}
                         {% for fieldset in adminform %}
