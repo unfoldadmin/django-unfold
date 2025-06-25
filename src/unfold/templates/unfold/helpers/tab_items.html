@@ -34,7 +34,7 @@
                        href="#{{ inline.formset.prefix|slugify }}"
                        x-on:click="activeTab = '{{ inline.formset.prefix|slugify }}'"
                        x-bind:class="{'border-b border-base-200 dark:border-base-800 md:border-primary-500 dark:md:border-primary-600! font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ inline.formset.prefix|slugify }}', 'hover:text-primary-600 dark:hover:text-primary-500 dark:border-base-800': activeTab != '{{ inline.formset.prefix|slugify }}'}">
-                        {% if not inline.formset.is_valid %}<span class="material-symbols-outlined text-red-500 align-text-bottom">warning</span>{% endif %}
+                        {% if inline.formset.total_error_count %}<span class="material-symbols-outlined text-red-500 align-text-bottom">warning</span>{% endif %}
                         {% if inline.formset.max_num == 1 %}
                             {{ inline.opts.verbose_name|capfirst }}
                         {% else %}
