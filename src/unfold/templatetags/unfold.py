@@ -604,3 +604,15 @@ def querystring_params(
     result[query_key] = query_value
 
     return result.urlencode()
+
+
+@register.filter
+def fieldset_has_error(fieldset) -> bool:
+    """
+    Checks if any field in the provided fieldset has a form error.
+    """
+    for line in fieldset:
+        for field in line:
+            if not field.is_readonly and field.errors():
+                return True
+    return False
