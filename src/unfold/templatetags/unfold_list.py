@@ -38,7 +38,10 @@ from unfold.widgets import UnfoldBooleanWidget
 
 register = Library()
 
-LINK_CLASSES = []
+LINK_CLASSES = [
+    "text-font-important-light",
+    "dark:text-font-important-dark",
+]
 
 ROW_CLASSES = [
     "align-middle",
