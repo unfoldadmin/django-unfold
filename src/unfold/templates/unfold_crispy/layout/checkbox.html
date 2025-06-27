@@ -1,11 +1,27 @@
 {% load crispy_forms_field unfold %}
 
 {% if form_show_labels %}
-    <label for="{{ field.id_for_label }}" class="flex flex-row gap-3 items-center {% if tag == "td" %}mt-9{% endif %}">
-        {% crispy_field field 'class' form_classes.switch %} <span>{{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}</span>
-    </label>
+    {% if 'form-horizontal' in form_class %}
+        <div class="flex flex-col min-h-[38px] lg:flex-row lg:gap-3 lg:items-center">
+            <div class="flex flex-row max-lg:flex-row-reverse max-lg:justify-end gap-3 lg:items-center lg:gap-0 lg:justify-start">
+                <label for="{{ field.id_for_label }}" class="flex flex-row font-semibold gap-3 items-center text-base-900 lg:min-w-56 lg:w-56 dark:text-base-100 {% if tag == "td" %}mt-9{% endif %}">
+                    <span>{{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}</span>
+                </label>
 
-    {% include 'unfold_crispy/layout/help_text_and_errors.html' %}
+                {% crispy_field field 'class' form_classes.switch %}
+            </div>
+
+            <div class="">
+                {% include 'unfold_crispy/layout/help_text_and_errors.html' %}
+            </div>
+        </div>
+    {% else %}
+        <label for="{{ field.id_for_label }}" class="flex flex-row font-semibold gap-3 items-center text-base-900 dark:text-base-100 {% if tag == "td" %}mt-9{% endif %}">
+            {% crispy_field field 'class' form_classes.switch %} <span>{{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}</span>
+        </label>
+
+        {% include 'unfold_crispy/layout/help_text_and_errors.html' %}
+    {% endif %}
 {% else %}
     {% with field=field|add_css_class:form_classes.switch %}
         {% if tag == "td" %}
