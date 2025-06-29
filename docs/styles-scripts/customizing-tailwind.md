@@ -46,7 +46,36 @@ UNFOLD = {
 }
 ```
 
+## Migration from Tailwind 3 to Tailwind 4
+For smooth migration from Tailwind 3 to Tailwind 4, use Tailwind Upgrade Tool. 
+It replaces obsolete classes in .html, .css and .py files. Still, you may need to tweak some files manually.
+See https://tailwindcss.com/docs/upgrade-guide
 
+Custom variables defined in a deprecated `tailwind.config.js` (Tailwind 3) may require special handling. 
+If the custom variables are used for referencing other variables in your project, 
+consider using Tailwind `theme inline` directive along with `theme` directive in your `styles.css`. 
+That helps to avoid broken, missing and out of scope variables and thus classes.
+
+```css
+/* styles.css */
+@import 'tailwindcss';
+
+@theme inline {
+  --color-primary-50: green;
+  ...  
+}
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  ...
+}
+```
+Reference: 
+https://tailwindcss.com/docs/theme#referencing-other-variables
+https://github.com/tailwindlabs/tailwindcss/discussions/15122
+https://github.com/tailwindlabs/tailwindcss/pull/14095
 
 ## Tailwind 3.x for Unfold below 0.56
 
