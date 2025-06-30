@@ -206,6 +206,9 @@ class UnfoldAdminSite(AdminSite):
             context={
                 "results": results,
             },
+            headers={
+                "HX-Trigger": "search",
+            },
         )
 
     def password_change(
