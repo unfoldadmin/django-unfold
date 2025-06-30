@@ -22,9 +22,7 @@
                    placeholder="{% translate 'Search apps and models...' %}"
                    aria-label="{% translate 'Filter navigation items' %}">
 
-            <kbd class="bg-base-50 border border-base-200 font-mono text-xs text-font-subtle-light rounded-xs px-1">
-                t
-            </kbd>
+            {% include "unfold/helpers/shortcut.html" with shortcut="t" %}
         </div>
 
         <div id="search-results" x-show="openSearchResults"></div>

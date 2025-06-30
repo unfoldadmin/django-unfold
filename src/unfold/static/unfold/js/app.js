@@ -26,7 +26,26 @@ const sortRecords = (e) => {
 };
 
 /*************************************************************
- * Searh dropdown
+ * Search form
+ *************************************************************/
+function searchForm() {
+  return {
+    applyShortcut(event) {
+      if (
+        event.key === "/" &&
+        document.activeElement.tagName.toLowerCase() !== "input" &&
+        document.activeElement.tagName.toLowerCase() !== "textarea" &&
+        !document.activeElement.isContentEditable
+      ) {
+        event.preventDefault();
+        this.$refs.searchInput.focus();
+      }
+    },
+  };
+}
+
+/*************************************************************
+ * Search dropdown
  *************************************************************/
 function searchDropdown() {
   return {
