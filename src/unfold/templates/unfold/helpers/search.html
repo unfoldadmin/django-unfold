@@ -1,24 +1,30 @@
 {% load i18n %}
 
 {% if sidebar_show_search %}
-    <div class="mb-2.5 mx-3 relative" x-data="{openSearchResults: false}">
-        <div class="bg-white border border-base-200 flex items-center overflow-hidden rounded-default shadow-xs focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
-            <span class="material-symbols-outlined md-18 pl-3 text-base-400">manage_search</span>
+    <div class="mb-2.5 mx-3 relative" x-data="searchDropdown()" x-on:keydown.window="applyShortcut($event)" x-on:click.outside="openSearchResults = false">
+        <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
+            <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
 
             <input type="search"
                    id="nav-filter"
                    name="s"
-                   x-on:blur="setTimeout(function() {openSearchResults = false}, 200)"
-                   x-on:focus="openSearchResults=true"
+                   x-ref="searchInput"
+                   x-on:focus="openSearchResults = true; currentIndex = 0"
+                   x-on:keydown.arrow-down.prevent="nextItem()"
+                   x-on:keydown.arrow-up.prevent="prevItem()"
+                   x-on:keydown.escape.prevent="openSearchResults=false"
+                   x-on:keydown.enter.prevent="selectItem()"
+                   x-on:search="currentIndex = 0"
                    hx-get="{% url "admin:search" %}"
-                   hx-trigger="keyup changed delay:500ms, search"
+                   hx-trigger="keyup changed delay:500ms"
                    hx-target="#search-results"
-                   hx-indicator=".htmx-indicator"
-                   class="grow font-medium overflow-hidden pl-2 pr-3 py-2 text-font-default-light text-sm placeholder-base-400 focus:outline-hidden dark:bg-base-900 dark:text-font-default-dark"
-                   placeholder="{% translate 'Search apps and models...' %}" aria-label="{% translate 'Filter navigation items' %}">
-            <div class="absolute opacity-0 htmx-indicator mt-0.5 right-2 top-2">
-                <span class="animate-spin material-symbols-outlined md-18 text-base-300">sync</span>
-            </div>
+                   class="grow font-medium min-w-0 overflow-hidden p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                   placeholder="{% translate 'Search apps and models...' %}"
+                   aria-label="{% translate 'Filter navigation items' %}">
+
+            <kbd class="bg-base-50 border border-base-200 font-mono text-xs text-font-subtle-light rounded-xs px-1">
+                t
+            </kbd>
         </div>
 
         <div id="search-results" x-show="openSearchResults"></div>

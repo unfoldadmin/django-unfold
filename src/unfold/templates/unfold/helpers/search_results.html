@@ -1,13 +1,14 @@
 {% if results %}
-    <ul class="absolute bg-white border border-base-200 left-0 mt-12 right-0 rounded-default top-0 shadow-xs text-sm z-10 dark:bg-base-800 dark:border-base-700">
-        {% for app in results %}
-            {% for model in app.models %}
-                <li>
-                    <a href="{{ model.admin_url }}" class="block px-3 py-2 truncate hover:text-base-700 dark:hover:text-base-200">
-                        {{ app.name }} <span class="align-text-top material-symbols-outlined md-18">arrow_right_alt</span> {{ model.name }}
-                    </a>
-                </li>
-            {% endfor %}
+    <ul class="absolute bg-white border border-base-200 flex flex-col leading-none left-0 mt-12 py-1 right-0 rounded-default top-0 shadow-xs text-sm z-10 dark:bg-base-800 dark:border-base-700">
+        {% for item in results %}
+            <li class="mx-1">
+                <a href="{{ item.model.admin_url }}"
+                   class="block items-center px-3 py-2 rounded-default truncate"
+                   x-on:mouseenter="currentIndex = {{ forloop.counter }}"
+                   x-bind:class="{'bg-base-100 text-base-700 dark:bg-base-700 dark:text-base-200': currentIndex === {{ forloop.counter }}}">
+                    {{ item.app.name }} <span class="text-font-subtle-light mx-1 dark:text-font-subtle-dark">/</span> {{ item.model.name }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 {% endif %}
