@@ -170,6 +170,7 @@ class UnfoldAdminSite(AdminSite):
     ) -> TemplateResponse:
         query = request.GET.get("s").lower()
         app_list = super().get_app_list(request)
+        apps = []
         results = []
 
         if query in EMPTY_VALUES:
@@ -177,7 +178,7 @@ class UnfoldAdminSite(AdminSite):
 
         for app in app_list:
             if query in app["name"].lower():
-                results.append(app)
+                apps.append(app)
                 continue
 
             models = []
@@ -188,13 +189,25 @@ class UnfoldAdminSite(AdminSite):
 
             if len(models) > 0:
                 app["models"] = models
-                results.append(app)
+                apps.append(app)
+
+        for app in apps:
+            for model in app["models"]:
+                results.append(
+                    {
+                        "app": app,
+                        "model": model,
+                    }
+                )
 
         return TemplateResponse(
             request,
             template="unfold/helpers/search_results.html",
             context={
                 "results": results,
+            },
+            headers={
+                "HX-Trigger": "search",
             },
         )
 
