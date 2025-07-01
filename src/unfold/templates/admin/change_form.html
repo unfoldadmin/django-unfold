@@ -76,7 +76,7 @@
 
             {% block form_top %}{% endblock %}
 
-            <div>
+            <div class="flex flex-col gap-8">
                 {% if is_popup %}
                     <input type="hidden" name="{{ is_popup_var }}" value="1">
                 {% endif %}
@@ -110,16 +110,16 @@
 
                 {% block after_related_objects %}{% endblock %}
 
-                {% if adminform.model_admin.change_form_after_template %}
-                    {% include adminform.model_admin.change_form_after_template %}
-                {% endif %}
-
                 {% block admin_change_form_document_ready %}
                     <script id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}"{% if adminform and add %} data-model-name="{{ opts.model_name }}"{% endif %} async></script>
                 {% endblock %}
 
                 {% prepopulated_fields_js %}
             </div>
+
+            {% if adminform.model_admin.change_form_after_template %}
+                {% include adminform.model_admin.change_form_after_template %}
+            {% endif %}
         </form>
 
         {% if adminform.model_admin.change_form_outer_after_template %}
