@@ -35,8 +35,8 @@
 
 @theme {
   --font-sans: 'Inter', sans-serif;
-  --shadow-raised: 0 2px 12px rgba(0, 0, 0, 0.12);
-  --shadow-raised-dark: 0 2px 12px rgba(255, 255, 255, 0.12);
+  --shadow-raised: 0 2px 12px rgb(var(--color-base-300));
+  --shadow-raised-dark: 0 2px 12px rgb(var(--color-base-700));
 }
 
 @theme inline{
