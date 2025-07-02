@@ -33,14 +33,25 @@ WYSIWYG_CLASSES = [
 class ArrayWidget(MultiWidget):
     template_name = "unfold/forms/array.html"
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        widget_class: Optional[type[Widget]] = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         if "choices" in kwargs:
             self.choices = kwargs["choices"]
+
+        if widget_class is not None:
+            self.widget_class = widget_class
 
         widgets = [self.get_widget_instance()]
         super().__init__(widgets)
 
     def get_widget_instance(self) -> Any:
+        if hasattr(self, "widget_class"):
+            return self.widget_class()
+
         if hasattr(self, "choices"):
             return UnfoldAdminSelectWidget(choices=self.choices)
 
