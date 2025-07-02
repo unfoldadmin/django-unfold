@@ -70,7 +70,7 @@
             </thead>
 
             {% for result in results %}
-                <tbody class="block relative lg:table-row-group lg:hover:shadow-raised lg:dark:hover:shadow-raised-dark lg:hover:z-20 {% if forloop.counter|divisibleby:2 %}bg-base-50 dark:bg-white/[.02]{% endif %}" x-data="{rowOpen: false}">
+                <tbody class="block relative lg:table-row-group lg:hover:shadow-raised lg:dark:hover:shadow-raised-dark lg:hover:z-20 {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}" x-data="{rowOpen: false}">
                     {% if result.form and result.form.non_field_errors %}
                         <tr>
                             <td class="text-left" colspan="{{ result|length }}">
