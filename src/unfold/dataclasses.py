@@ -19,6 +19,14 @@ class UnfoldAction:
 
 
 @dataclass
+class SearchResult:
+    title: str
+    description: str
+    url: str
+    icon: Optional[str]
+
+
+@dataclass
 class Favicon:
     href: Union[str, Callable]
     rel: Optional[str] = None

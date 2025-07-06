@@ -84,8 +84,8 @@
                             <td class="align-middle cursor-pointer flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:py-3 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px"
                                 data-label="{% trans "Expand row" %}"
                                 x-on:click="rowOpen = !rowOpen">
-                                <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-10 lg:block" x-show="rowOpen"></div>
-                                <span class="material-symbols-outlined select-none block! -rotate-90 transition-all" x-bind:class="rowOpen && 'rotate-0'">
+                                <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-[50] lg:block" x-show="rowOpen"></div>
+                                <span class="material-symbols-outlined select-none block! h-[18px] w-[18px] -rotate-90 transition-all" x-bind:class="rowOpen && 'rotate-0'">
                                     expand_more
                                 </span>
                             </td>

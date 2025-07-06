@@ -64,6 +64,9 @@ CONFIG_DEFAULTS = {
         "action": None,
         "navigation": [],
     },
+    "COMMAND": {
+        "search_models": False,
+    },
     "SIDEBAR": {
         "show_search": False,
         "show_all_applications": False,
