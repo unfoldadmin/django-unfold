@@ -105,7 +105,7 @@ class ActionModelAdminMixin:
             if action.action_name not in request.POST:
                 continue
 
-            action.method(request, obj)
+            return action.method(request, obj)
 
     def get_unfold_action(self, action: str) -> UnfoldAction:
         """
