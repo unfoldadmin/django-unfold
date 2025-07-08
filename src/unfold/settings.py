@@ -65,7 +65,8 @@ CONFIG_DEFAULTS = {
         "navigation": [],
     },
     "COMMAND": {
-        "search_models": False,
+        "search_models": False,  # Enable search in the models
+        "search_callback": None,  # Inject a custom callback to the search form
     },
     "SIDEBAR": {
         "show_search": False,

@@ -22,7 +22,7 @@ class UnfoldAction:
 class SearchResult:
     title: str
     description: str
-    url: str
+    link: str
     icon: Optional[str]
 
 

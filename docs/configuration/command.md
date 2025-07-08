@@ -15,7 +15,32 @@ UNFOLD = {
     # ...
     "COMMAND": {
         "search_models": True,  # Default: False
+        "search_callback": "utils.search_callback"
     },
     # ...
 }
+```
+
+## Custom search callback
+
+The search callback feature provides a way to define a custom hook that can inject additional content into search results. This is particularly useful when you want to search for results from external sources or services beyond the Django admin interface.
+
+When implementing a search callback, keep in mind that you'll need to handle permissions manually to ensure users only see results they have access to.
+
+```python
+# utils.py
+from unfold.dataclasses import SearchResult
+
+
+def search_callback(request, search_term):
+    # Do custom search, e.g. third party service
+
+    return [
+        SearchResult(
+            "title": "Some title",
+            "description": "Extra content",
+            "link": "https://example.com",
+            "icon": "database",
+        )
+    ]
 ```

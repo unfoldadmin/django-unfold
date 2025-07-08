@@ -4,7 +4,7 @@
     <ul class="flex flex-col gap-1.5">
         {% for item in results %}
             <li class="group" x-bind:class="{'active': currentIndex === {{ forloop.counter }}}" x-on:mouseenter="currentIndex = {{ forloop.counter }}">
-                <a href="{{ item.url }}" class="bg-base-100 flex items-center rounded-default px-3.5 py-3 group-[.active]:bg-primary-600 group-[.active]:text-white dark:bg-base-700 dark:text-base-200 dark:group-[.active]:bg-primary-600 dark:group-[.active]:text-white">
+                <a href="{{ item.link }}" class="bg-base-100 flex items-center rounded-default px-3.5 py-3 group-[.active]:bg-primary-600 group-[.active]:text-white dark:bg-base-700 dark:text-base-200 dark:group-[.active]:bg-primary-600 dark:group-[.active]:text-white">
                     {% if item.icon %}
                         <span class="bg-white border border-base-300 h-8 mr-4 w-8 flex items-center justify-center rounded-default group-[.active]:bg-transparent group-[.active]:border-white/60 dark:bg-base-800 dark:border-base-700">
                             <span class="material-symbols-outlined text-font-subtle-light text-sm dark:text-font-subtle-dark group-[.active]:text-white">

@@ -194,7 +194,7 @@ class UnfoldAdminSite(AdminSite):
                     SearchResult(
                         title=str(model["name"]),
                         description=app["name"],
-                        url=model["admin_url"],
+                        link=model["admin_url"],
                         icon="tag",
                     )
                 )
@@ -227,7 +227,7 @@ class UnfoldAdminSite(AdminSite):
 
                     pks.append(item.pk)
 
-                    url = reverse(
+                    link = reverse_lazy(
                         f"{self.name}:{admin_instance.model._meta.app_label}_{admin_instance.model._meta.model_name}_change",
                         args=(item.pk,),
                     )
@@ -235,8 +235,8 @@ class UnfoldAdminSite(AdminSite):
                     results.append(
                         SearchResult(
                             title=str(item),
-                            description=f"{item._meta.app_label} - {item._meta.model_name}",
-                            url=url,
+                            description=f"{item._meta.app_label.capitalize()} - {item._meta.verbose_name.capitalize()}",
+                            link=link,
                             icon="data_object",
                         )
                     )
@@ -268,9 +268,18 @@ class UnfoldAdminSite(AdminSite):
         else:
             results = self._search_apps(app_list, search_term)
             search_models = self._get_config("COMMAND", request).get("search_models")
+            search_callback = self._get_config("COMMAND", request).get(
+                "search_callback"
+            )
 
-            if extended_search and search_models is True:
-                results.extend(self._search_models(request, app_list, search_term))
+            if extended_search:
+                if search_callback:
+                    results.extend(
+                        self._get_value(search_callback, request, search_term)
+                    )
+
+                if search_models is True:
+                    results.extend(self._search_models(request, app_list, search_term))
 
             cache.set(cache_key, results, timeout=CACHE_TIMEOUT)
 
