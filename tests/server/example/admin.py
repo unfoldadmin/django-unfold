@@ -459,4 +459,4 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(ModelAdmin):
-    pass
+    search_fields = ["name"]

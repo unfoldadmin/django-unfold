@@ -49,7 +49,7 @@ function searchForm() {
  *************************************************************/
 function searchDropdown() {
   return {
-    openSearchResults: true,
+    openSearchResults: false,
     currentIndex: 0,
     applyShortcut(event) {
       if (
@@ -82,6 +82,89 @@ function searchDropdown() {
         .querySelectorAll("li");
 
       window.location = items[this.currentIndex - 1].querySelector("a").href;
+    },
+  };
+}
+
+/*************************************************************
+ * Search command
+ *************************************************************/
+function searchCommand() {
+  return {
+    el: document.getElementById("command-results"),
+    items: undefined,
+    openSearchResults: false,
+    currentIndex: 0,
+    handleShortcut(event) {
+      if (
+        event.key === "k" &&
+        (event.metaKey || event.ctrlKey) &&
+        document.activeElement.tagName.toLowerCase() !== "input" &&
+        document.activeElement.tagName.toLowerCase() !== "textarea" &&
+        !document.activeElement.isContentEditable
+      ) {
+        event.preventDefault();
+        this.openSearchResults = true;
+        this.toggleBodyOverflow();
+        setTimeout(() => {
+          this.$refs.searchInputCommand.focus();
+        }, 20);
+      }
+
+      if (event.key === "Escape" && this.openSearchResults) {
+        event.preventDefault();
+        this.openSearchResults = false;
+        this.el.innerHTML = "";
+        this.items = undefined;
+        this.currentIndex = 0;
+      }
+    },
+    handleEscape() {
+      if (this.$refs.searchInputCommand.value === "") {
+        this.openSearchResults = false;
+        this.toggleBodyOverflow();
+      } else {
+        this.$refs.searchInputCommand.value = "";
+      }
+    },
+    handleContentLoaded(event) {
+      this.items = event.target.querySelectorAll("li");
+      new SimpleBar(event.target);
+    },
+    handleOutsideClick() {
+      this.$refs.searchInputCommand.value = "";
+      this.openSearchResults = false;
+    },
+    toggleBodyOverflow() {
+      document
+        .getElementsByTagName("body")[0]
+        .classList.toggle("overflow-hidden");
+    },
+    scrollToActiveItem() {
+      const item = this.items[this.currentIndex - 1];
+
+      if (item) {
+        item.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    },
+    nextItem() {
+      if (this.currentIndex < this.items.length) {
+        this.currentIndex++;
+        this.scrollToActiveItem();
+      }
+    },
+    prevItem() {
+      if (this.currentIndex > 1) {
+        this.currentIndex--;
+        this.scrollToActiveItem();
+      }
+    },
+    selectItem() {
+      window.location =
+        this.items[this.currentIndex - 1].querySelector("a").href;
     },
   };
 }
