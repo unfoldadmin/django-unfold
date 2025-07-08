@@ -16,6 +16,8 @@ Tailwind 4 introduces a significant change in how configuration is managed. Unli
 
 To get started with Tailwind in your project, you'll need to install both the Tailwind CSS framework and its CLI tool. The CLI tool is essential for compiling your Tailwind styles into production-ready CSS. Install them using npm with the following command:
 
+**Note:** If you are migrating existing Tailwind 3.x CSS to Tailwind 4.x, please [read the official upgrade guide](https://tailwindcss.com/docs/upgrade-guide)
+
 ```sh
 npm i tailwindcss @tailwindcss/cli
 ```
