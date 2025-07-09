@@ -368,7 +368,6 @@
         updateSelectFilter();
       },
       addButton: options.addButton,
-      callback: callback,
     });
 
     if (typeof callback === "function") {
