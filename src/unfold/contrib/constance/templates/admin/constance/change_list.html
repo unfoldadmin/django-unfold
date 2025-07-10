@@ -36,6 +36,10 @@
 
                 {% include "unfold/helpers/form_errors.html" with errors=form.non_field_errors %}
 
+                {% for field in form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+
                 {% if fieldsets %}
                     <div class="border border-base-200 rounded-default overflow-hidden dark:border-base-800">
                         <table class="w-full border-collapse">
