@@ -33,6 +33,8 @@ from unfold.contrib.constance.settings import UNFOLD_CONSTANCE_ADDITIONAL_FIELDS
 
 CONSTANCE_ADDITIONAL_FIELDS = {
     **UNFOLD_CONSTANCE_ADDITIONAL_FIELDS,
+
+    # Example field configuration for select with choices. Not needed.
     "choice_field": [
         "django.forms.fields.ChoiceField",
         {
