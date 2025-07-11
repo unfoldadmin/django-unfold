@@ -41,7 +41,7 @@
                 {% endfor %}
 
                 {% if fieldsets %}
-                    <div class="border border-base-200 rounded-default overflow-hidden dark:border-base-800">
+                    <div class="border border-base-200 rounded-default overflow-x-auto simplebar-horizontal-scrollbar-top dark:border-base-800" data-simplebar data-simplebar-auto-hide="false">
                         <table class="w-full border-collapse">
                             {% for fieldset in fieldsets %}
                                 {% with config_values=fieldset.config_values %}
