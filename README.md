@@ -50,6 +50,7 @@ Unfold Studio lets you visually customize your Django admin without writing code
 - **Advanced filters**: Features custom dropdowns, autocomplete, numeric, datetime, and text field filters.
 - **Dashboard tools**: Includes helpers for building custom dashboard pages.
 - **UI components**: Offers reusable interface components such as cards, buttons, and charts.
+- **Crispy forms**: Custom template pack for django-crispy-forms to style forms with Unfold's design system
 - **WYSIWYG editor**: Built-in support for WYSIWYG editing through Trix.
 - **Array widget:** Built-in widget for `django.contrib.postgres.fields.ArrayField`
 - **Inline tabs:** Group inlines into tab navigation in the change form
@@ -72,8 +73,20 @@ Unfold Studio lets you visually customize your Django admin without writing code
 - **Dependencies:** Built entirely on `django.contrib.admin`.
 - **VS Code:** Project configuration and development container included.
 
+## Third-party package support
+
+- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)
+- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/)
+- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)
+- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/)
+- [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/)
+- [django-modeltranslation](https://github.com/deschler/django-modeltranslation) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-modeltranslation/)
+- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
+- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
+
 ## Credits
 
+- **Tailwind**: [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **Icons**: [Material Symbols](https://github.com/google/material-design-icons) - Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 - **Font**: [Inter](https://github.com/rsms/inter) - Licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL).
 - **Charts**: [Chart.js](https://github.com/chartjs/Chart.js) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
