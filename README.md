@@ -75,16 +75,14 @@ Unfold Studio lets you visually customize your Django admin without writing code
 
 ## Third-party package support
 
-| Package                                                                              | Integration Guide                                                                       |
-|--------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| [django-guardian](https://github.com/django-guardian/django-guardian)                | [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)         |
-| [django-import-export](https://github.com/django-import-export/django-import-export) | [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/)    |
-| [django-simple-history](https://github.com/jazzband/django-simple-history)           | [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)   |
-| [django-constance](https://github.com/jazzband/django-constance)                     | [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/)        |
-| [django-celery-beat](https://github.com/celery/django-celery-beat)                   | [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/)      |
-| [django-modeltranslation](https://github.com/deschler/django-modeltranslation)       | [Integration guide](https://unfoldadmin.com/docs/integrations/django-modeltranslation/) |
-| [django-money](https://github.com/django-money/django-money)                         | [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)            |
-| [django-location-field](https://github.com/caioariede/django-location-field)         | [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)   |
+- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)
+- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/)
+- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)
+- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/)
+- [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/)
+- [django-modeltranslation](https://github.com/deschler/django-modeltranslation) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-modeltranslation/)
+- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
+- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
 
 ## Credits
 
