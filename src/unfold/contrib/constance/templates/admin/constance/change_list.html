@@ -1,0 +1,70 @@
+{% extends "admin/base_site.html" %}
+
+{% load admin_list static i18n %}
+
+{% block extrahead %}
+    {% url 'admin:jsi18n' as jsi18nurl %}
+    <script type="text/javascript" src="{{ jsi18nurl|default:'../../jsi18n/' }}"></script>
+    {{ block.super }}
+    {{ media.js }}
+    <script type="text/javascript" src="{% static 'admin/js/constance.js' %}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="px-4">
+        <div class="container mb-6 mx-auto -my-3 lg:mb-12">
+            <ul class="flex flex-wrap">
+                {% url 'admin:index' as link %}
+                {% trans 'Home' as name %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
+
+                {% url 'admin:app_list' app_label=opts.app_label as link %}
+                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
+
+                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=opts.verbose_name_plural|capfirst %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div id="content-main" class="constance">
+        <div id="changelist" class="flex flex-col gap-8 w-full">
+            <form id="changelist-form" action="" method="post" enctype="multipart/form-data" novalidate class="flex flex-col gap-8 w-full">
+                {% csrf_token %}
+
+                {% include "unfold/helpers/form_errors.html" with errors=form.non_field_errors %}
+
+                {% for field in form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+
+                {% if fieldsets %}
+                    <div class="border border-base-200 rounded-default overflow-x-auto simplebar-horizontal-scrollbar-top dark:border-base-800" data-simplebar data-simplebar-auto-hide="false">
+                        <table class="w-full border-collapse">
+                            {% for fieldset in fieldsets %}
+                                {% with config_values=fieldset.config_values %}
+                                    {% include "admin/constance/includes/results_list.html" %}
+                                {% endwith %}
+                            {% endfor %}
+
+                            <tfoot>
+                                <tr>
+                                    <td class="border-t border-base-200 px-3 py-2 dark:border-base-800" colspan="100%">
+                                        <div class="flex justify-end">
+                                            {% trans "Save" as title %}
+                                            {% include "unfold/helpers/submit.html" with title=title %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                {% else %}
+                    {% include "admin/constance/includes/results_list.html" %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

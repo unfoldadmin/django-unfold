@@ -1,0 +1,71 @@
+{% load admin_list static i18n %}
+
+<tbody {% if fieldset.collapse %} x-data="{ rowsOpen: false }" {% endif %}>
+    <tr {% if fieldset.collapse %} x-on:click="rowsOpen = !rowsOpen" {% endif %} class="{% if fieldset.collapse %}cursor-pointer{% endif %}">
+        <th class="bg-base-50 border-t border-base-200 font-semibold px-3 py-2 text-left text-font-important-light dark:text-font-important-dark dark:border-base-800 dark:bg-white/[.04] {% if forloop.first %}border-t-0{% endif %}" colspan="100%">
+            {{ fieldset.title }}
+
+            {% if fieldset.collapse %}
+                <span class="material-symbols-outlined float-right select-none transition-all" title="{% trans "Collapse" %}" x-bind:class="rowsOpen ? 'rotate-180' : ''">
+                    expand_more
+                </span>
+            {% endif %}
+        </th>
+    </tr>
+
+    <tr class="border-t border-base-200 dark:border-base-800 *:font-semibold *:px-3 *:py-2 *:text-left *:text-font-important-light dark:*:text-font-important-dark" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
+        <th>{% trans "Name" %}</th>
+        <th>{% trans "Value" %}</th>
+        <th>{% trans "Code" %}</th>
+        <th>{% trans "Default" %}</th>
+        <th>{% trans "Modified" %}</th>
+        <th></th>
+    </tr>
+
+    {% for item in config_values %}
+        <tr class="border-t border-base-200 h-[55px] *:px-3 *:py-2 *:align-middle dark:border-base-800" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
+            <th class="font-normal text-left">
+                {{ item.help_text|linebreaksbr }}
+            </th>
+
+            <td class="{% if item.form_field.errors %}group errors{% endif %}">
+                {{ item.form_field }}
+
+                {% include "unfold/helpers/form_errors.html" with errors=item.form_field.errors %}
+            </td>
+
+
+            <td>
+                <a class="item-name item-anchor" href="#{{ item.name|slugify }}" id="{{ item.name|slugify }}" title="Link to this setting">
+                    {% include "unfold/helpers/label.html" with text=item.name type="info" %}
+                </a>
+            </td>
+
+            <td>
+                {% if item.default %}
+                    {% include "unfold/helpers/label.html" with text=item.default %}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+
+            <td>
+                {% include "unfold/helpers/boolean.html" with value=item.modified %}
+            </td>
+
+            <td class="w-px">
+                {% if not item.is_file %}
+                    <a href="#"
+                       class="flex items-center gap-1 reset-link whitespace-nowrap"
+                       data-default="{% spaceless %}{% if item.is_checkbox %}{% if item.raw_default %} true {% else %} false {% endif %}{% elif item.is_date %}{{ item.raw_default|date:"U" }}{% elif item.is_datetime %}{{ item.raw_default|date:"U" }}{% else %}{{ item.default }}{% endif %}{% endspaceless %}"
+                       data-field-type="{% spaceless %}{% if item.is_checkbox %}checkbox{% elif item.is_datetime %}datetime{% elif item.is_date %}date{% endif %}{% endspaceless %}"
+                       data-field-id="{{ item.form_field.auto_id }}">
+                        <span class="material-symbols-outlined text-base-400 hover:text-base-700  dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" title="{% trans "Reset to default" %}">
+                            refresh
+                        </span>
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
