@@ -139,7 +139,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                     result_repr = display_for_field(value, f, self.empty_value_display)
                     return conditional_escape(result_repr)
                 elif isinstance(f, models.URLField):
-                    return format_html(
+                    return value and format_html(
                         '<a href="{}" class="text-primary-600 dark:text-primary-500">{}</a>',
                         value,
                         value,
