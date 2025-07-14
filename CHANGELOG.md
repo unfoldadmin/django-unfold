@@ -1,4 +1,14 @@
 
+## 0.62.0 (2025-07-02)
+
+- feat: ArrayWidget custom widget class parameter (#1432) ([`03fe5f0`](https://github.com/unfoldadmin/django-unfold/commit/03fe5f0a9bd3f77ae4e7f66fbff89d8d5fa4baa9))
+- feat: improved changeform layout spacing (#1423) ([`ec6434d`](https://github.com/unfoldadmin/django-unfold/commit/ec6434dd5945b62fc94b2a8087434790edc393c6))
+- fix: safari changelist row hover (#1431) ([`08680fd`](https://github.com/unfoldadmin/django-unfold/commit/08680fdae009c8dbd3af968044fd5a4cef9a86da))
+- fix: actions bar height (#1427) ([`7cb201d`](https://github.com/unfoldadmin/django-unfold/commit/7cb201d58c34f9a37bfa5f9a78c32e316083af67))
+- fix: site dropdown background color (#1426) ([`f9bd1d7`](https://github.com/unfoldadmin/django-unfold/commit/f9bd1d7315f737248ce90558ff7900d77534210b))
+- fix: dropdown search blur (#1425) ([`d4bd605`](https://github.com/unfoldadmin/django-unfold/commit/d4bd605f2eb4e5c8aed2341f4b0edcf0f94a1b4f))
+- fix: autocomplete field close icon (#1424) ([`927208f`](https://github.com/unfoldadmin/django-unfold/commit/927208fc84b16f3e9aab1cda8e326d097380c2b9))
+
 ## 0.61.0 (2025-06-30)
 
 - feat: search form shortcut (#1420) ([`6a54398`](https://github.com/unfoldadmin/django-unfold/commit/6a54398eefefcc9c8b352bf2f37b17747e194b6b))
