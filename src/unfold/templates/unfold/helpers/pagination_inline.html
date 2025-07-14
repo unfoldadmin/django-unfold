@@ -7,14 +7,19 @@
         <input type="hidden" name="{{ pagination_key }}" value="{{ page_obj.number }}" />
 
         {% if page_obj.paginator.count and page_obj.paginator.num_pages > 1 %}
-            <div class="flex items-center gap-2 mt-6 mb-6">
+            <div class="flex items-center gap-2 mt-6">
                 {% for i in elided_page_range %}
                     {% if i == page_obj.paginator.ELLIPSIS %}
                         <span>{{ page_obj.paginator.ELLIPSIS }}</span>
                     {% elif i == page_obj.number %}
                         <span class="font-medium text-primary-600">{{ i }}</span>
                     {% else %}
-                        <a href="?{% querystring_params pagination_key i %}{% if has_tab %}#{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}">
+                        <a class="cursor-pointer"
+                           hx-get="?{% querystring_params pagination_key i %}{% if has_tab %}#{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}"
+                           hx-push-url="true"
+                           hx-swap="outerHTML"
+                           hx-select="#{{ inline_admin_formset.formset.prefix }}-group"
+                           hx-target="#{{ inline_admin_formset.formset.prefix }}-group">
                             {{ i }}
                         </a>
                     {% endif %}
