@@ -244,6 +244,7 @@ RADIO_CLASSES = [
 SWITCH_CLASSES = [
     "appearance-none",
     "bg-base-300",
+    "block",
     "cursor-pointer",
     "h-5",
     "relative",

@@ -9,7 +9,7 @@
   }
 }
 
-@source inline("h-3 w-3 h-[64px] w-[65px]! left-[65px] dark:hover:bg-white/[.06] translate-x-1/4 -translate-y-1/4");
+@source inline("bg-white/[.06] border-white/40 h-3 w-3 h-[64px] w-[65px]! left-[65px] dark:hover:bg-white/[.06] translate-x-1/4 -translate-y-1/4");
 @source inline("{-,}{top,bottom,left,right}-{0..6}");
 @source inline("rounded rounded-{t,r,b,l} rounded-{t,r,b,l}-default");
 @source inline("{md:,lg:,2xl:,}relative {md:,lg:,2xl:,}flex {md:,lg:,2xl:,}absolute {md:,lg:,2xl:,}sticky");
