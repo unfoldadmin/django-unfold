@@ -104,7 +104,13 @@
 
                 {% block inline_field_sets %}
                     {% for inline_admin_formset in inline_admin_formsets %}
-                        {% include inline_admin_formset.opts.template %}
+                        {% if request.headers.hx_request  %}
+                            {% if inline_admin_formset.formset.get_pagination_key in request.GET %}
+                                {% include inline_admin_formset.opts.template %}
+                            {% endif %}
+                        {% else %}
+                            {% include inline_admin_formset.opts.template %}
+                        {% endif %}
                     {% endfor %}
                 {% endblock %}
 
