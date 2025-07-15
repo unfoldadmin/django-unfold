@@ -114,6 +114,9 @@ class UnfoldAdminSite(AdminSite):
             "tab_list": self.get_tabs_list(request),
             "styles": self._get_list("STYLES", request),
             "scripts": self._get_list("SCRIPTS", request),
+            "sidebar_command_search": self._get_config("SIDEBAR", request).get(
+                "command_search"
+            ),
             "sidebar_show_all_applications": self._get_value(
                 sidebar_config.get("show_all_applications"), request
             ),

@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-32 z-50" x-data="searchCommand()"  x-on:keydown.window="handleShortcut($event)" x-show="openSearchResults">
+    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-32 z-50" x-data="searchCommand()" x-on:opencommand.window="handleOpen()" x-on:keydown.window="handleShortcut($event)" x-show="openCommandResults">
         <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
             <div class="flex flex-row items-center px-4 w-full">
                 <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">

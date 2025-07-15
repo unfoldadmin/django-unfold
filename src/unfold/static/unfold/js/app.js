@@ -93,8 +93,15 @@ function searchCommand() {
   return {
     el: document.getElementById("command-results"),
     items: undefined,
-    openSearchResults: false,
+    openCommandResults: false,
     currentIndex: 0,
+    handleOpen() {
+      this.openCommandResults = true;
+      this.toggleBodyOverflow();
+      setTimeout(() => {
+        this.$refs.searchInputCommand.focus();
+      }, 20);
+    },
     handleShortcut(event) {
       if (
         event.key === "k" &&
@@ -104,16 +111,12 @@ function searchCommand() {
         !document.activeElement.isContentEditable
       ) {
         event.preventDefault();
-        this.openSearchResults = true;
-        this.toggleBodyOverflow();
-        setTimeout(() => {
-          this.$refs.searchInputCommand.focus();
-        }, 20);
+        this.handleOpen();
       }
 
-      if (event.key === "Escape" && this.openSearchResults) {
+      if (event.key === "Escape" && this.openCommandResults) {
         event.preventDefault();
-        this.openSearchResults = false;
+        this.openCommandResults = false;
         this.el.innerHTML = "";
         this.items = undefined;
         this.currentIndex = 0;
@@ -121,7 +124,7 @@ function searchCommand() {
     },
     handleEscape() {
       if (this.$refs.searchInputCommand.value === "") {
-        this.openSearchResults = false;
+        this.openCommandResults = false;
         this.toggleBodyOverflow();
       } else {
         this.$refs.searchInputCommand.value = "";
@@ -133,7 +136,7 @@ function searchCommand() {
     },
     handleOutsideClick() {
       this.$refs.searchInputCommand.value = "";
-      this.openSearchResults = false;
+      this.openCommandResults = false;
     },
     toggleBodyOverflow() {
       document
