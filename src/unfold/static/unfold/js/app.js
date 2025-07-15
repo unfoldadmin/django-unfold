@@ -93,14 +93,20 @@ function searchCommand() {
   return {
     el: document.getElementById("command-results"),
     items: undefined,
+    hasResults: false,
     openCommandResults: false,
     currentIndex: 0,
+    commandHistory: JSON.parse(localStorage.getItem("commandHistory") || "[]"),
     handleOpen() {
       this.openCommandResults = true;
       this.toggleBodyOverflow();
       setTimeout(() => {
         this.$refs.searchInputCommand.focus();
       }, 20);
+
+      this.items = document
+        .getElementById("command-history")
+        .querySelectorAll("li");
     },
     handleShortcut(event) {
       if (
@@ -113,25 +119,28 @@ function searchCommand() {
         event.preventDefault();
         this.handleOpen();
       }
-
-      if (event.key === "Escape" && this.openCommandResults) {
-        event.preventDefault();
+    },
+    handleEscape() {
+      if (this.$refs.searchInputCommand.value === "") {
+        this.toggleBodyOverflow();
         this.openCommandResults = false;
         this.el.innerHTML = "";
         this.items = undefined;
         this.currentIndex = 0;
-      }
-    },
-    handleEscape() {
-      if (this.$refs.searchInputCommand.value === "") {
-        this.openCommandResults = false;
-        this.toggleBodyOverflow();
       } else {
         this.$refs.searchInputCommand.value = "";
       }
     },
     handleContentLoaded(event) {
       this.items = event.target.querySelectorAll("li");
+      this.hasResults = this.items.length > 0;
+
+      if (!this.hasResults) {
+        this.items = document
+          .getElementById("command-history")
+          .querySelectorAll("li");
+      }
+
       new SimpleBar(event.target);
     },
     handleOutsideClick() {
@@ -166,8 +175,42 @@ function searchCommand() {
       }
     },
     selectItem() {
-      window.location =
-        this.items[this.currentIndex - 1].querySelector("a").href;
+      const link = this.items[this.currentIndex - 1].querySelector("a");
+      const data = {
+        title: link.dataset.title,
+        description: link.dataset.description,
+        link: link.href,
+      };
+
+      this.addToHistory(data);
+      window.location = link.href;
+    },
+    addToHistory(data) {
+      let commandHistory = JSON.parse(
+        localStorage.getItem("commandHistory") || "[]"
+      );
+
+      for (const item of commandHistory) {
+        if (item.link === data.link) {
+          // TODO: move to the top of the list
+          return;
+        }
+      }
+
+      commandHistory.unshift(data);
+      commandHistory = commandHistory.slice(0, 10);
+      this.commandHistory = commandHistory;
+      localStorage.setItem("commandHistory", JSON.stringify(commandHistory));
+    },
+    removeFromHistory(event, index) {
+      event.preventDefault();
+
+      const commandHistory = JSON.parse(
+        localStorage.getItem("commandHistory") || "[]"
+      );
+      commandHistory.splice(index, 1);
+      this.commandHistory = commandHistory;
+      localStorage.setItem("commandHistory", JSON.stringify(commandHistory));
     },
   };
 }

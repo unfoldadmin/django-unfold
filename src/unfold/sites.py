@@ -1,4 +1,5 @@
 import copy
+import time
 from http import HTTPStatus
 from typing import Any, Callable, Optional, Union
 from urllib.parse import parse_qs, urlparse
@@ -249,6 +250,8 @@ class UnfoldAdminSite(AdminSite):
     def search(
         self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
     ) -> TemplateResponse:
+        start_time = time.time()
+
         CACHE_TIMEOUT = 10
 
         search_term = request.GET.get("s")
@@ -264,7 +267,7 @@ class UnfoldAdminSite(AdminSite):
         cache_results = cache.get(cache_key)
 
         if extended_search:
-            template_name = "unfold/helpers/search_results_extended.html"
+            template_name = "unfold/helpers/command_results.html"
 
         if cache_results:
             results = cache_results
@@ -286,11 +289,14 @@ class UnfoldAdminSite(AdminSite):
 
             cache.set(cache_key, results, timeout=CACHE_TIMEOUT)
 
+        execution_time = time.time() - start_time
+
         return TemplateResponse(
             request,
             template=template_name,
             context={
                 "results": results,
+                "execution_time": execution_time,
             },
             headers={
                 "HX-Trigger": "search",

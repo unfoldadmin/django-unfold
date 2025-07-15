@@ -1,8 +1,12 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-32 z-50" x-data="searchCommand()" x-on:opencommand.window="handleOpen()" x-on:keydown.window="handleShortcut($event)" x-show="openCommandResults">
-        <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
+    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-32 z-50"
+         x-data="searchCommand()"
+         x-on:opencommand.window="handleOpen()"
+         x-on:keydown.window="handleShortcut($event)"
+         x-show="openCommandResults">
+        <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
             <div class="flex flex-row items-center px-4 w-full">
                 <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
                     <span class="block material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:hidden">
@@ -15,6 +19,7 @@
                 </button>
 
                 <input
+                    autocomplete="off"
                     type="search"
                     placeholder="{% trans "Type to search" %}"
                     class="font-medium grow px-2 py-4 placeholder-font-subtle-light text-font-default-light focus:outline-hidden dark:placeholder-font-subtle-dark dark:text-font-default-dark"
@@ -28,14 +33,60 @@
                     x-on:keydown.enter.prevent="selectItem()"
                     hx-get="{% url "admin:search" %}?extended=1"
                     hx-trigger="keyup changed delay:500ms"
+                    hx-select="#command-results-list"
+                    hx-select-oob="#command-results-note"
                     hx-target="#command-results">
 
                 {% include "unfold/helpers/shortcut.html" with shortcut="esc" %}
             </div>
 
-            <div id="command-results" class="grow h-full overflow-auto w-full dark:border-base-700" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)" x-bind:class="{'border-t border-base-200 p-4': items !== undefined && items.length > 0}">
+            <div class="grow h-full overflow-auto w-full dark:border-base-700" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)" x-bind:class="{'border-t border-base-200': items !== undefined && items.length > 0}">
+                <div id="command-results"></div>
 
+                <div id="command-history" x-show="!hasResults">
+                    <template x-if="commandHistory.length > 0">
+                        <div class="">
+                            <h3 class="border-b border-base-200 font-semibold text-font-important-light dark:text-font-important-dark dark:border-base-700 p-4">
+                                {% trans "Recent searches" %}
+                            </h3>
+
+                            <ul>
+                                <template x-for="(item, index) in commandHistory">
+                                    <li class="border-b border-base-200 dark:border-base-700 last:border-b-0"
+                                        x-bind:class="{'active': currentIndex === index + 1}"
+                                        x-on:mouseenter="currentIndex = index + 1">
+                                        <a class="block flex flex-row items-center p-4"
+                                           x-bind:data-title="item.title"
+                                           x-bind:data-description="item.description"
+                                           x-bind:href="item.link"
+                                           x-bind:class="{'bg-base-50 dark:bg-white/[.04]': currentIndex === index + 1}">
+                                            <span>
+                                                <span class="font-medium" x-text="item.title"></span>
+                                                <span class="mx-1 opacity-50 group-[.active]:text-white">•</span>
+                                                <span class="text-font-subtle-light dark:text-font-subtle-dark group-[.active]:text-white" x-text="item.description"></span>
+                                            </span>
+
+                                            <span class="material-symbols-outlined ml-auto text-base-400 dark:text-base-500 hover:text-base-500 dark:hover:text-base-400" x-on:click="removeFromHistory($event, index);">
+                                                close
+                                            </span>
+                                        </a>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+
+                    <template x-if="commandHistory.length === 0">
+                        <div class="border-t border-base-200 p-4 dark:border-base-700">
+                            <p>
+                                {% trans "No recent searches" %}
+                            </p>
+                        </div>
+                    </template>
+                </div>
             </div>
+
+            <div id="command-results-note"></div>
         </div>
     </div>
 {% endif %}
