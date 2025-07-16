@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-32 z-50"
+    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-32 z-[1000]"
          x-data="searchCommand()"
          x-on:opencommand.window="handleOpen()"
          x-on:keydown.window="handleShortcut($event)"
@@ -55,7 +55,7 @@
                                     <li class="border-b border-base-200 dark:border-base-700 last:border-b-0"
                                         x-bind:class="{'active': currentIndex === index + 1}"
                                         x-on:mouseenter="currentIndex = index + 1">
-                                        <a class="block flex flex-row items-center p-4"
+                                        <a class="block flex flex-row items-center p-4 transition-colors"
                                            x-bind:data-title="item.title"
                                            x-bind:data-description="item.description"
                                            x-bind:href="item.link"
@@ -77,8 +77,8 @@
                     </template>
 
                     <template x-if="commandHistory.length === 0">
-                        <div class="border-t border-base-200 p-4 dark:border-base-700">
-                            <p>
+                        <div class="border-t border-base-200 px-4 py-8 dark:border-base-700">
+                            <p class="text-lg text-center">
                                 {% trans "No recent searches" %}
                             </p>
                         </div>

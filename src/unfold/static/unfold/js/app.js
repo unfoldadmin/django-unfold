@@ -77,11 +77,8 @@ function searchDropdown() {
         .length;
     },
     selectItem() {
-      const items = document
-        .getElementById("search-results")
-        .querySelectorAll("li");
-
-      window.location = items[this.currentIndex - 1].querySelector("a").href;
+      const href = this.items[this.currentIndex - 1].querySelector("a").href;
+      window.location = href;
     },
   };
 }
@@ -133,6 +130,7 @@ function searchCommand() {
     },
     handleContentLoaded(event) {
       this.items = event.target.querySelectorAll("li");
+      this.currentIndex = 0;
       this.hasResults = this.items.length > 0;
 
       if (!this.hasResults) {
@@ -146,6 +144,7 @@ function searchCommand() {
     handleOutsideClick() {
       this.$refs.searchInputCommand.value = "";
       this.openCommandResults = false;
+      this.toggleBodyOverflow();
     },
     toggleBodyOverflow() {
       document
@@ -190,10 +189,9 @@ function searchCommand() {
         localStorage.getItem("commandHistory") || "[]"
       );
 
-      for (const item of commandHistory) {
+      for (const [index, item] of commandHistory.entries()) {
         if (item.link === data.link) {
-          // TODO: move to the top of the list
-          return;
+          commandHistory.splice(index, 1);
         }
       }
 
