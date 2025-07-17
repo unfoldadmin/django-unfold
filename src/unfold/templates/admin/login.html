@@ -44,7 +44,7 @@
 
         <div class="flex flex-col gap-3 mt-6">
             {% component "unfold/components/button.html" with submit=1 variant="primary" class="submit-row w-full" %}
-                {% translate 'Log in' %} <span class="material-symbols-outlined ml-2 relative right-0 transition-all group-hover:-right-1">arrow_forward</span>
+                {% translate 'Log in' %} <span class="material-symbols-outlined relative right-0 transition-all group-hover:-right-1 text-sm">arrow_forward</span>
             {% endcomponent %}
 
             {% url 'admin_password_reset' as password_reset_url %}

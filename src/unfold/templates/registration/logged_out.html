@@ -1,8 +1,12 @@
-{% extends "unfold/layouts/skeleton.html" %}
+{% extends 'unfold/layouts/unauthenticated.html' %}
 
-{% load i18n %}
+{% load i18n unfold %}
 
-{% block base %}
+{% block title %}
+    {{ title }} | {{ site_title }}
+{% endblock %}
+
+{% block content %}
     <div id="page" class="bg-white flex min-h-screen dark:bg-base-900 ">
         <div class="flex grow items-center justify-center mx-auto px-4">
             <div class="w-full sm:w-96">
@@ -11,12 +15,13 @@
                 </h1>
 
                 <p class="leading-relaxed mb-10">
-                    {% translate "Thanks for spending some quality time with the web site today." %}
+                    {% trans "Thanks for spending some quality time with the web site today." %}
                 </p>
 
-                <a href="{% url "admin:index" %}" class="bg-primary-600 block border border-transparent font-semibold py-2 rounded-default text-sm text-center text-white w-full">
-                    {% translate "Log in again" %}
-                </a>
+                {% url "admin:index" as login_url %}
+                {% component "unfold/components/button.html" with href=login_url variant="primary" class="w-full" %}
+                    {% trans "Log in again" %} <span class="material-symbols-outlined relative right-0 transition-all group-hover:-right-1 text-sm">arrow_forward</span>
+                {% endcomponent %}
             </div>
         </div>
     </div>
