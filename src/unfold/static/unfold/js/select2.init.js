@@ -8,6 +8,10 @@
         return;
       }
 
+      if ($(element).hasClass("select2-hidden-accessible")) {
+        return;
+      }
+
       $(element).select2();
     });
 

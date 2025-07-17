@@ -2,8 +2,8 @@
 
 <div class="absolute flex flex-row items-center justify-between left-0 m-4 right-0 top-0">
     {% if site_url %}
-        <a href="{{ site_url }}" class="flex font-medium items-center text-sm text-primary-600 dark:text-primary-500">
-            <span class="material-symbols-outlined mr-2">arrow_back</span> {% trans 'Return to site' %}
+        <a href="{{ site_url }}" class="flex font-medium gap-2 group items-center text-sm text-primary-600 dark:text-primary-500">
+            <span class="material-symbols-outlined left-0 relative text-sm transition-all group-hover:-left-1">arrow_back</span> {% trans 'Return to site' %}
         </a>
     {% endif %}
 
