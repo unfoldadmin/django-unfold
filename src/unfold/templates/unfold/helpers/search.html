@@ -1,30 +1,48 @@
 {% load i18n %}
 
 {% if sidebar_show_search %}
-    <div class="mb-2.5 mx-3 relative" x-data="searchDropdown()" x-on:keydown.window="applyShortcut($event)" x-on:click.outside="openSearchResults = false">
-        <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
-            <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
+    {% if sidebar_command_search %}
+        <div class="mb-2.5 mx-3 relative" x-on:click="$dispatch('opencommand')">
+            <div class="bg-white border border-base-200 cursor-pointer flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
+                <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
 
-            <input type="search"
-                   id="nav-filter"
-                   name="s"
-                   x-ref="searchInput"
-                   x-on:focus="openSearchResults = true; currentIndex = 0"
-                   x-on:keydown.arrow-down.prevent="nextItem()"
-                   x-on:keydown.arrow-up.prevent="prevItem()"
-                   x-on:keydown.escape.prevent="openSearchResults = false; if ($refs.searchInput.value === '') { $refs.searchInput.blur() } else { $refs.searchInput.value = '' }"
-                   x-on:keydown.enter.prevent="selectItem()"
-                   x-on:search="currentIndex = 0"
-                   hx-get="{% url "admin:search" %}"
-                   hx-trigger="keyup changed delay:500ms"
-                   hx-target="#search-results"
-                   class="grow font-medium min-w-0 overflow-hidden p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
-                   placeholder="{% translate 'Search apps and models...' %}"
-                   aria-label="{% translate 'Filter navigation items' %}">
+                <div class="grow font-medium min-w-0 overflow-hidden p-2 text-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:text-font-subtle-dark">
+                    {% trans 'Search apps and models...' %}
+                </div>
 
-            {% include "unfold/helpers/shortcut.html" with shortcut="t" %}
+                {% if 'Macintosh' in request.META.HTTP_USER_AGENT %}
+                    {% include "unfold/helpers/shortcut.html" with shortcut="⌘K" %}
+                {% else %}
+                    {% include "unfold/helpers/shortcut.html" with shortcut="Ctrl + K" %}
+                {% endif %}
+            </div>
         </div>
+    {% else %}
+        <div class="mb-2.5 mx-3 relative" x-data="searchDropdown()" x-on:keydown.window="applyShortcut($event)" x-on:click.outside="openSearchResults = false">
+            <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
+                <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
 
-        <div id="search-results" x-show="openSearchResults"></div>
-    </div>
+                <input type="search"
+                       id="nav-filter"
+                       name="s"
+                       x-ref="searchInput"
+                       x-on:focus="openSearchResults = true; currentIndex = 0"
+                       x-on:keydown.arrow-down.prevent="nextItem()"
+                       x-on:keydown.arrow-up.prevent="prevItem()"
+                       x-on:keydown.escape.prevent="openSearchResults = false; if ($refs.searchInput.value === '') { $refs.searchInput.blur() } else { $refs.searchInput.value = '' }"
+                       x-on:keydown.enter.prevent="selectItem()"
+                       x-on:search="currentIndex = 0"
+                       hx-get="{% url "admin:search" %}"
+                       hx-trigger="keyup changed delay:500ms"
+                       hx-target="#search-results"
+                       class="grow font-medium min-w-0 overflow-hidden p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                       placeholder="{% trans 'Search apps and models...' %}"
+                       aria-label="{% trans 'Filter navigation items' %}">
+
+                {% include "unfold/helpers/shortcut.html" with shortcut="t" %}
+            </div>
+
+            <div id="search-results" x-show="openSearchResults"></div>
+        </div>
+    {% endif %}
 {% endif %}

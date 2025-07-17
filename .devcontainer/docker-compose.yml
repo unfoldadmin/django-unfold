@@ -1,3 +1,5 @@
+name: unfold
+
 services:
   unfold:
     command: bash -c "python tests/server/manage.py migrate && python tests/server/manage.py runserver 0.0.0.0:8000"

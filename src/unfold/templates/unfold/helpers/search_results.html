@@ -2,11 +2,11 @@
     <ul class="absolute bg-white border border-base-200 flex flex-col leading-none left-0 mt-12 py-1 right-0 rounded-default top-0 shadow-xs text-sm z-10 dark:bg-base-800 dark:border-base-700">
         {% for item in results %}
             <li class="mx-1">
-                <a href="{{ item.model.admin_url }}"
+                <a href="{{ item.link }}"
                    class="block items-center px-3 py-2 rounded-default truncate"
                    x-on:mouseenter="currentIndex = {{ forloop.counter }}"
                    x-bind:class="{'bg-base-100 text-base-700 dark:bg-base-700 dark:text-base-200': currentIndex === {{ forloop.counter }}}">
-                    {{ item.app.name }} <span class="text-font-subtle-light mx-1 dark:text-font-subtle-dark">/</span> {{ item.model.name }}
+                    {{ item.title }} <span class="text-font-subtle-light mx-1 dark:text-font-subtle-dark">/</span> {{ item.description }}
                 </a>
             </li>
         {% endfor %}
