@@ -24,6 +24,7 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
     """
 
     model_admin = None
+    list_fullwidth = False
 
     def __init__(self, model_admin, **kwargs):
         self.model_admin = model_admin
@@ -44,4 +45,5 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
             **kwargs,
             **self.model_admin.admin_site.each_context(self.request),
             **{"title": self.title},
+            **{"list_fullwidth": self.list_fullwidth},
         )
