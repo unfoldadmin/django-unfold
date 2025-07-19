@@ -47,6 +47,8 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     action_form = ActionForm
     custom_urls = ()
     add_fieldsets = ()
+    ordering_field = None
+    hide_ordering_field = False
     list_horizontal_scrollbar_top = False
     list_filter_submit = False
     list_filter_sheet = True
@@ -87,7 +89,20 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
             }
         )
 
+        if self.ordering_field and self.ordering_field not in self.list_editable:
+            list_editable = list(getattr(self, "list_editable", []))
+            list_editable.append(self.ordering_field)
+            self.list_editable = list_editable
+
         return super().changelist_view(request, extra_context)
+
+    def get_list_display(self, request: HttpRequest) -> list[str]:
+        list_display = super().get_list_display(request)
+
+        if self.ordering_field and self.ordering_field not in list_display:
+            list_display.append(self.ordering_field)
+
+        return list_display
 
     def get_fieldsets(self, request: HttpRequest, obj=None) -> FieldsetsType:
         if not obj and self.add_fieldsets:
