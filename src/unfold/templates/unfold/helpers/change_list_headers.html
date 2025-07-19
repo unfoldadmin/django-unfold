@@ -1,0 +1,65 @@
+{% load i18n %}
+
+<thead>
+    <tr>
+        {% if cl.model_admin.ordering_field %}
+            <th></th>
+        {% endif %}
+
+        {% if cl.model_admin.list_sections|length > 0 %}
+            <th></th>
+        {% endif %}
+
+        {% for header in result_headers %}
+            <th class="align-middle font-semibold py-2 text-left text-font-important-light dark:text-font-important-dark whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
+                <div class="flex items-center">
+                    <div class="text">
+                        {% if header.sortable %}
+                            <a href="{{ header.url_primary }}">
+                                {{ header.text|capfirst }}
+                            </a>
+                        {% else %}
+                            {% if "action-toggle" in header.text and forloop.counter == 1 %}
+                                <label class="flex flex-row items-center gap-2">
+                                    {{ header.text|capfirst }}
+
+                                    <span class="block font-normal lg:hidden">
+                                        {% trans "Select all rows"%}
+                                    </span>
+                                </label>
+                            {% else %}
+                                <span>
+                                    {{ header.text|capfirst }}
+                                </span>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                    {% if header.sortable %}
+                        {% if header.sort_priority > 0 %}
+                            <div class="sortoptions flex items-center ml-2">
+                                <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-base-400 hover:text-base-500 dark:text-base-500 dark:hover:text-base-400 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
+                                    {% if header.ascending %}
+                                        <span class="block material-symbols-outlined">arrow_circle_down</span>
+                                    {% else %}
+                                        <span class="block material-symbols-outlined">arrow_circle_up</span>
+                                    {% endif %}
+                                </a>
+
+                                <a class="sortremove flex items-center leading-none ml-1 text-base-400 dark:text-base-500 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                    <span class="block material-symbols-outlined">cancel</span>
+                                </a>
+                            </div>
+
+                            {% if num_sorted_fields > 1 %}
+                                <span class="sortpriority font-medium ml-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
+                                    {{ header.sort_priority }}
+                                </span>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </th>
+        {% endfor %}
+    </tr>
+</thead>
