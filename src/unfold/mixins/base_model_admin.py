@@ -53,8 +53,11 @@ class BaseModelAdminMixin:
                 kwargs["widget"] = widgets.UnfoldAdminSelectWidget()
 
         if "choices" not in kwargs:
+            include_blank = db_field.blank or not (
+                db_field.has_default() or "initial" in kwargs
+            )
             kwargs["choices"] = db_field.get_choices(
-                include_blank=db_field.blank, blank_choice=[("", _("Select value"))]
+                include_blank=include_blank, blank_choice=[("", _("Select value"))]
             )
 
         return super().formfield_for_choice_field(db_field, request, **kwargs)
