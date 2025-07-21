@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-32 z-[1000]"
+    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]"
          x-data="searchCommand()"
          x-on:opencommand.window="handleOpen()"
          x-on:keydown.window="handleShortcut($event)"
