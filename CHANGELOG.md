@@ -1,4 +1,22 @@
 
+## 0.63.0 (2025-07-21)
+
+- feat: ajax paginated inlines (#1440) ([`70a86ec`](https://github.com/unfoldadmin/django-unfold/commit/70a86ec90eaaba1c2a2e3f1de79909d946a0b3a5))
+- feat: django-constance (#1441) ([`e4df3bc`](https://github.com/unfoldadmin/django-unfold/commit/e4df3bc9aaa125348b52e8429597760eabcf408e))
+- fix: logout template design adjustments (#1460) ([`166e45a`](https://github.com/unfoldadmin/django-unfold/commit/166e45ac92195a9397180369ae69f076af4413c8))
+- fix: django-constance default &lt;-&gt; code position (#1459) ([`b807156`](https://github.com/unfoldadmin/django-unfold/commit/b8071566ca3341d165e8c589f1c1e1dc79f460fb))
+- fix: prevent duplicated select2 dropdowns (#1458) ([`40df7ff`](https://github.com/unfoldadmin/django-unfold/commit/40df7ff918310ba23dafa5c199930886a9a10638))
+- fix: checkbox switch focus (#1451) ([`6169261`](https://github.com/unfoldadmin/django-unfold/commit/61692617494a2e8775429052bf10b15ccc4604ec))
+- fix: django-constance form fields tabindex (#1450) ([`44b92e6`](https://github.com/unfoldadmin/django-unfold/commit/44b92e6908e7a1143eb6176cd58e170a3f55c57f))
+- fix: related widget actions focus outline (#1449) ([`0fd04ff`](https://github.com/unfoldadmin/django-unfold/commit/0fd04ffad04071c130d05c6f56e4dc03aa3a8d97))
+- fix: empty urlfield in readonly display (#1448) ([`7ee46b5`](https://github.com/unfoldadmin/django-unfold/commit/7ee46b5b7d20f4e9c0246f340a75adb79f332470))
+- fix: hide empty pagination input (#1436) ([`6140d03`](https://github.com/unfoldadmin/django-unfold/commit/6140d03381443b2da0e140c8b2b7dcaba527430a))
+- docs: django-location-field (#1444) ([`8afd3d2`](https://github.com/unfoldadmin/django-unfold/commit/8afd3d2199f989e0fc6883e5d21f976dd10c499a))
+- docs: tailwind4 upgrade guide link (#1437) ([`2e2f25f`](https://github.com/unfoldadmin/django-unfold/commit/2e2f25f7d18f40e2d2edc3495f16b5fb16b1cdb9))
+- chore: safelist base colors (#1455) ([`9649b18`](https://github.com/unfoldadmin/django-unfold/commit/9649b1841bf07785f070f3ca672645c748126e60))
+- chore: safelist css classes (#1445) ([`570cea1`](https://github.com/unfoldadmin/django-unfold/commit/570cea15ddf4b64a4e7e41a7a5770566cdc35613))
+- chore: tailwind update (#1443) ([`ee0282c`](https://github.com/unfoldadmin/django-unfold/commit/ee0282ca4ef4409150e993e814f9b03f81fe1ce7))
+
 ## 0.62.0 (2025-07-02)
 
 - feat: ArrayWidget custom widget class parameter (#1432) ([`03fe5f0`](https://github.com/unfoldadmin/django-unfold/commit/03fe5f0a9bd3f77ae4e7f66fbff89d8d5fa4baa9))
