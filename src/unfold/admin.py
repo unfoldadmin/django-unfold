@@ -129,7 +129,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
         action_detail_urls = [
             path(
-                f"<path:object_id>/{action.path}/",
+                f"<path:object_id>/{action.path}",
                 wrap(action.method),
                 name=action.action_name,
             )
