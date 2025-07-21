@@ -66,6 +66,7 @@ CONFIG_DEFAULTS = {
     },
     "COMMAND": {
         "search_models": False,  # Enable search in the models
+        "show_history": False,  # Enable history in the command search
         "search_callback": None,  # Inject a custom callback to the search form
     },
     "SIDEBAR": {

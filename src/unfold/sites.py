@@ -115,6 +115,9 @@ class UnfoldAdminSite(AdminSite):
             "tab_list": self.get_tabs_list(request),
             "styles": self._get_list("STYLES", request),
             "scripts": self._get_list("SCRIPTS", request),
+            "command_show_history": self._get_config("COMMAND", request).get(
+                "show_history"
+            ),
             "sidebar_command_search": self._get_config("SIDEBAR", request).get(
                 "command_search"
             ),
@@ -297,6 +300,9 @@ class UnfoldAdminSite(AdminSite):
             context={
                 "results": results,
                 "execution_time": execution_time,
+                "command_show_history": self._get_config("COMMAND", request).get(
+                    "show_history"
+                ),
             },
             headers={
                 "HX-Trigger": "search",

@@ -10,7 +10,7 @@
                    href="{{ item.link }}"
                    data-title="{{ item.title }}"
                    data-description="{{ item.description }}"
-                   x-on:click="selectItem()">
+                   x-on:click="selectItem({% if command_show_history %}true{% else %}false{% endif %})">
                     {% if item.icon %}
                         <span class="bg-white border border-base-300 h-8 mr-4 w-8 flex items-center justify-center rounded-default group-[.active]:bg-transparent group-[.active]:border-white/40 dark:bg-base-800 dark:border-base-700">
                             <span class="material-symbols-outlined text-font-subtle-light text-sm dark:text-font-subtle-dark group-[.active]:text-white">

@@ -101,9 +101,7 @@ function searchCommand() {
         this.$refs.searchInputCommand.focus();
       }, 20);
 
-      this.items = document
-        .getElementById("command-history")
-        .querySelectorAll("li");
+      this.items = document.querySelectorAll("#command-history li");
     },
     handleShortcut(event) {
       if (
@@ -134,9 +132,7 @@ function searchCommand() {
       this.hasResults = this.items.length > 0;
 
       if (!this.hasResults) {
-        this.items = document
-          .getElementById("command-history")
-          .querySelectorAll("li");
+        this.items = document.querySelectorAll("#command-history li");
       }
 
       new SimpleBar(event.target);
@@ -173,15 +169,21 @@ function searchCommand() {
         this.scrollToActiveItem();
       }
     },
-    selectItem() {
+    selectItem(addHistory) {
       const link = this.items[this.currentIndex - 1].querySelector("a");
       const data = {
         title: link.dataset.title,
         description: link.dataset.description,
         link: link.href,
+        favorite: false,
       };
 
-      this.addToHistory(data);
+      console.log("HISTORY", addHistory);
+
+      if (addHistory) {
+        this.addToHistory(data);
+      }
+
       window.location = link.href;
     },
     addToHistory(data) {
@@ -208,6 +210,19 @@ function searchCommand() {
       );
       commandHistory.splice(index, 1);
       this.commandHistory = commandHistory;
+      localStorage.setItem("commandHistory", JSON.stringify(commandHistory));
+    },
+    toggleFavorite(event, index) {
+      event.preventDefault();
+
+      const commandHistory = JSON.parse(
+        localStorage.getItem("commandHistory") || "[]"
+      );
+
+      commandHistory[index].favorite = !commandHistory[index].favorite;
+      this.commandHistory = commandHistory.sort(
+        (a, b) => Number(b.favorite) - Number(a.favorite)
+      );
       localStorage.setItem("commandHistory", JSON.stringify(commandHistory));
     },
   };

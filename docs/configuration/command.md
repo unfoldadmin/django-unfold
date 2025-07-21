@@ -16,6 +16,7 @@ UNFOLD = {
     "COMMAND": {
         "search_models": True,  # Default: False
         "search_callback": "utils.search_callback"
+        "show_history": True,  # Enable history
     },
     # ...
 }
@@ -44,3 +45,9 @@ def search_callback(request, search_term):
         )
     ]
 ```
+
+## Command history
+
+The command history feature can be enabled by setting `show_history` to `True` in the configuration. By default, this setting is disabled (`False`). When enabled, users can view their previous search queries.
+
+Search history is stored in the browser's `localStorage`. Before enabling this feature, carefully consider any potential security implications of storing search queries client-side, as sensitive information could be exposed if the `localStorage` is compromised.
