@@ -1,0 +1,54 @@
+{% load i18n %}
+
+<div id="command-history" x-show="!hasResults">
+    <template x-if="commandHistory.length > 0">
+        <div class="">
+            <h3 class="border-b border-base-200 font-semibold text-font-important-light dark:text-font-important-dark dark:border-base-700 p-4">
+                {% trans "Recent searches" %}
+            </h3>
+
+            <ul>
+                <template x-for="(item, index) in commandHistory">
+                    <li class="border-b border-base-200 dark:border-base-700 last:border-b-0"
+                        x-bind:class="{'active': currentIndex === index + 1}"
+                        x-on:mouseenter="currentIndex = index + 1">
+                        <a class="block flex flex-row gap-4 items-center p-4 transition-colors"
+                           x-bind:data-title="item.title"
+                           x-bind:data-description="item.description"
+                           x-bind:href="item.link"
+                           x-bind:class="{'bg-base-50 dark:bg-white/[.04]': currentIndex === index + 1}">
+                            <span class="truncate">
+                                <span class="font-medium text-font-important-light dark:text-font-important-dark" x-text="item.title"></span>
+                                <span class="mx-1 opacity-50 group-[.active]:text-white">•</span>
+                                <span class="text-font-subtle-light dark:text-font-subtle-dark group-[.active]:text-white" x-text="item.description"></span>
+                            </span>
+
+                            <span class="flex flex-row items-center ml-auto">
+                                <span class="material-symbols-outlined text-base-400 dark:text-base-500 hover:text-primary-600 dark:hover:text-primary-500"
+                                      x-on:click="toggleFavorite($event, index);"
+                                      x-bind:class="{'text-primary-600 dark:text-primary-500': item.favorite}">
+                                    favorite
+                                </span>
+
+                                <span class="bg-base-200 h-6 w-px mx-3"></span>
+
+                                <span class="material-symbols-outlined text-base-400 dark:text-base-500 hover:text-base-500 dark:hover:text-base-400" x-on:click="removeFromHistory($event, index);">
+                                    close
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </template>
+
+    <template x-if="commandHistory.length === 0">
+        <div class="border-t border-base-200 px-4 py-8 dark:border-base-700">
+            <p class="text-lg text-center">
+                {% trans "No recent searches" %}
+            </p>
+        </div>
+    </template>
+</div>
+</div>
