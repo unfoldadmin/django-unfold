@@ -4,6 +4,8 @@ order: 3
 description: A guide to using the command in Django Unfold admin interface for quick navigation and search functionality. Configure model search capabilities and customize search fields for enhanced admin experience.
 ---
 
+# Command
+
 The command can be activated by pressing `cmd + K` on Mac or `ctrl + K` on Windows/Linux. By default, the search functionality is limited to application and model names only.
 
 [![Command results](/static/docs/command/command-results.webp)](/static/docs/command/command-results.webp)
