@@ -178,8 +178,6 @@ function searchCommand() {
         favorite: false,
       };
 
-      console.log("HISTORY", addHistory);
-
       if (addHistory) {
         this.addToHistory(data);
       }
