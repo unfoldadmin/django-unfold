@@ -1,17 +1,20 @@
 import copy
+import time
 from http import HTTPStatus
 from typing import Any, Callable, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
+from django.core.cache import cache
 from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
+from django.utils.text import slugify
 
-from unfold.dataclasses import DropdownItem, Favicon
+from unfold.dataclasses import DropdownItem, Favicon, SearchResult
 
 try:
     from django.contrib.auth.decorators import login_not_required
@@ -112,6 +115,12 @@ class UnfoldAdminSite(AdminSite):
             "tab_list": self.get_tabs_list(request),
             "styles": self._get_list("STYLES", request),
             "scripts": self._get_list("SCRIPTS", request),
+            "command_show_history": self._get_config("COMMAND", request).get(
+                "show_history"
+            ),
+            "sidebar_command_search": self._get_config("SIDEBAR", request).get(
+                "command_search"
+            ),
             "sidebar_show_all_applications": self._get_value(
                 sidebar_config.get("show_all_applications"), request
             ),
@@ -165,26 +174,21 @@ class UnfoldAdminSite(AdminSite):
 
         return HttpResponse(status=HTTPStatus.OK)
 
-    def search(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
-    ) -> TemplateResponse:
-        query = request.GET.get("s").lower()
-        app_list = super().get_app_list(request)
-        apps = []
+    def _search_apps(
+        self, app_list: list[dict[str, Any]], search_term: str
+    ) -> list[SearchResult]:
         results = []
-
-        if query in EMPTY_VALUES:
-            return HttpResponse()
+        apps = []
 
         for app in app_list:
-            if query in app["name"].lower():
+            if search_term in app["name"].lower():
                 apps.append(app)
                 continue
 
             models = []
 
             for model in app["models"]:
-                if query in model["name"].lower():
+                if search_term in model["name"].lower():
                     models.append(model)
 
             if len(models) > 0:
@@ -194,17 +198,111 @@ class UnfoldAdminSite(AdminSite):
         for app in apps:
             for model in app["models"]:
                 results.append(
-                    {
-                        "app": app,
-                        "model": model,
-                    }
+                    SearchResult(
+                        title=str(model["name"]),
+                        description=app["name"],
+                        link=model["admin_url"],
+                        icon="tag",
+                    )
                 )
+
+        return results
+
+    def _search_models(
+        self, request: HttpRequest, app_list: list[dict[str, Any]], search_term: str
+    ) -> list[SearchResult]:
+        results = []
+
+        for app in app_list:
+            for model in app["models"]:
+                admin_instance = self._registry.get(model["model"])
+                search_fields = admin_instance.get_search_fields(request)
+
+                if not search_fields:
+                    continue
+
+                pks = []
+
+                qs = admin_instance.get_queryset(request)
+                search_results, _has_duplicates = admin_instance.get_search_results(
+                    request, qs, search_term
+                )
+
+                for item in search_results:
+                    if item.pk in pks:
+                        continue
+
+                    pks.append(item.pk)
+
+                    link = reverse_lazy(
+                        f"{self.name}:{admin_instance.model._meta.app_label}_{admin_instance.model._meta.model_name}_change",
+                        args=(item.pk,),
+                    )
+
+                    results.append(
+                        SearchResult(
+                            title=str(item),
+                            description=f"{item._meta.app_label.capitalize()} - {item._meta.verbose_name.capitalize()}",
+                            link=link,
+                            icon="data_object",
+                        )
+                    )
+
+        return results
+
+    def search(
+        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
+    ) -> TemplateResponse:
+        start_time = time.time()
+
+        CACHE_TIMEOUT = 10
+
+        search_term = request.GET.get("s")
+        extended_search = "extended" in request.GET
+        app_list = super().get_app_list(request)
+        template_name = "unfold/helpers/search_results.html"
+
+        if search_term in EMPTY_VALUES:
+            return HttpResponse()
+
+        search_term = search_term.lower()
+        cache_key = f"unfold_search_{request.user.pk}_{slugify(search_term)}"
+        cache_results = cache.get(cache_key)
+
+        if extended_search:
+            template_name = "unfold/helpers/command_results.html"
+
+        if cache_results:
+            results = cache_results
+        else:
+            results = self._search_apps(app_list, search_term)
+            search_models = self._get_config("COMMAND", request).get("search_models")
+            search_callback = self._get_config("COMMAND", request).get(
+                "search_callback"
+            )
+
+            if extended_search:
+                if search_callback:
+                    results.extend(
+                        self._get_value(search_callback, request, search_term)
+                    )
+
+                if search_models is True:
+                    results.extend(self._search_models(request, app_list, search_term))
+
+            cache.set(cache_key, results, timeout=CACHE_TIMEOUT)
+
+        execution_time = time.time() - start_time
 
         return TemplateResponse(
             request,
-            template="unfold/helpers/search_results.html",
+            template=template_name,
             context={
                 "results": results,
+                "execution_time": execution_time,
+                "command_show_history": self._get_config("COMMAND", request).get(
+                    "show_history"
+                ),
             },
             headers={
                 "HX-Trigger": "search",
