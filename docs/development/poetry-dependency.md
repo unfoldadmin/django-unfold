@@ -1,5 +1,5 @@
 ---
-title: Poetry dependecy path
+title: Poetry dependency path
 order: 0
 description: Learn how to set up pre-commit hooks, configure Poetry for development, and compile Tailwind CSS styles for Unfold theme development.
 ---
