@@ -18,6 +18,8 @@ from unfold.overrides import FORMFIELD_OVERRIDES
 
 
 class BaseModelAdminMixin:
+    conditional_fields: Optional[dict[str, str]] = None
+
     def __init__(self, model: models.Model, admin_site: AdminSite) -> None:
         overrides = copy.deepcopy(FORMFIELD_OVERRIDES)
 
