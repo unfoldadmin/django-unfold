@@ -66,3 +66,7 @@ class UserAdmin(ModelAdmin):
         "address": "different_address == true"
     }
 ```
+
+### Support
+
+`conditional_fields` can be used in `ModelAdmin`, `TabularInline` and `StackedInline`. When used with `TabularInline`, the table column containing a hidden field will still be shown, but the field itself will be hidden per row.
