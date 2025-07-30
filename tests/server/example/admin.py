@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
+from unfold.contrib.inlines.admin import NonrelatedStackedInline, NonrelatedTabularInline
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
@@ -37,10 +38,33 @@ class UserNoteStackedInline(StackedInline):
     }
 
 
+class UserTagUnrelatedInlineBase:
+    model = UserNote
+    conditional_fields = {
+        "note": "type == 'note'",
+        "tag": "type == 'tag'"
+    }
+
+    def get_form_queryset(self, obj: User):
+        return self.model.objects.all()
+
+    def save_new_instance(self, parent, instance):
+        pass
+
+
+class UserTagUnrelatedStackedInline(UserTagUnrelatedInlineBase, NonrelatedStackedInline):
+    pass
+
+
+class UserTagUnrelatedTabularInline(UserTagUnrelatedInlineBase, NonrelatedTabularInline):
+    pass
+
+
 @admin.register(NotableUser)
 class NotableUserAdmin(ModelAdmin):
     fields = ('username', )
-    inlines = (UserNoteTabularInline, UserNoteStackedInline)
+    inlines = (UserNoteTabularInline, UserNoteStackedInline, UserTagUnrelatedStackedInline,
+               UserTagUnrelatedTabularInline)
 
 
 @admin.register(User)
