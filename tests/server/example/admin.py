@@ -21,7 +21,15 @@ class UserTagInline(StackedInline):
     collapsible = True
 
 
-class UserNoteInline(TabularInline):
+class UserNoteTabularInline(TabularInline):
+    model = UserNote
+    conditional_fields = {
+        "note": "type == 'note'",
+        "tag": "type == 'tag'"
+    }
+
+
+class UserNoteStackedInline(StackedInline):
     model = UserNote
     conditional_fields = {
         "note": "type == 'note'",
@@ -32,7 +40,7 @@ class UserNoteInline(TabularInline):
 @admin.register(NotableUser)
 class NotableUserAdmin(ModelAdmin):
     fields = ('username', )
-    inlines = (UserNoteInline, )
+    inlines = (UserNoteTabularInline, UserNoteStackedInline)
 
 
 @admin.register(User)
