@@ -43,5 +43,8 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
         return super().get_context_data(
             **kwargs,
             **self.model_admin.admin_site.each_context(self.request),
-            **{"title": self.title},
+            **{
+                "title": self.title,
+                "model_admin": self.model_admin,
+            },
         )

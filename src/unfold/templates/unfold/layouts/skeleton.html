@@ -11,6 +11,7 @@
 {% capture as nav_global_side silent %}{% block nav-global-side %}{% endblock %}{% endcapture %}
 {% capture as actions_items silent %}{% block actions-items %}{% endblock %}{% endcapture %}
 {% capture as extra_userlinks silent %}{% block extra_userlinks %}{% endblock %}{% endcapture %}
+{% capture as show_back_button silent %}{% block show_back_button %}{{ show_back_button }}{% endblock %}{% endcapture %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" {% if theme %}class="{{ theme }}"{% endif %} x-data="{ adminTheme: {% if theme %}'{{ theme }}'{% else %}$persist('auto').as('adminTheme'){% endif %} }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak>
