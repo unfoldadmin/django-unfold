@@ -5,12 +5,12 @@ from django.contrib.auth.models import Group
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
-from unfold.admin import ModelAdmin, StackedInline
+from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
 
-from .models import ActionUser, SectionUser, Tag, User
+from .models import ActionUser, SectionUser, Tag, User, NotableUser, UserNote
 
 admin.site.unregister(Group)
 
@@ -19,6 +19,20 @@ class UserTagInline(StackedInline):
     model = User.tags.through
     per_page = 1
     collapsible = True
+
+
+class UserNoteInline(TabularInline):
+    model = UserNote
+    conditional_fields = {
+        "note": "type == 'note'",
+        "tag": "type == 'tag'"
+    }
+
+
+@admin.register(NotableUser)
+class NotableUserAdmin(ModelAdmin):
+    fields = ('username', )
+    inlines = (UserNoteInline, )
 
 
 @admin.register(User)

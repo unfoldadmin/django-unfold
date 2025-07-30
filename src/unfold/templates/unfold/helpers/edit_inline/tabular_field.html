@@ -1,4 +1,4 @@
-<div class="flex flex-row gap-3 items-center">
+<div class="flex flex-row gap-3 items-center" {% if conditional_display %} x-show="{{ conditional_display }}"{% endif %}>
     {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
         {% if inline_admin_formset.opts.ordering_field %}
             {% if inline_admin_form.original %}

@@ -24,3 +24,19 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class UserNote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.CharField(choices=[
+        ('note', 'Note'),
+        ('tag', 'Tag')
+    ], max_length=16)
+    note = models.CharField(max_length=255, blank=True)
+    tag = models.CharField(max_length=255, blank=True)
+
+
+class NotableUser(User):
+
+    class Meta:
+        proxy = True
