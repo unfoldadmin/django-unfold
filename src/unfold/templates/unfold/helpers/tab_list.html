@@ -2,7 +2,7 @@
 
 {% if not is_popup %}
     {% if tabs_list or inlines_list or actions_list or actions_detail or actions_items or nav_global %}
-        <div class="border-base-200 flex items-start flex-col mb-4 min-h-13 md:border-b dark:md:border-base-800 md:border-l-0 md:flex-row md:items-center">
+        <div class="flex items-start flex-col mb-4 md:flex-row md:items-center">
             {% include "unfold/helpers/tab_items.html" %}
 
             {% include "unfold/helpers/tab_actions.html" %}
