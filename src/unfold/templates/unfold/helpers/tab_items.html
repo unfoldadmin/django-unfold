@@ -1,47 +1,46 @@
 {% load i18n %}
 
 {% if inlines_list or tabs_list %}
-    <ul class="border border-base-200 rounded-default flex flex-col max-md:w-full md:flex-row md:border-b-0 md:border-t-0 md:border-l-0 md:border-r-0 dark:border-base-800">
+    <nav class="bg-base-100 flex flex-col font-medium gap-1 p-1 rounded-default w-full dark:border-base-700 md:flex-row md:w-auto dark:bg-white/[.04]">
         {% for item in tabs_list %}
             {% if item.has_permission %}
-                <li class="border-b border-base-200 last:border-b-0 md:border-b-0 md:mr-8 dark:border-base-800">
-                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}{% if item.inline %}#{{ item.inline|slugify }}{% endif %}"
-                       class="block px-3 py-2 md:py-4 md:px-0 dark:border-base-800 {% if item.active and not item.inline %} border-b font-semibold -mb-px text-primary-600 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-500 md:border-primary-500 dark:md:border-primary-600!{% else %}font-medium hover:text-primary-600 dark:hover:text-primary-500{% endif %}"
-                       {% if item.inline %}
-                           x-on:click="activeTab = '{{ item.inline|slugify }}'"
-                           x-bind:class="{'border-b border-base-200 dark:border-base-800 md:border-primary-500 dark:md:border-primary-600! font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ item.inline|slugify }}'}"
-                       {% endif %}
-                    >
-                        {{ item.title }}
-                    </a>
-                </li>
+                <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}{% if item.inline %}#{{ item.inline|slugify }}{% endif %}"
+                   class="flex flex-row font-medium items-center px-2.5 py-[5px] rounded-default transition-colors
+                          {% if item.active and not item.inline %}
+                              bg-white shadow-xs text-font-important-light hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-font-important-dark
+                          {% else %}
+                              hover:bg-base-700/[.04] dark:hover:bg-white/[.04]
+                          {% endif %}"
+                   {% if item.inline %}
+                       x-on:click="activeTab = '{{ item.inline|slugify }}'"
+                       x-bind:class="{'bg-base-100 text-primary-600 hover:text-primary-500 dark:text-primary-500 dark:bg-white/[.06]': activeTab == '{{ item.inline|slugify }}'}"
+                   {% endif %}
+                >
+                    {{ item.title }}
+                </a>
             {% endif %}
         {% endfor %}
 
         {% if inlines_list %}
-            <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-base-800">
-                <a class="block cursor-pointer font-medium px-3 py-2 md:py-4 md:px-0"
-                   href="#general"
-                   x-on:click="activeTab = 'general'"
-                   x-bind:class="{'border-b border-base-200 dark:border-base-800 md:border-primary-500 dark:md:border-primary-600! font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == 'general', 'hover:text-primary-600 dark:hover:text-primary-500 dark:border-base-800': activeTab != 'general'}">
-                    {% trans "General" %}
-                </a>
-            </li>
+            <a class="flex flex-row items-center px-2.5 py-[5px] rounded-default transition-colors"
+               href="#general"
+               x-on:click="activeTab = 'general'"
+               x-bind:class="{'bg-white shadow-xs text-font-important-light hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-font-important-dark': activeTab == 'general', 'hover:bg-base-700/[.04] dark:hover:bg-white/[.04]': activeTab != 'general'}">
+                {% trans "General" %}
+            </a>
 
             {% for inline in inlines_list %}
-                <li class="border-b last:border-b-0 md:border-b-0 md:mr-8 dark:border-base-800">
-                    <a class="block cursor-pointer font-medium px-3 py-2 md:py-4 md:px-0"
-                       href="#{{ inline.formset.prefix|slugify }}"
-                       x-on:click="activeTab = '{{ inline.formset.prefix|slugify }}'"
-                       x-bind:class="{'border-b border-base-200 dark:border-base-800 md:border-primary-500 dark:md:border-primary-600! font-semibold -mb-px text-primary-600 dark:text-primary-500': activeTab == '{{ inline.formset.prefix|slugify }}', 'hover:text-primary-600 dark:hover:text-primary-500 dark:border-base-800': activeTab != '{{ inline.formset.prefix|slugify }}'}">
-                        {% if inline.formset.max_num == 1 %}
-                            {{ inline.opts.verbose_name|capfirst }}
-                        {% else %}
-                            {{ inline.opts.verbose_name_plural|capfirst }}
-                        {% endif %}
-                    </a>
-                </li>
+                <a class="flex flex-row items-center px-2.5 py-[5px] rounded-default transition-colors"
+                   href="#{{ inline.formset.prefix|slugify }}"
+                   x-on:click="activeTab = '{{ inline.formset.prefix|slugify }}'"
+                   x-bind:class="{'bg-white shadow-xs text-font-important-light hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-font-important-dark': activeTab == '{{ inline.formset.prefix|slugify }}', 'hover:bg-base-700/[.04] dark:hover:bg-white/[.04]': activeTab != '{{ inline.formset.prefix|slugify }}'}">
+                    {% if inline.formset.max_num == 1 %}
+                        {{ inline.opts.verbose_name|capfirst }}
+                    {% else %}
+                        {{ inline.opts.verbose_name_plural|capfirst }}
+                    {% endif %}
+                </a>
             {% endfor %}
         {% endif %}
-    </ul>
+    </nav>
 {% endif %}
