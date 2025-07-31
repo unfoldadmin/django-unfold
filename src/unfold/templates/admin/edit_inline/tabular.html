@@ -23,7 +23,7 @@
                     {% include "unfold/helpers/edit_inline/tabular_heading.html" %}
 
                     {% for inline_admin_form in inline_admin_formset %}
-                        <tbody class="{% if inline_admin_form.original or inline_admin_form.show_url %}has_original {% else %}template{% endif %}" x-sort:item>
+                        <tbody class="{% if inline_admin_form.original or inline_admin_form.show_url %}has_original {% else %}template{% endif %}" x-sort:item{% if inline_admin_form.model_admin.conditional_fields %} x-data='{{ inline_admin_form|changeform_data }}'{% endif %}>
                             {% include "unfold/helpers/edit_inline/tabular_error.html" %}
 
                             {% include "unfold/helpers/edit_inline/tabular_title.html" %}
