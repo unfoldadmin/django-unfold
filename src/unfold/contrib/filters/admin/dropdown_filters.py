@@ -22,12 +22,19 @@ class DropdownFilter(admin.SimpleListFilter):
     all_option = ["", _("All")]
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
+        choices = []
+
+        if self.all_option:
+            choices = [self.all_option]
+
+        choices.extend(self.lookup_choices)
+
         return (
             {
                 "form": self.form_class(
                     label=_(" By %(filter_title)s ") % {"filter_title": self.title},
                     name=self.parameter_name,
-                    choices=[self.all_option, *self.lookup_choices],
+                    choices=choices,
                     data={self.parameter_name: self.value()},
                     multiple=self.multiple if hasattr(self, "multiple") else False,
                 ),
@@ -37,6 +44,7 @@ class DropdownFilter(admin.SimpleListFilter):
 
 class MultipleDropdownFilter(DropdownFilter):
     multiple = True
+    all_option = None
 
     def __init__(
         self,
