@@ -37,17 +37,17 @@ def test_colors_hex_to_rgb():
     assert "colors" in context
     assert "primary" in context["colors"]
 
-    assert context["colors"]["primary"][50] == "240, 249, 255"
-    assert context["colors"]["primary"][100] == "224, 242, 254"
-    assert context["colors"]["primary"][200] == "186, 230, 253"
-    assert context["colors"]["primary"][300] == "125, 211, 252"
-    assert context["colors"]["primary"][400] == "56, 189, 248"
-    assert context["colors"]["primary"][500] == "14, 165, 233"
-    assert context["colors"]["primary"][600] == "2, 132, 199"
-    assert context["colors"]["primary"][700] == "3, 105, 161"
-    assert context["colors"]["primary"][800] == "7, 89, 133"
-    assert context["colors"]["primary"][900] == "12, 74, 110"
-    assert context["colors"]["primary"][950] == "8, 47, 73"
+    assert context["colors"]["primary"][50] == "rgb(240, 249, 255)"
+    assert context["colors"]["primary"][100] == "rgb(224, 242, 254)"
+    assert context["colors"]["primary"][200] == "rgb(186, 230, 253)"
+    assert context["colors"]["primary"][300] == "rgb(125, 211, 252)"
+    assert context["colors"]["primary"][400] == "rgb(56, 189, 248)"
+    assert context["colors"]["primary"][500] == "rgb(14, 165, 233)"
+    assert context["colors"]["primary"][600] == "rgb(2, 132, 199)"
+    assert context["colors"]["primary"][700] == "rgb(3, 105, 161)"
+    assert context["colors"]["primary"][800] == "rgb(7, 89, 133)"
+    assert context["colors"]["primary"][900] == "rgb(12, 74, 110)"
+    assert context["colors"]["primary"][950] == "rgb(8, 47, 73)"
 
 
 @override_settings(
@@ -80,17 +80,17 @@ def test_colors_rgb():
     assert "colors" in context
     assert "primary" in context["colors"]
 
-    assert context["colors"]["primary"][50] == "240, 249, 255"
-    assert context["colors"]["primary"][100] == "224, 242, 254"
-    assert context["colors"]["primary"][200] == "186, 230, 253"
-    assert context["colors"]["primary"][300] == "125, 211, 252"
-    assert context["colors"]["primary"][400] == "56, 189, 248"
-    assert context["colors"]["primary"][500] == "14, 165, 233"
-    assert context["colors"]["primary"][600] == "2, 132, 199"
-    assert context["colors"]["primary"][700] == "3, 105, 161"
-    assert context["colors"]["primary"][800] == "7, 89, 133"
-    assert context["colors"]["primary"][900] == "12, 74, 110"
-    assert context["colors"]["primary"][950] == "8, 47, 73"
+    assert context["colors"]["primary"][50] == "rgb(240, 249, 255)"
+    assert context["colors"]["primary"][100] == "rgb(224, 242, 254)"
+    assert context["colors"]["primary"][200] == "rgb(186, 230, 253)"
+    assert context["colors"]["primary"][300] == "rgb(125, 211, 252)"
+    assert context["colors"]["primary"][400] == "rgb(56, 189, 248)"
+    assert context["colors"]["primary"][500] == "rgb(14, 165, 233)"
+    assert context["colors"]["primary"][600] == "rgb(2, 132, 199)"
+    assert context["colors"]["primary"][700] == "rgb(3, 105, 161)"
+    assert context["colors"]["primary"][800] == "rgb(7, 89, 133)"
+    assert context["colors"]["primary"][900] == "rgb(12, 74, 110)"
+    assert context["colors"]["primary"][950] == "rgb(8, 47, 73)"
 
 
 @override_settings(
@@ -123,14 +123,14 @@ def test_colors_full_rgb_conversion():
     assert "colors" in context
     assert "primary" in context["colors"]
 
-    assert context["colors"]["primary"][50] == "240, 249, 255"
-    assert context["colors"]["primary"][100] == "224, 242, 254"
-    assert context["colors"]["primary"][200] == "186, 230, 253"
-    assert context["colors"]["primary"][300] == "125, 211, 252"
-    assert context["colors"]["primary"][400] == "56, 189, 248"
-    assert context["colors"]["primary"][500] == "14, 165, 233"
-    assert context["colors"]["primary"][600] == "2, 132, 199"
-    assert context["colors"]["primary"][700] == "3, 105, 161"
-    assert context["colors"]["primary"][800] == "7, 89, 133"
-    assert context["colors"]["primary"][900] == "12, 74, 110"
-    assert context["colors"]["primary"][950] == "8, 47, 73"
+    assert context["colors"]["primary"][50] == "rgb(240, 249, 255)"
+    assert context["colors"]["primary"][100] == "rgb(224, 242, 254)"
+    assert context["colors"]["primary"][200] == "rgb(186, 230, 253)"
+    assert context["colors"]["primary"][300] == "rgb(125, 211, 252)"
+    assert context["colors"]["primary"][400] == "rgb(56, 189, 248)"
+    assert context["colors"]["primary"][500] == "rgb(14, 165, 233)"
+    assert context["colors"]["primary"][600] == "rgb(2, 132, 199)"
+    assert context["colors"]["primary"][700] == "rgb(3, 105, 161)"
+    assert context["colors"]["primary"][800] == "rgb(7, 89, 133)"
+    assert context["colors"]["primary"][900] == "rgb(12, 74, 110)"
+    assert context["colors"]["primary"][950] == "rgb(8, 47, 73)"

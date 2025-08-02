@@ -25,7 +25,7 @@ except ImportError:
 
 
 from unfold.settings import get_config
-from unfold.utils import hex_to_rgb
+from unfold.utils import convert_color
 from unfold.widgets import (
     BUTTON_CLASSES,
     CHECKBOX_CLASSES,
@@ -538,33 +538,12 @@ class UnfoldAdminSite(AdminSite):
     def _get_colors(self, key: str, *args) -> dict[str, dict[str, str]]:
         colors = self._get_config(key, *args)
 
-        def rgb_to_values(value: str) -> str:
-            return ", ".join(
-                list(
-                    map(
-                        str.strip,
-                        value.removeprefix("rgb(").removesuffix(")").split(","),
-                    )
-                )
-            )
-
-        def hex_to_values(value: str) -> str:
-            return ", ".join(str(item) for item in hex_to_rgb(value))
-
         for name, weights in colors.items():
             weights = self._get_value(weights, *args)
             colors[name] = weights
 
             for weight, value in weights.items():
-                if value[0] == "#":
-                    colors[name][weight] = hex_to_values(value)
-                elif value.startswith("rgb"):
-                    colors[name][weight] = rgb_to_values(value)
-                elif isinstance(value, str) and all(
-                    part.isdigit() for part in value.split()
-                ):
-                    colors[name][weight] = ", ".join(value.split(" "))
-                pass
+                colors[name][weight] = convert_color(value)
 
         return colors
 

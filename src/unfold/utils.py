@@ -140,16 +140,6 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return display_for_value(value, empty_value_display)
 
 
-def hex_to_rgb(hex_color: str) -> list[int]:
-    hex_color = hex_color.lstrip("#")
-
-    r = int(hex_color[0:2], 16)
-    g = int(hex_color[2:4], 16)
-    b = int(hex_color[4:6], 16)
-
-    return (r, g, b)
-
-
 def prettify_json(data: Any, encoder: Any) -> Optional[str]:
     try:
         from pygments import highlight
@@ -189,3 +179,28 @@ def parse_datetime_str(value: str) -> Optional[datetime.datetime]:
             return datetime.datetime.strptime(value, format)
         except (ValueError, TypeError):
             continue
+
+
+def hex_to_rgb(hex_color: str) -> list[int]:
+    hex_color = hex_color.lstrip("#")
+
+    r = int(hex_color[0:2], 16)
+    g = int(hex_color[2:4], 16)
+    b = int(hex_color[4:6], 16)
+
+    return (r, g, b)
+
+
+def hex_to_values(value: str) -> str:
+    return ", ".join(str(item) for item in hex_to_rgb(value))
+
+
+def convert_color(value: str) -> str:
+    if value[0] == "#":
+        return f"rgb({hex_to_values(value)})"
+    elif value.startswith("rgb") or value.startswith("oklch"):
+        return value
+    elif isinstance(value, str) and all(part.isdigit() for part in value.split()):
+        return f"rgb({', '.join(value.split(' '))})"
+
+    return value

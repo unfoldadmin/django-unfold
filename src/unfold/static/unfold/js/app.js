@@ -464,9 +464,7 @@ const renderCharts = () => {
       .getPropertyValue("--color-base-300")
       .trim();
 
-    const borderColor = hasDarkClass
-      ? `rgb(${baseColorDark})`
-      : `rgb(${baseColorLight})`;
+    const borderColor = hasDarkClass ? baseColorDark : baseColorLight;
 
     for (const chart of charts) {
       chart.options.scales.x.grid.color = borderColor;
@@ -495,7 +493,7 @@ const renderCharts = () => {
           const color = getComputedStyle(document.documentElement)
             .getPropertyValue(cssVar)
             .trim();
-          dataset[colorProp] = `rgb(${color})`;
+          dataset[colorProp] = color;
         }
       };
 
