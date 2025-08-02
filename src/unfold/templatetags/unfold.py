@@ -628,7 +628,7 @@ def header_title(context: RequestContext) -> str:
             }
         )
 
-        if original := context.get("original"):
+        if (original := context.get("original")) and not isinstance(original, str):
             parts.append(
                 {
                     "link": reverse_lazy(
