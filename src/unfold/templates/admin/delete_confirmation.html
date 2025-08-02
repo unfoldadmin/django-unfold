@@ -9,27 +9,6 @@
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} delete-confirmation{% endblock %}
 
-{% block breadcrumbs %}
-    <div class="px-4">
-        <div class="container mb-6 mx-auto -my-3 lg:mb-12">
-            <ul class="flex flex-wrap">
-                {% url 'admin:index' as link %}
-                {% trans 'Home' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
-
-                {% url 'admin:app_list' app_label=opts.app_label as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
-
-                {% url opts|admin_urlname:'changelist' as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.verbose_name_plural|capfirst %}
-
-                {% url opts|admin_urlname:'change' object.pk|admin_urlquote as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=object|truncatewords:"18" %}
-            </ul>
-        </div>
-    </div>
-{% endblock %}
-
 {% block content %}
     {% if perms_lacking %}
         <div class="border border-base-200 rounded-default shadow-xs dark:border-base-800">

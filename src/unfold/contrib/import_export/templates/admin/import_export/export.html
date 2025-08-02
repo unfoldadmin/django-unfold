@@ -9,29 +9,6 @@
     {{ form.media }}
 {% endblock %}
 
-{% block breadcrumbs %}
-    <div class="px-4">
-        <div class="container mb-6 mx-auto -my-3 lg:mb-12">
-            <ul class="flex flex-wrap">
-                {% url 'admin:index' as link %}
-                {% trans 'Home' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
-
-                {% url 'admin:app_list' app_label=opts.app_label as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
-
-                {% url opts|admin_urlname:'changelist' as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.verbose_name_plural|capfirst %}
-
-                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=cl.opts.verbose_name_plural|capfirst %}
-
-                {% trans 'Export' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=name %}
-            </ul>
-        </div>
-    </div>
-{% endblock %}
-
 {% block content %}
     <form action="{{ export_url }}" method="POST">
         {% csrf_token %}
