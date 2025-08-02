@@ -13,22 +13,6 @@
         <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 {% element_classes 'main' %}">
             {% include "unfold/helpers/header.html" %}
 
-            {% if not is_popup %}
-                {% spaceless %}
-                    {% block breadcrumbs %}
-                        <div class="px-4">
-                            <div class="container mb-12 mx-auto -my-3">
-                                <ul class="flex flex-wrap">
-                                    {% url 'admin:index' as link %}
-                                    {% trans 'Home' as name %}
-                                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
-                                    {% block custom_breadcrumbs %}{% endblock %}
-                                </ul>
-                            </div>
-                        </div>
-                    {% endblock %}
-                {% endspaceless %}
-            {% endif %}
 
             {% block messages %}
                 <div class="px-4">

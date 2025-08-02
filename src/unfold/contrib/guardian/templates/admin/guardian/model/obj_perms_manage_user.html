@@ -6,32 +6,6 @@
     {{ form.media }}
 {% endblock %}
 
-{% block breadcrumbs %}{% if not is_popup %}
-    <div class="px-4">
-        <div class="container mb-6 mx-auto -my-3 lg:mb-12">
-            <ul class="flex flex-wrap">
-                {% url 'admin:index' as link %}
-                {% trans 'Home' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
-
-                {% url 'admin:app_list' app_label=opts.app_label as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
-
-                {% url opts|admin_urlname:'changelist' as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.verbose_name_plural|capfirst %}
-
-                {% url opts|admin_urlname:'change' object.pk|admin_urlquote as link %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=original|truncatewords:'18' %}
-
-                {% trans 'Object permissions' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link="../../" name=name %}
-
-                {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=user_obj|truncatewords:"18" %}
-            </ul>
-        </div>
-    </div>
-{% endif %}{% endblock %}
-
 {% block content %}
     <div class="border border-base-200 overflow-hidden rounded-default p-3 shadow-xs dark:border-base-800">
         <form method="post">

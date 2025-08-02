@@ -14,7 +14,9 @@ from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.safestring import SafeText, mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
@@ -603,3 +605,116 @@ def querystring_params(
     result[query_key] = query_value
 
     return result.urlencode()
+
+
+@register.simple_tag(takes_context=True)
+def header_title(context: RequestContext) -> str:
+    parts = []
+
+    if opts := context.get("opts"):
+        parts.append(
+            {
+                "link": reverse_lazy("admin:app_list", args=[opts.app_label]),
+                "title": opts.app_config.verbose_name,
+            }
+        )
+
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"admin:{opts.app_label}_{opts.model_name}_changelist"
+                ),
+                "title": opts.verbose_name_plural,
+            }
+        )
+
+        if (original := context.get("original")) and not isinstance(original, str):
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"admin:{opts.app_label}_{opts.model_name}_change",
+                        args=[original.pk],
+                    ),
+                    "title": original,
+                }
+            )
+        elif object := context.get("object"):
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"admin:{object._meta.app_label}_{object._meta.model_name}_change",
+                        args=[object.pk],
+                    ),
+                    "title": object,
+                }
+            )
+    elif object := context.get("object"):
+        parts.append(
+            {
+                "link": reverse_lazy("admin:app_list", args=[object._meta.app_label]),
+                "title": object._meta.app_label,
+            }
+        )
+
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"admin:{object._meta.app_label}_{object._meta.model_name}_changelist",
+                ),
+                "title": object._meta.verbose_name_plural,
+            }
+        )
+
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"admin:{object._meta.app_label}_{object._meta.model_name}_change",
+                    args=[object.pk],
+                ),
+                "title": object,
+            }
+        )
+    elif (model_admin := context.get("model_admin")) and hasattr(model_admin, "model"):
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    "admin:app_list", args=[model_admin.model._meta.app_label]
+                ),
+                "title": model_admin.model._meta.app_label,
+            }
+        )
+
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"admin:{model_admin.model._meta.app_label}_{model_admin.model._meta.model_name}_changelist",
+                ),
+                "title": model_admin.model._meta.verbose_name,
+            }
+        )
+
+    if not opts and (content_title := context.get("content_title")):
+        parts.append(
+            {
+                "title": content_title,
+            }
+        )
+
+    if len(parts) == 0:
+        username = (
+            context.request.user.get_short_name() or context.request.user.get_username()
+        )
+        parts.append({"title": f"{_('Welcome')} <strong>{username}</strong>"})
+
+    return render_to_string(
+        "unfold/helpers/header_title.html",
+        request=context.request,
+        context={
+            "parts": parts,
+        },
+    )
+
+
+@register.filter
+def admin_object_app_url(object: Model, arg: str) -> str:
+    return f"admin:{object._meta.app_label}_{object._meta.model_name}_{arg}"

@@ -1,0 +1,15 @@
+{% for part in parts %}
+    {% if part.link %}
+        <a href="{{ part.link }}" class="tracking-tight">
+            {{ part.title|capfirst }}
+        </a>
+    {% else %}
+        <span class="tracking-tight">
+            {{ part.title|capfirst }}
+        </span>
+    {% endif %}
+
+    {% if not forloop.last %}
+        <span class="mx-3 text-base-200 text-sm dark:text-base-600">/</span>
+    {% endif %}
+{% endfor %}

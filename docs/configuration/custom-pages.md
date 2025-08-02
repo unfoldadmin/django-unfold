@@ -43,7 +43,7 @@ class CustomAdmin(ModelAdmin):
 
 The template is straightforward, extend from `unfold/layouts/base.html` and the UI will display all Unfold components like header or sidebar with all menu items. Then all content needs to be located in `content` block. Below you can find full example from the Formula project implementing additional components:
 
-- Breadcrumbs: it is up to developer to construct own breadcrumbs
+- Breadcrumbs: it is up to developer to construct own breadcrumbs (version 0.64+ does not contain breadcrumbs)
 - Tab list: in case your project has dynamic tabs, you can use `tab_list` helper to display them
 
 ```html

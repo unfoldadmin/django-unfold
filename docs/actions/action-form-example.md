@@ -81,8 +81,6 @@ Template displaying the form. Please note that breadcrumbs are empty in this cas
 
 {% load i18n unfold %}
 
-{% block breadcrumbs %}{% endblock %}
-
 {% block extrahead %}
     {{ block.super }}
     <script src="{% url 'admin:jsi18n' %}"></script>

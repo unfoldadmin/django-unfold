@@ -1,7 +1,15 @@
-{% load admin_urls i18n %}
+{% load admin_urls i18n unfold %}
 
 {% if show_back_button %}
-    {% if opts and adminform %}
+    {% if object %}
+        {% url object|admin_object_app_url:"changelist" as changelist_url %}
+
+        <a href="{{ changelist_url }}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+        </a>
+    {% elif opts and adminform %}
         {% url opts|admin_urlname:'changelist' as changelist_url %}
 
         <a href="{% add_preserved_filters changelist_url %}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
