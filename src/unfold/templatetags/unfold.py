@@ -610,8 +610,9 @@ def querystring_params(
 @register.simple_tag(takes_context=True)
 def header_title(context: RequestContext) -> str:
     parts = []
+    opts = context.get("opts")
 
-    if opts := context.get("opts"):
+    if opts:
         parts.append(
             {
                 "link": reverse_lazy("admin:app_list", args=[opts.app_label]),
@@ -619,20 +620,20 @@ def header_title(context: RequestContext) -> str:
             }
         )
 
-        parts.append(
-            {
-                "link": reverse_lazy(
-                    f"admin:{opts.app_label}_{opts.model_name}_changelist"
-                ),
-                "title": opts.verbose_name_plural,
-            }
-        )
-
         if (original := context.get("original")) and not isinstance(original, str):
             parts.append(
                 {
                     "link": reverse_lazy(
-                        f"admin:{opts.app_label}_{opts.model_name}_change",
+                        f"admin:{original._meta.app_label}_{original._meta.model_name}_changelist"
+                    ),
+                    "title": original._meta.verbose_name_plural,
+                }
+            )
+
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"admin:{original._meta.app_label}_{original._meta.model_name}_change",
                         args=[original.pk],
                     ),
                     "title": original,
@@ -642,10 +643,28 @@ def header_title(context: RequestContext) -> str:
             parts.append(
                 {
                     "link": reverse_lazy(
+                        f"admin:{object._meta.app_label}_{object._meta.model_name}_changelist"
+                    ),
+                    "title": object._meta.verbose_name_plural,
+                }
+            )
+
+            parts.append(
+                {
+                    "link": reverse_lazy(
                         f"admin:{object._meta.app_label}_{object._meta.model_name}_change",
                         args=[object.pk],
                     ),
                     "title": object,
+                }
+            )
+        else:
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"admin:{opts.app_label}_{opts.model_name}_changelist"
+                    ),
+                    "title": opts.verbose_name_plural,
                 }
             )
     elif object := context.get("object"):
@@ -689,7 +708,7 @@ def header_title(context: RequestContext) -> str:
                 "link": reverse_lazy(
                     f"admin:{model_admin.model._meta.app_label}_{model_admin.model._meta.model_name}_changelist",
                 ),
-                "title": model_admin.model._meta.verbose_name,
+                "title": model_admin.model._meta.verbose_name_plural,
             }
         )
 
@@ -704,7 +723,7 @@ def header_title(context: RequestContext) -> str:
         username = (
             context.request.user.get_short_name() or context.request.user.get_username()
         )
-        parts.append({"title": f"{_('Welcome')} <strong>{username}</strong>"})
+        parts.append({"title": f"{_('Welcome')} {username}"})
 
     return render_to_string(
         "unfold/helpers/header_title.html",
