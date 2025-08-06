@@ -737,3 +737,10 @@ def header_title(context: RequestContext) -> str:
 @register.filter
 def admin_object_app_url(object: Model, arg: str) -> str:
     return f"admin:{object._meta.app_label}_{object._meta.model_name}_{arg}"
+
+
+@register.filter
+def has_nested_tables(table: dict) -> bool:
+    return any(
+        isinstance(row, dict) and "table" in row for row in table.get("rows", [])
+    )
