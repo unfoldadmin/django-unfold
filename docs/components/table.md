@@ -38,6 +38,28 @@ def dashboard_callback(request):
 {% endcomponent %}
 ```
 
+## Nested tables data structure
+
+```python
+data = {
+    "headers": ["col1", "col 2"],
+    "rows": [
+        # Classic row
+        ["a", "b"],
+        # Row with nested table
+        {
+            "cols": ["c", "d"], # Cols in row
+            "table": {
+                "headers": ["col2", "col3"]
+                "rows" [
+                    ["g", "h"]
+                ]
+            }
+        }
+    ]
+}
+```
+
 ## Table component parameters
 
 | Parameter                         | Description                                |
