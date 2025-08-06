@@ -18,7 +18,7 @@
                             {% endif %}
 
                             {% for header in table.headers %}
-                                <th class="align-middle border-b border-base-200 font-semibold py-2 text-left whitespace-nowrap hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02]">
+                                <th class="align-middle border-b border-base-200 font-semibold py-2 text-left whitespace-nowrap hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02] {% if card_included == 1 %}first:pl-6 last:pr-6{% endif %}">
                                     {{ header|capfirst }}
                                 </th>
                             {% endfor %}
@@ -40,7 +40,7 @@
                                 {% endif %}
 
                                 {% for cell in row.cols|default:row %}
-                                    <td class="px-3 py-2 align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800" {% if table.headers %}data-label="{{ table.headers|index:forloop.counter0 }}"{% endif %}>
+                                    <td class="px-3 py-2 align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden {% if not forloop.parentloop.first %}lg:first:border-t{% endif %} lg:py-3 lg:table-cell dark:border-base-800 {% if card_included == 1 %}lg:first:pl-6 lg:last:pr-6{% endif %}" {% if table.headers %}data-label="{{ table.headers|index:forloop.counter0 }}"{% endif %}>
                                         {{ cell }}
                                     </td>
                                 {% endfor %}
@@ -75,10 +75,10 @@
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
                             {% endif %}
-                        </table>
-                        </td>
-                        </tr>
                         </tbody>
                     {% endfor %}
                 {% endif %}
