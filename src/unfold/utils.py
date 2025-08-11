@@ -202,5 +202,9 @@ def convert_color(value: str) -> str:
         return value
     elif isinstance(value, str) and all(part.isdigit() for part in value.split()):
         return f"rgb({', '.join(value.split(' '))})"
+    elif isinstance(value, str) and all(
+        part.strip().isdigit() for part in value.split(",")
+    ):
+        return f"rgb({', '.join(part.strip() for part in value.split(','))})"
 
     return value
