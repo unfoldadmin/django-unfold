@@ -1,4 +1,23 @@
 
+## 0.64.0 (2025-08-11)
+
+- feat: support for nested tables in table component (#1496) ([`5e494e2`](https://github.com/unfoldadmin/django-unfold/commit/5e494e2352c76895700aa6962e64c1e5dc83baeb))
+- feat: boolean flag redesign (#1488) ([`9e55015`](https://github.com/unfoldadmin/django-unfold/commit/9e55015dc8121fbbd97bdebf3b132dd0d4409f47))
+- feat: oklch colors (#1486) ([`d8b8ac1`](https://github.com/unfoldadmin/django-unfold/commit/d8b8ac10d3074477c3111d919f634d7ee7c8f8ad))
+- feat: header breadcrumbs (#1480) ([`0537273`](https://github.com/unfoldadmin/django-unfold/commit/053727303daabdca684cd517eaa6a89de1446ce2))
+- feat: redesigned tab navigation (#1481) ([`dae00fd`](https://github.com/unfoldadmin/django-unfold/commit/dae00fd641dea8eae295e79cffd9ce3f31b0875e))
+- feat: command (#1433) ([`bccf8a4`](https://github.com/unfoldadmin/django-unfold/commit/bccf8a491305adabf47c512dd036417050d0978e))
+- fix: tab items css refactoring (#1495) ([`734d224`](https://github.com/unfoldadmin/django-unfold/commit/734d224d421322afa47deb513aebced265a9d275))
+- fix: header dark mode colors (#1492) ([`204ab97`](https://github.com/unfoldadmin/django-unfold/commit/204ab97fbf415feebefe216488eaa418bc7cb0e3))
+- fix: header breadcrumbs alignment (#1491) ([`2538943`](https://github.com/unfoldadmin/django-unfold/commit/2538943e0d013e4e6df421759abe186a6f2fabf4))
+- fix: numeric filter not enough data styling (#1490) ([`492cad5`](https://github.com/unfoldadmin/django-unfold/commit/492cad5aee967c9c092b2f6c365539d7f0f2510f))
+- fix: object history breadcrumb title (#1489) ([`5107340`](https://github.com/unfoldadmin/django-unfold/commit/51073400419e5453091372fae6a779f65b4075cc))
+- fix: active tab navigation item (#1475) ([`a2a5aa3`](https://github.com/unfoldadmin/django-unfold/commit/a2a5aa36d2118846eea7ce5cdf9382a8247cafa1))
+- fix: trailing action url slash (#1464) ([`08647ea`](https://github.com/unfoldadmin/django-unfold/commit/08647ea000f56b81c9a313f12a8987096c2cb4c4))
+- docs: poetry title ([`ac9eeae`](https://github.com/unfoldadmin/django-unfold/commit/ac9eeaed610ecc94f0b22b051b4d559a4630c385))
+- docs: command title (#1473) ([`04ab5af`](https://github.com/unfoldadmin/django-unfold/commit/04ab5af89c01f4383ef9e554b2bd91ef8307877d))
+- chore: command cleanup (#1472) ([`6bb0fb7`](https://github.com/unfoldadmin/django-unfold/commit/6bb0fb7b387f6a6f1e096a8e53b90fffd4ef7e18))
+
 ## 0.63.0 (2025-07-21)
 
 - feat: ajax paginated inlines (#1440) ([`70a86ec`](https://github.com/unfoldadmin/django-unfold/commit/70a86ec90eaaba1c2a2e3f1de79909d946a0b3a5))
