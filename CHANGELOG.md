@@ -1,4 +1,8 @@
 
+## 0.64.1 (2025-08-11)
+
+- fix: color conversion (#1501) ([`bb4ac8a`](https://github.com/unfoldadmin/django-unfold/commit/bb4ac8ad412d52fd99d523ff428868c07cebeda5))
+
 ## 0.64.0 (2025-08-11)
 
 - feat: support for nested tables in table component (#1496) ([`5e494e2`](https://github.com/unfoldadmin/django-unfold/commit/5e494e2352c76895700aa6962e64c1e5dc83baeb))
