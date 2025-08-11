@@ -38,7 +38,7 @@
   };
 
   $(function () {
-    $(".unfold-admin-autocomplete.admin-autocomplete").djangoCustomSelect2();
+    $(".unfold-admin-autocomplete").djangoCustomSelect2();
 
     $(".admin-autocomplete")
       .not(".unfold-admin-autocomplete")
