@@ -698,8 +698,15 @@ class UnfoldAdminSelectWidget(Select):
         if attrs is None:
             attrs = {}
 
+        attrs["class"] = " ".join(
+            [
+                *SELECT_CLASSES,
+                "unfold-admin-autocomplete",
+                attrs.get("class", "") if attrs else "",
+            ]
+        )
+
         attrs["data-theme"] = "admin-autocomplete"
-        attrs["class"] = "unfold-admin-autocomplete"
 
         super().__init__(attrs, choices)
 
