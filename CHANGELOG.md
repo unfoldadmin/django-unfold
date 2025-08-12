@@ -1,4 +1,8 @@
 
+## 0.64.2 (2025-08-12)
+
+- fix: unclosed command div (#1504) ([`e72f22f`](https://github.com/unfoldadmin/django-unfold/commit/e72f22fbd6958cb7799f107fa2375a205ceba77e))
+
 ## 0.64.1 (2025-08-11)
 
 - fix: color conversion (#1501) ([`bb4ac8a`](https://github.com/unfoldadmin/django-unfold/commit/bb4ac8ad412d52fd99d523ff428868c07cebeda5))
