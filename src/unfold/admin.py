@@ -63,30 +63,29 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     warn_unsaved_form = False
     checks_class = UnfoldModelAdminChecks
 
-    def changelist_view(
-        self, request: HttpRequest, extra_context: Optional[dict[str, str]] = None
-    ) -> TemplateResponse:
-        additional_media = forms.Media()
+    @property
+    def media(self):
+        if not hasattr(self, "request"):
+            return super().media
 
-        for filter in self.get_list_filter(request):
+        media = forms.Media()
+
+        for filter in self.get_list_filter(self.request):
             if (
                 isinstance(filter, (tuple, list))
                 and hasattr(filter[1], "form_class")
                 and hasattr(filter[1].form_class, "Media")
             ):
-                additional_media += forms.Media(filter[1].form_class.Media)
+                media += forms.Media(filter[1].form_class.Media)
             elif hasattr(filter, "form_class") and hasattr(filter.form_class, "Media"):
-                additional_media += forms.Media(filter.form_class.Media)
+                media += forms.Media(filter.form_class.Media)
 
-        if not extra_context:
-            extra_context = {}
+        return media
 
-        extra_context.update(
-            {
-                "media": self.media + additional_media,
-            }
-        )
-
+    def changelist_view(
+        self, request: HttpRequest, extra_context: Optional[dict[str, str]] = None
+    ) -> TemplateResponse:
+        self.request = request
         return super().changelist_view(request, extra_context)
 
     def get_fieldsets(self, request: HttpRequest, obj=None) -> FieldsetsType:
