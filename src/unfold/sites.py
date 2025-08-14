@@ -355,14 +355,6 @@ class UnfoldAdminSite(AdminSite):
                     request, item.get("link_callback") or link
                 )
 
-            # Checks if any tab item is active and then marks the sidebar link as active
-            if (
-                tabs
-                and self._get_is_tab_active(request, tabs, link)
-                and "active" not in item
-            ):
-                item["active"] = True
-
             # Link callback
             if isinstance(link, Callable):
                 item["link_callback"] = lazy(link)(request)
@@ -487,29 +479,6 @@ class UnfoldAdminSite(AdminSite):
                 return False
 
             return True
-
-        return False
-
-    def _get_is_tab_active(
-        self, request: HttpRequest, tabs: list[dict], link: str
-    ) -> bool:
-        for tab in tabs:
-            has_primary_link = False
-            has_tab_link_active = False
-
-            for tab_item in tab["items"]:
-                if link == tab_item["link"]:
-                    has_primary_link = True
-                    continue
-
-                if self._get_is_active(
-                    request, tab_item.get("link_callback") or tab_item["link"]
-                ):
-                    has_tab_link_active = True
-                    continue
-
-            if has_primary_link and has_tab_link_active:
-                return True
 
         return False
 
