@@ -30,6 +30,8 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
         super().__init__(**kwargs)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        self.request.current_app = self.model_admin.admin_site.name
+
         if not hasattr(self, "model_admin"):
             raise UnfoldException(
                 "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"
