@@ -68,7 +68,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         if not hasattr(self, "request"):
             return super().media
 
-        media = forms.Media()
+        media = super().media
 
         for filter in self.get_list_filter(self.request):
             if (
