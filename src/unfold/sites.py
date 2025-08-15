@@ -356,11 +356,7 @@ class UnfoldAdminSite(AdminSite):
                 )
 
             # Checks if any tab item is active and then marks the sidebar link as active
-            if (
-                tabs
-                and self._get_is_tab_active(request, tabs, link)
-                and "active" not in item
-            ):
+            if tabs and self._get_is_tab_active(request, tabs, link):
                 item["active"] = True
 
             # Link callback
