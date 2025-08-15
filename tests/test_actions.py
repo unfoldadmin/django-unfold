@@ -620,7 +620,6 @@ def test_submit_line_mixed_permissions_true(client, staff_user):
     )
 
     assert response.status_code == HTTPStatus.OK
-    print(response.content.decode())
     assert (
         "Submit line action with mixed permissions true successfully executed"
         in response.content.decode()
