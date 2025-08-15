@@ -694,16 +694,35 @@ class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
 
 
 class UnfoldAdminSelectWidget(Select):
-    template_name = "unfold/widgets/select.html"
-
     def __init__(self, attrs=None, choices=()):
         if attrs is None:
             attrs = {}
 
         attrs["class"] = " ".join(
-            [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
+            [
+                *SELECT_CLASSES,
+                "unfold-admin-autocomplete",
+                attrs.get("class", "") if attrs else "",
+            ]
         )
+
+        attrs["data-theme"] = "admin-autocomplete"
+
         super().__init__(attrs, choices)
+
+    class Media:
+        js = (
+            "admin/js/vendor/jquery/jquery.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "unfold/js/select2.init.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
 
 
 class UnfoldAdminSelect2Widget(Select):
