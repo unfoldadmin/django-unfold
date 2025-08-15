@@ -1,7 +1,7 @@
-import django
 from django import forms
 
 from unfold.forms import AuthenticationForm
+
 
 class HoneypotLoginForm(AuthenticationForm):
     def clean(self):
@@ -10,7 +10,7 @@ class HoneypotLoginForm(AuthenticationForm):
         care what they entered here.
         """
         raise forms.ValidationError(
-            self.error_messages['invalid_login'],
-            code='invalid_login',
-            params={'username': self.username_field.verbose_name}
+            self.error_messages["invalid_login"],
+            code="invalid_login",
+            params={"username": self.username_field.verbose_name},
         )

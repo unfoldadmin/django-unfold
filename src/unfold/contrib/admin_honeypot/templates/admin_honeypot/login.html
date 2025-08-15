@@ -1,19 +1,19 @@
 {% extends 'admin/login.html' %}
 {% block extrastyle %}
-<style id="unfold-theme-colors">
-    :root {
-        {% if border_radius %}
-            --border-radius: {{ border_radius }};
-        {% endif %}
+    <style id="unfold-theme-colors">
+        :root {
+            {% if border_radius %}
+                --border-radius: {{ border_radius }};
+            {% endif %}
 
-        {% for name, weights in colors.items %}
-            {% for weight, value in weights.items %}
-                --color-{{ name }}-{{ weight }}: {{ value }};
+            {% for name, weights in colors.items %}
+                {% for weight, value in weights.items %}
+                    --color-{{ name }}-{{ weight }}: {{ value }};
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    }
-</style>
+        }
+    </style>
 {% endblock %}
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'unfold.contrib.admin_honeypot:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+    <h1 id="site-name"><a href="{% url 'unfold.contrib.admin_honeypot:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
 {% endblock %}
