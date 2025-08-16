@@ -22,30 +22,30 @@
                     {{ field }}
                 {% endfor %}
 
-                {% if fieldsets %}
-                    <div class="border border-base-200 rounded-default overflow-x-auto simplebar-horizontal-scrollbar-top dark:border-base-800" data-simplebar data-simplebar-auto-hide="false">
-                        <table class="w-full border-collapse">
+                <div class="border border-base-200 rounded-default overflow-x-auto simplebar-horizontal-scrollbar-top dark:border-base-800" data-simplebar data-simplebar-auto-hide="false">
+                    <table class="w-full border-collapse">
+                        {% if fieldsets %}
                             {% for fieldset in fieldsets %}
                                 {% with config_values=fieldset.config_values %}
                                     {% include "admin/constance/includes/results_list.html" %}
                                 {% endwith %}
                             {% endfor %}
+                        {% else %}
+                            {% include "admin/constance/includes/results_list.html" %}
+                        {% endif %}
 
-                            <tfoot>
-                                <tr>
-                                    <td class="border-t border-base-200 px-3 py-2 dark:border-base-800" colspan="100%">
-                                        <div class="flex justify-end">
-                                            {% trans "Save" as title %}
-                                            {% include "unfold/helpers/submit.html" with title=title %}
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                {% else %}
-                    {% include "admin/constance/includes/results_list.html" %}
-                {% endif %}
+                        <tfoot>
+                            <tr>
+                                <td class="border-t border-base-200 px-3 py-2 dark:border-base-800" colspan="100%">
+                                    <div class="flex justify-end">
+                                        {% trans "Save" as title %}
+                                        {% include "unfold/helpers/submit.html" with title=title %}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </form>
         </div>
     </div>
