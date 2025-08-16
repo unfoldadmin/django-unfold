@@ -611,7 +611,11 @@ def querystring_params(
 def header_title(context: RequestContext) -> str:
     parts = []
     opts = context.get("opts")
-    current_app = context.request.current_app
+    current_app = (
+        context.request.current_app
+        if hasattr(context.request, "current_app")
+        else "admin"
+    )
 
     if opts:
         parts.append(
@@ -739,7 +743,11 @@ def header_title(context: RequestContext) -> str:
 
 @register.simple_tag(takes_context=True)
 def admin_object_app_url(context: RequestContext, object: Model, arg: str) -> str:
-    current_app = context.request.current_app
+    current_app = (
+        context.request.current_app
+        if hasattr(context.request, "current_app")
+        else "admin"
+    )
 
     return f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_{arg}"
 
