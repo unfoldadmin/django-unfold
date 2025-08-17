@@ -1,19 +1,21 @@
 {% load admin_list static i18n %}
 
 <tbody {% if fieldset.collapse %} x-data="{ rowsOpen: false }" {% endif %}>
-    <tr {% if fieldset.collapse %} x-on:click="rowsOpen = !rowsOpen" {% endif %} class="{% if fieldset.collapse %}cursor-pointer{% endif %}">
-        <th class="bg-base-50 border-t border-base-200 font-semibold px-3 py-2 text-left text-font-important-light dark:text-font-important-dark dark:border-base-800 dark:bg-white/[.04] {% if forloop.first %}border-t-0{% endif %}" colspan="100%">
-            {{ fieldset.title }}
+    {% if fieldset.title %}
+        <tr {% if fieldset.collapse %} x-on:click="rowsOpen = !rowsOpen" {% endif %} class="{% if fieldset.collapse %}cursor-pointer{% endif %}">
+            <th class="bg-base-50 border-t border-base-200 font-semibold px-3 py-2 text-left text-font-important-light dark:text-font-important-dark dark:border-base-800 dark:bg-white/[.04] {% if forloop.first %}border-t-0{% endif %}" colspan="100%">
+                {{ fieldset.title }}
 
-            {% if fieldset.collapse %}
-                <span class="material-symbols-outlined float-right select-none transition-all" title="{% trans "Collapse" %}" x-bind:class="rowsOpen ? 'rotate-180' : ''">
-                    expand_more
-                </span>
-            {% endif %}
-        </th>
-    </tr>
+                {% if fieldset.collapse %}
+                    <span class="material-symbols-outlined float-right select-none transition-all" title="{% trans "Collapse" %}" x-bind:class="rowsOpen ? 'rotate-180' : ''">
+                        expand_more
+                    </span>
+                {% endif %}
+            </th>
+        </tr>
+    {% endif %}
 
-    <tr class="border-t border-base-200 dark:border-base-800 *:font-semibold *:px-3 *:py-2 *:text-left *:text-font-important-light dark:*:text-font-important-dark" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
+    <tr class="{% if fieldset.title %}border-t{% endif %} border-base-200 dark:border-base-800 *:font-semibold *:px-3 *:py-2 *:text-left *:text-font-important-light dark:*:text-font-important-dark" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
         <th>{% trans "Name" %}</th>
         <th>{% trans "Value" %}</th>
         <th>{% trans "Default" %}</th>
