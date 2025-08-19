@@ -87,6 +87,8 @@ BASE_CLASSES = [
     "dark:focus:group-[.errors]:outline-red-500",
     "dark:scheme-dark",
     "group-[.primary]:border-transparent",
+    "disabled:!bg-base-50",
+    "dark:disabled:!bg-base-800",
 ]
 
 BASE_INPUT_CLASSES = [
