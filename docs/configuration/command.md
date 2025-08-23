@@ -19,7 +19,7 @@ UNFOLD = {
     # ...
     "COMMAND": {
         "search_models": True,  # Default: False
-        "search_callback": "utils.search_callback"
+        "search_callback": "utils.search_callback",
         "show_history": True,  # Enable history
     },
     # ...
