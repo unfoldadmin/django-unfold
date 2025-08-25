@@ -39,3 +39,4 @@ class DropdownItem:
     title: str
     link: Union[str, Callable]
     icon: Optional[str] = None
+    attrs: Optional[dict] = None

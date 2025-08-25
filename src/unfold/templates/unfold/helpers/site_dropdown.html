@@ -3,7 +3,7 @@
 {% if site_dropdown %}
     <div class="absolute bg-white border border-base-200 flex flex-col left-3 py-1 rounded-default shadow-lg top-[73px] w-[264px] z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openDropdown" x-transition x-on:click.outside="openDropdown = false">
         {% for item in site_dropdown %}
-            <a href="{{ item.link }}" class="flex flex-row items-center gap-3 max-h-[30px] mx-1 px-2 py-2 rounded-default text-font-default-light dark:text-font-default-dark hover:bg-base-100 hover:text-font-important-light dark:hover:bg-base-700 dark:hover:text-font-important-dark">
+            <a href="{{ item.link }}" class="flex flex-row items-center gap-3 max-h-[30px] mx-1 px-2 py-2 rounded-default text-font-default-light dark:text-font-default-dark hover:bg-base-100 hover:text-font-important-light dark:hover:bg-base-700 dark:hover:text-font-important-dark" {% include "unfold/helpers/attrs.html" with attrs=item.attrs %}>
                 {% if item.icon %}
                     <span class="material-symbols-outlined">
                         {{ item.icon }}
