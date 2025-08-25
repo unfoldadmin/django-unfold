@@ -1,4 +1,19 @@
 
+## 0.65.0 (2025-08-25)
+
+- feat: site dropdown attrs (#1534) ([`5e64475`](https://github.com/unfoldadmin/django-unfold/commit/5e644755a61c173b69ea965dcd51f5d40dff94bb))
+- feat: disabled input state (#1523) ([`a93d9c7`](https://github.com/unfoldadmin/django-unfold/commit/a93d9c77ec4d1c23880f409f9f6127623299a2b7))
+- fix: changeform messages spacing (#1527) ([`ffe1be4`](https://github.com/unfoldadmin/django-unfold/commit/ffe1be474d389c9703d608ae2c19d7388df67380))
+- fix: template layout without constance config (#1522) ([`5df0ee8`](https://github.com/unfoldadmin/django-unfold/commit/5df0ee8c25950cf8da67169f1ad43b29eec23bf1))
+- fix: default current app in header breadcrumb (#1520) ([`83233b0`](https://github.com/unfoldadmin/django-unfold/commit/83233b0335faedd1ecd65f8d05371180d3b67c79))
+- fix: changelist parent media loading (#1517) ([`354836d`](https://github.com/unfoldadmin/django-unfold/commit/354836d8a94f9be95ddcb850fef16d6342061391))
+- fix: infinite paginator next (#1516) ([`e63ca4b`](https://github.com/unfoldadmin/django-unfold/commit/e63ca4be6409c12f035e48f4bc01a47e259be7f2))
+- fix: changelist media loading (#1507) ([`f7cf1c2`](https://github.com/unfoldadmin/django-unfold/commit/f7cf1c2053a6f54173512102fa5df7689d9f4248))
+- fix: tab navigation (#1515) ([`6b40d6a`](https://github.com/unfoldadmin/django-unfold/commit/6b40d6a704b3470bee12deb0cc9db274336eb7f7))
+- fix: header breadcrumb current app (#1511) ([`3594282`](https://github.com/unfoldadmin/django-unfold/commit/3594282090b7941f8ad293e3dae7fc3e215d04ec))
+- fix: change model type in BaseModelAdminMixin.__init__ (#1499) ([`b1da84f`](https://github.com/unfoldadmin/django-unfold/commit/b1da84f77da743e9d74355a544e3db99165c69ab))
+- chore(deps): bump actions/checkout from 4 to 5 (#1525) ([`c5f6ee8`](https://github.com/unfoldadmin/django-unfold/commit/c5f6ee89ab0a837b2aa060360f17ef8304278799))
+
 ## 0.64.2 (2025-08-12)
 
 - fix: unclosed command div (#1504) ([`e72f22f`](https://github.com/unfoldadmin/django-unfold/commit/e72f22fbd6958cb7799f107fa2375a205ceba77e))
