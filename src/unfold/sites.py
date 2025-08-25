@@ -578,6 +578,7 @@ class UnfoldAdminSite(AdminSite):
                 title=item.get("title"),
                 link=self._get_value(item["link"], *args),
                 icon=item.get("icon"),
+                attrs=item.get("attrs"),
             )
             for item in items
         ]
