@@ -119,7 +119,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
         actions_list_urls = [
             path(
-                action.path,
+                f"{action.path.removesuffix('/')}/",
                 wrap(action.method),
                 name=action.action_name,
             )
@@ -128,7 +128,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
         action_detail_urls = [
             path(
-                f"<path:object_id>/{action.path}",
+                f"<path:object_id>/{action.path.removesuffix('/')}/",
                 wrap(action.method),
                 name=action.action_name,
             )
@@ -137,7 +137,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
         action_row_urls = [
             path(
-                f"<path:object_id>/{action.path}",
+                f"<path:object_id>/{action.path.removesuffix('/')}/",
                 wrap(action.method),
                 name=action.action_name,
             )
