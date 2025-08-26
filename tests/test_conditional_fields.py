@@ -13,11 +13,11 @@ def test_conditional_fields_in_context(admin_client):
     conditional_fields_test_instance = ConditionalFieldsTestModelFactory(
         status="ACTIVE",
         conditional_field_active="Active Value",
-        conditional_field_inactive="Inactive Value"
+        conditional_field_inactive="Inactive Value",
     )
     change_url = reverse(
         "admin:example_conditionalfieldstestmodel_change",
-        args=[conditional_fields_test_instance.pk]
+        args=[conditional_fields_test_instance.pk],
     )
 
     response = admin_client.get(change_url)
@@ -25,6 +25,10 @@ def test_conditional_fields_in_context(admin_client):
     assert response.status_code == HTTPStatus.OK
     content = response.content.decode()
     # Test that the x-bind:disabled directive is present to disable hidden fields
-    assert re.search(r'x-bind:disabled="!\(status\s*===\s*&quot;ACTIVE&quot;\)"', content)
-    assert re.search(r'x-bind:disabled="!\(status\s*===\s*&quot;INACTIVE&quot;\)"', content)
+    assert re.search(
+        r'x-bind:disabled="!\(status\s*===\s*&quot;ACTIVE&quot;\)"', content
+    )
+    assert re.search(
+        r'x-bind:disabled="!\(status\s*===\s*&quot;INACTIVE&quot;\)"', content
+    )
     # TODO: test that the fields are disabled (at init & on update)
