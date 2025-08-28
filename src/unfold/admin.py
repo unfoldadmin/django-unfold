@@ -192,7 +192,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     ) -> dict[str, Any]:
         formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
 
-        if hasattr(inline, "per_page"):
+        if hasattr(inline, "per_page") and inline.per_page:
             formset_kwargs["request"] = request
             formset_kwargs["per_page"] = inline.per_page
 
