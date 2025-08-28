@@ -127,6 +127,10 @@ function searchCommand() {
       }
     },
     handleContentLoaded(event) {
+      if (event.target.id !== "command-results") {
+        return;
+      }
+
       this.items = event.target.querySelectorAll("li");
       this.currentIndex = 0;
       this.hasResults = this.items.length > 0;
