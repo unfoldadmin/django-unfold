@@ -6,7 +6,7 @@
             <li class="group"
                 x-bind:class="{'active': currentIndex === {{ forloop.counter }}}"
                 x-on:mouseenter="currentIndex = {{ forloop.counter }}">
-                <a class="bg-base-100 flex items-center rounded-default px-3.5 py-3 transition-colors group-[.active]:bg-primary-600 group-[.active]:text-white dark:bg-white/[.04] dark:text-base-200 dark:group-[.active]:bg-primary-600 dark:group-[.active]:text-white"
+                <a class="bg-base-100 flex items-center rounded-default px-3.5 py-3 group-[.active]:bg-primary-600 group-[.active]:text-white dark:bg-white/[.04] dark:text-base-200 dark:group-[.active]:bg-primary-600 dark:group-[.active]:text-white"
                    href="{{ item.link }}"
                    data-title="{{ item.title }}"
                    data-description="{{ item.description }}"
@@ -25,7 +25,7 @@
                         <span class="text-font-subtle-light dark:text-font-subtle-dark group-[.active]:text-white">{{ item.description|capfirst }}</span>
                     </span>
 
-                    <span class="material-symbols-outlined ml-auto text-sm transition-all group-[.active]:text-white group-[.active]:-mr-1">arrow_forward</span>
+                    <span class="material-symbols-outlined ml-auto text-sm transition-transform group-[.active]:text-white group-[.active]:-translate-x-[2px]">arrow_forward</span>
                 </a>
             </li>
         {% endfor %}
