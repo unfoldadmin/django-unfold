@@ -22,6 +22,7 @@ from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
 from unfold.widgets import UnfoldAdminMoneyWidget, UnfoldAdminSplitDateTimeWidget
+from django.utils.functional import Promise
 
 register = Library()
 
@@ -625,7 +626,7 @@ def header_title(context: RequestContext) -> str:
             }
         )
 
-        if (original := context.get("original")) and not isinstance(original, str):
+        if (original := context.get("original")) and not isinstance(original, (str, Promise)):
             parts.append(
                 {
                     "link": reverse_lazy(
