@@ -193,8 +193,16 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
 
         if hasattr(inline, "per_page") and inline.per_page:
-            formset_kwargs["request"] = request
-            formset_kwargs["per_page"] = inline.per_page
+            if issubclass(inline.formset, PaginationInlineFormSet) or issubclass(
+                inline.formset, PaginationGenericInlineFormSet
+            ):
+                formset_kwargs["request"] = request
+                formset_kwargs["per_page"] = inline.per_page
+            else:
+                raise ValueError(
+                    "To use 'per_page' attribute, formset must inherit from "
+                    "'PaginationInlineFormSet' or 'PaginationGenericInlineFormSet'"
+                )
 
         return formset_kwargs
 
