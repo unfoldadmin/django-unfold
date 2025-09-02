@@ -4,7 +4,7 @@
     <ul id="command-results-list" class="flex flex-col gap-1.5 p-4">
         {% for item in results %}
             <li class="group"
-                {% if forloop.last %}
+                {% if forloop.last and results.next_page_number %}
                     hx-get="{% url "admin:search" %}{% unfold_querystring extended=1 page=results.next_page_number %}"
                     hx-trigger="intersect once threshold:0.5"
                     hx-swap="beforeend"
