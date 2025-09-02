@@ -30,7 +30,7 @@
                     x-on:keydown.escape.prevent="handleEscape()"
                     x-on:keydown.arrow-down.prevent="nextItem()"
                     x-on:keydown.arrow-up.prevent="prevItem()"
-                    x-on:keydown.enter.prevent="selectItem()"
+                    x-on:keydown.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %})"
                     hx-get="{% url "admin:search" %}?extended=1"
                     hx-trigger="keyup changed delay:500ms"
                     hx-select="#command-results-list"

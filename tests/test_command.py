@@ -55,7 +55,7 @@ def test_command_search_non_existing_record(admin_client):
 )
 @pytest.mark.django_db
 def test_command_search_extended_models(admin_client, tag_factory):
-    tag_factory(name="test-tagasdfsadf")
+    tag_factory(name="test-tag")
     response = admin_client.get(reverse("admin:search") + "?s=test-tag&extended=1")
 
     assert response.status_code == HTTPStatus.OK
