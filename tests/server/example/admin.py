@@ -10,7 +10,7 @@ from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
 
-from .models import ActionUser, SectionUser, Tag, User
+from .models import ActionUser, ConditionalFieldsTestModel, SectionUser, Tag, User
 
 admin.site.unregister(Group)
 
@@ -50,6 +50,22 @@ class SectionUserAdmin(UserAdmin):
         SomeTemplateSection,
         RelatedTableSection,
     ]
+
+
+@admin.register(ConditionalFieldsTestModel)
+class ConditionalFieldsModelAdmin(ModelAdmin):
+    list_display = ["name", "status"]
+    fields = [
+        "name",
+        "status",
+        "conditional_field_active",
+        "conditional_field_inactive",
+    ]
+
+    conditional_fields = {
+        "conditional_field_active": 'status === "ACTIVE"',
+        "conditional_field_inactive": 'status === "INACTIVE"',
+    }
 
 
 @admin.register(ActionUser)
