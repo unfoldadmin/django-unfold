@@ -27,6 +27,7 @@
                        name="s"
                        x-ref="searchInput"
                        x-on:focus="openSearchResults = true; currentIndex = 0"
+                       x-on:keydown="openSearchResults = true;"
                        x-on:keydown.arrow-down.prevent="nextItem()"
                        x-on:keydown.arrow-up.prevent="prevItem()"
                        x-on:keydown.escape.prevent="openSearchResults = false; if ($refs.searchInput.value === '') { $refs.searchInput.blur() } else { $refs.searchInput.value = '' }"

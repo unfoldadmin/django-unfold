@@ -68,7 +68,7 @@ function searchDropdown() {
       }
     },
     prevItem() {
-      if (this.currentIndex > 0) {
+      if (this.currentIndex > 1) {
         this.currentIndex--;
       }
     },
