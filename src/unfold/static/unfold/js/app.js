@@ -352,7 +352,9 @@ const fileInputUpdatePath = () => {
           input.parentNode.parentNode.parentNode.querySelector(
             "input[type=text]"
           );
-        placeholder.setAttribute("value", parts[parts.length - 1]);
+        if (placeholder !== null) {
+          placeholder.setAttribute("value", parts[parts.length - 1]);
+        }
       });
 
       input.hasChangeListener = true;
