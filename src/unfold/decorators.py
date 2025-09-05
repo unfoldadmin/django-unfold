@@ -1,3 +1,4 @@
+import functools
 from collections.abc import Iterable
 from typing import Any, Callable, Optional, Union
 
@@ -22,6 +23,7 @@ def action(
     variant: Optional[ActionVariant] = ActionVariant.DEFAULT,
 ) -> ActionFunction:
     def decorator(func: Callable) -> ActionFunction:
+        @functools.wraps(func)
         def inner(
             model_admin: BaseModelAdmin,
             request: HttpRequest,
