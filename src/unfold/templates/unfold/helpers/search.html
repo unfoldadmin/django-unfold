@@ -2,21 +2,19 @@
 
 {% if sidebar_show_search %}
     {% if sidebar_command_search %}
-        <div class="mb-2.5 mx-3 relative" x-on:click="$dispatch('opencommand')">
-            <div class="bg-white border border-base-200 cursor-pointer flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">
-                <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
+        <button type="button" class="bg-white border border-base-200 cursor-pointer flex flex-row items-center mb-2.5 mx-3 px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700 text-left" x-on:click="$dispatch('opencommand')" aria-haspopup="true" aria-controls="command-palette" :aria-expanded="openCommandResults">
+            <span class="material-symbols-outlined md-18 text-base-400">manage_search</span>
 
-                <div class="grow font-medium min-w-0 overflow-hidden p-2 text-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:text-font-subtle-dark">
-                    {% trans 'Search apps and models...' %}
-                </div>
+            <span class="grow font-medium min-w-0 overflow-hidden p-2 text-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:text-font-subtle-dark">
+                {% trans 'Search apps and models...' %}
+            </span>
 
-                {% if 'Macintosh' in request.META.HTTP_USER_AGENT %}
-                    {% include "unfold/helpers/shortcut.html" with shortcut="⌘K" %}
-                {% else %}
-                    {% include "unfold/helpers/shortcut.html" with shortcut="Ctrl + K" %}
-                {% endif %}
-            </div>
-        </div>
+            {% if 'Macintosh' in request.META.HTTP_USER_AGENT %}
+                {% include "unfold/helpers/shortcut.html" with shortcut="⌘K" %}
+            {% else %}
+                {% include "unfold/helpers/shortcut.html" with shortcut="Ctrl + K" %}
+            {% endif %}
+        </button>
     {% else %}
         <div class="mb-2.5 mx-3 relative" x-data="searchDropdown()" x-on:keydown.window="applyShortcut($event)" x-on:click.outside="openSearchResults = false">
             <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 dark:bg-base-900 dark:border-base-700">

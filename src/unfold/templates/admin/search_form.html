@@ -4,6 +4,7 @@
     <div id="toolbar">
         <form id="changelist-search" method="get" role="search" x-data="searchForm()">
             <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 lg:w-96 dark:bg-base-900 dark:border-base-700">
+                <label for="searchbar" class="sr-only">{% trans "Search" %}</label>
                 <button type="submit" class="flex items-center focus:outline-hidden" id="searchbar-submit">
                     <span class="material-symbols-outlined md-18 text-base-400 dark:text-base-500">search</span>
                 </button>

@@ -1,12 +1,17 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]"
+    <div id="command-palette"
+         class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]"
          x-data="searchCommand()"
          x-on:opencommand.window="handleOpen()"
          x-on:keydown.window="handleShortcut($event)"
-         x-show="openCommandResults">
+         x-show="openCommandResults"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="command-palette-title">
         <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
+            <h2 id="command-palette-title" class="sr-only">{% trans "Command palette" %}</h2>
             <div class="flex flex-row items-center px-4 w-full">
                 <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
                     <span class="block material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:hidden">
@@ -18,6 +23,7 @@
                     </span>
                 </button>
 
+                <label for="search-input-command" class="sr-only">{% trans "Search command" %}</label>
                 <input
                     autocomplete="off"
                     type="search"
@@ -35,13 +41,16 @@
                     hx-trigger="keyup changed delay:500ms"
                     hx-select="#command-results-list"
                     hx-select-oob="#command-results-note"
-                    hx-target="#command-results">
+                    hx-target="#command-results-list"
+                    role="combobox"
+                    aria-autocomplete="list"
+                    aria-controls="command-results-list">
 
                 {% include "unfold/helpers/shortcut.html" with shortcut="esc" %}
             </div>
 
             <div class="grow h-full overflow-auto w-full dark:border-base-700" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)" x-bind:class="{'border-t border-base-200': items !== undefined && items.length > 0}">
-                <div id="command-results"></div>
+                <div id="command-results-list" role="listbox"></div>
 
                 {% if command_show_history %}
                     {% include "unfold/helpers/command_history.html" %}
