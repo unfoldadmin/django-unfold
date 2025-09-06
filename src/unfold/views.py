@@ -4,6 +4,7 @@ import django
 from django.contrib.admin.views.main import ERROR_FLAG, PAGE_VAR
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import TemplateView
 
 from unfold.exceptions import UnfoldException
 
@@ -37,16 +38,35 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
                 "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"
             )
 
-        if not hasattr(self, "title"):
+        if not hasattr(self, "title") and not hasattr(self, "get_title"):
             raise UnfoldException(
-                "UnfoldModelAdminViewMixin was not provided with 'title' attribute"
+                "UnfoldModelAdminViewMixin requires a 'title' attribute or a 'get_title' method."
             )
 
-        return super().get_context_data(
-            **kwargs,
+        context = {
+            "title": self.get_title(),
+            "model_admin": self.model_admin,
             **self.model_admin.admin_site.each_context(self.request),
-            **{
-                "title": self.title,
-                "model_admin": self.model_admin,
-            },
-        )
+        }
+        context.update(kwargs)
+        return super().get_context_data(**context)
+
+    def get_title(self) -> str:
+        return self.title
+
+
+class UnfoldAdminView(UnfoldModelAdminViewMixin, TemplateView):
+    """
+    Base class for creating custom admin views.
+    """
+
+    title = None
+    template_name = None
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context.update(self.get_extra_context())
+        return context
+
+    def get_extra_context(self) -> dict[str, Any]:
+        return {}

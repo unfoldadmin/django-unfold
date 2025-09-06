@@ -5,10 +5,10 @@
     </h2>
 {% endif %}
 
-<div class="grow relative {% if icon %} pl-6{% endif %}">
-    {{ children }}
+<div class="grow relative {% if component.icon %} pl-6{% endif %}">
+    {{ component.children }}
 
-    {% if label %}
+    {% if component.label %}
         <div class="absolute right-0 top-0">
             {% include "unfold/helpers/label.html" with text=label type="primary" %}
         </div>

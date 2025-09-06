@@ -18,8 +18,9 @@ from django.urls import reverse_lazy
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from unfold.components import ComponentRegistry
+import inspect
 from unfold.dataclasses import UnfoldAction
+from unfold import components
 from unfold.enums import ActionVariant
 from unfold.widgets import UnfoldAdminMoneyWidget, UnfoldAdminSplitDateTimeWidget
 
@@ -241,11 +242,22 @@ class RenderComponentNode(template.Node):
             }
         )
 
-        if "component_class" in values:
-            values = ComponentRegistry.create_instance(
-                values["component_class"],
-                request=context.request if hasattr(context, "request") else None,
-            ).get_context_data(**values)
+        if self.include_context:
+            values.update(context.flatten())
+
+        if self.template_name not in components.component_registry:
+            raise TemplateSyntaxError(
+                f"Component '{self.template_name}' is not registered."
+            )
+
+        component_class = components.component_registry[self.template_name]
+        component_fields = {f.name for f in component_class.__dataclass_fields__.values()}
+        component_kwargs = {k: v for k, v in values.items() if k in component_fields or k == 'class'}
+
+        if "class" in component_kwargs:
+            component_kwargs["class_"] = component_kwargs.pop("class")
+
+        values["component"] = component_class(**component_kwargs)
 
         if self.include_context:
             values.update(context.flatten())
