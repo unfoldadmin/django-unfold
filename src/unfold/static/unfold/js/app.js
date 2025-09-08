@@ -299,6 +299,33 @@ const filterForm = () => {
       if (value === "") event.formData.delete(key);
     });
   });
+
+  const selectors = [
+    'select[name*="__exact"]',
+    'select[name*="__icontains"]',
+    'select[name*="__in"]',
+    ".admin-autocomplete",
+    ".unfold-admin-autocomplete",
+    "#changelist-filters select"
+  ];
+
+  filterForm.querySelectorAll(selectors.join(", ")).forEach((select) => {
+    if (select.multiple) return;
+
+    select.addEventListener("change", (event) => {
+      const url = new URL(window.location);
+      const params = url.searchParams;
+
+      if (event.target.value) {
+        params.set(event.target.name, event.target.value);
+      } else {
+        params.delete(event.target.name);
+      }
+
+      params.delete("p");
+      window.location.href = url.pathname + "?" + params.toString();
+    });
+  });
 };
 
 /*************************************************************
