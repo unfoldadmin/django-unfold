@@ -108,3 +108,71 @@ def test_command_search_extended_model_with_permission(
     )
     assert response.status_code == HTTPStatus.OK
     assert "sample-test-tag-with-permission" in response.content.decode()
+
+
+@pytest.mark.django_db
+@override_settings(
+    CACHES={"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
+)
+def test_command_allowed_models(admin_client, admin_user, tag_factory):
+    tag_factory(name="another-test-tag")
+
+    with override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "COMMAND": {
+                    "search_models": False,
+                }
+            },
+        }
+    ):
+        response = admin_client.get(
+            reverse("admin:search") + "?s=another-test-tag&extended=1"
+        )
+        assert "another-test-tag" not in response.content.decode()
+
+    with override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "COMMAND": {
+                    "search_models": True,
+                }
+            },
+        }
+    ):
+        response = admin_client.get(
+            reverse("admin:search") + "?s=another-test-tag&extended=1"
+        )
+        assert "another-test-tag" in response.content.decode()
+
+    with override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "COMMAND": {
+                    "search_models": [],
+                }
+            },
+        }
+    ):
+        response = admin_client.get(
+            reverse("admin:search") + "?s=another-test-tag&extended=1"
+        )
+        assert "another-test-tag" not in response.content.decode()
+
+    with override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "COMMAND": {
+                    "search_models": ["example.tag"],
+                }
+            },
+        }
+    ):
+        response = admin_client.get(
+            reverse("admin:search") + "?s=another-test-tag&extended=1"
+        )
+        assert "another-test-tag" in response.content.decode()
