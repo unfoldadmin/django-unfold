@@ -68,7 +68,7 @@ function searchDropdown() {
       }
     },
     prevItem() {
-      if (this.currentIndex > 0) {
+      if (this.currentIndex > 1) {
         this.currentIndex--;
       }
     },
@@ -93,6 +93,7 @@ function searchCommand() {
     hasResults: false,
     openCommandResults: false,
     currentIndex: 0,
+    totalItems: 0,
     commandHistory: JSON.parse(localStorage.getItem("commandHistory") || "[]"),
     handleOpen() {
       this.openCommandResults = true;
@@ -102,6 +103,7 @@ function searchCommand() {
       }, 20);
 
       this.items = document.querySelectorAll("#command-history li");
+      this.totalItems = this.items.length;
     },
     handleShortcut(event) {
       if (
@@ -121,25 +123,35 @@ function searchCommand() {
         this.openCommandResults = false;
         this.el.innerHTML = "";
         this.items = undefined;
+        this.totalItems = 0;
         this.currentIndex = 0;
       } else {
         this.$refs.searchInputCommand.value = "";
       }
     },
     handleContentLoaded(event) {
-      if (event.target.id !== "command-results") {
+      if (
+        event.target.id !== "command-results" &&
+        event.target.id !== "command-results-list"
+      ) {
         return;
       }
 
-      this.items = event.target.querySelectorAll("li");
-      this.currentIndex = 0;
-      this.hasResults = this.items.length > 0;
+      this.items = document
+        .getElementById("command-results-list")
+        .querySelectorAll("li");
+      this.totalItems = this.items.length;
+
+      if (event.target.id === "command-results") {
+        this.currentIndex = 0;
+        this.totalItems = this.items.length;
+      }
+
+      this.hasResults = this.totalItems > 0;
 
       if (!this.hasResults) {
         this.items = document.querySelectorAll("#command-history li");
       }
-
-      new SimpleBar(event.target);
     },
     handleOutsideClick() {
       this.$refs.searchInputCommand.value = "";
@@ -162,7 +174,7 @@ function searchCommand() {
       }
     },
     nextItem() {
-      if (this.currentIndex < this.items.length) {
+      if (this.currentIndex < this.totalItems) {
         this.currentIndex++;
         this.scrollToActiveItem();
       }

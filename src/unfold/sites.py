@@ -6,6 +6,7 @@ from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
 from django.core.cache import cache
+from django.core.paginator import Paginator
 from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
@@ -255,7 +256,8 @@ class UnfoldAdminSite(AdminSite):
     ) -> TemplateResponse:
         start_time = time.time()
 
-        CACHE_TIMEOUT = 10
+        CACHE_TIMEOUT = 5 * 60
+        PER_PAGE = 100
 
         search_term = request.GET.get("s")
         extended_search = "extended" in request.GET
@@ -294,11 +296,15 @@ class UnfoldAdminSite(AdminSite):
 
         execution_time = time.time() - start_time
 
+        paginator = Paginator(results, PER_PAGE)
+
         return TemplateResponse(
             request,
             template=template_name,
             context={
-                "results": results,
+                "page_obj": paginator,
+                "results": paginator.page(request.GET.get("page", 1)),
+                "page_counter": (int(request.GET.get("page", 1)) - 1) * PER_PAGE,
                 "execution_time": execution_time,
                 "command_show_history": self._get_config("COMMAND", request).get(
                     "show_history"
