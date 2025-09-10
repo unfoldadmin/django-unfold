@@ -210,12 +210,23 @@ class UnfoldAdminSite(AdminSite):
         return results
 
     def _search_models(
-        self, request: HttpRequest, app_list: list[dict[str, Any]], search_term: str
+        self,
+        request: HttpRequest,
+        app_list: list[dict[str, Any]],
+        search_term: str,
+        allowed_models: Optional[list[str]] = None,
     ) -> list[SearchResult]:
         results = []
 
         for app in app_list:
             for model in app["models"]:
+                # Skip models which are not allowed
+                if isinstance(allowed_models, (list, tuple)):
+                    if model["model"]._meta.label.lower() not in [
+                        m.lower() for m in allowed_models
+                    ]:
+                        continue
+
                 admin_instance = self._registry.get(model["model"])
                 search_fields = admin_instance.get_search_fields(request)
 
@@ -278,25 +289,40 @@ class UnfoldAdminSite(AdminSite):
             results = cache_results
         else:
             results = self._search_apps(app_list, search_term)
-            search_models = self._get_config("COMMAND", request).get("search_models")
-            search_callback = self._get_config("COMMAND", request).get(
-                "search_callback"
-            )
 
             if extended_search:
-                if search_callback:
+                if search_callback := self._get_config("COMMAND", request).get(
+                    "search_callback"
+                ):
                     results.extend(
                         self._get_value(search_callback, request, search_term)
                     )
 
-                if search_models is True:
-                    results.extend(self._search_models(request, app_list, search_term))
+                search_models = self._get_value(
+                    self._get_config("COMMAND", request).get("search_models"), request
+                )
+
+                if search_models is True or isinstance(search_models, (list, tuple)):
+                    allowed_models = (
+                        search_models
+                        if isinstance(search_models, (list, tuple))
+                        else None
+                    )
+
+                    results.extend(
+                        self._search_models(
+                            request, app_list, search_term, allowed_models
+                        )
+                    )
 
             cache.set(cache_key, results, timeout=CACHE_TIMEOUT)
 
         execution_time = time.time() - start_time
-
         paginator = Paginator(results, PER_PAGE)
+
+        show_history = self._get_value(
+            self._get_config("COMMAND", request).get("show_history"), request
+        )
 
         return TemplateResponse(
             request,
@@ -306,9 +332,7 @@ class UnfoldAdminSite(AdminSite):
                 "results": paginator.page(request.GET.get("page", 1)),
                 "page_counter": (int(request.GET.get("page", 1)) - 1) * PER_PAGE,
                 "execution_time": execution_time,
-                "command_show_history": self._get_config("COMMAND", request).get(
-                    "show_history"
-                ),
+                "command_show_history": show_history,
             },
             headers={
                 "HX-Trigger": "search",

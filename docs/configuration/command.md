@@ -28,6 +28,27 @@ UNFOLD = {
 
 Command results use infinite scrolling with a default page size of 100 results. When the last item becomes visible in the viewport, a new page of results is automatically loaded and appended to the existing list, allowing continuous browsing through search results.
 
+## Search only specific models
+
+- `search_models` accepts `list` or `tuple` of allowed models which can be searched
+
+```python
+UNFOLD = {
+    # ...
+    "COMMAND": {
+        "search_models": ["example.sample"], # List or tuple
+        # "search_models": "example.utils.search_models_callback"
+    },
+    # ...
+}
+
+# utils.py
+def search_models_callback(request):
+    return [
+        "example.sample",
+    ]
+```
+
 ## Custom search callback
 
 The search callback feature provides a way to define a custom hook that can inject additional content into search results. This is particularly useful when you want to search for results from external sources or services beyond the Django admin interface.

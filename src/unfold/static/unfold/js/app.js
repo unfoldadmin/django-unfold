@@ -137,14 +137,25 @@ function searchCommand() {
         return;
       }
 
-      this.items = document
-        .getElementById("command-results-list")
-        .querySelectorAll("li");
-      this.totalItems = this.items.length;
+      const commandResultsList = document.getElementById(
+        "command-results-list"
+      );
+      if (commandResultsList) {
+        this.items = commandResultsList.querySelectorAll("li");
+        this.totalItems = this.items.length;
+      } else {
+        this.items = undefined;
+        this.totalItems = 0;
+      }
 
       if (event.target.id === "command-results") {
         this.currentIndex = 0;
-        this.totalItems = this.items.length;
+
+        if (this.items) {
+          this.totalItems = this.items.length;
+        } else {
+          this.totalItems = 0;
+        }
       }
 
       this.hasResults = this.totalItems > 0;
