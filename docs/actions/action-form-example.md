@@ -13,7 +13,7 @@ This example demonstrates how to create an action that displays a custom form wh
 
 from django import forms
 from django.contrib.auth.models import User
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -24,7 +24,7 @@ from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldAdminSplitDateTimeW
 
 
 class SomeForm(forms.Form):
-    # It is important to set a widget coming from Unfold
+    # It is important to set up a widget from Unfold.
     date_start = forms.SplitDateTimeField(label=_("Start"), widget=UnfoldAdminSplitDateTimeWidget)
     date_end = forms.SplitDateTimeField(label=_("End"), widget=UnfoldAdminSplitDateTimeWidget)
     note = forms.CharField(label=_("Note"), widget=UnfoldAdminTextInputWidget)
@@ -45,8 +45,8 @@ class UserAdmin(ModelAdmin):
     actions_detail = ["change_detail_action"]
 
     @action(description=_("Change detail action"), url_path="change-detail-action")
-    def change_detail_action(self, request: HttpRequest, object_id: int) -> str:
-        # Check if object already exists, otherwise returs 404
+    def change_detail_action(self, request: HttpRequest, object_id: int) -> HttpResponse:
+        # Check whether the object already exists; otherwise, return a 404 error.
         obj = get_object_or_404(User, pk=object_id)
         form = SomeForm(request.POST or None)
 
@@ -74,7 +74,7 @@ class UserAdmin(ModelAdmin):
         )
 ```
 
-Template displaying the form. Please note that breadcrumbs are empty in this case but if you want, you can configure your own breadcrumbs path.
+This is the template for the form. Please note that the breadcrumbs are empty in this case, but you can configure your own breadcrumb path if you wish.
 
 ```html
 {% extends "admin/base_site.html" %}
