@@ -83,6 +83,24 @@ def display_for_label(value: Any, empty_value_display: str, label: Any) -> SafeT
     )
 
 
+def display_for_template(
+    value: dict, empty_value_display: str, template: str
+) -> SafeText:
+    if not isinstance(value, dict):
+        raise UnfoldException("Display template requires dict")
+
+    context = value or {}
+
+    return mark_safe(
+        render_to_string(
+            template,
+            {
+                **context,
+            },
+        )
+    )
+
+
 def display_for_value(
     value: Any, empty_value_display: str, boolean: bool = False
 ) -> str:

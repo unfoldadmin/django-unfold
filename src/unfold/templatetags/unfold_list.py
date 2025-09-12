@@ -32,6 +32,7 @@ from unfold.utils import (
     display_for_field,
     display_for_header,
     display_for_label,
+    display_for_template,
     display_for_value,
 )
 from unfold.widgets import UnfoldBooleanWidget
@@ -229,6 +230,7 @@ def items_for_result(
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)
                 dropdown = getattr(attr, "dropdown", False)
+                template = getattr(attr, "template", False)
 
                 if label:
                     result_repr = display_for_label(value, empty_value_display, label)
@@ -238,6 +240,10 @@ def items_for_result(
                     )
                 elif header:
                     result_repr = display_for_header(value, empty_value_display)
+                elif template:
+                    result_repr = display_for_template(
+                        value, empty_value_display, template
+                    )
                 else:
                     result_repr = display_for_value(value, empty_value_display, boolean)
 
