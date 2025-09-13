@@ -80,3 +80,7 @@ AUTH_PASSWORD_VALIDATORS = [
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOCALE_PATHS = [
+    Path(__file__).resolve().parent.parent.parent.parent / "src" / "unfold" / "locale"
+]
