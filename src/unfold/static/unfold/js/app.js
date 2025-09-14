@@ -8,21 +8,31 @@ window.addEventListener("load", (e) => {
   filterForm();
 
   warnWithoutSaving();
+
+  inlines();
 });
 
 /*************************************************************
  * Alpine.sort.js callback after sorting
  *************************************************************/
 const sortRecords = (e) => {
-  const orderingField = e.from.dataset.orderingField;
-
-  const weightInputs = Array.from(
-    e.from.querySelectorAll(`.has_original input[name$=-${orderingField}]`)
-  );
-
-  weightInputs.forEach((input, index) => {
+  e.from.querySelectorAll(`.form-group.original`).forEach((row, index) => {
+    input = row.querySelector(`input[name$=-${e.from.dataset.orderingField}]`);
     input.value = index;
   });
+};
+
+/*************************************************************
+ * Alpine.sort.js callback before moving records
+ *************************************************************/
+const moveRecords = (e) => {
+  if (
+    (e.related.classList.contains("template") ||
+      e.related.classList.contains("form-actions")) &&
+    e.willInsertAfter
+  ) {
+    return false;
+  }
 };
 
 /*************************************************************
@@ -312,7 +322,7 @@ const watchClassChanges = (selector, callback) => {
 /*************************************************************
  * Calendar & clock
  *************************************************************/
-const dateTimeShortcutsOverlay = () => {
+function dateTimeShortcutsOverlay() {
   const observer = new MutationObserver((mutations) => {
     for (const mutationRecord of mutations) {
       const display = mutationRecord.target.style.display;
@@ -334,19 +344,19 @@ const dateTimeShortcutsOverlay = () => {
       attributeFilter: ["style"],
     });
   }
-};
+}
 
 /*************************************************************
  * File upload path
  *************************************************************/
-const fileInputUpdatePath = () => {
-  const checkInputChanged = () => {
+function fileInputUpdatePath() {
+  function checkInputChanged() {
     for (const input of document.querySelectorAll("input[type=file]")) {
       if (input.hasChangeListener) {
         continue;
       }
 
-      input.addEventListener("change", (e) => {
+      input.addEventListener("change", function (e) {
         const parts = e.target.value.split("\\");
         const placeholder =
           input.parentNode.parentNode.parentNode.querySelector(
@@ -357,9 +367,9 @@ const fileInputUpdatePath = () => {
 
       input.hasChangeListener = true;
     }
-  };
+  }
 
-  new MutationObserver(() => {
+  new MutationObserver(function () {
     checkInputChanged();
   }).observe(document.body, {
     childList: true,
@@ -367,7 +377,7 @@ const fileInputUpdatePath = () => {
   });
 
   checkInputChanged();
-};
+}
 
 /*************************************************************
  * Chart
@@ -520,3 +530,258 @@ const renderCharts = () => {
     changeDarkModeSettings();
   });
 };
+
+/*************************************************************
+ * Inlines
+ *************************************************************/
+function inlines() {
+  /**
+   * Replacing: https://github.com/django/django/blob/main/django/contrib/admin/static/admin/js/inlines.js
+   *
+   * Expected HTML structure:
+   *
+   * <div class="formset-wrapper">
+   *     ... management form ...
+   *     <div class="formset">
+   *         <div class="form-group">
+   *             <div class="form-row">inputs</div>
+   *             <div class="form-nested">nested inlines if exists</div>
+   *         </div>
+   *
+   *         ... another form group ...
+   *
+   *         <div class="form-actions">
+   *             <div class="add-row">Add record button</div>
+   *         </div>
+   *     </div>
+   * </div>
+   */
+  document.querySelectorAll(".add-row").forEach(function (el) {
+    el.addEventListener("click", addInlinesRowHandler);
+  });
+
+  document.querySelectorAll(".delete-template").forEach(function (el) {
+    el.addEventListener("click", deleteTemplateHandler);
+  });
+}
+
+function deleteTemplateHandler(e) {
+  const formset = e.target.closest(".formset");
+  const options = JSON.parse(formset.dataset.inlineFormset).options;
+  const formsetWrapper = e.target.closest(".formset-wrapper");
+  const minNumForms = formsetWrapper.querySelector(
+    "input[type=hidden][name$='MIN_NUM_FORMS']"
+  );
+  const totalForms = formsetWrapper.querySelector(
+    "input[type=hidden][name$='TOTAL_FORMS']"
+  );
+  const maxNumForms = formsetWrapper.querySelector(
+    "input[type=hidden][name$='MAX_NUM_FORMS']"
+  );
+  const rowToDelete = e.target.closest(".form-group");
+
+  if (parseInt(totalForms.value) == parseInt(minNumForms.value)) {
+    return;
+  }
+
+  let reindex = false;
+  formset
+    .querySelectorAll(":scope > .form-group:not(.empty-form)")
+    .forEach((row, index) => {
+      if (rowToDelete.isSameNode(row)) {
+        reindex = true;
+      }
+
+      if (!rowToDelete.isSameNode(row) && reindex) {
+        const content = row.querySelector(":scope > .form-row");
+
+        content.innerHTML = content.innerHTML.replaceAll(
+          `${options.prefix}-${index}`,
+          `${options.prefix}-${index - 1}`
+        );
+
+        // Reindex nested formset
+        const nestedFormset = row.querySelector(":scope .form-nested");
+        if (nestedFormset) {
+          nestedFormset.innerHTML = nestedFormset.innerHTML.replaceAll(
+            `${options.prefix}-${index}`,
+            `${options.prefix}-${index - 1}`
+          );
+        }
+      }
+    });
+
+  const rowToDeleteParent = rowToDelete.parentElement;
+  rowToDelete.remove();
+  updateStackedCounter(rowToDeleteParent);
+
+  // Update total forms count
+  totalForms.value = parseInt(
+    formset.querySelectorAll(":scope > .form-group:not(.empty-form)").length
+  );
+
+  // Apply delete event
+  formset.querySelectorAll(".delete-template").forEach(function (el) {
+    el.removeEventListener("click", deleteTemplateHandler);
+    el.addEventListener("click", deleteTemplateHandler);
+  });
+
+  // Show add button
+  if (parseInt(totalForms.value) < parseInt(maxNumForms.value)) {
+    formset.querySelector(".add-row").classList.remove("hidden");
+  }
+
+  applyLastClass(formset);
+
+  document.dispatchEvent(
+    new CustomEvent("formset:removed", {
+      detail: {
+        formsetName: options.prefix,
+      },
+    })
+  );
+}
+
+function addInlinesRowHandler(e) {
+  e.preventDefault();
+
+  const formset = e.target.closest(".formset");
+  const formsetWrapper = e.target.closest(".formset-wrapper");
+  const totalForms = formsetWrapper.querySelector(
+    "input[type=hidden][name$='TOTAL_FORMS']"
+  );
+  const maxNumForms = formsetWrapper.querySelector(
+    "input[type=hidden][name$='MAX_NUM_FORMS']"
+  );
+  const template = formset.querySelector(":scope >.empty-form");
+  const index = formset.querySelectorAll(":scope > .form-group").length - 1;
+  const options = JSON.parse(formset.dataset.inlineFormset).options;
+  const row = template.cloneNode(true);
+
+  row.classList.remove("empty-form");
+
+  if (parseInt(totalForms.value) >= parseInt(maxNumForms.value)) {
+    return;
+  }
+
+  // Insert new row BEFORE template row which is always last in formset
+  formset.insertBefore(row, template);
+  applyLastClass(formset);
+
+  // Stacked inlines are having a counter in title
+  updateStackedCounter(row.parentElement);
+
+  // Replace __prefix__ in RECENTLY ADDED row
+  const formRow = row.querySelector(":scope > .form-row");
+  formRow.innerHTML = formRow.innerHTML.replaceAll(/__prefix__/g, index);
+
+  // Update hidden TOTAL_FORMS input value
+  totalForms.value = parseInt(totalForms.value) + 1;
+
+  // Hide add row button if it is not possible to add more rows
+  if (totalForms.value == maxNumForms.value) {
+    e.target.classList.add("hidden");
+  }
+
+  // Call special `formsetGroup:added` event to reinitialize inlines
+  row.dispatchEvent(
+    new CustomEvent("formsetGroup:added", {
+      bubbles: true,
+      detail: {
+        formsetName: options.prefix,
+        row: row,
+        index: index,
+      },
+    })
+  );
+}
+
+document.addEventListener("formsetGroup:added", function (e) {
+  if (!e.detail.row) {
+    return;
+  }
+
+  e.detail.row.innerHTML = e.detail.row.innerHTML.replaceAll(
+    `${e.detail.formsetName}-__prefix__`,
+    `${e.detail.formsetName}-${e.detail.index}`
+  );
+
+  if (typeof DateTimeShortcuts !== "undefined") {
+    document.querySelectorAll(".datetimeshortcuts").forEach(function (el) {
+      el.remove();
+    });
+
+    DateTimeShortcuts.init();
+    dateTimeShortcutsOverlay();
+  }
+
+  e.detail.row.querySelector(":scope > .form-row").dispatchEvent(
+    new CustomEvent("formset:added", {
+      bubbles: true,
+      detail: { formsetName: e.detail.formsetName },
+    })
+  );
+
+  e.detail.row
+    .querySelectorAll(".nested-formset > .form-group:not(.empty-form)")
+    .forEach(function (formGroup) {
+      formGroup.querySelector(".form-row").dispatchEvent(
+        new CustomEvent("formset:added", {
+          bubbles: true,
+          detail: { formsetName: e.detail.formsetName },
+        })
+      );
+    });
+
+  e.detail.row.querySelectorAll(".add-row").forEach(function (el) {
+    el.addEventListener("click", addInlinesRowHandler);
+  });
+
+  e.detail.row.querySelectorAll(".delete-template").forEach(function (el) {
+    el.addEventListener("click", deleteTemplateHandler);
+  });
+});
+
+function applyLastClass(formset) {
+  formset.querySelectorAll(":scope > .form-group").forEach(function (row) {
+    if (row.classList.contains("last")) {
+      row.classList.remove("last");
+    }
+
+    if (
+      row.nextElementSibling.classList.contains("empty-form") ||
+      row.nextElementSibling.classList.contains("form-actions")
+    ) {
+      row.classList.add("last");
+    }
+  });
+}
+
+function updateStackedCounter(rowsParent) {
+  rowsParent
+    .querySelectorAll(":scope > .form-group:not(.empty-form) > .form-row")
+    .forEach(function (row, index) {
+      const counter = row.querySelector(".stacked-counter");
+
+      if (counter) {
+        counter.textContent = index + 1;
+      }
+    });
+}
+
+/*************************************************************
+ * Reinitialize inlines after pagination AJAX request
+ *************************************************************/
+document.addEventListener("htmx:afterSettle", function (e) {
+  e.target.querySelectorAll(".form-row").forEach(function (formRow) {
+    formRow.dispatchEvent(
+      new CustomEvent("formset:added", {
+        bubbles: true,
+        detail: {
+          formsetName: JSON.parse(e.target.dataset.inlineFormset).options
+            .prefix,
+        },
+      })
+    );
+  });
+});

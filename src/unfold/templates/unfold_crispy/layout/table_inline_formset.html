@@ -52,7 +52,7 @@
 
             {% if form_add and formset_id %}
                 <tbody>
-                    <tr class="empty-form">
+                    <tr class="hidden empty-form">
                         {% for field in formset.empty_form %}
                             {% include 'unfold_crispy/field.html' with tag="td" %}
                         {% endfor %}
@@ -85,7 +85,7 @@
                 const formCount = parseInt(formTotalEl.value);
                 const newForm = document.querySelector('#{{ formset_id }} .empty-form').cloneNode(true);
 
-                newForm.classList.remove('empty-form');
+                newForm.classList.remove('empty-form', 'hidden');
                 newForm.innerHTML = newForm.innerHTML.replaceAll(/__prefix__/g, formCount);
 
                 document.getElementById('{{ formset_id }}-rows').insertBefore(

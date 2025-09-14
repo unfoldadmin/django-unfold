@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
+    <div class="absolute backdrop-blur-xs border-b border-base shadow-inner flex items-center justify-center gap-1.5 top-0 left-0 w-full h-full bg-white/50 dark:bg-base-900/80 dark:border-base-800 {% if nested_inline %}z-40{% else %}z-50{% endif %}">
+        <span>{% trans "This item will be deleted." %}</span>
+
+        <label for="{{ inline_admin_form.deletion_field.field.id_for_label }}" class="cursor-pointer font-medium flex gap-1 items-center text-red-600 dark:text-red-500">
+            {% trans "Click to cancel" %} <span class="material-symbols-outlined">undo</span>
+        </label>
+    </div>
+{% endif %}

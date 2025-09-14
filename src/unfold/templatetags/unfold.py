@@ -757,3 +757,8 @@ def has_nested_tables(table: dict) -> bool:
     return any(
         isinstance(row, dict) and "table" in row for row in table.get("rows", [])
     )
+
+
+@register.filter
+def inline_add_button_text(json_string: str) -> str:
+    return json.loads(json_string)["options"]["addText"]

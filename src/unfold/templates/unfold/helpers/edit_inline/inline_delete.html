@@ -1,0 +1,13 @@
+{% load unfold %}
+
+{% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
+    <{% if inline_admin_form.original %}label{% else %}div{% endif %} class="cursor-pointer flex h-[38px] w-[38px] items-center justify-center rounded-default select-none transition-colors hover:bg-base-50 dark:hover:bg-base-800 {% if not inline_admin_form.original %}delete-template{% endif %}">
+    <span class="material-symbols-outlined md-18 text-red-600 dark:text-red-500">delete</span>
+
+    {% if inline_admin_form.original %}
+        <div class="hidden">
+            {{ inline_admin_form.deletion_field.field|add_css_class:"delete" }}
+        </div>
+    {% endif %}
+    </{% if inline_admin_form.original %}label{% else %}div{% endif %}>
+{% endif %}
