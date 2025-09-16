@@ -9,16 +9,17 @@
   }
 }
 
-@source inline("bg-white/[.06] border-white/40 h-3 w-3 h-[64px] w-[65px]! left-[65px] {dark:,}text-base-{50,{100..900},950} dark:hover:bg-white/[.06] translate-x-1/4 -translate-y-1/4");
-@source inline("{-,}{top,bottom,left,right}-{0..6}");
+@source inline("aspect-square bg-white/[.06] border-white/40 h-3 w-3 h-[64px] w-[65px]! left-[65px] {dark:,}text-base-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
+@source inline("{-,}{top,bottom,left,right}-{1/2,0..6} {!,}leading-[38px]");
+@source inline("bg-linear-to-{t,r,b,l} from-primary-{50,{100..900..100},950} to-primary-{50,{100..900..100},950}");
 @source inline("rounded rounded-{t,r,b,l} rounded-{t,r,b,l}-default");
 @source inline("{md:,lg:,2xl:,}relative {md:,lg:,2xl:,}flex {md:,lg:,2xl:,}absolute {md:,lg:,2xl:,}sticky");
-@source inline("{-,}m{t,r,b,l,x,y,}-{0..6} {-,}p{t,r,b,l,x,y,}-{0..6}");
+@source inline("{-,}m{t,r,b,l,x,y,}-{0..24} {-,}p{t,r,b,l,x,y,}-{0..24}");
 @source inline("{md:,lg:,}border-{0,2} {md:,lg:,}border-{t,r,b,l}-{0,2}");
 @source inline("{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
 @source inline("{hover:,dark:,}border-base-{50,{100..900..100},950} {hover:,dark:,}border-transparent");
 @source inline("{hover:,dark:,}bg-base-{50,{100..900..100},950}");
-@source inline("{md:,lg:,}w-{1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5,1/6,2/6,3/6,4/6,5/6,1/7,2/7,3/7,4/7,5/7,6/7}");
+@source inline("{md:,lg:,}w-{1,1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5,1/6,2/6,3/6,4/6,5/6,1/7,2/7,3/7,4/7,5/7,6/7}");
 @source inline("{md:,lg:,}gap-{0.5,{1..12}}");
 @source inline("{md:,lg:,}grid-cols-{1..12}");
 @source inline("{md:,lg:,}col-span-{1..12}");
@@ -29,7 +30,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-base-200, currentColor);
   }
 }
 
@@ -99,7 +100,7 @@
 }
 
 @utility scrollable-top {
-  @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-gray-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
+  @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-base-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
 }
 
 @utility md-16 {

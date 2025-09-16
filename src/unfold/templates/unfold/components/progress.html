@@ -1,23 +1,21 @@
-<div class="{% if class %}{{ class }}{% endif %}">
-    <div class="flex flex-col gap-2 relative">
-        <div class="flex flex-row relative z-20">
-            {% if title %}
-                <h3 class="text-font-important-light dark:text-font-important-dark text-sm">
-                    {{ title }}
-                </h3>
-            {% endif %}
+<div class="flex flex-col gap-2 relative w-full {% if class %}{{ class }}{% endif %}">
+    <div class="flex flex-row relative z-20">
+        {% if title %}
+            <h3 class="text-font-important-light dark:text-font-important-dark text-sm">
+                {{ title }}
+            </h3>
+        {% endif %}
 
-            {% if description %}
-                <strong class="bg-base-100 font-medium text-font-important-light ml-auto px-1.5 py-1 rounded-default text-xs dark:text-font-important-dark dark:bg-base-800">
-                    {{ description }}
-                </strong>
-            {% endif %}
-        </div>
-
-        {% if value %}
-            <div class="bg-gray-100 overflow-hidden rounded-default dark:bg-base-800">
-                <div class="h-1.5 bg-primary-600 rounded-default z-10 dark:bg-primary-500" title="{{ value }}%" style="width: {{ value }}%"></div>
-            </div>
+        {% if description %}
+            <strong class="bg-base-100 font-medium text-font-important-light ml-auto px-1.5 py-1 rounded-default text-xs dark:text-font-important-dark dark:bg-base-800">
+                {{ description }}
+            </strong>
         {% endif %}
     </div>
+
+    {% if value %}
+        <div class="bg-base-100 overflow-hidden rounded-default dark:bg-base-800">
+            <div class="h-1.5 bg-primary-600 rounded-default z-10 dark:bg-primary-500 {{ progress_class }}" title="{{ value }}%" style="width: {{ value }}%"></div>
+        </div>
+    {% endif %}
 </div>
