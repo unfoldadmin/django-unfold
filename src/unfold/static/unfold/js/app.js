@@ -446,9 +446,22 @@ const DEFAULT_CHART_OPTIONS = {
         width: 0,
       },
       ticks: {
-        display: false,
-        font: {
-          size: 13,
+        color: "#9ca3af",
+        display: function (context) {
+          return context.chart.data.datasets.some((dataset) => {
+            return (
+              dataset.hasOwnProperty("displayYAxis") && dataset.displayYAxis
+            );
+          });
+        },
+        callback: function (value) {
+          const suffix = this.chart.data.datasets.find(
+            (dataset) => dataset.suffixYAxis
+          )?.suffixYAxis;
+          if (suffix) {
+            return `${value} ${suffix}`;
+          }
+          return value;
         },
       },
       grid: {
@@ -521,7 +534,7 @@ const renderCharts = () => {
       new Chart(ctx, {
         type: type || "bar",
         data: parsedData,
-        options: options ? JSON.parse(options) : DEFAULT_CHART_OPTIONS,
+        options: options ? JSON.parse(options) : { ...DEFAULT_CHART_OPTIONS },
       })
     );
   }
