@@ -1,11 +1,4 @@
-# Czech translation for Django Unfold
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
 #
-# Translators:
-# Jakub Boukal <www.bagr@gmail.com>, 2025.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Django Unfold\n"
@@ -14,12 +7,11 @@ msgstr ""
 "PO-Revision-Date: 2025-09-16 23:14+0200\n"
 "Last-Translator: Jakub Boukal <www.bagr@gmail.com>\n"
 "Language-Team: Czech <LL@li.org>\n"
-"Language: cs \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
-"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: admin.py:40 templatetags/unfold_list.py:337
 msgid "Select record"
@@ -28,13 +20,6 @@ msgstr "Zvolit záznam"
 #: admin.py:166
 msgid "Select action"
 msgstr "Zvolit akci"
-
-#: contrib/constance/templates/admin/constance/change_list.html:41
-#: contrib/guardian/templates/admin/guardian/model/obj_perms_manage_group.html:23
-#: contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:24
-#: templates/admin/pagination.html:19 templates/admin/submit_line.html:9
-msgid "Save"
-msgstr "Uložit"
 
 #: contrib/constance/templates/admin/constance/includes/results_list.html:10
 msgid "Collapse"
@@ -65,44 +50,6 @@ msgstr "Změněno"
 #: contrib/constance/templates/admin/constance/includes/results_list.html:65
 msgid "Reset to default"
 msgstr "Obnovit výchozí"
-
-#: contrib/filters/admin/choice_filters.py:22
-#: contrib/filters/admin/choice_filters.py:65
-#: contrib/filters/admin/choice_filters.py:78
-#: contrib/filters/admin/dropdown_filters.py:22
-#: contrib/filters/admin/mixins.py:45
-msgid "All"
-msgstr "Vše"
-
-#: contrib/filters/admin/choice_filters.py:46
-#: contrib/filters/admin/choice_filters.py:103
-#: contrib/filters/admin/choice_filters.py:137
-#: contrib/filters/admin/choice_filters.py:168
-#: contrib/filters/admin/dropdown_filters.py:28
-#: contrib/filters/admin/dropdown_filters.py:61
-#: contrib/filters/admin/dropdown_filters.py:105
-#: contrib/filters/admin/mixins.py:71 contrib/filters/admin/mixins.py:169
-#: contrib/filters/admin/text_filters.py:29
-#: contrib/filters/admin/text_filters.py:60
-#: contrib/filters/templates/unfold/filters/filters_date_range.html:5
-#: contrib/filters/templates/unfold/filters/filters_datetime_range.html:5
-#: contrib/filters/templates/unfold/filters/filters_numeric_range.html:5
-#: contrib/filters/templates/unfold/filters/filters_numeric_single.html:5
-#: contrib/filters/templates/unfold/filters/filters_numeric_slider.html:7
-#: templates/admin/filter.html:5
-#, python-format
-msgid " By %(filter_title)s "
-msgstr " Podle %(filter_title)s "
-
-#: contrib/filters/admin/choice_filters.py:88
-#: contrib/filters/admin/choice_filters.py:96
-msgid "Yes"
-msgstr "Ano"
-
-#: contrib/filters/admin/choice_filters.py:89
-#: contrib/filters/admin/choice_filters.py:97
-msgid "No"
-msgstr "Ne"
 
 #: contrib/filters/forms.py:186 contrib/filters/forms.py:224
 msgid "From"
@@ -217,27 +164,9 @@ msgstr "Objekt"
 msgid "Group"
 msgstr "Skupina"
 
-#: contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:17
-#: contrib/guardian/templates/unfold/guardian/group_form.html:33
-#: contrib/guardian/templates/unfold/guardian/user_form.html:15
-#: contrib/guardian/templates/unfold/guardian/user_form.html:33
-#: templates/admin/object_history.html:14
-#: templates/admin/object_history.html:30
-msgid "User"
-msgstr "Uživatel"
-
 #: contrib/guardian/templates/unfold/guardian/group_form.html:7
 msgid "Group permissions"
 msgstr "Oprávnění skupiny"
-
-#: contrib/guardian/templates/unfold/guardian/group_form.html:25
-#: contrib/guardian/templates/unfold/guardian/group_form.html:49
-#: contrib/guardian/templates/unfold/guardian/user_form.html:25
-#: contrib/guardian/templates/unfold/guardian/user_form.html:49
-#: templates/admin/object_history.html:18
-#: templates/admin/object_history.html:34
-msgid "Action"
-msgstr "Akce"
 
 #: contrib/guardian/templates/unfold/guardian/group_form.html:51
 #: contrib/guardian/templates/unfold/guardian/user_form.html:51
@@ -325,11 +254,6 @@ msgstr "Nový"
 msgid "Skipped"
 msgstr "Přeskočen"
 
-#: contrib/import_export/templates/admin/import_export/import_preview.html:26
-#: templates/admin/submit_line.html:60
-msgid "Delete"
-msgstr "Smazat"
-
 #: contrib/import_export/templates/admin/import_export/import_preview.html:28
 msgid "Update"
 msgstr "Aktualizovat"
@@ -368,42 +292,12 @@ msgstr "Tento exportér exportuje následující pole: "
 msgid "This importer will import the following fields: "
 msgstr "Tento importér importuje následující pole: "
 
-#. Translators: Model verbose name and instance representation,
-#. suitable to be an item in a list.
-#: contrib/inlines/admin.py:99
-#, python-format
-msgid "%(class_name)s %(instance)s"
-msgstr "%(class_name)s %(instance)s"
-
-#: contrib/inlines/admin.py:108
-msgid "and"
-msgstr "a"
-
-#: contrib/inlines/admin.py:111
-#, python-format
-msgid ""
-"Deleting %(class_name)s %(instance)s would require deleting the following "
-"protected related objects: %(related_objects)s"
-msgstr ""
-"Smazání %(class_name)s %(instance)s by vyžadovalo smazání následujících "
-"chráněných souvisejících objektů: %(related_objects)s"
-
 #: contrib/simple_history/templates/simple_history/object_history.html:8
 msgid ""
 "Choose a date from the list below to revert to a previous version of this "
 "object."
-msgstr "Vyberte datum ze seznamu níže a vraťte se k předchozí verzi tohoto "
-"objektu."
-
-
-#: contrib/simple_history/templates/simple_history/object_history.html:28
-#: templates/admin/object_history.html:57
-msgid "entry"
-msgid_plural "entries"
-msgstr[0] "záznam"
-msgstr[1] "záznamy"
-msgstr[2] "záznamu"
-msgstr[3] "záznamů"
+msgstr ""
+"Vyberte datum ze seznamu níže a vraťte se k předchozí verzi tohoto objektu."
 
 #: contrib/simple_history/templates/simple_history/object_history.html:32
 msgid "This object doesn't have a change history."
@@ -415,17 +309,9 @@ msgid ""
 msgstr ""
 "Stiskněte tlačítko 'Vrátit' níže, abyste se vrátili k této verzi objektu."
 
-
 #: contrib/simple_history/templates/simple_history/object_history_form.html:20
 msgid "Press the 'Change History' button below to edit the history."
 msgstr "Stiskněte tlačítko 'Historie změn' níže pro úpravu historie."
-
-#: contrib/simple_history/templates/simple_history/object_history_list.html:19
-#: contrib/simple_history/templates/simple_history/object_history_list.html:55
-#: templates/admin/object_history.html:10
-#: templates/admin/object_history.html:26
-msgid "Date/time"
-msgstr "Datum/čas"
 
 #: contrib/simple_history/templates/simple_history/object_history_list.html:23
 #: contrib/simple_history/templates/simple_history/object_history_list.html:59
@@ -447,10 +333,6 @@ msgstr "Důvod změny"
 msgid "Changes"
 msgstr "Změny"
 
-#: contrib/simple_history/templates/simple_history/object_history_list.html:73
-msgid "None"
-msgstr "Žádný"
-
 #: contrib/simple_history/templates/simple_history/submit_line.html:8
 msgid "Revert"
 msgstr "Vrátit"
@@ -458,11 +340,6 @@ msgstr "Vrátit"
 #: contrib/simple_history/templates/simple_history/submit_line.html:14
 msgid "Change History"
 msgstr "Historie změn"
-
-#: contrib/simple_history/templates/simple_history/submit_line.html:19
-#: templates/admin/submit_line.html:52
-msgid "Close"
-msgstr "Zavřít"
 
 #: forms.py:71
 msgid "Select action to run"
@@ -474,297 +351,55 @@ msgid ""
 "password, but you can change the password using <a href=\"{}\" class=\"text-"
 "primary-600 dark:text-primary-500\">this form</a>."
 msgstr ""
-"Hesla nejsou uložena v nezašifrované podobě, takže není možné zjistit "
-"heslo tohoto uživatele, ale můžete heslo změnit pomocí <a href=\"{}\" "
+"Hesla nejsou uložena v nezašifrované podobě, takže není možné zjistit heslo "
+"tohoto uživatele, ale můžete heslo změnit pomocí <a href=\"{}\" "
 "class=\"text-primary-600 dark:text-primary-500\">tohoto formuláře</a>."
-
 
 #: mixins/base_model_admin.py:57 mixins/base_model_admin.py:78
 msgid "Select value"
 msgstr "Zvolit hodnotu"
 
-#: templates/admin/actions.html:22
-msgid "Run the selected action"
-msgstr "Spustit zvolenou akci"
-
 #: templates/admin/actions.html:23
 msgid "Run"
 msgstr "Spustit"
-
-#: templates/admin/actions.html:43
-msgid "Click here to select the objects across all pages"
-msgstr "Klikněte zde pro výběr objektů na všech stránkách"
-
-#: templates/admin/actions.html:44
-#, python-format
-msgid "Select all %(total_count)s %(module_name)s"
-msgstr "Zvolit všechny %(total_count)s %(module_name)s"
-
-#: templates/admin/actions.html:50
-msgid "Clear selection"
-msgstr "Zrušit výběr"
-
-#: templates/admin/app_index.html:5 templates/admin/base_site.html:3
-#: templates/admin/index.html:5 templates/admin/login.html:15
-#: templates/unfold/layouts/base.html:7
-msgid "Django site admin"
-msgstr "Správa webu Django"
-
-#: templates/admin/app_list.html:12
-#: templates/unfold/helpers/app_list_default.html:9
-#, python-format
-msgid "Models in the %(name)s application"
-msgstr "Modely v aplikaci %(name)s"
-
-#: templates/admin/app_list.html:48 templates/unfold/helpers/app_list.html:99
-#: templates/unfold/helpers/app_list_default.html:59
-msgid "You don’t have permission to view or edit anything."
-msgstr "Nemáte oprávnění nic zobrazit ani upravit."
 
 #: templates/admin/auth/user/add_form.html:6
 msgid "After you've created a user, you’ll be able to edit more user options."
 msgstr "Po vytvoření uživatele budete moci upravit další možnosti uživatele."
 
-#: templates/admin/auth/user/change_password.html:19
-#, python-format
-msgid "Enter a new password for the user <strong>%(username)s</strong>."
-msgstr "Zadejte nové heslo pro uživatele <strong>%(username)s</strong>."
-
-#: templates/admin/auth/user/change_password.html:30
-#: templates/registration/password_change_form.html:29
-#: templates/unfold/helpers/account_links.html:30
-msgid "Change password"
-msgstr "Změnit heslo"
-
-#: templates/admin/change_form_object_tools.html:6
-msgid "History"
-msgstr "Historie"
-
-#: templates/admin/change_form_object_tools.html:12
-#: templates/admin/edit_inline/stacked.html:77
-#: templates/unfold/helpers/edit_inline/tabular_title.html:33
-msgid "View on site"
-msgstr "Zobrazit na webu"
-
-#: templates/admin/change_list.html:69
-msgid "Filters"
-msgstr "Filtry"
-
 #: templates/admin/change_list_results.html:32
 msgid "Select all rows"
 msgstr "Zvolit všechny řádky"
-
-#: templates/admin/change_list_results.html:46
-msgid "Toggle sorting"
-msgstr "Přepnout řazení"
-
-#: templates/admin/change_list_results.html:54
-msgid "Remove from sorting"
-msgstr "Odebrat z řazení"
-
-#: templates/admin/change_list_results.html:60
-#, python-format
-msgid "Sorting priority: %(priority_number)s"
-msgstr "Priorita řazení: %(priority_number)s"
 
 #: templates/admin/change_list_results.html:85
 #: templates/unfold/components/table.html:34
 msgid "Expand row"
 msgstr "Rozbalit řádek"
 
-#: templates/admin/delete_confirmation.html:16
-#, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
-"related objects, but your account doesn't have permission to delete the "
-"following types of objects:"
-msgstr ""
-"Odstranění %(object_name)s '%(escaped_object)s' by mělo za následek "
-"odstranění souvisejících objektů, ale váš účet nemá oprávnění k odstranění "
-"následujících typů objektů:"
-
-#: templates/admin/delete_confirmation.html:32
-#, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
-"following protected related objects:"
-msgstr ""
-"Odstranění %(object_name)s '%(escaped_object)s' by vyžadovalo odstranění "
-"následujících chráněných souvisejících objektů:"
-
-#: templates/admin/delete_confirmation.html:48
-#, python-format
-msgid ""
-"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
-"All of the following related items will be deleted:"
-msgstr ""
-"Opravdu chcete odstranit %(object_name)s \"%(escaped_object)s\"? "
-"Budou odstraněny všechny následující související položky:"
-
-
-#: templates/admin/delete_confirmation.html:55
-#: templates/admin/delete_selected_confirmation.html:49
-msgid "Objects"
-msgstr "Objekty"
-
-#: templates/admin/delete_selected_confirmation.html:15
-#, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would result in deleting related "
-"objects, but your account doesn't have permission to delete the following "
-"types of objects:"
-msgstr ""
-"Odstranění vybraných %(objects_name)s by mělo za následek odstranění "
-"souvisejících objektů, ale váš účet nemá oprávnění k odstranění "
-"následujících typů objektů:"
-
-#: templates/admin/delete_selected_confirmation.html:28
-#, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would require deleting the following "
-"protected related objects:"
-msgstr ""
-"Odstranění vybraných %(objects_name)s by vyžadovalo odstranění následujících "
-"chráněných souvisejících objektů:"
-
-#: templates/admin/delete_selected_confirmation.html:42
-#, python-format
-msgid ""
-"Are you sure you want to delete the selected %(objects_name)s? All of the "
-"following objects and their related items will be deleted:"
-msgstr ""
-"Opravdu chcete smazat vybrané %(objects_name)s? Všechny následující objekty "
-"a související položky budou smazány:"
-
-#: templates/admin/edit_inline/stacked.html:63
-#: templates/unfold/helpers/app_list_default.html:42
-#: templates/unfold/helpers/edit_inline/tabular_title.html:23
-msgid "Change"
-msgstr "Upravit"
-
-#: templates/admin/edit_inline/stacked.html:65
-#: templates/unfold/helpers/app_list_default.html:38
-#: templates/unfold/helpers/edit_inline/tabular_title.html:25
-msgid "View"
-msgstr "Zobrazit"
-
-#: templates/admin/includes/object_delete_summary.html:5
-msgid "Summary"
-msgstr "Shrnutí"
-
 #: templates/admin/login.html:15
 msgid "Welcome back to"
 msgstr "Vítejte zpět na"
 
-#: templates/admin/login.html:26
-#, python-format
-msgid ""
-"You are authenticated as %(username)s, but are not authorized to access this "
-"page. Would you like to login to a different account?"
-msgstr ""
-"Jste přihlášeni jako %(username)s, ale nemáte oprávnění k přístupu na tuto "
-"stránku. Chcete se přihlásit k jinému účtu?"
-
-#: templates/admin/login.html:47
-msgid "Log in"
-msgstr "Přihlásit se"
-
-#: templates/admin/login.html:55
-msgid "Forgotten your password or username?"
-msgstr "Zapomněli jste heslo nebo uživatelské jméno?"
-
-#: templates/admin/object_history.html:60
-msgid ""
-"This object doesn’t have a change history. It probably wasn’t added via this "
-"admin site."
-msgstr ""
-"Tento objekt nemá historii změn. Pravděpodobně nebyl přidán prostřednictvím "
-"této administrátorské stránky."
-
-#: templates/admin/pagination.html:12
-#: templates/unfold/helpers/popup_header.html:14
-#: templates/unfold/helpers/welcomemsg.html:25
-msgid "Show all"
-msgstr "Zobrazit vše"
-
-#: templates/admin/search_form.html:18 templates/unfold/helpers/command.html:24
+#: templates/admin/search_form.html:18
+#: templates/unfold/helpers/command.html:24
 msgid "Type to search"
 msgstr "Zadejte hledaný výraz"
-
-#: templates/admin/submit_line.html:28
-msgid "Save and continue editing"
-msgstr "Uložit a pokračovat v úpravách"
-
-#: templates/admin/submit_line.html:30
-msgid "Save and view"
-msgstr "Uložit a zobrazit"
-
-#: templates/admin/submit_line.html:37
-msgid "Save and add another"
-msgstr "Uložit a přidat další"
-
-#: templates/admin/submit_line.html:43
-msgid "Save as new"
-msgstr "Uložit jako nové"
 
 #: templates/registration/logged_out.html:14
 msgid "You have been successfully logged out from the administration"
 msgstr "Byli jste úspěšně odhlášeni z administrace"
 
-#: templates/registration/logged_out.html:18
-msgid "Thanks for spending some quality time with the web site today."
-msgstr "Děkujeme, že jste dnes strávili příjemný čas na našich webových stránkách."
-
-#: templates/registration/logged_out.html:23
-msgid "Log in again"
-msgstr "Přihlásit se znovu"
-
-#: templates/registration/password_change_done.html:9
-msgid "Your password was changed."
-msgstr "Vaše heslo bylo změněno."
-
-#: templates/registration/password_change_form.html:18
-msgid ""
-"Please enter your old password, for security’s sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
-msgstr ""
-"Z bezpečnostních důvodů zadejte své staré heslo a poté dvakrát zadejte nové "
-"heslo, abychom mohli ověřit, že jste jej zadali správně."
-
 #: templates/unfold/components/table.html:89
 msgid "No data"
 msgstr "Žádná data"
-
-#: templates/unfold/helpers/account_links.html:17
-msgid "View site"
-msgstr "Zobrazit web"
-
-#: templates/unfold/helpers/account_links.html:40
-msgid "Log out"
-msgstr "Odhlásit se"
 
 #: templates/unfold/helpers/actions_row.html:4
 msgid "More actions"
 msgstr "Více akcí"
 
-#: templates/unfold/helpers/add_link.html:5
-#: templates/unfold/helpers/add_link.html:8
-#: templates/unfold/helpers/empty_results.html:4
-#, python-format
-msgid "Add %(name)s"
-msgstr "Přidat %(name)s"
-
 #: templates/unfold/helpers/app_list.html:68
 msgid "All applications"
 msgstr "Všechny aplikace"
-
-#: templates/unfold/helpers/app_list_default.html:31
-msgid "Add"
-msgstr "Přidat"
-
-#: templates/unfold/helpers/boolean.html:4
-msgid "Unknown"
-msgstr "Neznámé"
 
 #: templates/unfold/helpers/boolean.html:4
 msgid "True"
@@ -785,10 +420,6 @@ msgstr "Skrýt počty"
 #: templates/unfold/helpers/change_list_filter_actions.html:20
 msgid "Show counts"
 msgstr "Zobrazit počty"
-
-#: templates/unfold/helpers/change_list_filter_actions.html:27
-msgid "Clear all filters"
-msgstr "Vymazat všechny filtry"
 
 #: templates/unfold/helpers/command_history.html:7
 msgid "Recent searches"
@@ -833,25 +464,9 @@ msgstr[3] ""
 "                Nalezeno %(counter)s výsledků za %(time)s sekund\n"
 "            "
 
-#: templates/unfold/helpers/delete_submit_line.html:5
-msgid "No, take me back"
-msgstr "Ne, beru zpět"
-
-#: templates/unfold/helpers/delete_submit_line.html:9
-msgid "Yes, I’m sure"
-msgstr "Ano, jsem si jist(a)"
-
 #: templates/unfold/helpers/display_header.html:10
 msgid "Record picture"
 msgstr "Obrázek záznamu"
-
-#: templates/unfold/helpers/edit_inline/tabular_delete.html:4
-msgid "Remove"
-msgstr "Odebrat"
-
-#: templates/unfold/helpers/edit_inline/tabular_heading.html:21
-msgid "Delete?"
-msgstr "Smazat?"
 
 #: templates/unfold/helpers/empty_results.html:12
 msgid "No results found"
@@ -861,8 +476,8 @@ msgstr "Nebyly nalezeny žádné výsledky"
 msgid ""
 "This page yielded into no results. Create a new item or reset your filters."
 msgstr ""
-"Tato stránka nepřinesla žádné výsledky. Vytvořte nový položku nebo resetujte "
-"filtry."
+"Tato stránka nepřinesla žádné výsledky. Vytvořte nový položku nebo resetujte"
+" filtry."
 
 #: templates/unfold/helpers/empty_results.html:30
 msgid "Reset filters"
@@ -873,22 +488,6 @@ msgstr "Obnovit filtry"
 msgid "Go back"
 msgstr "Jít zpět"
 
-#: templates/unfold/helpers/history.html:9
-msgid "Recent actions"
-msgstr "Nedávné akce"
-
-#: templates/unfold/helpers/history.html:28
-msgid "Unknown content"
-msgstr "Neznámý obsah"
-
-#: templates/unfold/helpers/messages/errornote.html:5
-msgid "Please correct the error below."
-msgid_plural "Please correct the errors below."
-msgstr[0] "Opravte prosím níže uvedenou chybu."
-msgstr[1] "Opravte prosím níže uvedené chyby."
-msgstr[2] "Opravte prosím níže uvedené chyby."
-msgstr[3] "Opravte prosím níže uvedené chyby."
-
 #: templates/unfold/helpers/pagination_infinite.html:5
 msgid "Previous"
 msgstr "Předchozí"
@@ -897,44 +496,10 @@ msgstr "Předchozí"
 msgid "Next"
 msgstr "Další"
 
-#: templates/unfold/helpers/popup_header.html:14
-#: templates/unfold/helpers/welcomemsg.html:25
-#, python-format
-msgid "%(counter)s result"
-msgid_plural "%(counter)s results"
-msgstr[0] "%(counter)s výsledek"
-msgstr[1] "%(counter)s výsledky"
-msgstr[2] "%(counter)s výsledku"
-msgstr[3] "%(counter)s výsledků"
-
-#: templates/unfold/helpers/popup_header.html:14
-#: templates/unfold/helpers/welcomemsg.html:25
-#, python-format
-msgid "%(full_result_count)s total"
-msgstr "%(full_result_count)s celkem"
-
 #: templates/unfold/helpers/search.html:10
 #: templates/unfold/helpers/search.html:40
 msgid "Search apps and models..."
 msgstr "Hledat aplikace a modely..."
-
-#: templates/unfold/helpers/search.html:41
-msgid "Filter navigation items"
-msgstr "Filtrovat navigační položky"
-
-#: templates/unfold/helpers/site_branding.html:3
-#: templates/unfold/helpers/site_branding.html:6
-msgid "Django administration"
-msgstr "Administrace Django"
-
-#: templates/unfold/helpers/site_icon.html:7
-#: templates/unfold/helpers/site_icon.html:9
-#: templates/unfold/helpers/site_icon.html:11
-#: templates/unfold/helpers/site_logo.html:5
-#: templates/unfold/helpers/site_logo.html:7
-#: templates/unfold/helpers/site_logo.html:9
-msgid "Home"
-msgstr "Domů"
 
 #: templates/unfold/helpers/tab_items.html:15
 msgid "General"
@@ -964,26 +529,6 @@ msgstr "Náhled obrázku"
 #: templates/unfold/widgets/clearable_file_input_small.html:17
 msgid "Choose file to upload"
 msgstr "Zvolit soubor k nahrání"
-
-#: templates/unfold/widgets/related_widget_wrapper.html:16
-#, python-format
-msgid "Change selected %(model)s"
-msgstr "Změnit vybraný %(model)s"
-
-#: templates/unfold/widgets/related_widget_wrapper.html:26
-#, python-format
-msgid "Add another %(model)s"
-msgstr "Přidat další %(model)s"
-
-#: templates/unfold/widgets/related_widget_wrapper.html:35
-#, python-format
-msgid "View selected %(model)s"
-msgstr "Zobrazit vybraný %(model)s"
-
-#: templates/unfold/widgets/related_widget_wrapper.html:45
-#, python-format
-msgid "Delete selected %(model)s"
-msgstr "Smazat vybraný %(model)s"
 
 #: templates/unfold_crispy/layout/table_inline_formset.html:65
 msgid "Add row"

@@ -26,10 +26,18 @@ Add new language support to `django-unfold` using Django's internationalization 
     ```bash
     django-admin makemessages -l <language_code>
     ```
-3. Edit translations:
+
+3. Prune Django default translations
+
+   ```bash
+   ../../scripts/prune_locale.py <language_code>
+   ```
+
+4. Edit translations:
     * Open `locale/<language_code>/LC_MESSAGES/django.po`
     * Add or update translations
-4. Compile messages:
+
+5. Compile messages:
 
     ```bash
     django-admin compilemessages
