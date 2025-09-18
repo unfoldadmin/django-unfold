@@ -1,17 +1,19 @@
 <div class="flex flex-col gap-2 relative w-full {% if class %}{{ class }}{% endif %}">
-    <div class="flex flex-row relative z-20">
-        {% if title %}
-            <h3 class="text-font-important-light dark:text-font-important-dark text-sm">
-                {{ title }}
-            </h3>
-        {% endif %}
+    {% if title or description %}
+        <div class="flex flex-row relative z-20">
+            {% if title %}
+                <h3 class="text-font-important-light dark:text-font-important-dark text-sm">
+                    {{ title }}
+                </h3>
+            {% endif %}
 
-        {% if description %}
-            <strong class="bg-base-100 font-medium text-font-important-light ml-auto px-1.5 py-1 rounded-default text-xs dark:text-font-important-dark dark:bg-base-800">
-                {{ description }}
-            </strong>
-        {% endif %}
-    </div>
+            {% if description %}
+                <strong class="bg-base-100 font-medium text-font-important-light ml-auto px-1.5 py-1 rounded-default text-xs dark:text-font-important-dark dark:bg-base-800">
+                    {{ description }}
+                </strong>
+            {% endif %}
+        </div>
+    {% endif %}
 
     {% if value %}
         <div class="bg-base-100 overflow-hidden rounded-default dark:bg-base-800">
