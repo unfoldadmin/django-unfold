@@ -59,7 +59,11 @@ class AutocompleteDropdownForm(forms.Form):
             label=label,
             required=False,
             queryset=field.remote_field.model.objects,
-            widget=self.widget(field, model_admin.admin_site),
+            widget=self.widget(
+                field,
+                model_admin.admin_site,
+                attrs={"class": "unfold-filter-autocomplete"},
+            ),
         )
 
     class Media:
