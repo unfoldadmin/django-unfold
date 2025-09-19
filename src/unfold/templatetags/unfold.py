@@ -244,7 +244,14 @@ class RenderComponentNode(template.Node):
         context_copy = context.new()
         context_copy.update(context.flatten())
         context_copy.update(values)
-        values.update({"children": self.nodelist.render(context_copy)})
+        children = self.nodelist.render(context_copy)
+
+        if len(children) > 0:
+            values.update(
+                {
+                    "children": children,
+                }
+            )
 
         if self.include_context:
             values.update(context.flatten())
