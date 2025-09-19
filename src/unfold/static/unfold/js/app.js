@@ -444,6 +444,11 @@ const DEFAULT_CHART_OPTIONS = {
       ticks: {
         color: "#9ca3af",
         display: true,
+        maxTicksLimit: function (context) {
+          return context.chart.data.datasets.find(
+            (dataset) => dataset.maxTicksXLimit
+          )?.maxTicksXLimit;
+        },
       },
       grid: {
         display: true,
