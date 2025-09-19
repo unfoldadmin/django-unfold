@@ -235,17 +235,16 @@ class RenderComponentNode(template.Node):
             name: var.resolve(context) for name, var in self.extra_context.items()
         }
 
-        values.update(
-            {
-                "children": self.nodelist.render(context),
-            }
-        )
-
         if "component_class" in values:
             values = ComponentRegistry.create_instance(
                 values["component_class"],
                 request=context.request if hasattr(context, "request") else None,
             ).get_context_data(**values)
+
+        context_copy = context.new()
+        context_copy.update(context.flatten())
+        context_copy.update(values)
+        values.update({"children": self.nodelist.render(context_copy)})
 
         if self.include_context:
             values.update(context.flatten())
