@@ -1,4 +1,28 @@
 
+## 0.66.0 (2025-09-23)
+
+- feat: safelisted css classes (#1581) ([`eb6b2f9`](https://github.com/unfoldadmin/django-unfold/commit/eb6b2f99b1591e8789dbcaac2ae20b9baa21f905))
+- feat: chart max tick limit support (#1580) ([`ae48ff0`](https://github.com/unfoldadmin/django-unfold/commit/ae48ff08acc491c55ed18dce5635fdf8611517f7))
+- feat: progress component without title handling (#1576) ([`f651d45`](https://github.com/unfoldadmin/django-unfold/commit/f651d45969d2167014f9813465e285c589a3cbed))
+- feat: layer component (#1577) ([`0212a54`](https://github.com/unfoldadmin/django-unfold/commit/0212a5407d1a829853a61aac08bcc32da847596b))
+- feat: command searchable models (#1559) ([`25995b0`](https://github.com/unfoldadmin/django-unfold/commit/25995b06a45820b0633f9e04da584dedd952b699))
+- feat: command infinite scrolling (#1550) ([`7fe448b`](https://github.com/unfoldadmin/django-unfold/commit/7fe448ba9e93b5b07098cb2a956c79f07c682e4b))
+- fix: selector choose all pointer style (#1587) ([`547ad0a`](https://github.com/unfoldadmin/django-unfold/commit/547ad0a41ab86e58e028f1c17393122c5f9707b9))
+- fix: readonly boolean flag border radius (#1586) ([`7b9d240`](https://github.com/unfoldadmin/django-unfold/commit/7b9d2404c07acf3ed48b32258b1115f0012066bf))
+- fix: location field z-index (#1585) ([`f847a1e`](https://github.com/unfoldadmin/django-unfold/commit/f847a1e686e8439acfb5dfa5565ddd40225b5961))
+- fix: all apps list scrollbar (#1584) ([`47f94d0`](https://github.com/unfoldadmin/django-unfold/commit/47f94d0603f9df077fe6751e8e3ed132a7ff980d))
+- fix: empty component children handling (#1583) ([`dd799d8`](https://github.com/unfoldadmin/django-unfold/commit/dd799d86fb27c87eadb0a00446e646ee7b1db33e))
+- fix: tracker component accepts class param (#1579) ([`5eb7808`](https://github.com/unfoldadmin/django-unfold/commit/5eb78086bb28d5eee7384c79b7da92139c38b19e))
+- fix: component variables nesting (#1578) ([`0352499`](https://github.com/unfoldadmin/django-unfold/commit/035249966a899f99fb79b3106fefd37e2b1e88da))
+- fix: toggle disabled state (#1574) ([`3ebc9c6`](https://github.com/unfoldadmin/django-unfold/commit/3ebc9c603db7c5cc881d0ba1fb8f08c236c4319a))
+- fix: django-constance: can&#39;t disable boolean setting (#1556) ([`c18b0dc`](https://github.com/unfoldadmin/django-unfold/commit/c18b0dc1de1c1ddb96c4efeb8f0d9cc8b09e0ed9))
+- fix: chart options (#1573) ([`9d4bfb3`](https://github.com/unfoldadmin/django-unfold/commit/9d4bfb3a2c7cb99901018148f6334fcb6c1f3cd2))
+- fix: base colors (#1572) ([`552ee31`](https://github.com/unfoldadmin/django-unfold/commit/552ee313e308e68005540d0ce4e5b9a5611fbf29))
+- fix: prevent double event propagation in command (#1543) ([`c6aca2c`](https://github.com/unfoldadmin/django-unfold/commit/c6aca2c8e3c2277b1d8041a9e0d58ac5bc6dd302))
+- fix: baseformset request param (#1542) ([`bd7a172`](https://github.com/unfoldadmin/django-unfold/commit/bd7a172584e120226aa1c712c30241bffa1a0394))
+- chore(deps): bump django from 4.2.22 to 4.2.24 (#1568) ([`41e8bc9`](https://github.com/unfoldadmin/django-unfold/commit/41e8bc9972eb83e4a3652406012969af5eeb3a8f))
+- chore(deps): bump actions/setup-python from 5 to 6 (#1561) ([`c135bf5`](https://github.com/unfoldadmin/django-unfold/commit/c135bf537c20f253236ff5cc2d10b452d0465d1f))
+
 ## 0.65.0 (2025-08-25)
 
 - feat: site dropdown attrs (#1534) ([`5e64475`](https://github.com/unfoldadmin/django-unfold/commit/5e644755a61c173b69ea965dcd51f5d40dff94bb))
