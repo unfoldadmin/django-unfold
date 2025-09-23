@@ -1,3 +1,5 @@
+from typing import Union
+
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import lookup_field, quote
 from django.core.exceptions import ObjectDoesNotExist
@@ -38,7 +40,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         return format_html("<label{}>{}</label>", flatatt(attrs), capfirst(label))
 
     @property
-    def url(self) -> str:
+    def url(self) -> Union[str, bool]:
         field, obj, model_admin = (
             self.field["field"],
             self.form.instance,
