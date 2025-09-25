@@ -533,7 +533,17 @@ const renderCharts = () => {
     for (const key in parsedData.datasets) {
       const dataset = parsedData.datasets[key];
       const processColor = (colorProp) => {
-        if (dataset?.[colorProp]?.startsWith("var(")) {
+        if (Array.isArray(dataset?.[colorProp])) {
+          for (const [index, prop] of dataset?.[colorProp].entries()) {
+            if (prop.startsWith("var(")) {
+              const cssVar = prop.match(/var\((.*?)\)/)[1];
+              const color = getComputedStyle(document.documentElement)
+                .getPropertyValue(cssVar)
+                .trim();
+              dataset[colorProp][index] = color;
+            }
+          }
+        } else if (dataset?.[colorProp]?.startsWith("var(")) {
           const cssVar = dataset[colorProp].match(/var\((.*?)\)/)[1];
           const color = getComputedStyle(document.documentElement)
             .getPropertyValue(cssVar)
