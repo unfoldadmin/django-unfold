@@ -15,6 +15,7 @@ from django.template import Context, Library, Node, RequestContext, TemplateSynt
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.functional import Promise
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -662,7 +663,9 @@ def header_title(context: RequestContext) -> str:
             }
         )
 
-        if (original := context.get("original")) and not isinstance(original, str):
+        if (original := context.get("original")) and not isinstance(
+            original, (str, Promise)
+        ):
             parts.append(
                 {
                     "link": reverse_lazy(
