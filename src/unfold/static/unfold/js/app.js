@@ -416,6 +416,12 @@ const DEFAULT_CHART_OPTIONS = {
       pointBorderWidth: 0,
       pointStyle: false,
     },
+    pie: {
+      borderWidth: 0,
+    },
+    doughnut: {
+      borderWidth: 0,
+    },
   },
   plugins: {
     legend: {
@@ -436,6 +442,13 @@ const DEFAULT_CHART_OPTIONS = {
   },
   scales: {
     x: {
+      display: function (context) {
+        if (["pie", "doughnut", "radar"].includes(context.chart.config.type)) {
+          return false;
+        }
+
+        return true;
+      },
       border: {
         dash: [5, 5],
         dashOffset: 2,
@@ -456,6 +469,13 @@ const DEFAULT_CHART_OPTIONS = {
       },
     },
     y: {
+      display: function (context) {
+        if (["pie", "doughnut", "radar"].includes(context.chart.config.type)) {
+          return false;
+        }
+
+        return true;
+      },
       border: {
         dash: [5, 5],
         dashOffset: 5,
@@ -512,8 +532,17 @@ const renderCharts = () => {
     const borderColor = hasDarkClass ? baseColorDark : baseColorLight;
 
     for (const chart of charts) {
-      chart.options.scales.x.grid.color = borderColor;
-      chart.options.scales.y.grid.color = borderColor;
+      if (chart.options.scales.x) {
+        chart.options.scales.x.grid.color = borderColor;
+      }
+
+      if (chart.options.scales.y) {
+        chart.options.scales.y.grid.color = borderColor;
+      }
+
+      if (chart.options.scales.r) {
+        chart.options.scales.r.grid.color = borderColor;
+      }
       chart.update();
     }
   };
@@ -556,11 +585,30 @@ const renderCharts = () => {
       processColor("backgroundColor");
     }
 
+    CHART_OPTIONS = { ...DEFAULT_CHART_OPTIONS };
+    if (type === "radar") {
+      CHART_OPTIONS.scales = {
+        r: {
+          ticks: {
+            backdropColor: "transparent",
+          },
+          pointLabels: {
+            color: "#9ca3af",
+            font: {
+              size: 12,
+            },
+          },
+        },
+      };
+    }
+    Chart.defaults.font.family = "Inter";
+    Chart.defaults.font.size = 12;
+
     charts.push(
       new Chart(ctx, {
         type: type || "bar",
         data: parsedData,
-        options: options ? JSON.parse(options) : { ...DEFAULT_CHART_OPTIONS },
+        options: options ? JSON.parse(options) : { ...CHART_OPTIONS },
       })
     );
   }
