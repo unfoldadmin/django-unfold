@@ -8,21 +8,12 @@
         </h3>
 
         {% if choice.min is not None and choice.max is not None and choice.step %}
-            <div class="admin-numeric-filter-slider-tooltips">
-                <span class="admin-numeric-filter-slider-tooltip-from border border-base-200 cursor-not-allowed flex grow flex-row items-center mr-auto rounded-default shadow-xs px-3 py-2 w-full dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark">
-                    {{ choice.value_from }}
-                </span>
 
-                <span class="admin-numeric-filter-slider-tooltip-to border border-base-200 cursor-not-allowed flex grow flex-row items-center rounded-default shadow-xs px-3 py-2 w-full dark:bg-base-900 dark:border-base-700 dark:text-font-default-dark">
-                    {{ choice.value_to }}
-                </span>
+            <div class="admin-numeric-filter-wrapper-group flex flex-row gap-4 mb-4">
+                {{ choice.form.as_p }}
             </div>
 
             <div class="admin-numeric-filter-slider" data-min="{{ choice.min|unlocalize }}" data-max="{{ choice.max|unlocalize }}" data-decimals="{{ choice.decimals }}" data-step="{{ choice.step|unlocalize }}">
-            </div>
-
-            <div class="admin-numeric-filter-wrapper-group hidden">
-                {{ choice.form.as_p }}
             </div>
         {% else %}
             <div class="admin-numeric-filter-slider-error dark:text-font-default-dark">
