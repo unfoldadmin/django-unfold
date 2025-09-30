@@ -41,7 +41,7 @@ class NestedInlinesModelAdminMixin:
     nested_formset_media = Media()
 
     def _create_formsets(
-        self, request: HttpRequest, obj: Model | None, change: bool
+        self, request: HttpRequest, obj: Optional[Model] = None, change: bool = False
     ) -> tuple[list[BaseInlineFormSet], list[InlineModelAdmin]]:
         formsets, inline_instances = super()._create_formsets(request, obj, change)
 
