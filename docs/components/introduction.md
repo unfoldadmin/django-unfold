@@ -73,4 +73,5 @@ Let's explore a more sophisticated example that demonstrates how multiple compon
 | unfold/components/table.html      | Table                          | table, card_included, striped        |
 | unfold/components/text.html       | Paragraph of text              | class                                |
 | unfold/components/title.html      | Basic heading element          | class                                |
-| unfold/components/tracker.html    | Tracker component              | data                                 |
+| unfold/components/tracker.html    | Tracker component              | class, data                          |
+| unfold/components/layer.html      | Abstract components wrapper    |                                      |

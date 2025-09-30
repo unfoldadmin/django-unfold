@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div class="inline-flex font-semibold items-center justify-center leading-normal h-6 w-6 rounded-full uppercase whitespace-nowrap {% if value == '' or value == None %}bg-base-100 text-base-700 dark:bg-base-500/20 dark:text-base-200{% elif value %}bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400{% else %}bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400{% endif %}"
+<div class="inline-flex font-semibold items-center justify-center leading-normal h-6 w-6 !rounded-full uppercase whitespace-nowrap {% if value == '' or value == None %}bg-base-100 text-base-700 dark:bg-base-500/20 dark:text-base-200{% elif value %}bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400{% else %}bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400{% endif %}"
      title="{% if value == '' or value == None %}{% trans "Unknown" %}{% elif value %}{% trans "True" %}{% else %}{% trans "False" %}{% endif %}">
 
     <span class="material-symbols-outlined">

@@ -1,5 +1,5 @@
 import json
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from typing import Any, Optional, Union
 
 from django import template
@@ -235,17 +235,23 @@ class RenderComponentNode(template.Node):
             name: var.resolve(context) for name, var in self.extra_context.items()
         }
 
-        values.update(
-            {
-                "children": self.nodelist.render(context),
-            }
-        )
-
         if "component_class" in values:
             values = ComponentRegistry.create_instance(
                 values["component_class"],
                 request=context.request if hasattr(context, "request") else None,
             ).get_context_data(**values)
+
+        context_copy = context.new()
+        context_copy.update(context.flatten())
+        context_copy.update(values)
+        children = self.nodelist.render(context_copy)
+
+        if len(children) > 0:
+            values.update(
+                {
+                    "children": children,
+                }
+            )
 
         if self.include_context:
             values.update(context.flatten())
@@ -605,6 +611,37 @@ def querystring_params(
     result[query_key] = query_value
 
     return result.urlencode()
+
+
+@register.simple_tag(name="unfold_querystring", takes_context=True)
+def unfold_querystring(context, *args, **kwargs):
+    """
+    Duplicated querystring template tag from Django core to allow
+    it using in Django 4.x. Once 4.x is not supported, remove it.
+    """
+    if not args:
+        args = [context.request.GET]
+    params = QueryDict(mutable=True)
+    for d in [*args, kwargs]:
+        if not isinstance(d, Mapping):
+            raise TemplateSyntaxError(
+                "querystring requires mappings for positional arguments (got "
+                f"{d!r} instead)."
+            )
+        for key, value in d.items():
+            if not isinstance(key, str):
+                raise TemplateSyntaxError(
+                    f"querystring requires strings for mapping keys (got {key!r} "
+                    "instead)."
+                )
+            if value is None:
+                params.pop(key, None)
+            elif isinstance(value, Iterable) and not isinstance(value, str):
+                params.setlist(key, value)
+            else:
+                params[key] = value
+    query_string = params.urlencode() if params else ""
+    return f"?{query_string}"
 
 
 @register.simple_tag(takes_context=True)

@@ -264,14 +264,14 @@ files = [
 
 [[package]]
 name = "django"
-version = "4.2.22"
+version = "4.2.24"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.8"
 groups = ["main", "test"]
 files = [
-    {file = "django-4.2.22-py3-none-any.whl", hash = "sha256:0a32773b5b7f4e774a155ee253ab24a841fed7e9e9061db08bf2ce9711da404d"},
-    {file = "django-4.2.22.tar.gz", hash = "sha256:e726764b094407c313adba5e2e866ab88f00436cad85c540a5bf76dc0a912c9e"},
+    {file = "django-4.2.24-py3-none-any.whl", hash = "sha256:a6527112c58821a0dfc5ab73013f0bdd906539790a17196658e36e66af43c350"},
+    {file = "django-4.2.24.tar.gz", hash = "sha256:40cd7d3f53bc6cd1902eadce23c337e97200888df41e4a73b42d682f23e71d80"},
 ]
 
 [package.dependencies]

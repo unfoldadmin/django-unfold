@@ -1,5 +1,5 @@
-<div class="{% if class %}{{ class }}{% endif %}">
-    <div class="flex flex-col gap-2 relative">
+<div class="flex flex-col gap-2 relative w-full {% if class %}{{ class }}{% endif %}">
+    {% if title or description %}
         <div class="flex flex-row relative z-20">
             {% if title %}
                 <h3 class="text-font-important-light dark:text-font-important-dark text-sm">
@@ -13,11 +13,17 @@
                 </strong>
             {% endif %}
         </div>
+    {% endif %}
 
-        {% if value %}
-            <div class="bg-gray-100 overflow-hidden rounded-default dark:bg-base-800">
-                <div class="h-1.5 bg-primary-600 rounded-default z-10 dark:bg-primary-500" title="{{ value }}%" style="width: {{ value }}%"></div>
-            </div>
-        {% endif %}
-    </div>
+    {% if items or value %}
+        <div class="bg-base-100 flex flex-row overflow-hidden rounded-default dark:bg-base-800">
+            {% if items %}
+                {% for item in items %}
+                    <div class="h-1.5 bg-primary-600 z-10 dark:bg-primary-500 last:rounded-r-default {{ item.progress_class }}" title="{% if item.title %}{{ item.title }}: {% endif %}{{ item.value }}%" style="width: {{ item.value }}%"></div>
+                {% endfor %}
+            {% elif value %}
+                <div class="h-1.5 bg-primary-600 rounded-default z-10 last:rounded-r-default dark:bg-primary-500 {{ progress_class }}" title="{% if title %}{{ title }}: {% endif %}{{ value }}%" style="width: {{ value }}%"></div>
+            {% endif %}
+        </div>
+    {% endif %}
 </div>
