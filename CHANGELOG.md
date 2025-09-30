@@ -1,4 +1,15 @@
 
+## 0.67.0 (2025-09-30)
+
+- feat: number slider filter input change event (#1598) ([`d6e971c`](https://github.com/unfoldadmin/django-unfold/commit/d6e971c97fca19c5be117fdff13bf10ee47e4fc9))
+- feat: card component title action (#1596) ([`71a2340`](https://github.com/unfoldadmin/django-unfold/commit/71a2340ec2cbee9a0d5a112bb0199f42b1fe2899))
+- feat: progress bar with multiple segments (#1593) ([`c738d98`](https://github.com/unfoldadmin/django-unfold/commit/c738d98f71489bdd26597ebb783ac0b179d13ace))
+- feat: readonly file/image fields (#1591) ([`dfab25c`](https://github.com/unfoldadmin/django-unfold/commit/dfab25ccdbe54bf9b7c6ab4a0b2dbc613ccf5aae))
+- fix: chart default options (#1594) ([`9b5e9ec`](https://github.com/unfoldadmin/django-unfold/commit/9b5e9ec873a13cd7ea8157ed2f08ad12a191fd6e))
+- fix: select2 autocomplete init (#1582) ([`b697510`](https://github.com/unfoldadmin/django-unfold/commit/b69751081fb2232ed032a476c8eae419f6d1ca52))
+- fix: charts colors (#1592) ([`29f007b`](https://github.com/unfoldadmin/django-unfold/commit/29f007be2a708bce701b7319af24254d5d9368bf))
+- docs: update comments and import in action-form-example.md (#1565) ([`bd0e6e8`](https://github.com/unfoldadmin/django-unfold/commit/bd0e6e8e46aebd2283d63c65f6872343b6e3d6f4))
+
 ## 0.66.0 (2025-09-23)
 
 - feat: safelisted css classes (#1581) ([`eb6b2f9`](https://github.com/unfoldadmin/django-unfold/commit/eb6b2f99b1591e8789dbcaac2ae20b9baa21f905))
