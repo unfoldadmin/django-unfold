@@ -52,9 +52,9 @@ class NestedInlinesModelAdminMixin:
     def changeform_view(
         self,
         request: HttpRequest,
-        object_id: str | None = None,
+        object_id: Optional[str] = None,
         form_url: str = "",
-        extra_context: dict[str, Any] | None = None,
+        extra_context: Optional[dict[str, Any]] = None,
     ) -> HttpResponse:
         # Monkey patch all_valid to do nested formsets validation. Applied because
         # we don't want to completely override `BaseModelAdmin._changeform_view()`
