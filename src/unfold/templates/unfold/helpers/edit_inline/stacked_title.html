@@ -1,0 +1,21 @@
+{% load admin_urls i18n unfold %}
+
+{% if not inline_admin_formset.opts.hide_title or inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
+    <h3 class="border-b border-base-200 flex font-medium items-center px-3 py-2 text-sm dark:border-base-800 {% if inline_admin_formset.opts.collapsible %}cursor-pointer{% endif %}" {% if inline_admin_formset.opts.collapsible %}x-bind:class="!openRow && 'border-b-0'" x-on:click="$event.target.tagName.toLowerCase() === 'h3' && (openRow = !openRow)"{% endif %}>
+        {% include "unfold/helpers/edit_inline/inline_drag.html" with stacked=1 %}
+
+        <span class="flex items-center font-semibold mr-auto text-font-important-light dark:text-font-important-dark">
+            {% if inline_admin_form.original %}
+                {% with inline_title=inline_admin_form.original.get_inline_title|default:inline_admin_form.original %}
+                    {{ inline_title }}
+                {% endwith %}
+            {% else %}
+                {{ inline_admin_formset.opts.verbose_name|capfirst }}: #<span class="stacked-counter">{{ forloop.counter }}</span>
+            {% endif %}
+
+            {% include "unfold/helpers/edit_inline/inline_links.html" %}
+        </span>
+
+        {% include "unfold/helpers/edit_inline/stacked_delete.html" %}
+    </h3>
+{% endif %}

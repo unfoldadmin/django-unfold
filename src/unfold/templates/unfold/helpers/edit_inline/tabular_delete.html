@@ -1,13 +1,7 @@
 {% load i18n unfold %}
 
 {% if inline_admin_formset.formset.can_delete and inline_admin_formset.has_delete_permission %}
-    <td class="lg:border-t border-base-200 dark:border-base-800 lg:border-t-0 min-h-[62.5px] delete {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:text-font-important-light before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px dark:before:text-font-important-dark" data-label="{% trans "Remove" %}">
-        {% if inline_admin_form.original %}
-            <div class="flex flex-row lg:mt-3">
-                <div class="ml-auto">
-                    {{ inline_admin_form.deletion_field.field|add_css_class:form_classes.checkbox }}
-                </div>
-            </div>
-        {% endif %}
+    <td class="delete pl-3 pr-1.5 lg:pl-0 {% if inline_admin_form.form.nested_formsets %}pr-[19px]{% endif %} border-b lg:border-t border-base-200 dark:border-base-800 lg:group-[.last]/nested:border-b-0 lg:border-t-0 min-h-[62.5px] {% if inline_admin_form.original %}p-3 lg:py-3{% else %}py-3{% endif %} text-left text-red-600 flex items-center before:capitalize before:font-semibold before:content-[attr(data-label)] before:mr-auto before:text-font-important-light before:pr-4 lg:before:hidden font-normal px-3 text-sm lg:align-top lg:table-cell lg:w-px dark:before:text-font-important-dark" data-label="{% trans "Remove" %}">
+        {% include "unfold/helpers/edit_inline/inline_delete.html" %}
     </td>
 {% endif %}

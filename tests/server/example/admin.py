@@ -5,20 +5,29 @@ from django.contrib.auth.models import Group
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
-from unfold.admin import ModelAdmin, StackedInline
+from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
 
-from .models import ActionUser, SectionUser, Tag, User
+from .models import ActionUser, Project, SectionUser, Tag, Task, User
 
 admin.site.unregister(Group)
 
 
 class UserTagInline(StackedInline):
     model = User.tags.through
-    per_page = 1
     collapsible = True
+    per_page = 10
+
+
+class ProjectTaskInline(TabularInline):
+    model = Task
+
+
+class UserProjectInline(TabularInline):
+    model = Project
+    inlines = [ProjectTaskInline]
 
 
 @admin.register(User)
@@ -26,7 +35,8 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    inlines = [UserTagInline]
+    readonly_fields = ["date_joined", "last_login"]
+    inlines = [UserProjectInline, UserTagInline]
 
 
 class RelatedTableSection(TableSection):
