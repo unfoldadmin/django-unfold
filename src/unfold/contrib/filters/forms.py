@@ -179,22 +179,39 @@ class SingleNumericForm(forms.Form):
 
 
 class RangeNumericForm(forms.Form):
-    def __init__(self, name: str, *args, **kwargs) -> None:
+    def __init__(
+        self, name: str, min: float = None, max: float = None, *args, **kwargs
+    ) -> None:
         self.name = name
         super().__init__(*args, **kwargs)
+
+        min_max = {}
+
+        if min:
+            min_max["min"] = min
+        if max:
+            min_max["max"] = max
 
         self.fields[self.name + "_from"] = forms.FloatField(
             label="",
             required=False,
             widget=forms.NumberInput(
-                attrs={"placeholder": _("From"), "class": " ".join(INPUT_CLASSES)}
+                attrs={
+                    "placeholder": _("From"),
+                    "class": " ".join(INPUT_CLASSES),
+                    **min_max,
+                }
             ),
         )
         self.fields[self.name + "_to"] = forms.FloatField(
             label="",
             required=False,
             widget=forms.NumberInput(
-                attrs={"placeholder": _("To"), "class": " ".join(INPUT_CLASSES)}
+                attrs={
+                    "placeholder": _("To"),
+                    "class": " ".join(INPUT_CLASSES),
+                    **min_max,
+                }
             ),
         )
 

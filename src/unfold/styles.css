@@ -637,10 +637,6 @@ fieldset details[open] > summary:after {
   @apply bg-primary-600 border-0 h-1;
 }
 
-#changelist-filter .admin-numeric-filter-slider-tooltips {
-  @apply flex flex-row font-medium mb-5 space-x-4 text-base-500 text-sm;
-}
-
 /*******************************************************
  Trix
  *******************************************************/
