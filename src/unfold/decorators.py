@@ -106,6 +106,7 @@ def display(
     dropdown: Optional[bool] = None,
     label: Optional[Union[bool, str, dict[str, str]]] = None,
     header: Optional[bool] = None,
+    template: Optional[str] = None,
 ) -> Callable:
     def decorator(func: Callable[[Model], Any]) -> Callable:
         if boolean is not None and empty_value is not None:
@@ -129,6 +130,8 @@ def display(
             func.header = header
         if dropdown is not None:
             func.dropdown = dropdown
+        if template is not None:
+            func.template = template
 
         return func
 
