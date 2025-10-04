@@ -35,11 +35,11 @@ Unfold Studio lets you visually customize your Django admin without writing code
 
 ## Fresh Features & Enhancements
 
+- **Command**: Offers a command palette for quick searching across all models or custom-injected data
 - **django-constance**: Official support with a completely new design and UX improvements
 - **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance
 - **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form
 - **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load
-- **Checkbox & radio filters:** Enhanced filter options with checkbox and radio interfaces for intuitive filtering
 
 ## Core Features & Capabilities
 
@@ -58,6 +58,7 @@ Unfold Studio lets you visually customize your Django admin without writing code
 - **Model tabs:** Allow defining custom tab navigation for models
 - **Fieldset tabs:** Merge multiple fieldsets into tabs in the change form
 - **Sortable inlines:** Allow sorting inlines by dragging and dropping
+- **Command**: Offers a command palette for quick searching across all models or custom-injected data
 - **Environment label:** Distinguish between environments by displaying a label
 - **Nonrelated inlines:** Display nonrelated models as inlines in the change form
 - **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance
