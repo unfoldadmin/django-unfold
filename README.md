@@ -1,4 +1,4 @@
-![screenshot](https://github.com/user-attachments/assets/87aaad04-f454-42aa-b9ac-e14d41f189ac)
+<img width="2560" height="2198" alt="screenshot" src="https://github.com/user-attachments/assets/a8232d59-0abe-4bd5-8856-399f3d3ea462" />
 
 ## Unfold - Django Admin Theme
 
@@ -33,13 +33,15 @@ If you need assistance with integrating or customizing Unfold, support packages 
 
 Unfold Studio lets you visually customize your Django admin without writing code — update colors, logos, sidebar, and interface styles to match your brand in minutes. Give your admin a polished, professional look that feels truly yours. Available at [unfoldadmin.com/studio](https://unfoldadmin.com/studio).
 
+<img width="2560" height="1100" alt="dashboards" src="https://github.com/user-attachments/assets/b83ca29e-4a97-433e-bc2b-2709dc4b5b68" />
+
 ## Fresh Features & Enhancements
 
+- **Command**: Offers a command palette for quick searching across all models or custom-injected data
 - **django-constance**: Official support with a completely new design and UX improvements
 - **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance
 - **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form
 - **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load
-- **Checkbox & radio filters:** Enhanced filter options with checkbox and radio interfaces for intuitive filtering
 
 ## Core Features & Capabilities
 
@@ -58,6 +60,7 @@ Unfold Studio lets you visually customize your Django admin without writing code
 - **Model tabs:** Allow defining custom tab navigation for models
 - **Fieldset tabs:** Merge multiple fieldsets into tabs in the change form
 - **Sortable inlines:** Allow sorting inlines by dragging and dropping
+- **Command**: Offers a command palette for quick searching across all models or custom-injected data
 - **Environment label:** Distinguish between environments by displaying a label
 - **Nonrelated inlines:** Display nonrelated models as inlines in the change form
 - **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance
