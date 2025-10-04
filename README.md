@@ -1,4 +1,4 @@
-<img width="2560" height="2198" alt="screenshot" src="https://github.com/user-attachments/assets/d0a5e8b7-011d-4703-9f5e-4ba0b8e5562f" />
+<img width="2560" height="2198" alt="screenshot" src="https://github.com/user-attachments/assets/a8232d59-0abe-4bd5-8856-399f3d3ea462" />
 
 ## Unfold - Django Admin Theme
 
@@ -33,7 +33,7 @@ If you need assistance with integrating or customizing Unfold, support packages 
 
 Unfold Studio lets you visually customize your Django admin without writing code — update colors, logos, sidebar, and interface styles to match your brand in minutes. Give your admin a polished, professional look that feels truly yours. Available at [unfoldadmin.com/studio](https://unfoldadmin.com/studio).
 
-<img width="2560" height="1100" alt="dashboards" src="https://github.com/user-attachments/assets/4d138f67-29c6-42ec-b897-0d087b7b8a7a" />
+<img width="2560" height="1100" alt="dashboards" src="https://github.com/user-attachments/assets/b83ca29e-4a97-433e-bc2b-2709dc4b5b68" />
 
 ## Fresh Features & Enhancements
 
