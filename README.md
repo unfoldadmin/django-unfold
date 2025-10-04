@@ -1,4 +1,4 @@
-![screenshot](https://github.com/user-attachments/assets/87aaad04-f454-42aa-b9ac-e14d41f189ac)
+<img width="2560" height="2198" alt="screenshot" src="https://github.com/user-attachments/assets/d0a5e8b7-011d-4703-9f5e-4ba0b8e5562f" />
 
 ## Unfold - Django Admin Theme
 
