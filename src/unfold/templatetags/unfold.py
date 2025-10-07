@@ -65,7 +65,7 @@ def _get_tabs_list(
 @register.simple_tag(name="tab_list", takes_context=True)
 def tab_list(context: RequestContext, page: str, opts: Optional[Options] = None) -> str:
     inlines_list = []
-
+    datasets_list = []
     data = {
         "nav_global": context.get("nav_global"),
         "actions_detail": context.get("actions_detail"),
@@ -84,6 +84,13 @@ def tab_list(context: RequestContext, page: str, opts: Optional[Options] = None)
 
         if len(inlines_list) > 0:
             data["inlines_list"] = inlines_list
+
+        for dataset in context.get("datasets", []):
+            if dataset and hasattr(dataset, "tab"):
+                datasets_list.append(dataset)
+
+        if len(datasets_list) > 0:
+            data["datasets_list"] = datasets_list
 
     return render_to_string(
         "unfold/helpers/tab_list.html",
