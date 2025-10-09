@@ -7,6 +7,8 @@ from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
 from django.contrib.admin.options import InlineModelAdmin
+from django.contrib.admin.views import main
+from django.contrib.admin.views.main import IGNORED_PARAMS
 from django.contrib.contenttypes.admin import (
     GenericStackedInline as BaseGenericStackedInline,
 )
@@ -23,6 +25,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from unfold.checks import UnfoldModelAdminChecks
+from unfold.datasets import BaseDataset
 from unfold.forms import (
     ActionForm,
     PaginationGenericInlineFormSet,
@@ -58,6 +61,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     change_form_after_template = None
     change_form_outer_before_template = None
     change_form_outer_after_template = None
+    change_form_datasets = ()
     compressed_fields = False
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
@@ -87,6 +91,39 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     ) -> TemplateResponse:
         self.request = request
         return super().changelist_view(request, extra_context)
+
+    def changeform_view(
+        self,
+        request: HttpRequest,
+        object_id: Optional[str] = None,
+        form_url: str = "",
+        extra_context: Optional[dict[str, Any]] = None,
+    ) -> TemplateResponse:
+        self.request = request
+        extra_context = extra_context or {}
+        datasets = self.get_changeform_datasets(request)
+
+        # Monkeypatch IGNORED_PARAMS to add dataset page and search arguments into ignored params
+        ignored_params = []
+        for dataset in datasets:
+            ignored_params.append(f"{dataset.model._meta.model_name}-q")
+            ignored_params.append(f"{dataset.model._meta.model_name}-p")
+
+        main.IGNORED_PARAMS = (*IGNORED_PARAMS, *ignored_params)
+
+        rendered_datasets = []
+        for dataset in datasets:
+            rendered_datasets.append(
+                dataset(
+                    request=request,
+                    extra_context={
+                        "object": object_id,
+                    },
+                )
+            )
+
+        extra_context["datasets"] = rendered_datasets
+        return super().changeform_view(request, object_id, form_url, extra_context)
 
     def get_fieldsets(self, request: HttpRequest, obj=None) -> FieldsetsType:
         if not obj and self.add_fieldsets:
@@ -197,6 +234,9 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
             formset_kwargs["per_page"] = inline.per_page
 
         return formset_kwargs
+
+    def get_changeform_datasets(self, request: HttpRequest) -> list[type[BaseDataset]]:
+        return self.change_form_datasets
 
 
 class BaseInlineMixin:

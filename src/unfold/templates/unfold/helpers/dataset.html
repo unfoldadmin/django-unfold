@@ -1,0 +1,19 @@
+{% load admin_list unfold_list %}
+
+<div {% if cl.model_admin.tab %}x-show="activeTab == 'dataset-{{ dataset.model_name }}'"{% endif %}>
+    {% if not cl.model_admin.tab %}
+        <h2 class="inline-heading bg-base-100 font-semibold mb-6 px-4 py-3 rounded-default text-font-important-light @min-[1570px]:-mx-4 dark:bg-white/[.02] dark:text-font-important-dark">
+            {{ dataset.model_verbose_name|capfirst }}
+        </h2>
+    {% endif %}
+
+    {% if cl.search_fields %}
+        <div class="flex flex-col gap-4 mb-4  sm:flex-row empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
+            {% unfold_search_form cl %}
+        </div>
+    {% endif %}
+
+    {% unfold_result_list cl %}
+
+    {% pagination cl %}
+</div>
