@@ -2,7 +2,7 @@
 
 {% with url=field.url %}
     {% if not url %}
-        <span class="flex items-center">-<span>
+        <span class="flex items-center">-</span>
     {% elif field.is_image %}
         <a href="{{ url }}" target="_blank" class="block max-w-48">
             <img src="{{ url }}" alt="{% trans 'Image preview' %}" class="block rounded-default" />
