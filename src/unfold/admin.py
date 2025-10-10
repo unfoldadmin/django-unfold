@@ -28,7 +28,11 @@ from unfold.forms import (
     PaginationGenericInlineFormSet,
     PaginationInlineFormSet,
 )
-from unfold.mixins import ActionModelAdminMixin, BaseModelAdminMixin
+from unfold.mixins import (
+    ActionModelAdminMixin,
+    BaseModelAdminMixin,
+    NestedInlinesModelAdminMixin,
+)
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
 from unfold.typing import FieldsetsType
 from unfold.views import ChangeList
@@ -43,7 +47,12 @@ checkbox = UnfoldBooleanWidget(
 )
 
 
-class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
+class ModelAdmin(
+    BaseModelAdminMixin,
+    ActionModelAdminMixin,
+    NestedInlinesModelAdminMixin,
+    BaseModelAdmin,
+):
     action_form = ActionForm
     custom_urls = ()
     add_fieldsets = ()
@@ -65,10 +74,13 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
     @property
     def media(self):
-        if not hasattr(self, "request"):
-            return super().media
-
         media = super().media
+
+        if hasattr(self, "nested_formset_media"):
+            media += self.nested_formset_media
+
+        if not hasattr(self, "request"):
+            return media
 
         for filter in self.get_list_filter(self.request):
             if (
