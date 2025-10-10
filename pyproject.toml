@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.67.0"
+version = "0.67.1"
 description = "Modern Django admin theme for seamless interface development"
 license = "MIT"
 readme = "README.md"
@@ -23,7 +23,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.9,<4.0"
 django = ">=4.2"
 
 [tool.poetry.group.test.dependencies]
@@ -34,7 +34,7 @@ tox = "^4.30"
 django-money = "^3.5"
 
 [tool.poetry.group.dev.dependencies]
-python-semantic-release = "^9.21"
+python-semantic-release = "^10.4"
 
 [tool.ruff]
 fix = true
@@ -59,19 +59,16 @@ ignore = [
 [tool.semantic_release]
 tag_format = "{version}"
 major_on_zero = false
+allow_zero_version = true
 version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [tool.semantic_release.changelog]
-template_dir = ".github/templates"
+mode = "init"
 exclude_commit_patterns = [
     "chore: version bump",
-    "chore(deps)",
-    "chore(deps-dev)",
+    '''chore(?:\(deps\))?: .+''',
+    '''chore(?:\(deps-dev\))?: .+'''
 ]
-
-[tool.semantic_release.changelog.environment]
-trim_blocks = true
-lstrip_blocks = true
 
 [tool.semantic_release.publish]
 upload_to_vcs_release = false
