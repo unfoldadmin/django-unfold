@@ -1,7 +1,7 @@
 {% load admin_modify admin_urls i18n %}
 
 {% if inline_admin_form.original %}
-    <span class="ml-2 font-normal text-xs text-primary-600 dark:text-primary-500">
+    <span class="ml-2 font-normal text-xs text-primary-600 dark:text-primary-500 group-hover/title:block hidden">
         {% if inline_admin_form.model_admin.show_change_link and inline_admin_form.model_admin.has_registered_model %}
             <a href="{% url inline_admin_form.model_admin.opts|admin_urlname:'change' inline_admin_form.original.pk|admin_urlquote %}" class="align-middle">
                 {% trans "Change" %}

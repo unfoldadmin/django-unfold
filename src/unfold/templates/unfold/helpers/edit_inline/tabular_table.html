@@ -8,11 +8,11 @@
 
         {% include "unfold/helpers/edit_inline/inline_errors.html" %}
 
-        <table id="{{ inline_admin_formset.formset.prefix }}-data" class="formset w-full {% if nested_inline %}nested-formset{% endif %}" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-sort.ghost x-sort:config="{preventOnFilter: false, filter: '.template', onMove: moveRecords, onEnd: sortRecords}"{% endif %} data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
+        <table id="{{ inline_admin_formset.formset.prefix }}-data" class="formset group/formset-{% if nested_inline %}nested{% else %}parent{% endif %} w-full {% if nested_inline %}nested-formset{% endif %}" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-sort.ghost x-sort:config="{preventOnFilter: false, filter: '.template', onMove: moveRecords, onEnd: sortRecords}"{% endif %} data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
             {% include "unfold/helpers/edit_inline/tabular_heading.html" %}
 
             {% for inline_admin_form in inline_admin_formset %}
-                {% include "unfold/helpers/edit_inline/tabular_row.html" %}
+                {% include "unfold/helpers/edit_inline/tabular_group.html" %}
             {% endfor %}
 
             {% include "unfold/helpers/edit_inline/tabular_footer.html" %}

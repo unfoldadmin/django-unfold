@@ -656,15 +656,15 @@ function inlines() {
    * </div>
    */
   document.querySelectorAll(".add-row").forEach(function (el) {
-    el.addEventListener("click", addInlinesRowHandler);
+    el.addEventListener("click", addInlineTemplateHandler);
   });
 
   document.querySelectorAll(".delete-template").forEach(function (el) {
-    el.addEventListener("click", deleteTemplateHandler);
+    el.addEventListener("click", deleteInlineTemplateHandler);
   });
 }
 
-function deleteTemplateHandler(e) {
+function deleteInlineTemplateHandler(e) {
   const formset = e.target.closest(".formset");
   const options = JSON.parse(formset.dataset.inlineFormset).options;
   const formsetWrapper = e.target.closest(".formset-wrapper");
@@ -716,21 +716,23 @@ function deleteTemplateHandler(e) {
 
   // Update total forms count
   totalForms.value = parseInt(
-    formset.querySelectorAll(":scope > .form-group:not(.empty-form)").length
+    formset.querySelectorAll(":scope > .form-group:not(.empty-form)").length,
+    10
   );
 
   // Apply delete event
   formset.querySelectorAll(".delete-template").forEach(function (el) {
-    el.removeEventListener("click", deleteTemplateHandler);
-    el.addEventListener("click", deleteTemplateHandler);
+    el.removeEventListener("click", deleteInlineTemplateHandler);
+    el.addEventListener("click", deleteInlineTemplateHandler);
   });
 
   // Show add button
-  if (parseInt(totalForms.value) < parseInt(maxNumForms.value)) {
+  if (parseInt(totalForms.value, 10) < parseInt(maxNumForms.value, 10)) {
     formset.querySelector(".add-row").classList.remove("hidden");
   }
 
   applyLastClass(formset);
+  checkFormsetEmpty(formset);
 
   document.dispatchEvent(
     new CustomEvent("formset:removed", {
@@ -741,7 +743,7 @@ function deleteTemplateHandler(e) {
   );
 }
 
-function addInlinesRowHandler(e) {
+function addInlineTemplateHandler(e) {
   e.preventDefault();
 
   const formset = e.target.closest(".formset");
@@ -759,13 +761,14 @@ function addInlinesRowHandler(e) {
 
   row.classList.remove("empty-form");
 
-  if (parseInt(totalForms.value) >= parseInt(maxNumForms.value)) {
+  if (parseInt(totalForms.value, 10) >= parseInt(maxNumForms.value, 10)) {
     return;
   }
 
   // Insert new row BEFORE template row which is always last in formset
   formset.insertBefore(row, template);
   applyLastClass(formset);
+  checkFormsetEmpty(formset);
 
   // Stacked inlines are having a counter in title
   updateStackedCounter(row.parentElement);
@@ -775,11 +778,11 @@ function addInlinesRowHandler(e) {
   formRow.innerHTML = formRow.innerHTML.replaceAll(/__prefix__/g, index);
 
   // Update hidden TOTAL_FORMS input value
-  totalForms.value = parseInt(totalForms.value) + 1;
+  totalForms.value = parseInt(totalForms.value, 10) + 1;
 
   // Hide add row button if it is not possible to add more rows
-  if (totalForms.value == maxNumForms.value) {
-    e.target.classList.add("hidden");
+  if (totalForms.value === maxNumForms.value) {
+    e.target.parentElement.classList.add("hidden");
   }
 
   // Call special `formsetGroup:added` event to reinitialize inlines
@@ -833,13 +836,25 @@ document.addEventListener("formsetGroup:added", function (e) {
     });
 
   e.detail.row.querySelectorAll(".add-row").forEach(function (el) {
-    el.addEventListener("click", addInlinesRowHandler);
+    el.addEventListener("click", addInlineTemplateHandler);
   });
 
   e.detail.row.querySelectorAll(".delete-template").forEach(function (el) {
-    el.addEventListener("click", deleteTemplateHandler);
+    el.addEventListener("click", deleteInlineTemplateHandler);
   });
 });
+
+function checkFormsetEmpty(formset) {
+  const formGroups = formset.querySelectorAll(
+    ":scope > .form-group:not(.empty-form)"
+  );
+
+  if (formGroups.length === 0) {
+    formset.classList.add("empty");
+  } else {
+    formset.classList.remove("empty");
+  }
+}
 
 function applyLastClass(formset) {
   formset.querySelectorAll(":scope > .form-group").forEach(function (row) {
