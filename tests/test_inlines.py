@@ -62,7 +62,7 @@ def test_inline_collapsible(client, admin_user):
     response = client.get(reverse("admin:example_user_change", args=(admin_user.pk,)))
     assert response.status_code == HTTPStatus.OK
     assert (
-        "x-on:click=\"$event.target.tagName.toLowerCase() === 'h3' && (openRow = !openRow)"
+        "x-on:click=\"['h3', 'strong'].includes($event.target.tagName.toLowerCase()) && (openRow = !openRow)\""
         in response.content.decode()
     )
 
