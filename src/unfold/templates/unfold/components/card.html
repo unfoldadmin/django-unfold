@@ -1,11 +1,20 @@
-<{% if href %}a href="{{ href }}"{% else %}div{% endif %} class="bg-white block border border-base-200 flex flex-col grow overflow-hidden p-6 relative rounded-default shadow-xs dark:bg-base-900 dark:border-base-800 {% if href %}cursor-pointer transition-all hover:border-base-300 hover:shadow-md hover:shadow-base-200 dark:hover:border-base-700 dark:hover:shadow-base-800/50 {% endif %}{% if class %} {{ class }}{% endif %}">
+<{% if href %}a href="{{ href }}"{% else %}div{% endif %} class="bg-white block flex flex-col grow overflow-hidden p-6 relative rounded-default shadow-xs dark:bg-base-900 dark:border-base-800 {% if not disable_border %}border border-base-200 {% else %}shadow-base-500/20{% endif %} {% if href %}cursor-pointer transition-all hover:border-base-300 hover:shadow-md dark:hover:border-base-700 dark:hover:shadow-base-800/50 {% endif %}{% if class %} {{ class }}{% endif %}">
+
 {% if title %}
-    <h2 class="border-b border-base-200 font-semibold mb-6 -mt-6 -mx-6 py-4 px-6 text-[15px] text-font-important-light dark:text-font-important-dark dark:border-base-800">
-        {{ title }}
-    </h2>
+    <div class="border-b border-base-200 flex flex-row items-center mb-6 -mt-6 -mx-6 py-4 px-6 dark:border-base-800">
+        <h2 class="font-semibold text-[15px] text-important">
+            {{ title }}
+        </h2>
+
+        {% if action %}
+            <div class="ml-auto">
+                {{ action }}
+            </div>
+        {% endif %}
+    </div>
 {% endif %}
 
-<div class="grow relative {% if icon %} pl-6{% endif %}">
+<div class="grow relative{% if icon %} pl-8{% endif %}">
     {{ children }}
 
     {% if label %}
@@ -15,7 +24,7 @@
     {% endif %}
 
     {% if icon %}
-        <span class="material-symbols-outlined absolute -left-6 text-base-300 top-1/2 -translate-x-1/3 -translate-y-1/2 text-6xl! dark:text-base-500">{{ icon }}</span>
+        <span class="material-symbols-outlined absolute -left-6 text-base-300 top-1/2 -translate-x-1/3 -translate-y-1/2 text-6xl! dark:text-base-500 {{ icon_class }}">{{ icon }}</span>
     {% endif %}
 </div>
 

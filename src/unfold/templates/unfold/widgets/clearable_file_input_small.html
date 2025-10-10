@@ -3,7 +3,7 @@
 <div class="flex flex-row">
     <div class="{{ widget.file_wrapper_class }}">
         {% if widget.is_initial and not widget.required %}
-            <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-base-900 dark:border-r-gray-700">
+            <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-base-900 dark:border-r-base-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
                     <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 

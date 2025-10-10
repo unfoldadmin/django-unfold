@@ -179,6 +179,8 @@ class SliderNumericFilter(RangeNumericFilter):
                 ),
                 "form": self.form_class(
                     name=self.parameter_name,
+                    min=min_value,
+                    max=max_value,
                     data={
                         self.parameter_name + "_from": self.used_parameters.get(
                             self.parameter_name + "_from", min_value

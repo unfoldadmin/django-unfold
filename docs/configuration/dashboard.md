@@ -28,8 +28,6 @@ TEMPLATES = [
 
 {% load i18n %}
 
-{% block breadcrumbs %}{% endblock %}
-
 {% block title %}
     {% if subtitle %}
         {{ subtitle }} |

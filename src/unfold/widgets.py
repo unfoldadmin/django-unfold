@@ -87,6 +87,8 @@ BASE_CLASSES = [
     "dark:focus:group-[.errors]:outline-red-500",
     "dark:scheme-dark",
     "group-[.primary]:border-transparent",
+    "disabled:!bg-base-50",
+    "dark:disabled:!bg-base-800",
 ]
 
 BASE_INPUT_CLASSES = [
@@ -252,9 +254,9 @@ SWITCH_CLASSES = [
     "transition-colors",
     "w-8",
     "min-w-8",
-    "focus:outline-2",
-    "focus:outline-offset-2",
-    "focus:outline-primary-600",
+    "disabled:cursor-not-allowed",
+    "disabled:opacity-50",
+    "focus:outline-none",
     "after:absolute",
     "after:bg-white",
     "after:content-['']",

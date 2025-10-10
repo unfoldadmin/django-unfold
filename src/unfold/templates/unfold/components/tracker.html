@@ -1,4 +1,4 @@
-<ul class="flex flex-row gap-0.5 overflow-hidden rounded-default">
+<ul class="flex flex-row gap-0.5 overflow-hidden rounded-default {% if class %}{{ class }}{% endif %}">
     {% for item in data %}
         <li class="h-8 px-px size-full {% if item.color %}{{ item.color }}{% else %}bg-base-300 dark:bg-base-400{% endif %} hover:opacity-50" title="{{ item.tooltip }}"></li>
     {% endfor %}

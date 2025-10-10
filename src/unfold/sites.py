@@ -1,17 +1,21 @@
 import copy
+import time
 from http import HTTPStatus
 from typing import Any, Callable, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
+from django.core.cache import cache
+from django.core.paginator import Paginator
 from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
+from django.utils.text import slugify
 
-from unfold.dataclasses import DropdownItem, Favicon
+from unfold.dataclasses import DropdownItem, Favicon, SearchResult
 
 try:
     from django.contrib.auth.decorators import login_not_required
@@ -22,7 +26,7 @@ except ImportError:
 
 
 from unfold.settings import get_config
-from unfold.utils import hex_to_rgb
+from unfold.utils import convert_color
 from unfold.widgets import (
     BUTTON_CLASSES,
     CHECKBOX_CLASSES,
@@ -112,6 +116,12 @@ class UnfoldAdminSite(AdminSite):
             "tab_list": self.get_tabs_list(request),
             "styles": self._get_list("STYLES", request),
             "scripts": self._get_list("SCRIPTS", request),
+            "command_show_history": self._get_config("COMMAND", request).get(
+                "show_history"
+            ),
+            "sidebar_command_search": self._get_config("SIDEBAR", request).get(
+                "command_search"
+            ),
             "sidebar_show_all_applications": self._get_value(
                 sidebar_config.get("show_all_applications"), request
             ),
@@ -165,26 +175,21 @@ class UnfoldAdminSite(AdminSite):
 
         return HttpResponse(status=HTTPStatus.OK)
 
-    def search(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
-    ) -> TemplateResponse:
-        query = request.GET.get("s").lower()
-        app_list = super().get_app_list(request)
-        apps = []
+    def _search_apps(
+        self, app_list: list[dict[str, Any]], search_term: str
+    ) -> list[SearchResult]:
         results = []
-
-        if query in EMPTY_VALUES:
-            return HttpResponse()
+        apps = []
 
         for app in app_list:
-            if query in app["name"].lower():
+            if search_term in app["name"].lower():
                 apps.append(app)
                 continue
 
             models = []
 
             for model in app["models"]:
-                if query in model["name"].lower():
+                if search_term in model["name"].lower():
                     models.append(model)
 
             if len(models) > 0:
@@ -194,17 +199,140 @@ class UnfoldAdminSite(AdminSite):
         for app in apps:
             for model in app["models"]:
                 results.append(
-                    {
-                        "app": app,
-                        "model": model,
-                    }
+                    SearchResult(
+                        title=str(model["name"]),
+                        description=app["name"],
+                        link=model["admin_url"],
+                        icon="tag",
+                    )
                 )
+
+        return results
+
+    def _search_models(
+        self,
+        request: HttpRequest,
+        app_list: list[dict[str, Any]],
+        search_term: str,
+        allowed_models: Optional[list[str]] = None,
+    ) -> list[SearchResult]:
+        results = []
+
+        for app in app_list:
+            for model in app["models"]:
+                # Skip models which are not allowed
+                if isinstance(allowed_models, (list, tuple)):
+                    if model["model"]._meta.label.lower() not in [
+                        m.lower() for m in allowed_models
+                    ]:
+                        continue
+
+                admin_instance = self._registry.get(model["model"])
+                search_fields = admin_instance.get_search_fields(request)
+
+                if not search_fields:
+                    continue
+
+                pks = []
+
+                qs = admin_instance.get_queryset(request)
+                search_results, _has_duplicates = admin_instance.get_search_results(
+                    request, qs, search_term
+                )
+
+                for item in search_results:
+                    if item.pk in pks:
+                        continue
+
+                    pks.append(item.pk)
+
+                    link = reverse_lazy(
+                        f"{self.name}:{admin_instance.model._meta.app_label}_{admin_instance.model._meta.model_name}_change",
+                        args=(item.pk,),
+                    )
+
+                    results.append(
+                        SearchResult(
+                            title=str(item),
+                            description=f"{item._meta.app_label.capitalize()} - {item._meta.verbose_name.capitalize()}",
+                            link=link,
+                            icon="data_object",
+                        )
+                    )
+
+        return results
+
+    def search(
+        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
+    ) -> TemplateResponse:
+        start_time = time.time()
+
+        CACHE_TIMEOUT = 5 * 60
+        PER_PAGE = 100
+
+        search_term = request.GET.get("s")
+        extended_search = "extended" in request.GET
+        app_list = super().get_app_list(request)
+        template_name = "unfold/helpers/search_results.html"
+
+        if search_term in EMPTY_VALUES:
+            return HttpResponse()
+
+        search_term = search_term.lower()
+        cache_key = f"unfold_search_{request.user.pk}_{slugify(search_term)}"
+        cache_results = cache.get(cache_key)
+
+        if extended_search:
+            template_name = "unfold/helpers/command_results.html"
+
+        if cache_results:
+            results = cache_results
+        else:
+            results = self._search_apps(app_list, search_term)
+
+            if extended_search:
+                if search_callback := self._get_config("COMMAND", request).get(
+                    "search_callback"
+                ):
+                    results.extend(
+                        self._get_value(search_callback, request, search_term)
+                    )
+
+                search_models = self._get_value(
+                    self._get_config("COMMAND", request).get("search_models"), request
+                )
+
+                if search_models is True or isinstance(search_models, (list, tuple)):
+                    allowed_models = (
+                        search_models
+                        if isinstance(search_models, (list, tuple))
+                        else None
+                    )
+
+                    results.extend(
+                        self._search_models(
+                            request, app_list, search_term, allowed_models
+                        )
+                    )
+
+            cache.set(cache_key, results, timeout=CACHE_TIMEOUT)
+
+        execution_time = time.time() - start_time
+        paginator = Paginator(results, PER_PAGE)
+
+        show_history = self._get_value(
+            self._get_config("COMMAND", request).get("show_history"), request
+        )
 
         return TemplateResponse(
             request,
-            template="unfold/helpers/search_results.html",
+            template=template_name,
             context={
-                "results": results,
+                "page_obj": paginator,
+                "results": paginator.page(request.GET.get("page", 1)),
+                "page_counter": (int(request.GET.get("page", 1)) - 1) * PER_PAGE,
+                "execution_time": execution_time,
+                "command_show_history": show_history,
             },
             headers={
                 "HX-Trigger": "search",
@@ -258,11 +386,7 @@ class UnfoldAdminSite(AdminSite):
                 )
 
             # Checks if any tab item is active and then marks the sidebar link as active
-            if (
-                tabs
-                and (is_active := self._get_is_tab_active(request, tabs, link))
-                and is_active
-            ):
+            if tabs and self._get_is_tab_active(request, tabs, link):
                 item["active"] = True
 
             # Link callback
@@ -408,7 +532,7 @@ class UnfoldAdminSite(AdminSite):
                     request, tab_item.get("link_callback") or tab_item["link"]
                 ):
                     has_tab_link_active = True
-                    break
+                    continue
 
             if has_primary_link and has_tab_link_active:
                 return True
@@ -440,33 +564,12 @@ class UnfoldAdminSite(AdminSite):
     def _get_colors(self, key: str, *args) -> dict[str, dict[str, str]]:
         colors = self._get_config(key, *args)
 
-        def rgb_to_values(value: str) -> str:
-            return ", ".join(
-                list(
-                    map(
-                        str.strip,
-                        value.removeprefix("rgb(").removesuffix(")").split(","),
-                    )
-                )
-            )
-
-        def hex_to_values(value: str) -> str:
-            return ", ".join(str(item) for item in hex_to_rgb(value))
-
         for name, weights in colors.items():
             weights = self._get_value(weights, *args)
             colors[name] = weights
 
             for weight, value in weights.items():
-                if value[0] == "#":
-                    colors[name][weight] = hex_to_values(value)
-                elif value.startswith("rgb"):
-                    colors[name][weight] = rgb_to_values(value)
-                elif isinstance(value, str) and all(
-                    part.isdigit() for part in value.split()
-                ):
-                    colors[name][weight] = ", ".join(value.split(" "))
-                pass
+                colors[name][weight] = convert_color(value)
 
         return colors
 
@@ -505,6 +608,7 @@ class UnfoldAdminSite(AdminSite):
                 title=item.get("title"),
                 link=self._get_value(item["link"], *args),
                 icon=item.get("icon"),
+                attrs=item.get("attrs"),
             )
             for item in items
         ]

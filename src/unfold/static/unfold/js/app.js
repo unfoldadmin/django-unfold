@@ -51,7 +51,7 @@ function searchForm() {
  *************************************************************/
 function searchDropdown() {
   return {
-    openSearchResults: true,
+    openSearchResults: false,
     currentIndex: 0,
     applyShortcut(event) {
       if (
@@ -70,7 +70,7 @@ function searchDropdown() {
       }
     },
     prevItem() {
-      if (this.currentIndex > 0) {
+      if (this.currentIndex > 1) {
         this.currentIndex--;
       }
     },
@@ -79,11 +79,178 @@ function searchDropdown() {
         .length;
     },
     selectItem() {
-      const items = document
-        .getElementById("search-results")
-        .querySelectorAll("li");
+      const href = this.items[this.currentIndex - 1].querySelector("a").href;
+      window.location = href;
+    },
+  };
+}
 
-      window.location = items[this.currentIndex - 1].querySelector("a").href;
+/*************************************************************
+ * Search command
+ *************************************************************/
+function searchCommand() {
+  return {
+    el: document.getElementById("command-results"),
+    items: undefined,
+    hasResults: false,
+    openCommandResults: false,
+    currentIndex: 0,
+    totalItems: 0,
+    commandHistory: JSON.parse(localStorage.getItem("commandHistory") || "[]"),
+    handleOpen() {
+      this.openCommandResults = true;
+      this.toggleBodyOverflow();
+      setTimeout(() => {
+        this.$refs.searchInputCommand.focus();
+      }, 20);
+
+      this.items = document.querySelectorAll("#command-history li");
+      this.totalItems = this.items.length;
+    },
+    handleShortcut(event) {
+      if (
+        event.key === "k" &&
+        (event.metaKey || event.ctrlKey) &&
+        document.activeElement.tagName.toLowerCase() !== "input" &&
+        document.activeElement.tagName.toLowerCase() !== "textarea" &&
+        !document.activeElement.isContentEditable
+      ) {
+        event.preventDefault();
+        this.handleOpen();
+      }
+    },
+    handleEscape() {
+      if (this.$refs.searchInputCommand.value === "") {
+        this.toggleBodyOverflow();
+        this.openCommandResults = false;
+        this.el.innerHTML = "";
+        this.items = undefined;
+        this.totalItems = 0;
+        this.currentIndex = 0;
+      } else {
+        this.$refs.searchInputCommand.value = "";
+      }
+    },
+    handleContentLoaded(event) {
+      if (
+        event.target.id !== "command-results" &&
+        event.target.id !== "command-results-list"
+      ) {
+        return;
+      }
+
+      const commandResultsList = document.getElementById(
+        "command-results-list"
+      );
+      if (commandResultsList) {
+        this.items = commandResultsList.querySelectorAll("li");
+        this.totalItems = this.items.length;
+      } else {
+        this.items = undefined;
+        this.totalItems = 0;
+      }
+
+      if (event.target.id === "command-results") {
+        this.currentIndex = 0;
+
+        if (this.items) {
+          this.totalItems = this.items.length;
+        } else {
+          this.totalItems = 0;
+        }
+      }
+
+      this.hasResults = this.totalItems > 0;
+
+      if (!this.hasResults) {
+        this.items = document.querySelectorAll("#command-history li");
+      }
+    },
+    handleOutsideClick() {
+      this.$refs.searchInputCommand.value = "";
+      this.openCommandResults = false;
+      this.toggleBodyOverflow();
+    },
+    toggleBodyOverflow() {
+      document
+        .getElementsByTagName("body")[0]
+        .classList.toggle("overflow-hidden");
+    },
+    scrollToActiveItem() {
+      const item = this.items[this.currentIndex - 1];
+
+      if (item) {
+        item.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    },
+    nextItem() {
+      if (this.currentIndex < this.totalItems) {
+        this.currentIndex++;
+        this.scrollToActiveItem();
+      }
+    },
+    prevItem() {
+      if (this.currentIndex > 1) {
+        this.currentIndex--;
+        this.scrollToActiveItem();
+      }
+    },
+    selectItem(addHistory) {
+      const link = this.items[this.currentIndex - 1].querySelector("a");
+      const data = {
+        title: link.dataset.title,
+        description: link.dataset.description,
+        link: link.href,
+        favorite: false,
+      };
+
+      if (addHistory) {
+        this.addToHistory(data);
+      }
+
+      window.location = link.href;
+    },
+    addToHistory(data) {
+      let commandHistory = JSON.parse(
+        localStorage.getItem("commandHistory") || "[]"
+      );
+
+      for (const [index, item] of commandHistory.entries()) {
+        if (item.link === data.link) {
+          commandHistory.splice(index, 1);
+        }
+      }
+
+      commandHistory.unshift(data);
+      commandHistory = commandHistory.slice(0, 10);
+      this.commandHistory = commandHistory;
+      localStorage.setItem("commandHistory", JSON.stringify(commandHistory));
+    },
+    removeFromHistory(event, index) {
+      event.preventDefault();
+
+      const commandHistory = JSON.parse(
+        localStorage.getItem("commandHistory") || "[]"
+      );
+      commandHistory.splice(index, 1);
+      this.commandHistory = commandHistory;
+      localStorage.setItem("commandHistory", JSON.stringify(commandHistory));
+    },
+    toggleFavorite(event, index) {
+      event.preventDefault();
+
+      const commandHistory = JSON.parse(
+        localStorage.getItem("commandHistory") || "[]"
+      );
+
+      commandHistory[index].favorite = !commandHistory[index].favorite;
+      this.commandHistory = commandHistory.sort(
+        (a, b) => Number(b.favorite) - Number(a.favorite)
+      );
+      localStorage.setItem("commandHistory", JSON.stringify(commandHistory));
     },
   };
 }
@@ -251,6 +418,12 @@ const DEFAULT_CHART_OPTIONS = {
       pointBorderWidth: 0,
       pointStyle: false,
     },
+    pie: {
+      borderWidth: 0,
+    },
+    doughnut: {
+      borderWidth: 0,
+    },
   },
   plugins: {
     legend: {
@@ -271,6 +444,13 @@ const DEFAULT_CHART_OPTIONS = {
   },
   scales: {
     x: {
+      display: function (context) {
+        if (["pie", "doughnut", "radar"].includes(context.chart.config.type)) {
+          return false;
+        }
+
+        return true;
+      },
       border: {
         dash: [5, 5],
         dashOffset: 2,
@@ -279,6 +459,11 @@ const DEFAULT_CHART_OPTIONS = {
       ticks: {
         color: "#9ca3af",
         display: true,
+        maxTicksLimit: function (context) {
+          return context.chart.data.datasets.find(
+            (dataset) => dataset.maxTicksXLimit
+          )?.maxTicksXLimit;
+        },
       },
       grid: {
         display: true,
@@ -286,15 +471,35 @@ const DEFAULT_CHART_OPTIONS = {
       },
     },
     y: {
+      display: function (context) {
+        if (["pie", "doughnut", "radar"].includes(context.chart.config.type)) {
+          return false;
+        }
+
+        return true;
+      },
       border: {
         dash: [5, 5],
         dashOffset: 5,
         width: 0,
       },
       ticks: {
-        display: false,
-        font: {
-          size: 13,
+        color: "#9ca3af",
+        display: function (context) {
+          return context.chart.data.datasets.some((dataset) => {
+            return (
+              dataset.hasOwnProperty("displayYAxis") && dataset.displayYAxis
+            );
+          });
+        },
+        callback: function (value) {
+          const suffix = this.chart.data.datasets.find(
+            (dataset) => dataset.suffixYAxis
+          )?.suffixYAxis;
+          if (suffix) {
+            return `${value} ${suffix}`;
+          }
+          return value;
         },
       },
       grid: {
@@ -326,13 +531,20 @@ const renderCharts = () => {
       .getPropertyValue("--color-base-300")
       .trim();
 
-    const borderColor = hasDarkClass
-      ? `rgb(${baseColorDark})`
-      : `rgb(${baseColorLight})`;
+    const borderColor = hasDarkClass ? baseColorDark : baseColorLight;
 
     for (const chart of charts) {
-      chart.options.scales.x.grid.color = borderColor;
-      chart.options.scales.y.grid.color = borderColor;
+      if (chart.options.scales.x) {
+        chart.options.scales.x.grid.color = borderColor;
+      }
+
+      if (chart.options.scales.y) {
+        chart.options.scales.y.grid.color = borderColor;
+      }
+
+      if (chart.options.scales.r) {
+        chart.options.scales.r.grid.color = borderColor;
+      }
       chart.update();
     }
   };
@@ -352,12 +564,22 @@ const renderCharts = () => {
     for (const key in parsedData.datasets) {
       const dataset = parsedData.datasets[key];
       const processColor = (colorProp) => {
-        if (dataset?.[colorProp]?.startsWith("var(")) {
+        if (Array.isArray(dataset?.[colorProp])) {
+          for (const [index, prop] of dataset?.[colorProp].entries()) {
+            if (prop.startsWith("var(")) {
+              const cssVar = prop.match(/var\((.*?)\)/)[1];
+              const color = getComputedStyle(document.documentElement)
+                .getPropertyValue(cssVar)
+                .trim();
+              dataset[colorProp][index] = color;
+            }
+          }
+        } else if (dataset?.[colorProp]?.startsWith("var(")) {
           const cssVar = dataset[colorProp].match(/var\((.*?)\)/)[1];
           const color = getComputedStyle(document.documentElement)
             .getPropertyValue(cssVar)
             .trim();
-          dataset[colorProp] = `rgb(${color})`;
+          dataset[colorProp] = color;
         }
       };
 
@@ -365,11 +587,30 @@ const renderCharts = () => {
       processColor("backgroundColor");
     }
 
+    CHART_OPTIONS = { ...DEFAULT_CHART_OPTIONS };
+    if (type === "radar") {
+      CHART_OPTIONS.scales = {
+        r: {
+          ticks: {
+            backdropColor: "transparent",
+          },
+          pointLabels: {
+            color: "#9ca3af",
+            font: {
+              size: 12,
+            },
+          },
+        },
+      };
+    }
+    Chart.defaults.font.family = "Inter";
+    Chart.defaults.font.size = 12;
+
     charts.push(
       new Chart(ctx, {
         type: type || "bar",
         data: parsedData,
-        options: options ? JSON.parse(options) : DEFAULT_CHART_OPTIONS,
+        options: options ? JSON.parse(options) : { ...CHART_OPTIONS },
       })
     );
   }

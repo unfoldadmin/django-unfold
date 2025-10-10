@@ -19,6 +19,14 @@ class UnfoldAction:
 
 
 @dataclass
+class SearchResult:
+    title: str
+    description: str
+    link: str
+    icon: Optional[str]
+
+
+@dataclass
 class Favicon:
     href: Union[str, Callable]
     rel: Optional[str] = None
@@ -31,3 +39,4 @@ class DropdownItem:
     title: str
     link: Union[str, Callable]
     icon: Optional[str] = None
+    attrs: Optional[dict] = None

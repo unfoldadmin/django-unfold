@@ -65,29 +65,29 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     warn_unsaved_form = False
     checks_class = UnfoldModelAdminChecks
 
-    def changelist_view(
-        self, request: HttpRequest, extra_context: Optional[dict[str, str]] = None
-    ) -> TemplateResponse:
-        additional_media = forms.Media()
+    @property
+    def media(self):
+        if not hasattr(self, "request"):
+            return super().media
 
-        for filter in self.get_list_filter(request):
+        media = super().media
+
+        for filter in self.get_list_filter(self.request):
             if (
                 isinstance(filter, (tuple, list))
                 and hasattr(filter[1], "form_class")
                 and hasattr(filter[1].form_class, "Media")
             ):
-                additional_media += forms.Media(filter[1].form_class.Media)
+                media += forms.Media(filter[1].form_class.Media)
             elif hasattr(filter, "form_class") and hasattr(filter.form_class, "Media"):
-                additional_media += forms.Media(filter.form_class.Media)
+                media += forms.Media(filter.form_class.Media)
 
-        if not extra_context:
-            extra_context = {}
+        return media
 
-        extra_context.update(
-            {
-                "media": self.media + additional_media,
-            }
-        )
+    def changelist_view(
+        self, request: HttpRequest, extra_context: Optional[dict[str, str]] = None
+    ) -> TemplateResponse:
+        self.request = request
 
         if self.ordering_field and self.ordering_field not in self.list_editable:
             list_editable = list(getattr(self, "list_editable", []))
@@ -144,7 +144,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
         action_detail_urls = [
             path(
-                f"<path:object_id>/{action.path}/",
+                f"<path:object_id>/{action.path}",
                 wrap(action.method),
                 name=action.action_name,
             )
@@ -208,7 +208,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     ) -> dict[str, Any]:
         formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
 
-        if hasattr(inline, "per_page"):
+        if hasattr(inline, "per_page") and inline.per_page:
             formset_kwargs["request"] = request
             formset_kwargs["per_page"] = inline.per_page
 

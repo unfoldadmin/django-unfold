@@ -5,7 +5,7 @@
         {% trans "Previous" %}
     </a>
 
-    <a {% if cl.result_list|length %}href="{% infinite_paginator_url cl cl.page_num|add:1 %}"{% endif %} class="{% if cl.result_list|length %}hover:text-primary-600 dark:hover:text-primary-500{% endif %}">
+    <a {% if cl.result_list|length == cl.paginator.per_page %}href="{% infinite_paginator_url cl cl.page_num|add:1 %}"{% endif %} class="{% if cl.result_list|length and cl.result_list|length == cl.paginator.per_page %}hover:text-primary-600 dark:hover:text-primary-500{% endif %}">
         {% trans "Next" %}
     </a>
 </div>

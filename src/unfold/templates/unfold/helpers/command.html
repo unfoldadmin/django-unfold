@@ -1,0 +1,54 @@
+{% load i18n %}
+
+{% if request.user.is_staff %}
+    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]"
+         x-data="searchCommand()"
+         x-on:opencommand.window="handleOpen()"
+         x-on:keydown.window="handleShortcut($event)"
+         x-show="openCommandResults">
+        <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
+            <div class="flex flex-row items-center px-4 w-full">
+                <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
+                    <span class="block material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:hidden">
+                        search
+                    </span>
+
+                    <span class="hidden material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:block animate-spin">
+                        progress_activity
+                    </span>
+                </button>
+
+                <input
+                    autocomplete="off"
+                    type="search"
+                    placeholder="{% trans "Type to search" %}"
+                    class="font-medium grow px-2 py-4 placeholder-font-subtle-light text-font-default-light focus:outline-hidden dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                    name="s"
+                    id="search-input-command"
+                    x-ref="searchInputCommand"
+                    hx-indicator="#command-submit"
+                    x-on:keydown.escape.prevent="handleEscape()"
+                    x-on:keydown.arrow-down.prevent="nextItem()"
+                    x-on:keydown.arrow-up.prevent="prevItem()"
+                    x-on:keydown.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %})"
+                    hx-get="{% url "admin:search" %}?extended=1"
+                    hx-trigger="keyup changed delay:500ms"
+                    hx-select="#command-results-list"
+                    hx-select-oob="#command-results-note"
+                    hx-target="#command-results">
+
+                {% include "unfold/helpers/shortcut.html" with shortcut="esc" %}
+            </div>
+
+            <div class="grow h-full overflow-auto w-full dark:border-base-700" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)" x-bind:class="{'border-t border-base-200': items !== undefined && items.length > 0}">
+                <div id="command-results"></div>
+
+                {% if command_show_history %}
+                    {% include "unfold/helpers/command_history.html" %}
+                {% endif %}
+
+                <div id="command-results-note"></div>
+            </div>
+        </div>
+    </div>
+{% endif %}

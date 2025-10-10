@@ -25,6 +25,9 @@ UNFOLD = {
             "icon": "diamond",
             "title": _("My site"),
             "link": "https://example.com",
+            "attrs": {
+                "target": "_blank",
+            },
         },
         {
             "icon": "diamond",

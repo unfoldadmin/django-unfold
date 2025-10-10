@@ -1,0 +1,69 @@
+{% load i18n unfold %}
+
+{% if results %}
+    <ul id="command-results-list" class="flex flex-col gap-1.5 p-4">
+        {% for item in results %}
+            <li class="group"
+                {% if forloop.last and results.next_page_number %}
+                    hx-get="{% url "admin:search" %}{% unfold_querystring extended=1 page=results.next_page_number %}"
+                    hx-trigger="intersect once threshold:0.5"
+                    hx-swap="beforeend"
+                    hx-select="#command-results-list > *"
+                    hx-target="#command-results-list"
+                    hx-indicator="#command-results-loading"
+                {% endif %}
+                x-bind:class="{'active': currentIndex === {{ page_counter|add:forloop.counter }}}"
+                x-on:mouseenter="currentIndex = {{ page_counter|add:forloop.counter }}">
+                <a class="bg-base-100 flex items-center rounded-default px-3.5 py-3 group-[.active]:bg-primary-600 group-[.active]:text-white dark:bg-white/[.04] dark:text-base-200 dark:group-[.active]:bg-primary-600 dark:group-[.active]:text-white"
+                   href="{{ item.link }}"
+                   data-title="{{ item.title }}"
+                   data-description="{{ item.description }}"
+                   x-on:click="selectItem({% if command_show_history %}true{% else %}false{% endif %})">
+                    {% if item.icon %}
+                        <span class="bg-white border border-base-300 h-8 mr-4 w-8 flex items-center justify-center rounded-default group-[.active]:bg-transparent group-[.active]:border-white/40 dark:bg-base-800 dark:border-base-700">
+                            <span class="material-symbols-outlined text-font-subtle-light text-sm dark:text-font-subtle-dark group-[.active]:text-white">
+                                {{ item.icon }}
+                            </span>
+                        </span>
+                    {% endif %}
+
+                    <span>
+                        <span class="font-medium">{{ item.title }}</span>
+                        <span class="mx-1 opacity-50 group-[.active]:text-white">•</span>
+                        <span class="text-font-subtle-light dark:text-font-subtle-dark group-[.active]:text-white">{{ item.description|capfirst }}</span>
+                    </span>
+
+                    <span class="material-symbols-outlined ml-auto text-sm transition-transform group-[.active]:text-white group-[.active]:-translate-x-[2px]">arrow_forward</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <ul class="px-4 py-8 flex items-center justify-center">
+        <li class="text-lg">
+            {% trans "No results matching your query" %}
+        </li>
+    </ul>
+{% endif %}
+
+<div id="command-results-note" x-show="hasResults">
+    <div class="border-t border-base-200 px-4 py-3 flex items-center justify-center text-xs dark:border-base-700">
+        <div id="command-results-loading" class="hidden flex-row gap-2 grow h-[16px] items-center justify-center w-[16px] w-full [&.htmx-request]:flex [&.htmx-request+div]:hidden">
+            <span class="material-symbols-outlined animate-spin text-sm">
+                progress_activity
+            </span>
+
+            <span>
+                {% trans "Loading more results..." %}
+            </span>
+        </div>
+
+        <div>
+            {% blocktranslate count counter=page_obj.count with time=execution_time|floatformat:2 %}
+                Found {{ counter }} result in {{ time }} seconds
+            {% plural %}
+                Found {{ counter }} results in {{ time }} seconds
+            {% endblocktranslate %}
+        </div>
+    </div>
+</div>

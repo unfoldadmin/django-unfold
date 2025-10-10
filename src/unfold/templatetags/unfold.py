@@ -1,5 +1,5 @@
 import json
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from typing import Any, Optional, Union
 
 from django import template
@@ -14,7 +14,9 @@ from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.safestring import SafeText, mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
@@ -233,17 +235,23 @@ class RenderComponentNode(template.Node):
             name: var.resolve(context) for name, var in self.extra_context.items()
         }
 
-        values.update(
-            {
-                "children": self.nodelist.render(context),
-            }
-        )
-
         if "component_class" in values:
             values = ComponentRegistry.create_instance(
                 values["component_class"],
                 request=context.request if hasattr(context, "request") else None,
             ).get_context_data(**values)
+
+        context_copy = context.new()
+        context_copy.update(context.flatten())
+        context_copy.update(values)
+        children = self.nodelist.render(context_copy)
+
+        if len(children) > 0:
+            values.update(
+                {
+                    "children": children,
+                }
+            )
 
         if self.include_context:
             values.update(context.flatten())
@@ -546,7 +554,7 @@ def changeform_data(adminform: AdminForm) -> str:
     return mark_safe(json.dumps(fields))
 
 
-@register.filter(takes_context=True)
+@register.filter
 def changeform_condition(field: BoundField) -> BoundField:
     if isinstance(field.field, dict):
         return field
@@ -603,3 +611,186 @@ def querystring_params(
     result[query_key] = query_value
 
     return result.urlencode()
+
+
+@register.simple_tag(name="unfold_querystring", takes_context=True)
+def unfold_querystring(context, *args, **kwargs):
+    """
+    Duplicated querystring template tag from Django core to allow
+    it using in Django 4.x. Once 4.x is not supported, remove it.
+    """
+    if not args:
+        args = [context.request.GET]
+    params = QueryDict(mutable=True)
+    for d in [*args, kwargs]:
+        if not isinstance(d, Mapping):
+            raise TemplateSyntaxError(
+                "querystring requires mappings for positional arguments (got "
+                f"{d!r} instead)."
+            )
+        for key, value in d.items():
+            if not isinstance(key, str):
+                raise TemplateSyntaxError(
+                    f"querystring requires strings for mapping keys (got {key!r} "
+                    "instead)."
+                )
+            if value is None:
+                params.pop(key, None)
+            elif isinstance(value, Iterable) and not isinstance(value, str):
+                params.setlist(key, value)
+            else:
+                params[key] = value
+    query_string = params.urlencode() if params else ""
+    return f"?{query_string}"
+
+
+@register.simple_tag(takes_context=True)
+def header_title(context: RequestContext) -> str:
+    parts = []
+    opts = context.get("opts")
+    current_app = (
+        context.request.current_app
+        if hasattr(context.request, "current_app")
+        else "admin"
+    )
+
+    if opts:
+        parts.append(
+            {
+                "link": reverse_lazy(f"{current_app}:app_list", args=[opts.app_label]),
+                "title": opts.app_config.verbose_name,
+            }
+        )
+
+        if (original := context.get("original")) and not isinstance(original, str):
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_changelist"
+                    ),
+                    "title": original._meta.verbose_name_plural,
+                }
+            )
+
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_change",
+                        args=[original.pk],
+                    ),
+                    "title": original,
+                }
+            )
+        elif object := context.get("object"):
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist"
+                    ),
+                    "title": object._meta.verbose_name_plural,
+                }
+            )
+
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
+                        args=[object.pk],
+                    ),
+                    "title": object,
+                }
+            )
+        else:
+            parts.append(
+                {
+                    "link": reverse_lazy(
+                        f"{current_app}:{opts.app_label}_{opts.model_name}_changelist"
+                    ),
+                    "title": opts.verbose_name_plural,
+                }
+            )
+    elif object := context.get("object"):
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"{current_app}:app_list", args=[object._meta.app_label]
+                ),
+                "title": object._meta.app_label,
+            }
+        )
+
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist",
+                ),
+                "title": object._meta.verbose_name_plural,
+            }
+        )
+
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
+                    args=[object.pk],
+                ),
+                "title": object,
+            }
+        )
+    elif (model_admin := context.get("model_admin")) and hasattr(model_admin, "model"):
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"{current_app}:app_list", args=[model_admin.model._meta.app_label]
+                ),
+                "title": model_admin.model._meta.app_label,
+            }
+        )
+
+        parts.append(
+            {
+                "link": reverse_lazy(
+                    f"{current_app}:{model_admin.model._meta.app_label}_{model_admin.model._meta.model_name}_changelist",
+                ),
+                "title": model_admin.model._meta.verbose_name_plural,
+            }
+        )
+
+    if not opts and (content_title := context.get("content_title")):
+        parts.append(
+            {
+                "title": content_title,
+            }
+        )
+
+    if len(parts) == 0:
+        username = (
+            context.request.user.get_short_name() or context.request.user.get_username()
+        )
+        parts.append({"title": f"{_('Welcome')} {username}"})
+
+    return render_to_string(
+        "unfold/helpers/header_title.html",
+        request=context.request,
+        context={
+            "parts": parts,
+        },
+    )
+
+
+@register.simple_tag(takes_context=True)
+def admin_object_app_url(context: RequestContext, object: Model, arg: str) -> str:
+    current_app = (
+        context.request.current_app
+        if hasattr(context.request, "current_app")
+        else "admin"
+    )
+
+    return f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_{arg}"
+
+
+@register.filter
+def has_nested_tables(table: dict) -> bool:
+    return any(
+        isinstance(row, dict) and "table" in row for row in table.get("rows", [])
+    )

@@ -1,0 +1,11 @@
+{% spaceless %}
+    {% for part in parts %}
+        <{% if part.link %}a href="{{ part.link }}"{% else %}span{% endif %} class="align-middle inline-block leading-5 tracking-tight">
+        {{ part.title|capfirst }}
+        </{% if part.link %}a{% else %}span{% endif %} >
+
+        {% if not forloop.last %}
+            <span class="material-symbols-outlined inline-block align-middle leading-5 mx-2 text-base-400 dark:text-base-500">chevron_right</span>
+        {% endif %}
+    {% endfor %}
+{% endspaceless %}

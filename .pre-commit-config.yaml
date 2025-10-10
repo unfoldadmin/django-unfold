@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-case-conflict
       - id: check-json
@@ -12,7 +12,7 @@ repos:
       - id: trailing-whitespace
         exclude: CHANGELOG.md
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.3
+    rev: v0.13.3
     hooks:
       - id: ruff
         args:
@@ -25,12 +25,12 @@ repos:
         stages: [commit-msg]
         args: []
   - repo: https://github.com/rtts/djhtml
-    rev: 3.0.8
+    rev: 3.0.9
     hooks:
       - id: djhtml
         files: .*/templates/.*\.html$
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.25.0
+    rev: 1.29.0
     hooks:
       - id: django-upgrade
         args: ['--target-version', '4.2']

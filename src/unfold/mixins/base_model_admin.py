@@ -18,7 +18,7 @@ from unfold.overrides import FORMFIELD_OVERRIDES
 
 
 class BaseModelAdminMixin:
-    def __init__(self, model: models.Model, admin_site: AdminSite) -> None:
+    def __init__(self, model: type[models.Model], admin_site: AdminSite) -> None:
         overrides = copy.deepcopy(FORMFIELD_OVERRIDES)
 
         for k, v in self.formfield_overrides.items():

@@ -9,39 +9,6 @@
 
 {% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
 
-{% if not is_popup %}
-    {% block breadcrumbs %}
-        <div class="px-4">
-            <div class="container mb-6 mx-auto -my-3 lg:mb-12">
-                <ul class="flex flex-wrap">
-                    {% url 'admin:index' as link %}
-                    {% trans 'Home' as name %}
-                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
-
-                    {% url 'admin:app_list' app_label=opts.app_label as link %}
-                    {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=opts.app_config.verbose_name %}
-
-                    {% if has_view_permission %}
-                        {% url opts|admin_urlname:'changelist' as link %}
-                        {% include 'unfold/helpers/breadcrumb_item.html' with link=link  name=opts.verbose_name_plural|capfirst %}
-                    {% else %}
-                        {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=opts.verbose_name_plural|capfirst %}
-                    {% endif %}
-
-                    {% if add %}
-                        {% blocktranslate trimmed with name=opts.verbose_name asvar breadcrumb_name %}
-                            Add {{ name }}
-                        {% endblocktranslate %}
-
-                        {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=breadcrumb_name %}
-                    {% else %}
-                        {% include 'unfold/helpers/breadcrumb_item.html' with link='' name=original|truncatewords:'18' %}
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    {% endblock %}
-{% endif %}
 
 {% block nav-global %}{% spaceless %}
     {% if change and not is_popup %}
@@ -85,8 +52,12 @@
                     <input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}">
                 {% endif %}
 
-                {% include "unfold/helpers/messages/errornote.html" with errors=errors %}
-                {% include "unfold/helpers/messages/error.html" with errors=adminform.form.non_field_errors %}
+                {% if errors or adminform.form.non_field_errors %}
+                    <div class="flex flex-col gap-4 *:mb-0">
+                        {% include "unfold/helpers/messages/errornote.html" with errors=errors %}
+                        {% include "unfold/helpers/messages/error.html" with errors=adminform.form.non_field_errors %}
+                    </div>
+                {% endif %}
 
                 {% block field_sets %}
                     {% with has_conditional_display=adminform.model_admin.conditional_fields %}
