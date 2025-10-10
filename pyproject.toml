@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-unfold"
-version = "0.67.1"
+version = "0.67.0"
 description = "Modern Django admin theme for seamless interface development"
 license = "MIT"
 readme = "README.md"
@@ -11,7 +11,6 @@ packages = [{ include = "unfold", from = "src" }]
 keywords = ["django", "admin", "tailwind", "theme"]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -23,7 +22,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4.0"
+python = ">=3.10,<4.0"
 django = ">=4.2"
 
 [tool.poetry.group.test.dependencies]
@@ -87,7 +86,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{39,310,311,312,313}-django{42,50,51,52}
+        python{310,311,312,313}-django{42,50,51,52}
 
     [testenv]
     skip_install = true
