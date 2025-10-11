@@ -99,6 +99,9 @@ def result_headers(cl):
     Generate the list column headers.
     """
     ordering_field_columns = cl.get_ordering_field_columns()
+    ordering_field = getattr(cl.model_admin, "ordering_field", None)
+    hide_ordering_field = getattr(cl.model_admin, "hide_ordering_field", False)
+
     for i, field_name in enumerate(cl.list_display):
         text, attr = label_for_field(
             field_name, cl.model, model_admin=cl.model_admin, return_attr=True
@@ -145,6 +148,10 @@ def result_headers(cl):
         order_type = ""
         new_order_type = "asc"
         sort_priority = 0
+
+        if ordering_field and field_name == ordering_field and hide_ordering_field:
+            th_classes.append("!hidden")
+
         # Is it currently being sorted on?
         is_sorted = i in ordering_field_columns
         if is_sorted:
@@ -209,6 +216,9 @@ def items_for_result(
 
     for field_index, field_name in enumerate(cl.list_display):
         empty_value_display = cl.model_admin.get_empty_value_display()
+        ordering_field = getattr(cl.model_admin, "ordering_field", None)
+        hide_ordering_field = getattr(cl.model_admin, "hide_ordering_field", False)
+
         row_classes = [
             f"field-{_coerce_field_name(field_name, field_index)}",
             *ROW_CLASSES,
@@ -320,6 +330,9 @@ def items_for_result(
 
                 if bf.errors:
                     row_classes += ["group", "errors"]
+
+            if ordering_field and field_name == ordering_field and hide_ordering_field:
+                row_classes.append("!hidden")
 
             row_class = mark_safe(f' class="{" ".join(row_classes)}"')
 

@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% with url=field.url %}
+    {% if not url %}
+        <span class="flex items-center">-</span>
+    {% elif field.is_image %}
+        <a href="{{ url }}" target="_blank" class="block max-w-48">
+            <img src="{{ url }}" alt="{% trans 'Image preview' %}" class="block rounded-default" />
+        </a>
+    {% else %}
+        <a href="{{ url }}" target="_blank">
+            <span class="flex items-center gap-2">
+                <span class="text-primary-600 dark:text-primary-500">{% trans "Click to download" %}</span>
+                <span class="material-symbols-outlined text-base-400 dark:text-base-500">download</span>
+            </span>
+        </a>
+    {% endif %}
+{% endwith %}

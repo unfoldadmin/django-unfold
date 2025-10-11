@@ -1,8 +1,11 @@
+from typing import Union
+
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import lookup_field, quote
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import (
+    FileField,
     ForeignObjectRel,
     ImageField,
     JSONField,
@@ -35,6 +38,30 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         label = self.field["label"]
 
         return format_html("<label{}>{}</label>", flatatt(attrs), capfirst(label))
+
+    @property
+    def url(self) -> Union[str, bool]:
+        field, obj, model_admin = (
+            self.field["field"],
+            self.form.instance,
+            self.model_admin,
+        )
+
+        try:
+            f, attr, value = lookup_field(field, obj, model_admin)
+        except (AttributeError, ValueError, ObjectDoesNotExist):
+            return False
+
+        if not self.is_file():
+            return False
+
+        if hasattr(obj, field):
+            field_value = getattr(obj, field)
+
+            if field_value and hasattr(field_value, "url"):
+                return field_value.url
+
+        return False
 
     def is_json(self) -> bool:
         field, obj, model_admin = (
@@ -72,6 +99,20 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             return attr.fget.image
 
         return isinstance(f, ImageField)
+
+    def is_file(self) -> bool:
+        field, obj, model_admin = (
+            self.field["field"],
+            self.form.instance,
+            self.model_admin,
+        )
+
+        try:
+            f, attr, value = lookup_field(field, obj, model_admin)
+        except (AttributeError, ValueError, ObjectDoesNotExist):
+            return False
+
+        return isinstance(f, (ImageField, FileField))
 
     def contents(self) -> str:
         contents = self._get_contents()

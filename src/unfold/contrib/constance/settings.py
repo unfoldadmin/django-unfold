@@ -15,6 +15,7 @@ UNFOLD_CONSTANCE_ADDITIONAL_FIELDS = {
         "django.forms.BooleanField",
         {
             "widget": "unfold.widgets.UnfoldBooleanSwitchWidget",
+            "required": False,
         },
     ],
     "file_field": [
