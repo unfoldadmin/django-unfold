@@ -17,7 +17,9 @@ const sortRecords = (e) => {
   const orderingField = e.from.dataset.orderingField;
 
   const weightInputs = Array.from(
-    e.from.querySelectorAll(`.has_original input[name$=-${orderingField}]`)
+    e.from.querySelectorAll(
+      `.has_original input[name$=-${orderingField}], td.field-${orderingField} input[name$=-${orderingField}]`
+    )
   );
 
   weightInputs.forEach((input, index) => {
