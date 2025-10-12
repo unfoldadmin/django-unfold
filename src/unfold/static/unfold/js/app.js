@@ -15,12 +15,24 @@ window.addEventListener("load", (e) => {
 /*************************************************************
  * Alpine.sort.js callback after sorting
  *************************************************************/
-const sortRecords = (e) => {
-  e.from.querySelectorAll(`.form-group.original`).forEach((row, index) => {
-    input = row.querySelector(`input[name$=-${e.from.dataset.orderingField}]`);
-    input.value = index;
-  });
-};
+function sortRecords(e) {
+  e.from
+    .querySelectorAll(`.form-group.original`)
+    .forEach(function (row, index) {
+      input = row.querySelector(
+        `input[name$=-${e.from.dataset.orderingField}]`
+      );
+      input.value = index;
+    });
+
+  e.from
+    .querySelectorAll(
+      `td.field-${e.from.dataset.orderingField} input[name$=-${e.from.dataset.orderingField}]`
+    )
+    .forEach(function (input, index) {
+      input.value = index;
+    });
+}
 
 /*************************************************************
  * Alpine.sort.js callback before moving records

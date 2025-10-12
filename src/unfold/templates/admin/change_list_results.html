@@ -8,69 +8,11 @@
 
 {% if results %}
     <div class="{% if cl.search_fields or cl.has_filters %}lg:rounded-b-default{% else %}lg:rounded-default{% endif %} -mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:shadow-xs lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
-        <table id="result_list" class="block border-base-200 border-spacing-none border-separate w-full lg:table">
-            <thead>
-                <tr>
-                    {% if cl.model_admin.list_sections|length > 0 %}
-                        <th></th>
-                    {% endif %}
-
-                    {% for header in result_headers %}
-                        <th class="align-middle font-semibold py-2 text-left text-font-important-light dark:text-font-important-dark whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}lg:px-3 lg:w-10{% else %}hidden px-3 lg:table-cell{% endif %}" scope="col">
-                            <div class="flex items-center">
-                                <div class="text">
-                                    {% if header.sortable %}
-                                        <a href="{{ header.url_primary }}">
-                                            {{ header.text|capfirst }}
-                                        </a>
-                                    {% else %}
-                                        {% if "action-toggle" in header.text and forloop.counter == 1 %}
-                                            <label class="flex flex-row items-center gap-2">
-                                                {{ header.text|capfirst }}
-
-                                                <span class="block font-normal lg:hidden">
-                                                    {% trans "Select all rows"%}
-                                                </span>
-                                            </label>
-                                        {% else %}
-                                            <span>
-                                                {{ header.text|capfirst }}
-                                            </span>
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
-
-                                {% if header.sortable %}
-                                    {% if header.sort_priority > 0 %}
-                                        <div class="sortoptions flex items-center ml-2">
-                                            <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-base-400 hover:text-base-500 dark:text-base-500 dark:hover:text-base-400 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
-                                                {% if header.ascending %}
-                                                    <span class="block material-symbols-outlined">arrow_circle_down</span>
-                                                {% else %}
-                                                    <span class="block material-symbols-outlined">arrow_circle_up</span>
-                                                {% endif %}
-                                            </a>
-
-                                            <a class="sortremove flex items-center leading-none ml-1 text-base-400 dark:text-base-500 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
-                                                <span class="block material-symbols-outlined">cancel</span>
-                                            </a>
-                                        </div>
-
-                                        {% if num_sorted_fields > 1 %}
-                                            <span class="sortpriority font-medium ml-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
-                                                {{ header.sort_priority }}
-                                            </span>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endif %}
-                            </div>
-                        </th>
-                    {% endfor %}
-                </tr>
-            </thead>
+        <table id="result_list" class="block border-base-200 border-spacing-none border-separate w-full lg:table" {% if cl.model_admin.ordering_field %}x-sort.ghost x-on:end="sortRecords"{% endif %} data-ordering-field="{{ cl.model_admin.ordering_field }}">
+            {% include 'unfold/helpers/change_list_headers.html' %}
 
             {% for result in results %}
-                <tbody class="block relative lg:table-row-group lg:hover:shadow-raised lg:dark:hover:shadow-raised-dark lg:hover:z-20 {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}" x-data="{rowOpen: false}">
+                <tbody class="block relative lg:table-row-group lg:hover:shadow-raised lg:dark:hover:shadow-raised-dark lg:hover:z-20 {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}" x-data="{rowOpen: false}" {% if cl.model_admin.ordering_field %}x-sort:item{% endif %}>
                     {% if result.form and result.form.non_field_errors %}
                         <tr>
                             <td class="text-left" colspan="{{ result|length }}">
@@ -80,6 +22,12 @@
                     {% endif %}
 
                     <tr class="block border border-base-200 mb-3 relative rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:rounded-none lg:shadow-none dark:border-base-800">
+                        {% if cl.model_admin.ordering_field %}
+                            <td class="align-middle cursor-move flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:py-3 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px" x-sort:handle>
+                                <span class="material-symbols-outlined align-middle cursor-move">drag_indicator</span>
+                            </td>
+                        {% endif %}
+
                         {% if cl.model_admin.list_sections|length > 0 %}
                             <td class="align-middle cursor-pointer flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:py-3 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px"
                                 data-label="{% trans "Expand row" %}"
@@ -100,7 +48,7 @@
 
                     {% if cl.model_admin.list_sections|length > 0 %}
                         <tr class="block mb-3 relative z-30 lg:table-row" x-show="rowOpen">
-                            <td colspan="{{ result|length|add:2 }}" class="border bg-base-200/10 block border-base-200 relative rounded-default p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800">
+                            <td colspan="100%" class="border bg-base-200/10 block border-base-200 relative rounded-default p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800">
                                 <div class="absolute bg-primary-600 h-full hidden left-0 top-0 w-0.5 lg:block"></div>
 
                                 <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">

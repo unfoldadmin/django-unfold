@@ -11,11 +11,11 @@ packages = [{ include = "unfold", from = "src" }]
 keywords = ["django", "admin", "tailwind", "theme"]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Operating System :: OS Independent",
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
@@ -23,18 +23,18 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.10,<4.0"
 django = ">=4.2"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.3"
+pytest = "^8.4"
 pytest-django = "^4.11"
-pytest-factoryboy = "^2.7.0"
-tox = "^4.26"
+pytest-factoryboy = "^2.8"
+tox = "^4.30"
 django-money = "^3.5"
 
 [tool.poetry.group.dev.dependencies]
-python-semantic-release = "^9.21"
+python-semantic-release = "^10.4"
 
 [tool.ruff]
 fix = true
@@ -59,19 +59,16 @@ ignore = [
 [tool.semantic_release]
 tag_format = "{version}"
 major_on_zero = false
+allow_zero_version = true
 version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [tool.semantic_release.changelog]
-template_dir = ".github/templates"
+mode = "init"
 exclude_commit_patterns = [
     "chore: version bump",
-    "chore(deps)",
-    "chore(deps-dev)",
+    '''chore(?:\(deps\))?: .+''',
+    '''chore(?:\(deps-dev\))?: .+'''
 ]
-
-[tool.semantic_release.changelog.environment]
-trim_blocks = true
-lstrip_blocks = true
 
 [tool.semantic_release.publish]
 upload_to_vcs_release = false
@@ -90,7 +87,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{39,310,311,312,313}-django{42,50,51,52}
+        python{310,311,312,313,314}-django{42,50,51,52}
 
     [testenv]
     skip_install = true
