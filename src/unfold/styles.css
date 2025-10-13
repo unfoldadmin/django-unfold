@@ -420,6 +420,10 @@ td .inline-deletelink {
   @apply py-1;
 }
 
+.select2-container .select2-results__option--highlighted[aria-selected] {
+    @apply !bg-base-100 dark:!bg-base-800;
+}
+
 .select2-container.select2-container--open .select2-dropdown {
   @apply bg-white border border-base-200 rounded-default shadow-xs dark:border-base-700 dark:bg-base-900;
 }
