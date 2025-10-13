@@ -1,5 +1,5 @@
 {% if inline_admin_formset.opts.ordering_field %}
-    <span class="{% if inline_admin_form.original %}cursor-pointer hover:bg-base-50 dark:hover:bg-base-800{% else %}cursor-not-allowed opacity-50{% endif %} {% if inline_admin_form.form.nested_formsets %}ml-[8px]{% endif %} flex h-[38px] w-[38px] items-center justify-center {% if tabular == 1 %}-mx-1.5{% else %}-ml-1.5 -my-1 mr-1.5{% endif %} rounded-default select-none transition-colors" {% if inline_admin_form.original %}x-sort:handle{% endif %}>
+    <span class="{% if inline_admin_form.original %}cursor-move hover:bg-base-50 dark:hover:bg-base-800{% else %}cursor-not-allowed opacity-50{% endif %} {% if inline_admin_form.form.nested_formsets %}ml-[8px]{% endif %} flex h-[38px] w-[38px] items-center justify-center {% if tabular == 1 %}-mx-1.5{% else %}-ml-1.5 -my-1 mr-1.5{% endif %} rounded-default select-none transition-colors" {% if inline_admin_form.original %}x-sort:handle{% endif %}>
         <span class="material-symbols-outlined">drag_indicator</span>
     </span>
 {% endif %}
