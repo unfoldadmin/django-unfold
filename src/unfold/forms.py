@@ -1,5 +1,5 @@
 from collections.abc import Generator
-from typing import Optional, Union
+from typing import Union
 
 from django import forms
 from django.contrib.admin.forms import (
@@ -85,7 +85,7 @@ class ActionForm(forms.Form):
 class AuthenticationForm(AdminAuthenticationForm):
     def __init__(
         self,
-        request: Optional[HttpRequest] = None,
+        request: HttpRequest | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -192,14 +192,14 @@ class Fieldline(BaseFieldline):
 
 
 class PaginationFormSetMixin:
-    queryset: Optional[QuerySet] = None
-    request: Optional[HttpRequest] = None
-    per_page: Optional[int] = None
+    queryset: QuerySet | None = None
+    request: HttpRequest | None = None
+    per_page: int | None = None
 
     def __init__(
         self,
-        request: Optional[HttpRequest] = None,
-        per_page: Optional[int] = None,
+        request: HttpRequest | None = None,
+        per_page: int | None = None,
         *args,
         **kwargs,
     ):

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
@@ -54,7 +54,7 @@ class SingleNumericFilter(admin.FieldListFilter):
 
     def queryset(
         self, request: HttpRequest, queryset: QuerySet[Any]
-    ) -> Optional[QuerySet]:
+    ) -> QuerySet | None:
         if self.value():
             try:
                 return queryset.filter(**{self.parameter_name: self.value()})
@@ -64,7 +64,7 @@ class SingleNumericFilter(admin.FieldListFilter):
     def value(self) -> Any:
         return self.used_parameters.get(self.parameter_name, None)
 
-    def expected_parameters(self) -> list[Optional[str]]:
+    def expected_parameters(self) -> list[str | None]:
         return [self.parameter_name]
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:

@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from typing import Any, Optional, Protocol, Union
+from typing import Any, Protocol, Union
 
 
 class ActionFunction(Protocol):
@@ -13,13 +13,13 @@ class ActionFunction(Protocol):
     short_description: str
     url_path: str
     attrs: dict[str, Any]
-    icon: Optional[str] = None
+    icon: str | None = None
 
     def __call__(self, *args, **kwargs):
         pass
 
 
 FieldsetsType = Union[
-    list[tuple[Union[str, None], dict[str, Any]]],
-    tuple[tuple[Union[str, None], dict[str, Any]]],
+    list[tuple[str | None, dict[str, Any]]],
+    tuple[tuple[str | None, dict[str, Any]]],
 ]

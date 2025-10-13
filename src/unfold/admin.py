@@ -1,5 +1,5 @@
 from functools import update_wrapper
-from typing import Any, Optional
+from typing import Any
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -85,7 +85,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         return media
 
     def changelist_view(
-        self, request: HttpRequest, extra_context: Optional[dict[str, str]] = None
+        self, request: HttpRequest, extra_context: dict[str, str] | None = None
     ) -> TemplateResponse:
         self.request = request
 
@@ -193,7 +193,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         return res
 
     def response_add(
-        self, request: HttpRequest, obj: Model, post_url_continue: Optional[str] = None
+        self, request: HttpRequest, obj: Model, post_url_continue: str | None = None
     ) -> HttpResponse:
         res = super().response_add(request, obj, post_url_continue)
         if "next" in request.GET:

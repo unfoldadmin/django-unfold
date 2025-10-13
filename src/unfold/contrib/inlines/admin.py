@@ -1,5 +1,5 @@
 from functools import partial
-from typing import Any, Optional
+from typing import Any
 
 from django import forms
 from django.contrib.admin.utils import NestedObjects, flatten_fieldsets
@@ -28,7 +28,7 @@ class NonrelatedInlineMixin:
     formset = NonrelatedInlineModelFormSet
 
     def get_formset(
-        self, request: HttpRequest, obj: Optional[Model] = None, **kwargs: Any
+        self, request: HttpRequest, obj: Model | None = None, **kwargs: Any
     ):
         defaults = self._get_formset_defaults(request, obj, **kwargs)
 
@@ -41,7 +41,7 @@ class NonrelatedInlineMixin:
         )
 
     def _get_formset_defaults(
-        self, request: HttpRequest, obj: Optional[Model] = None, **kwargs: Any
+        self, request: HttpRequest, obj: Model | None = None, **kwargs: Any
     ):
         """Return a BaseInlineFormSet class for use in admin add/change views."""
         if "fields" in kwargs:
