@@ -141,7 +141,9 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
         return list_display
 
-    def get_fieldsets(self, request: HttpRequest, obj=None) -> FieldsetsType:
+    def get_fieldsets(
+        self, request: HttpRequest, obj: Optional[Model] = None
+    ) -> FieldsetsType:
         if not obj and self.add_fieldsets:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
@@ -205,7 +207,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
             + urls
         )
 
-    def _path_from_custom_url(self, custom_url) -> URLPattern:
+    def _path_from_custom_url(self, custom_url: tuple[str, str, View]) -> URLPattern:
         return path(
             custom_url[0],
             self.admin_site.admin_view(custom_url[2]),
@@ -214,13 +216,15 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         )
 
     def get_action_choices(
-        self, request: HttpRequest, default_choices=BLANK_CHOICE_DASH
-    ):
+        self,
+        request: HttpRequest,
+        default_choices: list[tuple[str, str]] = BLANK_CHOICE_DASH,
+    ) -> list[tuple[str, str]]:
         default_choices = [("", _("Select action"))]
         return super().get_action_choices(request, default_choices)
 
     @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
-    def action_checkbox(self, obj: Model):
+    def action_checkbox(self, obj: Model) -> str:
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
     def response_change(self, request: HttpRequest, obj: Model) -> HttpResponse:
@@ -237,7 +241,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
             return redirect(request.GET["next"])
         return res
 
-    def get_changelist(self, request, **kwargs):
+    def get_changelist(self, request: HttpRequest, **kwargs: Any) -> ChangeList:
         return ChangeList
 
     def get_formset_kwargs(
