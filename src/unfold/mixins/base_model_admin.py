@@ -1,5 +1,5 @@
 import copy
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib.admin import helpers
 from django.contrib.admin.sites import AdminSite
@@ -31,9 +31,9 @@ class BaseModelAdminMixin:
     def changeform_view(
         self,
         request: HttpRequest,
-        object_id: Optional[str] = None,
+        object_id: str | None = None,
         form_url: str = "",
-        extra_context: Optional[dict[str, Any]] = None,
+        extra_context: dict[str, Any] | None = None,
     ) -> Any:
         from unfold.forms import AdminForm, Fieldline
 
@@ -61,7 +61,7 @@ class BaseModelAdminMixin:
 
     def formfield_for_foreignkey(
         self, db_field: ForeignKey, request: HttpRequest, **kwargs
-    ) -> Optional[ModelChoiceField]:
+    ) -> ModelChoiceField | None:
         db = kwargs.get("using")
 
         # Overrides widgets for all related fields
@@ -102,7 +102,7 @@ class BaseModelAdminMixin:
 
     def formfield_for_nullboolean_field(
         self, db_field: Field, request: HttpRequest, **kwargs
-    ) -> Optional[Field]:
+    ) -> Field | None:
         if "widget" not in kwargs:
             if db_field.choices:
                 kwargs["widget"] = widgets.UnfoldAdminSelectWidget(
@@ -115,7 +115,7 @@ class BaseModelAdminMixin:
 
     def formfield_for_dbfield(
         self, db_field: Field, request: HttpRequest, **kwargs
-    ) -> Optional[Field]:
+    ) -> Field | None:
         if isinstance(db_field, models.BooleanField) and db_field.null is True:
             return self.formfield_for_nullboolean_field(db_field, request, **kwargs)
 

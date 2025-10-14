@@ -1,5 +1,5 @@
-from collections.abc import Iterable
-from typing import Any, Callable, Optional, Union
+from collections.abc import Callable, Iterable
+from typing import Any
 
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import PermissionDenied
@@ -12,14 +12,14 @@ from unfold.typing import ActionFunction
 
 
 def action(
-    function: Optional[Callable] = None,
+    function: Callable | None = None,
     *,
-    permissions: Optional[Iterable[str]] = None,
-    description: Optional[str] = None,
-    url_path: Optional[str] = None,
-    attrs: Optional[dict[str, Any]] = None,
-    icon: Optional[str] = None,
-    variant: Optional[ActionVariant] = ActionVariant.DEFAULT,
+    permissions: Iterable[str] | None = None,
+    description: str | None = None,
+    url_path: str | None = None,
+    attrs: dict[str, Any] | None = None,
+    icon: str | None = None,
+    variant: ActionVariant | None = ActionVariant.DEFAULT,
 ) -> ActionFunction:
     def decorator(func: Callable) -> ActionFunction:
         def inner(
@@ -27,7 +27,7 @@ def action(
             request: HttpRequest,
             *args: Any,
             **kwargs,
-        ) -> Optional[HttpResponse]:
+        ) -> HttpResponse | None:
             if permissions:
                 permission_rules = []
 
@@ -96,16 +96,16 @@ def action(
 
 
 def display(
-    function: Optional[Callable[[Model], Any]] = None,
+    function: Callable[[Model], Any] | None = None,
     *,
-    boolean: Optional[bool] = None,
-    image: Optional[bool] = None,
-    ordering: Optional[Union[str, Combinable, BaseExpression]] = None,
-    description: Optional[str] = None,
-    empty_value: Optional[str] = None,
-    dropdown: Optional[bool] = None,
-    label: Optional[Union[bool, str, dict[str, str]]] = None,
-    header: Optional[bool] = None,
+    boolean: bool | None = None,
+    image: bool | None = None,
+    ordering: str | Combinable | BaseExpression | None = None,
+    description: str | None = None,
+    empty_value: str | None = None,
+    dropdown: bool | None = None,
+    label: bool | str | dict[str, str] | None = None,
+    header: bool | None = None,
 ) -> Callable:
     def decorator(func: Callable[[Model], Any]) -> Callable:
         if boolean is not None and empty_value is not None:

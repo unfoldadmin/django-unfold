@@ -1,6 +1,6 @@
 import json
 from collections.abc import Iterable, Mapping
-from typing import Any, Optional, Union
+from typing import Any
 
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
@@ -27,7 +27,7 @@ register = Library()
 
 
 def _get_tabs_list(
-    context: RequestContext, page: str, opts: Optional[Options] = None
+    context: RequestContext, page: str, opts: Options | None = None
 ) -> list:
     tabs_list = []
     page_id = None
@@ -63,7 +63,7 @@ def _get_tabs_list(
 
 
 @register.simple_tag(name="tab_list", takes_context=True)
-def tab_list(context: RequestContext, page: str, opts: Optional[Options] = None) -> str:
+def tab_list(context: RequestContext, page: str, opts: Options | None = None) -> str:
     inlines_list = []
     datasets_list = []
     data = {
@@ -157,7 +157,7 @@ class CaptureNode(Node):
         self.varname = varname
         self.silent = silent
 
-    def render(self, context: dict[str, Any]) -> Union[str, SafeText]:
+    def render(self, context: dict[str, Any]) -> str | SafeText:
         output = self.nodelist.render(context)
         context[self.varname] = output
         if self.silent:
@@ -226,7 +226,7 @@ class RenderComponentNode(template.Node):
         self,
         template_name: str,
         nodelist: NodeList,
-        extra_context: Optional[dict] = None,
+        extra_context: dict | None = None,
         include_context: bool = False,
         *args,
         **kwargs,
@@ -315,7 +315,7 @@ def do_component(parser: Parser, token: Token) -> str:
 
 
 @register.filter
-def add_css_class(field: Field, classes: Union[list, tuple]) -> Field:
+def add_css_class(field: Field, classes: list | tuple) -> Field:
     if type(classes) in (list, tuple):
         classes = " ".join(classes)
 
@@ -336,8 +336,8 @@ def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
     """
     Generate hidden input fields to preserve filters for POST forms.
     """
-    request: Optional[HttpRequest] = context.get("request")
-    changelist: Optional[ChangeList] = context.get("cl")
+    request: HttpRequest | None = context.get("request")
+    changelist: ChangeList | None = context.get("cl")
 
     if not request or not changelist:
         return {"params": {}}
@@ -355,7 +355,7 @@ def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
 @register.simple_tag(takes_context=True)
 def element_classes(context: Context, key: str) -> str:
     if key in context.get("element_classes", {}):
-        if isinstance(context["element_classes"][key], (list, tuple)):
+        if isinstance(context["element_classes"][key], list | tuple):
             return " ".join(context["element_classes"][key])
 
         return context["element_classes"][key]
@@ -592,9 +592,7 @@ def infinite_paginator_url(cl, i):
 
 
 @register.simple_tag
-def elided_page_range(
-    paginator: Paginator, number: int
-) -> Optional[list[Union[int, str]]]:
+def elided_page_range(paginator: Paginator, number: int) -> list[int | str] | None:
     if not paginator or not number:
         return None
 

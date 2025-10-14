@@ -1,5 +1,3 @@
-from typing import Union
-
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import lookup_field, quote
 from django.core.exceptions import ObjectDoesNotExist
@@ -40,7 +38,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         return format_html("<label{}>{}</label>", flatatt(attrs), capfirst(label))
 
     @property
-    def url(self) -> Union[str, bool]:
+    def url(self) -> str | bool:
         field, obj, model_admin = (
             self.field["field"],
             self.form.instance,
@@ -112,7 +110,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return False
 
-        return isinstance(f, (ImageField, FileField))
+        return isinstance(f, ImageField | FileField)
 
     def contents(self) -> str:
         contents = self._get_contents()
@@ -167,7 +165,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 if isinstance(f.remote_field, ManyToManyRel) and value is not None:
                     result_repr = ", ".join(map(str, value.all()))
                 elif (
-                    isinstance(f.remote_field, (ForeignObjectRel, OneToOneField))
+                    isinstance(f.remote_field, ForeignObjectRel | OneToOneField)
                     and value is not None
                 ):
                     result_repr = self.get_admin_url(f.remote_field, value)

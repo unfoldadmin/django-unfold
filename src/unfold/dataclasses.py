@@ -1,5 +1,5 @@
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, Optional, Union
 
 from unfold.enums import ActionVariant
 
@@ -12,10 +12,10 @@ class UnfoldAction:
     method: ActionFunction
     description: str
     path: str
-    attrs: Optional[dict] = None
-    object_id: Optional[Union[int, str]] = None
-    icon: Optional[str] = None
-    variant: Optional[ActionVariant] = ActionVariant.DEFAULT
+    attrs: dict | None = None
+    object_id: int | str | None = None
+    icon: str | None = None
+    variant: ActionVariant | None = ActionVariant.DEFAULT
 
 
 @dataclass
@@ -23,20 +23,20 @@ class SearchResult:
     title: str
     description: str
     link: str
-    icon: Optional[str]
+    icon: str | None
 
 
 @dataclass
 class Favicon:
-    href: Union[str, Callable]
-    rel: Optional[str] = None
-    type: Optional[str] = None
-    sizes: Optional[str] = None
+    href: str | Callable
+    rel: str | None = None
+    type: str | None = None
+    sizes: str | None = None
 
 
 @dataclass
 class DropdownItem:
     title: str
-    link: Union[str, Callable]
-    icon: Optional[str] = None
-    attrs: Optional[dict] = None
+    link: str | Callable
+    icon: str | None = None
+    attrs: dict | None = None

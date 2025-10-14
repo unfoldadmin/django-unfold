@@ -1,7 +1,8 @@
 import copy
 import time
+from collections.abc import Callable
 from http import HTTPStatus
-from typing import Any, Callable, Optional, Union
+from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 from django.contrib.admin import AdminSite
@@ -141,7 +142,7 @@ class UnfoldAdminSite(AdminSite):
         return context
 
     def index(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
     ) -> TemplateResponse:
         app_list = self.get_app_list(request)
 
@@ -166,7 +167,7 @@ class UnfoldAdminSite(AdminSite):
         )
 
     def toggle_sidebar(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
     ) -> HttpResponse:
         if "toggle_sidebar" not in request.session:
             request.session["toggle_sidebar"] = True
@@ -214,14 +215,14 @@ class UnfoldAdminSite(AdminSite):
         request: HttpRequest,
         app_list: list[dict[str, Any]],
         search_term: str,
-        allowed_models: Optional[list[str]] = None,
+        allowed_models: list[str] | None = None,
     ) -> list[SearchResult]:
         results = []
 
         for app in app_list:
             for model in app["models"]:
                 # Skip models which are not allowed
-                if isinstance(allowed_models, (list, tuple)):
+                if isinstance(allowed_models, list | tuple):
                     if model["model"]._meta.label.lower() not in [
                         m.lower() for m in allowed_models
                     ]:
@@ -263,7 +264,7 @@ class UnfoldAdminSite(AdminSite):
         return results
 
     def search(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
     ) -> TemplateResponse:
         start_time = time.time()
 
@@ -302,10 +303,10 @@ class UnfoldAdminSite(AdminSite):
                     self._get_config("COMMAND", request).get("search_models"), request
                 )
 
-                if search_models is True or isinstance(search_models, (list, tuple)):
+                if search_models is True or isinstance(search_models, list | tuple):
                     allowed_models = (
                         search_models
-                        if isinstance(search_models, (list, tuple))
+                        if isinstance(search_models, list | tuple)
                         else None
                     )
 
@@ -340,7 +341,7 @@ class UnfoldAdminSite(AdminSite):
         )
 
     def password_change(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]] = None
+        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
     ) -> HttpResponse:
         from django.contrib.auth.views import PasswordChangeView
 
@@ -462,7 +463,7 @@ class UnfoldAdminSite(AdminSite):
         return tabs
 
     def _call_permission_callback(
-        self, callback: Union[str, Callable, None], request: HttpRequest
+        self, callback: str | Callable | None, request: HttpRequest
     ) -> bool:
         if callback is None:
             return True
@@ -490,7 +491,7 @@ class UnfoldAdminSite(AdminSite):
         return target
 
     def _get_is_active(
-        self, request: HttpRequest, link: Union[str, Callable], is_tab: bool = False
+        self, request: HttpRequest, link: str | Callable, is_tab: bool = False
     ) -> bool:
         if not isinstance(link, str):
             link = str(link)
@@ -545,9 +546,7 @@ class UnfoldAdminSite(AdminSite):
         if key in config and config[key]:
             return self._get_value(config[key], *args)
 
-    def _get_theme_images(
-        self, key: str, *args: Any
-    ) -> Union[dict[str, str], str, None]:
+    def _get_theme_images(self, key: str, *args: Any) -> dict[str, str] | str | None:
         images = self._get_config(key, *args)
 
         if isinstance(images, dict):
@@ -613,9 +612,7 @@ class UnfoldAdminSite(AdminSite):
             for item in items
         ]
 
-    def _get_value(
-        self, value: Union[str, Callable, lazy, None], *args: Any
-    ) -> Optional[str]:
+    def _get_value(self, value: str | Callable | None, *args: Any) -> str | None:
         if value is None:
             return None
 

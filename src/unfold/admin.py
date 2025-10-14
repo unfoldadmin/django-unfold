@@ -1,5 +1,5 @@
 from functools import update_wrapper
-from typing import Any, Optional
+from typing import Any
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -78,7 +78,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
 
         for filter in self.get_list_filter(self.request):
             if (
-                isinstance(filter, (tuple, list))
+                isinstance(filter, tuple | list)
                 and hasattr(filter[1], "form_class")
                 and hasattr(filter[1].form_class, "Media")
             ):
@@ -89,7 +89,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         return media
 
     def changelist_view(
-        self, request: HttpRequest, extra_context: Optional[dict[str, str]] = None
+        self, request: HttpRequest, extra_context: dict[str, str] | None = None
     ) -> TemplateResponse:
         self.request = request
 
@@ -103,9 +103,9 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
     def changeform_view(
         self,
         request: HttpRequest,
-        object_id: Optional[str] = None,
+        object_id: str | None = None,
         form_url: str = "",
-        extra_context: Optional[dict[str, Any]] = None,
+        extra_context: dict[str, Any] | None = None,
     ) -> TemplateResponse:
         self.request = request
         extra_context = extra_context or {}
@@ -142,7 +142,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         return list_display
 
     def get_fieldsets(
-        self, request: HttpRequest, obj: Optional[Model] = None
+        self, request: HttpRequest, obj: Model | None = None
     ) -> FieldsetsType:
         if not obj and self.add_fieldsets:
             return self.add_fieldsets
@@ -234,7 +234,7 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
         return res
 
     def response_add(
-        self, request: HttpRequest, obj: Model, post_url_continue: Optional[str] = None
+        self, request: HttpRequest, obj: Model, post_url_continue: str | None = None
     ) -> HttpResponse:
         res = super().response_add(request, obj, post_url_continue)
         if "next" in request.GET:

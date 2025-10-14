@@ -1,4 +1,5 @@
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 from django.db.models import Model, QuerySet
 from django.forms import BaseModelFormSet, ModelForm, modelformset_factory
@@ -9,7 +10,7 @@ from unfold.forms import PaginationFormSetMixin
 class NonrelatedInlineModelFormSet(PaginationFormSetMixin, BaseModelFormSet):
     def __init__(
         self,
-        instance: Optional[Model] = None,
+        instance: Model | None = None,
         save_as_new: bool = False,
         **kwargs: Any,
     ) -> None:
@@ -33,9 +34,9 @@ class NonrelatedInlineModelFormSet(PaginationFormSetMixin, BaseModelFormSet):
 
 def nonrelated_inline_formset_factory(
     model: Model,
-    queryset: Optional[QuerySet] = None,
+    queryset: QuerySet | None = None,
     formset: BaseModelFormSet = NonrelatedInlineModelFormSet,
-    save_new_instance: Optional[Callable] = None,
+    save_new_instance: Callable | None = None,
     **kwargs: Any,
 ) -> BaseModelFormSet:
     inline_formset = modelformset_factory(model, formset=formset, **kwargs)
