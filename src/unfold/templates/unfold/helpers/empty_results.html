@@ -3,10 +3,12 @@
 {% url cl.opts|admin_urlname:"add" as add_url %}
 {% blocktranslate with name=cl.opts.verbose_name asvar title %}Add {{ name }}{% endblocktranslate %}
 
-<div class="bg-white border border-base-200 flex flex-col items-center px-8 py-24 rounded-default shadow-xs dark:bg-base-900 dark:border-base-800">
-    <div class="border border-base-300 border-dashed flex h-24 items-center justify-center mb-8 rounded-full w-24 dark:border-base-700">
-        <span class="material-symbols-outlined text-base-500 text-5xl! dark:text-base-400">inbox</span>
-    </div>
+<div class="bg-white border border-base-200 flex flex-col items-center px-8 shadow-xs dark:bg-base-900 dark:border-base-800 {% if cl.search_fields %}rounded-b-default{% else %}rounded-default{% endif %} {% if cl.is_dataset %}py-16{% else %}py-24{% endif %}">
+    {% if not cl.is_dataset %}
+        <div class="border border-base-300 border-dashed flex h-24 items-center justify-center mb-8 rounded-full w-24 dark:border-base-700">
+            <span class="material-symbols-outlined text-base-500 text-5xl! dark:text-base-400">inbox</span>
+        </div>
+    {% endif %}
 
     <h2 class="font-semibold mb-1 text-xl text-font-important-light tracking-tight dark:text-font-important-dark">
         {% trans "No results found" %}
