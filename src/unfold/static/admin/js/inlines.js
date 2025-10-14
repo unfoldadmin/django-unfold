@@ -91,6 +91,10 @@
     const addInlineClickHandler = function (e) {
       e.preventDefault();
       const template = $("#" + options.prefix + "-empty");
+      // Check if template exists (has_add_permission check)
+      if (template.length === 0) {
+        return;
+      }
       const row = template.clone(true);
       row
         .removeClass(options.emptyCssClass)
@@ -284,8 +288,12 @@
 
     // Show the add button if allowed to add more items.
     // Note that max_num = None translates to a blank string.
+    // Check if template exists (has_add_permission check)
+    const template = $("#" + options.prefix + "-empty");
+    const hasAddPermission = template.length > 0;
     const showAddButton =
-      maxForms.val() === "" || maxForms.val() - totalForms.val() > 0;
+      hasAddPermission &&
+      (maxForms.val() === "" || maxForms.val() - totalForms.val() > 0);
     if ($this.length && showAddButton) {
       addButton.parent().show();
     } else {
