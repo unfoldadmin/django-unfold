@@ -2,7 +2,7 @@
 
 {% if cl.search_fields %}
     <div id="toolbar">
-        <form id="changelist-search" method="get" role="search" x-data="searchForm()">
+        <form {% if not cl.is_dataset %}id="changelist-search" x-data="searchForm()"{% endif %} method="get" role="search">
             <div class="bg-white border border-base-200 flex flex-row items-center px-3 rounded-default relative shadow-xs w-full focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-primary-600 lg:w-96 dark:bg-base-900 dark:border-base-700">
                 <button type="submit" class="flex items-center focus:outline-hidden" id="searchbar-submit">
                     <span class="material-symbols-outlined md-18 text-base-400 dark:text-base-500">search</span>
@@ -14,10 +14,12 @@
                        class="grow font-medium min-w-0 overflow-hidden p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
                        name="{{ search_var }}"
                        value="{{ cl.query }}"
-                       id="searchbar"
+                       {% if not cl.is_dataset %}id="searchbar"{% endif %}
                        placeholder="{% if cl.search_help_text %}{{ cl.search_help_text }}{% else %}{% trans "Type to search" %}{% endif %}" />
 
-                {% include "unfold/helpers/shortcut.html" with shortcut="/" %}
+                {% if not cl.is_dataset %}
+                    {% include "unfold/helpers/shortcut.html" with shortcut="/" %}
+                {% endif %}
             </div>
 
             {% for pair in cl.filter_params.items %}

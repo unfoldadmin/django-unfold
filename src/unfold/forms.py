@@ -8,6 +8,7 @@ from django.contrib.admin.forms import (
 from django.contrib.admin.forms import (
     AdminPasswordChangeForm as BaseAdminOwnPasswordChangeForm,
 )
+from django.contrib.admin.views.main import ChangeListSearchForm
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
@@ -240,3 +241,14 @@ class PaginationInlineFormSet(PaginationFormSetMixin, BaseInlineFormSet):
 
 class PaginationGenericInlineFormSet(PaginationFormSetMixin, BaseGenericInlineFormSet):
     pass
+
+
+class DatasetChangeListSearchForm(ChangeListSearchForm):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+        from django.contrib.admin.views.main import SEARCH_VAR
+
+        self.fields = {
+            SEARCH_VAR: forms.CharField(required=False, strip=False),
+        }

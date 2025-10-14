@@ -99,6 +99,10 @@
             {% endif %}
         </form>
 
+        {% for dataset in datasets %}
+            {{ dataset.contents }}
+        {% endfor %}
+
         {% if adminform.model_admin.change_form_outer_after_template %}
             {% include adminform.model_admin.change_form_outer_after_template %}
         {% endif %}
