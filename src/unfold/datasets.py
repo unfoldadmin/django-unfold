@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib import admin
 from django.http import HttpRequest
@@ -11,7 +11,7 @@ class BaseDataset:
     tab = False
 
     def __init__(
-        self, request: HttpRequest, extra_context: Optional[dict[str, Any]]
+        self, request: HttpRequest, extra_context: dict[str, Any] | None
     ) -> None:
         self.request = request
         self.extra_context = extra_context

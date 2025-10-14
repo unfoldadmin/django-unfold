@@ -1,6 +1,6 @@
 import datetime
 from collections.abc import Generator
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
@@ -255,7 +255,7 @@ def items_for_result(
                 else:
                     result_repr = display_for_value(value, empty_value_display, boolean)
 
-                if isinstance(value, (datetime.date, datetime.time)):
+                if isinstance(value, datetime.date | datetime.time):
                     row_classes.append("nowrap")
             else:
                 if isinstance(f.remote_field, models.ManyToOneRel):
@@ -267,7 +267,7 @@ def items_for_result(
                 else:
                     result_repr = display_for_field(value, f, empty_value_display)
                 if isinstance(
-                    f, (models.DateField, models.TimeField, models.ForeignKey)
+                    f, models.DateField | models.TimeField | models.ForeignKey
                 ):
                     row_classes.append("nowrap")
 
@@ -363,7 +363,7 @@ class UnfoldResultList(ResultList):
     def __init__(
         self,
         instance: Model,
-        form: Optional[Form],
+        form: Form | None,
         *items: Any,
     ) -> None:
         self.instance = instance
@@ -412,7 +412,7 @@ def result_list_tag(parser: Parser, token: Token) -> InclusionAdminNode:
 
 
 @register.simple_tag
-def paginator_number(cl: ChangeList, i: Union[str, int]) -> Union[str, SafeText]:
+def paginator_number(cl: ChangeList, i: str | int) -> str | SafeText:
     """
     Generate an individual page index link in a paginated list.
     """

@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.http import HttpRequest
 
@@ -21,7 +21,7 @@ class ComponentRegistry:
         cls._registry[class_name] = component_cls
 
     @classmethod
-    def get_class(cls, class_name: str) -> Optional[type]:
+    def get_class(cls, class_name: str) -> type | None:
         return cls._registry.get(class_name)
 
     @classmethod

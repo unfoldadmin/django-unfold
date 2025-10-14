@@ -1,4 +1,4 @@
-from typing import Any, Optional, Union
+from typing import Any
 
 from django.core.validators import EMPTY_VALUES
 from django.forms import MultiWidget, Widget
@@ -35,7 +35,7 @@ class ArrayWidget(MultiWidget):
 
     def __init__(
         self,
-        widget_class: Optional[type[Widget]] = None,
+        widget_class: type[Widget] | None = None,
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -81,7 +81,7 @@ class ArrayWidget(MultiWidget):
     ) -> list:
         return data.getlist(name) not in [[""], *EMPTY_VALUES]
 
-    def decompress(self, value: Union[str, list]) -> list:
+    def decompress(self, value: str | list) -> list:
         if isinstance(value, list):
             return value
         elif isinstance(value, str):
@@ -89,7 +89,7 @@ class ArrayWidget(MultiWidget):
 
         return []
 
-    def _resolve_widgets(self, value: Optional[Union[list, str]]) -> None:
+    def _resolve_widgets(self, value: list | str | None) -> None:
         if value is None:
             value = []
 
@@ -112,7 +112,7 @@ class WysiwygWidget(Widget):
             "unfold/forms/js/trix.config.js",
         )
 
-    def __init__(self, attrs: Optional[dict[str, Any]] = None) -> None:
+    def __init__(self, attrs: dict[str, Any] | None = None) -> None:
         super().__init__(attrs)
 
         self.attrs.update(
