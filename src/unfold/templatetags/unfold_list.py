@@ -11,7 +11,6 @@ from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.contrib.admin.templatetags.base import InclusionAdminNode
 from django.contrib.admin.utils import label_for_field, lookup_field
 from django.contrib.admin.views.main import (
-    IS_FACETS_VAR,
     IS_POPUP_VAR,
     ORDER_VAR,
     PAGE_VAR,
@@ -39,6 +38,12 @@ from unfold.utils import (
 )
 from unfold.views import DatasetChangeList
 from unfold.widgets import UnfoldBooleanWidget
+
+try:
+    from django.contrib.admin.views.main import IS_FACETS_VAR
+except ImportError:
+    # TODO: remove once django 4.x is not supported
+    IS_FACETS_VAR = None
 
 register = Library()
 
