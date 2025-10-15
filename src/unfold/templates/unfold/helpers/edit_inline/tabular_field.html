@@ -1,12 +1,6 @@
 <div class="flex flex-row gap-3 items-center">
     {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
-        {% if inline_admin_formset.opts.ordering_field %}
-            {% if inline_admin_form.original %}
-                <span class="material-symbols-outlined cursor-move" x-sort:handle>drag_indicator</span>
-            {% else %}
-                <span class="-mr-3" x-sort:handle></span>
-            {% endif %}
-        {% endif %}
+        {% include "unfold/helpers/edit_inline/inline_drag.html" with tabular=1 %}
     {% endif %}
 
     {% if field.is_readonly %}
