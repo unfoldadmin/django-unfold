@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib.admin import options
 from django.contrib.admin.helpers import InlineAdminFormSet
@@ -41,7 +41,7 @@ class NestedInlinesModelAdminMixin:
     nested_formset_media = Media()
 
     def _create_formsets(
-        self, request: HttpRequest, obj: Optional[Model] = None, change: bool = False
+        self, request: HttpRequest, obj: Model | None = None, change: bool = False
     ) -> tuple[list[BaseInlineFormSet], list[InlineModelAdmin]]:
         formsets, inline_instances = super()._create_formsets(request, obj, change)
 
@@ -52,9 +52,9 @@ class NestedInlinesModelAdminMixin:
     def changeform_view(
         self,
         request: HttpRequest,
-        object_id: Optional[str] = None,
+        object_id: str | None = None,
         form_url: str = "",
-        extra_context: Optional[dict[str, Any]] = None,
+        extra_context: dict[str, Any] | None = None,
     ) -> HttpResponse:
         # Monkey patch all_valid to do nested formsets validation. Applied because
         # we don't want to completely override `BaseModelAdmin._changeform_view()`
@@ -148,7 +148,7 @@ class NestedInlinesModelAdminMixin:
         parent_inline: InlineModelAdmin,
         inline_class: type[InlineModelAdmin],
         change: bool,
-    ) -> Optional[InlineAdminFormSet]:
+    ) -> InlineAdminFormSet | None:
         inline = inline_class(parent_inline.model, self.admin_site)
 
         if not self._check_nested_inline_permissions(request, inline, obj):
@@ -193,7 +193,7 @@ class NestedInlinesModelAdminMixin:
         self,
         request: HttpRequest,
         inline: InlineModelAdmin,
-        obj: Optional[Model] = None,
+        obj: Model | None = None,
     ) -> bool:
         if not (
             inline.has_view_or_change_permission(request, obj)
