@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
@@ -35,7 +35,7 @@ class SingleNumericFilter(admin.FieldListFilter):
     ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
 
-        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
+        if not isinstance(field, DecimalField | IntegerField | FloatField | AutoField):
             raise TypeError(
                 f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
             )
@@ -54,7 +54,7 @@ class SingleNumericFilter(admin.FieldListFilter):
 
     def queryset(
         self, request: HttpRequest, queryset: QuerySet[Any]
-    ) -> Optional[QuerySet]:
+    ) -> QuerySet | None:
         if self.value():
             try:
                 return queryset.filter(**{self.parameter_name: self.value()})
@@ -64,7 +64,7 @@ class SingleNumericFilter(admin.FieldListFilter):
     def value(self) -> Any:
         return self.used_parameters.get(self.parameter_name, None)
 
-    def expected_parameters(self) -> list[Optional[str]]:
+    def expected_parameters(self) -> list[str | None]:
         return [self.parameter_name]
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
@@ -111,7 +111,7 @@ class RangeNumericFilter(RangeNumericMixin, admin.FieldListFilter):
         field_path: str,
     ) -> None:
         super().__init__(field, request, params, model, model_admin, field_path)
-        if not isinstance(field, (DecimalField, IntegerField, FloatField, AutoField)):
+        if not isinstance(field, DecimalField | IntegerField | FloatField | AutoField):
             raise TypeError(
                 f"Class {type(self.field)} is not supported for {self.__class__.__name__}."
             )
@@ -156,7 +156,7 @@ class SliderNumericFilter(RangeNumericFilter):
         else:
             max_value = None
 
-        if isinstance(self.field, (FloatField, DecimalField)):
+        if isinstance(self.field, FloatField | DecimalField):
             decimals = self.MAX_DECIMALS
             step = self.STEP if self.STEP else self._get_min_step(self.MAX_DECIMALS)
         else:

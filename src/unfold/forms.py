@@ -1,5 +1,5 @@
 from collections.abc import Generator
-from typing import Optional, Union
+from typing import Any, Union
 
 from django import forms
 from django.contrib.admin.forms import (
@@ -8,6 +8,7 @@ from django.contrib.admin.forms import (
 from django.contrib.admin.forms import (
     AdminPasswordChangeForm as BaseAdminOwnPasswordChangeForm,
 )
+from django.contrib.admin.views.main import ChangeListSearchForm
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
@@ -85,7 +86,7 @@ class ActionForm(forms.Form):
 class AuthenticationForm(AdminAuthenticationForm):
     def __init__(
         self,
-        request: Optional[HttpRequest] = None,
+        request: HttpRequest | None = None,
         *args,
         **kwargs,
     ) -> None:
@@ -192,14 +193,14 @@ class Fieldline(BaseFieldline):
 
 
 class PaginationFormSetMixin:
-    queryset: Optional[QuerySet] = None
-    request: Optional[HttpRequest] = None
-    per_page: Optional[int] = None
+    queryset: QuerySet | None = None
+    request: HttpRequest | None = None
+    per_page: int | None = None
 
     def __init__(
         self,
-        request: Optional[HttpRequest] = None,
-        per_page: Optional[int] = None,
+        request: HttpRequest | None = None,
+        per_page: int | None = None,
         *args,
         **kwargs,
     ):
@@ -240,3 +241,14 @@ class PaginationInlineFormSet(PaginationFormSetMixin, BaseInlineFormSet):
 
 class PaginationGenericInlineFormSet(PaginationFormSetMixin, BaseGenericInlineFormSet):
     pass
+
+
+class DatasetChangeListSearchForm(ChangeListSearchForm):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+        from django.contrib.admin.views.main import SEARCH_VAR
+
+        self.fields = {
+            SEARCH_VAR: forms.CharField(required=False, strip=False),
+        }

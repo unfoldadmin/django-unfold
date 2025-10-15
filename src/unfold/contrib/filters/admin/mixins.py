@@ -1,5 +1,5 @@
 from collections.abc import Generator
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
@@ -18,7 +18,7 @@ from unfold.contrib.filters.forms import (
 
 
 class ValueMixin:
-    def value(self) -> Optional[str]:
+    def value(self) -> str | None:
         return (
             self.lookup_val[0]
             if self.lookup_val not in EMPTY_VALUES
@@ -29,7 +29,7 @@ class ValueMixin:
 
 
 class MultiValueMixin:
-    def value(self) -> Optional[list[str]]:
+    def value(self) -> list[str] | None:
         return (
             self.lookup_val
             if self.lookup_val not in EMPTY_VALUES

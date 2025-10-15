@@ -24,6 +24,12 @@
                     {% endif %}
                 </a>
             {% endfor %}
+
+            {% for dataset in datasets_list %}
+                <a href="#dataset-{{ dataset.model_name }}" x-on:click="activeTab = 'dataset-{{ dataset.model_name }}'" x-bind:class="{'active': activeTab == 'dataset-{{ dataset.model_name }}'}">
+                    {{ dataset.model_verbose_name|capfirst }}
+                </a>
+            {% endfor %}
         {% endif %}
     </nav>
 {% endif %}

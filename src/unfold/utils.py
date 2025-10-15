@@ -2,7 +2,7 @@ import datetime
 import decimal
 import json
 from collections.abc import Iterable
-from typing import Any, Optional
+from typing import Any
 
 from django.conf import settings
 from django.db import models
@@ -94,13 +94,13 @@ def display_for_value(
         return str(value)
     elif isinstance(value, datetime.datetime):
         return formats.localize(timezone.template_localtime(value))
-    elif isinstance(value, (datetime.date, datetime.time)):
+    elif isinstance(value, datetime.date | datetime.time):
         return formats.localize(value)
     elif Money is not None and isinstance(value, Money):
         return str(value)
-    elif isinstance(value, (int, decimal.Decimal, float)):
+    elif isinstance(value, int | decimal.Decimal | float):
         return formats.number_format(value)
-    elif isinstance(value, (list, tuple)):
+    elif isinstance(value, list | tuple):
         return ", ".join(str(v) for v in value)
     else:
         return str(value)
@@ -121,13 +121,13 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return empty_value_display
     elif isinstance(field, models.DateTimeField):
         return formats.localize(timezone.template_localtime(value))
-    elif isinstance(field, (models.DateField, models.TimeField)):
+    elif isinstance(field, models.DateField | models.TimeField):
         return formats.localize(value)
     elif MoneyField is not None and isinstance(field, MoneyField):
         return str(value)
     elif isinstance(field, models.DecimalField):
         return formats.number_format(value, field.decimal_places)
-    elif isinstance(field, (models.IntegerField, models.FloatField)):
+    elif isinstance(field, models.IntegerField | models.FloatField):
         return formats.number_format(value)
     elif isinstance(field, models.FileField) and value:
         return format_html('<a href="{}">{}</a>', value.url, value)
@@ -140,7 +140,7 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return display_for_value(value, empty_value_display)
 
 
-def prettify_json(data: Any, encoder: Any) -> Optional[str]:
+def prettify_json(data: Any, encoder: Any) -> str | None:
     try:
         from pygments import highlight
         from pygments.formatters import HtmlFormatter
@@ -165,7 +165,7 @@ def prettify_json(data: Any, encoder: Any) -> Optional[str]:
     )
 
 
-def parse_date_str(value: str) -> Optional[datetime.date]:
+def parse_date_str(value: str) -> datetime.date | None:
     for format in settings.DATE_INPUT_FORMATS:
         try:
             return datetime.datetime.strptime(value, format).date()
@@ -173,7 +173,7 @@ def parse_date_str(value: str) -> Optional[datetime.date]:
             continue
 
 
-def parse_datetime_str(value: str) -> Optional[datetime.datetime]:
+def parse_datetime_str(value: str) -> datetime.datetime | None:
     for format in settings.DATETIME_INPUT_FORMATS:
         try:
             return datetime.datetime.strptime(value, format)
