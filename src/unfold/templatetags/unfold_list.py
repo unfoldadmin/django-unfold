@@ -48,8 +48,8 @@ except ImportError:
 register = Library()
 
 LINK_CLASSES = [
-    "text-font-important-light",
-    "dark:text-font-important-dark",
+    "text-primary-600",
+    "dark:text-primary-500",
 ]
 
 ROW_CLASSES = [
