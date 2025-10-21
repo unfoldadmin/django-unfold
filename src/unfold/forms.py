@@ -61,7 +61,7 @@ class ActionForm(forms.Form):
                         "py-2",
                         "pr-8",
                         "rounded-default",
-                        "!text-white",
+                        "!text-current",
                         "truncate",
                         "!outline-primary-400",
                         "dark:!outline-primary-700",
@@ -79,7 +79,12 @@ class ActionForm(forms.Form):
         label="",
         required=False,
         initial=0,
-        widget=forms.HiddenInput({"class": "select-across"}),
+        widget=forms.HiddenInput(
+            {
+                "class": "select-across",
+                "x-model": "selectAcross",
+            }
+        ),
     )
 
 
