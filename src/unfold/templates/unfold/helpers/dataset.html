@@ -9,9 +9,9 @@
 
     {% if cl.search_fields %}
         <div class="flex flex-col gap-4 justify-between mb-4  sm:flex-row empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
-            {% unfold_admin_actions %}
-
             {% unfold_search_form cl %}
+
+            {% unfold_admin_actions %}
         </div>
     {% endif %}
 
