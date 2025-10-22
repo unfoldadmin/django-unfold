@@ -1,19 +1,33 @@
 {% load admin_list unfold_list %}
 
-<div {% if cl.model_admin.tab %}x-show="activeTab == 'dataset-{{ dataset.model_name }}'"{% endif %}>
-    {% if not cl.model_admin.tab %}
+<div class="result-list-wrapper {% if not tab %}mt-8{% endif %}" x-data="{action: '', selectAcross: '0'}" {% if tab %}x-show="activeTab == 'dataset-{{ dataset.model_name }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
+    {% if not tab %}
         <h2 class="inline-heading bg-base-100 font-semibold mb-6 px-4 py-3 rounded-default text-font-important-light @min-[1570px]:-mx-4 dark:bg-white/[.02] dark:text-font-important-dark">
             {{ dataset.model_verbose_name|capfirst }}
         </h2>
     {% endif %}
 
     {% if cl.search_fields %}
-        <div class="flex flex-col gap-4 mb-4  sm:flex-row empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
+        <div class="flex flex-col gap-4 justify-between mb-4  sm:flex-row empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
             {% unfold_search_form cl %}
+
+            {% unfold_admin_actions %}
         </div>
     {% endif %}
 
-    {% unfold_result_list cl %}
+    <form id="dataset-{{ id }}" class="group" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+        {% csrf_token %}
+
+        <input type="hidden" name="dataset" value="{{ id }}">
+        <input type="hidden" name="action" x-model="action">
+        <input type="hidden" name="select_across" x-model="selectAcross">
+
+        {% if cl.formset %}
+            {{ cl.formset.management_form }}
+        {% endif %}
+
+        {% unfold_result_list cl %}
+    </form>
 
     {% pagination cl %}
 </div>

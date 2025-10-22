@@ -10,7 +10,7 @@
 
                 <input type="text"
                        x-ref="searchInput"
-                       x-on:keydown.window="applyShortcut($event)"
+                       {% if not cl.is_dataset %}x-on:keydown.window="applyShortcut($event)"{% endif %}
                        class="grow font-medium min-w-0 overflow-hidden p-2 placeholder-font-subtle-light truncate focus:outline-hidden dark:bg-base-900 dark:placeholder-font-subtle-dark dark:text-font-default-dark"
                        name="{{ search_var }}"
                        value="{{ cl.query }}"

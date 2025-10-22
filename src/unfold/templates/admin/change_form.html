@@ -99,9 +99,13 @@
             {% endif %}
         </form>
 
-        {% for dataset in datasets %}
-            {{ dataset.contents }}
-        {% endfor %}
+        {% if datasets %}
+            <div class="flex flex-col">
+                {% for dataset in datasets %}
+                    {{ dataset.contents }}
+                {% endfor %}
+            </div>
+        {% endif %}
 
         {% if adminform.model_admin.change_form_outer_after_template %}
             {% include adminform.model_admin.change_form_outer_after_template %}

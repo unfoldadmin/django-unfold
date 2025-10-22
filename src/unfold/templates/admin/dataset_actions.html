@@ -1,0 +1,50 @@
+{% load i18n %}
+
+<div class="actions flex flex-col gap-3 order-last lg:order-none lg:flex-row lg:items-center">
+    {% if actions_selection_counter %}
+        <div class="bg-base-100 flex flex-row h-9.5 items-center px-3 rounded-md shadow-sm truncate dark:bg-white/[.04] lg:bg-transparent dark:lg:!bg-transparent lg:px-0 lg:shadow-none">
+            <span class="action-counter text-sm" data-actions-icnt="{{ cl.result_list|length }}">
+                {{ selection_note }}
+            </span>
+
+            {% if cl.result_count != cl.result_list|length %}
+                <span class="all hidden">
+                    {{ selection_note_all }}
+                </span>
+
+                {% if not cl.model_admin.list_disable_select_all %}
+                    <span class="question ml-2 hidden text-primary-600 dark:text-primary-500">
+                        <a href="#" title="{% translate "Click here to select the objects across all pages" %}">
+                            {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
+                        </a>
+                    </span>
+
+                    <span class="clear hidden text-red-600">
+                        <a href="#">
+                            {% translate "Clear selection" %}
+                        </a>
+                    </span>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="flex flex-col gap-2 lg:flex-row">
+        {% for field in action_form %}
+            {% if field.label %}
+                <label>
+                    {{ field.label }}
+            {% endif %}
+
+            {{ field }}
+
+            {% if field.label %}
+                </label>
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit" form="dataset-{{ id }}" x-show="action" class="bg-primary-600 cursor-pointer flex font-medium items-center justify-center px-3 py-2 rounded-md text-sm text-white whitespace-nowrap" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+            {% trans "Run" %}
+        </button>
+    </div>
+</div>
