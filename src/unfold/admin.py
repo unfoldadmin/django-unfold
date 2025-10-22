@@ -7,8 +7,6 @@ from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
 from django.contrib.admin.options import InlineModelAdmin
-from django.contrib.admin.views import main
-from django.contrib.admin.views.main import IGNORED_PARAMS
 from django.contrib.contenttypes.admin import (
     GenericStackedInline as BaseGenericStackedInline,
 )
@@ -31,7 +29,11 @@ from unfold.forms import (
     PaginationGenericInlineFormSet,
     PaginationInlineFormSet,
 )
-from unfold.mixins import ActionModelAdminMixin, BaseModelAdminMixin
+from unfold.mixins import (
+    ActionModelAdminMixin,
+    BaseModelAdminMixin,
+    DatasetModelAdminMixin,
+)
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
 from unfold.typing import FieldsetsType
 from unfold.views import ChangeList
@@ -46,7 +48,9 @@ checkbox = UnfoldBooleanWidget(
 )
 
 
-class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
+class ModelAdmin(
+    BaseModelAdminMixin, ActionModelAdminMixin, DatasetModelAdminMixin, BaseModelAdmin
+):
     action_form = ActionForm
     custom_urls = ()
     add_fieldsets = ()
@@ -99,39 +103,6 @@ class ModelAdmin(BaseModelAdminMixin, ActionModelAdminMixin, BaseModelAdmin):
             self.list_editable = list_editable
 
         return super().changelist_view(request, extra_context)
-
-    def changeform_view(
-        self,
-        request: HttpRequest,
-        object_id: str | None = None,
-        form_url: str = "",
-        extra_context: dict[str, Any] | None = None,
-    ) -> TemplateResponse:
-        self.request = request
-        extra_context = extra_context or {}
-        datasets = self.get_changeform_datasets(request)
-
-        # Monkeypatch IGNORED_PARAMS to add dataset page and search arguments into ignored params
-        ignored_params = []
-        for dataset in datasets:
-            ignored_params.append(f"{dataset.model._meta.model_name}-q")
-            ignored_params.append(f"{dataset.model._meta.model_name}-p")
-
-        main.IGNORED_PARAMS = (*IGNORED_PARAMS, *ignored_params)
-
-        rendered_datasets = []
-        for dataset in datasets:
-            rendered_datasets.append(
-                dataset(
-                    request=request,
-                    extra_context={
-                        "object": object_id,
-                    },
-                )
-            )
-
-        extra_context["datasets"] = rendered_datasets
-        return super().changeform_view(request, object_id, form_url, extra_context)
 
     def get_list_display(self, request: HttpRequest) -> list[str]:
         list_display = super().get_list_display(request)

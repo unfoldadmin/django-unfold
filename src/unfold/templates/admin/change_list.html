@@ -45,7 +45,7 @@
         {% endif %}
 
         <div class="flex -mx-4 module{% if cl.has_filters %} filtered{% endif %}" id="changelist" x-data="{ changeListWidth: 0 }">
-            <div class="changelist-form-container flex flex-row grow gap-6 min-w-0 px-4">
+            <div class="result-list-wrapper changelist-form-container flex flex-row grow gap-6 min-w-0 px-4">
                 <div class="grow min-w-0" x-resize="changeListWidth = $width">
                     {% block date_hierarchy %}
                         {% if cl.date_hierarchy %}
