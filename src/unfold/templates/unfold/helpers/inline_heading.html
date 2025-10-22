@@ -1,0 +1,11 @@
+<h2 class="bg-base-100 flex flex-row font-semibold h-[38px] items-center mb-4 px-3 rounded-default text-important dark:bg-white/[.02] {% if inline_admin_formset.opts.tab %}hidden{% endif %} {% if clickable or inline_admin_formset.is_collapsible %}cursor-pointer{% endif %}" {% if inline_admin_formset %}id="{{ inline_admin_formset.formset.prefix }}-heading"{% endif %}>
+    {% if inline_admin_formset %}
+        {% if inline_admin_formset.formset.max_num == 1 %}
+            {{ inline_admin_formset.opts.verbose_name|capfirst }}
+        {% else %}
+            {{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
+        {% endif %}
+    {% else %}
+        {{ title|capfirst }}
+    {% endif %}
+</h2>

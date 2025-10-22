@@ -2,23 +2,21 @@
 
 {% with tabs=adminform|tabs %}
     {% if tabs %}
-        <div x-data="{openTab: null}" x-show="activeTab == 'general'">
-            <ul class="bg-base-100 flex gap-1 mb-6 px-1.5 py-1.5 rounded-default text-font-default-light @min-[1570px]:-mx-4 dark:bg-white/[.02] dark:text-font-default-dark">
-                {% for fieldset in tabs %}
-                    <li>
-                        <a class="block cursor-pointer font-semibold px-2.5 py-2 rounded-default hover:text-base-700 dark:hover:text-white"
-                           x-on:click="openTab = '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'"
-                           x-bind:class="openTab == '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %} ? 'bg-white text-font-important-light shadow-xs dark:bg-base-900 dark:text-font-important-dark' : ''">
+        <div class="{% fieldset_rows_classes %}" x-data="{openTab: null}" x-show="activeTab == 'general'">
+            <div class="{% if adminform.model_admin.compressed_fields %}border-b border-base-200 border-dashed dark:border-base-800{% endif %}">
+                <nav class="bg-base-100 cursor-pointer flex flex-col font-medium gap-1 m-2 p-1 rounded-default text-important dark:border-base-700 md:inline-flex md:flex-row md:w-auto dark:bg-white/[.04] *:flex-inline *:flex-row *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:transition-colors *:hover:bg-base-700/[.04] *:dark:hover:bg-white/[.04] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:hover:bg-white [&>.active]:dark:bg-base-900 [&>.active]:dark:hover:bg-base-900">
+                    {% for fieldset in tabs %}
+                        <a x-on:click="openTab = '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'" x-bind:class="openTab == '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %} ? 'active' : ''">
                             {{ fieldset.name }}
                         </a>
-                    </li>
-                {% endfor %}
-            </ul>
+                    {% endfor %}
+                </nav>
+            </div>
 
             {% for fieldset in tabs %}
                 <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|slugify }} fieldset-{{ forloop.counter0 }}-{{ fieldset.name|slugify }}{% endif %}"
                      x-show="openTab == '{{ forloop.counter0 }}-{{ fieldset.name|slugify }}'{% if forloop.first %} || openTab == null{% endif %}">
-                    {% include 'admin/includes/fieldset.html' %}
+                    {% include 'admin/includes/fieldset.html' with stacked=1 %}
                 </div>
             {% endfor %}
         </div>

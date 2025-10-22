@@ -1,10 +1,8 @@
 {% load admin_list unfold_list %}
 
-<div class="result-list-wrapper {% if not tab %}mt-8{% endif %}" x-data="{action: '', selectAcross: '0'}" {% if tab %}x-show="activeTab == 'dataset-{{ dataset.model_name }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
+<div class="result-list-wrapper {% if not tab %}mt-6{% endif %}" x-data="{action: '', selectAcross: '0'}" {% if tab %}x-show="activeTab == 'dataset-{{ dataset.model_name }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
     {% if not tab %}
-        <h2 class="inline-heading bg-base-100 font-semibold mb-6 px-4 py-3 rounded-default text-font-important-light @min-[1570px]:-mx-4 dark:bg-white/[.02] dark:text-font-important-dark">
-            {{ dataset.model_verbose_name|capfirst }}
-        </h2>
+        {% include "unfold/helpers/inline_heading.html" with title=dataset.model_verbose_name %}
     {% endif %}
 
     {% if cl.search_fields %}
