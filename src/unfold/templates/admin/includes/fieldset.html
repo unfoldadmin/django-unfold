@@ -9,9 +9,7 @@
                 {{ fieldset.name }}
             </h2>
         {% else %}
-            <h2 class="bg-base-100 font-semibold mb-6 px-4 py-3 rounded-default text-font-important-light text-sm @min-[1570px]:-mx-4 dark:bg-white/[.02] dark:text-font-important-dark {% if fieldset.is_collapsible %}cursor-pointer{% endif %}">
-                {{ fieldset.name }}
-            </h2>
+            {% include "unfold/helpers/inline_heading.html" with title=fieldset.name clickable=fieldset.is_collapsible %}
         {% endif %}
     {% endif %}
 
