@@ -1,6 +1,6 @@
 {% load admin_list unfold_list %}
 
-<div class="result-list-wrapper {% if not tab %}mt-8{% endif %}" x-data="{action: '', selectAcross: '0'}" {% if tab %}x-show="activeTab == 'dataset-{{ dataset.model_name }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
+<div class="result-list-wrapper {% if not tab %}mt-6{% endif %}" x-data="{action: '', selectAcross: '0'}" {% if tab %}x-show="activeTab == 'dataset-{{ dataset.model_name }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
     {% if not tab %}
         {% include "unfold/helpers/inline_heading.html" with title=dataset.model_verbose_name %}
     {% endif %}
