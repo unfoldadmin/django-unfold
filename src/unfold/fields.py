@@ -37,7 +37,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
         return format_html("<label{}>{}</label>", flatatt(attrs), capfirst(label))
 
-
     def _lookup_field(self, field, obj, model_admin):
         try:
             return self._lookup_field_cached
