@@ -37,6 +37,14 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
         return format_html("<label{}>{}</label>", flatatt(attrs), capfirst(label))
 
+
+    def _lookup_field(self, field, obj, model_admin):
+        try:
+            return self._lookup_field_cached
+        except AttributeError:
+            self._lookup_field_cached = lookup_field(field, obj, model_admin)
+            return self._lookup_field_cached
+
     @property
     def url(self) -> str | bool:
         field, obj, model_admin = (
@@ -46,7 +54,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         )
 
         try:
-            f, attr, value = lookup_field(field, obj, model_admin)
+            f, attr, value = self._lookup_field(field, obj, model_admin)
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return False
 
@@ -69,7 +77,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         )
 
         try:
-            f, attr, value = lookup_field(field, obj, model_admin)
+            f, attr, value = self._lookup_field(field, obj, model_admin)
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return False
 
@@ -83,7 +91,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         )
 
         try:
-            f, attr, value = lookup_field(field, obj, model_admin)
+            f, attr, value = self._lookup_field(field, obj, model_admin)
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return False
 
@@ -106,7 +114,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         )
 
         try:
-            f, attr, value = lookup_field(field, obj, model_admin)
+            f, attr, value = self._lookup_field(field, obj, model_admin)
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return False
 
@@ -142,7 +150,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             self.model_admin,
         )
         try:
-            f, attr, value = lookup_field(field, obj, model_admin)
+            f, attr, value = self._lookup_field(field, obj, model_admin)
         except (AttributeError, ValueError, ObjectDoesNotExist):
             result_repr = self.empty_value_display
         else:
