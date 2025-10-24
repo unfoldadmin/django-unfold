@@ -47,7 +47,11 @@ class UnfoldAdminSite(AdminSite):
 
         super().__init__(name)
 
-        if self.login_form is None:
+        custom_login_form = get_config(self.settings_name)["LOGIN"]["form"]
+
+        if custom_login_form is not None:
+            self.login_form = import_string(custom_login_form)
+        elif self.login_form is None:
             self.login_form = AuthenticationForm
 
     def get_urls(self) -> list[URLPattern]:
