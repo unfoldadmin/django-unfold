@@ -97,6 +97,8 @@ class AuthenticationForm(AdminAuthenticationForm):
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
+        self.fields["username"].widget.attrs["autofocus"] = ""
+
         self.fields["username"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
         self.fields["password"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
 
