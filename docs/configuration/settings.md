@@ -57,6 +57,8 @@ UNFOLD = {
     "LOGIN": {
         "image": lambda request: static("sample/login-bg.jpg"),
         "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
+        # Inherits from `unfold.forms.AuthenticationForm`
+        "form": "app.forms.CustomLoginForm",
     },
     "STYLES": [
         lambda request: static("css/style.css"),
