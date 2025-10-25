@@ -8,7 +8,7 @@
 ![Pre Commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white&style=for-the-badge)
 ![Code Style - Ruff](https://img.shields.io/badge/code%20style-ruff-30173D.svg?style=for-the-badge)
 
-Unfold is a modern, Django admin theme that upgrades Django admin with beautiful design, advanced features, and easy customization.
+Modern theme that upgrades Django admin with beautiful design, advanced features, and easy customization.
 
 - **Documentation:** The full documentation is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
 - **Unfold:** The demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
@@ -18,7 +18,7 @@ Unfold is a modern, Django admin theme that upgrades Django admin with beautiful
 
 ## Profesional services
 
-Looking for professional help with your Django or Unfold project? We offer a range of tools and services to support your development process:
+Need expert help with Django or Unfold? We offer services to support your project:
 
 - **Consulting**: Expert guidance on Django architecture, performance, feature development, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
 - **Support**: Assistance with integrating or customizing Unfold, including live 1:1 calls and implementation review. Fixed price, no ongoing commitment. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
