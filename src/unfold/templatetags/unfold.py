@@ -151,76 +151,6 @@ def tabs(adminform: AdminForm) -> list[Fieldset]:
     return result
 
 
-class CaptureNode(Node):
-    def __init__(self, nodelist: NodeList, varname: str, silent: bool) -> None:
-        self.nodelist = nodelist
-        self.varname = varname
-        self.silent = silent
-
-    def render(self, context: dict[str, Any]) -> str | SafeText:
-        output = self.nodelist.render(context)
-        context[self.varname] = output
-        if self.silent:
-            return ""
-        else:
-            return output
-
-
-@register.tag(name="capture")
-def do_capture(parser: Parser, token: Token) -> CaptureNode:
-    """
-    Capture the contents of a tag output.
-    Usage:
-    .. code-block:: html+django
-        {% capture %}..{% endcapture %}                    # output in {{ capture }}
-        {% capture silent %}..{% endcapture %}             # output in {{ capture }} only
-        {% capture as varname %}..{% endcapture %}         # output in {{ varname }}
-        {% capture as varname silent %}..{% endcapture %}  # output in {{ varname }} only
-    For example:
-    .. code-block:: html+django
-        {# Allow templates to override the page title/description #}
-        <meta name="description" content="{% capture as meta_description %}
-            {% block meta-description %}{% endblock %}{% endcapture %}" />
-        <title>{% capture as meta_title %}{% block meta-title %}Untitled{% endblock %}{% endcapture %}</title>
-        {# copy the values to the Social Media meta tags #}
-        <meta property="og:description" content="{% block og-description %}{{ meta_description }}{% endblock %}" />
-        <meta name="twitter:title" content="{% block twitter-title %}{{ meta_title }}{% endblock %}" />
-    """
-    bits = token.split_contents()
-
-    # tokens
-    t_as = "as"
-    t_silent = "silent"
-    var = "capture"
-    silent = False
-
-    num_bits = len(bits)
-    if len(bits) > 4:
-        raise TemplateSyntaxError(
-            "'capture' node supports '[as variable] [silent]' parameters."
-        )
-    elif num_bits == 4:
-        t_name, t_as, var, t_silent = bits
-        silent = True
-    elif num_bits == 3:
-        t_name, t_as, var = bits
-    elif num_bits == 2:
-        t_name, t_silent = bits
-        silent = True
-    else:
-        var = "capture"
-        silent = False
-
-    if t_silent != "silent" or t_as != "as":
-        raise TemplateSyntaxError(
-            "'capture' node expects 'as variable' or 'silent' syntax."
-        )
-
-    nodelist = parser.parse(("endcapture",))
-    parser.delete_first_token()
-    return CaptureNode(nodelist, var, silent)
-
-
 class RenderComponentNode(template.Node):
     def __init__(
         self,
@@ -799,3 +729,50 @@ def has_nested_tables(table: dict) -> bool:
     return any(
         isinstance(row, dict) and "table" in row for row in table.get("rows", [])
     )
+
+
+class RenderCaptureNode(Node):
+    def __init__(self, nodelist: NodeList, variable_name: str, silent: bool) -> None:
+        self.nodelist = nodelist
+        self.variable_name = variable_name
+        self.silent = silent
+
+    def render(self, context: dict[str, Any]) -> str | SafeText:
+        content = self.nodelist.render(context)
+
+        if not self.silent:
+            return content
+
+        context.update(
+            {
+                self.variable_name: content,
+            }
+        )
+
+        return ""
+
+
+@register.tag(name="capture")
+def do_capture(parser: Parser, token: Token) -> RenderCaptureNode:
+    parts = token.split_contents()
+    variable_name = ""
+    silent = False
+
+    if len(parts) > 4:
+        raise TemplateSyntaxError("Too many arguments for 'capture' tag.")
+
+    if len(parts) >= 3:
+        if parts[1] != "as":
+            raise TemplateSyntaxError("'as' is required for 'capture' tag.")
+
+        variable_name = parts[2]
+
+    if len(parts) == 4:
+        if parts[3] != "silent":
+            raise TemplateSyntaxError("'silent' is required for 'capture' tag.")
+
+        silent = True
+
+    nodelist = parser.parse(("endcapture",))
+    parser.delete_first_token()
+    return RenderCaptureNode(nodelist, variable_name, silent)
