@@ -54,7 +54,16 @@ class MultipleDropdownFilter(DropdownFilter):
 
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        choices = [self.all_option, *self.field.flatchoices]
+        add_facets = getattr(changelist, "add_facets", False)
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+
+        choices = [self.all_option] if self.all_option else []
+        for i, choice in enumerate(self.field.flatchoices):
+            if add_facets:
+                count = facet_counts[f"{i}__c"]
+                choice = (choice[0], f"{choice[1]} ({count})")
+
+            choices.append(choice)
 
         yield {
             "form": self.form_class(
