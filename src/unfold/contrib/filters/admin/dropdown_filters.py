@@ -22,12 +22,23 @@ class DropdownFilter(admin.SimpleListFilter):
     all_option = ["", _("All")]
 
     def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
+        add_facets = getattr(changelist, "add_facets", False)
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+        choices = [self.all_option] if self.all_option else []
+
+        for i, choice in enumerate(self.lookup_choices):
+            if add_facets:
+                count = facet_counts[f"{i}__c"]
+                choice = (choice[0], f"{choice[1]} ({count})")
+
+            choices.append(choice)
+
         return (
             {
                 "form": self.form_class(
                     label=_(" By %(filter_title)s ") % {"filter_title": self.title},
                     name=self.parameter_name,
-                    choices=[self.all_option, *self.lookup_choices],
+                    choices=choices,
                     data={self.parameter_name: self.value()},
                     multiple=self.multiple if hasattr(self, "multiple") else False,
                 ),
@@ -48,13 +59,23 @@ class MultipleDropdownFilter(DropdownFilter):
         self.request = request
         super().__init__(request, params, model, model_admin)
 
-    def value(self) -> list[Any]:
-        return self.request.GET.getlist(self.parameter_name)
+        self.used_parameters[self.parameter_name] = self.request.GET.getlist(
+            self.parameter_name
+        )
 
 
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
     def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
-        choices = [self.all_option, *self.field.flatchoices]
+        add_facets = getattr(changelist, "add_facets", False)
+        facet_counts = self.get_facet_queryset(changelist) if add_facets else None
+
+        choices = [self.all_option] if self.all_option else []
+        for i, choice in enumerate(self.field.flatchoices):
+            if add_facets:
+                count = facet_counts[f"{i}__c"]
+                choice = (choice[0], f"{choice[1]} ({count})")
+
+            choices.append(choice)
 
         yield {
             "form": self.form_class(
