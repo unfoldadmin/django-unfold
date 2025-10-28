@@ -4,7 +4,6 @@ import json
 from collections.abc import Iterable
 from typing import Any
 
-from django.conf import settings
 from django.db import models
 from django.db.models import Model
 from django.template.loader import render_to_string
