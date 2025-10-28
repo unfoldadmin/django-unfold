@@ -11,6 +11,10 @@
             <span class="material-symbols-outlined">
                 {{ action.icon }}
             </span>
+        {% elif icon %}
+            <span class="material-symbols-outlined">
+                {{ icon }}
+            </span>
         {% endif %}
 
         {{ title }}

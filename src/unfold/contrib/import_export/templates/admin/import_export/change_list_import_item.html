@@ -3,5 +3,5 @@
 {% if has_import_permission %}
     {% trans "Import" as title %}
     {% url opts|admin_urlname:"import" as link %}
-    {% include "unfold/helpers/tab_action.html" with title=title link=link %}
+    {% include "unfold/helpers/tab_action.html" with title=title link=link icon="upload" %}
 {% endif %}

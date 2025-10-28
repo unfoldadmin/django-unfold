@@ -3,5 +3,5 @@
 {% if has_export_permission %}
     {% trans "Export" as title %}
     {% url opts|admin_urlname:'export' as link %}
-    {% include "unfold/helpers/tab_action.html" with title=title link=link|add:cl.get_query_string %}
+    {% include "unfold/helpers/tab_action.html" with title=title link=link|add:cl.get_query_string icon="download" %}
 {% endif %}
