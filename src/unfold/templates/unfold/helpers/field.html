@@ -1,7 +1,7 @@
 {% load unfold %}
 
 {% if field.field.widget.input_type == "checkbox" and field.field.widget|class_name != "UnfoldAdminCheckboxSelectMultiple"%}
-    <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-5 last:mb-4">
+    <div class="{% if field.errors %}errors {% endif %}flex flex-col gap-4 group mb-5">
         <div class="flex flex-row gap-2 items-center">
             {{ field }}
 
@@ -13,7 +13,7 @@
         {% include "unfold/helpers/help_text.html" with help_text=field.help_text %}
     </div>
 {% else %}
-    <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-5 last:mb-4">
+    <div class="{% if field.errors %}errors {% endif %}flex flex-col gap-4 group mb-5">
         <div class="flex flex-col gap-2">
             {% include "unfold/helpers/form_label.html" with field=field %}
 

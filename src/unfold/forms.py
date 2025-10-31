@@ -53,20 +53,20 @@ class ActionForm(forms.Form):
             {
                 "class": " ".join(
                     [
-                        "appearance-none",
-                        "!bg-white/20",
-                        "font-medium",
-                        "grow",
-                        "px-3",
-                        "py-2",
-                        "pr-8",
-                        "rounded-default",
-                        "!text-white",
-                        "truncate",
-                        "!outline-primary-400",
-                        "dark:!outline-primary-700",
-                        "*:text-base-700",
-                        "lg:w-72",
+                        "group-[.changelist-actions]:appearance-none",
+                        "group-[.changelist-actions]:!bg-white/20",
+                        "group-[.changelist-actions]:font-medium",
+                        "group-[.changelist-actions]:grow",
+                        "group-[.changelist-actions]:px-3",
+                        "group-[.changelist-actions]:py-2",
+                        "group-[.changelist-actions]:pr-8",
+                        "group-[.changelist-actions]:rounded-default",
+                        "group-[.changelist-actions]:!text-current",
+                        "group-[.changelist-actions]:truncate",
+                        "group-[.changelist-actions]:!outline-primary-400",
+                        "group-[.changelist-actions]:dark:!outline-primary-700",
+                        "group-[.changelist-actions]:*:text-base-700",
+                        "group-[.changelist-actions]:lg:w-72",
                     ]
                 ),
                 "aria-label": _("Select action to run"),
@@ -79,7 +79,12 @@ class ActionForm(forms.Form):
         label="",
         required=False,
         initial=0,
-        widget=forms.HiddenInput({"class": "select-across"}),
+        widget=forms.HiddenInput(
+            {
+                "class": "select-across",
+                "x-model": "selectAcross",
+            }
+        ),
     )
 
 
@@ -91,6 +96,8 @@ class AuthenticationForm(AdminAuthenticationForm):
         **kwargs,
     ) -> None:
         super().__init__(request, *args, **kwargs)
+
+        self.fields["username"].widget.attrs["autofocus"] = ""
 
         self.fields["username"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
         self.fields["password"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)

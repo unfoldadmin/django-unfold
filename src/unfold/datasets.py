@@ -23,16 +23,29 @@ class BaseDataset:
 
     @property
     def contents(self) -> str:
+        if self.model_admin_instance.get_actions(self.request):
+            action_form = self.model_admin_instance.action_form(auto_id=None)
+            action_form.fields[
+                "action"
+            ].choices = self.model_admin_instance.get_action_choices(self.request)
+        else:
+            action_form = None
+
         return render_to_string(
             "unfold/helpers/dataset.html",
             request=self.request,
             context={
                 "dataset": self,
-                "cl": self.cl(),
+                "id": self.id,
+                "cl": self.cl,
+                "tab": self.tab,
                 "opts": self.model._meta,
+                "action_form": action_form,
+                "actions_selection_counter": True,
             },
         )
 
+    @property
     def cl(self) -> DatasetChangeList:
         list_display = self.model_admin_instance.get_list_display(self.request)
         list_display_links = self.model_admin_instance.get_list_display_links(
@@ -40,6 +53,10 @@ class BaseDataset:
         )
         sortable_by = self.model_admin_instance.get_sortable_by(self.request)
         search_fields = self.model_admin_instance.get_search_fields(self.request)
+
+        if self.model_admin_instance.get_actions(self.request):
+            list_display = ["action_checkbox", *list_display]
+
         cl = DatasetChangeList(
             request=self.request,
             model=self.model,
@@ -59,6 +76,10 @@ class BaseDataset:
         cl.formset = None
 
         return cl
+
+    @property
+    def id(self) -> str:
+        return self.__class__.__name__
 
     @property
     def model_name(self) -> str:

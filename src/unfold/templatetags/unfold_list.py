@@ -5,6 +5,7 @@ from typing import Any
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
     _coerce_field_name,
+    admin_actions,
     result_hidden_fields,
 )
 from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
@@ -126,6 +127,7 @@ def result_headers(cl):
                     "text": UnfoldBooleanWidget(
                         {
                             "id": "action-toggle",
+                            "class": "action-toggle",
                             "aria-label": _(
                                 "Select all objects on this page for an action"
                             ),
@@ -470,4 +472,14 @@ def unfold_search_form_tag(parser, token):
         func=unfold_search_form,
         template_name="search_form.html",
         takes_context=False,
+    )
+
+
+@register.tag(name="unfold_admin_actions")
+def unfold_admin_actions_tag(parser, token):
+    return InclusionAdminNode(
+        parser,
+        token,
+        func=admin_actions,
+        template_name="dataset_actions.html",
     )

@@ -8,7 +8,7 @@
 
 {% if results %}
     <div class="{% if cl.search_fields or cl.has_filters %}lg:rounded-b-default{% else %}lg:rounded-default{% endif %} -mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:shadow-xs lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900 {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}" data-simplebar data-simplebar-auto-hide="false">
-        <table id="result_list" class="block border-base-200 border-spacing-none border-separate w-full lg:table" {% if cl.model_admin.ordering_field %}x-sort.ghost x-on:end="sortRecords"{% endif %} data-ordering-field="{{ cl.model_admin.ordering_field }}">
+        <table id="result_list" class="result-list block border-base-200 border-spacing-none border-separate w-full lg:table" {% if cl.model_admin.ordering_field %}x-sort.ghost x-on:end="sortRecords"{% endif %} data-ordering-field="{{ cl.model_admin.ordering_field }}">
             {% include 'unfold/helpers/change_list_headers.html' %}
 
             {% for result in results %}

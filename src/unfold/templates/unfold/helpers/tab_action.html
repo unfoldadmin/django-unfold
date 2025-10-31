@@ -11,12 +11,16 @@
             <span class="material-symbols-outlined">
                 {{ action.icon }}
             </span>
+        {% elif icon %}
+            <span class="material-symbols-outlined">
+                {{ icon }}
+            </span>
         {% endif %}
 
         {{ title }}
 
         {% if not link and action.items|length > 0 %}
-            <span class="border-l border-base-200 flex items-center select-none self-stretch ml-auto -mr-1 -my-2 pl-2
+            <span class="border-l border-base-200 flex items-center select-none self-stretch ml-auto -mr-1 pl-2
                          {% if action.variant.value == "primary" %}
                              border-primary-700 dark:border-primary-500
                          {% elif action.variant.value == "danger" %}
