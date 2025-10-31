@@ -4,7 +4,6 @@ import json
 from collections.abc import Iterable
 from typing import Any
 
-from django.conf import settings
 from django.db import models
 from django.db.models import Model
 from django.template.loader import render_to_string
@@ -166,7 +165,7 @@ def prettify_json(data: Any, encoder: Any) -> str | None:
 
 
 def parse_date_str(value: str) -> datetime.date | None:
-    for format in settings.DATE_INPUT_FORMATS:
+    for format in formats.get_format("DATE_INPUT_FORMATS"):
         try:
             return datetime.datetime.strptime(value, format).date()
         except (ValueError, TypeError):
@@ -174,7 +173,7 @@ def parse_date_str(value: str) -> datetime.date | None:
 
 
 def parse_datetime_str(value: str) -> datetime.datetime | None:
-    for format in settings.DATETIME_INPUT_FORMATS:
+    for format in formats.get_format("DATETIME_INPUT_FORMATS"):
         try:
             return datetime.datetime.strptime(value, format)
         except (ValueError, TypeError):
