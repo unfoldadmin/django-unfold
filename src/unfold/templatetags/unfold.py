@@ -731,6 +731,11 @@ def has_nested_tables(table: dict) -> bool:
     )
 
 
+@register.filter
+def inline_add_button_text(json_string: str) -> str:
+    return json.loads(json_string)["options"]["addText"]
+
+
 class RenderCaptureNode(Node):
     def __init__(self, nodelist: NodeList, variable_name: str, silent: bool) -> None:
         self.nodelist = nodelist
