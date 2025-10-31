@@ -1,6 +1,39 @@
 # CHANGELOG
 
 
+## v0.69.0 (2025-10-27)
+
+### Bug Fixes
+
+- Dataset actions styling ([#1629](https://github.com/unfoldadmin/django-unfold/pull/1629),
+  [`4e3eb01`](https://github.com/unfoldadmin/django-unfold/commit/4e3eb017ece896ffee62aa21b22aa40e7aa04355))
+
+### Documentation
+
+- Card component ([#1638](https://github.com/unfoldadmin/django-unfold/pull/1638),
+  [`c575646`](https://github.com/unfoldadmin/django-unfold/commit/c5756465afd0dabf57d063d84456aa890b83ab70))
+
+### Features
+
+- Auth form username autofocus ([#1632](https://github.com/unfoldadmin/django-unfold/pull/1632),
+  [`0675040`](https://github.com/unfoldadmin/django-unfold/commit/067504035f40ad14f3ed3ea11430dba3f07c3bd3))
+
+- Change password design ([#1631](https://github.com/unfoldadmin/django-unfold/pull/1631),
+  [`fdf72af`](https://github.com/unfoldadmin/django-unfold/commit/fdf72af44bb7d7542b979d06d221023145359b43))
+
+- Custom login form class ([#1634](https://github.com/unfoldadmin/django-unfold/pull/1634),
+  [`c6c8157`](https://github.com/unfoldadmin/django-unfold/commit/c6c8157c5ac1e9a45b2949d048478a16c5c8f786))
+
+- Datasets actions ([#1626](https://github.com/unfoldadmin/django-unfold/pull/1626),
+  [`b7e38e0`](https://github.com/unfoldadmin/django-unfold/commit/b7e38e0cdd5c75dd0f2fc9c6a91696f37774df47))
+
+- Redesigned inlines headers ([#1627](https://github.com/unfoldadmin/django-unfold/pull/1627),
+  [`901f48a`](https://github.com/unfoldadmin/django-unfold/commit/901f48afcb6cd82c4554055f105f6b622969e58d))
+
+- Updated material symbols ([#1621](https://github.com/unfoldadmin/django-unfold/pull/1621),
+  [`3f9eb8a`](https://github.com/unfoldadmin/django-unfold/commit/3f9eb8ae064e6c91ea6b5be4d089d7886daeedff))
+
+
 ## v0.68.0 (2025-10-15)
 
 ### Bug Fixes
