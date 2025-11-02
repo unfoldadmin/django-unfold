@@ -11,7 +11,7 @@
 
 @source inline("aspect-square bg-white/[.06] border-white/40 h-3 w-3 h-[64px] w-[65px]! left-[65px] {dark:,}text-base-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
 @source inline("{-,}{top,bottom,left,right}-{1/2,0..6} {!,}leading-[38px] text-{default,subtle,important}");
-@source inline("bg-linear-to-{{t,r,b,l,tl,tr,bl,br}} {dark:,}{from, to}-{{{base,primary}-{50,{100..900..100},950}},white}");
+@source inline("bg-linear-to-{{t,r,b,l,tl,tr,bl,br}} {dark:,}{from,to}-{{{base,primary}-{50,{100..900..100},950}},white}");
 @source inline("rounded rounded-{t,r,b,l} rounded-{t,r,b,l}-default");
 @source inline("{md:,lg:,2xl:,}relative {md:,lg:,2xl:,}flex {md:,lg:,2xl:,}absolute {md:,lg:,2xl:,}sticky");
 @source inline("{-,}{lg:,}m{t,r,b,l,x,y,}-{0..24} {-,}{lg:,}p{t,r,b,l,x,y,}-{0..24}");
