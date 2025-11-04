@@ -4,7 +4,7 @@
     {% if object %}
         {% admin_object_app_url object "changelist" as changelist_url %}
 
-        <a href="{{ changelist_url }}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
+        <a href="{% url changelist_url %}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
             <span class="material-symbols-outlined">
                 arrow_back
             </span>
