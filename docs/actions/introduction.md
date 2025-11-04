@@ -126,3 +126,26 @@ All these actions are based on custom URLs generated for each of them. Handler f
 For actions without intermediate steps, you can write all the logic inside handler directly. Request and object ID are both passed to these action handler functions, so you are free to fetch the instance from database and perform any operations with it. In the end, it is recommended to return redirect back to either detail or listing based on where the action was triggered from.
 
 For actions with intermediate steps, it is recommended to use handler function only to redirect to custom URL with custom view. This view can be extended from base Unfold view, to have unified experience.
+
+
+## Hide built-in actions
+
+By default, Django and third-party packages add their own actions, which are displayed alongside any custom actions you define. In some situations, you may want to completely hide these built-in actions, this can help save horizontal space, use different icons or texts, or move actions into a dropdown menu for a cleaner interface. To hide these default actions, set `actions_list_hide_default` or `actions_detail_hide_default` to `True`.
+
+```python
+from django.utils.translation import gettext_lazy as _
+from django.shortcuts import redirect
+
+from unfold.admin import ModelAdmin
+from unfold.decorators import action
+
+
+class MyAdmin(ModelAdmin):
+    actions_list = ["my_action", "existing_action_wrapper"]
+    actions_list_hide_default = True
+
+    @action(description=_("History"), icon="history")
+    def existing_action_wrapper(self, *args, **kwargs):
+        # Redirect to the page URL which is created by third-party package
+        return redirect("https://example.com")
+```

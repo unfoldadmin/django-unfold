@@ -69,7 +69,9 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
     data = {
         "nav_global": context.get("nav_global"),
         "actions_detail": context.get("actions_detail"),
+        "actions_detail_hide_default": context.get("actions_detail_hide_default"),
         "actions_list": context.get("actions_list"),
+        "actions_list_hide_default": context.get("actions_list_hide_default"),
         "actions_items": context.get("actions_items"),
         "is_popup": context.get("is_popup"),
         "tabs_list": _get_tabs_list(context, page, opts),
