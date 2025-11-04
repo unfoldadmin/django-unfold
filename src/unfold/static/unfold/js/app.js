@@ -8,7 +8,62 @@ window.addEventListener("load", (e) => {
   filterForm();
 
   warnWithoutSaving();
+
+  tabNavigation();
 });
+
+/*************************************************************
+ * Move not visible tab items to dropdown
+ *************************************************************/
+function tabNavigation() {
+  const itemsDropdown = document.getElementById("tabs-dropdown");
+  const itemsList = document.getElementById("tabs-items");
+  const widths = [];
+
+  handleTabNavigationResize();
+
+  window.addEventListener("resize", () => {
+    handleTabNavigationResize();
+  });
+
+  function handleTabNavigationResize() {
+    const contentWidth = document.getElementById("content").offsetWidth;
+    const tabsWidth = document.getElementById("tabs-wrapper").scrollWidth;
+    const availableWidth =
+      itemsList.parentElement.offsetWidth - itemsList.offsetWidth - 48;
+
+    if (tabsWidth > contentWidth) {
+      const lastTabItem = itemsList ? itemsList.lastElementChild : null;
+
+      if (itemsDropdown && lastTabItem) {
+        widths.push(lastTabItem.offsetWidth);
+        itemsList.removeChild(lastTabItem);
+        itemsDropdown.appendChild(lastTabItem);
+
+        if (
+          document.getElementById("content").offsetWidth <
+          document.getElementById("tabs-wrapper").scrollWidth
+        ) {
+          handleTabNavigationResize();
+        }
+      }
+    } else if (widths[widths.length - 1] < availableWidth) {
+      const lastTabItem = itemsDropdown ? itemsDropdown.lastElementChild : null;
+
+      if (lastTabItem) {
+        itemsDropdown.removeChild(lastTabItem);
+        itemsList.appendChild(lastTabItem);
+        widths.pop();
+      }
+    }
+
+    if (itemsDropdown.childElementCount === 0) {
+      itemsDropdown.parentElement.classList.add("hidden");
+    } else {
+      itemsDropdown.parentElement.classList.remove("hidden");
+    }
+  }
+}
 
 /*************************************************************
  * Alpine.sort.js callback after sorting
