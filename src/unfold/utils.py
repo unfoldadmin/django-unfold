@@ -13,7 +13,7 @@ from django.utils.hashable import make_hashable
 from django.utils.html import format_html
 from django.utils.safestring import SafeText, mark_safe
 
-from .exceptions import UnfoldException
+from unfold.exceptions import UnfoldException
 
 try:
     from djmoney.models.fields import MoneyField
