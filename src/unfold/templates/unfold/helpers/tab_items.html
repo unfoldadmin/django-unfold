@@ -36,9 +36,9 @@
             {% endif %}
         </nav>
 
-        <div class="ml-2 relative" x-data="{ openTabsDropdown: false }">
-            <div class="group border border-base-200 flex cursor-pointer h-[38px] w-[38px] items-center justify-center rounded-default select-none" x-on:click="openTabsDropdown = !openTabsDropdown" x-bind:class="{'text-primary-600 dark:text-primary-500': openTabsDropdown}">
-                <span class="material-symbols-outlined text-base-400 group-hover:text-primary-600 dark:group-hover:text-primary-500">more_horiz</span>
+        <div class="hidden ml-2 relative" x-data="{ openTabsDropdown: false }">
+            <div class="group border border-base-200 flex cursor-pointer h-[38px] w-[38px] items-center justify-center rounded-default select-none" x-on:click="openTabsDropdown = !openTabsDropdown">
+                <span class="material-symbols-outlined text-base-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'text-primary-600 dark:text-primary-500': openTabsDropdown}">more_horiz</span>
             </div>
 
             <nav id="tabs-dropdown" class="absolute bg-white border border-base-200 flex flex-col -mr-px py-1 right-0 rounded-default shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700 *:max-h-[30px] *:flex *:flex-row *:items-center *:mx-1 *:px-3 *:py-2 *:rounded-default *:text-left *:hover:bg-base-100 *:hover:text-base-700 *:dark:hover:bg-base-700 *:dark:hover:text-base-200" x-show="openTabsDropdown" x-transition></nav>
