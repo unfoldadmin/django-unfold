@@ -26,10 +26,18 @@
     {% with field=field %}
         {% if tag == "td" %}
             <div class="flex items-center justify-center h-[38px]">
-                {% crispy_field field %}
+                {% if field.name == "DELETE" %}
+                    {% crispy_field field 'class' form_classes.switch %}
+                {% else %}
+                    {% crispy_field field %}
+                {% endif %}
             </div>
         {% else %}
-            {% crispy_field field %}
+            {% if field.name == "DELETE" %}
+                {% crispy_field field 'class' form_classes.switch %}
+            {% else %}
+                {% crispy_field field %}
+            {% endif %}
         {% endif %}
     {% endwith %}
 {% endif %}
