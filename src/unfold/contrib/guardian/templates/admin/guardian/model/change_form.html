@@ -7,7 +7,7 @@
 
     {% trans "Object permissions" as title %}
     {% add_preserved_filters history_url as link %}
-    {% include "unfold/helpers/tab_action.html" with title=title link=link %}
+    {% include "unfold/helpers/tab_action.html" with title=title link=link icon="lock" %}
 
     {{ block.super }}
 {% endblock %}
