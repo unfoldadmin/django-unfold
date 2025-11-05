@@ -2,7 +2,7 @@ from django.apps import AppConfig
 from django.contrib import admin
 from django.contrib.admin import sites
 
-from .sites import UnfoldAdminSite
+from unfold.sites import UnfoldAdminSite
 
 
 class DefaultAppConfig(AppConfig):

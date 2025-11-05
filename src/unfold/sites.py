@@ -349,7 +349,7 @@ class UnfoldAdminSite(AdminSite):
     ) -> HttpResponse:
         from django.contrib.auth.views import PasswordChangeView
 
-        from .forms import AdminOwnPasswordChangeForm
+        from unfold.forms import AdminOwnPasswordChangeForm
 
         url = reverse(f"{self.name}:password_change_done", current_app=self.name)
         defaults = {

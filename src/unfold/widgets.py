@@ -32,7 +32,7 @@ from django.forms import (
 )
 from django.utils.translation import gettext_lazy as _
 
-from .exceptions import UnfoldException
+from unfold.exceptions import UnfoldException
 
 BUTTON_CLASSES = [
     "border",
