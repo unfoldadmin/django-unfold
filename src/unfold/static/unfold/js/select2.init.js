@@ -38,8 +38,8 @@
   };
 
   $(function () {
-    $(".unfold-admin-autocomplete.admin-autocomplete").djangoCustomSelect2();
+    $(".unfold-admin-autocomplete").djangoCustomSelect2();
 
-    $(".unfold-filter-autocomplete.admin-autocomplete").djangoFilterSelect2();
+    $(".unfold-filter-autocomplete").djangoFilterSelect2();
   });
 }

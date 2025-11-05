@@ -714,7 +714,7 @@ class UnfoldAdminSelect2Widget(Select):
             attrs = {}
 
         attrs["data-theme"] = "admin-autocomplete"
-        attrs["class"] = "unfold-admin-autocomplete admin-autocomplete"
+        attrs["class"] = "unfold-admin-autocomplete"
 
         super().__init__(attrs, choices)
 
