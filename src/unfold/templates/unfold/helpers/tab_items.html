@@ -1,37 +1,47 @@
 {% load i18n %}
 
 {% if inlines_list or tabs_list %}
-    <nav class="bg-base-100 flex flex-col font-medium gap-1 p-1 rounded-default text-important w-full dark:border-base-700 md:flex-row md:w-auto dark:bg-white/[.04] *:flex *:flex-row *:font-medium *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:transition-colors *:hover:bg-base-700/[.04] *:dark:hover:bg-white/[.04] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:hover:bg-white [&>.active]:dark:bg-base-900 [&>.active]:dark:hover:bg-base-900">
-        {% for item in tabs_list %}
-            {% if item.has_permission %}
-                <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}{% if item.inline %}#{{ item.inline|slugify }}{% endif %}" class="{% if item.active and not item.inline %}active{% endif %}" {% if item.inline %}x-on:click="activeTab = '{{ item.inline|slugify }}'" x-bind:class="{'active': activeTab == '{{ item.inline|slugify }}'}"{% endif %}>
-                    {{ item.title }}
-                </a>
-            {% endif %}
-        {% endfor %}
-
-        {% if inlines_list %}
-            <a href="#general" x-on:click="activeTab = 'general'" x-bind:class="{'active': activeTab == 'general'}">
-                {% trans "General" %}
-            </a>
-
-            {% for inline in inlines_list %}
-                <a href="#{{ inline.formset.prefix|slugify }}" x-on:click="activeTab = '{{ inline.formset.prefix|slugify }}'" x-bind:class="{'active': activeTab == '{{ inline.formset.prefix|slugify }}'}">
-                    {% if inline.formset.max_num == 1 %}
-                        {{ inline.opts.verbose_name|capfirst }}
-                    {% else %}
-                        {{ inline.opts.verbose_name_plural|capfirst }}
-                    {% endif %}
-                </a>
-            {% endfor %}
-
-            {% for dataset in datasets_list %}
-                {% if dataset.tab %}
-                    <a href="#dataset-{{ dataset.model_name }}" x-on:click="activeTab = 'dataset-{{ dataset.model_name }}'" x-bind:class="{'active': activeTab == 'dataset-{{ dataset.model_name }}'}">
-                        {{ dataset.model_verbose_name|capfirst }}
+    <div class="flex flex-row grow">
+        <nav id="tabs-items" class="bg-base-100 flex flex-row font-medium gap-1 p-1 rounded-default text-important dark:border-base-700 md:w-auto dark:bg-white/[.04] *:flex *:flex-row *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:transition-colors *:hover:bg-base-700/[.04] *:dark:hover:bg-white/[.04] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:hover:bg-white [&>.active]:dark:bg-base-900 [&>.active]:dark:hover:bg-base-900">
+            {% for item in tabs_list %}
+                {% if item.has_permission %}
+                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}{% if item.inline %}#{{ item.inline|slugify }}{% endif %}" class="{% if item.active and not item.inline %}active{% endif %}" {% if item.inline %}x-on:click="activeTab = '{{ item.inline|slugify }}'" x-bind:class="{'active': activeTab == '{{ item.inline|slugify }}'}"{% endif %}>
+                        {{ item.title }}
                     </a>
                 {% endif %}
             {% endfor %}
-        {% endif %}
-    </nav>
+
+            {% if inlines_list %}
+                <a href="#general" x-on:click="activeTab = 'general'" x-bind:class="{'active': activeTab == 'general'}">
+                    {% trans "General" %}
+                </a>
+
+                {% for inline in inlines_list %}
+                    <a href="#{{ inline.formset.prefix|slugify }}" x-on:click="activeTab = '{{ inline.formset.prefix|slugify }}'" x-bind:class="{'active': activeTab == '{{ inline.formset.prefix|slugify }}'}">
+                        {% if inline.formset.max_num == 1 %}
+                            {{ inline.opts.verbose_name|capfirst }}
+                        {% else %}
+                            {{ inline.opts.verbose_name_plural|capfirst }}
+                        {% endif %}
+                    </a>
+                {% endfor %}
+
+                {% for dataset in datasets_list %}
+                    {% if dataset.tab %}
+                        <a href="#dataset-{{ dataset.model_name }}" x-on:click="activeTab = 'dataset-{{ dataset.model_name }}'" x-bind:class="{'active': activeTab == 'dataset-{{ dataset.model_name }}'}">
+                            {{ dataset.model_verbose_name|capfirst }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </nav>
+
+        <div class="hidden ml-2 relative" x-data="{ openTabsDropdown: false }">
+            <div class="group border border-base-200 flex cursor-pointer h-[38px] w-[38px] items-center justify-center rounded-default select-none" x-on:click="openTabsDropdown = !openTabsDropdown">
+                <span class="material-symbols-outlined text-base-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'text-primary-600 dark:text-primary-500': openTabsDropdown}">more_horiz</span>
+            </div>
+
+            <nav id="tabs-dropdown" class="absolute bg-white border border-base-200 flex flex-col -mr-px py-1 right-0 rounded-default shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700 *:max-h-[30px] *:flex *:flex-row *:items-center *:mx-1 *:px-3 *:py-2 *:rounded-default *:text-left *:hover:bg-base-100 *:hover:text-base-700 *:dark:hover:bg-base-700 *:dark:hover:text-base-200" x-show="openTabsDropdown" x-transition></nav>
+        </div>
+    </div>
 {% endif %}
