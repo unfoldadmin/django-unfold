@@ -21,7 +21,11 @@ from django.utils.translation import gettext_lazy as _
 from unfold.components import ComponentRegistry
 from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
-from unfold.widgets import UnfoldAdminMoneyWidget, UnfoldAdminSplitDateTimeWidget
+from unfold.widgets import (
+    UnfoldAdminMoneyWidget,
+    UnfoldAdminSelect2Widget,
+    UnfoldAdminSplitDateTimeWidget,
+)
 
 register = Library()
 
@@ -501,6 +505,11 @@ def changeform_condition(field: BoundField) -> BoundField:
     if isinstance(field.field.field.widget, RelatedFieldWidgetWrapper):
         field.field.field.widget.widget.attrs["x-model.fill"] = field.field.name
         field.field.field.widget.widget.attrs["x-init"] = mark_safe(
+            f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
+        )
+    elif isinstance(field.field.field.widget, UnfoldAdminSelect2Widget):
+        field.field.field.widget.attrs["x-model.fill"] = field.field.name
+        field.field.field.widget.attrs["x-init"] = mark_safe(
             f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
         )
     elif isinstance(
