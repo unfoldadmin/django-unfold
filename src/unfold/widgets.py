@@ -275,6 +275,7 @@ SWITCH_CLASSES = [
 ]
 
 FILE_CLASSES = [
+    "bg-white",
     "border",
     "border-base-200",
     "flex",
@@ -289,6 +290,7 @@ FILE_CLASSES = [
     "focus-within:outline-primary-600",
     "group-[.errors]:border-red-600",
     "focus-within:group-[.errors]:outline-red-500",
+    "dark:bg-base-900",
     "dark:border-base-700",
     "dark:group-[.errors]:border-red-500",
     "dark:focus-within:group-[.errors]:outline-red-500",
