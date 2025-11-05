@@ -18,8 +18,10 @@ class ActionModelAdminMixin:
     """
 
     actions_list = ()  # Displayed in changelist at the top
+    actions_list_hide_default = False
     actions_row = ()  # Displayed in changelist for each row in the table
     actions_detail = ()  # Displayed in changeform at the top
+    actions_detail_hide_default = False
     actions_submit_line = ()  # Displayed in changeform in the submit line (form buttons)
 
     def changelist_view(
@@ -51,6 +53,7 @@ class ActionModelAdminMixin:
 
         extra_context.update(
             {
+                "actions_list_hide_default": self.actions_list_hide_default,
                 "actions_list": actions_list,
                 "actions_row": actions_row,
             }
@@ -85,6 +88,7 @@ class ActionModelAdminMixin:
 
             extra_context.update(
                 {
+                    "actions_detail_hide_default": self.actions_detail_hide_default,
                     "actions_submit_line": actions_submit_line,
                     "actions_detail": actions_detail,
                 }
