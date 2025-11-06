@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import lookup_field, quote
 from django.core.exceptions import ObjectDoesNotExist
@@ -20,14 +22,15 @@ from django.utils.text import capfirst
 
 from unfold.settings import get_config
 from unfold.utils import display_for_field, prettify_json
-from unfold.widgets import (
-    CHECKBOX_LABEL_CLASSES,
-    INPUT_CLASSES,
-    LABEL_CLASSES,
-)
+from unfold.widgets import CHECKBOX_LABEL_CLASSES, INPUT_CLASSES, LABEL_CLASSES
 
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+        self.resolved_field = self._resolve_field()
+
     def label_tag(self) -> SafeText:
         attrs = {
             "class": " ".join(LABEL_CLASSES + ["mb-2"]),
@@ -39,56 +42,36 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def url(self) -> str | bool:
-        field, obj, model_admin = (
-            self.field["field"],
-            self.form.instance,
-            self.model_admin,
-        )
-
-        try:
-            f, attr, value = lookup_field(field, obj, model_admin)
-        except (AttributeError, ValueError, ObjectDoesNotExist):
+        if not self.is_file:
             return False
 
-        if not self.is_file():
-            return False
-
-        if hasattr(obj, field):
-            field_value = getattr(obj, field)
+        if hasattr(self.form.instance, self.field["field"]):
+            field_value = getattr(self.form.instance, self.field["field"])
 
             if field_value and hasattr(field_value, "url"):
                 return field_value.url
 
         return False
 
+    @property
     def is_json(self) -> bool:
-        field, obj, model_admin = (
-            self.field["field"],
-            self.form.instance,
-            self.model_admin,
-        )
-
-        try:
-            f, attr, value = lookup_field(field, obj, model_admin)
-        except (AttributeError, ValueError, ObjectDoesNotExist):
+        if not self.resolved_field:
             return False
+
+        f, attr, value = self.resolved_field
 
         return isinstance(f, JSONField)
 
+    @property
     def is_image(self) -> bool:
-        field, obj, model_admin = (
-            self.field["field"],
-            self.form.instance,
-            self.model_admin,
-        )
-
-        try:
-            f, attr, value = lookup_field(field, obj, model_admin)
-        except (AttributeError, ValueError, ObjectDoesNotExist):
+        if not self.resolved_field:
             return False
+
+        f, attr, value = self.resolved_field
 
         if hasattr(attr, "image"):
             return attr.image
+
         elif (
             isinstance(attr, property)
             and hasattr(attr, "fget")
@@ -98,18 +81,12 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
         return isinstance(f, ImageField)
 
+    @property
     def is_file(self) -> bool:
-        field, obj, model_admin = (
-            self.field["field"],
-            self.form.instance,
-            self.model_admin,
-        )
-
-        try:
-            f, attr, value = lookup_field(field, obj, model_admin)
-        except (AttributeError, ValueError, ObjectDoesNotExist):
+        if not self.resolved_field:
             return False
 
+        f, attr, value = self.resolved_field
         return isinstance(f, ImageField | FileField)
 
     def contents(self) -> str:
@@ -201,6 +178,18 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 contents = func(contents)
 
         return contents
+
+    def _resolve_field(self) -> bool | list:
+        field, obj, model_admin = (
+            self.field["field"],
+            self.form.instance,
+            self.model_admin,
+        )
+
+        try:
+            return lookup_field(field, obj, model_admin)
+        except (AttributeError, ValueError, ObjectDoesNotExist):
+            return False
 
 
 class UnfoldAdminField(helpers.AdminField):
