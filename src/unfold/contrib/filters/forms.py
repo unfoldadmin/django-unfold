@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.contrib.admin.options import HORIZONTAL
 from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
 from django.db.models import Field as ModelField
@@ -67,8 +68,9 @@ class AutocompleteDropdownForm(forms.Form):
         )
 
     class Media:
+        extra = "" if settings.DEBUG else ".min"
         js = (
-            "admin/js/vendor/jquery/jquery.js",
+            f"admin/js/vendor/jquery/jquery{extra}.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
             "unfold/js/select2.init.js",
@@ -150,8 +152,9 @@ class DropdownForm(forms.Form):
         )
 
     class Media:
+        extra = "" if settings.DEBUG else ".min"
         js = (
-            "admin/js/vendor/jquery/jquery.js",
+            f"admin/js/vendor/jquery/jquery{extra}.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
             "unfold/js/select2.init.js",
