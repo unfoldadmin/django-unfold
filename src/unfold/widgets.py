@@ -1,5 +1,6 @@
 from collections.abc import Callable
 from typing import Any
+
 from django.conf import settings
 from django.contrib.admin.options import VERTICAL
 from django.contrib.admin.sites import AdminSite
