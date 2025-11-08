@@ -12,6 +12,7 @@ This example demonstrates how to create an action that displays a custom form wh
 # admin.py
 
 from django import forms
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -31,8 +32,9 @@ class SomeForm(forms.Form):
 
     # Loads date widget required JS files
     class Media:
+        extra = "" if settings.DEBUG else ".min"
         js = [
-            "admin/js/vendor/jquery/jquery.js",
+            f"admin/js/vendor/jquery/jquery{extra}.js",
             "admin/js/jquery.init.js",
             "admin/js/calendar.js",
             "admin/js/admin/DateTimeShortcuts.js",

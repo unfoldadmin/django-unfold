@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from typing import Any
 
+from django.conf import settings
 from django.contrib.admin.options import VERTICAL
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import (
@@ -721,8 +722,9 @@ class UnfoldAdminSelect2Widget(Select):
         super().__init__(attrs, choices)
 
     class Media:
+        extra = "" if settings.DEBUG else ".min"
         js = (
-            "admin/js/vendor/jquery/jquery.js",
+            f"admin/js/vendor/jquery/jquery{extra}.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
             "unfold/js/select2.init.js",
@@ -757,8 +759,9 @@ class UnfoldAdminSelect2MultipleWidget(SelectMultiple):
         super().__init__(attrs, choices)
 
     class Media:
+        extra = "" if settings.DEBUG else ".min"
         js = (
-            "admin/js/vendor/jquery/jquery.js",
+            f"admin/js/vendor/jquery/jquery{extra}.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
             "unfold/js/select2.init.js",
