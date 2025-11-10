@@ -24,6 +24,7 @@ class DatasetModelAdminMixin:
         for dataset in datasets:
             ignored_params.append(f"{dataset.model._meta.model_name}-q")
             ignored_params.append(f"{dataset.model._meta.model_name}-p")
+            ignored_params.append("_changelist_filters")
 
         main.IGNORED_PARAMS = (*IGNORED_PARAMS, *ignored_params)
 
