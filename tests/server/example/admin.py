@@ -2,15 +2,17 @@ from django.contrib import admin, messages
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
+from django.db import models
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from unfold.admin import ModelAdmin, StackedInline
+from unfold.contrib.forms.widgets import MarkdownWidget
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
 
-from .models import ActionUser, SectionUser, Tag, User
+from .models import ActionUser, Article, SectionUser, Tag, User
 
 admin.site.unregister(Group)
 
@@ -460,3 +462,16 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(ModelAdmin):
     search_fields = ["name"]
+
+
+@admin.register(Article)
+class ArticleAdmin(ModelAdmin):
+    list_display = ["title", "created_at", "updated_at"]
+    list_filter = ["created_at", "updated_at"]
+    search_fields = ["title", "content"]
+    readonly_fields = ["created_at", "updated_at"]
+    formfield_overrides = {
+        models.TextField: {
+            "widget": MarkdownWidget,
+        }
+    }

@@ -29,6 +29,10 @@ WYSIWYG_CLASSES = [
     "dark:group-[.errors]:border-red-500!",
 ]
 
+MARKDOWN_CLASSES = [
+
+]
+
 
 class ArrayWidget(MultiWidget):
     template_name = "unfold/forms/array.html"
@@ -118,5 +122,30 @@ class WysiwygWidget(Widget):
         self.attrs.update(
             {
                 "class": " ".join(WYSIWYG_CLASSES),
+            }
+        )
+
+
+class MarkdownWidget(Widget):
+    template_name = "unfold/forms/markdown.html"
+
+    class Media:
+        css = {
+            "all": (
+                "unfold/forms/css/easymde/easymde.min.css",
+                "unfold/forms/css/easymde/markdown.css",
+            )
+        }
+        js = (
+            "unfold/forms/js/easymde/easymde.min.js",
+            "unfold/forms/js/markdown.config.js",
+        )
+
+    def __init__(self, attrs: dict[str, Any] | None = None) -> None:
+        super().__init__(attrs)
+
+        self.attrs.update(
+            {
+                "class": " ".join(MARKDOWN_CLASSES),
             }
         )
