@@ -55,7 +55,7 @@ from unfold.contrib.forms.widgets import MarkdownWidget
 class MyModelForm(forms.ModelForm):
     content = forms.CharField(widget=MarkdownWidget())
     description = forms.CharField(widget=MarkdownWidget())
-    
+
     class Meta:
         model = MyModel
         fields = '__all__'
@@ -219,4 +219,3 @@ class BlogPostAdmin(ModelAdmin):
 ## License
 
 The MarkdownWidget uses EasyMDE, which is licensed under the [MIT License](https://github.com/Ionaru/easy-markdown-editor/blob/master/LICENSE).
-

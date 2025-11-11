@@ -29,9 +29,7 @@ WYSIWYG_CLASSES = [
     "dark:group-[.errors]:border-red-500!",
 ]
 
-MARKDOWN_CLASSES = [
-
-]
+MARKDOWN_CLASSES = []
 
 
 class ArrayWidget(MultiWidget):

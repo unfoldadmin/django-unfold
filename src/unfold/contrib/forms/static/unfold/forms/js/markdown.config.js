@@ -3,7 +3,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const markdownTextareas = document.querySelectorAll('textarea[id^="markdown-"]');
-    
+
     markdownTextareas.forEach(function(textarea) {
         if (textarea.easymde) {
             return;
@@ -200,4 +200,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-

@@ -104,7 +104,7 @@ def test_widgets_custom_css_class(widget_class):
 def test_markdown_widget_initialization():
     """Test MarkdownWidget initializes with correct template and media."""
     widget = MarkdownWidget()
-    
+
     assert widget.template_name == "unfold/forms/markdown.html"
     assert "easymde/easymde.min.js" in str(widget.media._js)
     assert "markdown.config.js" in str(widget.media._js)
@@ -116,7 +116,7 @@ def test_markdown_widget_render():
     """Test MarkdownWidget renders correct HTML."""
     widget = MarkdownWidget()
     rendered = widget.render("content", "# Hello World", {})
-    
+
     assert 'id="markdown-content"' in rendered
     assert "markdown-widget-wrapper" in rendered
     assert "max-w-4xl" in rendered
@@ -128,7 +128,7 @@ def test_markdown_widget_render_empty():
     """Test MarkdownWidget renders with empty value."""
     widget = MarkdownWidget()
     rendered = widget.render("content", None, {})
-    
+
     assert 'id="markdown-content"' in rendered
     assert "markdown-widget-wrapper" in rendered
     assert "<textarea" in rendered
@@ -138,7 +138,7 @@ def test_markdown_widget_custom_attrs():
     """Test MarkdownWidget accepts custom attributes."""
     widget = MarkdownWidget(attrs={"rows": 10, "cols": 80})
     rendered = widget.render("content", "", {})
-    
+
     assert "markdown-widget-wrapper" in rendered
     assert 'id="markdown-content"' in rendered
 
@@ -146,7 +146,7 @@ def test_markdown_widget_custom_attrs():
 def test_wysiwyg_widget_initialization():
     """Test WysiwygWidget initializes with correct template and media."""
     widget = WysiwygWidget()
-    
+
     assert widget.template_name == "unfold/forms/wysiwyg.html"
     assert "trix/trix.js" in str(widget.media._js)
     assert "trix.config.js" in str(widget.media._js)
@@ -156,6 +156,6 @@ def test_wysiwyg_widget_initialization():
 def test_array_widget_initialization():
     """Test ArrayWidget initializes correctly."""
     widget = ArrayWidget()
-    
+
     assert widget.template_name == "unfold/forms/array.html"
     assert len(widget.widgets) >= 1
