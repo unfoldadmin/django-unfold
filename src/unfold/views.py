@@ -1,7 +1,7 @@
 from typing import Any
 
 import django
-from django.contrib.admin.views import main
+from django.contrib import messages
 from django.contrib.admin.views.main import ERROR_FLAG, PAGE_VAR
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -23,13 +23,28 @@ class ChangeList(BaseChangeList):
 
 class DatasetChangeList(ChangeList):
     is_dataset = True
-    search_form_class = DatasetChangeListSearchForm
 
     def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
-        # Monkeypatch SEARCH_VAR and PAGE_VAR for custom datasets
-        main.SEARCH_VAR = f"{kwargs.get('model')._meta.model_name}-q"
-        main.PAGE_VAR = f"{kwargs.get('model')._meta.model_name}-p"
+        search_var = f"{kwargs.get('model')._meta.model_name}-q"
+        page_var = f"{kwargs.get('model')._meta.model_name}-p"
+
+        _search_form = DatasetChangeListSearchForm(request.GET, search_var=search_var)
+        if not _search_form.is_valid():
+            for error in _search_form.errors.values():
+                messages.error(request, ", ".join(error))
+
+        self.dataset_search_query = _search_form.cleaned_data.get(search_var) or ""
+
         super().__init__(request, *args, **kwargs)
+
+        try:
+            self.page_num = int(request.GET.get(page_var, 1))
+        except ValueError:
+            self.page_num = 1
+
+    def get_queryset(self, request, exclude_parameters=None):
+        self.query = self.dataset_search_query
+        return super().get_queryset(request, exclude_parameters)
 
 
 class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
