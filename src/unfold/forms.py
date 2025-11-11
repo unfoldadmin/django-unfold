@@ -252,10 +252,9 @@ class PaginationGenericInlineFormSet(PaginationFormSetMixin, BaseGenericInlineFo
 
 class DatasetChangeListSearchForm(ChangeListSearchForm):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
+        search_var = kwargs.pop("search_var")
         super().__init__(*args, **kwargs)
 
-        from django.contrib.admin.views.main import SEARCH_VAR
-
         self.fields = {
-            SEARCH_VAR: forms.CharField(required=False, strip=False),
+            search_var: forms.CharField(required=False, strip=False),
         }
