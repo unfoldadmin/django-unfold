@@ -98,35 +98,25 @@
     margin: 0 0.5rem;
 }
 
-/* Hide default FA icons, use Material Symbols via CSS content */
+/* Hide default FA icons */
 .markdown-widget-wrapper .editor-toolbar button i.fa {
     display: none;
 }
 
-.markdown-widget-wrapper .editor-toolbar button::before {
+/* Material Symbols styling - same as Unfold */
+.markdown-widget-wrapper .editor-toolbar button .material-symbols-outlined {
     font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
     font-size: 18px;
     line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
 }
-
-.markdown-widget-wrapper .editor-toolbar button.bold::before { content: "format_bold"; }
-.markdown-widget-wrapper .editor-toolbar button.italic::before { content: "format_italic"; }
-.markdown-widget-wrapper .editor-toolbar button.strikethrough::before { content: "format_strikethrough"; }
-.markdown-widget-wrapper .editor-toolbar button.heading-1::before { content: "format_h1"; }
-.markdown-widget-wrapper .editor-toolbar button.heading-2::before { content: "format_h2"; }
-.markdown-widget-wrapper .editor-toolbar button.heading-3::before { content: "format_h3"; }
-.markdown-widget-wrapper .editor-toolbar button.quote::before { content: "format_quote"; }
-.markdown-widget-wrapper .editor-toolbar button.code::before { content: "code"; }
-.markdown-widget-wrapper .editor-toolbar button.unordered-list::before { content: "format_list_bulleted"; }
-.markdown-widget-wrapper .editor-toolbar button.ordered-list::before { content: "format_list_numbered"; }
-.markdown-widget-wrapper .editor-toolbar button.link::before { content: "link"; }
-.markdown-widget-wrapper .editor-toolbar button.image::before { content: "image"; }
-.markdown-widget-wrapper .editor-toolbar button.table::before { content: "table"; }
-.markdown-widget-wrapper .editor-toolbar button.horizontal-rule::before { content: "horizontal_rule"; }
-.markdown-widget-wrapper .editor-toolbar button.preview::before { content: "visibility"; }
-.markdown-widget-wrapper .editor-toolbar button.side-by-side::before { content: "view_sidebar"; }
-.markdown-widget-wrapper .editor-toolbar button.fullscreen::before { content: "fullscreen"; }
-.markdown-widget-wrapper .editor-toolbar button.guide::before { content: "help"; }
 
 /* ===================================================================
    STATUS BAR
@@ -164,12 +154,9 @@
     font-size: 0.875rem;
     line-height: 1.7142857;
     padding: 1rem;
+    z-index: 999!important;
 }
 
-/* Side-by-side active state */
-.markdown-widget-wrapper .editor-preview-active-side {
-    width: 50%;
-}
 
 /* Prose typography styles matching Unfold */
 .markdown-widget-wrapper .editor-preview h1,
@@ -278,6 +265,21 @@
    FULLSCREEN MODE
    =================================================================== */
 
+.editor-toolbar.fullscreen {
+    background: white;
+    border: none;
+    border-bottom: 1px solid rgb(228 228 231);
+    border-radius: 0;
+    bottom: auto;
+    height: 50px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
 .CodeMirror-fullscreen {
     background: white;
     border: none;
@@ -288,39 +290,20 @@
     position: fixed;
     right: 0;
     top: 50px;
-    z-index: 9;
+    z-index: 999!important;
 }
 
-/* When in fullscreen with side-by-side */
-.CodeMirror-fullscreen.CodeMirror-sided {
-    right: 50%;
-    width: 50%;
-}
-
-.editor-toolbar.fullscreen {
+.editor-preview-full {
     background: white;
-    border: none;
-    border-bottom: 1px solid rgb(228 228 231);
-    border-radius: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-}
-
-/* Preview in fullscreen side-by-side */
-.editor-preview-side.editor-preview-active-side {
-    background: white;
-    border-left: 1px solid rgb(228 228 231);
+    border: 1px solid rgb(228 228 231);
+    border-top: none;
     bottom: 0;
-    height: auto;
-    left: 50%;
+    left: 0;
+    overflow: auto;
     position: fixed;
     right: 0;
     top: 50px;
-    z-index: 9;
+    z-index: 999;
 }
 
 /* ===================================================================
@@ -408,18 +391,18 @@
     background: rgb(39 39 42);
 }
 
-.dark .CodeMirror-fullscreen {
-    background: rgb(24 24 27);
-}
-
 .dark .editor-toolbar.fullscreen {
     background: rgb(24 24 27);
     border-bottom-color: rgb(63 63 70);
 }
 
-.dark .editor-preview-side.editor-preview-active-side {
+.dark .CodeMirror-fullscreen {
     background: rgb(24 24 27);
-    border-left-color: rgb(63 63 70);
+}
+
+.dark .editor-preview-full {
+    background: rgb(24 24 27);
+    border-color: rgb(63 63 70);
 }
 
 /* ===================================================================
