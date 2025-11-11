@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import time
 from collections.abc import Callable
 from http import HTTPStatus
@@ -12,9 +13,9 @@ from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
+from django.utils.encoding import force_bytes
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
-from django.utils.text import slugify
 
 from unfold.dataclasses import DropdownItem, Favicon, SearchResult
 
@@ -284,7 +285,10 @@ class UnfoldAdminSite(AdminSite):
             return HttpResponse()
 
         search_term = search_term.lower()
-        cache_key = f"unfold_search_{request.user.pk}_{slugify(search_term)}"
+        search_key_base = f"{request.user.pk}_{search_term}"
+        cache_key = (
+            f"unfold_search_{hashlib.sha256(force_bytes(search_key_base)).hexdigest()}"
+        )
         cache_results = cache.get(cache_key)
 
         if extended_search:
