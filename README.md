@@ -75,6 +75,7 @@ Need expert help with Django or Unfold? We offer services to support your projec
 - [django-modeltranslation](https://github.com/deschler/django-modeltranslation) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-modeltranslation/)
 - [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
 - [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
+- [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)
 
 ## Credits
 

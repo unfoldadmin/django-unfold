@@ -686,3 +686,39 @@ trix-toolbar[id^="trix-toolbar-"] {
 .simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
   @apply top-9
 }
+
+/*******************************************************
+ DjangoQL
+ *******************************************************/
+textarea#searchbar {
+  @apply font-medium placeholder-base-400 leading-[35px] max-h-[35px] min-h-[35px] whitespace-nowrap !w-full focus:outline-none;
+}
+
+div.djangoql-completion {
+  @apply border border-base-200 rounded-default shadow-xs bg-white dark:border-base-700 dark:bg-base-800 -ml-[39px] mt-[6px] w-[384px];
+}
+
+div.djangoql-completion ul {
+  @apply py-1;
+}
+
+div.djangoql-completion li {
+  @apply flex items-center leading-none mx-1 px-3 h-[30px] rounded-default text-sm hover:bg-base-100 hover:text-important hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200;
+}
+
+div.djangoql-completion li.active {
+  @apply bg-base-100 text-important dark:bg-base-700;
+}
+
+div.djangoql-completion li i {
+  @apply ml-auto text-sm text-default;
+}
+
+div.djangoql-completion .syntax-help {
+  @apply hidden;
+}
+
+.djangoql-toggle {
+  @apply appearance-none bg-white block border border-base-300 cursor-pointer h-4 min-w-4 relative rounded-[4px] shadow-xs w-4 hover:border-base-400 dark:bg-base-700 dark:border-base-500 dark:checked:after:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 after:absolute after:content-['check\_small'] after:flex! after:h-4 after:items-center after:justify-center after:leading-none after:material-symbols-outlined after:-ml-px after:-mt-px after:text-white after:transition-all after:w-4 dark:after:text-base-700 checked:bg-primary-600 dark:checked:bg-primary-600 checked:border-primary-600 dark:checked:border-primary-600 checked:transition-all checked:hover:border-primary-600;
+  @apply relative -ml-4.5;
+}
