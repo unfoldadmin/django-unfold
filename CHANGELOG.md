@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.71.0 (2025-11-11)
+
+### Bug Fixes
+
+- Dataset custom params ([#1680](https://github.com/unfoldadmin/django-unfold/pull/1680),
+  [`71b38d0`](https://github.com/unfoldadmin/django-unfold/commit/71b38d072d85b6dbbbf53885e3e5b85929f60e6a))
+
+### Features
+
+- Djangoql ([#1676](https://github.com/unfoldadmin/django-unfold/pull/1676),
+  [`81d0aa3`](https://github.com/unfoldadmin/django-unfold/commit/81d0aa3ec15316c8e359456f05f03d1a7bbbcbe9))
+
+
 ## v0.70.0 (2025-11-10)
 
 ### Bug Fixes
