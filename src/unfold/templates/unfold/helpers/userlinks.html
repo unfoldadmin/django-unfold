@@ -1,6 +1,12 @@
 {% load i18n static unfold %}
 
 <div class="flex items-center ml-auto">
+    {% if environment %}
+        <div class="mr-4">
+            {% include "unfold/helpers/label.html" with text=environment.0 type=environment.1 %}
+        </div>
+    {% endif %}
+
     {% action_list %}
 
     {% if nav_global_side %}
