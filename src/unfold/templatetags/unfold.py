@@ -66,16 +66,29 @@ def _get_tabs_list(
     return tabs_list
 
 
-@register.simple_tag(name="tab_list", takes_context=True)
-def tab_list(context: RequestContext, page: str, opts: Options | None = None) -> str:
-    inlines_list = []
-    datasets_list = []
+@register.simple_tag(name="action_list", takes_context=True)
+def action_list(context: RequestContext) -> str:
     data = {
         "nav_global": context.get("nav_global"),
         "actions_detail": context.get("actions_detail"),
         "actions_detail_hide_default": context.get("actions_detail_hide_default"),
         "actions_list": context.get("actions_list"),
         "actions_list_hide_default": context.get("actions_list_hide_default"),
+        "actions_items": context.get("actions_items"),
+    }
+
+    return render_to_string(
+        "unfold/helpers/tab_actions.html",
+        request=context["request"],
+        context=data,
+    )
+
+
+@register.simple_tag(name="tab_list", takes_context=True)
+def tab_list(context: RequestContext, page: str, opts: Options | None = None) -> str:
+    inlines_list = []
+    datasets_list = []
+    data = {
         "actions_items": context.get("actions_items"),
         "is_popup": context.get("is_popup"),
         "tabs_list": _get_tabs_list(context, page, opts),
@@ -401,12 +414,12 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
     classes = [
         "border",
         "border-base-200",
-        "max-md:-mt-px",
-        "max-md:first:rounded-t-default",
-        "max-md:last:rounded-b-default",
-        "md:-ml-px",
-        "md:first:rounded-l-default",
-        "md:last:rounded-r-default",
+        "max-lg:-mt-px",
+        "max-lg:first:rounded-t-default",
+        "max-lg:last:rounded-b-default",
+        "min-lg:-ml-px",
+        "min-lg:first:rounded-l-default",
+        "min-lg:last:rounded-r-default",
     ]
 
     if "variant" not in action:

@@ -5,21 +5,15 @@
 {% get_language_info_list for LANGUAGES as languages %}
 
 {% if show_languages %}
-    <div class="relative" x-data="{ openLanguageLinks: false }">
-        <a class="block cursor-pointer h-[18px] hover:text-base-700 dark:hover:text-base-200" x-on:click="openLanguageLinks = !openLanguageLinks">
-            <span class="material-symbols-outlined">translate</span>
-        </a>
+    {% if languages_list %}
+        {% for language in languages_list %}
+            {% include "unfold/helpers/language_form.html" with language=language %}
+        {% endfor %}
+    {% else %}
+        {% for language in languages %}
+            {% include "unfold/helpers/language_form.html" with language=language %}
+        {% endfor %}
+    {% endif %}
 
-        <div class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 -right-2 rounded-default shadow-lg top-7 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openLanguageLinks" x-transition x-on:click.outside="openLanguageLinks = false">
-            {% if languages_list %}
-                {% for language in languages_list %}
-                    {% include "unfold/helpers/language_form.html" with language=language %}
-                {% endfor %}
-            {% else %}
-                {% for language in languages %}
-                    {% include "unfold/helpers/language_form.html" with language=language %}
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
+    <div class="border-t border-base-200 mt-1 pt-1 dark:border-base-700"></div>
 {% endif %}
