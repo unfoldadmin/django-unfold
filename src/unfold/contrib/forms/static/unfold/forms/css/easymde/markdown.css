@@ -1,0 +1,436 @@
+/**
+ * EasyMDE Markdown Editor - Django Unfold Integration
+ * Clean integration with Unfold's design system
+ */
+
+/* ===================================================================
+   BASE EDITOR STYLES
+   =================================================================== */
+
+.markdown-widget-wrapper .EasyMDEContainer .CodeMirror {
+    background: white;
+    border: 1px solid rgb(228 228 231);
+    border-radius: 6px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    color: rgb(82 82 91);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 200px;
+    padding: 0.75rem;
+}
+
+.markdown-widget-wrapper .CodeMirror-scroll {
+    min-height: 200px;
+}
+
+/* Plain text - disable all markdown styling in editor */
+.markdown-widget-wrapper .cm-header-1,
+.markdown-widget-wrapper .cm-header-2,
+.markdown-widget-wrapper .cm-header-3,
+.markdown-widget-wrapper .cm-header-4,
+.markdown-widget-wrapper .cm-header-5,
+.markdown-widget-wrapper .cm-header-6 {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.markdown-widget-wrapper .cm-strong {
+    font-weight: inherit;
+}
+
+.markdown-widget-wrapper .cm-em {
+    font-style: inherit;
+}
+
+.markdown-widget-wrapper .cm-link,
+.markdown-widget-wrapper .cm-url {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+.markdown-widget-wrapper .cm-quote {
+    color: inherit;
+    font-style: inherit;
+}
+
+/* ===================================================================
+   TOOLBAR
+   =================================================================== */
+
+.markdown-widget-wrapper .editor-toolbar {
+    background: rgb(250 250 250);
+    border: 1px solid rgb(228 228 231);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    opacity: 1;
+    padding: 0.5rem 0.75rem;
+}
+
+.markdown-widget-wrapper .CodeMirror {
+    border-radius: 0 0 6px 6px;
+    border-top: none;
+}
+
+.markdown-widget-wrapper .editor-toolbar button {
+    background: white;
+    border: 1px solid rgb(228 228 231);
+    border-radius: 6px;
+    color: rgb(113 113 122);
+    height: 2rem;
+    width: 2rem;
+    margin: 0 0.125rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.markdown-widget-wrapper .editor-toolbar button:hover {
+    color: rgb(147 51 234);
+}
+
+.markdown-widget-wrapper .editor-toolbar button.active {
+    border-color: rgb(147 51 234);
+    color: rgb(147 51 234);
+}
+
+.markdown-widget-wrapper .editor-toolbar i.separator {
+    border-left: 1px solid rgb(228 228 231);
+    border-right: none;
+    margin: 0 0.5rem;
+}
+
+/* Hide default FA icons */
+.markdown-widget-wrapper .editor-toolbar button i.fa {
+    display: none;
+}
+
+/* Material Symbols styling - same as Unfold */
+.markdown-widget-wrapper .editor-toolbar button .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+}
+
+/* ===================================================================
+   STATUS BAR
+   =================================================================== */
+
+.markdown-widget-wrapper .editor-statusbar {
+    background: rgb(250 250 250);
+    border-top: 1px solid rgb(228 228 231);
+    border-radius: 0 0 6px 6px;
+    color: rgb(113 113 122);
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+}
+
+/* ===================================================================
+   PREVIEW PANEL - Apply Unfold prose styling
+   =================================================================== */
+
+.markdown-widget-wrapper .editor-preview {
+    background: white;
+    border: 1px solid rgb(228 228 231);
+    color: rgb(82 82 91);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.7142857;
+    padding: 1rem;
+}
+
+.markdown-widget-wrapper .editor-preview-side {
+    background: white;
+    border: 1px solid rgb(228 228 231);
+    border-left-color: rgb(228 228 231);
+    color: rgb(82 82 91);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.7142857;
+    padding: 1rem;
+    z-index: 999!important;
+}
+
+
+/* Prose typography styles matching Unfold */
+.markdown-widget-wrapper .editor-preview h1,
+.markdown-widget-wrapper .editor-preview-side h1 {
+    color: rgb(24 24 27);
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1.3333333;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.markdown-widget-wrapper .editor-preview h2,
+.markdown-widget-wrapper .editor-preview-side h2 {
+    color: rgb(24 24 27);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3333333;
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.markdown-widget-wrapper .editor-preview h3,
+.markdown-widget-wrapper .editor-preview-side h3 {
+    color: rgb(24 24 27);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+.markdown-widget-wrapper .editor-preview p,
+.markdown-widget-wrapper .editor-preview-side p {
+    margin-bottom: 1rem;
+}
+
+.markdown-widget-wrapper .editor-preview ul,
+.markdown-widget-wrapper .editor-preview ol,
+.markdown-widget-wrapper .editor-preview-side ul,
+.markdown-widget-wrapper .editor-preview-side ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.markdown-widget-wrapper .editor-preview ul,
+.markdown-widget-wrapper .editor-preview-side ul {
+    list-style-type: disc;
+}
+
+.markdown-widget-wrapper .editor-preview ol,
+.markdown-widget-wrapper .editor-preview-side ol {
+    list-style-type: decimal;
+}
+
+.markdown-widget-wrapper .editor-preview blockquote,
+.markdown-widget-wrapper .editor-preview-side blockquote {
+    border-left: 4px solid rgb(228 228 231);
+    color: rgb(113 113 122);
+    font-style: normal;
+    margin: 1rem 0;
+    padding-left: 1rem;
+}
+
+.markdown-widget-wrapper .editor-preview code,
+.markdown-widget-wrapper .editor-preview-side code {
+    background: rgb(250 250 250);
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.875em;
+    padding: 0.125rem 0.25rem;
+}
+
+.markdown-widget-wrapper .editor-preview pre,
+.markdown-widget-wrapper .editor-preview-side pre {
+    background: rgb(250 250 250);
+    border-radius: 6px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    padding: 1rem;
+}
+
+.markdown-widget-wrapper .editor-preview table,
+.markdown-widget-wrapper .editor-preview-side table {
+    border-collapse: collapse;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.markdown-widget-wrapper .editor-preview th,
+.markdown-widget-wrapper .editor-preview td,
+.markdown-widget-wrapper .editor-preview-side th,
+.markdown-widget-wrapper .editor-preview-side td {
+    border: 1px solid rgb(228 228 231);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.markdown-widget-wrapper .editor-preview th,
+.markdown-widget-wrapper .editor-preview-side th {
+    background: rgb(250 250 250);
+    font-weight: 600;
+}
+
+/* ===================================================================
+   FULLSCREEN MODE
+   =================================================================== */
+
+.editor-toolbar.fullscreen {
+    background: white;
+    border: none;
+    border-bottom: 1px solid rgb(228 228 231);
+    border-radius: 0;
+    bottom: auto;
+    height: 50px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.CodeMirror-fullscreen {
+    background: white;
+    border: none;
+    border-radius: 0;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 50px;
+    z-index: 999!important;
+}
+
+.editor-preview-full {
+    background: white;
+    border: 1px solid rgb(228 228 231);
+    border-top: none;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 50px;
+    z-index: 999;
+}
+
+/* ===================================================================
+   DARK THEME
+   =================================================================== */
+
+.dark .markdown-widget-wrapper .EasyMDEContainer .CodeMirror {
+    background: rgb(24 24 27);
+    border-color: rgb(63 63 70);
+    color: rgb(212 212 216);
+}
+
+.dark .markdown-widget-wrapper .editor-toolbar {
+    background: rgb(0 0 0 / 0.02);
+    border-color: rgb(63 63 70);
+}
+
+.dark .markdown-widget-wrapper .editor-toolbar button {
+    background: rgb(24 24 27);
+    border-color: rgb(63 63 70);
+    color: rgb(161 161 170);
+}
+
+.dark .markdown-widget-wrapper .editor-toolbar button:hover {
+    color: rgb(168 85 247);
+}
+
+.dark .markdown-widget-wrapper .editor-toolbar button.active {
+    border-color: rgb(168 85 247);
+    color: rgb(168 85 247);
+}
+
+.dark .markdown-widget-wrapper .editor-toolbar i.separator {
+    border-left-color: rgb(63 63 70);
+}
+
+.dark .markdown-widget-wrapper .editor-statusbar {
+    background: rgb(0 0 0 / 0.02);
+    border-top-color: rgb(63 63 70);
+    color: rgb(161 161 170);
+}
+
+.dark .markdown-widget-wrapper .editor-preview,
+.dark .markdown-widget-wrapper .editor-preview-side {
+    background: rgb(24 24 27);
+    border-color: rgb(63 63 70);
+    color: rgb(212 212 216);
+}
+
+.dark .markdown-widget-wrapper .editor-preview-side {
+    border-left-color: rgb(63 63 70);
+}
+
+.dark .markdown-widget-wrapper .editor-preview h1,
+.dark .markdown-widget-wrapper .editor-preview h2,
+.dark .markdown-widget-wrapper .editor-preview h3,
+.dark .markdown-widget-wrapper .editor-preview-side h1,
+.dark .markdown-widget-wrapper .editor-preview-side h2,
+.dark .markdown-widget-wrapper .editor-preview-side h3 {
+    color: rgb(244 244 245);
+}
+
+.dark .markdown-widget-wrapper .editor-preview blockquote,
+.dark .markdown-widget-wrapper .editor-preview-side blockquote {
+    border-left-color: rgb(63 63 70);
+    color: rgb(161 161 170);
+}
+
+.dark .markdown-widget-wrapper .editor-preview code,
+.dark .markdown-widget-wrapper .editor-preview-side code,
+.dark .markdown-widget-wrapper .editor-preview pre,
+.dark .markdown-widget-wrapper .editor-preview-side pre {
+    background: rgb(39 39 42);
+}
+
+.dark .markdown-widget-wrapper .editor-preview th,
+.dark .markdown-widget-wrapper .editor-preview td,
+.dark .markdown-widget-wrapper .editor-preview-side th,
+.dark .markdown-widget-wrapper .editor-preview-side td {
+    border-color: rgb(63 63 70);
+}
+
+.dark .markdown-widget-wrapper .editor-preview th,
+.dark .markdown-widget-wrapper .editor-preview-side th {
+    background: rgb(39 39 42);
+}
+
+.dark .editor-toolbar.fullscreen {
+    background: rgb(24 24 27);
+    border-bottom-color: rgb(63 63 70);
+}
+
+.dark .CodeMirror-fullscreen {
+    background: rgb(24 24 27);
+}
+
+.dark .editor-preview-full {
+    background: rgb(24 24 27);
+    border-color: rgb(63 63 70);
+}
+
+/* ===================================================================
+   ERROR STATE (Django validation)
+   =================================================================== */
+
+.errors .markdown-widget-wrapper .EasyMDEContainer .CodeMirror {
+    border-color: rgb(220 38 38);
+}
+
+.errors .markdown-widget-wrapper .editor-toolbar {
+    border-color: rgb(220 38 38);
+}
+
+.dark .errors .markdown-widget-wrapper .EasyMDEContainer .CodeMirror {
+    border-color: rgb(239 68 68);
+}
+
+.dark .errors .markdown-widget-wrapper .editor-toolbar {
+    border-color: rgb(239 68 68);
+}
+
+/* ===================================================================
+   RESPONSIVE
+   =================================================================== */
+
+@media (max-width: 768px) {
+    .markdown-widget-wrapper .editor-toolbar button.no-mobile {
+        display: none;
+    }
+}
