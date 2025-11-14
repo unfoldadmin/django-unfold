@@ -10,14 +10,16 @@ window.addEventListener("load", (e) => {
   warnWithoutSaving();
 
   tabNavigation();
+
+  tabNavigation("fieldset-");
 });
 
 /*************************************************************
  * Move not visible tab items to dropdown
  *************************************************************/
-function tabNavigation() {
-  const itemsDropdown = document.getElementById("tabs-dropdown");
-  const itemsList = document.getElementById("tabs-items");
+function tabNavigation(prefix = "") {
+  const itemsDropdown = document.getElementById(prefix + "tabs-dropdown");
+  const itemsList = document.getElementById(prefix + "tabs-items");
   const widths = [];
 
   if (!itemsDropdown || !itemsList) {
@@ -32,7 +34,7 @@ function tabNavigation() {
 
   function handleTabNavigationResize() {
     const contentWidth = document.getElementById("content").offsetWidth;
-    const tabsWidth = document.getElementById("tabs-wrapper").scrollWidth;
+    const tabsWidth = document.getElementById(prefix + "tabs-wrapper").scrollWidth;
     const availableWidth =
       itemsList.parentElement.offsetWidth - itemsList.offsetWidth - 48;
 
@@ -47,7 +49,7 @@ function tabNavigation() {
         // If there is still not enough space, move the last item to the dropdown again
         if (
           document.getElementById("content").offsetWidth <
-          document.getElementById("tabs-wrapper").scrollWidth
+          document.getElementById(prefix + "tabs-wrapper").scrollWidth
         ) {
           handleTabNavigationResize();
         }
@@ -70,6 +72,14 @@ function tabNavigation() {
       itemsDropdown.parentElement.classList.add("hidden");
     } else {
       itemsDropdown.parentElement.classList.remove("hidden");
+
+      // After adding the dropdown item, check again if we need to move items
+      if (
+        document.getElementById("content").offsetWidth <
+        document.getElementById(prefix + "tabs-wrapper").scrollWidth
+      ) {
+        handleTabNavigationResize();
+      }
     }
   }
 }
