@@ -3,7 +3,7 @@
 {% if not theme %}
     <div class="relative" x-data="{ openTheme: false }">
         <a class="block cursor-pointer h-[18px] leading-none hover:text-base-700 dark:hover:text-base-200" x-on:click="openTheme = !openTheme">
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined select-none">
                 <span x-text="adminTheme == 'dark' && 'dark_mode' || adminTheme == 'light' && 'light_mode' || 'computer'"></span>
             </span>
         </a>
