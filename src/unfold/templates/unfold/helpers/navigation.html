@@ -10,4 +10,6 @@
     {% else %}
         {% include "admin/app_list.html" with app_list=available_apps show_changelinks=False %}
     {% endif %}
+
+    {% include "unfold/helpers/navigation_user.html" %}
 </nav>

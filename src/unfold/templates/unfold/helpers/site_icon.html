@@ -18,13 +18,13 @@
     </{% if site_dropdown %}span{% else %}a{% endif %}>
 {% endif %}
 
-<div class="flex flex-col gap-0.5 grow justify-center min-w-0">
-    <div class="text-font-important-light leading-normal tracking-tight dark:text-font-important-dark *:truncate {% if site_subheader %}xl:text-sm{% else %}xl:text-base{% endif %}">
+<div class="flex flex-col gap-1.5 grow justify-center min-w-0">
+    <div class="text-important leading-none tracking-tight *:truncate {% if site_subheader %}xl:text-sm{% else %}xl:text-base{% endif %}">
         {{ branding }}
     </div>
 
     {% if site_subheader %}
-        <div class="font-normal text-font-subtle-light text-xs dark:text-font-subtle-dark">
+        <div class="font-normal leading-none text-subtle text-xs">
             {{ site_subheader }}
         </div>
     {% endif %}
