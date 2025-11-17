@@ -695,7 +695,7 @@ textarea#searchbar {
 }
 
 div.djangoql-completion {
-  @apply border border-base-200 rounded-default shadow-xs bg-white dark:border-base-700 dark:bg-base-800 -ml-[39px] mt-[6px] w-[384px];
+  @apply border border-base-200 rounded-default shadow-xs bg-white dark:border-base-700 dark:bg-base-800 -ml-[39px] mt-[6px] w-[384px] z-40;
 }
 
 div.djangoql-completion ul {
