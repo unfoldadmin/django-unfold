@@ -2,7 +2,6 @@ import copy
 import hashlib
 import time
 from collections.abc import Callable
-from http import HTTPStatus
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
@@ -64,11 +63,6 @@ class UnfoldAdminSite(AdminSite):
         urlpatterns = (
             [
                 path("search/", self.admin_view(self.search), name="search"),
-                path(
-                    "toggle-sidebar/",
-                    self.admin_view(self.toggle_sidebar),
-                    name="toggle_sidebar",
-                ),
             ]
             + extra_urls
             + super().get_urls()
@@ -170,16 +164,6 @@ class UnfoldAdminSite(AdminSite):
         return TemplateResponse(
             request, self.index_template or "admin/index.html", context
         )
-
-    def toggle_sidebar(
-        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
-    ) -> HttpResponse:
-        if "toggle_sidebar" not in request.session:
-            request.session["toggle_sidebar"] = True
-        else:
-            request.session["toggle_sidebar"] = not request.session["toggle_sidebar"]
-
-        return HttpResponse(status=HTTPStatus.OK)
 
     def _search_apps(
         self, app_list: list[dict[str, Any]], search_term: str
