@@ -5,7 +5,8 @@ from django.contrib import messages
 from django.contrib.admin.views.main import ERROR_FLAG, PAGE_VAR
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpRequest
+from django.http import HttpRequest, JsonResponse
+from django.views.generic import ListView
 
 from unfold.exceptions import UnfoldException
 from unfold.forms import DatasetChangeListSearchForm
@@ -78,4 +79,27 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
                 "title": self.title,
                 "model_admin": self.model_admin,
             },
+        )
+
+
+class BaseAutocompleteView(ListView):
+    paginate_by = 20
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> JsonResponse:
+        super().get(request, *args, **kwargs)
+        context = self.get_context_data()
+
+        return JsonResponse(
+            {
+                "results": [
+                    {
+                        "id": obj.pk,
+                        "text": str(obj),
+                    }
+                    for obj in self.object_list
+                ],
+                "pagination": {
+                    "more": context["page_obj"].has_next(),
+                },
+            }
         )
