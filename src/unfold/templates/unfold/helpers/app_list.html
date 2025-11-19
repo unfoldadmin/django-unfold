@@ -34,19 +34,9 @@
                                             </span>
                                         {% endif %}
 
-                                        <span class="text-sm">
-                                            {{ item.title|safe }}
-                                        </span>
+                                        <span>{{ item.title|safe }}</span>
 
-                                        {% if item.badge %}
-                                            <span class="bg-red-600 font-semibold ml-2 px-1 relative rounded-xs text-xs text-white">
-                                                {% if item.badge_callback %}
-                                                    {{ item.badge_callback }}
-                                                {% else %}
-                                                    {{ item.badge }}
-                                                {% endif %}
-                                            </span>
-                                        {% endif %}
+                                        {% include "unfold/helpers/app_list_badge.html" with item=item %}
                                     </a>
                                 </li>
                             {% endif %}
