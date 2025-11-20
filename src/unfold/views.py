@@ -26,22 +26,27 @@ class DatasetChangeList(ChangeList):
     is_dataset = True
 
     def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
-        search_var = f"{kwargs.get('model')._meta.model_name}-q"
-        page_var = f"{kwargs.get('model')._meta.model_name}-p"
+        self.search_var = f"{kwargs.get('model')._meta.model_name}-q"
+        self.page_var = f"{kwargs.get('model')._meta.model_name}-p"
 
-        _search_form = DatasetChangeListSearchForm(request.GET, search_var=search_var)
+        _search_form = DatasetChangeListSearchForm(
+            request.GET, search_var=self.search_var
+        )
         if not _search_form.is_valid():
             for error in _search_form.errors.values():
                 messages.error(request, ", ".join(error))
 
-        self.dataset_search_query = _search_form.cleaned_data.get(search_var) or ""
+        self.dataset_search_query = _search_form.cleaned_data.get(self.search_var) or ""
 
         super().__init__(request, *args, **kwargs)
 
+    def get_results(self, request: HttpRequest) -> None:
         try:
-            self.page_num = int(request.GET.get(page_var, 1))
+            self.page_num = int(request.GET.get(self.page_var, 1))
         except ValueError:
             self.page_num = 1
+
+        super().get_results(request)
 
     def get_queryset(self, request, exclude_parameters=None):
         self.query = self.dataset_search_query
