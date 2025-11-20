@@ -12,9 +12,10 @@ from django.db.models import (
     ManyToManyRel,
     OneToOneField,
 )
+from django.forms import ModelChoiceField, ModelMultipleChoiceField, Widget
 from django.forms.utils import flatatt
 from django.template.defaultfilters import linebreaksbr
-from django.urls import NoReverseMatch, reverse
+from django.urls import NoReverseMatch, reverse, reverse_lazy
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
@@ -22,7 +23,13 @@ from django.utils.text import capfirst
 
 from unfold.settings import get_config
 from unfold.utils import display_for_field, prettify_json
-from unfold.widgets import CHECKBOX_LABEL_CLASSES, INPUT_CLASSES, LABEL_CLASSES
+from unfold.widgets import (
+    CHECKBOX_LABEL_CLASSES,
+    INPUT_CLASSES,
+    LABEL_CLASSES,
+    UnfoldAdminAutocompleteWidget,
+    UnfoldAdminMultipleAutocompleteWidget,
+)
 
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
@@ -193,7 +200,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
 
 class UnfoldAdminField(helpers.AdminField):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
         try:
@@ -233,3 +240,24 @@ class UnfoldAdminField(helpers.AdminField):
             attrs=attrs,
             label_suffix=required if self.field.field.required else "",
         )
+
+
+class AutocompleteFieldMixin:
+    def __init__(self, url_path: str, *args: Any, **kwargs: Any) -> None:
+        self.url_path = url_path
+        super().__init__(*args, **kwargs)
+
+    def widget_attrs(self, widget: Widget) -> dict[str, Any]:
+        return {
+            "data-ajax--url": reverse_lazy(self.url_path),
+        }
+
+
+class UnfoldAdminAutocompleteModelChoiceField(AutocompleteFieldMixin, ModelChoiceField):
+    widget = UnfoldAdminAutocompleteWidget
+
+
+class UnfoldAdminMultipleAutocompleteModelChoiceField(
+    AutocompleteFieldMixin, ModelMultipleChoiceField
+):
+    widget = UnfoldAdminMultipleAutocompleteWidget
