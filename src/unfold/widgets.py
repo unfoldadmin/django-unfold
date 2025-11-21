@@ -131,7 +131,7 @@ SELECT_CLASSES = [
     "pr-8!",
     "max-w-2xl",
     "appearance-none",
-    "truncate",
+    "text-ellipsis",
 ]
 
 PROSE_CLASSES = [
