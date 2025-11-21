@@ -101,7 +101,8 @@ The following example illustrates how to implement a dropdown menu with a list o
   - `title` - The text label for the menu item
   - `link` (optional) - A URL or path that the item will link to when clicked
 - `striped` (optional) - When set to true, adds alternating background colors to list items for better visual separation
-- `height` (optional) - Sets a maximum height in pixels, after which the content becomes scrollable
+- `height` (optional) - Sets height in pixels for the dropdown menu
+- `max_height` (optional) - Sets a maximum height in pixels, after which the content becomes scrollable
 - `width` (optional) - Defines the dropdown's width in pixels for precise layout control
 
 The dropdown menu automatically positions itself below the trigger element and includes built-in behavior to close when clicking outside the menu or selecting an item.
