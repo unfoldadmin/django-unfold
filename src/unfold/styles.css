@@ -278,7 +278,7 @@ table tr.selected th {
 
 .selector-chooseall,
 .selector-clearall {
-  @apply block border-t border-base-200 cursor-pointer py-2 text-center text-sm text-default;
+  @apply block border-t border-base-200 cursor-pointer py-2 text-center text-sm text-default dark:border-base-700;
 }
 
 .selector-clearall {
