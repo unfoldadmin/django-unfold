@@ -359,6 +359,15 @@ class UnfoldAdminSite(AdminSite):
 
         for group in copy.deepcopy(navigation):
             group["items"] = self._get_navigation_items(request, group["items"], tabs)
+
+            # Badge callbacks
+            if "badge" in group and isinstance(group["badge"], str):
+                try:
+                    callback = import_string(group["badge"])
+                    group["badge_callback"] = lazy(callback)(request)
+                except ImportError:
+                    pass
+
             results.append(group)
 
         return results
