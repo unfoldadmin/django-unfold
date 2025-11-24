@@ -1,6 +1,43 @@
 # CHANGELOG
 
 
+## v0.72.0 (2025-11-24)
+
+### Bug Fixes
+
+- Command cache key with special letters
+  ([#1679](https://github.com/unfoldadmin/django-unfold/pull/1679),
+  [`2f953d7`](https://github.com/unfoldadmin/django-unfold/commit/2f953d7292abf5e39b3a70c49f3490f51d470066))
+
+- Dataset pagination ([#1699](https://github.com/unfoldadmin/django-unfold/pull/1699),
+  [`098d7dc`](https://github.com/unfoldadmin/django-unfold/commit/098d7dc5893c1977f90abbdbbca271fa139b21a8))
+
+- Djangoql dropdown zindex ([#1691](https://github.com/unfoldadmin/django-unfold/pull/1691),
+  [`b39346c`](https://github.com/unfoldadmin/django-unfold/commit/b39346c55f98eae8da7c53c57dbc5bbe790e4f65))
+
+- Not allowed div in label ([#1681](https://github.com/unfoldadmin/django-unfold/pull/1681),
+  [`c071120`](https://github.com/unfoldadmin/django-unfold/commit/c07112043c6cc658d14a509532713aab3ef2adcb))
+
+- Select multiple not visible scrollbar
+  ([#1702](https://github.com/unfoldadmin/django-unfold/pull/1702),
+  [`7e4a98c`](https://github.com/unfoldadmin/django-unfold/commit/7e4a98cf2040d0ecb959adf9c80aeddb628e8284))
+
+### Features
+
+- Autocomplete fields ([#1697](https://github.com/unfoldadmin/django-unfold/pull/1697),
+  [`774c0e9`](https://github.com/unfoldadmin/django-unfold/commit/774c0e971f9078d32b05a97727c4a340f25d7707))
+
+- Sidebar badge styles ([#1698](https://github.com/unfoldadmin/django-unfold/pull/1698),
+  [`409ce95`](https://github.com/unfoldadmin/django-unfold/commit/409ce9588a7e86bd99f556402d769cbd71be0c8d))
+
+- Sidebar group badge ([#1701](https://github.com/unfoldadmin/django-unfold/pull/1701),
+  [`e17feb6`](https://github.com/unfoldadmin/django-unfold/commit/e17feb623afb397feebb125ba078013c754b54f7))
+
+- Use localstorage for sidebar open/closed state
+  ([#1692](https://github.com/unfoldadmin/django-unfold/pull/1692),
+  [`4b290d4`](https://github.com/unfoldadmin/django-unfold/commit/4b290d4f3c66ebe3da9c5cdf7a7b91dbd76cd634))
+
+
 ## v0.71.0 (2025-11-11)
 
 ### Bug Fixes
