@@ -42,6 +42,7 @@ Need expert help with Django or Unfold? We offer services to support your projec
 - **UI components**: Offers reusable interface components such as cards, buttons, and charts.
 - **Crispy forms**: Custom template pack for django-crispy-forms to style forms with Unfold's design system.
 - **WYSIWYG editor**: Built-in support for WYSIWYG editing through Trix.
+- **Markdown editor**: Separate package [django-unfold-markdown](https://github.com/sergei-vasilev-dev/django-unfold-markdown) for Markdown editing with EasyMDE.
 - **Array widget:** Built-in widget for `django.contrib.postgres.fields.ArrayField`.
 - **Inline tabs:** Group inlines into tab navigation in the change form.
 - **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form.
@@ -67,6 +68,8 @@ Need expert help with Django or Unfold? We offer services to support your projec
 
 ## Third-party package support
 
+### Official integrations
+
 - [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)
 - [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/)
 - [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)
@@ -75,6 +78,10 @@ Need expert help with Django or Unfold? We offer services to support your projec
 - [django-modeltranslation](https://github.com/deschler/django-modeltranslation) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-modeltranslation/)
 - [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
 - [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
+
+### Community extensions
+
+- [django-unfold-markdown](https://github.com/sergey-vasiliev-dualboot/django-unfold-markdown) - Markdown editor widget with EasyMDE
 
 ## Credits
 
