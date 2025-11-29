@@ -39,7 +39,7 @@ class MyAutocompleteView(BaseAutocompleteView):
     def get_queryset(self):
         # Search query is available in the request.GET object under the key "term"
         term = self.request.GET.get("term")
-        
+
         # Additional filters and permissions checks here
         qs = super().get_queryset()
 
