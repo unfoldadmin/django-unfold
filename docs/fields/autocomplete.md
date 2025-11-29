@@ -37,8 +37,9 @@ class MyAutocompleteView(BaseAutocompleteView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
+        term = self.request.get("term")
         # ADDITIONAL FILTERS AND PERMISSIONS CHECKS HERE
-        return super().get_queryset()
+        return super().get_queryset().filter(my_field__icontains=term)
 
 
 @admin.register(MyModel)
