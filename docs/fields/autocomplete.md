@@ -33,12 +33,22 @@ class MyAutocompleteView(BaseAutocompleteView):
     model = MyModel
 
     def dispatch(self, request, *args, **kwargs):
-        # DO THE PERMISSIONS CHECKS HERE
+        # Permissions checks here
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        # ADDITIONAL FILTERS AND PERMISSIONS CHECKS HERE
-        return super().get_queryset()
+        # Search query is available in the request.GET object under the key "term"
+        term = self.request.GET.get("term")
+
+        # Additional filters and permissions checks here
+        qs = super().get_queryset()
+
+        # No search provided, return all results
+        if term == "":
+            return qs
+
+        # Search query provided, filter results
+        return qs.filter(my_field__icontains=term)
 
 
 @admin.register(MyModel)
