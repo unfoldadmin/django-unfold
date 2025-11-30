@@ -80,7 +80,7 @@ Need expert help with Django or Unfold? We offer services to support your projec
 
 ## Community packages
 
-- [django-unfold-markdown](https://github.com/sergei-vasilev-dev/django-unfold-markdown) - [Integration guide](https://github.com/sergei-vasilev-dev/django-unfold-markdown)
+- [django-unfold-markdown](https://pypi.org/project/django-unfold-markdown/) - [Integration guide](https://github.com/sergei-vasilev-dev/django-unfold-markdown)
 
 ## Credits
 
