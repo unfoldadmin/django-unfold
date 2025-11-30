@@ -77,6 +77,11 @@ Need expert help with Django or Unfold? We offer services to support your projec
 - [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
 - [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)
 
+
+## Community packages
+
+- [django-unfold-markdown](https://pypi.org/project/django-unfold-markdown/) - [Integration guide](https://github.com/sergei-vasilev-dev/django-unfold-markdown)
+
 ## Credits
 
 - **Tailwind**: [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
