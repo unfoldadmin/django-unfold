@@ -3,7 +3,7 @@
 <div class="flex flex-row grow font-semibold items-center min-w-0 mr-3">
     {% if is_nav_sidebar_enabled %}
         <span class="cursor-pointer flex flex-row items-center">
-            <span class="material-symbols-outlined hidden! xl:block!" hx-get="{% url "admin:toggle_sidebar" %}" hx-swap="none" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen">
+            <span class="material-symbols-outlined hidden! xl:block!" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen; localStorage.setItem('sidebarDesktopOpen', sidebarDesktopOpen ? '1' : '0');">
                 dock_to_right
             </span>
 

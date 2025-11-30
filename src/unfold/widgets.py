@@ -1,3 +1,4 @@
+import json
 from collections.abc import Callable
 from typing import Any
 
@@ -130,7 +131,7 @@ SELECT_CLASSES = [
     "pr-8!",
     "max-w-2xl",
     "appearance-none",
-    "truncate",
+    "text-ellipsis",
 ]
 
 PROSE_CLASSES = [
@@ -906,3 +907,30 @@ class UnfoldAdminPasswordInput(PasswordInput):
             },
             render_value,
         )
+
+
+class AutocompleteWidgetMixin:
+    def __init__(self, attrs: dict | None = None, choices: tuple = ()) -> None:
+        if not attrs:
+            attrs = {}
+
+        attrs.update(
+            {
+                "data-ajax--cache": "true",
+                "data-ajax--delay": 250,
+                "data-ajax--type": "GET",
+                "data-theme": "admin-autocomplete",
+                "data-allow-clear": json.dumps(not self.is_required),
+                "data-placeholder": "",
+                "class": "unfold-admin-autocomplete admin-autocomplete",
+            }
+        )
+        super().__init__(attrs, choices)
+
+
+class UnfoldAdminAutocompleteWidget(AutocompleteWidgetMixin, Select):
+    option_template_name = "unfold/widgets/select_option_autocomplete.html"
+
+
+class UnfoldAdminMultipleAutocompleteWidget(AutocompleteWidgetMixin, SelectMultiple):
+    option_template_name = "unfold/widgets/select_option_autocomplete.html"

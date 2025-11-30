@@ -1,7 +1,7 @@
 import copy
+import hashlib
 import time
 from collections.abc import Callable
-from http import HTTPStatus
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
@@ -12,9 +12,9 @@ from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path, reverse, reverse_lazy
+from django.utils.encoding import force_bytes
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
-from django.utils.text import slugify
 
 from unfold.dataclasses import DropdownItem, Favicon, SearchResult
 
@@ -63,11 +63,6 @@ class UnfoldAdminSite(AdminSite):
         urlpatterns = (
             [
                 path("search/", self.admin_view(self.search), name="search"),
-                path(
-                    "toggle-sidebar/",
-                    self.admin_view(self.toggle_sidebar),
-                    name="toggle_sidebar",
-                ),
             ]
             + extra_urls
             + super().get_urls()
@@ -170,16 +165,6 @@ class UnfoldAdminSite(AdminSite):
         return TemplateResponse(
             request, self.index_template or "admin/index.html", context
         )
-
-    def toggle_sidebar(
-        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
-    ) -> HttpResponse:
-        if "toggle_sidebar" not in request.session:
-            request.session["toggle_sidebar"] = True
-        else:
-            request.session["toggle_sidebar"] = not request.session["toggle_sidebar"]
-
-        return HttpResponse(status=HTTPStatus.OK)
 
     def _search_apps(
         self, app_list: list[dict[str, Any]], search_term: str
@@ -285,7 +270,10 @@ class UnfoldAdminSite(AdminSite):
             return HttpResponse()
 
         search_term = search_term.lower()
-        cache_key = f"unfold_search_{request.user.pk}_{slugify(search_term)}"
+        search_key_base = f"{request.user.pk}_{search_term}"
+        cache_key = (
+            f"unfold_search_{hashlib.sha256(force_bytes(search_key_base)).hexdigest()}"
+        )
         cache_results = cache.get(cache_key)
 
         if extended_search:
@@ -372,6 +360,15 @@ class UnfoldAdminSite(AdminSite):
 
         for group in copy.deepcopy(navigation):
             group["items"] = self._get_navigation_items(request, group["items"], tabs)
+
+            # Badge callbacks
+            if "badge" in group and isinstance(group["badge"], str):
+                try:
+                    callback = import_string(group["badge"])
+                    group["badge_callback"] = lazy(callback)(request)
+                except ImportError:
+                    pass
+
             results.append(group)
 
         return results
