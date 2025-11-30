@@ -1,0 +1,34 @@
+{% load i18n %}
+
+{% if not theme %}
+    <div class="relative" x-data="{ openTheme: false }">
+        <a class="block cursor-pointer h-[18px] leading-none hover:text-base-700 dark:hover:text-base-200" x-on:click="openTheme = !openTheme">
+            <span class="material-symbols-outlined">
+                <span x-text="adminTheme == 'dark' && 'dark_mode' || adminTheme == 'light' && 'light_mode' || 'computer'"></span>
+            </span>
+        </a>
+
+        <nav class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 -right-2 rounded-default shadow-lg top-7 w-40 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openTheme" x-transition x-on:click.outside="openTheme = false">
+            <a class="cursor-pointer flex flex-row mx-1 px-3 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+               x-on:click="adminTheme = 'light'"
+               x-bind:class="adminTheme == 'light'  && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+                <span class="material-symbols-outlined mr-2">light_mode</span>
+                <span class="leading-none self-center">{% trans "Light" %}</span>
+            </a>
+
+            <a class="cursor-pointer flex flex-row leading-none mx-1 px-3 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+               x-on:click="adminTheme = 'dark'"
+               x-bind:class="adminTheme == 'dark' && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+                <span class="material-symbols-outlined mr-2">dark_mode</span>
+                <span class="leading-none self-center">{% trans "Dark" %}</span>
+            </a>
+
+            <a class="cursor-pointer flex flex-row mx-1 px-3 py-1.5 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200"
+               x-on:click="adminTheme = 'auto'"
+               x-bind:class="adminTheme == 'auto' && 'text-primary-600 dark:text-primary-500 dark:hover:text-primary-500! hover:text-primary-600!'">
+                <span class="material-symbols-outlined mr-2">computer</span>
+                <span class="leading-none self-center">{% trans "System" %}</span>
+            </a>
+        </nav>
+    </div>
+{% endif %}

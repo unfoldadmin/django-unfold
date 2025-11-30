@@ -98,6 +98,7 @@ class UnfoldAdminSite(AdminSite):
             "show_history": self._get_config("SHOW_HISTORY", request),
             "show_view_on_site": self._get_config("SHOW_VIEW_ON_SITE", request),
             "show_languages": self._get_config("SHOW_LANGUAGES", request),
+            "language_flags": self._get_config("LANGUAGE_FLAGS", request),
             "show_back_button": self._get_config("SHOW_BACK_BUTTON", request),
             "theme": self._get_config("THEME", request),
             "border_radius": self._get_config("BORDER_RADIUS", request),

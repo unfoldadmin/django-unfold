@@ -8,6 +8,6 @@ class="font-medium flex group items-center gap-2 px-3 py-2 rounded-default justi
     bg-transparent text-font-important-light dark:text-font-important-dark
 {% else %}
     border border-base-200 bg-primary-600 border-transparent text-white
-{% endif %}{% if class %} {{ class }}{% endif %}" {% include "unfold/helpers/attrs.html" %}>
+{% endif %}{% if class %} {{ class }}{% endif %}" {% include "unfold/helpers/attrs.html" %} {% if extra_attrs %}{{ extra_attrs }}{% endif %}>
 {{ children }}
 </{% if href %}a{% else %}button{% endif%}>
