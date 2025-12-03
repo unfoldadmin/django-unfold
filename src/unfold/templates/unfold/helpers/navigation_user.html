@@ -22,7 +22,9 @@
 
 
         <div class="flex flex-col gap-1.5 select-none">
-            <div class="font-semibold leading-none text-important tracking-tight">{{ user.get_full_name }}</div>
+            <div class="font-semibold leading-none text-important tracking-tight">
+                {{ user.get_full_name|default:user.username }}
+            </div>
 
             {% if user.email %}
                 <div class="font-normal leading-none text-subtle text-xs">{{ user.email }}</div>
