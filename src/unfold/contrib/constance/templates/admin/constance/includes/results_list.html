@@ -20,13 +20,13 @@
         <th>{% trans "Value" %}</th>
         <th>{% trans "Default" %}</th>
         <th>{% trans "Code" %}</th>
-        <th>{% trans "Modified" %}</th>
+        <th class="!px-0"></th>
         <th></th>
     </tr>
 
     {% for item in config_values %}
-        <tr class="border-t border-base-200 h-[55px] *:px-3 *:py-2 *:align-middle dark:border-base-800" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
-            <th class="font-normal text-left">
+        <tr class="border-t border-base-200 relative h-[55px] *:px-3 *:py-2 *:align-middle dark:border-base-800 hover:shadow-raised dark:hover:shadow-raised-dark hover:z-20" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
+            <th class="font-normal leading-relaxed text-left max-w-sm">
                 {{ item.help_text|linebreaksbr }}
             </th>
 
@@ -50,7 +50,7 @@
                 </a>
             </td>
 
-            <td>
+            <td class="!px-0">
                 {% include "unfold/helpers/boolean.html" with value=item.modified %}
             </td>
 
