@@ -11,6 +11,12 @@ UNFOLD_CONSTANCE_ADDITIONAL_FIELDS = {
             "widget": "unfold.widgets.UnfoldAdminIntegerFieldWidget",
         },
     ],
+    float: [
+        "django.forms.FloatField",
+        {
+            "widget": "unfold.widgets.UnfoldAdminDecimalFieldWidget",
+        },
+    ],
     bool: [
         "django.forms.BooleanField",
         {
