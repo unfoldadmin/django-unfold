@@ -65,14 +65,38 @@ class MyModelAdmin(ModelAdmin):
 class MyForm(forms.Form):
     one_object = UnfoldAdminAutocompleteModelChoiceField(
         label=_("Object - Single value"),
-        # Important for validation. Make sure it offers same results as the custom view
-        queryset=MyModel.objects.all(),
+        # Create here a limited queryset to avoid having to render all results at once
+        queryset=MyModel.objects.all()[0:20],
         # Map autocomplete results to the custom view
         url_path="admin:custom_autocomplete_path_name",
     )
     multiple_objects = UnfoldAdminMultipleAutocompleteModelChoiceField(
         label=_("Objects - Multiple values"),
-        queryset=MyModel.objects.all(),
+        # Create here a limited queryset to avoid having to render all results at once
+        queryset=MyModel.objects.all()[0:20],
         url_path="admin:custon_autocomplete_path_name",
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # In case the form contains initial values, you want to add these to the queryset
+        if self.initial.get("one_object"):
+            self.fields["one_object"].queryset = self.fields["one_object"].queryset.filter(
+                pk=self.initial.get("one_object")
+            )
+        if self.initial.get("multiple_objects"):
+            self.fields["multiple_objects"].queryset = self.fields["multiple_objects"].queryset.filter(
+                pk__in=self.initial.get("multiple_objects")
+            )
+
+
+        # Important - Validate the queryset when the form is submitted
+        if request.method == "POST":
+            self.fields["one_object"].queryset = MyModel.objects.filter(
+                pk__in=request.POST.getlist("one_object")
+            )
+            self.fields["multiple_objects"].queryset = MyModel.objects.filter(
+                pk__in=request.POST.getlist("multiple_objects")
+            )
 ```
