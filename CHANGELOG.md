@@ -1,6 +1,37 @@
 # CHANGELOG
 
 
+## v0.73.0 (2025-12-08)
+
+### Bug Fixes
+
+- Constance float field ([#1721](https://github.com/unfoldadmin/django-unfold/pull/1721),
+  [`aa34369`](https://github.com/unfoldadmin/django-unfold/commit/aa343691ae813450f836c0e667e01becef3bedee))
+
+- Sidebar logout button height ([#1715](https://github.com/unfoldadmin/django-unfold/pull/1715),
+  [`748610b`](https://github.com/unfoldadmin/django-unfold/commit/748610b0c4e7e04a8f3f92aafa88b3b85aad9853))
+
+- Sidebar user nav defaults ([#1718](https://github.com/unfoldadmin/django-unfold/pull/1718),
+  [`a5abebb`](https://github.com/unfoldadmin/django-unfold/commit/a5abebbca18ab723f75b15a2fc5628ab25340473))
+
+### Documentation
+
+- Autocomplete field term filter ([#1709](https://github.com/unfoldadmin/django-unfold/pull/1709),
+  [`aa5d210`](https://github.com/unfoldadmin/django-unfold/commit/aa5d210fff2ae1542ba59d601ce8119f396058c6))
+
+- Markdown editor package ([#1713](https://github.com/unfoldadmin/django-unfold/pull/1713),
+  [`329e83f`](https://github.com/unfoldadmin/django-unfold/commit/329e83f3a5c029504512ecf49e43a10da7e93693))
+
+### Features
+
+- Display dropdown max height option
+  ([#1703](https://github.com/unfoldadmin/django-unfold/pull/1703),
+  [`2b96573`](https://github.com/unfoldadmin/django-unfold/commit/2b965733a1a2c974088a5354562482cedb32b1c2))
+
+- Sidebar user dropdown ([#1684](https://github.com/unfoldadmin/django-unfold/pull/1684),
+  [`1282060`](https://github.com/unfoldadmin/django-unfold/commit/1282060b985920f6afda399e347f10d18e006fec))
+
+
 ## v0.72.0 (2025-11-24)
 
 ### Bug Fixes
