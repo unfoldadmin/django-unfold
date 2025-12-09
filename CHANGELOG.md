@@ -1,6 +1,21 @@
 # CHANGELOG
 
 
+## v0.73.1 (2025-12-09)
+
+### Bug Fixes
+
+- Actions dark mode background color
+  ([#1725](https://github.com/unfoldadmin/django-unfold/pull/1725),
+  [`1735d4c`](https://github.com/unfoldadmin/django-unfold/commit/1735d4c13e19ccb39589885b1a0b5aa6229d71be))
+
+- Inline tabs display condition ([#1724](https://github.com/unfoldadmin/django-unfold/pull/1724),
+  [`1c94bcb`](https://github.com/unfoldadmin/django-unfold/commit/1c94bcb2f45762875e143efc9d8f30192a7250ee))
+
+- User sidebar long titles ([#1727](https://github.com/unfoldadmin/django-unfold/pull/1727),
+  [`0043800`](https://github.com/unfoldadmin/django-unfold/commit/0043800bfac065bfd8fb75e2a56eeceed6d123c4))
+
+
 ## v0.73.0 (2025-12-08)
 
 ### Bug Fixes
