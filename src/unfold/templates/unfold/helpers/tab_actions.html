@@ -6,7 +6,7 @@
             <span class="material-symbols-outlined">more_horiz</span>
         {% endcomponent %}
 
-        <ul class="bg-white container hidden flex-col font-medium mx-auto left-0 right-0 lg:flex lg:flex-row lg:mb-0 lg:mt-0 max-lg:absolute max-lg:top-16" x-bind:class="{'max-lg:flex': showActions}">
+        <ul class="bg-white container hidden flex-col font-medium mx-auto left-0 right-0 lg:flex lg:flex-row lg:mb-0 lg:mt-0 max-lg:absolute max-lg:top-16 dark:bg-base-900" x-bind:class="{'max-lg:flex': showActions}">
             {% if not actions_list_hide_default and not actions_detail_hide_default %}
                 {% if actions_items %}
                     {{ actions_items }}
