@@ -10,7 +10,40 @@ window.addEventListener("load", (e) => {
   warnWithoutSaving();
 
   tabNavigation();
+
+  scrollSidebarNav();
 });
+
+/*************************************************************
+ * Scroll sidebar to active item
+ *************************************************************/
+function scrollSidebarNav() {
+  const sidebarNav = document.getElementById("nav-sidebar-apps");
+
+  if (!sidebarNav) {
+    return;
+  }
+
+  const instance = SimpleBar.instances.get(sidebarNav);
+  const activeItem = sidebarNav.querySelector("a.active");
+
+  if (!instance || !activeItem) {
+    return;
+  }
+
+  function isActiveItemVisible() {
+    const sidebarRect = sidebarNav.getBoundingClientRect();
+    const itemRect = activeItem.getBoundingClientRect();
+
+    return (
+      itemRect.top >= sidebarRect.top && itemRect.bottom <= sidebarRect.bottom
+    );
+  }
+
+  if (instance && !isActiveItemVisible()) {
+    instance.getScrollElement().scroll(0, activeItem.offsetTop);
+  }
+}
 
 /*************************************************************
  * Move not visible tab items to dropdown

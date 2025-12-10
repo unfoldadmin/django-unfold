@@ -1,7 +1,7 @@
 {% load i18n unfold %}
 
 {% if sidebar_navigation %}
-    <div class="h-0 grow overflow-auto" data-simplebar>
+    <div id="nav-sidebar-apps" class="h-0 grow overflow-auto" data-simplebar>
         {% for group in sidebar_navigation %}
             {% if group.items %}
                 {% has_nav_item_active group.items as has_active %}
@@ -29,7 +29,7 @@
                         {% for item in group.items %}
                             {% if item.has_permission %}
                                 <li>
-                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 {% if item.active %}bg-base-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
+                                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}" class="flex h-[38px] items-center -mx-3 px-3 rounded-default hover:text-primary-600 dark:hover:text-primary-500 {% if item.active %}bg-base-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500 active{% endif %}">
                                         {% if item.icon %}
                                             <span class="material-symbols-outlined md-18 mr-3 w-[18px]">
                                                 {{ item.icon }}
