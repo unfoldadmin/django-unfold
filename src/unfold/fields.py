@@ -118,7 +118,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             return str(remote_obj)
 
     def _get_contents(self) -> str:
-        from django.contrib.admin.templatetags.admin_list import _boolean_icon
+        from unfold.utils import _boolean_icon
 
         field, obj, model_admin = (
             self.field["field"],
