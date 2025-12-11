@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% if inlines_list or tabs_list %}
+{% if inlines_list or tabs_list or datasets_list %}
     <div class="flex flex-row grow">
         <nav id="tabs-items" class="bg-base-100 flex flex-row font-medium gap-1 p-1 rounded-default text-important dark:border-base-700 md:w-auto dark:bg-white/[.04] *:flex *:flex-row *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:transition-colors *:hover:bg-base-700/[.04] *:dark:hover:bg-white/[.04] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:hover:bg-white [&>.active]:dark:bg-base-900 [&>.active]:dark:hover:bg-base-900">
             {% for item in tabs_list %}
@@ -11,7 +11,7 @@
                 {% endif %}
             {% endfor %}
 
-            {% if inlines_list %}
+            {% if inlines_list or datasets_list %}
                 <a href="#general" x-on:click="activeTab = 'general'" x-bind:class="{'active': activeTab == 'general'}">
                     {% trans "General" %}
                 </a>
