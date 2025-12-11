@@ -33,16 +33,16 @@ class SomeDatasetAdmin(ModelAdmin):
 
     def get_queryset(self, request):
         # `extra_context` contains current changeform object
-        obj = self.extra_context.get("object")
+        obj_id = self.extra_context.get("object")
 
         # If we are on create object page display no results
-        if not obj:
+        if not obj_id:
             return super().get_queryset(request).none()
 
         # If there is a permission requirement, make sure that
         # everything is properly handled here
         return super().get_queryset(request).filter(
-            related_field__pk=obj.pk
+            related_field__pk=obj_id
         )
 
 
