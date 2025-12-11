@@ -4,6 +4,8 @@ order: 20
 description: Discover how to display Django admin changelists within changeform pages using Datasets. Understand key features like list display, search, sorting and pagination to show related data alongside model forms.
 ---
 
+# Datasets
+
 Datasets allow you to display Django admin changelists within changeform pages. This is useful when you want to show related data alongside a model's edit form. A Dataset is essentially a specialized ModelAdmin that is not registered with the standard `@admin.register` decorator and displays as a changelist table within another model's changeform page. It can optionally be shown in a tab interface.
 
 Datasets support core changelist functionality including list display fields and links, search, sorting, and pagination. You can also customize the queryset to filter the displayed objects. However, some changelist features as `list_filters` are not supported.
