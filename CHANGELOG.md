@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.74.1 (2025-12-15)
+
+### Bug Fixes
+
+- Constance allow empty charfield ([#1742](https://github.com/unfoldadmin/django-unfold/pull/1742),
+  [`c499c63`](https://github.com/unfoldadmin/django-unfold/commit/c499c63511b5dfbc02c1d5da97323793187b270c))
+
+
 ## v0.74.0 (2025-12-15)
 
 ### Bug Fixes
