@@ -1,6 +1,32 @@
 # CHANGELOG
 
 
+## v0.74.0 (2025-12-15)
+
+### Bug Fixes
+
+- Dataset docs title ([#1736](https://github.com/unfoldadmin/django-unfold/pull/1736),
+  [`807e706`](https://github.com/unfoldadmin/django-unfold/commit/807e7068d8c81796eeced71eacc3295469303e92))
+
+- Dataset tab navigation ([#1731](https://github.com/unfoldadmin/django-unfold/pull/1731),
+  [`b9db53d`](https://github.com/unfoldadmin/django-unfold/commit/b9db53d831d9846ef42a5d8cb4385154b7201d90))
+
+- Header actions/object tools spacing
+  ([#1737](https://github.com/unfoldadmin/django-unfold/pull/1737),
+  [`bb04e84`](https://github.com/unfoldadmin/django-unfold/commit/bb04e84ade02db49d938c0d256acc875ce1f33f2))
+
+- Readonly boolean field rendering ([#1733](https://github.com/unfoldadmin/django-unfold/pull/1733),
+  [`2cfa0d6`](https://github.com/unfoldadmin/django-unfold/commit/2cfa0d6fddf5fd8033a6855a805a1f7521627de1))
+
+### Features
+
+- Redesigned actions bar ([#1735](https://github.com/unfoldadmin/django-unfold/pull/1735),
+  [`cebfd59`](https://github.com/unfoldadmin/django-unfold/commit/cebfd590214f72077e1441bc94041853aedc966b))
+
+- Scroll sidebar to active item ([#1730](https://github.com/unfoldadmin/django-unfold/pull/1730),
+  [`533ee9b`](https://github.com/unfoldadmin/django-unfold/commit/533ee9beaaf3c6f81a5890eb3d19ddda514429b5))
+
+
 ## v0.73.1 (2025-12-09)
 
 ### Bug Fixes
