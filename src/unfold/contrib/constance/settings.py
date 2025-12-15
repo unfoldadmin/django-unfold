@@ -3,6 +3,7 @@ UNFOLD_CONSTANCE_ADDITIONAL_FIELDS = {
         "django.forms.CharField",
         {
             "widget": "unfold.widgets.UnfoldAdminTextInputWidget",
+            "required": False,
         },
     ],
     int: [
