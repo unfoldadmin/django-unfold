@@ -2,6 +2,15 @@ from typing import Any
 
 from django.conf import settings
 
+from unfold.widgets import (
+    BUTTON_CLASSES,
+    CHECKBOX_CLASSES,
+    FILE_CLASSES,
+    INPUT_CLASSES,
+    RADIO_CLASSES,
+    SWITCH_CLASSES,
+)
+
 CONFIG_DEFAULTS = {
     "SITE_TITLE": None,
     "SITE_HEADER": None,
@@ -17,6 +26,16 @@ CONFIG_DEFAULTS = {
     "SHOW_LANGUAGES": False,
     "LANGUAGE_FLAGS": {},
     "SHOW_BACK_BUTTON": False,
+    "FORMS": {
+        "classes": {
+            "text_input": " ".join(INPUT_CLASSES),
+            "checkbox": " ".join(CHECKBOX_CLASSES),
+            "button": " ".join(BUTTON_CLASSES),
+            "radio": " ".join(RADIO_CLASSES),
+            "switch": " ".join(SWITCH_CLASSES),
+            "file": " ".join(FILE_CLASSES),
+        },
+    },
     "COLORS": {
         "base": {
             "50": "oklch(98.5% .002 247.839)",
