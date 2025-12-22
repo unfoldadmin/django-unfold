@@ -28,14 +28,6 @@ except ImportError:
 
 from unfold.settings import get_config
 from unfold.utils import convert_color
-from unfold.widgets import (
-    BUTTON_CLASSES,
-    CHECKBOX_CLASSES,
-    FILE_CLASSES,
-    INPUT_CLASSES,
-    RADIO_CLASSES,
-    SWITCH_CLASSES,
-)
 
 
 class UnfoldAdminSite(AdminSite):
@@ -75,14 +67,7 @@ class UnfoldAdminSite(AdminSite):
 
         sidebar_config = self._get_config("SIDEBAR", request)
         data = {
-            "form_classes": {
-                "text_input": " ".join(INPUT_CLASSES),
-                "checkbox": " ".join(CHECKBOX_CLASSES),
-                "button": " ".join(BUTTON_CLASSES),
-                "radio": " ".join(RADIO_CLASSES),
-                "switch": " ".join(SWITCH_CLASSES),
-                "file": " ".join(FILE_CLASSES),
-            },
+            "form_classes": self._get_config("FORMS", request).get("classes"),
             "site_title": self._get_config("SITE_TITLE", request),
             "site_header": self._get_config("SITE_HEADER", request),
             "site_url": self._get_config("SITE_URL", request),
