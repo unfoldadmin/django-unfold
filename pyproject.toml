@@ -41,10 +41,7 @@ dev = [
 ]
 
 [tool.uv]
-default-groups = [
-    "test",
-    "dev",
-]
+default-groups = ["dev"]
 
 [tool.hatch.build.targets.sdist]
 include = ["src/unfold"]
@@ -114,6 +111,7 @@ legacy_tox_ini = """
         python{310,311,312,313,314}-django{42,50,51,52}
 
     [testenv]
+    allowlist_externals = uv
     skip_install = true
     set_env =
         PYTHONDEVMODE = 1
