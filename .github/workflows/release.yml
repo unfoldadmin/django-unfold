@@ -19,19 +19,17 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.14"
-      - name: Install Poetry
-        run: |
-          pip install poetry
-          poetry install
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
       - name: Release
         run: |
-          poetry run semantic-release version
-          poetry run semantic-release publish
+          uv run -- semantic-release version
+          uv run -- semantic-release publish
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
-        run: poetry build
+        run: uv build
       - name: Publish
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish
