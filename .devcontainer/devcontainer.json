@@ -5,7 +5,7 @@
   "overrideCommand": true,
   "workspaceFolder": "/app",
   "forwardPorts": [8000],
-  "postCreateCommand": "python tests/server/manage.py migrate",
+  "postCreateCommand": "uv run -- python tests/server/manage.py migrate",
   "customizations": {
     "vscode": {
       "settings": {
