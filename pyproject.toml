@@ -1,7 +1,7 @@
 [project]
 name = "django-unfold"
 version = "0.74.1"
-description = "Modern Django admin theme for seamless interface development"
+description = "Modern Django admin theme"
 authors = []
 requires-python = ">=3.10,<4.0"
 readme = "README.md"
@@ -28,7 +28,9 @@ dependencies = ["django>=4.2"]
 
 [project.urls]
 Homepage = "https://unfoldadmin.com"
+Documentation = "https://unfoldadmin.com/docs/"
 Repository = "https://github.com/unfoldadmin/django-unfold"
+Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
