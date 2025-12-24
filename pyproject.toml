@@ -35,11 +35,11 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 [dependency-groups]
 dev = [
     "django-money>=3.5",
-    "pytest>=8.4",
+    "pytest>=9.0",
     "pytest-django>=4.11",
     "pytest-factoryboy>=2.8",
-    "python-semantic-release>=10.4",
-    "tox>=4.31",
+    "python-semantic-release>=10.5",
+    "tox>=4.32",
 ]
 
 [tool.uv]
