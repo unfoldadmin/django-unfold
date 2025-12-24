@@ -6,7 +6,9 @@ from django.contrib.admin.views.main import ERROR_FLAG, PAGE_VAR
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpRequest, JsonResponse
+from django.views import View
 from django.views.generic import ListView
+from django.views.generic.base import ContextMixin
 
 from unfold.exceptions import UnfoldException
 from unfold.forms import DatasetChangeListSearchForm
@@ -33,8 +35,8 @@ class DatasetChangeList(ChangeList):
             request.GET, search_var=self.search_var
         )
         if not _search_form.is_valid():
-            for error in _search_form.errors.values():
-                messages.error(request, ", ".join(error))
+            for error_list in _search_form.errors.values():
+                messages.error(request, ", ".join(str(e) for e in error_list))
 
         self.dataset_search_query = _search_form.cleaned_data.get(self.search_var) or ""
 
@@ -53,7 +55,7 @@ class DatasetChangeList(ChangeList):
         return super().get_queryset(request, exclude_parameters)
 
 
-class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
+class UnfoldModelAdminViewMixin(ContextMixin, View, PermissionRequiredMixin):
     """
     Prepares views to be displayed in admin
     """

@@ -35,6 +35,7 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 [dependency-groups]
 dev = [
     "django-money>=3.5",
+    "django-stubs>=5.2.8",
     "pytest>=8.4",
     "pytest-django>=4.11",
     "pytest-factoryboy>=2.8",
@@ -78,6 +79,12 @@ ignore = [
     "B905", # zip() without strict=True
     "C901", # too complex
 ]
+
+[tool.ty.src]
+include = ["src/unfold"] # TODO: include tests
+
+[tool.ty.rules]
+possibly-missing-attribute = "ignore" # TODO: remove once all errors are fixed
 
 [tool.semantic_release]
 tag_format = "{version}"
