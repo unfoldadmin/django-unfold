@@ -23,7 +23,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from unfold.checks import UnfoldModelAdminChecks
-from unfold.datasets import BaseDataset
 from unfold.forms import (
     ActionForm,
     PaginationGenericInlineFormSet,
@@ -67,7 +66,6 @@ class ModelAdmin(
     change_form_after_template = None
     change_form_outer_before_template = None
     change_form_outer_after_template = None
-    change_form_datasets = ()
     compressed_fields = False
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
@@ -212,7 +210,7 @@ class ModelAdmin(
             return redirect(request.GET["next"])
         return res
 
-    def get_changelist(self, request: HttpRequest, **kwargs: Any) -> ChangeList:
+    def get_changelist(self, request: HttpRequest, **kwargs: Any) -> type[ChangeList]:
         return ChangeList
 
     def get_formset_kwargs(
@@ -225,9 +223,6 @@ class ModelAdmin(
             formset_kwargs["per_page"] = inline.per_page
 
         return formset_kwargs
-
-    def get_changeform_datasets(self, request: HttpRequest) -> list[type[BaseDataset]]:
-        return self.change_form_datasets
 
 
 class BaseInlineMixin:

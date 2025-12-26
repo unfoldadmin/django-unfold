@@ -1,13 +1,13 @@
 from functools import partial
 from typing import Any
 
-from django import forms
+from django.contrib.admin.options import InlineModelAdmin
 from django.contrib.admin.utils import NestedObjects, flatten_fieldsets
 from django.core.exceptions import ValidationError
 from django.db import router
 from django.db.models import Model
 from django.forms.formsets import DELETION_FIELD_NAME
-from django.forms.models import modelform_defines_fields
+from django.forms.models import ALL_FIELDS, modelform_defines_fields
 from django.http import HttpRequest
 from django.utils.text import get_text_list
 from django.utils.translation import gettext_lazy as _
@@ -23,7 +23,7 @@ from unfold.contrib.inlines.forms import (
 )
 
 
-class NonrelatedInlineMixin:
+class NonrelatedInlineMixin(InlineModelAdmin):
     checks_class = NonrelatedModelAdminChecks
     formset = NonrelatedInlineModelFormSet
 
@@ -134,7 +134,7 @@ class NonrelatedInlineMixin:
         if defaults["fields"] is None and not modelform_defines_fields(
             defaults["form"]
         ):
-            defaults["fields"] = forms.ALL_FIELDS
+            defaults["fields"] = ALL_FIELDS
 
         return defaults
 

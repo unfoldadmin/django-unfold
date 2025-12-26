@@ -231,7 +231,7 @@ class UnfoldAdminSite(AdminSite):
                         SearchResult(
                             title=str(item),
                             description=f"{item._meta.app_label.capitalize()} - {item._meta.verbose_name.capitalize()}",
-                            link=link,
+                            link=str(link),
                             icon="data_object",
                         )
                     )
@@ -240,7 +240,7 @@ class UnfoldAdminSite(AdminSite):
 
     def search(
         self, request: HttpRequest, extra_context: dict[str, Any] | None = None
-    ) -> TemplateResponse:
+    ) -> TemplateResponse | HttpResponse:
         start_time = time.time()
 
         CACHE_TIMEOUT = 5 * 60
@@ -320,7 +320,7 @@ class UnfoldAdminSite(AdminSite):
 
     def password_change(
         self, request: HttpRequest, extra_context: dict[str, Any] | None = None
-    ) -> HttpResponse:
+    ) -> TemplateResponse:
         from django.contrib.auth.views import PasswordChangeView
 
         from unfold.forms import AdminOwnPasswordChangeForm
@@ -569,35 +569,51 @@ class UnfoldAdminSite(AdminSite):
 
     def _get_favicons(self, key: str, *args) -> list[Favicon]:
         favicons = self._get_config(key, *args)
+        results = []
 
         if not favicons:
             return []
 
-        return [
-            Favicon(
-                href=self._get_value(item["href"], *args),
-                rel=item.get("rel"),
-                sizes=item.get("sizes"),
-                type=item.get("type"),
-            )
-            for item in favicons
-        ]
+        for item in favicons:
+            href = self._get_value(item["href"], *args)
 
-    def _get_site_dropdown_items(self, key: str, *args) -> list[dict[str, Any]]:
+            if not href:
+                continue
+
+            results.append(
+                Favicon(
+                    href=href,
+                    rel=item.get("rel"),
+                    sizes=item.get("sizes"),
+                    type=item.get("type"),
+                )
+            )
+
+        return results
+
+    def _get_site_dropdown_items(self, key: str, *args) -> list[DropdownItem]:
+        results = []
         items = self._get_config(key, *args)
 
         if not items:
-            return []
+            return results
 
-        return [
-            DropdownItem(
-                title=item.get("title"),
-                link=self._get_value(item["link"], *args),
-                icon=item.get("icon"),
-                attrs=item.get("attrs"),
+        for item in items:
+            link = self._get_value(item["link"], *args)
+
+            if not link:
+                continue
+
+            results.append(
+                DropdownItem(
+                    title=item.get("title"),
+                    link=link,
+                    icon=item.get("icon"),
+                    attrs=item.get("attrs"),
+                )
             )
-            for item in items
-        ]
+
+        return results
 
     def _get_value(self, value: str | Callable | None, *args: Any) -> str | None:
         if value is None:

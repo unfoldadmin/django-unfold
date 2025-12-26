@@ -1,13 +1,17 @@
 from typing import Any
 
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+from django.db.models import Model
 from django.http import HttpRequest
 from django.template.loader import render_to_string
 
 from unfold.views import DatasetChangeList
 
 
-class BaseDataset:
+class BaseDataset(ModelAdmin):
+    model: type[Model]
+    model_admin: type[ModelAdmin]
     tab = False
 
     def __init__(
@@ -19,7 +23,7 @@ class BaseDataset:
         self.model_admin_instance = self.model_admin(
             model=self.model, admin_site=admin.site
         )
-        self.model_admin_instance.extra_context = self.extra_context
+        self.model_admin_instance.extra_context = self.extra_context  # ty:ignore[unresolved-attribute]
 
     @property
     def contents(self) -> str:
@@ -82,9 +86,12 @@ class BaseDataset:
         return self.__class__.__name__
 
     @property
-    def model_name(self) -> str:
+    def model_name(self) -> str | None:
         return self.model._meta.model_name
 
     @property
-    def model_verbose_name(self) -> str:
-        return self.model._meta.verbose_name_plural
+    def model_verbose_name(self) -> str | None:
+        if self.model._meta.verbose_name_plural is None:
+            return None
+
+        return str(self.model._meta.verbose_name_plural)

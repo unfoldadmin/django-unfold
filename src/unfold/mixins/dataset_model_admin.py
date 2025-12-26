@@ -1,20 +1,26 @@
 from typing import Any
 
-from django.contrib.admin import helpers
+from django.contrib.admin import ModelAdmin, helpers
 from django.contrib.admin.views import main
 from django.contrib.admin.views.main import IGNORED_PARAMS
-from django.http import HttpRequest
-from django.template.response import TemplateResponse
+from django.http import HttpRequest, HttpResponse
+
+from unfold.datasets import BaseDataset
 
 
-class DatasetModelAdminMixin:
+class DatasetModelAdminMixin(ModelAdmin):
+    change_form_datasets = []
+
+    def get_changeform_datasets(self, request: HttpRequest) -> list[type[BaseDataset]]:
+        return self.change_form_datasets
+
     def changeform_view(
         self,
         request: HttpRequest,
         object_id: str | None = None,
         form_url: str = "",
         extra_context: dict[str, Any] | None = None,
-    ) -> TemplateResponse:
+    ) -> HttpResponse:
         self.request = request
         extra_context = extra_context or {}
         datasets = self.get_changeform_datasets(request)
