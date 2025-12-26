@@ -2,9 +2,10 @@ import datetime
 from collections.abc import Generator
 from typing import Any
 
+from django.contrib.admin.options import IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
-    _coerce_field_name,
+    _coerce_field_name,  # ty:ignore[unresolved-import]
     admin_actions,
     result_hidden_fields,
 )
@@ -12,7 +13,6 @@ from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.contrib.admin.templatetags.base import InclusionAdminNode
 from django.contrib.admin.utils import label_for_field, lookup_field
 from django.contrib.admin.views.main import (
-    IS_POPUP_VAR,
     ORDER_VAR,
     PAGE_VAR,
     SEARCH_VAR,
@@ -21,7 +21,7 @@ from django.contrib.admin.views.main import (
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Model
-from django.forms import Form
+from django.forms import ModelForm
 from django.template import Library
 from django.template.base import Parser, Token
 from django.template.loader import render_to_string
@@ -41,10 +41,10 @@ from unfold.views import DatasetChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
 try:
-    from django.contrib.admin.views.main import IS_FACETS_VAR
+    from django.contrib.admin.options import IS_FACETS_VAR
 except ImportError:
     # TODO: remove once django 4.x is not supported
-    IS_FACETS_VAR = None
+    IS_FACETS_VAR: str | None = None
 
 register = Library()
 
@@ -370,7 +370,7 @@ class UnfoldResultList(ResultList):
     def __init__(
         self,
         instance: Model,
-        form: Form | None,
+        form: ModelForm | None,
         *items: Any,
     ) -> None:
         self.instance = instance

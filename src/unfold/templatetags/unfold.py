@@ -1,15 +1,16 @@
 import json
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Iterator, Mapping
 from typing import Any
 
 from django import template
 from django.contrib.admin.helpers import AdminForm, Fieldset
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
+from django.contrib.auth.models import AbstractUser
 from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import BoundField, CheckboxSelectMultiple, Field
+from django.forms import BoundField, CheckboxSelectMultiple
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
@@ -19,8 +20,8 @@ from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
-from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
+from unfold.fields import UnfoldAdminField
 from unfold.widgets import (
     UnfoldAdminMoneyWidget,
     UnfoldAdminSelect2Widget,
@@ -39,7 +40,7 @@ def _get_tabs_list(
     if page not in ["changeform", "changelist"]:
         page_id = page
 
-    for tab in context.get("tab_list", []):
+    for tab in context.get("tab_list", []) or []:
         if page_id:
             if tab.get("page") == page_id:
                 tabs_list = tab["items"]
@@ -96,15 +97,15 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
 
     # If the changeform is rendered and there are no custom tab navigation
     # specified, check for inlines to put into tabs
-    if page == "changeform" and len(data["tabs_list"]) == 0:
-        for inline in context.get("inline_admin_formsets", []):
+    if page == "changeform" and len(data["tabs_list"] or []) == 0:
+        for inline in context.get("inline_admin_formsets", []) or []:
             if opts and hasattr(inline.opts, "tab"):
                 inlines_list.append(inline)
 
         if len(inlines_list) > 0:
             data["inlines_list"] = inlines_list
 
-        for dataset in context.get("datasets", []):
+        for dataset in context.get("datasets", []) or []:
             if dataset and hasattr(dataset, "tab"):
                 datasets_list.append(dataset)
 
@@ -119,7 +120,7 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
 
 
 @register.simple_tag(name="render_section", takes_context=True)
-def render_section(context: Context, section_class, instance: Model) -> str:
+def render_section(context: RequestContext, section_class, instance: Model) -> str:
     return section_class(context.request, instance).render()
 
 
@@ -138,7 +139,7 @@ def class_name(value: Any) -> str:
 
 
 @register.filter
-def is_list(value: Any) -> str:
+def is_list(value: Any) -> bool:
     return isinstance(value, list)
 
 
@@ -164,7 +165,7 @@ def tabs(adminform: AdminForm) -> list[Fieldset]:
     result = []
 
     for fieldset in adminform:
-        if "tab" in fieldset.classes and fieldset.name:
+        if "tab" in fieldset.classes and getattr(fieldset, "name", None):
             result.append(fieldset)
 
     return result
@@ -186,7 +187,7 @@ class RenderComponentNode(template.Node):
         self.include_context = include_context
         super().__init__(*args, **kwargs)
 
-    def render(self, context: RequestContext) -> str:
+    def render(self, context: Context) -> str:
         values = {
             name: var.resolve(context) for name, var in self.extra_context.items()
         }
@@ -198,7 +199,7 @@ class RenderComponentNode(template.Node):
             ).get_context_data(**values)
 
         context_copy = context.new()
-        context_copy.update(context.flatten())
+        context_copy.update(dict(context.flatten()))
         context_copy.update(values)
         children = self.nodelist.render(context_copy)
 
@@ -212,15 +213,19 @@ class RenderComponentNode(template.Node):
         if self.include_context:
             values.update(context.flatten())
 
+        request = None
+        if hasattr(context, "request") and isinstance(context.request, HttpRequest):
+            request = context.request
+
         return render_to_string(
             self.template_name,
-            request=context.request if hasattr(context, "request") else None,
+            request=request,
             context=values,
         )
 
 
 @register.tag("component")
-def do_component(parser: Parser, token: Token) -> str:
+def do_component(parser: Parser, token: Token) -> RenderComponentNode:
     bits = token.split_contents()
 
     if len(bits) < 2:
@@ -264,7 +269,7 @@ def do_component(parser: Parser, token: Token) -> str:
 
 
 @register.filter
-def add_css_class(field: Field, classes: list | tuple) -> Field:
+def add_css_class(field: BoundField, classes: list | tuple) -> BoundField:
     if type(classes) in (list, tuple):
         classes = " ".join(classes)
 
@@ -303,7 +308,12 @@ def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
 
 @register.simple_tag(takes_context=True)
 def element_classes(context: Context, key: str) -> str:
-    if key in context.get("element_classes", {}):
+    element_classes = context.get("element_classes", {})
+
+    if not isinstance(element_classes, dict):
+        return ""
+
+    if key in element_classes:
         if isinstance(context["element_classes"][key], list | tuple):
             return " ".join(context["element_classes"][key])
 
@@ -341,7 +351,7 @@ def fieldset_row_classes(context: Context) -> str:
     ]
 
     formset = context.get("inline_admin_formset", None)
-    line = context.get("line")
+    line = context.get("line") or []
 
     # Hide the field in case of ordering field for sorting
     for field in line:
@@ -410,7 +420,7 @@ def fieldset_line_classes(context: Context) -> str:
 
 
 @register.simple_tag(takes_context=True)
-def action_item_classes(context: Context, action: UnfoldAction) -> str:
+def action_item_classes(context: RequestContext, action: dict) -> str:
     classes = [
         "border",
         "border-base-200",
@@ -511,7 +521,7 @@ def changeform_data(adminform: AdminForm) -> str:
 
 
 @register.filter
-def changeform_condition(field: BoundField) -> BoundField:
+def changeform_condition(field: UnfoldAdminField) -> UnfoldAdminField:
     if isinstance(field.field, dict):
         return field
 
@@ -541,12 +551,16 @@ def changeform_condition(field: BoundField) -> BoundField:
 
 
 @register.simple_tag
-def infinite_paginator_url(cl, i):
-    return cl.get_query_string({PAGE_VAR: i})
+def infinite_paginator_url(cl: ChangeList, i: int) -> str:
+    return cl.get_query_string(
+        {
+            PAGE_VAR: i,
+        }
+    )
 
 
 @register.simple_tag
-def elided_page_range(paginator: Paginator, number: int) -> list[int | str] | None:
+def elided_page_range(paginator: Paginator, number: int) -> Iterator[int | str] | None:
     if not paginator or not number:
         return None
 
@@ -573,14 +587,16 @@ def querystring_params(
 
 
 @register.simple_tag(name="unfold_querystring", takes_context=True)
-def unfold_querystring(context, *args, **kwargs):
+def unfold_querystring(context: RequestContext, *args: Any, **kwargs: Any) -> str:
     """
     Duplicated querystring template tag from Django core to allow
     it using in Django 4.x. Once 4.x is not supported, remove it.
     """
     if not args:
-        args = [context.request.GET]
+        args = (context.request.GET,)
+
     params = QueryDict(mutable=True)
+
     for d in [*args, kwargs]:
         if not isinstance(d, Mapping):
             raise TemplateSyntaxError(
@@ -723,9 +739,11 @@ def header_title(context: RequestContext) -> str:
         )
 
     if len(parts) == 0:
-        username = (
-            context.request.user.get_short_name() or context.request.user.get_username()
-        )
+        username = context.request.user.get_username()
+
+        if isinstance(context.request.user, AbstractUser):
+            username = context.request.user.get_short_name()
+
         parts.append({"title": f"{_('Welcome')} {username}"})
 
     return render_to_string(
@@ -761,7 +779,7 @@ class RenderCaptureNode(Node):
         self.variable_name = variable_name
         self.silent = silent
 
-    def render(self, context: dict[str, Any]) -> str | SafeText:
+    def render(self, context: Context) -> str | SafeText:
         content = self.nodelist.render(context)
 
         if not self.silent:

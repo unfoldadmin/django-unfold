@@ -19,12 +19,17 @@ try:
     from djmoney.models.fields import MoneyField
     from djmoney.money import Money
 except ImportError:
-    MoneyField = None
-    Money = None
+    MoneyField: Any = None
+    Money: Any = None
 
 
-def _boolean_icon(field_val: Any) -> str:
-    return render_to_string("unfold/helpers/boolean.html", {"value": field_val})
+def _boolean_icon(field_val: bool) -> str:
+    return render_to_string(
+        "unfold/helpers/boolean.html",
+        {
+            "value": field_val,
+        },
+    )
 
 
 def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
@@ -93,7 +98,7 @@ def display_for_value(
     elif isinstance(value, bool):
         return str(value)
     elif isinstance(value, datetime.datetime):
-        return formats.localize(timezone.template_localtime(value))
+        return formats.localize(timezone.template_localtime(value))  # ty:ignore[unresolved-attribute]
     elif isinstance(value, datetime.date | datetime.time):
         return formats.localize(value)
     elif Money is not None and isinstance(value, Money):
@@ -120,7 +125,7 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
     elif value is None or value == "":
         return empty_value_display
     elif isinstance(field, models.DateTimeField):
-        return formats.localize(timezone.template_localtime(value))
+        return formats.localize(timezone.template_localtime(value))  # ty:ignore[unresolved-attribute]
     elif isinstance(field, models.DateField | models.TimeField):
         return formats.localize(value)
     elif MoneyField is not None and isinstance(field, MoneyField):
@@ -143,19 +148,20 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
 def prettify_json(data: Any, encoder: Any) -> str | None:
     try:
         from pygments import highlight
-        from pygments.formatters import HtmlFormatter
-        from pygments.lexers import JsonLexer
+        from pygments.formatters import get_formatter_by_name
+        from pygments.lexers import get_lexer_by_name
     except ImportError:
         return None
 
     def format_response(response: str, theme: str) -> str:
-        formatter = HtmlFormatter(
+        formatter = get_formatter_by_name(
+            "html",
             style=theme,
             noclasses=True,
             nobackground=True,
             prestyles="white-space: pre-wrap; word-wrap: break-word;",
         )
-        return highlight(response, JsonLexer(), formatter)
+        return highlight(response, get_lexer_by_name("json"), formatter)
 
     response = json.dumps(data, sort_keys=True, indent=4, cls=encoder)
 
@@ -188,7 +194,7 @@ def hex_to_rgb(hex_color: str) -> list[int]:
     g = int(hex_color[2:4], 16)
     b = int(hex_color[4:6], 16)
 
-    return (r, g, b)
+    return [r, g, b]
 
 
 def hex_to_values(value: str) -> str:
