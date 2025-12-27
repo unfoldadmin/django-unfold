@@ -30,6 +30,7 @@ dependencies = ["django>=4.2"]
 Homepage = "https://unfoldadmin.com"
 Documentation = "https://unfoldadmin.com/docs/"
 Repository = "https://github.com/unfoldadmin/django-unfold"
+Issues = "https://github.com/unfoldadmin/django-unfold/issues"
 Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md"
 
 [dependency-groups]
