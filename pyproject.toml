@@ -38,6 +38,7 @@ dev = [
     "django-money>=3.5",
     "django-stubs>=5.2",
     "pytest>=9.0",
+    "pytest-cov>=7.0.0",
     "pytest-django>=4.11",
     "pytest-factoryboy>=2.8",
     "python-semantic-release>=10.5",
@@ -102,10 +103,19 @@ upload_to_vcs_release = false
 addopts = """\
     --strict-config
     --strict-markers
+    --cov=unfold
+    --cov-fail-under=61.50
+    --cov-report=term-missing
     --ds=example.settings
     """
 pythonpath = "tests/server"
 django_find_project = false
+
+[tool.coverage.paths]
+source = [
+  "src/unfold",
+  "*/site-packages/unfold",
+]
 
 [tool.tox]
 legacy_tox_ini = """
