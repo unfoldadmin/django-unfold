@@ -1,4 +1,4 @@
-from collections.abc import Generator
+from collections.abc import Generator, Iterator
 from typing import Any
 
 from django.contrib.admin.views.main import ChangeList
@@ -129,24 +129,22 @@ class RangeNumericMixin:
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
-        return (
-            {
-                "request": self.request,
-                "parameter_name": self.parameter_name,
-                "form": RangeNumericForm(
-                    name=self.parameter_name,
-                    data={
-                        self.parameter_name + "_from": self.used_parameters.get(
-                            self.parameter_name + "_from", None
-                        ),
-                        self.parameter_name + "_to": self.used_parameters.get(
-                            self.parameter_name + "_to", None
-                        ),
-                    },
-                ),
-            },
-        )
+    def choices(self, changelist: ChangeList) -> Iterator:
+        yield {
+            "request": self.request,
+            "parameter_name": self.parameter_name,
+            "form": RangeNumericForm(
+                name=self.parameter_name,
+                data={
+                    self.parameter_name + "_from": self.used_parameters.get(
+                        self.parameter_name + "_from", None
+                    ),
+                    self.parameter_name + "_to": self.used_parameters.get(
+                        self.parameter_name + "_to", None
+                    ),
+                },
+            ),
+        }
 
 
 class AutocompleteMixin:

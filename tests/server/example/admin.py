@@ -2,15 +2,24 @@ from django.contrib import admin, messages
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
+from django.core.validators import EMPTY_VALUES
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
+from example.models import ActionUser, FilterUser, SectionUser, Tag, User
 from unfold.admin import ModelAdmin, StackedInline
+from unfold.contrib.filters.admin import (
+    FieldTextFilter,
+    RangeNumericFilter,
+    RangeNumericListFilter,
+    SingleNumericFilter,
+    SliderNumericFilter,
+    TextFilter,
+)
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
-
-from .models import ActionUser, SectionUser, Tag, User
 
 admin.site.unregister(Group)
 
@@ -49,6 +58,57 @@ class SectionUserAdmin(UserAdmin):
     list_sections = [
         SomeTemplateSection,
         RelatedTableSection,
+    ]
+
+
+class CustomTextFilter(TextFilter):
+    title = _("Text filter")
+    parameter_name = "text_username"
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(username__icontains=self.value())
+
+        return queryset
+
+
+class CustomRangeNumericListFilter(RangeNumericListFilter):
+    parameter_name = "numeric_range_custom"
+    title = "Numeric Range Custom"
+
+
+class CustomSliderNumericFilter(SliderNumericFilter):
+    MAX_DECIMALS = 2
+    STEP = 1
+
+
+@admin.register(FilterUser)
+class FilterUserAdmin(UserAdmin):
+    list_filter = [
+        CustomTextFilter,
+        ("username", FieldTextFilter),
+        ("numeric_single", SingleNumericFilter),
+        ("numeric_slider", SliderNumericFilter),
+        ("numeric_slider_custom", CustomSliderNumericFilter),
+        ("numeric_range", RangeNumericFilter),
+        CustomRangeNumericListFilter,
+    ]
+    list_filter_submit = True
+    list_filter_sheet = False
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": (
+                    "username",
+                    "numeric_single",
+                    "numeric_slider",
+                    "numeric_slider_custom",
+                    "numeric_range",
+                    "numeric_range_custom",
+                ),
+            },
+        ),
     ]
 
 

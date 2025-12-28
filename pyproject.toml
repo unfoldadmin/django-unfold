@@ -108,12 +108,16 @@ addopts = """\
     --strict-config
     --strict-markers
     --cov=unfold
-    --cov-fail-under=61.50
+    --cov-fail-under=64.50
     --cov-report=term-missing
     --ds=example.settings
     """
 pythonpath = "tests/server"
 django_find_project = false
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
 
 [tool.coverage.paths]
 source = [
