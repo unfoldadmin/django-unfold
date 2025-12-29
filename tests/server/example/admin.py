@@ -25,6 +25,8 @@ from unfold.contrib.filters.admin import (
     ChoicesRadioFilter,
     FieldTextFilter,
     RadioFilter,
+    RangeDateFilter,
+    RangeDateTimeFilter,
     RangeNumericFilter,
     RangeNumericListFilter,
     RelatedCheckboxFilter,
@@ -127,6 +129,7 @@ class CustomApprovalCheckboxFilter(CheckboxFilter):
 
 @admin.register(FilterUser)
 class FilterUserAdmin(UserAdmin):
+    list_fullwidth = True
     list_display = [
         "username",
         "email",
@@ -135,18 +138,23 @@ class FilterUserAdmin(UserAdmin):
         "is_active",
         "status",
         "approval",
+        "date_joined",
+        "last_login",
     ]
     list_filter = [
         CustomTextFilter,
         ("username", FieldTextFilter),
+        # Date/time filters
+        ("date_joined", RangeDateFilter),
+        ("last_login", RangeDateTimeFilter),
         # Choice filters
-        CustomStatusRadioFilter,
-        CustomApprovalCheckboxFilter,
         ("status", ChoicesRadioFilter),
         ("approval", ChoicesCheckboxFilter),
         ("is_active", BooleanRadioFilter),
         ("tags", RelatedCheckboxFilter),
         ("username", AllValuesCheckboxFilter),
+        CustomStatusRadioFilter,
+        CustomApprovalCheckboxFilter,
         # Numeric filters
         ("numeric_single", SingleNumericFilter),
         ("numeric_slider", SliderNumericFilter),

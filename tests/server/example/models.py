@@ -17,9 +17,6 @@ class ApprovalChoices(models.TextChoices):
 
 
 class User(AbstractUser):
-    numeric_wrong_type = models.CharField(
-        _("Numeric Wrong Type"), null=True, blank=True
-    )
     numeric_single = models.FloatField(_("Numeric Single"), null=True, blank=True)
     numeric_range = models.FloatField(_("Numeric Range"), null=True, blank=True)
     numeric_slider = models.FloatField(_("Numeric Slider"), null=True, blank=True)
