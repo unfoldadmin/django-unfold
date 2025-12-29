@@ -273,6 +273,15 @@ wheels = [
 ]
 
 [[package]]
+name = "diff-match-patch"
+version = "20241021"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/0e/ad/32e1777dd57d8e85fa31e3a243af66c538245b8d64b7265bec9a61f2ca33/diff_match_patch-20241021.tar.gz", hash = "sha256:beae57a99fa48084532935ee2968b8661db861862ec82c6f21f4acdd6d835073", size = 39962, upload-time = "2024-10-21T19:41:21.094Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f7/bb/2aa9b46a01197398b901e458974c20ed107935c26e44e37ad5b0e5511e44/diff_match_patch-20241021-py3-none-any.whl", hash = "sha256:93cea333fb8b2bc0d181b0de5e16df50dd344ce64828226bda07728818936782", size = 43252, upload-time = "2024-10-21T19:41:19.914Z" },
+]
+
+[[package]]
 name = "distlib"
 version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -296,6 +305,50 @@ wheels = [
 ]
 
 [[package]]
+name = "django-constance"
+version = "4.3.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/88/c7/ce27c5aac4f3283e88e4d8a5d6f8743c4952bccc56c7c474e2b08ef1ad36/django_constance-4.3.4.tar.gz", hash = "sha256:30d1b325f636177c708cce63abbde7015593f5c60b2bc0b0e2eebe8c36e2ce59", size = 175428, upload-time = "2025-11-12T10:43:01.098Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/82/f0/bd5d63ad23ca97ff3445c11c6cf2dbeb52336bbecb7c4692cc9d75a24c92/django_constance-4.3.4-py3-none-any.whl", hash = "sha256:598f8c967a675fe2c7fe3688510ac8302e1b6df2141d01b8d29577532a8241db", size = 64411, upload-time = "2025-11-12T10:42:59.198Z" },
+]
+
+[[package]]
+name = "django-guardian"
+version = "3.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e2/f9/bcff6a931298b9eb55e1550b55ab964fab747f594ba6d2d81cbe19736c5f/django_guardian-3.2.0.tar.gz", hash = "sha256:9e18ecd2e211b665972690c2d03d27bce0ea4932b5efac24a4bb9d526950a69e", size = 99940, upload-time = "2025-09-16T10:35:53.609Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2f/23/63a7d868373a73d25c4a5c2dd3cce3aaeb22fbee82560d42b6e93ba01403/django_guardian-3.2.0-py3-none-any.whl", hash = "sha256:0768565a057988a93fc4a1d93649c4a794abfd7473a8408a079cfbf83c559d77", size = 134674, upload-time = "2025-09-16T10:35:51.69Z" },
+]
+
+[[package]]
+name = "django-import-export"
+version = "4.3.14"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "diff-match-patch" },
+    { name = "django" },
+    { name = "tablib" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b3/d7/0d7b0c26b1c665c6f462a418620d853328aeabbfe8b8d2a4decbcb58a398/django_import_export-4.3.14.tar.gz", hash = "sha256:224c7d909fec607378bc58271db38b9c6065982306aa644d26a529fcde64869e", size = 2234935, upload-time = "2025-11-13T10:06:45.793Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fa/11/cfd39f4c920a22c1f5954323e6d31834d11f097632c28e963f17d47a8d60/django_import_export-4.3.14-py3-none-any.whl", hash = "sha256:ce6484fa082a1cdb2bf4e0b60276d3e2a7f39f74c20ae663b2f8eebb54141a58", size = 156085, upload-time = "2025-11-13T10:06:43.903Z" },
+]
+
+[[package]]
+name = "django-location-field"
+version = "2.7.3"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cd/c3/37c545104c47d97331392a81f3765a2820cf69a0e3b362b2f4fdf250adc1/django_location_field-2.7.3-py2.py3-none-any.whl", hash = "sha256:b0660d3fd024541fbe53ef723e3b02ec4014fbc886ee3d8342e031f1ab28d11d", size = 920952, upload-time = "2023-11-21T14:20:59.132Z" },
+]
+
+[[package]]
 name = "django-money"
 version = "3.5.4"
 source = { registry = "https://pypi.org/simple" }
@@ -307,6 +360,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/4b/7c/b3c5154e1927a74239d99c4997396d232595c68da6b7c34cfdf8b2a1b9cf/django_money-3.5.4.tar.gz", hash = "sha256:25933ed6177f8dc981114db813c7c5d36c7c89bc4017f2b1b2bb0209b5f68876", size = 42629, upload-time = "2025-04-17T10:22:56.332Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/42/12/5fc531d267d8a8add794985b60c1ec0b6516eab1b4907ec9d82f1076ea0c/django_money-3.5.4-py3-none-any.whl", hash = "sha256:628b3afb6671edc2cbd26743d858c31d3b99a735357f7acb6a399ab3ab008d2b", size = 36085, upload-time = "2025-04-17T10:22:54.58Z" },
+]
+
+[[package]]
+name = "django-simple-history"
+version = "3.11.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a8/11/410049f1454b99a78f719d3403fc89437c2a38ee092e939d5ab8d4846738/django_simple_history-3.11.0.tar.gz", hash = "sha256:2c587479cf2c3071e9aa555d0d11b73676994db4910770958f57659ade2deffe", size = 234862, upload-time = "2025-12-11T13:50:55.022Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6e/c2/e9854a3438cfc80891ab4d3826b7c61a0fe5ba3a4da89104a8f5c9afb5df/django_simple_history-3.11.0-py3-none-any.whl", hash = "sha256:f3c298db49e418ffce7fb709a5e83108452ea2179ec5c4b9232484c25427192a", size = 81868, upload-time = "2025-12-11T13:50:53.71Z" },
 ]
 
 [[package]]
@@ -348,7 +413,12 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "django-constance" },
+    { name = "django-guardian" },
+    { name = "django-import-export" },
+    { name = "django-location-field" },
     { name = "django-money" },
+    { name = "django-simple-history" },
     { name = "django-stubs" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -363,7 +433,12 @@ requires-dist = [{ name = "django", specifier = ">=4.2" }]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "django-constance", specifier = ">=4.3.4" },
+    { name = "django-guardian", specifier = ">=3.2.0" },
+    { name = "django-import-export", specifier = ">=4.3.14" },
+    { name = "django-location-field", specifier = ">=2.7.3" },
     { name = "django-money", specifier = ">=3.5" },
+    { name = "django-simple-history", specifier = ">=3.11.0" },
     { name = "django-stubs", specifier = ">=5.2" },
     { name = "pytest", specifier = ">=9.0" },
     { name = "pytest-cov", specifier = ">=7.0.0" },
@@ -963,6 +1038,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/e5/40/edede8dd6977b0d3da179a342c198ed100dd2aba4be081861ee5911e4da4/sqlparse-0.5.3.tar.gz", hash = "sha256:09f67787f56a0b16ecdbde1bfc7f5d9c3371ca683cfeaa8e6ff60b4807ec9272", size = 84999, upload-time = "2024-12-10T12:05:30.728Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a9/5c/bfd6bd0bf979426d405cc6e71eceb8701b148b16c21d2dc3c261efc61c7b/sqlparse-0.5.3-py3-none-any.whl", hash = "sha256:cf2196ed3418f3ba5de6af7e82c694a9fbdbfecccdfc72e281548517081f16ca", size = 44415, upload-time = "2024-12-10T12:05:27.824Z" },
+]
+
+[[package]]
+name = "tablib"
+version = "3.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/11/00/416d2ba54d7d58a7f7c61bf62dfeb48fd553cf49614daf83312f2d2c156e/tablib-3.9.0.tar.gz", hash = "sha256:1b6abd8edb0f35601e04c6161d79660fdcde4abb4a54f66cc9f9054bd55d5fe2", size = 125565, upload-time = "2025-10-15T18:21:56.263Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/66/6b/32e51d847148b299088fc42d3d896845fd09c5247190133ea69dbe71ba51/tablib-3.9.0-py3-none-any.whl", hash = "sha256:eda17cd0d4dda614efc0e710227654c60ddbeb1ca92cdcfc5c3bd1fc5f5a6e4a", size = 49580, upload-time = "2025-10-15T18:21:44.185Z" },
 ]
 
 [[package]]

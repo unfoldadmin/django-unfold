@@ -39,7 +39,12 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 
 [dependency-groups]
 dev = [
+    "django-constance>=4.3.4",
+    "django-guardian>=3.2.0",
+    "django-import-export>=4.3.14",
+    "django-location-field>=2.7.3",
     "django-money>=3.5",
+    "django-simple-history>=3.11.0",
     "django-stubs>=5.2",
     "pytest>=9.0",
     "pytest-cov>=7.0.0",
@@ -108,8 +113,10 @@ addopts = """\
     --strict-config
     --strict-markers
     --cov=unfold
-    --cov-fail-under=64.50
+    --cov-fail-under=68
     --cov-report=term-missing
+    --reuse-db
+    --no-migrations
     --ds=example.settings
     """
 pythonpath = "tests/server"
@@ -124,6 +131,12 @@ source = [
   "src/unfold",
   "*/site-packages/unfold",
 ]
+
+[tool.ty.src]
+include = ["src/unfold"] # TODO: include tests
+
+[tool.ty.rules]
+possibly-missing-attribute = "ignore" # TODO: remove once all errors are fixed
 
 [tool.tox]
 legacy_tox_ini = """

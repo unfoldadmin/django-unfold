@@ -3,6 +3,19 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+class StatusChoices(models.TextChoices):
+    ACTIVE = "active", _("Active")
+    INACTIVE = "inactive", _("Inactive")
+    PENDING = "pending", _("Pending")
+
+
+class ApprovalChoices(models.TextChoices):
+    NEW = "new", _("New")
+    REVIEWED = "reviewed", _("Reviewed")
+    APPROVED = "approved", _("Approved")
+    REJECTED = "rejected", _("Rejected")
+
+
 class User(AbstractUser):
     numeric_wrong_type = models.CharField(
         _("Numeric Wrong Type"), null=True, blank=True
@@ -20,6 +33,23 @@ class User(AbstractUser):
         "contenttypes.ContentType", on_delete=models.CASCADE, null=True, blank=True
     )
     tags = models.ManyToManyField("Tag", blank=True)
+
+    status = models.CharField(
+        _("Status"),
+        max_length=20,
+        choices=StatusChoices.choices,
+        default=StatusChoices.ACTIVE,
+        blank=True,
+        null=True,
+    )
+    approval = models.CharField(
+        _("Approval"),
+        max_length=20,
+        choices=ApprovalChoices.choices,
+        default=ApprovalChoices.NEW,
+        blank=True,
+        null=True,
+    )
 
 
 class SectionUser(User):

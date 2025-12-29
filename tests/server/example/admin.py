@@ -7,12 +7,27 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from example.models import ActionUser, FilterUser, SectionUser, Tag, User
+from example.models import (
+    ActionUser,
+    ApprovalChoices,
+    FilterUser,
+    SectionUser,
+    StatusChoices,
+    Tag,
+    User,
+)
 from unfold.admin import ModelAdmin, StackedInline
 from unfold.contrib.filters.admin import (
+    AllValuesCheckboxFilter,
+    BooleanRadioFilter,
+    CheckboxFilter,
+    ChoicesCheckboxFilter,
+    ChoicesRadioFilter,
     FieldTextFilter,
+    RadioFilter,
     RangeNumericFilter,
     RangeNumericListFilter,
+    RelatedCheckboxFilter,
     SingleNumericFilter,
     SliderNumericFilter,
     TextFilter,
@@ -82,11 +97,57 @@ class CustomSliderNumericFilter(SliderNumericFilter):
     STEP = 1
 
 
+class CustomStatusRadioFilter(RadioFilter):
+    title = _("Custom radio filter")
+    parameter_name = "custom_radio_filter"
+
+    def lookups(self, request, model_admin):
+        return StatusChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(status=self.value())
+
+        return queryset
+
+
+class CustomApprovalCheckboxFilter(CheckboxFilter):
+    title = _("Custom checkbox filter")
+    parameter_name = "custom_checkbox_filter"
+
+    def lookups(self, request, model_admin):
+        return ApprovalChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(approval__in=self.value())
+
+        return queryset
+
+
 @admin.register(FilterUser)
 class FilterUserAdmin(UserAdmin):
+    list_display = [
+        "username",
+        "email",
+        "is_active",
+        "is_staff",
+        "is_active",
+        "status",
+        "approval",
+    ]
     list_filter = [
         CustomTextFilter,
         ("username", FieldTextFilter),
+        # Choice filters
+        CustomStatusRadioFilter,
+        CustomApprovalCheckboxFilter,
+        ("status", ChoicesRadioFilter),
+        ("approval", ChoicesCheckboxFilter),
+        ("is_active", BooleanRadioFilter),
+        ("tags", RelatedCheckboxFilter),
+        ("username", AllValuesCheckboxFilter),
+        # Numeric filters
         ("numeric_single", SingleNumericFilter),
         ("numeric_slider", SliderNumericFilter),
         ("numeric_slider_custom", CustomSliderNumericFilter),
@@ -101,6 +162,8 @@ class FilterUserAdmin(UserAdmin):
             {
                 "fields": (
                     "username",
+                    "status",
+                    "approval",
                     "numeric_single",
                     "numeric_slider",
                     "numeric_slider_custom",
