@@ -1,12 +1,16 @@
+from datetime import timedelta
 from http import HTTPStatus
 
 import pytest
 from django.contrib.admin.templatetags.admin_list import admin_list_filter
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 from example.models import ApprovalChoices, StatusChoices, Tag
 
 from unfold.contrib.filters.admin import (
+    RangeDateFilter,
+    RangeDateTimeFilter,
     RangeNumericFilter,
     SingleNumericFilter,
     SliderNumericFilter,
@@ -15,6 +19,190 @@ from unfold.contrib.filters.admin.autocomplete_filters import (
     AutocompleteSelectFilter,
     AutocompleteSelectMultipleFilter,
 )
+
+
+########################################################
+# Date/time filters
+########################################################
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "date_from, date_to, expected, not_expected",
+    [
+        [
+            "wrong_value",
+            now().date() - timedelta(days=1),
+            ["sample1@example.com"],
+            [],
+        ],
+        [
+            now().date() - timedelta(days=2),
+            now().date() - timedelta(days=1),
+            [],
+            ["sample1@example.com"],
+        ],
+        [
+            now().date() - timedelta(days=1),
+            now().date() + timedelta(days=1),
+            ["sample1@example.com"],
+            [],
+        ],
+        [
+            now().date() + timedelta(days=1),
+            now().date() + timedelta(days=2),
+            [],
+            ["sample1@example.com"],
+        ],
+        [
+            now().date() - timedelta(days=2),
+            None,
+            ["sample1@example.com"],
+            [],
+        ],
+        [
+            None,
+            now().date() + timedelta(days=2),
+            ["sample1@example.com"],
+            [],
+        ],
+    ],
+)
+def test_filters_date(
+    admin_client, user_factory, date_from, date_to, expected, not_expected
+):
+    user_factory.create(username="sample1@example.com", date_joined=now())
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={
+            "date_joined_from": date_from if date_from else "",
+            "date_joined_to": date_to if date_to else "",
+        },
+    )
+    assert response.status_code == HTTPStatus.OK
+
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "date_from, date_to, expected, not_expected",
+    [
+        [
+            {
+                "date": "2024-01-01",
+                "time": "12:00:00",
+            },
+            None,
+            ["sample1@example.com"],
+            [],
+        ],
+        [
+            "wrong_value",
+            now() + timedelta(days=1),
+            ["sample1@example.com"],
+            [],
+        ],
+        [
+            now() - timedelta(days=2),
+            now() - timedelta(days=1),
+            [],
+            ["sample1@example.com"],
+        ],
+        [
+            now() - timedelta(days=1),
+            now() + timedelta(days=1),
+            ["sample1@example.com"],
+            [],
+        ],
+        [
+            now() + timedelta(days=1),
+            now() + timedelta(days=2),
+            [],
+            ["sample1@example.com"],
+        ],
+        [
+            now() - timedelta(days=2),
+            None,
+            ["sample1@example.com"],
+            [],
+        ],
+        [
+            None,
+            now() + timedelta(days=2),
+            ["sample1@example.com"],
+            [],
+        ],
+    ],
+)
+def test_filters_datetime(
+    admin_client, user_factory, date_from, date_to, expected, not_expected
+):
+    user_factory.create(username="sample1@example.com", last_login=now())
+
+    if date_from is None:
+        from_0 = ""
+        from_1 = ""
+    elif isinstance(date_from, dict):
+        from_0 = date_from["date"]
+        from_1 = date_from["time"]
+    elif isinstance(date_from, str):
+        from_0 = date_from
+        from_1 = date_from
+    else:
+        from_0 = date_from.date()
+        from_1 = date_from.time()
+
+    if date_to is None:
+        to_0 = ""
+        to_1 = ""
+    elif isinstance(date_to, dict):
+        to_0 = date_to["date"]
+        to_1 = date_to["time"]
+    elif isinstance(date_to, str):
+        to_0 = date_to
+        to_1 = date_to
+    else:
+        to_0 = date_to.date()
+        to_1 = date_to.time()
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={
+            "last_login_from_0": from_0,
+            "last_login_from_1": from_1,
+            "last_login_to_0": to_0,
+            "last_login_to_1": to_1,
+        },
+    )
+    assert response.status_code == HTTPStatus.OK
+
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "filter_class",
+    [RangeDateFilter, RangeDateTimeFilter],
+)
+def test_filters_datetime_wrong_type(admin_request, user_model_admin, filter_class):
+    with pytest.raises(TypeError) as excinfo:
+        filter_class(
+            request=admin_request,
+            params={"date_wrong_type": ""},
+            model=get_user_model(),
+            model_admin=user_model_admin,
+            field=get_user_model()._meta.get_field("username"),
+            field_path="username",
+        )
+    assert "is not supported for" in str(excinfo.value)
 
 
 ########################################################
@@ -428,8 +616,8 @@ def test_filters_numeric_wrong_type(admin_request, user_model_admin, filter_clas
             params={"numeric_wrong_type": ""},
             model=get_user_model(),
             model_admin=user_model_admin,
-            field=get_user_model()._meta.get_field("numeric_wrong_type"),
-            field_path="numeric_wrong_type",
+            field=get_user_model()._meta.get_field("username"),
+            field_path="username",
         )
     assert "is not supported for" in str(excinfo.value)
 

@@ -1,22 +1,15 @@
-from typing import Any
+from collections.abc import Iterator
 
 from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.views.main import ChangeList
 from django.core.validators import EMPTY_VALUES
 from django.db.models import Model, QuerySet
-from django.db.models.fields import (
-    DateField,
-    DateTimeField,
-    Field,
-)
+from django.db.models.fields import DateField, DateTimeField, Field
 from django.forms import ValidationError
 from django.http import HttpRequest
 
-from unfold.contrib.filters.forms import (
-    RangeDateForm,
-    RangeDateTimeForm,
-)
+from unfold.contrib.filters.forms import RangeDateForm, RangeDateTimeForm
 from unfold.utils import parse_date_str, parse_datetime_str
 
 
@@ -59,46 +52,44 @@ class RangeDateFilter(admin.FieldListFilter):
             if value not in EMPTY_VALUES:
                 self.used_parameters[self.field_path + "_to"] = value
 
-    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
         filters = {}
 
-        value_from = self.used_parameters.get(self.parameter_name + "_from")
-        if value_from not in EMPTY_VALUES:
-            filters.update({self.parameter_name + "__gte": parse_date_str(value_from)})
+        value_from = self.used_parameters.get(f"{self.parameter_name}_from")
+        if value_from not in EMPTY_VALUES and isinstance(value_from, str):
+            filters.update({f"{self.parameter_name}__gte": parse_date_str(value_from)})
 
-        value_to = self.used_parameters.get(self.parameter_name + "_to")
-        if value_to not in EMPTY_VALUES:
-            filters.update({self.parameter_name + "__lte": parse_date_str(value_to)})
+        value_to = self.used_parameters.get(f"{self.parameter_name}_to")
+        if value_to not in EMPTY_VALUES and isinstance(value_to, str):
+            filters.update({f"{self.parameter_name}__lte": parse_date_str(value_to)})
 
         try:
             return queryset.filter(**filters)
         except (ValueError, ValidationError):
             return None
 
-    def expected_parameters(self) -> list[str]:
+    def expected_parameters(self) -> list[str | None]:
         return [
             f"{self.parameter_name}_from",
             f"{self.parameter_name}_to",
         ]
 
-    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
-        return (
-            {
-                "request": self.request,
-                "parameter_name": self.parameter_name,
-                "form": self.form_class(
-                    name=self.parameter_name,
-                    data={
-                        self.parameter_name + "_from": self.used_parameters.get(
-                            self.parameter_name + "_from", None
-                        ),
-                        self.parameter_name + "_to": self.used_parameters.get(
-                            self.parameter_name + "_to", None
-                        ),
-                    },
-                ),
-            },
-        )
+    def choices(self, changelist: ChangeList) -> Iterator:
+        yield {
+            "request": self.request,
+            "parameter_name": self.parameter_name,
+            "form": self.form_class(
+                name=self.parameter_name,
+                data={
+                    f"{self.parameter_name}_from": self.used_parameters.get(
+                        f"{self.parameter_name}_from", None
+                    ),
+                    f"{self.parameter_name}_to": self.used_parameters.get(
+                        f"{self.parameter_name}_to", None
+                    ),
+                },
+            ),
+        }
 
 
 class RangeDateTimeFilter(admin.FieldListFilter):
@@ -146,7 +137,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             value = value[0] if isinstance(value, list) else value
             self.used_parameters[self.field_path + "_to_1"] = value
 
-    def expected_parameters(self) -> list[str]:
+    def expected_parameters(self) -> list[str | None]:
         return [
             f"{self.parameter_name}_from_0",
             f"{self.parameter_name}_from_1",
@@ -154,14 +145,14 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             f"{self.parameter_name}_to_1",
         ]
 
-    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
         filters = {}
 
-        date_value_from = self.used_parameters.get(self.parameter_name + "_from_0")
-        time_value_from = self.used_parameters.get(self.parameter_name + "_from_1")
+        date_value_from = self.used_parameters.get(f"{self.parameter_name}_from_0")
+        time_value_from = self.used_parameters.get(f"{self.parameter_name}_from_1")
 
-        date_value_to = self.used_parameters.get(self.parameter_name + "_to_0")
-        time_value_to = self.used_parameters.get(self.parameter_name + "_to_1")
+        date_value_to = self.used_parameters.get(f"{self.parameter_name}_to_0")
+        time_value_to = self.used_parameters.get(f"{self.parameter_name}_to_1")
 
         if date_value_from not in EMPTY_VALUES and time_value_from not in EMPTY_VALUES:
             filters.update(
@@ -186,27 +177,25 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         except (ValueError, ValidationError):
             return None
 
-    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
-        return (
-            {
-                "request": self.request,
-                "parameter_name": self.parameter_name,
-                "form": self.form_class(
-                    name=self.parameter_name,
-                    data={
-                        self.parameter_name + "_from_0": self.used_parameters.get(
-                            self.parameter_name + "_from_0"
-                        ),
-                        self.parameter_name + "_from_1": self.used_parameters.get(
-                            self.parameter_name + "_from_1"
-                        ),
-                        self.parameter_name + "_to_0": self.used_parameters.get(
-                            self.parameter_name + "_to_0"
-                        ),
-                        self.parameter_name + "_to_1": self.used_parameters.get(
-                            self.parameter_name + "_to_1"
-                        ),
-                    },
-                ),
-            },
-        )
+    def choices(self, changelist: ChangeList) -> Iterator:
+        yield {
+            "request": self.request,
+            "parameter_name": self.parameter_name,
+            "form": self.form_class(
+                name=self.parameter_name,
+                data={
+                    f"{self.parameter_name}_from_0": self.used_parameters.get(
+                        f"{self.parameter_name}_from_0"
+                    ),
+                    f"{self.parameter_name}_from_1": self.used_parameters.get(
+                        f"{self.parameter_name}_from_1"
+                    ),
+                    f"{self.parameter_name}_to_0": self.used_parameters.get(
+                        f"{self.parameter_name}_to_0"
+                    ),
+                    f"{self.parameter_name}_to_1": self.used_parameters.get(
+                        f"{self.parameter_name}_to_1"
+                    ),
+                },
+            ),
+        }
