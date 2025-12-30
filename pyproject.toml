@@ -113,7 +113,7 @@ addopts = """\
     --strict-config
     --strict-markers
     --cov=unfold
-    --cov-fail-under=72
+    --cov-fail-under=73.5
     --cov-report=term-missing
     --reuse-db
     --no-migrations
@@ -137,6 +137,7 @@ include = ["src/unfold"] # TODO: include tests
 
 [tool.ty.rules]
 possibly-missing-attribute = "ignore" # TODO: remove once all errors are fixed
+too-many-positional-arguments = "ignore"
 
 [tool.tox]
 legacy_tox_ini = """
