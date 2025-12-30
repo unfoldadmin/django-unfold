@@ -2,11 +2,20 @@ from datetime import timedelta
 from http import HTTPStatus
 
 import pytest
-from django.contrib.admin.templatetags.admin_list import admin_list_filter
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.utils.timezone import now
-from example.models import ApprovalChoices, StatusChoices, Tag
+from example.models import (
+    ApprovalChoices,
+    Category,
+    ColorChoices,
+    Label,
+    PriorityChoices,
+    Project,
+    StatusChoices,
+    Tag,
+    Task,
+)
 
 from unfold.contrib.filters.admin import (
     RangeDateFilter,
@@ -15,10 +24,191 @@ from unfold.contrib.filters.admin import (
     SingleNumericFilter,
     SliderNumericFilter,
 )
-from unfold.contrib.filters.admin.autocomplete_filters import (
-    AutocompleteSelectFilter,
-    AutocompleteSelectMultipleFilter,
+
+
+########################################################
+# Dropdown filters
+########################################################
+@pytest.mark.django_db
+@pytest.mark.parametrize("param", ["priority__exact", "custom_priority"])
+@pytest.mark.parametrize(
+    "value, expected, not_expected",
+    [
+        [PriorityChoices.LOW, ["sample1@example.com"], ["sample2@example.com"]],
+        [PriorityChoices.HIGH, ["sample2@example.com"], ["sample1@example.com"]],
+        [PriorityChoices.MEDIUM, [], ["sample1@example.com", "sample2@example.com"]],
+    ],
 )
+def test_filters_dropdown_choices(
+    admin_client, user_factory, param, value, expected, not_expected
+):
+    user_factory.create(username="sample1@example.com", priority=PriorityChoices.LOW)
+    user_factory.create(username="sample2@example.com", priority=PriorityChoices.HIGH)
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={param: value},
+    )
+    assert response.status_code == HTTPStatus.OK
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("param", ["color__exact", "custom_color"])
+@pytest.mark.parametrize(
+    "value, expected, not_expected",
+    [
+        [ColorChoices.RED, ["sample1@example.com"], ["sample2@example.com"]],
+        [ColorChoices.BLUE, ["sample2@example.com"], ["sample1@example.com"]],
+        [
+            [ColorChoices.RED, ColorChoices.BLUE],
+            ["sample1@example.com", "sample2@example.com"],
+            [],
+        ],
+    ],
+)
+def test_filters_multiple_dropdown_choices(
+    admin_client, user_factory, param, value, expected, not_expected
+):
+    user_factory.create(username="sample1@example.com", color=ColorChoices.RED)
+    user_factory.create(username="sample2@example.com", color=ColorChoices.BLUE)
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={param: value},
+    )
+    assert response.status_code == HTTPStatus.OK
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("facet", [True, False])
+@pytest.mark.parametrize(
+    "param, value, expected, not_expected",
+    [
+        [
+            "categories__exact",
+            "category1",
+            ["sample1@example.com"],
+            ["sample2@example.com"],
+        ],
+        [
+            "categories__exact",
+            "category2",
+            ["sample2@example.com"],
+            ["sample1@example.com"],
+        ],
+        [
+            "categories__exact",
+            "category3",
+            [],
+            ["sample1@example.com", "sample2@example.com"],
+        ],
+    ],
+)
+def test_filters_related_dropdown_choices(
+    admin_client,
+    user_factory,
+    category_factory,
+    facet,
+    param,
+    value,
+    expected,
+    not_expected,
+):
+    category1 = category_factory.create(name="category1")
+    category2 = category_factory.create(name="category2")
+    category_factory.create(name="category3")
+
+    user_factory.create(username="sample1@example.com").categories.add(category1)
+    user_factory.create(username="sample2@example.com").categories.add(category2)
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={
+            param: Category.objects.get(name=value).pk,
+            **({"_facets": "True"} if facet else {}),
+        },
+    )
+    assert response.status_code == HTTPStatus.OK
+
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("facet", [True, False])
+@pytest.mark.parametrize(
+    "param, value, expected, not_expected",
+    [
+        [
+            "labels__exact",
+            ["label1"],
+            ["sample1@example.com"],
+            ["sample2@example.com"],
+        ],
+        [
+            "labels__exact",
+            ["label2"],
+            ["sample2@example.com"],
+            ["sample1@example.com"],
+        ],
+        [
+            "labels__exact",
+            ["label1", "label2"],
+            ["sample1@example.com", "sample2@example.com"],
+            [],
+        ],
+        [
+            "labels__exact",
+            ["label3"],
+            [],
+            ["sample1@example.com", "sample2@example.com"],
+        ],
+    ],
+)
+def test_filters_multiple_related_dropdown_choices(
+    admin_client,
+    user_factory,
+    label_factory,
+    facet,
+    param,
+    value,
+    expected,
+    not_expected,
+):
+    label1 = label_factory.create(name="label1")
+    label2 = label_factory.create(name="label2")
+    label_factory.create(name="label3")
+
+    user_factory.create(username="sample1@example.com").labels.add(label1)
+    user_factory.create(username="sample2@example.com").labels.add(label2)
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={
+            param: [Label.objects.get(name=label_name).pk for label_name in value],
+            **({"_facets": "True"} if facet else {}),
+        },
+    )
+    assert response.status_code == HTTPStatus.OK
+
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()
 
 
 ########################################################
@@ -513,6 +703,13 @@ def test_filters_numeric_single(
 @pytest.mark.parametrize(
     "param, value_min, value_max, expected, not_expected",
     [
+        (
+            "numeric_range",
+            "wrong_value",
+            11,
+            ["sample1@example.com", "sample2@example.com"],
+            [],
+        ),
         ("numeric_range", 9, 11, ["sample1@example.com"], ["sample2@example.com"]),
         ("numeric_range", 19, 21, ["sample2@example.com"], ["sample1@example.com"]),
         ("numeric_range", 10, 20, ["sample1@example.com", "sample2@example.com"], []),
@@ -697,36 +894,105 @@ def test_filters_fieldtext_filter(admin_client, user_factory):
 # Autocomplete filters
 ########################################################
 @pytest.mark.django_db
-def test_filters_autocomplete_select_multiple_filter(
-    admin_request, user_model_admin, user_changelist
+@pytest.mark.parametrize(
+    "param, value, expected, not_expected",
+    [
+        (
+            "projects__id__exact",
+            "project1",
+            ["sample1@example.com"],
+            ["sample2@example.com"],
+        ),
+        (
+            "projects__id__exact",
+            "project2",
+            ["sample2@example.com"],
+            ["sample1@example.com"],
+        ),
+        (
+            "projects__id__exact",
+            "project3",
+            [],
+            ["sample1@example.com", "sample2@example.com"],
+        ),
+    ],
+)
+def test_filters_autocomplete_select_filter(
+    admin_client, user_factory, project_factory, param, value, expected, not_expected
 ):
-    user_model = get_user_model()
+    project1 = project_factory.create(name="project1")
+    project2 = project_factory.create(name="project2")
+    project_factory.create(name="project3")
 
-    filter = AutocompleteSelectMultipleFilter(
-        request=admin_request,
-        params={"content_type": "test"},
-        model=get_user_model(),
-        model_admin=user_model_admin,
-        field=user_model._meta.get_field("content_type"),
-        field_path="content_type",
+    user_factory.create(username="sample1@example.com").projects.add(project1)
+    user_factory.create(username="sample2@example.com").projects.add(project2)
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={
+            param: Project.objects.get(name=value).pk,
+        },
     )
 
-    assert "id_content_type__id__exact" in admin_list_filter(user_changelist, filter)
+    assert response.status_code == HTTPStatus.OK
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()
 
 
 @pytest.mark.django_db
-def test_filters_autocomplete_select_filter(
-    admin_request, user_model_admin, user_changelist
+@pytest.mark.parametrize(
+    "param, value, expected, not_expected",
+    [
+        (
+            "tasks__id__exact",
+            ["task1"],
+            ["sample1@example.com"],
+            ["sample2@example.com"],
+        ),
+        (
+            "tasks__id__exact",
+            ["task2"],
+            ["sample2@example.com"],
+            ["sample1@example.com"],
+        ),
+        (
+            "tasks__id__exact",
+            ["task1", "task2"],
+            ["sample1@example.com", "sample2@example.com"],
+            [],
+        ),
+        (
+            "tasks__id__exact",
+            ["task3"],
+            [],
+            ["sample1@example.com", "sample2@example.com"],
+        ),
+    ],
+)
+def test_filters_autocomplete_select_multiple_filter(
+    admin_client, user_factory, task_factory, param, value, expected, not_expected
 ):
-    user_model = get_user_model()
+    task1 = task_factory.create(name="task1")
+    task2 = task_factory.create(name="task2")
+    task_factory.create(name="task3")
 
-    filter = AutocompleteSelectFilter(
-        request=admin_request,
-        params={"content_type": "test"},
-        model=get_user_model(),
-        model_admin=user_model_admin,
-        field=user_model._meta.get_field("content_type"),
-        field_path="content_type",
+    user_factory.create(username="sample1@example.com").tasks.add(task1)
+    user_factory.create(username="sample2@example.com").tasks.add(task2)
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_filteruser_changelist"),
+        data={
+            param: [Task.objects.get(name=task_name).pk for task_name in value],
+        },
     )
 
-    assert "id_content_type__id__exact" in admin_list_filter(user_changelist, filter)
+    assert response.status_code == HTTPStatus.OK
+
+    for user in expected:
+        assert response.context_data["cl"].queryset.filter(username=user).exists()
+
+    for user in not_expected:
+        assert not response.context_data["cl"].queryset.filter(username=user).exists()

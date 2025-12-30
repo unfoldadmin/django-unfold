@@ -16,6 +16,19 @@ class ApprovalChoices(models.TextChoices):
     REJECTED = "rejected", _("Rejected")
 
 
+class ColorChoices(models.TextChoices):
+    RED = "red", _("Red")
+    BLUE = "blue", _("Blue")
+    GREEN = "green", _("Green")
+    YELLOW = "yellow", _("Yellow")
+
+
+class PriorityChoices(models.TextChoices):
+    LOW = "low", _("Low")
+    MEDIUM = "medium", _("Medium")
+    HIGH = "high", _("High")
+
+
 class User(AbstractUser):
     numeric_single = models.FloatField(_("Numeric Single"), null=True, blank=True)
     numeric_range = models.FloatField(_("Numeric Range"), null=True, blank=True)
@@ -30,6 +43,10 @@ class User(AbstractUser):
         "contenttypes.ContentType", on_delete=models.CASCADE, null=True, blank=True
     )
     tags = models.ManyToManyField("Tag", blank=True)
+    categories = models.ManyToManyField("Category", blank=True)
+    labels = models.ManyToManyField("Label", blank=True)
+    projects = models.ManyToManyField("Project", blank=True)
+    tasks = models.ManyToManyField("Task", blank=True)
 
     status = models.CharField(
         _("Status"),
@@ -44,6 +61,22 @@ class User(AbstractUser):
         max_length=20,
         choices=ApprovalChoices.choices,
         default=ApprovalChoices.NEW,
+        blank=True,
+        null=True,
+    )
+    priority = models.CharField(
+        _("Priority"),
+        max_length=20,
+        choices=PriorityChoices.choices,
+        default=PriorityChoices.MEDIUM,
+        blank=True,
+        null=True,
+    )
+    color = models.CharField(
+        _("Color"),
+        max_length=20,
+        choices=ColorChoices.choices,
+        default=ColorChoices.BLUE,
         blank=True,
         null=True,
     )
@@ -65,6 +98,34 @@ class FilterUser(User):
 
 
 class Tag(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Label(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Task(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):

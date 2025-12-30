@@ -10,26 +10,40 @@ from django.utils.translation import gettext_lazy as _
 from example.models import (
     ActionUser,
     ApprovalChoices,
+    Category,
+    ColorChoices,
     FilterUser,
+    Label,
+    PriorityChoices,
+    Project,
     SectionUser,
     StatusChoices,
     Tag,
+    Task,
     User,
 )
 from unfold.admin import ModelAdmin, StackedInline
 from unfold.contrib.filters.admin import (
     AllValuesCheckboxFilter,
+    AutocompleteSelectFilter,
+    AutocompleteSelectMultipleFilter,
     BooleanRadioFilter,
     CheckboxFilter,
     ChoicesCheckboxFilter,
+    ChoicesDropdownFilter,
     ChoicesRadioFilter,
+    DropdownFilter,
     FieldTextFilter,
+    MultipleChoicesDropdownFilter,
+    MultipleDropdownFilter,
+    MultipleRelatedDropdownFilter,
     RadioFilter,
     RangeDateFilter,
     RangeDateTimeFilter,
     RangeNumericFilter,
     RangeNumericListFilter,
     RelatedCheckboxFilter,
+    RelatedDropdownFilter,
     SingleNumericFilter,
     SliderNumericFilter,
     TextFilter,
@@ -127,6 +141,34 @@ class CustomApprovalCheckboxFilter(CheckboxFilter):
         return queryset
 
 
+class CustomPriorityDropdownFilter(DropdownFilter):
+    title = _("Custom priority dropdown filter")
+    parameter_name = "custom_priority"
+
+    def lookups(self, request, model_admin):
+        return PriorityChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(priority=self.value())
+
+        return queryset
+
+
+class CustomColorMultipleDropdownFilter(MultipleDropdownFilter):
+    title = _("Custom color multiple dropdown filter")
+    parameter_name = "custom_color"
+
+    def lookups(self, request, model_admin):
+        return ColorChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(color__in=self.value())
+
+        return queryset
+
+
 @admin.register(FilterUser)
 class FilterUserAdmin(UserAdmin):
     list_fullwidth = True
@@ -144,6 +186,16 @@ class FilterUserAdmin(UserAdmin):
     list_filter = [
         CustomTextFilter,
         ("username", FieldTextFilter),
+        # Autocomplete filters
+        ("projects", AutocompleteSelectFilter),
+        ("tasks", AutocompleteSelectMultipleFilter),
+        # Dropdown filters
+        ("priority", ChoicesDropdownFilter),
+        ("color", MultipleChoicesDropdownFilter),
+        ("categories", RelatedDropdownFilter),
+        ("labels", MultipleRelatedDropdownFilter),
+        CustomPriorityDropdownFilter,
+        CustomColorMultipleDropdownFilter,
         # Date/time filters
         ("date_joined", RangeDateFilter),
         ("last_login", RangeDateTimeFilter),
@@ -590,4 +642,24 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Category)
+class CategoryAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Label)
+class LabelAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Project)
+class ProjectAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Task)
+class TaskAdmin(ModelAdmin):
     search_fields = ["name"]

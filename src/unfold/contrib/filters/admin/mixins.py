@@ -1,4 +1,4 @@
-from collections.abc import Generator, Iterator
+from collections.abc import Iterator
 from typing import Any
 
 from django.contrib.admin.views.main import ChangeList
@@ -11,7 +11,6 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.forms import (
-    AutocompleteDropdownForm,
     DropdownForm,
     RangeNumericForm,
 )
@@ -54,7 +53,7 @@ class DropdownMixin:
 class ChoicesMixin:
     template = "unfold/filters/filters_field.html"
 
-    def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+    def choices(self, changelist: ChangeList) -> Iterator:
         add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
         choices = [self.all_option] if self.all_option else []
@@ -82,38 +81,38 @@ class RangeNumericMixin:
     template = "unfold/filters/filters_numeric_range.html"
 
     def init_used_parameters(self, params: dict[str, Any]) -> None:
-        if self.parameter_name + "_from" in params:
-            value = params.pop(self.parameter_name + "_from")
+        if f"{self.parameter_name}_from" in params:
+            value = params.pop(f"{self.parameter_name}_from")
 
-            self.used_parameters[self.parameter_name + "_from"] = (
+            self.used_parameters[f"{self.parameter_name}_from"] = (
                 value[0] if isinstance(value, list) else value
             )
 
-        if self.parameter_name + "_to" in params:
-            value = params.pop(self.parameter_name + "_to")
-            self.used_parameters[self.parameter_name + "_to"] = (
+        if f"{self.parameter_name}_to" in params:
+            value = params.pop(f"{self.parameter_name}_to")
+            self.used_parameters[f"{self.parameter_name}_to"] = (
                 value[0] if isinstance(value, list) else value
             )
 
     def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet:
         filters = {}
 
-        value_from = self.used_parameters.get(self.parameter_name + "_from", None)
+        value_from = self.used_parameters.get(f"{self.parameter_name}_from", None)
         if value_from is not None and value_from != "":
             filters.update(
                 {
-                    self.parameter_name + "__gte": self.used_parameters.get(
-                        self.parameter_name + "_from", None
+                    f"{self.parameter_name}__gte": self.used_parameters.get(
+                        f"{self.parameter_name}_from", None
                     ),
                 }
             )
 
-        value_to = self.used_parameters.get(self.parameter_name + "_to", None)
+        value_to = self.used_parameters.get(f"{self.parameter_name}_to", None)
         if value_to is not None and value_to != "":
             filters.update(
                 {
-                    self.parameter_name + "__lte": self.used_parameters.get(
-                        self.parameter_name + "_to", None
+                    f"{self.parameter_name}__lte": self.used_parameters.get(
+                        f"{self.parameter_name}_to", None
                     ),
                 }
             )
@@ -136,11 +135,11 @@ class RangeNumericMixin:
             "form": RangeNumericForm(
                 name=self.parameter_name,
                 data={
-                    self.parameter_name + "_from": self.used_parameters.get(
-                        self.parameter_name + "_from", None
+                    f"{self.parameter_name}_from": self.used_parameters.get(
+                        f"{self.parameter_name}_from", None
                     ),
-                    self.parameter_name + "_to": self.used_parameters.get(
-                        self.parameter_name + "_to", None
+                    f"{self.parameter_name}_to": self.used_parameters.get(
+                        f"{self.parameter_name}_to", None
                     ),
                 },
             ),
@@ -158,9 +157,7 @@ class AutocompleteMixin:
             ("", BLANK_CHOICE_DASH),
         ]
 
-    def choices(
-        self, changelist: ChangeList
-    ) -> Generator[dict[str, AutocompleteDropdownForm], None, None]:
+    def choices(self, changelist: ChangeList) -> Iterator:
         yield {
             "form": self.form_class(
                 request=self.request,
