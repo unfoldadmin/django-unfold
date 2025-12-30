@@ -2,12 +2,13 @@ from collections.abc import Iterator
 from typing import Any
 
 from django.contrib import admin
+from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.views.main import ChangeList
-from django.db.models import Field, Model
+from django.core.validators import EMPTY_VALUES
+from django.db.models import Field, Model, QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
-from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin.mixins import (
     DropdownMixin,
     MultiValueMixin,
@@ -69,6 +70,12 @@ class MultipleDropdownFilter(DropdownFilter):
 
 
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
+        if self.value() not in EMPTY_VALUES:
+            return super().queryset(request, queryset)
+
+        return queryset
+
     def choices(self, changelist: ChangeList) -> Iterator:
         add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
@@ -109,6 +116,12 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
         super().__init__(field, request, params, model, model_admin, field_path)
         self.model_admin = model_admin
         self.request = request
+
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
+        if self.value() not in EMPTY_VALUES:
+            return super().queryset(request, queryset)
+
+        return queryset
 
     def choices(self, changelist: ChangeList) -> Iterator:
         add_facets = getattr(changelist, "add_facets", False)
