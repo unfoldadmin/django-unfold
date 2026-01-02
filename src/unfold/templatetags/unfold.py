@@ -3,19 +3,19 @@ from collections.abc import Iterable, Mapping
 from typing import Any
 
 from django import template
-from django.contrib.admin.helpers import AdminForm, Fieldset
+from django.contrib.admin.helpers import AdminField, AdminForm, Fieldset
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import BoundField, CheckboxSelectMultiple, Field
+from django.forms import CheckboxSelectMultiple, Field
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.utils.safestring import SafeText, mark_safe
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
@@ -422,65 +422,51 @@ def action_item_classes(context: Context, action: UnfoldAction) -> str:
         "min-lg:last:rounded-r-default",
     ]
 
+    variant_classes = {
+        ActionVariant.PRIMARY: [
+            "border-primary-700",
+            "bg-primary-600",
+            "text-white",
+            "dark:border-primary-500",
+        ],
+        ActionVariant.DANGER: [
+            "border-red-700",
+            "bg-red-600",
+            "text-white",
+            "dark:border-red-500",
+        ],
+        ActionVariant.SUCCESS: [
+            "border-green-700",
+            "bg-green-600",
+            "text-white",
+            "dark:border-green-500",
+        ],
+        ActionVariant.INFO: [
+            "border-blue-700",
+            "bg-blue-600",
+            "text-white",
+            "dark:border-blue-500",
+        ],
+        ActionVariant.WARNING: [
+            "border-orange-700",
+            "bg-orange-600",
+            "text-white",
+            "dark:border-orange-500",
+        ],
+        ActionVariant.DEFAULT: [
+            "border-base-200",
+            "hover:text-primary-600",
+            "dark:hover:text-primary-500",
+            "dark:border-base-700",
+        ],
+    }
+
     if "variant" not in action:
         variant = ActionVariant.DEFAULT
     else:
         variant = action["variant"]
 
-    if variant == ActionVariant.PRIMARY:
-        classes.extend(
-            [
-                "border-primary-700",
-                "bg-primary-600",
-                "text-white",
-                "dark:border-primary-500",
-            ]
-        )
-    elif variant == ActionVariant.DANGER:
-        classes.extend(
-            [
-                "border-red-700",
-                "bg-red-600",
-                "text-white",
-                "dark:border-red-500",
-            ]
-        )
-    elif variant == ActionVariant.SUCCESS:
-        classes.extend(
-            [
-                "border-green-700",
-                "bg-green-600",
-                "text-white",
-                "dark:border-green-500",
-            ]
-        )
-    elif variant == ActionVariant.INFO:
-        classes.extend(
-            [
-                "border-blue-700",
-                "bg-blue-600",
-                "text-white",
-                "dark:border-blue-500",
-            ]
-        )
-    elif variant == ActionVariant.WARNING:
-        classes.extend(
-            [
-                "border-orange-700",
-                "bg-orange-600",
-                "text-white",
-                "dark:border-orange-500",
-            ]
-        )
-    else:
-        classes.extend(
-            [
-                "border-base-200",
-                "hover:text-primary-600",
-                "dark:hover:text-primary-500",
-                "dark:border-base-700",
-            ]
-        )
+    classes.extend(variant_classes[variant])
 
     return " ".join(set(classes))
 
@@ -511,7 +497,7 @@ def changeform_data(adminform: AdminForm) -> str:
 
 
 @register.filter
-def changeform_condition(field: BoundField) -> BoundField:
+def changeform_condition(field: AdminField) -> AdminField:
     if isinstance(field.field, dict):
         return field
 
@@ -546,11 +532,9 @@ def infinite_paginator_url(cl, i):
 
 
 @register.simple_tag
-def elided_page_range(paginator: Paginator, number: int) -> list[int | str] | None:
-    if not paginator or not number:
-        return None
-
-    return paginator.get_elided_page_range(number=number)
+def elided_page_range(paginator: Paginator, number: int) -> Iterable[int | str] | None:
+    if paginator and number:
+        return paginator.get_elided_page_range(number=number)
 
 
 @register.simple_tag(takes_context=True)
@@ -576,7 +560,8 @@ def querystring_params(
 def unfold_querystring(context, *args, **kwargs):
     """
     Duplicated querystring template tag from Django core to allow
-    it using in Django 4.x. Once 4.x is not supported, remove it.
+    it using in Django 4.x.
+    TODO: Once 4.x is not supported, remove it.
     """
     if not args:
         args = [context.request.GET]
@@ -606,7 +591,7 @@ def unfold_querystring(context, *args, **kwargs):
 @register.simple_tag(takes_context=True)
 def header_title(context: RequestContext) -> str:
     parts = []
-    opts = context.get("opts")
+    opts: Options | None = context.get("opts")
     current_app = (
         context.request.current_app
         if hasattr(context.request, "current_app")
@@ -723,9 +708,12 @@ def header_title(context: RequestContext) -> str:
         )
 
     if len(parts) == 0:
-        username = (
-            context.request.user.get_short_name() or context.request.user.get_username()
-        )
+        user = context.request.user
+        username = user.get_username()
+
+        if hasattr(user, "get_short_name") and callable(user.get_short_name):
+            username = user.get_short_name() or user.get_username()
+
         parts.append({"title": f"{_('Welcome')} {username}"})
 
     return render_to_string(
@@ -748,20 +736,13 @@ def admin_object_app_url(context: RequestContext, object: Model, arg: str) -> st
     return f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_{arg}"
 
 
-@register.filter
-def has_nested_tables(table: dict) -> bool:
-    return any(
-        isinstance(row, dict) and "table" in row for row in table.get("rows", [])
-    )
-
-
 class RenderCaptureNode(Node):
     def __init__(self, nodelist: NodeList, variable_name: str, silent: bool) -> None:
         self.nodelist = nodelist
         self.variable_name = variable_name
         self.silent = silent
 
-    def render(self, context: dict[str, Any]) -> str | SafeText:
+    def render(self, context: Context) -> str:
         content = self.nodelist.render(context)
 
         if not self.silent:
