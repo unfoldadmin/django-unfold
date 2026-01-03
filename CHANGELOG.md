@@ -1,6 +1,29 @@
 # CHANGELOG
 
 
+## v0.75.0 (2026-01-02)
+
+### Bug Fixes
+
+- Navigation user template for custom users models
+  ([#1748](https://github.com/unfoldadmin/django-unfold/pull/1748),
+  [`4f7423a`](https://github.com/unfoldadmin/django-unfold/commit/4f7423a75ee3094eeba8d61438c25b94098f421d))
+
+- Version path ([#1770](https://github.com/unfoldadmin/django-unfold/pull/1770),
+  [`822ab60`](https://github.com/unfoldadmin/django-unfold/commit/822ab601f37213e5e1ecfaf67698dae46a7d147b))
+
+### Features
+
+- Button relative class ([#1749](https://github.com/unfoldadmin/django-unfold/pull/1749),
+  [`b7189f6`](https://github.com/unfoldadmin/django-unfold/commit/b7189f6054f9c701fa512f71e3adbbe2c07d87ea))
+
+- Messages extra class ([#1750](https://github.com/unfoldadmin/django-unfold/pull/1750),
+  [`446b44e`](https://github.com/unfoldadmin/django-unfold/commit/446b44e517288c8a05f3d38b71a5b2d3404e4dd5))
+
+- Poetry -> uv ([#1754](https://github.com/unfoldadmin/django-unfold/pull/1754),
+  [`fb59b19`](https://github.com/unfoldadmin/django-unfold/commit/fb59b193782405b4f1c39307976cf65e516670a1))
+
+
 ## v0.74.1 (2025-12-15)
 
 ### Bug Fixes
