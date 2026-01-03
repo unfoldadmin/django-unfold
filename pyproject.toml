@@ -113,7 +113,7 @@ addopts = """\
     --strict-config
     --strict-markers
     --cov=unfold
-    --cov-fail-under=73.5
+    --cov-fail-under=75
     --cov-report=term-missing
     --reuse-db
     --no-migrations
