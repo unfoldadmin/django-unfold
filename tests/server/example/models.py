@@ -130,3 +130,12 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    weight = models.PositiveIntegerField(_("weight"), default=0, db_index=True)
+
+    def __str__(self):
+        return self.title

@@ -9,18 +9,19 @@ from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import CheckboxSelectMultiple, Field
+from django.forms import BoundField, CheckboxSelectMultiple
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
-from unfold.dataclasses import UnfoldAction
 from unfold.enums import ActionVariant
+from unfold.sections import BaseSection
 from unfold.widgets import (
     UnfoldAdminMoneyWidget,
     UnfoldAdminSelect2Widget,
@@ -89,7 +90,6 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
     inlines_list = []
     datasets_list = []
     data = {
-        "actions_items": context.get("actions_items"),
         "is_popup": context.get("is_popup"),
         "tabs_list": _get_tabs_list(context, page, opts),
     }
@@ -119,12 +119,26 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
 
 
 @register.simple_tag(name="render_section", takes_context=True)
-def render_section(context: Context, section_class, instance: Model) -> str:
-    return section_class(context.request, instance).render()
+def render_section(
+    context: RequestContext, section_class: type[BaseSection] | str, instance: Model
+) -> str:
+    if isinstance(section_class, str):
+        section_class: type[BaseSection] = import_string(section_class)
+
+    return section_class(context.get("request"), instance).render()
 
 
 @register.simple_tag(name="has_nav_item_active")
 def has_nav_item_active(items: list) -> bool:
+    for item in items:
+        if "active" in item and item["active"]:
+            return True
+
+    return False
+
+
+@register.filter
+def has_active_item(items: list[dict]) -> bool:
     for item in items:
         if "active" in item and item["active"]:
             return True
@@ -138,17 +152,8 @@ def class_name(value: Any) -> str:
 
 
 @register.filter
-def is_list(value: Any) -> str:
+def is_list(value: Any) -> bool:
     return isinstance(value, list)
-
-
-@register.filter
-def has_active_item(items: list[dict]) -> bool:
-    for item in items:
-        if "active" in item and item["active"]:
-            return True
-
-    return False
 
 
 @register.filter
@@ -220,7 +225,7 @@ class RenderComponentNode(template.Node):
 
 
 @register.tag("component")
-def do_component(parser: Parser, token: Token) -> str:
+def do_component(parser: Parser, token: Token) -> RenderComponentNode:
     bits = token.split_contents()
 
     if len(bits) < 2:
@@ -264,7 +269,7 @@ def do_component(parser: Parser, token: Token) -> str:
 
 
 @register.filter
-def add_css_class(field: Field, classes: list | tuple) -> Field:
+def add_css_class(field: BoundField, classes: list | tuple) -> BoundField:
     if type(classes) in (list, tuple):
         classes = " ".join(classes)
 
@@ -281,7 +286,7 @@ def add_css_class(field: Field, classes: list | tuple) -> Field:
     takes_context=True,
     name="preserve_filters",
 )
-def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
+def preserve_changelist_filters(context: RequestContext) -> dict[str, dict[str, str]]:
     """
     Generate hidden input fields to preserve filters for POST forms.
     """
@@ -302,7 +307,7 @@ def preserve_changelist_filters(context: Context) -> dict[str, dict[str, str]]:
 
 
 @register.simple_tag(takes_context=True)
-def element_classes(context: Context, key: str) -> str:
+def element_classes(context: RequestContext, key: str) -> str:
     if key in context.get("element_classes", {}):
         if isinstance(context["element_classes"][key], list | tuple):
             return " ".join(context["element_classes"][key])
@@ -313,8 +318,9 @@ def element_classes(context: Context, key: str) -> str:
 
 
 @register.simple_tag(takes_context=True)
-def fieldset_rows_classes(context: Context) -> str:
+def fieldset_rows_classes(context: RequestContext) -> str:
     classes = [
+        "form-rows",
         "aligned",
     ]
 
@@ -333,7 +339,7 @@ def fieldset_rows_classes(context: Context) -> str:
 
 
 @register.simple_tag(takes_context=True)
-def fieldset_row_classes(context: Context) -> str:
+def fieldset_row_classes(context: RequestContext) -> str:
     classes = [
         "form-row",
         "field-row",
@@ -368,7 +374,7 @@ def fieldset_row_classes(context: Context) -> str:
 
 
 @register.simple_tag(takes_context=True)
-def fieldset_line_classes(context: Context) -> str:
+def fieldset_line_classes(context: RequestContext) -> str:
     classes = [
         "field-line",
         "flex",
@@ -410,7 +416,7 @@ def fieldset_line_classes(context: Context) -> str:
 
 
 @register.simple_tag(takes_context=True)
-def action_item_classes(context: Context, action: UnfoldAction) -> str:
+def action_item_classes(context: RequestContext, action: dict) -> str:
     classes = [
         "border",
         "border-base-200",

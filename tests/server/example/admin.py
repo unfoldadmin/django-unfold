@@ -14,6 +14,7 @@ from example.models import (
     ColorChoices,
     FilterUser,
     Label,
+    Post,
     PriorityChoices,
     Project,
     SectionUser,
@@ -48,6 +49,7 @@ from unfold.contrib.filters.admin import (
     SliderNumericFilter,
     TextFilter,
 )
+from unfold.datasets import BaseDataset
 from unfold.decorators import action
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
@@ -59,6 +61,24 @@ class UserTagInline(StackedInline):
     model = User.tags.through
     per_page = 1
     collapsible = True
+    tab = True
+
+
+class PostInline(StackedInline):
+    model = Post
+    ordering_field = "weight"
+    hide_ordering_field = True
+    list_display = ["title", "weight"]
+
+
+class ProjectDatasetModelAdmin(ModelAdmin):
+    pass
+
+
+class ProjectDataset(BaseDataset):
+    model = Project
+    model_admin = ProjectDatasetModelAdmin
+    tab = True
 
 
 @admin.register(User)
@@ -66,7 +86,39 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    inlines = [UserTagInline]
+    inlines = [UserTagInline, PostInline]
+    change_form_datasets = [
+        ProjectDataset,
+    ]
+    compressed_fields = True
+    fieldsets = (
+        (None, {"fields": ("username", "password")}),
+        (
+            _("Personal info"),
+            {
+                "fields": (
+                    ("first_name", "last_name"),
+                    "email",
+                    (),
+                ),
+                "classes": ["tab"],
+            },
+        ),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+                "classes": ["tab"],
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
 
 
 class RelatedTableSection(TableSection):
@@ -75,6 +127,11 @@ class RelatedTableSection(TableSection):
     columns = [
         "object_id",
     ]
+
+
+class TagSection(TableSection):
+    related_name = "tags"
+    fields = ["name"]
 
 
 class SomeTemplateSection(TemplateSection):
