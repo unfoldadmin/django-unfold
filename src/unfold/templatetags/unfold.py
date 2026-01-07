@@ -98,14 +98,14 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
     # specified, check for inlines to put into tabs
     if page == "changeform" and len(data["tabs_list"]) == 0:
         for inline in context.get("inline_admin_formsets", []):
-            if opts and hasattr(inline.opts, "tab"):
+            if opts and getattr(inline.opts, "tab", False):
                 inlines_list.append(inline)
 
         if len(inlines_list) > 0:
             data["inlines_list"] = inlines_list
 
         for dataset in context.get("datasets", []):
-            if dataset and hasattr(dataset, "tab"):
+            if dataset and getattr(dataset, "tab", False):
                 datasets_list.append(dataset)
 
         if len(datasets_list) > 0:
