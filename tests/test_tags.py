@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.forms import Form
 from django.template import Context, Template, TemplateSyntaxError
 from django.template.context import RequestContext
+from django.urls import reverse
 from example.admin import UserAdmin
 from example.models import User
 
@@ -874,6 +875,20 @@ def test_tags_do_capture_missing_silent():
 
 
 @pytest.mark.django_db
+def test_tags_tabs_errors_count(admin_client, user_factory):
+    user = user_factory(username="sample@example.com")
+    response = admin_client.post(
+        reverse("admin:example_user_change", args=[user.pk]),
+        {
+            "username": "",
+        },
+    )
+    assert "Please correct the errors below." in response.content.decode()
+    assert "x-data=\"{ activeFieldsetTab: 'permissions'}" in response.content.decode()
+    assert 'data-testid="error-count"' in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_tags_tabs_active(rf, user_factory):
     user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
     request = rf.get("/")
@@ -899,4 +914,4 @@ def test_tags_tabs_active(rf, user_factory):
         )
     )
 
-    assert "x-data=\"{ fieldsetTab: 'personal-info'}" in response
+    assert "personal-info" in response

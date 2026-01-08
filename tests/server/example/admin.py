@@ -92,7 +92,15 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     ]
     compressed_fields = True
     fieldsets = (
-        (None, {"fields": ("username", "password")}),
+        (
+            None,
+            {
+                "fields": (
+                    # "username",
+                    "password",
+                )
+            },
+        ),
         (
             _("Personal info"),
             {
@@ -108,6 +116,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
             _("Permissions"),
             {
                 "fields": (
+                    "username",  # Test the error count tab
                     "is_active",
                     "is_staff",
                     "is_superuser",
