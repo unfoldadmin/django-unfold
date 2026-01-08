@@ -3,11 +3,11 @@
 {% with tabs=adminform|tabs %}
     {% if tabs %}
         {% with active_tab=tabs|tabs_active %}
-            <div class="{% fieldset_rows_classes %}" x-data="{ activeTab: '{{ active_tab }}'}">
+            <div class="{% fieldset_rows_classes %}" x-data="{ activeFieldsetTab: '{{ active_tab }}'}" x-show="activeTab == 'general'">
                 <div class="{% if adminform.model_admin.compressed_fields %}border-b border-base-200 border-dashed dark:border-base-800{% endif %}">
                     <nav class="bg-base-100 cursor-pointer flex flex-col font-medium gap-1 m-2 p-1 rounded-default text-important dark:border-base-700 md:inline-flex md:flex-row md:w-auto dark:bg-white/[.04] *:flex *:flex-row *:gap-1 *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:transition-colors *:hover:bg-base-700/[.04] *:dark:hover:bg-white/[.04] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:hover:bg-white [&>.active]:dark:bg-base-900 [&>.active]:dark:hover:bg-base-900">
                         {% for fieldset in tabs %}
-                            <a x-on:click="activeTab = '{{ fieldset.name|slugify }}'" x-bind:class="activeTab == '{{ fieldset.name|slugify }}' && 'active'">
+                            <a x-on:click="activeFieldsetTab = '{{ fieldset.name|slugify }}'" x-bind:class="activeFieldsetTab == '{{ fieldset.name|slugify }}' && 'active'">
                                 {{ fieldset.name }}
 
                                 {% with error_count=fieldset|tabs_errors_count %}
@@ -24,7 +24,7 @@
 
                 {% for fieldset in tabs %}
                     <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|slugify }}{% endif %}"
-                         x-show="activeTab == '{{ fieldset.name|slugify }}'">
+                         x-show="activeFieldsetTab == '{{ fieldset.name|slugify }}'">
                         {% include 'admin/includes/fieldset.html' with stacked=1 %}
                     </div>
                 {% endfor %}
