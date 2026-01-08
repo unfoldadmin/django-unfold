@@ -871,3 +871,32 @@ def test_tags_do_capture_missing_silent():
         Template(
             "{% load unfold %} {% capture as value WRONG_PARAM %}Hello world!{% endcapture %}"
         ).render(Context({}))
+
+
+@pytest.mark.django_db
+def test_tags_tabs_active(rf, user_factory):
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    user_admin = UserAdmin(User, UnfoldAdminSite())
+    changeform_view = user_admin.changeform_view(
+        request=request, object_id=str(user.pk)
+    )
+    context_data = (
+        changeform_view.context_data
+        if hasattr(changeform_view, "context_data")
+        else changeform_view.context
+    )
+
+    response = Template(
+        "{% load unfold %}{% with tabs=adminform|tabs %}{{ tabs|tabs_active }} {% endwith %}"
+    ).render(
+        Context(
+            {
+                "adminform": context_data["adminform"],
+            },
+        )
+    )
+
+    assert "x-data=\"{ fieldsetTab: 'personal-info'}" in response
