@@ -13,6 +13,7 @@ from django.forms import BoundField, CheckboxSelectMultiple
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
+from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.module_loading import import_string
@@ -98,14 +99,14 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
     # specified, check for inlines to put into tabs
     if page == "changeform" and len(data["tabs_list"]) == 0:
         for inline in context.get("inline_admin_formsets", []):
-            if opts and hasattr(inline.opts, "tab"):
+            if opts and getattr(inline.opts, "tab", False):
                 inlines_list.append(inline)
 
         if len(inlines_list) > 0:
             data["inlines_list"] = inlines_list
 
         for dataset in context.get("datasets", []):
-            if dataset and hasattr(dataset, "tab"):
+            if dataset and getattr(dataset, "tab", False):
                 datasets_list.append(dataset)
 
         if len(datasets_list) > 0:
@@ -787,3 +788,31 @@ def do_capture(parser: Parser, token: Token) -> RenderCaptureNode:
     nodelist = parser.parse(("endcapture",))
     parser.delete_first_token()
     return RenderCaptureNode(nodelist, variable_name, silent)
+
+
+@register.filter
+def tabs_active(fieldsets: list[Fieldset]) -> str:
+    active = ""
+
+    if len(fieldsets) > 0:
+        active = slugify(fieldsets[0].name)
+
+    for fieldset in fieldsets:
+        for field_line in fieldset:
+            for field in field_line:
+                if not field.is_readonly and field.errors():
+                    active = slugify(fieldset.name)
+
+    return active
+
+
+@register.filter
+def tabs_errors_count(fieldset: Fieldset) -> int:
+    count = 0
+
+    for field_line in fieldset:
+        for field in field_line:
+            if not field.is_readonly and field.errors():
+                count += 1
+
+    return count
