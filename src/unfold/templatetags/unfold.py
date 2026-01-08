@@ -13,6 +13,7 @@ from django.forms import BoundField, CheckboxSelectMultiple, Field
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
+from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.safestring import SafeText, mark_safe
@@ -800,3 +801,31 @@ def do_capture(parser: Parser, token: Token) -> RenderCaptureNode:
     nodelist = parser.parse(("endcapture",))
     parser.delete_first_token()
     return RenderCaptureNode(nodelist, variable_name, silent)
+
+
+@register.filter
+def tabs_active(fieldsets: list[Fieldset]) -> str:
+    active = ""
+
+    if len(fieldsets) > 0:
+        active = slugify(fieldsets[0].name)
+
+    for fieldset in fieldsets:
+        for field_line in fieldset:
+            for field in field_line:
+                if not field.is_readonly and field.errors():
+                    active = slugify(fieldset.name)
+
+    return active
+
+
+@register.filter
+def tabs_errors_count(fieldset: Fieldset) -> int:
+    count = 0
+
+    for field_line in fieldset:
+        for field in field_line:
+            if not field.is_readonly and field.errors():
+                count += 1
+
+    return count
