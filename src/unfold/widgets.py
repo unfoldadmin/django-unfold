@@ -395,8 +395,7 @@ class UnfoldAdminIntegerRangeWidget(MultiWidget):
     template_name = "unfold/widgets/range.html"
 
     def __init__(self, attrs: dict[str, Any] | None = None) -> None:
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*INPUT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -407,9 +406,7 @@ class UnfoldAdminIntegerRangeWidget(MultiWidget):
         super().__init__(_widgets, attrs)
 
     def decompress(self, value: str | None) -> tuple[Callable | None, ...]:
-        if value:
-            return value.lower, value.upper
-        return None, None
+        return (value.lower, value.upper) if value else (None, None)
 
 
 class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
@@ -690,8 +687,7 @@ class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
     template_name = "unfold/widgets/select.html"
 
     def __init__(self, attrs=None):
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -703,8 +699,7 @@ class UnfoldAdminSelectWidget(Select):
     template_name = "unfold/widgets/select.html"
 
     def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -714,11 +709,12 @@ class UnfoldAdminSelectWidget(Select):
 
 class UnfoldAdminSelect2Widget(Select):
     def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs["data-theme"] = "admin-autocomplete"
-        attrs["class"] = "unfold-admin-autocomplete"
+        attrs["class"] = " ".join(
+            ["unfold-admin-autocomplete", attrs.get("class", "") if attrs else ""]
+        )
 
         super().__init__(attrs, choices)
 
@@ -740,8 +736,7 @@ class UnfoldAdminSelect2Widget(Select):
 
 class UnfoldAdminSelectMultipleWidget(SelectMultiple):
     def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -751,11 +746,15 @@ class UnfoldAdminSelectMultipleWidget(SelectMultiple):
 
 class UnfoldAdminSelect2MultipleWidget(SelectMultiple):
     def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs["data-theme"] = "admin-autocomplete"
-        attrs["class"] = "unfold-admin-autocomplete admin-autocomplete"
+        attrs["class"] = " ".join(
+            [
+                "unfold-admin-autocomplete admin-autocomplete",
+                attrs.get("class", "") if attrs else "",
+            ]
+        )
 
         super().__init__(attrs, choices)
 
@@ -802,7 +801,9 @@ class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
         super().__init__(*args, **kwargs)
 
         self.attrs = {
-            "class": " ".join([*CHECKBOX_CLASSES, self.attrs.get("class", "")])
+            "class": " ".join(
+                [*CHECKBOX_CLASSES, self.attrs.get("class", "") if self.attrs else ""]
+            )
         }
 
 
@@ -814,10 +815,10 @@ try:
         template_name = "unfold/widgets/split_money.html"
 
         def __init__(self, *args, **kwargs):
+            attrs = {}
+
             if "attrs" in kwargs:
                 attrs = kwargs.pop("attrs")
-            else:
-                attrs = {}
 
             super().__init__(
                 amount_widget=UnfoldAdminTextInputWidget(attrs=attrs),
@@ -840,8 +841,7 @@ class UnfoldBooleanWidget(CheckboxInput):
     def __init__(
         self, attrs: dict[str, Any] | None = None, check_test: Callable = None
     ) -> None:
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         super().__init__(
             {
@@ -910,9 +910,10 @@ class UnfoldAdminPasswordInput(PasswordInput):
 
 
 class AutocompleteWidgetMixin:
+    is_required: bool
+
     def __init__(self, attrs: dict | None = None, choices: tuple = ()) -> None:
-        if not attrs:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs.update(
             {
@@ -922,7 +923,12 @@ class AutocompleteWidgetMixin:
                 "data-theme": "admin-autocomplete",
                 "data-allow-clear": json.dumps(not self.is_required),
                 "data-placeholder": "",
-                "class": "unfold-admin-autocomplete admin-autocomplete",
+                "class": " ".join(
+                    [
+                        "unfold-admin-autocomplete admin-autocomplete",
+                        attrs.get("class", "") if attrs else "",
+                    ]
+                ),
             }
         )
         super().__init__(attrs, choices)
