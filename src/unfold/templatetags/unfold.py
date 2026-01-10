@@ -3,7 +3,12 @@ from collections.abc import Iterable, Mapping
 from typing import Any
 
 from django import template
-from django.contrib.admin.helpers import AdminField, AdminForm, Fieldset
+from django.contrib.admin.helpers import (
+    AdminField,
+    AdminForm,
+    AdminReadonlyField,
+    Fieldset,
+)
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.core.paginator import Paginator
@@ -504,7 +509,9 @@ def changeform_data(adminform: AdminForm) -> str:
 
 
 @register.filter
-def changeform_condition(field: AdminField) -> AdminField:
+def changeform_condition(
+    field: AdminField | AdminReadonlyField,
+) -> AdminField | AdminReadonlyField:
     if isinstance(field.field, dict):
         return field
 

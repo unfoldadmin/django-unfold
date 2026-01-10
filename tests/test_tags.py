@@ -12,6 +12,7 @@ from example.models import User
 
 from unfold.components import BaseComponent, register_component
 from unfold.enums import ActionVariant
+from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 from unfold.sites import UnfoldAdminSite
 
 
@@ -611,8 +612,8 @@ def test_tags_changeform_data(rf, user_factory):
 
 
 @pytest.mark.django_db
-def test_tags_changeform_condition(rf):
-    form = UserAdmin(get_user_model(), UnfoldAdminSite()).get_form(None)()
+def test_tags_changeform_condition_field(rf):
+    form = UserAdmin(User, UnfoldAdminSite()).get_form(None)()
     admin_field = AdminField(form, "username", False)
 
     response = Template(
@@ -626,6 +627,95 @@ def test_tags_changeform_condition(rf):
         )
     )
     assert 'x-model.fill="username"' in response
+
+
+@pytest.mark.django_db
+def test_tags_changeform_condition_field_datetime(rf, user_factory):
+    user = user_factory(username="sample@example.com")
+    form = UserAdmin(User, UnfoldAdminSite()).get_form(
+        rf.get("/"), obj=user, change=True
+    )()
+    admin_field = UnfoldAdminField(form, "date_joined", False)
+
+    response = Template(
+        "{% load unfold %} {% with admin_field|changeform_condition as field %}{{ field.field }}{% endwith %}"
+    ).render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "admin_field": admin_field,
+            },
+        )
+    )
+    assert 'x-model.fill="date_joined_0"' in response
+    assert 'x-model.fill="date_joined_1"' in response
+
+
+@pytest.mark.django_db
+def test_tags_changeform_condition_field_fk(rf, user_factory):
+    user = user_factory(username="sample@example.com")
+    form = UserAdmin(User, UnfoldAdminSite()).get_form(
+        rf.get("/"), obj=user, change=True
+    )()
+    admin_field = UnfoldAdminField(form, "tags", False)
+
+    response = Template(
+        "{% load unfold %} {% with admin_field|changeform_condition as field %}{{ field.field }}{% endwith %}"
+    ).render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "admin_field": admin_field,
+            },
+        )
+    )
+
+    assert 'x-model.fill="tags"' in response
+
+
+@pytest.mark.django_db
+def test_tags_changeform_condition_field_select2(rf, user_factory):
+    user = user_factory(username="sample@example.com")
+    form = UserAdmin(User, UnfoldAdminSite()).get_form(
+        rf.get("/"), obj=user, change=True
+    )()
+    admin_field = UnfoldAdminField(form, "status", False)
+
+    response = Template(
+        "{% load unfold %} {% with admin_field|changeform_condition as field %}{{ field.field }}{% endwith %}"
+    ).render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "admin_field": admin_field,
+            },
+        )
+    )
+
+    assert 'x-model.fill="status"' in response
+
+
+@pytest.mark.django_db
+def test_tags_changeform_condition_readonly_field(rf, user_factory):
+    user = user_factory(username="sample@example.com")
+    user_admin = UserAdmin(User, UnfoldAdminSite())
+    form = user_admin.get_form(rf.get("/"), obj=user, change=True)()
+    admin_field = UnfoldAdminReadonlyField(
+        form, "custom_readonly_field", False, user_admin
+    )
+    response = Template(
+        "{% load unfold %} {% with admin_field|changeform_condition as field %}{{ field.field }}{% endwith %}"
+    ).render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "admin_field": admin_field,
+            },
+        )
+    )
+
+    assert "Custom readonly field" in response
+    assert "readonly" in response
 
 
 @pytest.mark.django_db

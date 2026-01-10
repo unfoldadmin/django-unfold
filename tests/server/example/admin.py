@@ -50,9 +50,10 @@ from unfold.contrib.filters.admin import (
     TextFilter,
 )
 from unfold.datasets import BaseDataset
-from unfold.decorators import action
+from unfold.decorators import action, display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
+from unfold.widgets import UnfoldAdminCheckboxSelectMultiple, UnfoldAdminSelect2Widget
 
 admin.site.unregister(Group)
 
@@ -81,16 +82,27 @@ class ProjectDataset(BaseDataset):
     tab = True
 
 
+class ExtendedUserChangeForm(UserChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["status"].widget = UnfoldAdminSelect2Widget(choices=StatusChoices)
+        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultiple(
+            choices=Project.objects.all().values_list("id", "name")
+        )
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin):
-    form = UserChangeForm
+    form = ExtendedUserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
     inlines = [UserTagInline, PostInline]
     change_form_datasets = [
         ProjectDataset,
     ]
+    autocomplete_fields = ["tags"]
     compressed_fields = True
+    readonly_fields = ["custom_readonly_field"]
     fieldsets = (
         (
             None,
@@ -98,6 +110,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
                 "fields": (
                     # "username",
                     "password",
+                    "custom_readonly_field",
                 )
             },
         ),
@@ -107,6 +120,9 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
                 "fields": (
                     ("first_name", "last_name"),
                     "email",
+                    "status",
+                    "tags",
+                    "projects",
                     (),
                 ),
                 "classes": ["tab"],
@@ -128,6 +144,10 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
+
+    @display(description="Custom readonly field")
+    def custom_readonly_field(self, obj):
+        return "Custom readonly field"
 
 
 class RelatedTableSection(TableSection):
