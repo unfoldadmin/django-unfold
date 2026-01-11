@@ -76,3 +76,33 @@ class MyForm(forms.Form):
         url_path="admin:custon_autocomplete_path_name",
     )
 ```
+
+## SQL query optimisation
+
+When using `UnfoldAdminAutocompleteModelChoiceField`, the `ModelChoiceField` is initialized with the full queryset on page load, which generates a complete list of choices. This can be problematic if your database table contains a large number of records. To address this, you can override the queryset with an empty queryset during `GET` requests. For `POST` requests, you should update the queryset to include only the selected choices. This approach optimizes performance by loading only the necessary data.
+
+```python
+class MyAutocompleteView(BaseAutocompleteView):
+    one_object = UnfoldAdminAutocompleteModelChoiceField(
+        label=_("Object - Single value"),
+        queryset=MyModel.objects.all(),
+        url_path="admin:custom_autocomplete_path_name",
+    )
+
+    def __init__(self, request, *args, **kwargs):
+        # The request argument needs to be manually passed. If you are using
+        # `FormView` just use `get_form_kwargs` to pass the request argument.
+
+        if request.method == "GET":
+            if "initial" in kwargs:
+                # Initial values are present
+                self.queryset = MyModel.objects.filter(pk__in=kwargs["initial"]
+            else:
+
+                self.queryset = MyModel.objects.none()
+        elif request.method == "POST":
+            self.queryset = MyModel.objects.filter(pk__in=request.POST.getlist("objects"))
+
+        super().__init__(request, *args, **kwargs)
+
+```

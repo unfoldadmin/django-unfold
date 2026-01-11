@@ -27,8 +27,8 @@ from unfold.widgets import (
     CHECKBOX_LABEL_CLASSES,
     INPUT_CLASSES,
     LABEL_CLASSES,
-    UnfoldAdminAutocompleteWidget,
-    UnfoldAdminMultipleAutocompleteWidget,
+    UnfoldAdminAutocompleteModelChoiceFieldWidget,
+    UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget,
 )
 
 
@@ -254,10 +254,10 @@ class AutocompleteFieldMixin:
 
 
 class UnfoldAdminAutocompleteModelChoiceField(AutocompleteFieldMixin, ModelChoiceField):
-    widget = UnfoldAdminAutocompleteWidget
+    widget = UnfoldAdminAutocompleteModelChoiceFieldWidget
 
 
 class UnfoldAdminMultipleAutocompleteModelChoiceField(
     AutocompleteFieldMixin, ModelMultipleChoiceField
 ):
-    widget = UnfoldAdminMultipleAutocompleteWidget
+    widget = UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget

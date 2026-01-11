@@ -958,5 +958,19 @@ class UnfoldAdminAutocompleteWidget(AutocompleteWidgetMixin, Select):
     option_template_name = "unfold/widgets/select_option_autocomplete.html"
 
 
+class UnfoldAdminAutocompleteModelChoiceFieldWidget(AutocompleteWidgetMixin, Select):
+    option_template_name = (
+        "unfold/widgets/select_option_modelchoicefield_autocomplete.html"
+    )
+
+
 class UnfoldAdminMultipleAutocompleteWidget(AutocompleteWidgetMixin, SelectMultiple):
     option_template_name = "unfold/widgets/select_option_autocomplete.html"
+
+
+class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
+    AutocompleteWidgetMixin, SelectMultiple
+):
+    option_template_name = (
+        "unfold/widgets/select_option_modelchoicefield_autocomplete.html"
+    )
