@@ -101,7 +101,7 @@ class BaseAutocompleteView(ListView):
                         "id": obj.pk,
                         "text": str(obj),
                     }
-                    for obj in self.object_list
+                    for obj in context["object_list"]
                 ],
                 "pagination": {
                     "more": context["page_obj"].has_next(),
