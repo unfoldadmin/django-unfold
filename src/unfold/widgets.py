@@ -21,10 +21,11 @@ from django.contrib.admin.widgets import (
     ForeignKeyRawIdWidget,
     RelatedFieldWidgetWrapper,
 )
-from django.db.models.fields.reverse_related import ForeignObjectRel
+from django.db.models import ManyToOneRel
 from django.forms import (
     CheckboxInput,
     CheckboxSelectMultiple,
+    ClearableFileInput,
     MultiWidget,
     NullBooleanSelect,
     NumberInput,
@@ -32,6 +33,7 @@ from django.forms import (
     Select,
     SelectMultiple,
 )
+from django.forms.widgets import Input
 from django.utils.translation import gettext_lazy as _
 
 from unfold.exceptions import UnfoldException
@@ -299,8 +301,10 @@ FILE_CLASSES = [
 ]
 
 
-class UnfoldPrefixSuffixMixin:
-    def get_context(self, name, value, attrs):
+class UnfoldPrefixSuffixMixin(Input):
+    def get_context(
+        self, name: str, value: Any, attrs: dict[str, Any] | None
+    ) -> dict[str, Any]:
         context = super().get_context(name, value, attrs)
         widget = context["widget"]
 
@@ -395,8 +399,7 @@ class UnfoldAdminIntegerRangeWidget(MultiWidget):
     template_name = "unfold/widgets/range.html"
 
     def __init__(self, attrs: dict[str, Any] | None = None) -> None:
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*INPUT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -407,9 +410,7 @@ class UnfoldAdminIntegerRangeWidget(MultiWidget):
         super().__init__(_widgets, attrs)
 
     def decompress(self, value: str | None) -> tuple[Callable | None, ...]:
-        if value:
-            return value.lower, value.upper
-        return None, None
+        return (value.lower, value.upper) if value else (None, None)
 
 
 class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
@@ -424,8 +425,10 @@ class UnfoldAdminEmailInputWidget(AdminEmailInputWidget):
         )
 
 
-class FileFieldMixin:
-    def get_context(self, name, value, attrs):
+class FileFieldMixin(ClearableFileInput):
+    def get_context(
+        self, name: str, value: Any, attrs: dict[str, Any] | None
+    ) -> dict[str, Any]:
         widget = super().get_context(name, value, attrs)
 
         widget["widget"].update(
@@ -689,9 +692,8 @@ class UnfoldAdminBigIntegerFieldWidget(AdminBigIntegerFieldWidget):
 class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
     template_name = "unfold/widgets/select.html"
 
-    def __init__(self, attrs=None):
-        if attrs is None:
-            attrs = {}
+    def __init__(self, attrs: dict[str, Any] | None = None) -> None:
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -702,9 +704,10 @@ class UnfoldAdminNullBooleanSelectWidget(NullBooleanSelect):
 class UnfoldAdminSelectWidget(Select):
     template_name = "unfold/widgets/select.html"
 
-    def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+    def __init__(
+        self, attrs: dict[str, Any] | None = None, choices: tuple | list = ()
+    ) -> None:
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -713,12 +716,15 @@ class UnfoldAdminSelectWidget(Select):
 
 
 class UnfoldAdminSelect2Widget(Select):
-    def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+    def __init__(
+        self, attrs: dict[str, Any] | None = None, choices: tuple | list = ()
+    ) -> None:
+        attrs = attrs or {}
 
         attrs["data-theme"] = "admin-autocomplete"
-        attrs["class"] = "unfold-admin-autocomplete"
+        attrs["class"] = " ".join(
+            ["unfold-admin-autocomplete", attrs.get("class", "") if attrs else ""]
+        )
 
         super().__init__(attrs, choices)
 
@@ -739,9 +745,10 @@ class UnfoldAdminSelect2Widget(Select):
 
 
 class UnfoldAdminSelectMultipleWidget(SelectMultiple):
-    def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+    def __init__(
+        self, attrs: dict[str, Any] | None = None, choices: tuple | list = ()
+    ) -> None:
+        attrs = attrs or {}
 
         attrs["class"] = " ".join(
             [*SELECT_CLASSES, attrs.get("class", "") if attrs else ""]
@@ -750,12 +757,18 @@ class UnfoldAdminSelectMultipleWidget(SelectMultiple):
 
 
 class UnfoldAdminSelect2MultipleWidget(SelectMultiple):
-    def __init__(self, attrs=None, choices=()):
-        if attrs is None:
-            attrs = {}
+    def __init__(
+        self, attrs: dict[str, Any] | None = None, choices: tuple | list = ()
+    ) -> None:
+        attrs = attrs or {}
 
         attrs["data-theme"] = "admin-autocomplete"
-        attrs["class"] = "unfold-admin-autocomplete admin-autocomplete"
+        attrs["class"] = " ".join(
+            [
+                "unfold-admin-autocomplete admin-autocomplete",
+                attrs.get("class", "") if attrs else "",
+            ]
+        )
 
         super().__init__(attrs, choices)
 
@@ -779,7 +792,9 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
     template_name = "unfold/widgets/radio.html"
     option_template_name = "unfold/widgets/radio_option.html"
 
-    def __init__(self, radio_style: int | None = None, *args, **kwargs):
+    def __init__(
+        self, radio_style: int | None = None, *args: Any, **kwargs: Any
+    ) -> None:
         super().__init__(*args, **kwargs)
 
         if radio_style is None:
@@ -788,7 +803,7 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
         self.radio_style = radio_style
         self.attrs["class"] = " ".join([*RADIO_CLASSES, self.attrs.get("class", "")])
 
-    def get_context(self, *args, **kwargs) -> dict[str, Any]:
+    def get_context(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context(*args, **kwargs)
         context.update({"radio_style": self.radio_style})
         return context
@@ -798,11 +813,13 @@ class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
     template_name = "unfold/widgets/radio.html"
     option_template_name = "unfold/widgets/radio_option.html"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
         self.attrs = {
-            "class": " ".join([*CHECKBOX_CLASSES, self.attrs.get("class", "")])
+            "class": " ".join(
+                [*CHECKBOX_CLASSES, self.attrs.get("class", "") if self.attrs else ""]
+            )
         }
 
 
@@ -813,11 +830,11 @@ try:
     class UnfoldAdminMoneyWidget(MoneyWidget):
         template_name = "unfold/widgets/split_money.html"
 
-        def __init__(self, *args, **kwargs):
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            attrs = {}
+
             if "attrs" in kwargs:
                 attrs = kwargs.pop("attrs")
-            else:
-                attrs = {}
 
             super().__init__(
                 amount_widget=UnfoldAdminTextInputWidget(attrs=attrs),
@@ -832,16 +849,15 @@ try:
 except ImportError:
 
     class UnfoldAdminMoneyWidget:
-        def __init__(self, *args, **kwargs):
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
             raise UnfoldException("django-money not installed")
 
 
 class UnfoldBooleanWidget(CheckboxInput):
     def __init__(
-        self, attrs: dict[str, Any] | None = None, check_test: Callable = None
+        self, attrs: dict[str, Any] | None = None, check_test: Callable | None = None
     ) -> None:
-        if attrs is None:
-            attrs = {}
+        attrs = attrs or {}
 
         super().__init__(
             {
@@ -856,7 +872,7 @@ class UnfoldBooleanWidget(CheckboxInput):
 
 class UnfoldBooleanSwitchWidget(CheckboxInput):
     def __init__(
-        self, attrs: dict[str, Any] | None = None, check_test: Callable = None
+        self, attrs: dict[str, Any] | None = None, check_test: Callable | None = None
     ) -> None:
         super().__init__(
             attrs={
@@ -878,9 +894,9 @@ class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
 
     def __init__(
         self,
-        rel: ForeignObjectRel,
+        rel: ManyToOneRel,
         admin_site: AdminSite,
-        attrs: dict | None = None,
+        attrs: dict[str, Any] | None = None,
         using: Any | None = None,
     ) -> None:
         attrs = {
@@ -897,7 +913,9 @@ class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
 
 
 class UnfoldAdminPasswordInput(PasswordInput):
-    def __init__(self, attrs=None, render_value=False):
+    def __init__(
+        self, attrs: dict[str, Any] | None = None, render_value: bool = False
+    ) -> None:
         super().__init__(
             {
                 **(attrs or {}),
@@ -910,9 +928,12 @@ class UnfoldAdminPasswordInput(PasswordInput):
 
 
 class AutocompleteWidgetMixin:
-    def __init__(self, attrs: dict | None = None, choices: tuple = ()) -> None:
-        if not attrs:
-            attrs = {}
+    is_required: bool
+
+    def __init__(
+        self, attrs: dict[str, Any] | None = None, choices: tuple | list = ()
+    ) -> None:
+        attrs = attrs or {}
 
         attrs.update(
             {
@@ -922,7 +943,12 @@ class AutocompleteWidgetMixin:
                 "data-theme": "admin-autocomplete",
                 "data-allow-clear": json.dumps(not self.is_required),
                 "data-placeholder": "",
-                "class": "unfold-admin-autocomplete admin-autocomplete",
+                "class": " ".join(
+                    [
+                        "unfold-admin-autocomplete admin-autocomplete",
+                        attrs.get("class", "") if attrs else "",
+                    ]
+                ),
             }
         )
         super().__init__(attrs, choices)
