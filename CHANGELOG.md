@@ -1,6 +1,35 @@
 # CHANGELOG
 
 
+## v0.76.0 (2026-01-12)
+
+### Bug Fixes
+
+- Autocomplete field ([#1783](https://github.com/unfoldadmin/django-unfold/pull/1783),
+  [`436d513`](https://github.com/unfoldadmin/django-unfold/commit/436d513d475dd9e024e97951ab9444a6578a9549))
+
+- Fieldsets tabs variable name ([#1780](https://github.com/unfoldadmin/django-unfold/pull/1780),
+  [`9e9b2d1`](https://github.com/unfoldadmin/django-unfold/commit/9e9b2d135d8af19d54c3f034dd21e0c85ad4b967))
+
+- Filter spacing ([#1774](https://github.com/unfoldadmin/django-unfold/pull/1774),
+  [`eafb9b2`](https://github.com/unfoldadmin/django-unfold/commit/eafb9b24ac7d98fc7a9adf7ed0eab3f08c470e9f))
+
+- Filters background z-index ([#1773](https://github.com/unfoldadmin/django-unfold/pull/1773),
+  [`b79dff6`](https://github.com/unfoldadmin/django-unfold/commit/b79dff627559d502621943d2ca3af3f12d5b45ec))
+
+- Hide changelist topbar without filters
+  ([#1772](https://github.com/unfoldadmin/django-unfold/pull/1772),
+  [`d407777`](https://github.com/unfoldadmin/django-unfold/commit/d4077771f6f371e11d06cdc446a3094b06c5fa72))
+
+- Wrong tab value ([#1776](https://github.com/unfoldadmin/django-unfold/pull/1776),
+  [`1d46fa2`](https://github.com/unfoldadmin/django-unfold/commit/1d46fa2bfe7f617f104d524e487cd480901d59c6))
+
+### Features
+
+- Fieldset tabs error count ([#1779](https://github.com/unfoldadmin/django-unfold/pull/1779),
+  [`440a8cf`](https://github.com/unfoldadmin/django-unfold/commit/440a8cfff5b0ade1651d7161f3215bd64a435513))
+
+
 ## v0.75.0 (2026-01-02)
 
 ### Bug Fixes
