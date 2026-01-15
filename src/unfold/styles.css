@@ -722,3 +722,42 @@ div.djangoql-completion .syntax-help {
   @apply appearance-none bg-white block border border-base-300 cursor-pointer h-4 min-w-4 relative rounded-[4px] shadow-xs w-4 hover:border-base-400 dark:bg-base-700 dark:border-base-500 dark:checked:after:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 after:absolute after:content-['check\_small'] after:flex! after:h-4 after:items-center after:justify-center after:leading-none after:material-symbols-outlined after:-ml-px after:-mt-px after:text-white after:transition-all after:w-4 dark:after:text-base-700 checked:bg-primary-600 dark:checked:bg-primary-600 checked:border-primary-600 dark:checked:border-primary-600 checked:transition-all checked:hover:border-primary-600;
   @apply relative -ml-4.5;
 }
+
+/*******************************************************
+ Django JSON widget
+ *******************************************************/
+.jsoneditor {
+  @apply border !border-base-200 overflow-hidden rounded-default shadow-xs dark:!border-base-700;
+}
+
+.jsoneditor-menu {
+  @apply !bg-base-700 !border-base-200 dark:!border-base-700 dark:!bg-base-800;
+}
+
+.ace-jsoneditor .ace_scroller {
+  @apply text-default dark:bg-base-900;
+}
+
+.ace-jsoneditor .ace_gutter {
+  @apply border-r border-base-200 bg-base-100 text-subtle dark:bg-base-800 dark:border-base-700;
+}
+
+.ace-jsoneditor .ace_gutter-active-line {
+  @apply bg-yellow-500/20 text-important dark:bg-yellow-500/20;
+}
+
+.ace-jsoneditor .ace_active-line {
+  @apply !bg-yellow-500/20 dark:!bg-yellow-500/20;
+}
+
+.ace-jsoneditor .ace_variable {
+  @apply text-important;
+}
+
+.ace-jsoneditor .ace_indent-guide {
+  @apply bg-none border-r border-base-200 dark:border-base-700;
+}
+
+.jsoneditor .jsoneditor-statusbar {
+  @apply bg-base-100 border-base-200 text-subtle dark:bg-base-800 dark:border-base-700;
+}
