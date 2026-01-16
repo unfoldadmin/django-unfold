@@ -29,30 +29,51 @@
 
         {{ form.non_field_errors }}
 
-        <fieldset class="border border-base-200 mb-4 rounded-default pt-3 px-3 shadow-xs dark:border-base-800">
+        <fieldset class="border border-base-200 mb-4 rounded-default p-3 shadow-xs dark:border-base-800">
             {% for field in form.visible_fields %}
-                <div {% if field.field.is_selectable_field %}class="selectable-field-export-row" resource-index="{{ field.field.resource_index }}"{% endif %}>
-                    {% if field.field.initial_field %}
-                        <p class="block font-medium mb-2 text-base-900 text-sm dark:text-base-200">
-                            {% trans "This exporter will export the following fields" %}
-                        </p>
-                    {% endif %}
-
-                    {% if field.field.widget.attrs.readonly %}
-                        {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
-                        {{ field.as_hidden }}
-                    {% else %}
-                        {% include "unfold/helpers/field.html" with field=field %}
-                    {% endif %}
-                </div>
+                {% if field.field.initial_field %}
+                    <p class="block font-semibold mb-2 text-important">
+                        {% trans "This exporter will export the following fields" %}
+                    </p>
+                {% endif %}
             {% endfor %}
+
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                    {% for field in form.visible_fields %}
+                        {% if field.field.is_selectable_field %}
+                            <div class="selectable-field-export-row !p-0 *:mb-0" resource-index="{{ field.field.resource_index }}">
+                                {% if field.field.widget.attrs.readonly %}
+                                    {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
+                                    {{ field.as_hidden }}
+                                {% else %}
+                                    {% include "unfold/helpers/field.html" with field=field %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {% for field in form.visible_fields %}
+                    {% if not field.field.is_selectable_field %}
+                        <div class="*:mb-0">
+                            {% if field.field.widget.attrs.readonly %}
+                                {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
+                                {{ field.as_hidden }}
+                            {% else %}
+                                {% include "unfold/helpers/field.html" with field=field %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
 
             {% for field in form.hidden_fields %}
                 {{ field }}
             {% endfor %}
         </fieldset>
 
-        <button type="submit" class="bg-primary-600 border border-transparent font-medium px-3 py-2 rounded-default text-sm text-white">
+        <button type="submit" class="bg-primary-600 border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-sm text-white">
             {% translate 'Submit' %}
         </button>
     </form>
