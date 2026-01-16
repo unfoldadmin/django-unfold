@@ -731,11 +731,28 @@ div.djangoql-completion .syntax-help {
 }
 
 .jsoneditor-menu {
-  @apply !bg-base-700 !border-base-200 dark:!border-base-700 dark:!bg-base-800;
+  @apply !bg-base-100 !border-base-200 dark:!border-base-700 dark:!bg-base-800;
 }
 
+div.jsoneditor-tree,
 .ace-jsoneditor .ace_scroller {
   @apply text-default dark:bg-base-900;
+}
+
+.jsoneditor textarea.jsoneditor-text {
+  @apply p-3 text-default dark:bg-base-900;
+}
+
+.jsoneditor .jsoneditor-readonly {
+  @apply text-subtle;
+}
+
+.jsoneditor .jsoneditor-field {
+  @apply text-default;
+}
+
+.jsoneditor .jsoneditor-value {
+  @apply text-important;
 }
 
 .ace-jsoneditor .ace_gutter {
@@ -759,5 +776,86 @@ div.djangoql-completion .syntax-help {
 }
 
 .jsoneditor .jsoneditor-statusbar {
-  @apply bg-base-100 border-base-200 text-subtle dark:bg-base-800 dark:border-base-700;
+  @apply bg-white border-base-200 leading-[26px] px-2 text-subtle text-xs dark:bg-base-900 dark:border-base-700;
+}
+
+.jsoneditor .jsoneditor-menu > button {
+  @apply !bg-none !bg-transparent !border-none cursor-pointer text-important;
+}
+
+.jsoneditor .jsoneditor-menu > button:after {
+  @apply material-symbols-outlined;
+}
+
+.jsoneditor-menu > button.jsoneditor-format {
+  @apply after:content-['format\_align\_right']
+}
+
+.jsoneditor-menu > button.jsoneditor-compact {
+  @apply after:content-['format\_align\_left']
+}
+
+.jsoneditor-menu > button.jsoneditor-sort {
+  @apply after:content-['sort']
+}
+
+.jsoneditor-menu > button.jsoneditor-transform {
+  @apply after:content-['transform']
+}
+
+.jsoneditor-menu > button.jsoneditor-repair {
+  @apply after:content-['handyman']
+}
+
+.jsoneditor-menu > button.jsoneditor-undo {
+  @apply after:content-['undo']
+}
+
+.jsoneditor-menu > button.jsoneditor-redo {
+  @apply after:content-['redo']
+}
+
+.jsoneditor-menu > button.jsoneditor-expand-all {
+  @apply after:content-['expand']
+}
+
+.jsoneditor-menu > button.jsoneditor-collapse-all {
+  @apply after:content-['compress']
+}
+
+.jsoneditor-menu > div.jsoneditor-modes > button {
+  @apply !bg-transparent !border-none cursor-pointer !font-sans text-default hover:!bg-none hover:text-important;
+}
+
+.jsoneditor-menu a.jsoneditor-poweredBy {
+  @apply text-subtle text-xs opacity-100 font-sans;
+}
+
+/* Context menu */
+.jsoneditor-contextmenu .jsoneditor-menu {
+  @apply !bg-white border border-base-200 overflow-clip rounded-default !py-1 !shadow-xs dark:!bg-base-800 dark:border-base-800;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu li {
+  @apply flex;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu button {
+  @apply !flex-grow !mx-1 !px-3 !h-[30px] !rounded-default !w-auto hover:!bg-base-100 hover:!text-base-700 dark:hover:!bg-base-700 dark:hover:!text-base-200;
+}
+
+.jsoneditor-contextmenu button .jsoneditor-icon {
+  @apply !w-auto;
+}
+
+.jsoneditor-contextmenu button .jsoneditor-text {
+  @apply !font-sans p-0 text-default;
+}
+
+.jsoneditor-contextmenu .jsoneditor-selected {
+  @apply !bg-transparent;
+}
+
+.jsoneditor-contextmenu .jsoneditor-selected .jsoneditor-text {
+  @apply !text-primary-600 dark:!text-primary-500;
 }
