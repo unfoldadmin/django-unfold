@@ -39,25 +39,29 @@ class ArrayWidget(MultiWidget):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        if "choices" in kwargs:
-            self.choices = kwargs["choices"]
+        self.choices = kwargs.get("choices")
+        self.widget_class = widget_class
 
-        if widget_class is not None:
-            self.widget_class = widget_class
+        attrs = kwargs.get("attrs", {})
+        attrs.update(
+            {
+                "class": attrs.get("class", "") if attrs else "",
+            }
+        )
 
         widgets = [self.get_widget_instance()]
-        super().__init__(widgets)
+        super().__init__(widgets, attrs=attrs)
 
     def get_widget_instance(self) -> Any:
-        if hasattr(self, "widget_class"):
+        if hasattr(self, "widget_class") and self.widget_class is not None:
             return self.widget_class()
 
-        if hasattr(self, "choices"):
+        if hasattr(self, "choices") and self.choices is not None:
             return UnfoldAdminSelectWidget(choices=self.choices)
 
         return UnfoldAdminTextInputWidget()
 
-    def get_context(self, name: str, value: str, attrs: dict) -> dict:
+    def get_context(self, name: str, value: Any, attrs: dict | None) -> dict:
         self._resolve_widgets(value)
         context = super().get_context(name, value, attrs)
         context.update(
@@ -67,7 +71,7 @@ class ArrayWidget(MultiWidget):
 
     def value_from_datadict(
         self, data: QueryDict, files: MultiValueDict, name: str
-    ) -> list:
+    ) -> list:  # ty:ignore[invalid-method-override]
         values = []
 
         for item in data.getlist(name):
@@ -78,10 +82,10 @@ class ArrayWidget(MultiWidget):
 
     def value_omitted_from_data(
         self, data: QueryDict, files: MultiValueDict, name: str
-    ) -> list:
+    ) -> bool:  # ty:ignore[invalid-method-override]
         return data.getlist(name) not in [[""], *EMPTY_VALUES]
 
-    def decompress(self, value: str | list) -> list:
+    def decompress(self, value: Any) -> list:
         if isinstance(value, list):
             return value
         elif isinstance(value, str):
@@ -92,7 +96,6 @@ class ArrayWidget(MultiWidget):
     def _resolve_widgets(self, value: list | str | None) -> None:
         if value is None:
             value = []
-
         elif isinstance(value, list):
             self.widgets = [self.get_widget_instance() for item in value]
         else:
@@ -117,6 +120,8 @@ class WysiwygWidget(Widget):
 
         self.attrs.update(
             {
-                "class": " ".join(WYSIWYG_CLASSES),
+                "class": " ".join(
+                    [*WYSIWYG_CLASSES, attrs.get("class", "") if attrs else ""]
+                )
             }
         )

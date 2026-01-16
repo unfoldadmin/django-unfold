@@ -2,10 +2,13 @@ import builtins
 import importlib
 
 import pytest
+from django.http import QueryDict
+from django.utils.datastructures import MultiValueDict
 from django.utils.timezone import now
 from example.models import Post
 from moneyed import Money
 
+from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
 from unfold.sites import UnfoldAdminSite
 from unfold.widgets import (
     UnfoldAdminAutocompleteWidget,
@@ -48,6 +51,8 @@ from unfold.widgets import (
 @pytest.mark.parametrize(
     "widget_class",
     [
+        ArrayWidget,
+        WysiwygWidget,
         UnfoldAdminTextInputWidget,
         UnfoldAdminURLInputWidget,
         UnfoldAdminColorInputWidget,
@@ -211,3 +216,93 @@ def test_unfold_admin_money_widget_when_moneywidget_not_available(monkeypatch):
         widgets_modified.UnfoldException, match="django-money not installed"
     ):
         widgets_modified.UnfoldAdminMoneyWidget()
+
+
+def test_widgets_array():
+    widget = ArrayWidget(
+        widget_class=UnfoldAdminTextInputWidget,
+        attrs={
+            "class": "my-custom-class",
+        },
+    )
+    rendered = widget.render("test_field", "test value")
+
+    assert "test_field" in rendered
+    assert "my-custom-class" in rendered
+
+
+def test_widgets_array_no_value():
+    widget = ArrayWidget(
+        widget_class=UnfoldAdminTextInputWidget,
+        attrs={
+            "class": "my-custom-class",
+        },
+    )
+    rendered = widget.render("test_field", None)
+
+    assert "test_field" in rendered
+    assert "my-custom-class" in rendered
+
+
+def test_widgets_array_with_choices():
+    widget = ArrayWidget(
+        choices=(
+            ("key1", "value1"),
+            ("key2", "value2"),
+        ),
+    )
+    rendered = widget.render("test_field", [])
+    assert "key1" in rendered
+    assert "value1" in rendered
+    assert "key2" in rendered
+    assert "value2" in rendered
+    assert "select" in rendered
+
+
+def test_widgets_array_value_from_datadict():
+    widget = ArrayWidget(
+        choices=(
+            ("key1", "value1"),
+            ("key2", "value2"),
+        ),
+    )
+    values = widget.value_from_datadict(
+        data=QueryDict("test_field=key1&test_field=key2"),
+        files=MultiValueDict({"test_field": []}),
+        name="test_field",
+    )
+    assert values == ["key1", "key2"]
+
+
+def test_widgets_array_value_omitted_from_data():
+    widget = ArrayWidget(
+        choices=(
+            ("key1", "value1"),
+            ("key2", "value2"),
+        ),
+    )
+    assert widget.value_omitted_from_data(
+        data=QueryDict("test_field=key1&test_field=key2"),
+        files=MultiValueDict({"test_field": []}),
+        name="test_field",
+    )
+
+    assert not widget.value_omitted_from_data(
+        data=QueryDict("test_field="),
+        files=MultiValueDict({"test_field": []}),
+        name="test_field",
+    )
+
+
+def test_widgets_array_decompress():
+    widget = ArrayWidget()
+    assert widget.decompress(None) == []
+    assert widget.decompress("test value") == ["test value"]
+    assert widget.decompress("test value1,test value2") == [
+        "test value1",
+        "test value2",
+    ]
+    assert widget.decompress(["test value1", "test value2"]) == [
+        "test value1",
+        "test value2",
+    ]
