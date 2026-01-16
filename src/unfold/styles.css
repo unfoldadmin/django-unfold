@@ -722,3 +722,140 @@ div.djangoql-completion .syntax-help {
   @apply appearance-none bg-white block border border-base-300 cursor-pointer h-4 min-w-4 relative rounded-[4px] shadow-xs w-4 hover:border-base-400 dark:bg-base-700 dark:border-base-500 dark:checked:after:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 after:absolute after:content-['check\_small'] after:flex! after:h-4 after:items-center after:justify-center after:leading-none after:material-symbols-outlined after:-ml-px after:-mt-px after:text-white after:transition-all after:w-4 dark:after:text-base-700 checked:bg-primary-600 dark:checked:bg-primary-600 checked:border-primary-600 dark:checked:border-primary-600 checked:transition-all checked:hover:border-primary-600;
   @apply relative -ml-4.5;
 }
+
+/*******************************************************
+ Django JSON widget
+ *******************************************************/
+.jsoneditor {
+  @apply border !border-base-200 overflow-hidden rounded-default shadow-xs dark:!border-base-700;
+}
+
+.jsoneditor-menu {
+  @apply !bg-base-100 !border-base-200 dark:!border-base-700 dark:!bg-base-800;
+}
+
+div.jsoneditor-tree,
+.ace-jsoneditor .ace_scroller {
+  @apply text-default dark:bg-base-900;
+}
+
+.jsoneditor textarea.jsoneditor-text {
+  @apply p-3 text-default dark:bg-base-900;
+}
+
+.jsoneditor .jsoneditor-readonly {
+  @apply text-subtle;
+}
+
+.jsoneditor .jsoneditor-field {
+  @apply text-default;
+}
+
+.jsoneditor .jsoneditor-value {
+  @apply text-important;
+}
+
+.ace-jsoneditor .ace_gutter {
+  @apply border-r border-base-200 bg-base-100 text-subtle dark:bg-base-800 dark:border-base-700;
+}
+
+.ace-jsoneditor .ace_gutter-active-line {
+  @apply bg-yellow-500/20 text-important dark:bg-yellow-500/20;
+}
+
+.ace-jsoneditor .ace_active-line {
+  @apply !bg-yellow-500/20 dark:!bg-yellow-500/20;
+}
+
+.ace-jsoneditor .ace_variable {
+  @apply text-important;
+}
+
+.ace-jsoneditor .ace_indent-guide {
+  @apply bg-none border-r border-base-200 dark:border-base-700;
+}
+
+.jsoneditor .jsoneditor-statusbar {
+  @apply bg-white border-base-200 leading-[26px] px-2 text-subtle text-xs dark:bg-base-900 dark:border-base-700;
+}
+
+.jsoneditor .jsoneditor-menu > button {
+  @apply !bg-none !bg-transparent !border-none cursor-pointer text-important;
+}
+
+.jsoneditor .jsoneditor-menu > button:after {
+  @apply material-symbols-outlined;
+}
+
+.jsoneditor-menu > button.jsoneditor-format {
+  @apply after:content-['format\_align\_right']
+}
+
+.jsoneditor-menu > button.jsoneditor-compact {
+  @apply after:content-['format\_align\_left']
+}
+
+.jsoneditor-menu > button.jsoneditor-sort {
+  @apply after:content-['sort']
+}
+
+.jsoneditor-menu > button.jsoneditor-transform {
+  @apply after:content-['transform']
+}
+
+.jsoneditor-menu > button.jsoneditor-repair {
+  @apply after:content-['handyman']
+}
+
+.jsoneditor-menu > button.jsoneditor-undo {
+  @apply after:content-['undo']
+}
+
+.jsoneditor-menu > button.jsoneditor-redo {
+  @apply after:content-['redo']
+}
+
+.jsoneditor-menu > button.jsoneditor-expand-all {
+  @apply after:content-['expand']
+}
+
+.jsoneditor-menu > button.jsoneditor-collapse-all {
+  @apply after:content-['compress']
+}
+
+.jsoneditor-menu > div.jsoneditor-modes > button {
+  @apply !bg-transparent !border-none cursor-pointer !font-sans text-default hover:!bg-none hover:text-important;
+}
+
+.jsoneditor-menu a.jsoneditor-poweredBy {
+  @apply text-subtle text-xs opacity-100 font-sans;
+}
+
+/* Context menu */
+.jsoneditor-contextmenu .jsoneditor-menu {
+  @apply !bg-white border border-base-200 overflow-clip rounded-default !py-1 !shadow-xs dark:!bg-base-800 dark:border-base-800;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu li {
+  @apply flex;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu button {
+  @apply !flex-grow !mx-1 !px-3 !h-[30px] !rounded-default !w-auto hover:!bg-base-100 hover:!text-base-700 dark:hover:!bg-base-700 dark:hover:!text-base-200;
+}
+
+.jsoneditor-contextmenu button .jsoneditor-icon {
+  @apply !w-auto;
+}
+
+.jsoneditor-contextmenu button .jsoneditor-text {
+  @apply !font-sans p-0 text-default;
+}
+
+.jsoneditor-contextmenu .jsoneditor-selected {
+  @apply !bg-transparent;
+}
+
+.jsoneditor-contextmenu .jsoneditor-selected .jsoneditor-text {
+  @apply !text-primary-600 dark:!text-primary-500;
+}
