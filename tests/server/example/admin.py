@@ -6,6 +6,7 @@ from django.core.validators import EMPTY_VALUES
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from import_export.admin import ImportExportModelAdmin
 
 from example.models import (
     ActionUser,
@@ -48,6 +49,11 @@ from unfold.contrib.filters.admin import (
     SingleNumericFilter,
     SliderNumericFilter,
     TextFilter,
+)
+from unfold.contrib.import_export.forms import (
+    ExportForm,
+    ImportForm,
+    SelectableFieldsExportForm,
 )
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
@@ -92,7 +98,9 @@ class ExtendedUserChangeForm(UserChangeForm):
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, ModelAdmin):
+class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
     form = ExtendedUserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
@@ -742,7 +750,9 @@ class LabelAdmin(ModelAdmin):
 
 
 @admin.register(Project)
-class ProjectAdmin(ModelAdmin):
+class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
     search_fields = ["name"]
 
 
