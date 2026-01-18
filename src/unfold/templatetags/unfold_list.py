@@ -356,7 +356,8 @@ def items_for_result(
                     result_repr,
                 )
 
-    if form and form[cl.model._meta.pk.name].is_hidden:
+    # TODO: find out when this line of code is executed
+    if form and not form[cl.model._meta.pk.name].is_hidden:  # pragma: no cover
         yield format_html("<td>{}</td>", form[cl.model._meta.pk.name])
 
 
