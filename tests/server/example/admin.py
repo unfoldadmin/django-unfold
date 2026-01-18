@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group
 from django.core.validators import EMPTY_VALUES
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 
@@ -111,6 +112,23 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
     autocomplete_fields = ["tags"]
     compressed_fields = True
     readonly_fields = ["custom_readonly_field"]
+    list_display = (
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "content_type",
+        "is_staff",
+        "display_header",
+        "display_status",
+        "display_dropdown",
+        "display_datetime",
+        "display_username",
+    )
+    list_display_links = ["username", "content_type"]
+    list_editable = ["is_staff"]
+    ordering_field = "weight"
+    hide_ordering_field = True
     fieldsets = (
         (
             None,
@@ -156,6 +174,24 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
     @display(description="Custom readonly field")
     def custom_readonly_field(self, obj):
         return "Custom readonly field"
+
+    @display(description="Status", label=True)
+    def display_status(self, obj):
+        return obj.status
+
+    @display(header=True)
+    def display_header(self, obj):
+        return "Custom header", "Description"
+
+    @display(description="Status", dropdown=True)
+    def display_dropdown(self, obj):
+        return {
+            "title": "Custom dropdown title",
+            "content": "template content",
+        }
+
+    def display_datetime(self, obj):
+        return now()
 
 
 class RelatedTableSection(TableSection):
