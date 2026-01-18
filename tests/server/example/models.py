@@ -80,6 +80,14 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    weight = models.PositiveIntegerField(_("weight"), default=0, db_index=True)
+
+    def display_custom_value(self):
+        return self.username
+
+    display_custom_value.short_description = "Custom username"
+    display_custom_value.admin_order_field = "username"
+    display_username = property(display_custom_value)
 
 
 class SectionUser(User):
