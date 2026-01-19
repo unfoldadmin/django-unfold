@@ -2,26 +2,21 @@ import datetime
 from collections.abc import Generator
 from typing import Any
 
+from django.contrib.admin.options import IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
-    _coerce_field_name,
+    _coerce_field_name,  # ty:ignore[unresolved-import]
     admin_actions,
     result_hidden_fields,
 )
 from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.contrib.admin.templatetags.base import InclusionAdminNode
 from django.contrib.admin.utils import label_for_field, lookup_field
-from django.contrib.admin.views.main import (
-    IS_POPUP_VAR,
-    ORDER_VAR,
-    PAGE_VAR,
-    SEARCH_VAR,
-    ChangeList,
-)
+from django.contrib.admin.views.main import ORDER_VAR, PAGE_VAR, SEARCH_VAR, ChangeList
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Model
-from django.forms import Form
+from django.forms import ModelForm
 from django.template import Library
 from django.template.base import Parser, Token
 from django.template.loader import render_to_string
@@ -41,10 +36,10 @@ from unfold.views import DatasetChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
 try:
-    from django.contrib.admin.views.main import IS_FACETS_VAR
+    from django.contrib.admin.options import IS_FACETS_VAR
 except ImportError:
     # TODO: remove once django 4.x is not supported
-    IS_FACETS_VAR = None
+    IS_FACETS_VAR: str | None = None
 
 register = Library()
 
@@ -339,8 +334,7 @@ def items_for_result(
                     )
                 )
 
-                if bf.errors:
-                    row_classes += ["group", "errors"]
+                row_classes += ["group", "errors"] if bf.errors else []
 
             if ordering_field and field_name == ordering_field and hide_ordering_field:
                 row_classes.append("!hidden")
@@ -362,7 +356,8 @@ def items_for_result(
                     result_repr,
                 )
 
-    if form and not form[cl.model._meta.pk.name].is_hidden:
+    # TODO: find out when this line of code is executed
+    if form and not form[cl.model._meta.pk.name].is_hidden:  # pragma: no cover
         yield format_html("<td>{}</td>", form[cl.model._meta.pk.name])
 
 
@@ -370,7 +365,7 @@ class UnfoldResultList(ResultList):
     def __init__(
         self,
         instance: Model,
-        form: Form | None,
+        form: ModelForm | None,
         *items: Any,
     ) -> None:
         self.instance = instance
@@ -378,7 +373,7 @@ class UnfoldResultList(ResultList):
 
 
 def results(cl: ChangeList):
-    if cl.formset:
+    if hasattr(cl, "formset") and cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms):
             yield UnfoldResultList(res, form, items_for_result(cl, res, form))
     else:
@@ -423,22 +418,19 @@ def paginator_number(cl: ChangeList, i: str | int) -> str | SafeText:
     """
     Generate an individual page index link in a paginated list.
     """
-    if i == cl.paginator.ELLIPSIS:
+    if i == cl.page_num:
         return render_to_string(
-            "unfold/helpers/pagination_ellipsis.html",
+            "unfold/helpers/pagination_current_item.html",
             {
-                "ellipsis": cl.paginator.ELLIPSIS,
+                "number": i,
             },
         )
-    elif i == cl.page_num:
-        return render_to_string(
-            "unfold/helpers/pagination_current_item.html", {"number": i}
-        )
     else:
-        page_param = PAGE_VAR
-
-        if isinstance(cl, DatasetChangeList):
-            page_param = f"{cl.model._meta.model_name}-p"
+        page_param = (
+            f"{cl.model._meta.model_name}-p"
+            if isinstance(cl, DatasetChangeList)
+            else PAGE_VAR
+        )
 
         return format_html(
             '<a href="{}"{} x-data x-on:click.prevent="window.location.href = $el.href + window.location.hash">{}</a> ',
