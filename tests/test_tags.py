@@ -1035,7 +1035,7 @@ def test_tags_tabs_primary_active(rf, user_factory):
     formsets = context_data["inline_admin_formsets"]
 
     response = Template(
-        "{% load unfold %}{{ inline_admin_formsets|tabs_primary_active }}"
+        "{% load unfold %}{% tabs_primary_active inline_admin_formsets %}"
     ).render(
         Context(
             {
@@ -1051,7 +1051,7 @@ def test_tags_tabs_primary_active(rf, user_factory):
         mock_errors.return_value = [{"example_field": ["Example error."]}]
 
         response = Template(
-            "{% load unfold %}{{ inline_admin_formsets|tabs_primary_active }}"
+            "{% load unfold %}{% tabs_primary_active inline_admin_formsets %}"
         ).render(
             Context(
                 {
@@ -1080,17 +1080,7 @@ def test_tags_tabs_primary_errors_count(rf, user_factory):
 
     formsets = context_data["inline_admin_formsets"]
 
-    response = Template(
-        "{% load unfold %}{{ inline_admin_formsets|tabs_primary_active }}"
-    ).render(
-        Context(
-            {
-                "inline_admin_formsets": formsets,
-            },
-        )
-    )
-    assert "general" in response
-
+    # Errors in the inline which is displayed as tab
     with unittest.mock.patch.object(
         formsets[0].formset.__class__, "errors", new_callable=unittest.mock.PropertyMock
     ) as mock_errors:
@@ -1099,16 +1089,41 @@ def test_tags_tabs_primary_errors_count(rf, user_factory):
             {"example_field2": ["Example error 2."]},
         ]
 
-        response = Template(
-            "{% load unfold %}{{ inline_admin_formsets.0|tabs_primary_errors_count }}"
-        ).render(
-            Context(
+        response = Template("{% load unfold %}{% tab_list 'changeform' opts %}").render(
+            RequestContext(
+                request,
                 {
+                    "opts": get_user_model()._meta,
+                    "adminform": context_data["adminform"],
                     "inline_admin_formsets": formsets,
                 },
             )
         )
+
         assert "2" in response
+
+    # Errors in the inline display in "General" tab
+    with unittest.mock.patch.object(
+        formsets[1].formset.__class__, "errors", new_callable=unittest.mock.PropertyMock
+    ) as mock_errors:
+        mock_errors.return_value = [
+            {"example_field": ["Example error."]},
+            {"example_field2": ["Example error 2."]},
+            {"example_field3": ["Example error 3."]},
+        ]
+
+        response = Template("{% load unfold %}{% tab_list 'changeform' opts %}").render(
+            RequestContext(
+                request,
+                {
+                    "opts": get_user_model()._meta,
+                    "adminform": context_data["adminform"],
+                    "inline_admin_formsets": formsets,
+                },
+            )
+        )
+
+        assert "3" in response
 
 
 @pytest.mark.django_db
