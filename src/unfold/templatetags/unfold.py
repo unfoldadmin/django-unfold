@@ -8,6 +8,7 @@ from django.contrib.admin.helpers import (
     AdminForm,
     AdminReadonlyField,
     Fieldset,
+    InlineAdminFormSet,
 )
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
@@ -827,5 +828,34 @@ def tabs_errors_count(fieldset: Fieldset) -> int:
         for field in field_line:
             if not field.is_readonly and field.errors():
                 count += 1
+
+    return count
+
+
+@register.filter
+def tabs_primary_active(inlines: list[InlineAdminFormSet] | None) -> str:
+    active = "general"
+
+    if not inlines:
+        return active
+
+    for inline in inlines:
+        if getattr(inline.opts, "tab", False) and inline.formset.errors:
+            active = slugify(str(inline.formset.prefix))
+
+    return active
+
+
+@register.filter
+def tabs_primary_errors_count(inline: InlineAdminFormSet) -> int:
+    count = 0
+
+    for error in inline.formset.errors:
+        # Sometimes error is just an empty dict
+        if isinstance(error, dict) and len(error) > 0:
+            count += 1
+
+    if len(inline.formset.non_form_errors()) > 0:
+        count += 1
 
     return count

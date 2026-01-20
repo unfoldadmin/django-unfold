@@ -1,4 +1,5 @@
 import importlib
+import unittest.mock
 from http import HTTPStatus
 from unittest.mock import patch
 
@@ -1013,6 +1014,101 @@ def test_tags_tabs_active(rf, user_factory):
     )
 
     assert "personal-info" in response
+
+
+@pytest.mark.django_db
+def test_tags_tabs_primary_active(rf, user_factory):
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    user_admin = UserAdmin(User, UnfoldAdminSite())
+    changeform_view = user_admin.changeform_view(
+        request=request, object_id=str(user.pk)
+    )
+    context_data = (
+        changeform_view.context_data
+        if hasattr(changeform_view, "context_data")
+        else changeform_view.context
+    )
+
+    formsets = context_data["inline_admin_formsets"]
+
+    response = Template(
+        "{% load unfold %}{{ inline_admin_formsets|tabs_primary_active }}"
+    ).render(
+        Context(
+            {
+                "inline_admin_formsets": formsets,
+            },
+        )
+    )
+    assert "general" in response
+
+    with unittest.mock.patch.object(
+        formsets[0].formset.__class__, "errors", new_callable=unittest.mock.PropertyMock
+    ) as mock_errors:
+        mock_errors.return_value = [{"example_field": ["Example error."]}]
+
+        response = Template(
+            "{% load unfold %}{{ inline_admin_formsets|tabs_primary_active }}"
+        ).render(
+            Context(
+                {
+                    "inline_admin_formsets": formsets,
+                },
+            )
+        )
+        assert "user_tags" in response
+
+
+@pytest.mark.django_db
+def test_tags_tabs_primary_errors_count(rf, user_factory):
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    user_admin = UserAdmin(User, UnfoldAdminSite())
+    changeform_view = user_admin.changeform_view(
+        request=request, object_id=str(user.pk)
+    )
+    context_data = (
+        changeform_view.context_data
+        if hasattr(changeform_view, "context_data")
+        else changeform_view.context
+    )
+
+    formsets = context_data["inline_admin_formsets"]
+
+    response = Template(
+        "{% load unfold %}{{ inline_admin_formsets|tabs_primary_active }}"
+    ).render(
+        Context(
+            {
+                "inline_admin_formsets": formsets,
+            },
+        )
+    )
+    assert "general" in response
+
+    with unittest.mock.patch.object(
+        formsets[0].formset.__class__, "errors", new_callable=unittest.mock.PropertyMock
+    ) as mock_errors:
+        mock_errors.return_value = [
+            {"example_field": ["Example error."]},
+            {"example_field2": ["Example error 2."]},
+        ]
+
+        response = Template(
+            "{% load unfold %}{{ inline_admin_formsets.0|tabs_primary_errors_count }}"
+        ).render(
+            Context(
+                {
+                    "inline_admin_formsets": formsets,
+                },
+            )
+        )
+        assert "2" in response
 
 
 @pytest.mark.django_db
