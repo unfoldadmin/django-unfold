@@ -766,7 +766,7 @@ div.jsoneditor-tree,
 
 .jsoneditor .jsoneditor-value.jsoneditor-string,
 .jsoneditor .ace_string {
-  @apply text-green-600 dark:text-green-500;
+  @apply !text-green-600 dark:text-green-500;
 }
 
 .jsoneditor .jsoneditor-value.jsoneditor-number,
