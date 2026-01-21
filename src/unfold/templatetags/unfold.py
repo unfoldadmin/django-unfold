@@ -8,6 +8,7 @@ from django.contrib.admin.helpers import (
     AdminForm,
     AdminReadonlyField,
     Fieldset,
+    InlineAdminFormSet,
 )
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
@@ -36,6 +37,32 @@ from unfold.widgets import (
 )
 
 register = Library()
+
+
+def _count_errors_in_general(
+    admin_form: AdminForm, inlines: list[InlineAdminFormSet]
+) -> int:
+    count = 0
+    count += len(admin_form.errors)
+    count += len(admin_form.non_field_errors())
+
+    for inline in inlines:
+        if not getattr(inline.opts, "tab", False) and inline.formset.errors:
+            for error in inline.formset.errors:
+                if isinstance(error, dict) and len(error) > 0:
+                    count += 1
+
+    return count
+
+
+def _count_errors_in_inline(inline: InlineAdminFormSet) -> int:
+    count = 0
+
+    for error in inline.formset.errors:
+        if isinstance(error, dict) and len(error) > 0:
+            count += 1
+
+    return count
 
 
 def _get_tabs_list(
@@ -100,6 +127,15 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
         "is_popup": context.get("is_popup"),
         "tabs_list": _get_tabs_list(context, page, opts),
     }
+
+    if context.get("adminform") and context.get("inline_admin_formsets"):
+        data["error_count"] = _count_errors_in_general(
+            context["adminform"],
+            context["inline_admin_formsets"],
+        )
+
+        for inline in context.get("inline_admin_formsets") or []:
+            inline.error_count = _count_errors_in_inline(inline)
 
     # If the changeform is rendered and there are no custom tab navigation
     # specified, check for inlines to put into tabs
@@ -829,3 +865,16 @@ def tabs_errors_count(fieldset: Fieldset) -> int:
                 count += 1
 
     return count
+
+
+@register.simple_tag
+def tabs_primary_active(inlines: list[InlineAdminFormSet]) -> str:
+    active = "general"
+
+    for inline in inlines:
+        if getattr(inline.opts, "tab", False) and inline.formset.errors:
+            for error in inline.formset.errors:
+                if isinstance(error, dict) and len(error) > 0:
+                    active = slugify(str(inline.formset.prefix))
+
+    return active
