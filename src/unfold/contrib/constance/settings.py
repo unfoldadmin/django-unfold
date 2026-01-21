@@ -3,12 +3,19 @@ UNFOLD_CONSTANCE_ADDITIONAL_FIELDS = {
         "django.forms.CharField",
         {
             "widget": "unfold.widgets.UnfoldAdminTextInputWidget",
+            "required": False,
         },
     ],
     int: [
         "django.forms.IntegerField",
         {
             "widget": "unfold.widgets.UnfoldAdminIntegerFieldWidget",
+        },
+    ],
+    float: [
+        "django.forms.FloatField",
+        {
+            "widget": "unfold.widgets.UnfoldAdminDecimalFieldWidget",
         },
     ],
     bool: [

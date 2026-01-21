@@ -1,13 +1,14 @@
-from collections.abc import Generator
+from collections.abc import Iterator
 from typing import Any
 
 from django.contrib import admin
+from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.views.main import ChangeList
-from django.db.models import Field, Model
+from django.core.validators import EMPTY_VALUES
+from django.db.models import Field, Model, QuerySet
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
-from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin.mixins import (
     DropdownMixin,
     MultiValueMixin,
@@ -21,33 +22,32 @@ class DropdownFilter(admin.SimpleListFilter):
     form_class = DropdownForm
     all_option = ["", _("All")]
 
-    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> Iterator:
         add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
         choices = [self.all_option] if self.all_option else []
 
         for i, choice in enumerate(self.lookup_choices):
-            if add_facets:
+            if add_facets and facet_counts:
                 count = facet_counts[f"{i}__c"]
                 choice = (choice[0], f"{choice[1]} ({count})")
 
             choices.append(choice)
 
-        return (
-            {
-                "form": self.form_class(
-                    label=_(" By %(filter_title)s ") % {"filter_title": self.title},
-                    name=self.parameter_name,
-                    choices=choices,
-                    data={self.parameter_name: self.value()},
-                    multiple=self.multiple if hasattr(self, "multiple") else False,
-                ),
-            },
-        )
+        yield {
+            "form": self.form_class(
+                label=_(" By %(filter_title)s ") % {"filter_title": self.title},
+                name=self.parameter_name,
+                choices=choices,
+                data={self.parameter_name: self.value()},
+                multiple=self.multiple if hasattr(self, "multiple") else False,
+            ),
+        }
 
 
 class MultipleDropdownFilter(DropdownFilter):
     multiple = True
+    used_parameters: dict[str, list[str]]
 
     def __init__(
         self,
@@ -59,19 +59,30 @@ class MultipleDropdownFilter(DropdownFilter):
         self.request = request
         super().__init__(request, params, model, model_admin)
 
-        self.used_parameters[self.parameter_name] = self.request.GET.getlist(
-            self.parameter_name
-        )
+        if (
+            self.parameter_name is not None
+            and isinstance(self.parameter_name, str)
+            and self.parameter_name in self.request.GET
+        ):
+            self.used_parameters[self.parameter_name] = self.request.GET.getlist(
+                self.parameter_name
+            )
 
 
 class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFilter):
-    def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
+        if self.value() not in EMPTY_VALUES:
+            return super().queryset(request, queryset)
+
+        return queryset
+
+    def choices(self, changelist: ChangeList) -> Iterator:
         add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
 
         choices = [self.all_option] if self.all_option else []
         for i, choice in enumerate(self.field.flatchoices):
-            if add_facets:
+            if add_facets and facet_counts:
                 count = facet_counts[f"{i}__c"]
                 choice = (choice[0], f"{choice[1]} ({count})")
 
@@ -106,18 +117,23 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
         self.model_admin = model_admin
         self.request = request
 
-    def choices(self, changelist: ChangeList) -> Generator[dict[str, Any], None, None]:
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
+        if self.value() not in EMPTY_VALUES:
+            return super().queryset(request, queryset)
+
+        return queryset
+
+    def choices(self, changelist: ChangeList) -> Iterator:
         add_facets = getattr(changelist, "add_facets", False)
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
 
-        if add_facets:
+        if add_facets and facet_counts:
             choices = [self.all_option]
 
             for pk_val, val in self.lookup_choices:
-                if add_facets:
-                    count = facet_counts[f"{pk_val}__c"]
-                    choice = (pk_val, f"{val} ({count})")
-                    choices.append(choice)
+                count = facet_counts[f"{pk_val}__c"]
+                choice = (pk_val, f"{val} ({count})")
+                choices.append(choice)
         else:
             choices = [self.all_option, *self.lookup_choices]
 

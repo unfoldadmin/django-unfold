@@ -57,8 +57,8 @@ class ActionForm(forms.Form):
                         "group-[.changelist-actions]:!bg-white/20",
                         "group-[.changelist-actions]:font-medium",
                         "group-[.changelist-actions]:grow",
-                        "group-[.changelist-actions]:px-3",
-                        "group-[.changelist-actions]:py-2",
+                        "group-[.changelist-actions]:px-2",
+                        "group-[.changelist-actions]:py-1",
                         "group-[.changelist-actions]:pr-8",
                         "group-[.changelist-actions]:rounded-default",
                         "group-[.changelist-actions]:!text-current",
@@ -252,10 +252,9 @@ class PaginationGenericInlineFormSet(PaginationFormSetMixin, BaseGenericInlineFo
 
 class DatasetChangeListSearchForm(ChangeListSearchForm):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
+        search_var = kwargs.pop("search_var")
         super().__init__(*args, **kwargs)
 
-        from django.contrib.admin.views.main import SEARCH_VAR
-
         self.fields = {
-            SEARCH_VAR: forms.CharField(required=False, strip=False),
+            search_var: forms.CharField(required=False, strip=False),
         }

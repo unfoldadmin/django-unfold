@@ -4,7 +4,7 @@
     {% block header %}
         <div class="bg-white border-b border-base-200 mb-6 px-4 z-40 dark:bg-base-900 dark:border-base-800 dark:text-font-default-dark {% element_classes 'header' %}">
             <div class="{% if not cl.model_admin.list_fullwidth %}container{% endif %} flex items-center h-16 mx-auto py-4">
-                <div id="header-inner" class="flex items-center w-full">
+                <div id="header-inner" class="flex items-center relative w-full">
                     <div class="flex items-center w-full">
                         {% block usertools %}
                             {% if has_permission %}

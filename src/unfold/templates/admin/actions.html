@@ -1,60 +1,62 @@
 {% load i18n %}
 
-<div id="changelist-actions" class="actions flex flex-col gap-3 text-white sm:flex-row sm:items-center lg:items-center {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %}" x-bind:style="'width: ' + changeListWidth + 'px'">
-    {% block actions %}
-        <div class="group primary flex flex-row gap-2 lg:flex-row" x-data="{action: '', selectAcross: 0}">
-            {% block actions-form %}
-                {% for field in action_form %}
-                    {% if field.label %}
-                        <label>
-                            {{ field.label }}
-                    {% endif %}
+<div id="changelist-actions" class="actions mx-1 text-white {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %}" x-bind:style="'width: ' + changeListWidth + 'px'">
+    <div class="bg-primary-600 flex flex-col gap-3 mx-3 p-1.5 rounded-default dark:bg-primary-500 sm:flex-row sm:items-center lg:items-center">
+        {% block actions %}
+            <div class="group primary flex flex-row gap-2 lg:flex-row" x-data="{action: '', selectAcross: 0}">
+                {% block actions-form %}
+                    {% for field in action_form %}
+                        {% if field.label %}
+                            <label>
+                                {{ field.label }}
+                        {% endif %}
 
-                    {{ field }}
+                        {{ field }}
 
-                    {% if field.label %}
-                        </label>
-                    {% endif %}
-                {% endfor %}
-            {% endblock %}
+                        {% if field.label %}
+                            </label>
+                        {% endif %}
+                    {% endfor %}
+                {% endblock %}
 
-            {% block actions-submit %}
-                <button type="submit" x-show="action" class="bg-primary-900 cursor-pointer flex font-medium items-center justify-center px-3 py-2 rounded-default text-sm text-white whitespace-nowrap" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
-                    {% trans "Run" %}
-                </button>
-            {% endblock %}
-        </div>
+                {% block actions-submit %}
+                    <button type="submit" x-show="action" class="bg-primary-900 cursor-pointer flex font-medium items-center justify-center px-3 py-1 rounded-default text-sm text-white whitespace-nowrap" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+                        {% trans "Run" %}
+                    </button>
+                {% endblock %}
+            </div>
 
-        {% block actions-counter %}
-            {% if actions_selection_counter %}
-                <div class="flex grow flex-col sm:flex-row sm:items-center">
-                    <span class="action-counter" data-actions-icnt="{{ cl.result_list|length }}">
-                        {{ selection_note }}
-                    </span>
-
-                    {% if cl.result_count != cl.result_list|length %}
-                        <span class="all hidden">
-                            {{ selection_note_all }}
+            {% block actions-counter %}
+                {% if actions_selection_counter %}
+                    <div class="flex grow flex-col sm:flex-row sm:items-center">
+                        <span class="action-counter" data-actions-icnt="{{ cl.result_list|length }}">
+                            {{ selection_note }}
                         </span>
 
-                        {% if not cl.model_admin.list_disable_select_all %}
-                            <div class="mt-3 sm:ml-auto sm:mt-0">
-                                <span class="question hidden">
-                                    <a href="#" class="bg-white/20 block border border-transparent font-medium px-3 py-2 rounded-default text-white transition-colors hover:bg-white/30" title="{% translate "Click here to select the objects across all pages" %}">
-                                        {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
-                                    </a>
-                                </span>
+                        {% if cl.result_count != cl.result_list|length %}
+                            <span class="all hidden">
+                                {{ selection_note_all }}
+                            </span>
 
-                                <span class="clear hidden">
-                                    <a href="#" class="bg-white/20 block border border-transparent font-medium px-3 py-2 rounded-default text-white transition-colors hover:bg-white/30">
-                                        {% translate "Clear selection" %}
-                                    </a>
-                                </span>
-                            </div>
+                            {% if not cl.model_admin.list_disable_select_all %}
+                                <div class="mt-3 sm:ml-auto sm:mt-0">
+                                    <span class="question hidden">
+                                        <a href="#" class="bg-white/20 block border border-transparent font-medium px-3 py-1 rounded-default text-white transition-colors hover:bg-white/30" title="{% translate "Click here to select the objects across all pages" %}">
+                                            {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
+                                        </a>
+                                    </span>
+
+                                    <span class="clear hidden">
+                                        <a href="#" class="bg-white/20 block border border-transparent font-medium px-3 py-1 rounded-default text-white transition-colors hover:bg-white/30">
+                                            {% translate "Clear selection" %}
+                                        </a>
+                                    </span>
+                                </div>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                </div>
-            {% endif %}
+                    </div>
+                {% endif %}
+            {% endblock %}
         {% endblock %}
-    {% endblock %}
+    </div>
 </div>

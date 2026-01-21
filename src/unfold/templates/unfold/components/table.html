@@ -13,10 +13,6 @@
                 {% if table.headers %}
                     <thead class="text-font-important-light dark:text-font-important-dark {% if height %}sticky top-0 z-100{% endif %}">
                         <tr class="bg-base-50 dark:bg-base-900">
-                            {% if table|has_nested_tables %}
-                                <th class="align-middle border-b border-base-200 font-semibold py-2 text-left whitespace-nowrap hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02]"></th>
-                            {% endif %}
-
                             {% for header in table.headers %}
                                 <th class="align-middle border-b border-base-200 font-semibold py-2 text-left whitespace-nowrap hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02] {% if card_included == 1 %}first:pl-6 last:pr-6{% endif %}">
                                     {{ header|capfirst }}
@@ -29,33 +25,41 @@
                 {% if table.rows %}
                     {% for row in table.rows %}
                         <tbody class="block relative lg:table-row-group" x-data="{ rowOpen: false }">
-                            <tr class="{% if striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} {% if not card_included == 1 %}border border-base-200 mb-3 rounded-default shadow-xs{% else %}border-b border-base-200 {% if forloop.last %}last:border-b-0{% endif %}{% endif %} lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
-                                {% if row.table.rows %}
-                                    <td class="cursor-pointer px-3 py-2 lg:pr-0 align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto max-lg:first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800 lg:w-px" data-label="{% trans "Expand row" %}">
-                                        <span class="material-symbols-outlined select-none block! h-[18px] w-[18px] -rotate-90 transition-all" x-on:click="rowOpen = !rowOpen" x-bind:class="{'rotate-0': rowOpen}">
-                                            expand_more
-                                        </span>
-                                    </td>
-                                {% endif %}
-
+                            <tr class="{% if striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} {% if not card_included == 1 %}border border-base-200 mb-3 rounded-default shadow-xs{% else %}border-b border-base-200 {% if forloop.last %}last:border-b-0{% endif %}{% endif %} lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800 relative lg:hover:shadow-raised lg:dark:hover:shadow-raised-dark lg:hover:z-20">
                                 {% for cell in row.cols|default:row %}
                                     <td class="px-3 py-2 align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden {% if not forloop.parentloop.first %}lg:first:border-t{% endif %} lg:py-3 lg:table-cell dark:border-base-800 {% if card_included == 1 %}lg:first:pl-6 lg:last:pr-6{% endif %}" {% if table.headers %}data-label="{{ table.headers|index:forloop.counter0 }}"{% endif %}>
-                                        {{ cell }}
+                                        {% if row.table.rows|length > 0 %}
+                                            <div class="flex items-center gap-2">
+                                                {% if forloop.first and row.table.rows|length > 0 and row.table.collapsible %}
+                                                    <div class="material-symbols-outlined align-middle cursor-pointer select-none h-[18px] w-[18px] -rotate-90 transition-all" x-on:click="rowOpen = !rowOpen" x-bind:class="{'rotate-0': rowOpen}">
+                                                        expand_more
+                                                    </div>
+                                                {% endif %}
+
+                                                <div class="align-middle">
+                                                    {{ cell }}
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            {{ cell }}
+                                        {% endif %}
                                     </td>
                                 {% endfor %}
                             </tr>
 
                             {% if "table" in row %}
-                                <tr class="block lg:table-row" x-show="rowOpen">
+                                <tr class="block lg:table-row" {% if table.collapsible %}x-show="rowOpen"{% endif %}>
                                     <td class="block lg:table-cell" colspan="100%">
-                                        <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-[50] lg:block" x-show="rowOpen"></div>
+                                        {% if table.collapsible %}
+                                            <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-[50] lg:block" x-show="rowOpen"></div>
+                                        {% endif %}
 
                                         <table class="block w-full lg:table">
                                             {% if row.table.headers %}
                                                 <thead>
                                                     <tr class="bg-base-50 dark:bg-white/[.02]">
                                                         {% for header in row.table.headers %}
-                                                            <th class="align-middle border-b border-t border-base-200 font-semibold py-2 text-left whitespace-nowrap sortable column-description hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02]">
+                                                            <th class="align-middle border-b border-t border-base-200 font-semibold py-2 text-important text-left whitespace-nowrap sortable column-description hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02]">
                                                                 {{ header }}
                                                             </th>
                                                         {% endfor %}
@@ -65,7 +69,7 @@
 
                                             <tbody class="block lg:table-row-group">
                                                 {% for nested_row in row.table.rows %}
-                                                    <tr class="{% if row.table.striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} border border-base-200 mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                                                    <tr class="{% if row.table.striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} border border-base-200 mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800 relative lg:hover:shadow-raised lg:dark:hover:shadow-raised-dark lg:hover:z-20">
                                                         {% for cell in nested_row %}
                                                             <td class="px-3 py-2 align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden {% if not forloop.parentloop.first %}lg:first:border-t{% endif %} lg:py-3 lg:table-cell dark:border-base-800" {% if row.table.headers %}data-label="{{ row.table.headers|index:forloop.counter0 }}"{% endif %}>
                                                                 {{ cell }}

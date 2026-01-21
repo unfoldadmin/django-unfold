@@ -19,6 +19,7 @@ The table component requires a dictionary with the following structure:
 def dashboard_callback(request):
     return {
         "table_data": {
+            "collapsible": True,
             "headers": ["col 1", "col 2"],
             "rows": [
                 ["a", "b"],
@@ -50,8 +51,8 @@ data = {
         {
             "cols": ["c", "d"], # Cols in row
             "table": {
-                "headers": ["col2", "col3"]
-                "rows" [
+                "headers": ["col2", "col3"],
+                "rows": [
                     ["g", "h"]
                 ]
             }

@@ -8,28 +8,36 @@
                     <span>{{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}</span>
                 </label>
 
-                {% crispy_field field 'class' form_classes.switch %}
+                {% crispy_field field %}
             </div>
 
-            <div class="">
+            <div class="-mt-2">
                 {% include 'unfold_crispy/layout/help_text_and_errors.html' %}
             </div>
         </div>
     {% else %}
         <label for="{{ field.id_for_label }}" class="flex flex-row font-semibold gap-3 items-center text-base-900 dark:text-base-100 {% if tag == "td" %}mt-9{% endif %}">
-            {% crispy_field field 'class' form_classes.switch %} <span>{{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}</span>
+            {% crispy_field field %} <span>{{ field.label }}{% if field.field.required %} <span class="asteriskField">*</span>{% endif %}</span>
         </label>
 
         {% include 'unfold_crispy/layout/help_text_and_errors.html' %}
     {% endif %}
 {% else %}
-    {% with field=field|add_css_class:form_classes.switch %}
+    {% with field=field %}
         {% if tag == "td" %}
             <div class="flex items-center justify-center h-[38px]">
-                {% crispy_field field %}
+                {% if field.name == "DELETE" %}
+                    {% crispy_field field 'class' form_classes.switch %}
+                {% else %}
+                    {% crispy_field field %}
+                {% endif %}
             </div>
         {% else %}
-            {% crispy_field field %}
+            {% if field.name == "DELETE" %}
+                {% crispy_field field 'class' form_classes.switch %}
+            {% else %}
+                {% crispy_field field %}
+            {% endif %}
         {% endif %}
     {% endwith %}
 {% endif %}

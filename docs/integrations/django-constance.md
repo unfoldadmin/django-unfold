@@ -10,19 +10,6 @@ To get started, follow the installation instructions for django-constance from t
 
 After installing django-constance, add `unfold.contrib.constance` to your `INSTALLED_APPS` setting. Make sure to place it before `constance` in the list to ensure the proper templates are loaded correctly.
 
-
-```python
-# admin.py
-
-from django.contrib import admin
-from constance.admin import Config, ConstanceAdmin
-
-
-@admin.register(Config)
-class ConstanceConfigAdmin(ConstanceAdmin):
-    pass
-```
-
 Unfold comes with a pre-configured set of supported field types and their corresponding widgets. To use them, configure your `CONSTANCE_ADDITIONAL_FIELDS` setting as demonstrated in the example below. Additionally, `UNFOLD_CONSTANCE_ADDITIONAL_FIELDS` provides extra field types like `image_field` and `file_field` to enhance your form capabilities.
 
 ```python

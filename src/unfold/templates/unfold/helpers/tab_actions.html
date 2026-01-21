@@ -1,19 +1,29 @@
+{% load unfold %}
+
 {% if actions_list or actions_detail or actions_items or nav_global %}
-    <ul class="flex flex-col font-medium mb-4 ml-auto mt-2 md:flex-row md:mb-0 md:mt-0 max-md:w-full">
-        {% if actions_items %}
-            {{ actions_items }}
-        {% endif %}
+    <div class="flex flex-row items-center ml-auto" x-data="{ showActions: false }" x-on:click.outside="showActions = false">
+        {% component "unfold/components/button.html" with href="#" variant="default" class="!px-0 w-[38px] lg:hidden" extra_attrs="x-on:click='showActions = !showActions'" %}
+            <span class="material-symbols-outlined">more_horiz</span>
+        {% endcomponent %}
 
-        {% if nav_global %}
-            {{ nav_global }}
-        {% endif %}
+        <ul class="bg-white container hidden flex-col font-medium mx-auto left-0 right-0 lg:flex lg:flex-row lg:mb-0 lg:mt-0 max-lg:absolute max-lg:top-16 dark:bg-base-900" x-bind:class="{'max-lg:flex': showActions}">
+            {% if not actions_list_hide_default and not actions_detail_hide_default %}
+                {% if actions_items %}
+                    {{ actions_items }}
+                {% endif %}
 
-        {% for action in actions_list %}
-            {% include "unfold/helpers/tab_action.html" with title=action.title link=action.path %}
-        {% endfor %}
+                {% if nav_global %}
+                    {{ nav_global }}
+                {% endif %}
+            {% endif %}
 
-        {% for action in actions_detail %}
-            {% include "unfold/helpers/tab_action.html" with title=action.title link=action.path %}
-        {% endfor %}
-    </ul>
+            {% for action in actions_list %}
+                {% include "unfold/helpers/tab_action.html" with title=action.title link=action.path %}
+            {% endfor %}
+
+            {% for action in actions_detail %}
+                {% include "unfold/helpers/tab_action.html" with title=action.title link=action.path %}
+            {% endfor %}
+        </ul>
+    </div>
 {% endif %}

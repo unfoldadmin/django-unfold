@@ -10,7 +10,104 @@ window.addEventListener("load", (e) => {
   warnWithoutSaving();
 
   inlines();
+
+  tabNavigation();
+
+  scrollSidebarNav();
 });
+
+/*************************************************************
+ * Scroll sidebar to active item
+ *************************************************************/
+function scrollSidebarNav() {
+  const sidebarNav = document.getElementById("nav-sidebar-apps");
+
+  if (!sidebarNav) {
+    return;
+  }
+
+  const instance = SimpleBar.instances.get(sidebarNav);
+  const activeItem = sidebarNav.querySelector("a.active");
+
+  if (!instance || !activeItem) {
+    return;
+  }
+
+  function isActiveItemVisible() {
+    const sidebarRect = sidebarNav.getBoundingClientRect();
+    const itemRect = activeItem.getBoundingClientRect();
+
+    return (
+      itemRect.top >= sidebarRect.top && itemRect.bottom <= sidebarRect.bottom
+    );
+  }
+
+  if (instance && !isActiveItemVisible()) {
+    instance.getScrollElement().scroll(0, activeItem.offsetTop);
+  }
+}
+
+/*************************************************************
+ * Move not visible tab items to dropdown
+ *************************************************************/
+function tabNavigation() {
+  const itemsDropdown = document.getElementById("tabs-dropdown");
+  const itemsList = document.getElementById("tabs-items");
+  const widths = [];
+
+  if (!itemsDropdown || !itemsList) {
+    return;
+  }
+
+  handleTabNavigationResize();
+
+  window.addEventListener("resize", function () {
+    handleTabNavigationResize();
+  });
+
+  function handleTabNavigationResize() {
+    const contentWidth = document.getElementById("content").offsetWidth;
+    const tabsWidth = document.getElementById("tabs-wrapper").scrollWidth;
+    const availableWidth =
+      itemsList.parentElement.offsetWidth - itemsList.offsetWidth - 48;
+
+    if (tabsWidth > contentWidth) {
+      const lastTabItem = itemsList ? itemsList.lastElementChild : null;
+
+      if (lastTabItem) {
+        widths.push(lastTabItem.offsetWidth);
+        itemsList.removeChild(lastTabItem);
+        itemsDropdown.appendChild(lastTabItem);
+
+        // If there is still not enough space, move the last item to the dropdown again
+        if (
+          document.getElementById("content").offsetWidth <
+          document.getElementById("tabs-wrapper").scrollWidth
+        ) {
+          handleTabNavigationResize();
+        }
+      }
+    } else if (
+      widths.length > 0 &&
+      widths[widths.length - 1] < availableWidth
+    ) {
+      const lastTabItem = itemsDropdown ? itemsDropdown.lastElementChild : null;
+
+      if (lastTabItem) {
+        itemsDropdown.removeChild(lastTabItem);
+        itemsList.appendChild(lastTabItem);
+        widths.pop();
+      }
+    }
+
+    // Show/hide dropdown based on the number of items in dropdown
+    if (itemsDropdown.childElementCount === 0) {
+      itemsDropdown.parentElement.classList.add("hidden");
+    } else {
+      itemsDropdown.parentElement.classList.remove("hidden");
+    }
+  }
+}
 
 /*************************************************************
  * Alpine.sort.js callback after sorting

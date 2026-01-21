@@ -1,15 +1,38 @@
-from example.models import Project, Tag, Task, User
+from example.models import (
+    Category,
+    Invoice,
+    InvoiceItem,
+    Label,
+    Project,
+    Tag,
+    Task,
+    User,
+)
+from factory import LazyAttribute
 from factory.django import DjangoModelFactory
+from faker import Faker
 
 
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
+    username = LazyAttribute(lambda _: Faker().unique.email())
+
 
 class TagFactory(DjangoModelFactory):
     class Meta:
         model = Tag
+
+
+class CategoryFactory(DjangoModelFactory):
+    class Meta:
+        model = Category
+
+
+class LabelFactory(DjangoModelFactory):
+    class Meta:
+        model = Label
 
 
 class ProjectFactory(DjangoModelFactory):
@@ -20,3 +43,13 @@ class ProjectFactory(DjangoModelFactory):
 class TaskFactory(DjangoModelFactory):
     class Meta:
         model = Task
+
+
+class InvoiceFactory(DjangoModelFactory):
+    class Meta:
+        model = Invoice
+
+
+class InvoiceItemFactory(DjangoModelFactory):
+    class Meta:
+        model = InvoiceItem

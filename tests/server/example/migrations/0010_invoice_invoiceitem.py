@@ -5,12 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("example", "0004_actionuser_sectionuser"),
+        ("example", "0009_user_weight"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name="Project",
+            name="Invoice",
             fields=[
                 (
                     "id",
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name="Task",
+            name="InvoiceItem",
             fields=[
                 (
                     "id",
@@ -45,10 +45,10 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=255)),
                 (
-                    "project",
+                    "invoice",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="example.project",
+                        to="example.invoice",
                     ),
                 ),
             ],

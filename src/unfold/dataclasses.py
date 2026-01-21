@@ -2,8 +2,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 from unfold.enums import ActionVariant
-
-from .typing import ActionFunction
+from unfold.typing import ActionFunction
 
 
 @dataclass(frozen=True)

@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 from typing import Any
 
 from django.contrib import admin
@@ -55,28 +56,28 @@ class SingleNumericFilter(admin.FieldListFilter):
     def queryset(
         self, request: HttpRequest, queryset: QuerySet[Any]
     ) -> QuerySet | None:
-        if self.value():
+        if self.value() and self.parameter_name:
             try:
                 return queryset.filter(**{self.parameter_name: self.value()})
             except (ValueError, ValidationError):
                 return None
 
     def value(self) -> Any:
-        return self.used_parameters.get(self.parameter_name, None)
+        if self.parameter_name:
+            return self.used_parameters.get(self.parameter_name)
 
     def expected_parameters(self) -> list[str | None]:
         return [self.parameter_name]
 
-    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
-        return (
-            {
+    def choices(self, changelist: ChangeList) -> Iterator:
+        if self.parameter_name:
+            yield {
                 "request": self.request,
                 "parameter_name": self.parameter_name,
                 "form": SingleNumericForm(
                     name=self.parameter_name, data={self.parameter_name: self.value()}
                 ),
-            },
-        )
+            }
 
 
 class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
@@ -88,8 +89,6 @@ class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
         model_admin: ModelAdmin,
     ) -> None:
         super().__init__(request, params, model, model_admin)
-        if not self.parameter_name:
-            raise ValueError("Parameter name cannot be None")
 
         self.request = request
         self.init_used_parameters(params)
@@ -145,26 +144,25 @@ class SliderNumericFilter(RangeNumericFilter):
         self.field = field
         self.q = model_admin.get_queryset(request)
 
-    def choices(self, changelist: ChangeList) -> tuple[dict[str, Any], ...]:
+    def choices(self, changelist: ChangeList) -> Iterator:
         total = self.q.all().count()
         min_value = self.q.all().aggregate(min=Min(self.parameter_name)).get("min", 0)
+        max_value = None
 
         if total > 1:
             max_value = (
                 self.q.all().aggregate(max=Max(self.parameter_name)).get("max", 0)
             )
-        else:
-            max_value = None
+
+        decimals = 0
+        step = self.STEP if self.STEP else 1
 
         if isinstance(self.field, FloatField | DecimalField):
             decimals = self.MAX_DECIMALS
             step = self.STEP if self.STEP else self._get_min_step(self.MAX_DECIMALS)
-        else:
-            decimals = 0
-            step = self.STEP if self.STEP else 1
 
-        return (
-            {
+        if self.parameter_name:
+            yield {
                 "decimals": decimals,
                 "step": step,
                 "parameter_name": self.parameter_name,
@@ -190,8 +188,7 @@ class SliderNumericFilter(RangeNumericFilter):
                         ),
                     },
                 ),
-            },
-        )
+            }
 
     def _get_min_step(self, precision: int) -> float:
         result_format = f"{{:.{precision - 1}f}}"

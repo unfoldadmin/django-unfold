@@ -1,0 +1,39 @@
+<div class="border-t border-base-200 px-6 py-3 relative dark:border-base-800" x-data="{ openUserLinks: false }">
+    <nav class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 rounded-default shadow-lg bottom-[73px] left-3 right-3 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openUserLinks" x-transition x-on:click.outside="openUserLinks = false">
+        {% include "unfold/helpers/theme_switch.html" %}
+
+        {% include "unfold/helpers/language_switch.html" %}
+
+        {% if extra_userlinks %}
+            {{ extra_userlinks }}
+        {% endif %}
+
+        {% include "unfold/helpers/account_links.html" %}
+    </nav>
+
+    <div class="cursor-pointer flex flex-row gap-3 items-center min-h-[64px] -mx-6 -my-3 px-6 py-3 hover:bg-base-100 dark:hover:bg-base-800" x-on:click="openUserLinks = !openUserLinks" x-bind:class="{'bg-base-100 dark:bg-base-800': openUserLinks}">
+        {% with avatar_url=request.user.avatar_url %}
+            <div class="bg-white bg-cover h-[38px] flex items-center justify-center rounded-default select-none shadow min-w-[38px] w-[38px] dark:bg-base-700" {% if avatar_url %}style="background-image: url('{{ avatar_url }}');"{% endif %}>
+                {% if not avatar_url %}
+                    <span class="material-symbols-outlined text-base-400">person</span>
+                {% endif %}
+            </div>
+        {% endwith %}
+
+        <div class="flex flex-col select-none min-w-0">
+            <div class="font-semibold text-important tracking-tight truncate">
+                {{ user.get_full_name|default:user.get_username }}
+            </div>
+
+            {% if user.email %}
+                <div class="font-normal text-subtle text-xs truncate">
+                    {{ user.email }}
+                </div>
+            {% endif %}
+        </div>
+
+        <span class="material-symbols-outlined ml-auto select-none text-font-default-light dark:text-font-default-dark">
+            unfold_more
+        </span>
+    </div>
+</div>

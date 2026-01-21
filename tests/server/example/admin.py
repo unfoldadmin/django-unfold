@@ -2,15 +2,67 @@ from django.contrib import admin, messages
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
+from django.core.validators import EMPTY_VALUES
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
+from import_export.admin import ImportExportModelAdmin
 
+from example.models import (
+    ActionUser,
+    ApprovalChoices,
+    Category,
+    ColorChoices,
+    FilterUser,
+    Invoice,
+    InvoiceItem,
+    Label,
+    Post,
+    PriorityChoices,
+    Project,
+    SectionUser,
+    StatusChoices,
+    Tag,
+    Task,
+    User,
+)
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
-from unfold.decorators import action
+from unfold.contrib.filters.admin import (
+    AllValuesCheckboxFilter,
+    AutocompleteSelectFilter,
+    AutocompleteSelectMultipleFilter,
+    BooleanRadioFilter,
+    CheckboxFilter,
+    ChoicesCheckboxFilter,
+    ChoicesDropdownFilter,
+    ChoicesRadioFilter,
+    DropdownFilter,
+    FieldTextFilter,
+    MultipleChoicesDropdownFilter,
+    MultipleDropdownFilter,
+    MultipleRelatedDropdownFilter,
+    RadioFilter,
+    RangeDateFilter,
+    RangeDateTimeFilter,
+    RangeNumericFilter,
+    RangeNumericListFilter,
+    RelatedCheckboxFilter,
+    RelatedDropdownFilter,
+    SingleNumericFilter,
+    SliderNumericFilter,
+    TextFilter,
+)
+from unfold.contrib.import_export.forms import (
+    ExportForm,
+    ImportForm,
+    SelectableFieldsExportForm,
+)
+from unfold.datasets import BaseDataset
+from unfold.decorators import action, display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
-
-from .models import ActionUser, Project, SectionUser, Tag, Task, User
+from unfold.widgets import UnfoldAdminCheckboxSelectMultiple, UnfoldAdminSelect2Widget
 
 admin.site.unregister(Group)
 
@@ -19,24 +71,139 @@ class UserTagInline(StackedInline):
     model = User.tags.through
     collapsible = True
     per_page = 10
+    tab = True
 
 
-class ProjectTaskInline(TabularInline):
-    model = Task
+class InvoiceItemInline(TabularInline):
+    model = InvoiceItem
 
 
-class UserProjectInline(TabularInline):
+class UserInvoiceInline(TabularInline):
+    model = Invoice
+    inlines = [InvoiceItemInline]
+    # tab = True
+
+
+class PostInline(StackedInline):
+    model = Post
+    ordering_field = "weight"
+    hide_ordering_field = True
+    list_display = ["title", "weight"]
+
+
+class ProjectDatasetModelAdmin(ModelAdmin):
+    pass
+
+
+class ProjectDataset(BaseDataset):
     model = Project
-    inlines = [ProjectTaskInline]
+    model_admin = ProjectDatasetModelAdmin
+    tab = True
+
+
+class ExtendedUserChangeForm(UserChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["status"].widget = UnfoldAdminSelect2Widget(choices=StatusChoices)
+        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultiple(
+            choices=Project.objects.all().values_list("id", "name")
+        )
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, ModelAdmin):
-    form = UserChangeForm
+class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+    form = ExtendedUserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    readonly_fields = ["date_joined", "last_login"]
-    inlines = [UserProjectInline, UserTagInline]
+    inlines = [UserInvoiceInline, UserTagInline]
+    change_form_datasets = [
+        ProjectDataset,
+    ]
+    autocomplete_fields = ["tags"]
+    compressed_fields = True
+    readonly_fields = ["custom_readonly_field", "last_login"]
+    list_display = (
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "content_type",
+        "is_staff",
+        "display_header",
+        "display_status",
+        "display_dropdown",
+        "display_datetime",
+        "display_username",
+    )
+    list_display_links = ["username", "content_type"]
+    list_editable = ["is_staff"]
+    ordering_field = "weight"
+    hide_ordering_field = True
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    # "username",
+                    "password",
+                    "custom_readonly_field",
+                )
+            },
+        ),
+        (
+            _("Personal info"),
+            {
+                "fields": (
+                    ("first_name", "last_name"),
+                    "email",
+                    "status",
+                    "tags",
+                    "projects",
+                    (),
+                ),
+                "classes": ["tab"],
+            },
+        ),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "username",  # Test the error count tab
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+                "classes": ["tab"],
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
+
+    @display(description="Custom readonly field")
+    def custom_readonly_field(self, obj):
+        return "Custom readonly field"
+
+    @display(description="Status", label=True)
+    def display_status(self, obj):
+        return obj.status
+
+    @display(header=True)
+    def display_header(self, obj):
+        return "Custom header", "Description"
+
+    @display(description="Status", dropdown=True)
+    def display_dropdown(self, obj):
+        return {
+            "title": "Custom dropdown title",
+            "content": "template content",
+        }
+
+    def display_datetime(self, obj):
+        return now()
 
 
 class RelatedTableSection(TableSection):
@@ -45,6 +212,11 @@ class RelatedTableSection(TableSection):
     columns = [
         "object_id",
     ]
+
+
+class TagSection(TableSection):
+    related_name = "tags"
+    fields = ["name"]
 
 
 class SomeTemplateSection(TemplateSection):
@@ -59,6 +231,149 @@ class SectionUserAdmin(UserAdmin):
     list_sections = [
         SomeTemplateSection,
         RelatedTableSection,
+    ]
+
+
+class CustomTextFilter(TextFilter):
+    title = _("Text filter")
+    parameter_name = "text_username"
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(username__icontains=self.value())
+
+        return queryset
+
+
+class CustomRangeNumericListFilter(RangeNumericListFilter):
+    parameter_name = "numeric_range_custom"
+    title = "Numeric Range Custom"
+
+
+class CustomSliderNumericFilter(SliderNumericFilter):
+    MAX_DECIMALS = 2
+    STEP = 1
+
+
+class CustomStatusRadioFilter(RadioFilter):
+    title = _("Custom radio filter")
+    parameter_name = "custom_radio_filter"
+
+    def lookups(self, request, model_admin):
+        return StatusChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(status=self.value())
+
+        return queryset
+
+
+class CustomApprovalCheckboxFilter(CheckboxFilter):
+    title = _("Custom checkbox filter")
+    parameter_name = "custom_checkbox_filter"
+
+    def lookups(self, request, model_admin):
+        return ApprovalChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(approval__in=self.value())
+
+        return queryset
+
+
+class CustomPriorityDropdownFilter(DropdownFilter):
+    title = _("Custom priority dropdown filter")
+    parameter_name = "custom_priority"
+
+    def lookups(self, request, model_admin):
+        return PriorityChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(priority=self.value())
+
+        return queryset
+
+
+class CustomColorMultipleDropdownFilter(MultipleDropdownFilter):
+    title = _("Custom color multiple dropdown filter")
+    parameter_name = "custom_color"
+
+    def lookups(self, request, model_admin):
+        return ColorChoices.choices
+
+    def queryset(self, request, queryset):
+        if self.value() not in EMPTY_VALUES:
+            return queryset.filter(color__in=self.value())
+
+        return queryset
+
+
+@admin.register(FilterUser)
+class FilterUserAdmin(UserAdmin):
+    list_fullwidth = True
+    list_display = [
+        "username",
+        "email",
+        "is_active",
+        "is_staff",
+        "is_active",
+        "status",
+        "approval",
+        "date_joined",
+        "last_login",
+    ]
+    list_filter = [
+        CustomTextFilter,
+        ("username", FieldTextFilter),
+        # Autocomplete filters
+        ("projects", AutocompleteSelectFilter),
+        ("tasks", AutocompleteSelectMultipleFilter),
+        # Dropdown filters
+        ("priority", ChoicesDropdownFilter),
+        ("color", MultipleChoicesDropdownFilter),
+        ("categories", RelatedDropdownFilter),
+        ("labels", MultipleRelatedDropdownFilter),
+        CustomPriorityDropdownFilter,
+        CustomColorMultipleDropdownFilter,
+        # Date/time filters
+        ("date_joined", RangeDateFilter),
+        ("last_login", RangeDateTimeFilter),
+        # Choice filters
+        ("status", ChoicesRadioFilter),
+        ("approval", ChoicesCheckboxFilter),
+        ("is_active", BooleanRadioFilter),
+        ("tags", RelatedCheckboxFilter),
+        ("username", AllValuesCheckboxFilter),
+        CustomStatusRadioFilter,
+        CustomApprovalCheckboxFilter,
+        # Numeric filters
+        ("numeric_single", SingleNumericFilter),
+        ("numeric_slider", SliderNumericFilter),
+        ("numeric_slider_custom", CustomSliderNumericFilter),
+        ("numeric_range", RangeNumericFilter),
+        CustomRangeNumericListFilter,
+    ]
+    list_filter_submit = True
+    list_filter_sheet = False
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": (
+                    "username",
+                    "status",
+                    "approval",
+                    "numeric_single",
+                    "numeric_slider",
+                    "numeric_slider_custom",
+                    "numeric_range",
+                    "numeric_range_custom",
+                ),
+            },
+        ),
     ]
 
 
@@ -469,4 +784,26 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Category)
+class CategoryAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Label)
+class LabelAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Project)
+class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = SelectableFieldsExportForm
+    search_fields = ["name"]
+
+
+@admin.register(Task)
+class TaskAdmin(ModelAdmin):
     search_fields = ["name"]

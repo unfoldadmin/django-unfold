@@ -1,15 +1,15 @@
-FROM mcr.microsoft.com/devcontainers/python:3.13
+FROM mcr.microsoft.com/devcontainers/python:3.14
 
 ENV PYTHONUNBUFFERED 1
 
-RUN pip install poetry
+ENV UV_PROJECT_ENVIRONMENT=/.venv
 
-RUN poetry config virtualenvs.create false
+RUN pip install uv
 
-COPY poetry.lock pyproject.toml /app/
+COPY pyproject.toml uv.lock README.md  /app/
 
 WORKDIR /app
 
-RUN poetry install --no-root
+RUN uv sync
 
 EXPOSE 8000

@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib.admin.options import HORIZONTAL
+from django.conf import settings
+from django.contrib.admin.options import HORIZONTAL, ModelAdmin
 from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
 from django.db.models import Field as ModelField
 from django.forms import (
@@ -10,7 +11,6 @@ from django.forms import (
 from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
-from unfold.admin import ModelAdmin
 from unfold.widgets import (
     INPUT_CLASSES,
     UnfoldAdminCheckboxSelectMultiple,
@@ -67,8 +67,9 @@ class AutocompleteDropdownForm(forms.Form):
         )
 
     class Media:
+        extra = "" if settings.DEBUG else ".min"
         js = (
-            "admin/js/vendor/jquery/jquery.js",
+            f"admin/js/vendor/jquery/jquery{extra}.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
             "unfold/js/select2.init.js",
@@ -89,7 +90,7 @@ class CheckboxForm(forms.Form):
         self,
         name: str,
         label: str,
-        choices: tuple,
+        choices: tuple | list,
         *args,
         **kwargs,
     ) -> None:
@@ -150,8 +151,9 @@ class DropdownForm(forms.Form):
         )
 
     class Media:
+        extra = "" if settings.DEBUG else ".min"
         js = (
-            "admin/js/vendor/jquery/jquery.js",
+            f"admin/js/vendor/jquery/jquery{extra}.js",
             "admin/js/vendor/select2/select2.full.js",
             "admin/js/jquery.init.js",
             "unfold/js/select2.init.js",
@@ -180,7 +182,12 @@ class SingleNumericForm(forms.Form):
 
 class RangeNumericForm(forms.Form):
     def __init__(
-        self, name: str, min: float = None, max: float = None, *args, **kwargs
+        self,
+        name: str,
+        min: float | None = None,
+        max: float | None = None,
+        *args,
+        **kwargs,
     ) -> None:
         self.name = name
         super().__init__(*args, **kwargs)

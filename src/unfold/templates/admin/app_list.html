@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if app_list %}
-    <div class="h-0 grow overflow-auto" data-simplebar>
+    <div id="nav-sidebar-apps" class="h-0 grow overflow-auto" data-simplebar>
         {% for app in app_list %}
             <div class="app-{{ app.app_label }} module{% if app.app_url in request.path %} current-app{% endif %}">
                 <ol class="px-6">
@@ -27,7 +27,7 @@
 
                                             {% if model.admin_url %}
                                                 <a href="{{ model.admin_url }}" id="link-{{ app.app_label }}-{{ model.object_name|lower }}"
-                                                   class="flex items-center h-[38px] -mx-3 px-3 rounded-default truncate hover:text-primary-600 dark:hover:text-primary-500 {% if model.admin_url in request.path|urlencode %}bg-base-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
+                                                   class="flex items-center h-[38px] -mx-3 px-3 rounded-default truncate hover:text-primary-600 dark:hover:text-primary-500 {% if model.admin_url in request.path|urlencode %}bg-base-100 font-semibold text-primary-600 dark:bg-white/[.06] dark:text-primary-500 active{% endif %}">
                                                     {{ model.name }}
                                                 </a>
                                             {% else %}

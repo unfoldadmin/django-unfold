@@ -1,45 +1,32 @@
 {% load i18n %}
 
-<div class="relative" x-data="{ openUserLinks: false }">
-    <a class="block cursor-pointer h-[18px] hover:text-base-700 dark:hover:text-base-200" @click="openUserLinks = !openUserLinks">
-        <span class="material-symbols-outlined">person</span>
+
+{% if site_url %}
+    <a href="{{ site_url }}" target="_blank" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+        {% translate 'View site' %}
     </a>
+{% endif %}
 
-    <nav class="absolute bg-white border border-base-200 flex flex-col leading-none py-1 -right-2 rounded-default shadow-lg top-7 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openUserLinks" x-transition x-on:click.outside="openUserLinks = false">
-        <div class="border-b border-base-200 flex flex-row shrink-0 items-start justify-start mb-1 pb-1 dark:border-base-700">
-            <span class="block mx-1 px-3 py-2 truncate">
-                {% firstof user.get_short_name user.get_username %}
-            </span>
-        </div>
+{% if account_links %}
+    {% for link in account_links %}
+        <a href="{{ link.link }}" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+            {{ link.title }}
+        </a>
+    {% endfor %}
+{% else %}
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
+            {% translate 'Change password' %}
+        </a>
+    {% endif %}
+{% endif %}
 
-        {% if site_url %}
-            <a href="{{ site_url }}" target="_blank" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
-                {% translate 'View site' %}
-            </a>
-        {% endif %}
+<div class="border-t border-base-200 mt-1 pt-1 dark:border-base-700">
+    <form id="logout-form" method="post" action="{% url 'admin:logout' %}" class="mx-1">
+        {% csrf_token %}
 
-        {% if account_links %}
-            {% for link in account_links %}
-                <a href="{{ link.link }}" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
-                    {{ link.title }}
-                </a>
-            {% endfor %}
-        {% else %}
-            {% if user.has_usable_password %}
-                <a href="{% url 'admin:password_change' %}" class="mx-1 px-3 py-2 rounded-default hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200">
-                    {% translate 'Change password' %}
-                </a>
-            {% endif %}
-        {% endif %}
-
-        <div class="border-t border-base-200 mt-1 pt-1 dark:border-base-700">
-            <form id="logout-form" method="post" action="{% url 'admin:logout' %}" class="mx-1">
-                {% csrf_token %}
-
-                <button type="submit" class="bg-none block cursor-pointer px-3 py-2 text-left text-red-500 rounded-default w-full hover:bg-red-100 dark:hover:bg-red-500/20 dark:hover:text-red-500">
-                    {% translate 'Log out' %}
-                </button>
-            </form>
-        </div>
-    </nav>
+        <button type="submit" class="bg-none flex cursor-pointer items-center px-3 py-1.5 text-left text-red-500 rounded-default w-full hover:bg-red-100 dark:hover:bg-red-500/20 dark:hover:text-red-500">
+            {% translate 'Log out' %} <span class="ml-auto material-symbols-outlined text-red-500 dark:text-red-500">logout</span>
+        </button>
+    </form>
 </div>

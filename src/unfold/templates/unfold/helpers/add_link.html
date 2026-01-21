@@ -10,11 +10,7 @@
 
 {% if add_url %}
     <div class="flex flex-row items-center">
-        {% if not hide_separator %}
-            <span class="block bg-base-200 h-5 mx-4 w-px dark:bg-base-700"></span>
-        {% endif %}
-
-        <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 flex items-center h-9 justify-center -my-1 rounded-full w-9" title="{{ title }}">
+        <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 flex items-center h-[38px] justify-center -my-1 rounded-full w-[38px]" title="{{ title }}">
             <span class="material-symbols-outlined text-white">add</span>
         </a>
     </div>

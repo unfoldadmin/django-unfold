@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if actions %}
-    <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left text-sm before:block before:capitalize before:content-[attr(data-label)] before:mr-auto before:text-base-500 dark:before:text-base-300 lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800 lg:w-px">
+    <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left text-sm lg:py-3 lg:table-cell dark:border-base-800 lg:w-px before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:font-semibold before:text-font-important-light before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800 dark:before:text-font-important-dark">
         {% with action_id=instance_pk|cut:"-" %}
             <div class="group/action leading-none relative" x-data="{ openActionsId{{ action_id }}: false }">
                 <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 leading-7! justify-center rounded-default text-center text-base-400 w-7 group-hover/action:bg-base-100 group-hover/action:text-base-700 dark:text-font-default-dark dark:group-hover/action:bg-base-800 dark:group-hover/action:text-white"

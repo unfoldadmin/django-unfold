@@ -21,7 +21,10 @@
         </div>
     {% endif %}
 
-    <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="bg-white grow font-medium min-w-0 px-3 py-2 text-ellipsis dark:bg-base-900">
+    <label for="{{ widget.attrs.id }}" class="grow relative">
+        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="grow font-medium min-w-0 px-3 py-2 text-ellipsis">
+        <span class="absolute cursor-pointer left-0 bottom-0 top-0 right-0"></span>
+    </label>
 
     <div class="bg-white flex flex-none items-center leading-none self-stretch dark:bg-base-900">
         <div class="opacity-0 overflow-hidden w-[0px]">
