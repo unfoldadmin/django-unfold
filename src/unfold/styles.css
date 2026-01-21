@@ -740,7 +740,7 @@ div.jsoneditor-tree,
 }
 
 .jsoneditor div.jsoneditor-tree {
-  @apply bg-white dark:!bg-base-900;
+  @apply bg-white dark:!bg-transparent;
 }
 
 .jsoneditor textarea.jsoneditor-text {
@@ -749,7 +749,7 @@ div.jsoneditor-tree,
 
 .jsoneditor .jsoneditor-text,
 .jsoneditor .jsoneditor-tree {
-  @apply !bg-transparent !text-default dark:!bg-base-900;
+  @apply !bg-transparent !text-default dark:!bg-transparent;
 }
 
 .jsoneditor .jsoneditor-readonly {
@@ -757,7 +757,7 @@ div.jsoneditor-tree,
 }
 
 .jsoneditor .jsoneditor-field {
-  @apply !border-none !text-default hover:!bg-base-100 dark:bg-base-900 dark:hover:!bg-base-800;
+  @apply !border-none !text-default hover:!bg-base-100 dark:bg-transparent dark:hover:!bg-base-800;
 }
 
 .jsoneditor .jsoneditor-value {
@@ -797,6 +797,10 @@ div.jsoneditor-tree,
 
 .ace-jsoneditor .ace_indent-guide {
   @apply bg-none border-r border-base-200 dark:border-base-700;
+}
+
+.ace-jsoneditor .ace_marker-layer .ace_selection {
+  @apply bg-base-900/10 dark:bg-white/10;
 }
 
 .jsoneditor .jsoneditor-statusbar {
@@ -918,11 +922,11 @@ div.jsoneditor-tree,
 }
 
 .jsoneditor-contextmenu .jsoneditor-menu li {
-  @apply flex;
+  @apply flex flex-col relative;
 }
 
 .jsoneditor-contextmenu .jsoneditor-menu button {
-  @apply !flex-grow !mx-1 !px-3 !h-[30px] !rounded-default !w-auto hover:!bg-base-100 hover:!text-base-700 dark:hover:!bg-base-700 dark:hover:!text-base-200;
+  @apply !bg-transparent !flex-grow !mx-1 !px-3 !h-[30px] !rounded-default !w-auto hover:!bg-base-100 hover:!text-base-700 dark:hover:!bg-base-700 dark:hover:!text-base-200;
 }
 
 .jsoneditor-contextmenu button .jsoneditor-icon {
@@ -937,6 +941,56 @@ div.jsoneditor-tree,
   @apply !bg-transparent;
 }
 
-.jsoneditor-contextmenu .jsoneditor-selected .jsoneditor-text {
+.jsoneditor-contextmenu .jsoneditor-selected > button > .jsoneditor-text {
   @apply !text-primary-600 dark:!text-primary-500;
+}
+
+.jsoneditor .jsoneditor-selected,
+.jsoneditor .jsoneditor-highlight {
+  @apply !bg-base-50 dark:!bg-base-800;
+}
+
+.jsoneditor div.jsoneditor-expand,
+.jsoneditor .jsoneditor-button.jsoneditor-collapsed,
+.jsoneditor .jsoneditor-button.jsoneditor-expanded,
+.jsoneditor .jsoneditor-dragarea,
+.jsoneditor .jsoneditor-contextmenu-button {
+  @apply !bg-none !bg-transparent !outline-none;
+}
+
+.jsoneditor div.jsoneditor-expand:after,
+.jsoneditor .jsoneditor-dragarea:after,
+.jsoneditor .jsoneditor-contextmenu-button:after,
+.jsoneditor .jsoneditor-button.jsoneditor-collapsed:after,
+.jsoneditor .jsoneditor-button.jsoneditor-expanded:after {
+  @apply material-symbols-outlined text-[16px] !leading-[24px] text-icon;
+}
+
+.jsoneditor div.jsoneditor-expand:after {
+  @apply content-['arrow\_drop\_down'];
+}
+
+.jsoneditor .jsoneditor-contextmenu-button:after {
+  @apply content-['toolbar'];
+}
+
+.jsoneditor .jsoneditor-dragarea:after {
+  @apply content-['drag\_indicator'];
+}
+
+.jsoneditor .jsoneditor-button.jsoneditor-collapsed:after {
+  @apply content-['keyboard\_arrow\_up'];
+}
+
+.jsoneditor .jsoneditor-button.jsoneditor-expanded:after {
+  @apply content-['keyboard\_arrow\_down'];
+}
+
+
+.jsoneditor-contextmenu .jsoneditor-menu button.jsoneditor-expand {
+  @apply absolute !border-none right-0 top-0 hover:!bg-transparent;
+}
+
+.jsoneditor .jsoneditor-separator {
+  @apply !border-base-200 dark:!border-base-700;
 }
