@@ -92,6 +92,10 @@
   @apply text-base-400 dark:text-base-500;
 }
 
+@utility text-link {
+  @apply text-primary-600 dark:text-primary-500;
+}
+
 @utility field-sizing-content {
   field-sizing: content;
 }
@@ -173,7 +177,6 @@ select:after {
 /*******************************************************
  Table
  *******************************************************/
-
 table tr.selected td,
 table tr.selected th {
   @apply bg-yellow-200/[.10] dark:bg-white/[.03];
@@ -993,4 +996,78 @@ div.jsoneditor-tree,
 
 .jsoneditor .jsoneditor-separator {
   @apply !border-base-200 dark:!border-base-700;
+}
+
+/* Modal */
+.jsoneditor-modal.pico-content {
+  @apply !border-none !rounded-default !font-sans !text-default !shadow-xs dark:border-base-700 dark:!bg-base-800;
+}
+
+.jsoneditor-modal p {
+  @apply leading-relaxed;
+}
+
+.jsoneditor-modal p a {
+  @apply !text-link;
+}
+
+.jsoneditor-modal .pico-modal-header {
+  @apply !bg-transparent border-b border-base-200 !h-auto text-base !font-semibold !text-important !px-3 !py-1.5 !tracking-tight dark:border-base-700 ;
+}
+
+.jsoneditor-modal .pico-modal-contents {
+  @apply block !mt-3;
+}
+
+.jsoneditor-modal .jsoneditor-jmespath-label {
+  @apply !text-sm !text-important;
+}
+
+.jsoneditor-modal.pico-content .pico-close {
+  @apply !text-[0px] !text-icon -mt-3.5 mr-2;
+}
+
+.jsoneditor-modal.pico-content .pico-close:after {
+  @apply material-symbols-outlined text-[16px] !leading-[24px] content-['close'];
+}
+
+.jsoneditor-modal.pico-content select,
+.jsoneditor-modal.pico-content #query,
+.jsoneditor-modal.pico-content textarea {
+  @apply bg-white border border border-base-200 min-h-[38px] min-w-sm shadow-xs px-3 rounded-default text-default dark:bg-base-900 dark:border-base-700 outline-none;
+}
+
+.jsoneditor-modal.pico-content #query,
+.jsoneditor-modal.pico-content textarea {
+  @apply py-2;
+}
+
+.jsoneditor-modal.pico-content input[type="submit"] {
+  @apply border border-base-200 bg-primary-600 border-transparent text-white cursor-pointer font-medium flex items-center gap-2 px-3 py-2 relative rounded-default justify-center whitespace-nowrap;
+}
+
+.jsoneditor-modal.pico-content .jsoneditor-modal-actions {
+  @apply m-0;
+}
+
+.jsoneditor-modal.pico-content form {
+  @apply !font-sans !text-default w-[570px];
+}
+
+.jsoneditor-modal.pico-content .jsoneditor-button-group {
+  @apply flex flex-row gap-2 justify-end;
+}
+
+.jsoneditor-modal-input input[type="button"].jsoneditor-button-asc,
+.jsoneditor-modal-input input[type="button"].jsoneditor-button-desc {
+  @apply !bg-base-50 !border !border-base-200 cursor-pointer !font-sans !h-[38px] !text-default !rounded-default dark:!bg-base-800 dark:!border-base-700;
+}
+
+.jsoneditor-modal .jsoneditor-button-group.jsoneditor-button-group-value-asc input.jsoneditor-button-asc,
+.jsoneditor-modal .jsoneditor-button-group.jsoneditor-button-group-value-desc input.jsoneditor-button-desc {
+  @apply !border-primary-600 !bg-primary-600 !text-white;
+}
+
+.jsoneditor-modal table td, .jsoneditor-modal table th {
+  @apply !font-sans !text-default;
 }
