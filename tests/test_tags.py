@@ -1,7 +1,5 @@
 import importlib
-import unittest.mock
 from http import HTTPStatus
-from unittest.mock import patch
 
 import pytest
 from django import forms
@@ -1017,7 +1015,7 @@ def test_tags_tabs_active(rf, user_factory):
 
 
 @pytest.mark.django_db
-def test_tags_tabs_primary_active(rf, user_factory):
+def test_tags_tabs_primary_active(rf, user_factory, monkeypatch):
     user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
     request = rf.get("/")
     request.user = user
@@ -1045,25 +1043,28 @@ def test_tags_tabs_primary_active(rf, user_factory):
     )
     assert "general" in response
 
-    with unittest.mock.patch.object(
-        formsets[0].formset.__class__, "errors", new_callable=unittest.mock.PropertyMock
-    ) as mock_errors:
-        mock_errors.return_value = [{"example_field": ["Example error."]}]
+    class ErrorsProperty:
+        def __get__(self, obj, objtype=None):
+            return [{"example_field": ["Example error."]}]
 
-        response = Template(
-            "{% load unfold %}{% tabs_primary_active inline_admin_formsets %}"
-        ).render(
-            Context(
-                {
-                    "inline_admin_formsets": formsets,
-                },
-            )
+    monkeypatch.setattr(
+        type(formsets[0].formset), "errors", property(ErrorsProperty().__get__)
+    )
+
+    response = Template(
+        "{% load unfold %}{% tabs_primary_active inline_admin_formsets %}"
+    ).render(
+        Context(
+            {
+                "inline_admin_formsets": formsets,
+            },
         )
-        assert "user_tags" in response
+    )
+    assert "user_tags" in response
 
 
 @pytest.mark.django_db
-def test_tags_tabs_primary_errors_count(rf, user_factory):
+def test_tags_tabs_primary_errors_count(rf, user_factory, monkeypatch):
     user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
     request = rf.get("/")
     request.user = user
@@ -1081,49 +1082,70 @@ def test_tags_tabs_primary_errors_count(rf, user_factory):
     formsets = context_data["inline_admin_formsets"]
 
     # Errors in the inline which is displayed as tab
-    with unittest.mock.patch.object(
-        formsets[0].formset.__class__, "errors", new_callable=unittest.mock.PropertyMock
-    ) as mock_errors:
-        mock_errors.return_value = [
-            {"example_field": ["Example error."]},
-            {"example_field2": ["Example error 2."]},
-        ]
+    class ErrorsPropertyTab:
+        @property
+        def errors(self):
+            return [
+                {"example_field": ["Example error."]},
+                {"example_field2": ["Example error 2."]},
+            ]
 
-        response = Template("{% load unfold %}{% tab_list 'changeform' opts %}").render(
-            RequestContext(
-                request,
-                {
-                    "opts": get_user_model()._meta,
-                    "adminform": context_data["adminform"],
-                    "inline_admin_formsets": formsets,
-                },
-            )
+    original_errors_property_0 = getattr(formsets[0].formset.__class__, "errors", None)
+    monkeypatch.setattr(
+        formsets[0].formset.__class__, "errors", ErrorsPropertyTab.errors
+    )
+
+    response = Template("{% load unfold %}{% tab_list 'changeform' opts %}").render(
+        RequestContext(
+            request,
+            {
+                "opts": get_user_model()._meta,
+                "adminform": context_data["adminform"],
+                "inline_admin_formsets": formsets,
+            },
         )
+    )
 
-        assert "2" in response
+    assert "2" in response
+
+    # Restore previous patch for next usage
+    if original_errors_property_0 is not None:
+        monkeypatch.setattr(
+            formsets[0].formset.__class__, "errors", original_errors_property_0
+        )
 
     # Errors in the inline display in "General" tab
-    with unittest.mock.patch.object(
-        formsets[1].formset.__class__, "errors", new_callable=unittest.mock.PropertyMock
-    ) as mock_errors:
-        mock_errors.return_value = [
-            {"example_field": ["Example error."]},
-            {"example_field2": ["Example error 2."]},
-            {"example_field3": ["Example error 3."]},
-        ]
+    class ErrorsPropertyGeneral:
+        @property
+        def errors(self):
+            return [
+                {"example_field": ["Example error."]},
+                {"example_field2": ["Example error 2."]},
+                {"example_field3": ["Example error 3."]},
+            ]
 
-        response = Template("{% load unfold %}{% tab_list 'changeform' opts %}").render(
-            RequestContext(
-                request,
-                {
-                    "opts": get_user_model()._meta,
-                    "adminform": context_data["adminform"],
-                    "inline_admin_formsets": formsets,
-                },
-            )
+    original_errors_property_1 = getattr(formsets[1].formset.__class__, "errors", None)
+    monkeypatch.setattr(
+        formsets[1].formset.__class__, "errors", ErrorsPropertyGeneral.errors
+    )
+
+    response = Template("{% load unfold %}{% tab_list 'changeform' opts %}").render(
+        RequestContext(
+            request,
+            {
+                "opts": get_user_model()._meta,
+                "adminform": context_data["adminform"],
+                "inline_admin_formsets": formsets,
+            },
         )
+    )
 
-        assert "3" in response
+    assert "3" in response
+
+    if original_errors_property_1 is not None:
+        monkeypatch.setattr(
+            formsets[1].formset.__class__, "errors", original_errors_property_1
+        )
 
 
 @pytest.mark.django_db
@@ -1312,7 +1334,7 @@ def test_tags_is_facet_var_django42(monkeypatch):
 
 
 @pytest.mark.django_db
-def test_tags_result_list_object_does_not_exist(rf, user_factory):
+def test_tags_result_list_object_does_not_exist(rf, user_factory, monkeypatch):
     from django.contrib.admin.utils import lookup_field as real_lookup_field
 
     template = Template("{% load unfold_list %} {% unfold_result_list cl %}")
@@ -1344,20 +1366,20 @@ def test_tags_result_list_object_does_not_exist(rf, user_factory):
             raise ObjectDoesNotExist("Related object does not exist")
         return real_lookup_field(field_name, result, model_admin)
 
-    with patch(
-        "unfold.templatetags.unfold_list.lookup_field",
-        side_effect=mock_lookup_field,
-    ):
-        opts = get_user_model()._meta
-        opts.app_label = "non_existing_label"
-        response = template.render(
-            RequestContext(
-                request,
-                {
-                    "opts": opts,
-                    "cl": cl,
-                },
-            )
+    monkeypatch.setattr(
+        "unfold.templatetags.unfold_list.lookup_field", mock_lookup_field
+    )
+
+    opts = get_user_model()._meta
+    opts.app_label = "non_existing_label"
+    response = template.render(
+        RequestContext(
+            request,
+            {
+                "opts": opts,
+                "cl": cl,
+            },
         )
+    )
 
     assert "sample@example.com" not in response
