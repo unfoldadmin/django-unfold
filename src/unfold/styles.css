@@ -859,11 +859,11 @@ div.jsoneditor-tree,
 }
 
 .jsoneditor .jsoneditor-treepath .jsoneditor-treepath-seperator {
-  @apply text-[0px]
+  @apply text-[0px];
 }
 
 .jsoneditor .jsoneditor-treepath .jsoneditor-treepath-seperator:after {
-   @apply material-symbols-outlined content-['chevron\_right'] !align-[-4px];
+   @apply material-symbols-outlined content-['chevron\_right'] !align-[-4px] text-subtle;
 }
 
 /* Menu */
@@ -948,6 +948,10 @@ div.jsoneditor-tree,
   @apply !text-primary-600 dark:!text-primary-500;
 }
 
+.jsoneditor-contextmenu .jsoneditor-menu li button .jsoneditor-expand {
+  @apply !flex !items-center justify-center !m-0 !p-0 !top-0.5 !right-0.5;
+}
+
 .jsoneditor .jsoneditor-selected,
 .jsoneditor .jsoneditor-highlight {
   @apply !bg-base-50 dark:!bg-base-800;
@@ -1024,7 +1028,7 @@ div.jsoneditor-tree,
 }
 
 .jsoneditor-modal.pico-content .pico-close {
-  @apply !text-[0px] !text-icon -mt-3.5 mr-2;
+  @apply !text-[0px] !text-icon -mt-[13px] mr-2 hover:!text-important;
 }
 
 .jsoneditor-modal.pico-content .pico-close:after {
