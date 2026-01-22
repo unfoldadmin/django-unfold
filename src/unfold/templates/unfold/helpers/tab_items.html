@@ -2,7 +2,7 @@
 
 {% if inlines_list or tabs_list or datasets_list %}
     <div class="flex flex-row grow">
-        <nav id="tabs-items" class="bg-base-100 flex flex-row font-medium gap-1 p-1 rounded-default text-important dark:border-base-700 md:w-auto dark:bg-white/[.04] *:flex *:flex-row *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:transition-colors *:hover:bg-base-700/[.04] *:dark:hover:bg-white/[.04] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:hover:bg-white [&>.active]:dark:bg-base-900 [&>.active]:dark:hover:bg-base-900">
+        <nav id="tabs-items" class="bg-base-100 flex flex-row font-medium gap-1 p-1 rounded-default text-important dark:border-base-700 md:w-auto dark:bg-white/[.04] *:flex *:flex-row *:gap-1 *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:transition-colors *:hover:bg-base-700/[.04] *:dark:hover:bg-white/[.04] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:hover:bg-white [&>.active]:dark:bg-base-900 [&>.active]:dark:hover:bg-base-900">
             {% for item in tabs_list %}
                 {% if item.has_permission %}
                     <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}{% if item.inline %}#{{ item.inline|slugify }}{% endif %}" class="{% if item.active and not item.inline %}active{% endif %}" {% if item.inline %}x-on:click="activeTab = '{{ item.inline|slugify }}'" x-bind:class="{'active': activeTab == '{{ item.inline|slugify }}'}"{% endif %}>
@@ -14,6 +14,8 @@
             {% if inlines_list or datasets_list %}
                 <a href="#general" x-on:click="activeTab = 'general'" x-bind:class="{'active': activeTab == 'general'}">
                     {% trans "General" %}
+
+                    {% include "unfold/helpers/tab_error_count.html" with error_count=error_count %}
                 </a>
 
                 {% for inline in inlines_list %}
@@ -23,6 +25,8 @@
                         {% else %}
                             {{ inline.opts.verbose_name_plural|capfirst }}
                         {% endif %}
+
+                        {% include "unfold/helpers/tab_error_count.html" with error_count=inline.error_count %}
                     </a>
                 {% endfor %}
 

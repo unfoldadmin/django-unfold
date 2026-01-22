@@ -1008,3 +1008,17 @@ document.addEventListener("htmx:afterSettle", function (e) {
     );
   });
 });
+
+function getCurrentTab() {
+  const fragment = window.location.hash?.replace('#', '');
+
+  if (!fragment) {
+    return null
+  }
+
+  if (!document.getElementById(`${fragment}-group}`)) {
+    return null;
+  }
+
+  return fragment
+}
