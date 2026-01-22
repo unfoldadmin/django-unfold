@@ -75,6 +75,13 @@
   --color-font-important-dark: var(--color-font-important-dark);
 }
 
+@utility bg-striped {
+  background-image: repeating-linear-gradient(45deg, var(--color-base-100), 0px, var(--color-base-100) 1px, transparent 2px, transparent 10px);
+
+  @variant dark {
+    background-image: repeating-linear-gradient(45deg, var(--color-base-800) 0px, var(--color-base-800) 1px, transparent 2px, transparent 10px);
+  }
+}
 
 @utility text-important {
  @apply text-font-important-light dark:text-font-important-dark;
@@ -146,6 +153,10 @@
 
 .sortable-ghost {
   @apply opacity-50;
+}
+
+.empty-form {
+  @apply hidden;
 }
 
 /*******************************************************
@@ -322,48 +333,12 @@ table tr.selected th {
 }
 
 /*******************************************************
- Inlines
- *******************************************************/
-.empty-form {
-  @apply hidden;
-}
-
-.tabular-table tbody.has_original,
-.tabular-table .template tr {
-  @apply border-t border-base-200 dark:border-base-800;
-}
-
-.tabular-table tbody.has_original:first-of-type {
-  @apply border-t-0;
-}
-
-.add-row {
-  @apply align-middle bg-white px-3 py-5 font-normal text-right dark:bg-base-900;
-}
-
-[data-inline-type="stacked"] .add-row {
-  @apply overflow-hidden;
-}
-
-.add-row td {
-  @apply px-3 py-4;
-}
-
-.add-row a {
-  @apply bg-white border border-base-200 block font-medium px-3 py-2 rounded-default text-center hover:text-base-700 lg:float-right dark:bg-base-900 dark:border-base-700 dark:hover:text-base-200;
-}
-
-.inline-deletelink {
-  @apply block leading-none text-red-600 dark:text-red-500;
-}
-
-td .inline-deletelink {
-  @apply block lg:mt-2.5;
-}
-
-/*******************************************************
  Autocomplete
  *******************************************************/
+.formset .select2 {
+  @apply min-w-[240px];
+}
+
 .select2.select2-container {
   @apply bg-white border border-base-200 max-w-2xl min-h-[38px]! relative rounded-default shadow-xs w-full! dark:bg-base-900 dark:border-base-700;
 }

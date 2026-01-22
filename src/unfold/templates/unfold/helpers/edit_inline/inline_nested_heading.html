@@ -1,0 +1,15 @@
+{% if nested_inline %}
+    <h2 class="dark:border-base-800 flex flex-row items-center gap-3 font-semibold text-font-important-light dark:text-font-important-dark {% if inline_admin_formset.is_collapsible %}cursor-pointer select-none{% endif %}" {% if inline_admin_formset.is_collapsible %}x-on:click="open = !open"{% endif %}>
+        {% if inline_admin_formset.formset.max_num == 1 %}
+            {{ inline_admin_formset.opts.verbose_name|capfirst }}
+        {% else %}
+            {{ inline_admin_formset.opts.verbose_name_plural|capfirst }}
+        {% endif %}
+
+        {% if inline_admin_formset.is_collapsible %}
+            <span class="material-symbols-outlined ml-auto mr-[17px] rotate-90 select-none transition-transform" x-bind:class="{'rotate-270!': open }">
+                chevron_right
+            </span>
+        {% endif %}
+    </h2>
+{% endif %}

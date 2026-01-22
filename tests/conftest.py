@@ -2,6 +2,8 @@ from pytest_factoryboy import register
 
 from .factories import (
     CategoryFactory,
+    InvoiceFactory,
+    InvoiceItemFactory,
     LabelFactory,
     ProjectFactory,
     TagFactory,
@@ -16,3 +18,5 @@ register(ProjectFactory)
 register(TaskFactory)
 register(LabelFactory)
 register(CategoryFactory)
+register(InvoiceFactory)
+register(InvoiceItemFactory)
