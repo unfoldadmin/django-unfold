@@ -36,8 +36,6 @@
 
 {% block content %}
     <div id="content-main" x-data="{ filterOpen: false }">
-        {% include "unfold/helpers/popup_header.html" %}
-
         {% if cl.formset and cl.formset.errors %}
             {% include "unfold/helpers/messages/errornote.html" with errors=cl.formset.errors %}
 
