@@ -15,7 +15,7 @@ Modern theme that upgrades Django admin with beautiful design, advanced features
 - **Turbo:** A Django & Next.js boilerplate implementing Unfold is available at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo?utm_medium=github&utm_source=unfold).
 - **Discord:** Join our Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
 
-## Profesional services
+## Professional services
 
 Need expert help with Django or Unfold? We offer services to support your project:
 
@@ -76,7 +76,7 @@ Need expert help with Django or Unfold? We offer services to support your projec
 - [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
 - [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
 - [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)
-
+- [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/)
 
 ## Community packages
 
