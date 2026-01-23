@@ -25,7 +25,7 @@
                         </h2>
                     {% endif %}
 
-                    <ol class="flex flex-col gap-1 px-6" {% if group.collapsible %}x-show="navigationOpen"{% endif %}>
+                    <ol class="flex flex-col gap-0.5 px-6" {% if group.collapsible %}x-show="navigationOpen"{% endif %}>
                         {% for item in group.items %}
                             {% if item.has_permission %}
                                 <li>
