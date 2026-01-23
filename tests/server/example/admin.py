@@ -71,6 +71,10 @@ class UserTagInline(StackedInline):
     collapsible = True
     tab = True
 
+    def get_queryset(self, request, *args, **kwargs):
+        qs = super().get_queryset(request, *args, **kwargs)
+        return qs.order_by("pk")
+
 
 class PostInline(StackedInline):
     model = Post
