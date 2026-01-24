@@ -83,8 +83,10 @@ def display_for_label(value: Any, empty_value_display: str, label: Any) -> SafeT
     )
 
 
-def display_for_value(
-    value: Any, empty_value_display: str, boolean: bool = False
+def display_for_value(  # noqa: PLR0911
+    value: Any,
+    empty_value_display: str,
+    boolean: bool = False,
 ) -> str:
     if boolean:
         return _boolean_icon(value)
@@ -106,7 +108,7 @@ def display_for_value(
         return str(value)
 
 
-def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
+def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:  # noqa: PLR0911, PLR0912
     if getattr(field, "flatchoices", None):
         try:
             return dict(field.flatchoices).get(value, empty_value_display)

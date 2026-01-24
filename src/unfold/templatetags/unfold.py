@@ -267,7 +267,7 @@ class RenderComponentNode(template.Node):
 def do_component(parser: Parser, token: Token) -> RenderComponentNode:
     bits = token.split_contents()
 
-    if len(bits) < 2:
+    if len(bits) < 2:  # noqa: PLR2004
         raise TemplateSyntaxError(
             f"{bits[0]} tag takes at least one argument: the name of the template to be included."
         )
@@ -815,16 +815,16 @@ def do_capture(parser: Parser, token: Token) -> RenderCaptureNode:
     variable_name = ""
     silent = False
 
-    if len(parts) > 4:
+    if len(parts) > 4:  # noqa: PLR2004
         raise TemplateSyntaxError("Too many arguments for 'capture' tag.")
 
-    if len(parts) >= 3:
+    if len(parts) >= 3:  # noqa: PLR2004
         if parts[1] != "as":
             raise TemplateSyntaxError("'as' is required for 'capture' tag.")
 
         variable_name = parts[2]
 
-    if len(parts) == 4:
+    if len(parts) == 4:  # noqa: PLR2004
         if parts[3] != "silent":
             raise TemplateSyntaxError("'silent' is required for 'capture' tag.")
 

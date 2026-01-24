@@ -117,7 +117,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         except NoReverseMatch:
             return str(remote_obj)
 
-    def _get_contents(self) -> str:
+    def _get_contents(self) -> str:  # noqa: PLR0912
         from unfold.utils import _boolean_icon
 
         field, obj, model_admin = (
@@ -140,11 +140,10 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
             if f is None:
                 if getattr(attr, "boolean", False):
                     result_repr = _boolean_icon(value)
+                elif hasattr(value, "__html__"):
+                    result_repr = value
                 else:
-                    if hasattr(value, "__html__"):
-                        result_repr = value
-                    else:
-                        result_repr = linebreaksbr(value)
+                    result_repr = linebreaksbr(value)
             else:
                 if isinstance(f.remote_field, ManyToManyRel) and value is not None:
                     result_repr = ", ".join(map(str, value.all()))

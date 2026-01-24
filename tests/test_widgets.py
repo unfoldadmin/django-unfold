@@ -95,9 +95,9 @@ def test_widgets_custom_css_class(widget_class):
     )
 
     # Render the widget
-    if (
-        widget_class == UnfoldAdminRadioSelectWidget
-        or widget_class == UnfoldAdminCheckboxSelectMultiple
+    if widget_class in (
+        UnfoldAdminRadioSelectWidget,
+        UnfoldAdminCheckboxSelectMultiple,
     ):
         widget = widget_class(
             attrs={

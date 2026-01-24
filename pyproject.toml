@@ -84,12 +84,15 @@ select = [
     "C",    # flake8-comprehensions
     "B",    # flake8-bugbear
     "UP",   # pyupgrade
+    "PL",   # pylint
     "T20",  # disallow pprint and print
 ]
 ignore = [
-    "E501", # line too long, handled by black
-    "B905", # zip() without strict=True
-    "C901", # too complex
+    "E501",    # line too long, handled by black
+    "B905",    # zip() without strict=True
+    "C901",    # too complex
+    "PLC0415", # `import` should be at the top-level of a file
+    "PLR0913", # Too many arguments in function definition
 ]
 
 [tool.semantic_release]
