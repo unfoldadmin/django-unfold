@@ -469,11 +469,11 @@ class UnfoldAdminSite(AdminSite):
         return False
 
     def _replace_values(self, target: dict, source: dict, request: HttpRequest):
-        for key in source.keys():
-            if source[key] is not None and callable(source[key]):
-                target[key] = source[key](request)
+        for key, value in source.items():
+            if value is not None and callable(value):
+                target[key] = value(request)
             else:
-                target[key] = source[key]
+                target[key] = value
 
         return target
 
@@ -551,10 +551,10 @@ class UnfoldAdminSite(AdminSite):
         colors = self._get_config(key, *args)
 
         for name, weights in colors.items():
-            weights = self._get_value(weights, *args)
-            colors[name] = weights
+            color_weights = self._get_value(weights, *args)
+            colors[name] = color_weights
 
-            for weight, value in weights.items():
+            for weight, value in color_weights.items():
                 colors[name][weight] = convert_color(value)
 
         return colors
@@ -599,7 +599,7 @@ class UnfoldAdminSite(AdminSite):
             for item in items
         ]
 
-    def _get_value(self, value: str | Callable | None, *args: Any) -> str | None:
+    def _get_value(self, value: str | Callable | None, *args: Any) -> Any:
         if value is None:
             return None
 

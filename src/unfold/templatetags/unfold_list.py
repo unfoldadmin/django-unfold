@@ -113,7 +113,7 @@ def result_headers(cl):
         )
         is_field_sortable = cl.sortable_by is None or field_name in cl.sortable_by
         if attr:
-            field_name = _coerce_field_name(field_name, i)
+            field_name = _coerce_field_name(field_name, i)  # noqa: PLW2901
             # Potentially not sortable
 
             # if the field is the action checkbox: no sorting and special class
@@ -206,7 +206,7 @@ def result_headers(cl):
         }
 
 
-def items_for_result(
+def items_for_result(  # noqa: PLR0915, PLR0912
     cl: ChangeList, result: Model, form
 ) -> Generator[SafeText, None, None]:
     def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
