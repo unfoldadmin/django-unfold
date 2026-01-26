@@ -1,6 +1,44 @@
 # CHANGELOG
 
 
+## v0.77.0 (2026-01-26)
+
+### Bug Fixes
+
+- Better tabs handling in popup mode
+  ([#1801](https://github.com/unfoldadmin/django-unfold/pull/1801),
+  [`428ff44`](https://github.com/unfoldadmin/django-unfold/commit/428ff441bd2de715d6a8fae23c54cb2376098343))
+
+- Clearable fileinput bg color ([#1804](https://github.com/unfoldadmin/django-unfold/pull/1804),
+  [`9368a8c`](https://github.com/unfoldadmin/django-unfold/commit/9368a8c31c96c6cf84f52f7e8e809b0983fea8ef))
+
+- Current tab navigation typo ([#1800](https://github.com/unfoldadmin/django-unfold/pull/1800),
+  [`58de9dc`](https://github.com/unfoldadmin/django-unfold/commit/58de9dca76a698fba8e32daa5d19cfd8d5906282))
+
+- Sidebar nav items spacing ([#1802](https://github.com/unfoldadmin/django-unfold/pull/1802),
+  [`7d28c2b`](https://github.com/unfoldadmin/django-unfold/commit/7d28c2b630d66e5333d3e6f634381affdd389534))
+
+- Site header text spacing ([#1807](https://github.com/unfoldadmin/django-unfold/pull/1807),
+  [`321087f`](https://github.com/unfoldadmin/django-unfold/commit/321087f83c7804504ad4685ab2f812489c8f71a0))
+
+- Tests warnings ([#1806](https://github.com/unfoldadmin/django-unfold/pull/1806),
+  [`1dfcf36`](https://github.com/unfoldadmin/django-unfold/commit/1dfcf36dfca3f8f20b92419aa672d250433ebc0f))
+
+### Documentation
+
+- Django json widget ([#1803](https://github.com/unfoldadmin/django-unfold/pull/1803),
+  [`7c58a94`](https://github.com/unfoldadmin/django-unfold/commit/7c58a946c3352515b1840401d370598fc91ce3df))
+
+### Features
+
+- Django json widget ([#1789](https://github.com/unfoldadmin/django-unfold/pull/1789),
+  [`facac22`](https://github.com/unfoldadmin/django-unfold/commit/facac225e37406955f9dccd4f9b546f50a306d72))
+
+- Focus tab containing form with error
+  ([#1799](https://github.com/unfoldadmin/django-unfold/pull/1799),
+  [`1463157`](https://github.com/unfoldadmin/django-unfold/commit/1463157c6a6bdf823a5ae4c0f505a21d50427dbc))
+
+
 ## v0.76.0 (2026-01-12)
 
 ### Bug Fixes
