@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.77.1 (2026-01-26)
+
+### Bug Fixes
+
+- Flatten context for component ([#1813](https://github.com/unfoldadmin/django-unfold/pull/1813),
+  [`d6f34be`](https://github.com/unfoldadmin/django-unfold/commit/d6f34be86faca8ed1e415e92e195930615b45fa9))
+
+
 ## v0.77.0 (2026-01-26)
 
 ### Bug Fixes
