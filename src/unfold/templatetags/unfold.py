@@ -246,7 +246,7 @@ class RenderComponentNode(template.Node):
             ).get_context_data(**values)
 
         context_copy = context.new()
-        context_copy.update(context)
+        context_copy.update(context.flatten())  # ty:ignore[invalid-argument-type]
         context_copy.update(values)
         children = self.nodelist.render(context_copy)
 
