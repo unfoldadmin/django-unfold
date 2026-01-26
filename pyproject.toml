@@ -39,18 +39,20 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 
 [dependency-groups]
 dev = [
-    "django-constance>=4.3.4",
-    "django-guardian>=3.2.0",
-    "django-import-export>=4.3.14",
-    "django-location-field>=2.7.3",
+    "django-constance>=4.3",
+    "django-guardian>=3.2",
+    "django-import-export>=4.3",
+    "django-location-field>=2.7",
     "django-money>=3.5",
-    "django-simple-history>=3.11.0",
+    "django-simple-history>=3.11",
     "django-stubs>=5.2",
+    "pillow>=12.1",
     "pytest>=9.0",
-    "pytest-cov>=7.0.0",
+    "pytest-cov>=7.0",
     "pytest-django>=4.11",
     "pytest-factoryboy>=2.8",
     "python-semantic-release>=10.5",
+    "six>=1.17",
     "tox>=4.32",
 ]
 
