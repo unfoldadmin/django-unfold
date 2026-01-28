@@ -823,36 +823,6 @@ class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
         }
 
 
-try:
-    from djmoney.forms.widgets import MoneyWidget
-    from djmoney.settings import CURRENCY_CHOICES
-
-    class UnfoldAdminMoneyWidget(MoneyWidget):
-        template_name = "unfold/widgets/split_money.html"
-
-        def __init__(self, *args: Any, **kwargs: Any) -> None:
-            attrs = {}
-
-            if "attrs" in kwargs:
-                attrs = kwargs.pop("attrs")
-
-            super().__init__(
-                amount_widget=UnfoldAdminTextInputWidget(attrs=attrs),
-                currency_widget=UnfoldAdminSelectWidget(
-                    choices=CURRENCY_CHOICES,
-                    attrs={
-                        "aria-label": _("Select currency"),
-                    },
-                ),
-            )
-
-except ImportError:
-
-    class UnfoldAdminMoneyWidget:
-        def __init__(self, *args: Any, **kwargs: Any) -> None:
-            raise UnfoldException("django-money not installed")
-
-
 class UnfoldBooleanWidget(CheckboxInput):
     def __init__(
         self, attrs: dict[str, Any] | None = None, check_test: Callable | None = None
@@ -974,3 +944,56 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
     option_template_name = (
         "unfold/widgets/select_option_modelchoicefield_autocomplete.html"
     )
+
+
+try:
+    from djmoney.forms.widgets import MoneyWidget
+    from djmoney.settings import CURRENCY_CHOICES
+
+    class UnfoldAdminMoneyWidget(MoneyWidget):
+        template_name = "unfold/widgets/split_money.html"
+
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            attrs = {}
+
+            if "attrs" in kwargs:
+                attrs = kwargs.pop("attrs")
+
+            super().__init__(
+                amount_widget=UnfoldAdminTextInputWidget(attrs=attrs),
+                currency_widget=UnfoldAdminSelectWidget(
+                    choices=CURRENCY_CHOICES,
+                    attrs={
+                        "aria-label": _("Select currency"),
+                    },
+                ),
+            )
+
+except ImportError:
+
+    class UnfoldAdminMoneyWidget:
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            raise UnfoldException("django-money not installed")
+
+
+try:
+    from location_field.widgets import LocationWidget
+
+    class UnfoldAdminLocationWidget(LocationWidget):
+        def __init__(self, attrs: dict[str, Any] | None = None, **kwargs: Any) -> None:
+            based_fields = kwargs.pop("based_fields", [])
+            super().__init__(
+                attrs={
+                    **(attrs or {}),
+                    "class": " ".join(
+                        [*INPUT_CLASSES, attrs.get("class", "") if attrs else ""]
+                    ),
+                },
+                based_fields=based_fields,
+                **kwargs,
+            )
+except ImportError:
+
+    class UnfoldAdminLocationWidget:
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            raise UnfoldException("django-location-field not installed")

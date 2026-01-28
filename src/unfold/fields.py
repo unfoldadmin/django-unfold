@@ -1,10 +1,11 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import lookup_field, quote
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import (
+    Field,
     FileField,
     ForeignObjectRel,
     ImageField,
@@ -18,21 +19,25 @@ from django.template.defaultfilters import linebreaksbr
 from django.urls import NoReverseMatch, reverse, reverse_lazy
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
-from django.utils.safestring import SafeText, mark_safe
+from django.utils.safestring import SafeString, SafeText, mark_safe
 from django.utils.text import capfirst
 
 from unfold.settings import get_config
 from unfold.utils import display_for_field, prettify_json
 from unfold.widgets import (
     CHECKBOX_LABEL_CLASSES,
-    INPUT_CLASSES,
     LABEL_CLASSES,
     UnfoldAdminAutocompleteModelChoiceFieldWidget,
     UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget,
 )
 
+if TYPE_CHECKING:
+    from unfold.admin import ModelAdmin
+
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
+    model_admin: "ModelAdmin"
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
@@ -52,8 +57,9 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         if not self.is_file:
             return False
 
-        if hasattr(self.form.instance, self.field["field"]):
-            field_value = getattr(self.form.instance, self.field["field"])
+        field_name = self.field["field"]
+        if isinstance(field_name, str) and hasattr(self.form.instance, field_name):
+            field_value = getattr(self.form.instance, field_name)
 
             if field_value and hasattr(field_value, "url"):
                 return field_value.url
@@ -62,7 +68,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_json(self) -> bool:
-        if not self.resolved_field:
+        if isinstance(self.resolved_field, bool) or not self.resolved_field:
             return False
 
         f, attr, value = self.resolved_field
@@ -71,32 +77,22 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_image(self) -> bool:
-        if not self.resolved_field:
+        if isinstance(self.resolved_field, bool) or not self.resolved_field:
             return False
 
         f, attr, value = self.resolved_field
-
-        if hasattr(attr, "image"):
-            return attr.image
-
-        elif (
-            isinstance(attr, property)
-            and hasattr(attr, "fget")
-            and hasattr(attr.fget, "image")
-        ):
-            return attr.fget.image
 
         return isinstance(f, ImageField)
 
     @property
     def is_file(self) -> bool:
-        if not self.resolved_field:
+        if isinstance(self.resolved_field, bool) or not self.resolved_field:
             return False
 
         f, attr, value = self.resolved_field
         return isinstance(f, ImageField | FileField)
 
-    def contents(self) -> str:
+    def contents(self) -> SafeString:
         contents = self._get_contents()
         contents = self._preprocess_field(contents)
         return contents
@@ -109,15 +105,11 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 args=[quote(remote_obj.pk)],
                 current_app=self.model_admin.admin_site.name,
             )
-            return format_html(
-                '<a href="{}" class="text-primary-600 dark:text-primary-500">{}</a>',
-                url,
-                remote_obj,
-            )
+            return format_html('<a href="{}" class="text-link">{}</a>', url, remote_obj)
         except NoReverseMatch:
             return str(remote_obj)
 
-    def _get_contents(self) -> str:  # noqa: PLR0912
+    def _get_contents(self) -> SafeString:  # noqa: PLR0912
         from unfold.utils import _boolean_icon
 
         field, obj, model_admin = (
@@ -130,7 +122,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         except (AttributeError, ValueError, ObjectDoesNotExist):
             result_repr = self.empty_value_display
         else:
-            if field in self.form.fields:
+            if isinstance(field, str) and field in self.form.fields:
                 widget = self.form[field].field.widget
                 # This isn't elegant but suffices for contrib.auth's
                 # ReadOnlyPasswordHashWidget.
@@ -162,9 +154,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                     return conditional_escape(result_repr)
                 elif isinstance(f, models.URLField):
                     return value and format_html(
-                        '<a href="{}" class="text-primary-600 dark:text-primary-500">{}</a>',
-                        value,
-                        value,
+                        '<a href="{}" class="text-link">{}</a>', value, value
                     )
                 else:
                     result_repr = display_for_field(value, f, self.empty_value_display)
@@ -172,10 +162,11 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
                 result_repr = linebreaksbr(result_repr)
         return conditional_escape(result_repr)
 
-    def _preprocess_field(self, contents: str) -> str:
+    def _preprocess_field(self, contents: SafeString) -> SafeString:
         if (
             hasattr(self.model_admin, "readonly_preprocess_fields")
-            and self.field["field"] in self.model_admin.readonly_preprocess_fields
+            and self.field["field"]
+            in self.model_admin.readonly_preprocess_fields.keys()
         ):
             func = self.model_admin.readonly_preprocess_fields[self.field["field"]]
             if isinstance(func, str):
@@ -185,7 +176,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
         return contents
 
-    def _resolve_field(self) -> bool | list:
+    def _resolve_field(self) -> bool | tuple[Field | None, str | None, Any]:
         field, obj, model_admin = (
             self.field["field"],
             self.form.instance,
@@ -195,38 +186,28 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         try:
             return lookup_field(field, obj, model_admin)
         except (AttributeError, ValueError, ObjectDoesNotExist):
-            return False
+            pass
+
+        return False
 
 
 class UnfoldAdminField(helpers.AdminField):
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
-
-        try:
-            from location_field.widgets import LocationWidget
-
-            if isinstance(self.field.field.widget, LocationWidget):
-                self.field.field.widget.attrs["class"] = " ".join(INPUT_CLASSES)
-        except ImportError:
-            pass
-
     def label_tag(self) -> SafeText:
         classes = []
 
         # TODO load config from current AdminSite (override Fieldline.__iter__ method)
-        for lang, flag in get_config()["EXTENSIONS"]["modeltranslation"][
-            "flags"
-        ].items():
+        flags = get_config()["EXTENSIONS"]["modeltranslation"]["flags"]
+
+        for lang, flag in flags.items():
             if f"[{lang}]" in self.field.label:
                 self.field.label = self.field.label.replace(f"[{lang}]", flag)
                 break
 
         contents = conditional_escape(self.field.label)
 
-        if self.is_checkbox:
-            classes.append(" ".join(CHECKBOX_LABEL_CLASSES))
-        else:
-            classes.append(" ".join(LABEL_CLASSES))
+        classes.append(
+            " ".join(CHECKBOX_LABEL_CLASSES if self.is_checkbox else LABEL_CLASSES)
+        )
 
         if self.field.field.required:
             classes.append("required")

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "example",
     "constance",
     "import_export",
+    "location_field",
 ]
 
 MIDDLEWARE = [

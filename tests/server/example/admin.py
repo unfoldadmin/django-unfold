@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group
 from django.core.validators import EMPTY_VALUES
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.html import format_html
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
@@ -18,6 +19,7 @@ from example.models import (
     Label,
     Post,
     PriorityChoices,
+    Profile,
     Project,
     SectionUser,
     StatusChoices,
@@ -60,7 +62,11 @@ from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.sections import TableSection, TemplateSection
-from unfold.widgets import UnfoldAdminCheckboxSelectMultiple, UnfoldAdminSelect2Widget
+from unfold.widgets import (
+    UnfoldAdminCheckboxSelectMultiple,
+    UnfoldAdminLocationWidget,
+    UnfoldAdminSelect2Widget,
+)
 
 admin.site.unregister(Group)
 
@@ -101,6 +107,8 @@ class ExtendedUserChangeForm(UserChangeForm):
             choices=Project.objects.all().values_list("id", "name")
         )
 
+        self.fields["location"].widget = UnfoldAdminLocationWidget()
+
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
@@ -115,7 +123,16 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
     ]
     autocomplete_fields = ["tags"]
     compressed_fields = True
-    readonly_fields = ["custom_readonly_field"]
+    readonly_fields = [
+        "custom_readonly_field",
+        "another_readonly_field",
+        "boolean_readonly_field",
+        "html_readonly_field",
+    ]
+    readonly_preprocess_fields = {
+        "custom_readonly_field": "html.unescape",
+        "another_readonly_field": lambda content: content.strip(),
+    }
     list_display = (
         "username",
         "email",
@@ -140,7 +157,10 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
                 "fields": (
                     # "username",
                     "password",
+                    "boolean_readonly_field",
                     "custom_readonly_field",
+                    "another_readonly_field",
+                    "html_readonly_field",
                 )
             },
         ),
@@ -153,6 +173,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
                     "status",
                     "tags",
                     "projects",
+                    "location",
                     (),
                 ),
                 "classes": ["tab"],
@@ -178,6 +199,18 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
     @display(description="Custom readonly field")
     def custom_readonly_field(self, obj):
         return "Custom readonly field"
+
+    @display(description="Another readonly field")
+    def another_readonly_field(self, obj):
+        return "Another readonly field"
+
+    @display(description="HTML readonly field")
+    def html_readonly_field(self, obj):
+        return format_html("<b>HTML readonly field {}</b>", "example-value")
+
+    @display(description="Boolean readonly field", boolean=True)
+    def boolean_readonly_field(self, obj):
+        return True
 
     @display(description="Status", label=True)
     def display_status(self, obj):
@@ -798,4 +831,9 @@ class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(Profile)
+class ProfileAdmin(ModelAdmin):
     search_fields = ["name"]

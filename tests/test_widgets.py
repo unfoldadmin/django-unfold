@@ -24,6 +24,7 @@ from unfold.widgets import (
     UnfoldAdminImageSmallFieldWidget,
     UnfoldAdminIntegerFieldWidget,
     UnfoldAdminIntegerRangeWidget,
+    UnfoldAdminLocationWidget,
     UnfoldAdminMoneyWidget,
     UnfoldAdminMultipleAutocompleteWidget,
     UnfoldAdminNullBooleanSelectWidget,
@@ -83,6 +84,7 @@ from unfold.widgets import (
         UnfoldAdminSelect2Widget,
         UnfoldAdminSelect2MultipleWidget,
         UnfoldAdminCheckboxSelectMultiple,
+        UnfoldAdminLocationWidget,
     ],
 )
 def test_widgets_custom_css_class(widget_class):
@@ -216,6 +218,26 @@ def test_unfold_admin_money_widget_when_moneywidget_not_available(monkeypatch):
         widgets_modified.UnfoldException, match="django-money not installed"
     ):
         widgets_modified.UnfoldAdminMoneyWidget()
+
+
+def test_unfold_admin_location_widget_when_locationwidget_not_available(monkeypatch):
+    import unfold.widgets as widgets_modified
+
+    real_import = builtins.__import__
+
+    def blocked_import(name, *args, **kwargs):
+        if name == "location_field" or name.startswith("location_field."):
+            raise ImportError("No module named location_field")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", blocked_import)
+
+    importlib.reload(widgets_modified)
+
+    with pytest.raises(
+        widgets_modified.UnfoldException, match="django-location-field not installed"
+    ):
+        widgets_modified.UnfoldAdminLocationWidget()
 
 
 def test_widgets_array():
