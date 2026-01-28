@@ -592,6 +592,50 @@ def test_tags_action_item_classes(rf):
 
 
 @pytest.mark.django_db
+def test_tags_action_item_classes_existing_variant_as_string(rf):
+    response = Template("{% load unfold %} {% action_item_classes action %}").render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "action": {
+                    "action_name": "action_name",
+                    "method": lambda: False,
+                    "description": "action_description",
+                    "path": "action_path",
+                    "attrs": {},
+                    "icon": None,
+                    "variant": "primary",
+                },
+            },
+        )
+    )
+
+    assert "border-primary-700" in response
+
+
+@pytest.mark.django_db
+def test_tags_action_item_classes_non_existing_variant(rf):
+    response = Template("{% load unfold %} {% action_item_classes action %}").render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "action": {
+                    "action_name": "action_name",
+                    "method": lambda: False,
+                    "description": "action_description",
+                    "path": "action_path",
+                    "attrs": {},
+                    "icon": None,
+                    "variant": "non_existing_variant",
+                },
+            },
+        )
+    )
+
+    assert "border-base-200" in response
+
+
+@pytest.mark.django_db
 def test_tags_changeform_data(rf, user_factory):
     user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
     request = rf.get("/")
