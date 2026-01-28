@@ -513,6 +513,12 @@ def action_item_classes(context: RequestContext, action: dict) -> str:
     else:
         variant = action["variant"]
 
+        if isinstance(variant, str):
+            try:
+                variant = ActionVariant(variant)
+            except ValueError:
+                variant = ActionVariant.DEFAULT
+
     classes.extend(variant_classes[variant])
 
     return " ".join(set(classes))
