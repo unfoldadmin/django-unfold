@@ -1,6 +1,6 @@
 {% load unfold %}
 
-<div class="border-b border-base-200 flex gap-3 items-center h-[65px] mb-6 dark:border-base-800 px-3 {% element_classes 'navigation_header' %}" {% if site_dropdown %}x-data="{ openDropdown: false }"{% endif %}>
+<div class="border-b border-base-200 flex gap-3 items-center h-[65px] mb-6 dark:border-base-800 px-3 {% element_classes 'navigation_header' %}" {% if site_dropdown %}x-data="{ openDropdown: false }"{% endif %} data-testid="site_dropdown">
     <div class="bg-transparent flex font-semibold gap-3 grow min-w-0 h-[64px] items-center px-3 {% if site_dropdown %}cursor-pointer transition-all -mx-3 px-6 hover:bg-base-100 dark:hover:bg-white/[.06]{% endif %}"
          {% if site_dropdown %}
              x-on:click="openDropdown = !openDropdown"
@@ -20,7 +20,7 @@
         {% endif %}
     </div>
 
-    <span class="material-symbols-outlined block cursor-pointer h-[18px] xl:hidden! hover:text-base-700 dark:hover:text-base-200" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+    <span class="material-symbols-outlined block cursor-pointer h-[18px] xl:hidden! hover:text-base-700 dark:hover:text-base-200" x-on:click="sidebarMobileOpen = !sidebarMobileOpen" data-testid="mobile_menu_close_btn">
         close
     </span>
 
