@@ -10,7 +10,7 @@
 
 {% if add_url %}
     <div class="flex flex-row items-center">
-        <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 flex items-center h-[38px] justify-center -my-1 rounded-full w-[38px]" title="{{ title }}">
+        <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink bg-primary-600 flex items-center h-[38px] justify-center -my-1 rounded-full w-[38px] hover:bg-primary-700 transition-colors" title="{{ title }}">
             <span class="material-symbols-outlined text-white">add</span>
         </a>
     </div>
