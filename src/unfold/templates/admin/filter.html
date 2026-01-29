@@ -5,6 +5,10 @@
         {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
     </h3>
 
+    {% if spec.value %}
+        <input type="hidden" name="{{ spec.parameter_name }}" value="{{ spec.value }}">
+    {% endif %}
+
     {% for choice in choices %}
         {% if choice.selected and spec.lookup_val.0 %}
             <input type="hidden" name="{{ spec.lookup_kwarg }}" value="{{ spec.lookup_val.0 }}" />
