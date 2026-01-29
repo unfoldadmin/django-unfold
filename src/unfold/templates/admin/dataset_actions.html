@@ -43,7 +43,7 @@
             {% endif %}
         {% endfor %}
 
-        <button type="submit" form="dataset-{{ id }}" x-show="action" class="bg-primary-600 cursor-pointer flex font-medium items-center justify-center px-3 py-2 rounded-md text-sm text-white whitespace-nowrap" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+        <button type="submit" form="dataset-{{ id }}" x-show="action" class="bg-primary-600 cursor-pointer flex font-medium items-center justify-center px-3 py-2 rounded-md text-sm text-white whitespace-nowrap hover:bg-primary-700 transition-colors" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
             {% trans "Run" %}
         </button>
     </div>

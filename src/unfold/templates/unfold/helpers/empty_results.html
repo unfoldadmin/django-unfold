@@ -21,7 +21,7 @@
     {% if has_add_permission or cl.has_filters %}
         <div class="flex flex-col gap-4 justify-center w-full lg:flex-row">
             {% if has_add_permission %}
-                <a href="{% add_preserved_filters add_url is_popup to_field %}" class="bg-primary-600 flex flex-row font-medium gap-2 items-center h-[38px] justify-center px-3 py-2 rounded-default text-white w-full lg:w-auto">
+                <a href="{% add_preserved_filters add_url is_popup to_field %}" class="bg-primary-600 flex flex-row font-medium gap-2 items-center h-[38px] justify-center px-3 py-2 rounded-default text-white w-full lg:w-auto hover:bg-primary-700 transition-colors">
                     <span class="material-symbols-outlined text-white">add</span> {{ title }}
                 </a>
             {% endif %}

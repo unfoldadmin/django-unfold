@@ -5,7 +5,7 @@
         <div class="flex flex-col-reverse gap-3 items-center mx-auto lg:flex-row-reverse container lg:h-[64px]">
             {% block submit-row %}
                 {% if show_save %}
-                    <button type="submit" form="{{ opts.model_name }}_form" name="_save" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-white w-full lg:w-auto">
+                    <button type="submit" form="{{ opts.model_name }}_form" name="_save" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-white w-full lg:w-auto hover:bg-primary-700 transition-colors">
                         {% translate 'Save' %}
                     </button>
                 {% endif %}
