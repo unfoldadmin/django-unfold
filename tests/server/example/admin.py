@@ -61,6 +61,7 @@ from unfold.contrib.import_export.forms import (
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
+from unfold.paginator import InfinitePaginator
 from unfold.sections import TableSection, TemplateSection
 from unfold.widgets import (
     UnfoldAdminCheckboxSelectMultiple,
@@ -824,6 +825,8 @@ class LabelAdmin(ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
+    paginator = InfinitePaginator
+    list_per_page = 10
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
     search_fields = ["name"]

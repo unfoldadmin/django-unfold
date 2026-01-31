@@ -30,6 +30,8 @@ class ProjectFactory(DjangoModelFactory):
     class Meta:
         model = Project
 
+    name = LazyAttribute(lambda _: Faker().lexify(text="????????"))
+
 
 class TaskFactory(DjangoModelFactory):
     class Meta:
