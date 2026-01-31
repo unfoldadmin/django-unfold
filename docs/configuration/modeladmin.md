@@ -21,6 +21,9 @@ from unfold.contrib.forms.widgets import ArrayWidget, WysiwygWidget
 
 @admin.register(MyModel)
 class CustomAdminClass(ModelAdmin):
+    # Display add link in changelist / changeform
+    show_add_link = True  # Default: True
+
     # Display fields in changeform in compressed mode
     compressed_fields = True  # Default: False
 
