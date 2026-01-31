@@ -70,7 +70,8 @@ class NestedInlinesModelAdminMixin:
     ) -> None:
         super().save_formset(request, form, formset, change)
 
-        for form in formset.forms:
+        # TODO: fix linting error
+        for form in formset.forms:  # noqa: PLR1704
             if not hasattr(form, "nested_formsets"):
                 continue
 
@@ -173,7 +174,8 @@ class NestedInlinesModelAdminMixin:
         # Bypass validation of each view-only inline form (since the form's
         # data won't be in request.POST), unless the form was deleted.
         if not inline.has_change_permission(request, obj if change else None):
-            for index, form in enumerate(inline_formset.initial_forms):
+            # TODO: fix linting error
+            for index, form in enumerate(inline_formset.initial_forms):  # noqa: PLR1704
                 if self._user_deleted_form(prefix, request, inline, obj, index):
                     continue
                 form._errors = {}
