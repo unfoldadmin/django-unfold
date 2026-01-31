@@ -8,7 +8,7 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
-    username = LazyAttribute(lambda _: Faker().unique.email())
+    username = LazyAttribute(lambda _: f"{Faker().lexify(text='????????')}@example.com")
 
 
 class TagFactory(DjangoModelFactory):
