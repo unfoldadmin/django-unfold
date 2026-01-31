@@ -1,4 +1,5 @@
 import json
+import warnings
 from collections.abc import Callable
 from typing import Any
 
@@ -823,36 +824,6 @@ class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
         }
 
 
-try:
-    from djmoney.forms.widgets import MoneyWidget
-    from djmoney.settings import CURRENCY_CHOICES
-
-    class UnfoldAdminMoneyWidget(MoneyWidget):
-        template_name = "unfold/widgets/split_money.html"
-
-        def __init__(self, *args: Any, **kwargs: Any) -> None:
-            attrs = {}
-
-            if "attrs" in kwargs:
-                attrs = kwargs.pop("attrs")
-
-            super().__init__(
-                amount_widget=UnfoldAdminTextInputWidget(attrs=attrs),
-                currency_widget=UnfoldAdminSelectWidget(
-                    choices=CURRENCY_CHOICES,
-                    attrs={
-                        "aria-label": _("Select currency"),
-                    },
-                ),
-            )
-
-except ImportError:
-
-    class UnfoldAdminMoneyWidget:
-        def __init__(self, *args: Any, **kwargs: Any) -> None:
-            raise UnfoldException("django-money not installed")
-
-
 class UnfoldBooleanWidget(CheckboxInput):
     def __init__(
         self, attrs: dict[str, Any] | None = None, check_test: Callable | None = None
@@ -912,7 +883,7 @@ class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
         super().__init__(rel, admin_site, attrs, using)
 
 
-class UnfoldAdminPasswordInput(PasswordInput):
+class UnfoldAdminPasswordWidget(PasswordInput):
     def __init__(
         self, attrs: dict[str, Any] | None = None, render_value: bool = False
     ) -> None:
@@ -925,6 +896,20 @@ class UnfoldAdminPasswordInput(PasswordInput):
             },
             render_value,
         )
+
+
+class UnfoldAdminPasswordToggleWidget(UnfoldAdminPasswordWidget):
+    template_name = "unfold/widgets/password_toggle.html"
+
+
+class UnfoldAdminPasswordInput(UnfoldAdminPasswordWidget):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        warnings.warn(
+            "UnfoldAdminPasswordInput is deprecated and will be removed in a future release. "
+            "Please use UnfoldAdminPasswordWidget instead.",
+            stacklevel=2,
+        )
+        super().__init__(*args, **kwargs)
 
 
 class AutocompleteWidgetMixin:
@@ -974,3 +959,56 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
     option_template_name = (
         "unfold/widgets/select_option_modelchoicefield_autocomplete.html"
     )
+
+
+try:
+    from djmoney.forms.widgets import MoneyWidget
+    from djmoney.settings import CURRENCY_CHOICES
+
+    class UnfoldAdminMoneyWidget(MoneyWidget):
+        template_name = "unfold/widgets/split_money.html"
+
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            attrs = {}
+
+            if "attrs" in kwargs:
+                attrs = kwargs.pop("attrs")
+
+            super().__init__(
+                amount_widget=UnfoldAdminTextInputWidget(attrs=attrs),
+                currency_widget=UnfoldAdminSelectWidget(
+                    choices=CURRENCY_CHOICES,
+                    attrs={
+                        "aria-label": _("Select currency"),
+                    },
+                ),
+            )
+
+except ImportError:
+
+    class UnfoldAdminMoneyWidget:
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            raise UnfoldException("django-money not installed")
+
+
+try:
+    from location_field.widgets import LocationWidget
+
+    class UnfoldAdminLocationWidget(LocationWidget):
+        def __init__(self, attrs: dict[str, Any] | None = None, **kwargs: Any) -> None:
+            based_fields = kwargs.pop("based_fields", [])
+            super().__init__(
+                attrs={
+                    **(attrs or {}),
+                    "class": " ".join(
+                        [*INPUT_CLASSES, attrs.get("class", "") if attrs else ""]
+                    ),
+                },
+                based_fields=based_fields,
+                **kwargs,
+            )
+except ImportError:
+
+    class UnfoldAdminLocationWidget:
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            raise UnfoldException("django-location-field not installed")

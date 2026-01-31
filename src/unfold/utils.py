@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.utils import formats, timezone
 from django.utils.hashable import make_hashable
 from django.utils.html import format_html
-from django.utils.safestring import SafeText, mark_safe
+from django.utils.safestring import SafeString, SafeText, mark_safe
 
 from unfold.exceptions import UnfoldException
 
@@ -19,8 +19,8 @@ try:
     from djmoney.models.fields import MoneyField
     from djmoney.money import Money
 except ImportError:
-    MoneyField = None
-    Money = None
+    MoneyField: type[MoneyField] | None = None
+    Money: type[Money] | None = None
 
 
 def _boolean_icon(field_val: Any) -> str:
@@ -83,8 +83,10 @@ def display_for_label(value: Any, empty_value_display: str, label: Any) -> SafeT
     )
 
 
-def display_for_value(
-    value: Any, empty_value_display: str, boolean: bool = False
+def display_for_value(  # noqa: PLR0911
+    value: Any,
+    empty_value_display: str,
+    boolean: bool = False,
 ) -> str:
     if boolean:
         return _boolean_icon(value)
@@ -106,7 +108,7 @@ def display_for_value(
         return str(value)
 
 
-def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
+def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:  # noqa: PLR0911, PLR0912
     if getattr(field, "flatchoices", None):
         try:
             return dict(field.flatchoices).get(value, empty_value_display)
@@ -140,11 +142,11 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str:
         return display_for_value(value, empty_value_display)
 
 
-def prettify_json(data: Any, encoder: Any) -> str | None:
+def prettify_json(data: Any, encoder: Any) -> SafeString | None:
     try:
         from pygments import highlight
-        from pygments.formatters import HtmlFormatter
-        from pygments.lexers import JsonLexer
+        from pygments.formatters.html import HtmlFormatter
+        from pygments.lexers.data import JsonLexer
     except ImportError:
         return None
 
@@ -188,7 +190,7 @@ def hex_to_rgb(hex_color: str) -> list[int]:
     g = int(hex_color[2:4], 16)
     b = int(hex_color[4:6], 16)
 
-    return (r, g, b)
+    return [r, g, b]
 
 
 def hex_to_values(value: str) -> str:

@@ -1,6 +1,6 @@
 [project]
 name = "django-unfold"
-version = "0.76.0"
+version = "0.77.1"
 description = "Modern Django admin theme"
 authors = []
 requires-python = ">=3.10,<4.0"
@@ -39,18 +39,20 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 
 [dependency-groups]
 dev = [
-    "django-constance>=4.3.4",
-    "django-guardian>=3.2.0",
-    "django-import-export>=4.3.14",
-    "django-location-field>=2.7.3",
+    "django-constance>=4.3",
+    "django-guardian>=3.2",
+    "django-import-export>=4.3",
+    "django-location-field>=2.7",
     "django-money>=3.5",
-    "django-simple-history>=3.11.0",
+    "django-simple-history>=3.11",
     "django-stubs>=5.2",
+    "pillow>=12.1",
     "pytest>=9.0",
-    "pytest-cov>=7.0.0",
+    "pytest-cov>=7.0",
     "pytest-django>=4.11",
     "pytest-factoryboy>=2.8",
     "python-semantic-release>=10.5",
+    "six>=1.17",
     "tox>=4.32",
 ]
 
@@ -84,12 +86,15 @@ select = [
     "C",    # flake8-comprehensions
     "B",    # flake8-bugbear
     "UP",   # pyupgrade
+    "PL",   # pylint
     "T20",  # disallow pprint and print
 ]
 ignore = [
-    "E501", # line too long, handled by black
-    "B905", # zip() without strict=True
-    "C901", # too complex
+    "E501",    # line too long, handled by black
+    "B905",    # zip() without strict=True
+    "C901",    # too complex
+    "PLC0415", # `import` should be at the top-level of a file
+    "PLR0913", # Too many arguments in function definition
 ]
 
 [tool.semantic_release]

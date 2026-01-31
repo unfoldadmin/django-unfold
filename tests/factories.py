@@ -3,6 +3,7 @@ from example.models import (
     Invoice,
     InvoiceItem,
     Label,
+    Profile,
     Project,
     Tag,
     Task,
@@ -17,7 +18,7 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
-    username = LazyAttribute(lambda _: Faker().unique.email())
+    username = LazyAttribute(lambda _: f"{Faker().lexify(text='????????')}@example.com")
 
 
 class TagFactory(DjangoModelFactory):
@@ -39,6 +40,8 @@ class ProjectFactory(DjangoModelFactory):
     class Meta:
         model = Project
 
+    name = LazyAttribute(lambda _: Faker().lexify(text="????????"))
+
 
 class TaskFactory(DjangoModelFactory):
     class Meta:
@@ -53,3 +56,8 @@ class InvoiceFactory(DjangoModelFactory):
 class InvoiceItemFactory(DjangoModelFactory):
     class Meta:
         model = InvoiceItem
+
+
+class ProfileFactory(DjangoModelFactory):
+    class Meta:
+        model = Profile

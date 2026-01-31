@@ -1,7 +1,7 @@
 {% load unfold i18n admin_urls unfold %}
 
 <div class="flex flex-row grow font-semibold items-center min-w-0 mr-3">
-    {% if is_nav_sidebar_enabled %}
+    {% if is_nav_sidebar_enabled and not is_popup %}
         <span class="cursor-pointer flex flex-row items-center">
             <span class="material-symbols-outlined hidden! xl:block!" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen; localStorage.setItem('sidebarDesktopOpen', sidebarDesktopOpen ? '1' : '0');">
                 dock_to_right
@@ -11,9 +11,9 @@
                 dock_to_right
             </span>
         </span>
-    {% endif %}
 
-    <span class="block bg-base-200 h-5 mx-3 w-px dark:bg-base-700"></span>
+        <span class="block bg-base-200 h-5 mx-3 w-px dark:bg-base-700"></span>
+    {% endif %}
 
     {% include "unfold/helpers/header_back_button.html" %}
 

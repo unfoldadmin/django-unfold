@@ -1,3 +1,4 @@
+import copy
 import importlib
 from http import HTTPStatus
 
@@ -592,6 +593,50 @@ def test_tags_action_item_classes(rf):
 
 
 @pytest.mark.django_db
+def test_tags_action_item_classes_existing_variant_as_string(rf):
+    response = Template("{% load unfold %} {% action_item_classes action %}").render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "action": {
+                    "action_name": "action_name",
+                    "method": lambda: False,
+                    "description": "action_description",
+                    "path": "action_path",
+                    "attrs": {},
+                    "icon": None,
+                    "variant": "primary",
+                },
+            },
+        )
+    )
+
+    assert "border-primary-700" in response
+
+
+@pytest.mark.django_db
+def test_tags_action_item_classes_non_existing_variant(rf):
+    response = Template("{% load unfold %} {% action_item_classes action %}").render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "action": {
+                    "action_name": "action_name",
+                    "method": lambda: False,
+                    "description": "action_description",
+                    "path": "action_path",
+                    "attrs": {},
+                    "icon": None,
+                    "variant": "non_existing_variant",
+                },
+            },
+        )
+    )
+
+    assert "border-base-200" in response
+
+
+@pytest.mark.django_db
 def test_tags_changeform_data(rf, user_factory):
     user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
     request = rf.get("/")
@@ -1048,7 +1093,7 @@ def test_tags_tabs_primary_active(rf, user_factory, monkeypatch):
             return [{"example_field": ["Example error."]}]
 
     monkeypatch.setattr(
-        type(formsets[0].formset), "errors", property(ErrorsProperty().__get__)
+        type(formsets[1].formset), "errors", property(ErrorsProperty().__get__)
     )
 
     response = Template(
@@ -1370,7 +1415,7 @@ def test_tags_result_list_object_does_not_exist(rf, user_factory, monkeypatch):
         "unfold.templatetags.unfold_list.lookup_field", mock_lookup_field
     )
 
-    opts = get_user_model()._meta
+    opts = copy.copy(get_user_model()._meta)
     opts.app_label = "non_existing_label"
     response = template.render(
         RequestContext(

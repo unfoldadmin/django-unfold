@@ -61,9 +61,9 @@ class ChoicesMixin(ChoicesFieldListFilter):
         for i, choice in enumerate(self.field.flatchoices):
             if add_facets and facet_counts:
                 count = facet_counts[f"{i}__c"]
-                choice = (choice[0], f"{choice[1]} ({count})")
-
-            choices.append(choice)
+                choices.append((choice[0], f"{choice[1]} ({count})"))
+            else:
+                choices.append(choice)
 
         yield {
             "form": self.form_class(

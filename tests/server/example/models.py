@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from location_field.models.plain import PlainLocationField
 
 
 class StatusChoices(models.TextChoices):
@@ -30,6 +31,11 @@ class PriorityChoices(models.TextChoices):
 
 
 class User(AbstractUser):
+    url = models.URLField(_("URL"), blank=True, null=True)
+    location = PlainLocationField(based_fields=["city"], zoom=7, blank=True, null=True)
+    file = models.FileField(upload_to="files/", null=True, blank=True)
+    image = models.ImageField(upload_to="images/", null=True, blank=True)
+    data = models.JSONField(null=True, blank=True)
     numeric_single = models.FloatField(_("Numeric Single"), null=True, blank=True)
     numeric_range = models.FloatField(_("Numeric Range"), null=True, blank=True)
     numeric_slider = models.FloatField(_("Numeric Slider"), null=True, blank=True)
@@ -38,6 +44,9 @@ class User(AbstractUser):
     )
     numeric_range_custom = models.FloatField(
         _("Numeric Range Custom"), null=True, blank=True
+    )
+    profile = models.ForeignKey(
+        "Profile", on_delete=models.CASCADE, null=True, blank=True
     )
     content_type = models.ForeignKey(
         "contenttypes.ContentType", on_delete=models.CASCADE, null=True, blank=True
@@ -158,7 +167,11 @@ class Invoice(models.Model):
 
 
 class InvoiceItem(models.Model):
+    name = models.CharField(max_length=255)
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+
+
+class Profile(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):

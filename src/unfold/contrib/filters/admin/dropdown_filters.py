@@ -30,9 +30,9 @@ class DropdownFilter(admin.SimpleListFilter):
         for i, choice in enumerate(self.lookup_choices):
             if add_facets and facet_counts:
                 count = facet_counts[f"{i}__c"]
-                choice = (choice[0], f"{choice[1]} ({count})")
-
-            choices.append(choice)
+                choices.append((choice[0], f"{choice[1]} ({count})"))
+            else:
+                choices.append(choice)
 
         yield {
             "form": self.form_class(
@@ -84,9 +84,9 @@ class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFil
         for i, choice in enumerate(self.field.flatchoices):
             if add_facets and facet_counts:
                 count = facet_counts[f"{i}__c"]
-                choice = (choice[0], f"{choice[1]} ({count})")
-
-            choices.append(choice)
+                choices.append((choice[0], f"{choice[1]} ({count})"))
+            else:
+                choices.append(choice)
 
         yield {
             "form": self.form_class(

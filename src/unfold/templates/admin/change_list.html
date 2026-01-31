@@ -26,18 +26,14 @@
 
 {% block nav-global-side %}
     {% block object-tools %}
-        <div class="object-tools">
-            {% block object-tools-items %}
-                {% change_list_object_tools %}
-            {% endblock %}
-        </div>
+        {% block object-tools-items %}
+            {% change_list_object_tools %}
+        {% endblock %}
     {% endblock %}
 {% endblock %}
 
 {% block content %}
     <div id="content-main" x-data="{ filterOpen: false }">
-        {% include "unfold/helpers/popup_header.html" %}
-
         {% if cl.formset and cl.formset.errors %}
             {% include "unfold/helpers/messages/errornote.html" with errors=cl.formset.errors %}
 

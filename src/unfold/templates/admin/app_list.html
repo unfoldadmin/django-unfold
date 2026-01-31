@@ -15,7 +15,7 @@
                                 </h2>
                             {% endif %}
 
-                            <ol class="flex flex-col gap-1">
+                            <ol class="flex flex-col gap-0.5">
                                 {% for model in app.models %}
                                     {% if not model.hidden %}
                                         <li class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path|urlencode %} current-model{% endif %}">
