@@ -1,6 +1,37 @@
 # CHANGELOG
 
 
+## v0.78.0 (2026-02-02)
+
+### Bug Fixes
+
+- Dataset list per page ([#1836](https://github.com/unfoldadmin/django-unfold/pull/1836),
+  [`ea451fd`](https://github.com/unfoldadmin/django-unfold/commit/ea451fdd68150a097b29edf7348279c762c4a1ec))
+
+- Error handling for empty selection in dataset
+  ([#1835](https://github.com/unfoldadmin/django-unfold/pull/1835),
+  [`088a503`](https://github.com/unfoldadmin/django-unfold/commit/088a5032f76f7731181d7e7c5f304d4a66f72fe9))
+
+- Improved dark mode tabs contrasts
+  ([#1831](https://github.com/unfoldadmin/django-unfold/pull/1831),
+  [`1b1afbb`](https://github.com/unfoldadmin/django-unfold/commit/1b1afbbb9352a2e7c92f1d5de0be9c36ad92b22c))
+
+- Non existing action variant ([#1817](https://github.com/unfoldadmin/django-unfold/pull/1817),
+  [`9d048e1`](https://github.com/unfoldadmin/django-unfold/commit/9d048e1776f10e1496617b9a0caf930b10d8541c))
+
+### Features
+
+- Support title attribute for label
+  ([#1829](https://github.com/unfoldadmin/django-unfold/pull/1829),
+  [`a65a520`](https://github.com/unfoldadmin/django-unfold/commit/a65a520faedc4a15b4774e0a0077de39079da7c9))
+
+- Toggle add link ([#1830](https://github.com/unfoldadmin/django-unfold/pull/1830),
+  [`553c3fa`](https://github.com/unfoldadmin/django-unfold/commit/553c3fa81d284904f982c89666adccc45649c483))
+
+- Toggle password widget ([#1822](https://github.com/unfoldadmin/django-unfold/pull/1822),
+  [`4f63239`](https://github.com/unfoldadmin/django-unfold/commit/4f6323925259d1c4b81f226e3a6a872a6399031e))
+
+
 ## v0.77.1 (2026-01-26)
 
 ### Bug Fixes
