@@ -1,10 +1,12 @@
 from typing import Any
 
+from django.contrib import messages
 from django.contrib.admin import helpers
 from django.contrib.admin.views import main
 from django.contrib.admin.views.main import IGNORED_PARAMS
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.utils.translation import gettext_lazy as _
 
 
 class DatasetModelAdminMixin:
@@ -40,18 +42,30 @@ class DatasetModelAdminMixin:
             )
 
         extra_context["datasets"] = rendered_datasets
-        selected = request.POST.getlist(helpers.ACTION_CHECKBOX_NAME)
 
-        if (
-            request.method == "POST"
-            and selected
-            and "dataset" in request.POST
-            and helpers.ACTION_CHECKBOX_NAME in request.POST
-        ):
+        if request.method == "POST" and "dataset" in request.POST:
+            selected = request.POST.getlist(helpers.ACTION_CHECKBOX_NAME)
+
+            if not selected or helpers.ACTION_CHECKBOX_NAME not in request.POST:
+                messages.warning(
+                    request,
+                    _(
+                        "Items must be selected in order to perform actions on them. No items have been changed."
+                    ),
+                )
+                return HttpResponseRedirect(request.get_full_path())
+
             dataset = None
             for item in rendered_datasets:
                 if item.id == request.POST["dataset"]:
                     dataset = item
+
+            if not dataset:
+                messages.warning(
+                    request,
+                    _("Dataset not found. No action performed."),
+                )
+                return HttpResponseRedirect(request.get_full_path())
 
             response = dataset.model_admin_instance.response_action(
                 request, queryset=dataset.cl.get_queryset(request)
