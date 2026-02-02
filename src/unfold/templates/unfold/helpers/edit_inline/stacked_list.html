@@ -1,0 +1,66 @@
+{% load i18n unfold %}
+
+<div class="formset-wrapper flex flex-col gap-3" {% if inline_admin_formset.is_collapsible %}x-data="{ open: {% if inline_admin_formset.errors %}true{% else %}false{% endif %} }"{% endif%}>
+    {{ inline_admin_formset.formset.management_form }}
+
+    {% include "unfold/helpers/edit_inline/inline_nested_heading.html" %}
+
+    {% include "unfold/helpers/edit_inline/inline_errors.html" %}
+
+    <div class="border border-base-200 overflow-hidden rounded-default shadow-xs w-full dark:border-base-800" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-on:end="sortRecords" x-sort.ghost{% endif %} {% if inline_admin_formset.is_collapsible %}x-show="open"{% endif %}>
+        <div id="{{ inline_admin_formset.formset.prefix }}-data" class="formset group/formset-{% if nested_inline %}nested{% else %}parent{% endif %} {% if inline_admin_formset.forms|length == 0 %}empty{% endif %} bg-white dark:bg-base-900" {% if inline_admin_formset.is_collapsible %}x-show="open"{% endif %} data-inline-formset="{{ inline_admin_formset.inline_formset_data }}" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-sort.ghost x-sort:config="{preventOnFilter: false, filter: '.template', onMove: moveRecords, onEnd: sortRecords}"{% endif %}>
+
+            {% for inline_admin_form in inline_admin_formset %}
+                <div x-sort:item class="form-group has-[.delete:checked]:[&>.form-delete]:block relative {% if nested_inline %}group/nested{% else %}group/parent{% endif %} {% if inline_admin_form.original or inline_admin_form.show_url %}original{% else %}template{% endif %}{% if forloop.last and inline_admin_formset.has_add_permission %} empty-form{% endif %} {% if forloop.revcounter == 2 and inline_admin_formset.has_add_permission %}last{% endif %}" {% if inline_admin_formset.opts.collapsible %}x-data="{ openRow: {% if inline_admin_form.errors %}true{% else %}false{% endif %} }"{% endif %}>
+                    <div class="form-row border-b border-base-200 dark:border-base-800 {% if not nested_inline %}group-[.last]/parent:border-b-0{% else %}group-[.last]/nested:border-b-0{% endif %} {% if inline_admin_formset.opts.hide_title %}{% if not inline_admin_formset.formset.can_delete or not inline_admin_formset.has_delete_permission  %}pt-3{% endif %}{% endif %}">
+                        {% include "unfold/helpers/edit_inline/stacked_title.html" %}
+
+                        {% for fieldset in inline_admin_form %}
+                            {% if inline_admin_formset.opts.collapsible %}
+                                <div x-show="openRow">
+                                    {% include "admin/includes/fieldset.html" with stacked=1 %}
+                                </div>
+                            {% else %}
+                                {% include "admin/includes/fieldset.html" with stacked=1 %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    {% if inline_admin_form.original %}
+                        <div class="hidden form-delete">
+                            {% include "unfold/helpers/edit_inline/inline_delete_undo.html" %}
+                        </div>
+                    {% endif %}
+
+                    {% if inline_admin_form.form.nested_formsets %}
+                        <div class="form-nested">
+                            <div class="bg-striped border-b border-base-200 relative dark:border-base-800 group-[.last]/parent:border-b-0">
+                                <div class="flex flex-col p-3 gap-3 shadow-inner">
+                                    {% for nested_formset in inline_admin_form.form.nested_formsets %}
+                                        {% if nested_formset.inline_type == "tabular" %}
+                                            {% include "unfold/helpers/edit_inline/tabular_table.html" with inline_admin_formset=nested_formset nested_inline=True %}
+                                        {% elif nested_formset.inline_type == "stacked" %}
+                                            {% include "unfold/helpers/edit_inline/stacked_list.html" with inline_admin_formset=nested_formset nested_inline=True %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if inline_admin_form.needs_explicit_pk_field %}
+                        {{ inline_admin_form.pk_field.field }}
+                    {% endif %}
+
+                    {% if inline_admin_form.fk_field %}{{ inline_admin_form.fk_field.field }}{% endif %}
+                </div>
+            {% endfor %}
+
+            {% include "unfold/helpers/edit_inline/inline_footer.html" %}
+        </div>
+    </div>
+
+    {% if nested_inline and not forloop.last %}
+        <div class="bg-base-200 h-px -mx-3 dark:bg-base-800"></div>
+    {% endif %}
+</div>

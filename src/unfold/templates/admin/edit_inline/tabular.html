@@ -1,9 +1,5 @@
-{% load admin_modify admin_urls i18n static unfold %}
-
-<div class="js-inline-admin-formset inline-group" id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="tabular" data-inline-formset="{{ inline_admin_formset.inline_formset_data }}" {% if inline_admin_formset.opts.tab %}x-show="activeTab == '{{ inline_admin_formset.formset.prefix|slugify }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
+<div id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="tabular" {% if inline_admin_formset.opts.tab %}x-show="activeTab == '{{ inline_admin_formset.formset.prefix|slugify }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
     <div class="tabular inline-related {% if forloop.last %}last-related{% endif %}">
-        {{ inline_admin_formset.formset.management_form }}
-
         <fieldset class="module relative {{ inline_admin_formset.classes }} min-w-0" aria-labelledby="{{ inline_admin_formset.formset.prefix }}-heading">
             {% if inline_admin_formset.is_collapsible %}<details><summary>{% endif %}
 
@@ -11,24 +7,7 @@
 
             {% if inline_admin_formset.is_collapsible %}</summary>{% endif %}
 
-            {{ inline_admin_formset.formset.non_form_errors }}
-            <div class="border border-base-200 overflow-x-auto rounded-default shadow-xs dark:border-base-800" data-simplebar data-simplebar-auto-hide="false">
-                <table class="tabular-table w-full [&>tbody:nth-child(odd)]:bg-base-50 dark:[&>tbody:nth-child(odd)]:bg-white/[.02]" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-on:end="sortRecords" x-sort.ghost x-sort:config="{preventOnFilter: false}"{% endif %}>
-                    {% include "unfold/helpers/edit_inline/tabular_heading.html" %}
-
-                    {% for inline_admin_form in inline_admin_formset %}
-                        <tbody class="{% if inline_admin_form.original or inline_admin_form.show_url %}has_original {% else %}template{% endif %}" x-sort:item>
-                            {% include "unfold/helpers/edit_inline/tabular_error.html" %}
-
-                            {% include "unfold/helpers/edit_inline/tabular_title.html" %}
-
-                            {% include "unfold/helpers/edit_inline/tabular_row.html" %}
-                        </tbody>
-                    {% endfor %}
-                </table>
-            </div>
-
-            {% include "unfold/helpers/pagination_inline.html" %}
+            {% include "unfold/helpers/edit_inline/tabular_table.html" %}
 
             {% if inline_admin_formset.is_collapsible %}</details>{% endif %}
         </fieldset>

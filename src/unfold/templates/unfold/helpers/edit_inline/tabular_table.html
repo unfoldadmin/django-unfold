@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="flex flex-col gap-3" {% if inline_admin_formset.is_collapsible %}x-data="{ open: {% if inline_admin_formset.errors %}true{% else %}false{% endif %} }"{% endif%}>
+    {% include "unfold/helpers/edit_inline/inline_nested_heading.html" %}
+
+    <div class="formset-wrapper border border-base-200 overflow-x-auto relative shadow-xs dark:border-base-800 rounded-default {% if nested_inline %}bg-white dark:bg-base-900{% endif %}" {% if not nested_inline %}data-simplebar data-simplebar-auto-hide="false"{% endif %} {% if inline_admin_formset.is_collapsible %}x-show="open"{% endif %}>
+        {{ inline_admin_formset.formset.management_form }}
+
+        {% include "unfold/helpers/edit_inline/inline_errors.html" %}
+
+        <table id="{{ inline_admin_formset.formset.prefix }}-data" class="formset group/formset-{% if nested_inline %}nested{% else %}parent{% endif %} w-full {% if nested_inline %}nested-formset{% endif %}" {% if inline_admin_formset.opts.ordering_field %}data-ordering-field="{{ inline_admin_formset.opts.ordering_field }}" x-sort.ghost x-sort:config="{preventOnFilter: false, filter: '.template', onMove: moveRecords, onEnd: sortRecords}"{% endif %} data-inline-formset="{{ inline_admin_formset.inline_formset_data }}">
+            {% include "unfold/helpers/edit_inline/tabular_heading.html" %}
+
+            {% for inline_admin_form in inline_admin_formset %}
+                {% include "unfold/helpers/edit_inline/tabular_group.html" %}
+            {% endfor %}
+
+            {% include "unfold/helpers/edit_inline/tabular_footer.html" %}
+        </table>
+    </div>
+
+    {% if nested_inline and not forloop.last %}
+        <div class="bg-base-200 h-px -mx-3 dark:bg-base-800"></div>
+    {% endif %}
+</div>

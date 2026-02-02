@@ -1,3 +1,4 @@
+import copy
 import importlib
 from http import HTTPStatus
 
@@ -1092,7 +1093,7 @@ def test_tags_tabs_primary_active(rf, user_factory, monkeypatch):
             return [{"example_field": ["Example error."]}]
 
     monkeypatch.setattr(
-        type(formsets[0].formset), "errors", property(ErrorsProperty().__get__)
+        type(formsets[1].formset), "errors", property(ErrorsProperty().__get__)
     )
 
     response = Template(
@@ -1414,7 +1415,7 @@ def test_tags_result_list_object_does_not_exist(rf, user_factory, monkeypatch):
         "unfold.templatetags.unfold_list.lookup_field", mock_lookup_field
     )
 
-    opts = get_user_model()._meta
+    opts = copy.copy(get_user_model()._meta)
     opts.app_label = "non_existing_label"
     response = template.render(
         RequestContext(

@@ -794,6 +794,18 @@ def admin_object_app_url(context: RequestContext, object: Model, arg: str) -> st
     return f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_{arg}"
 
 
+@register.filter
+def has_nested_tables(table: dict) -> bool:
+    return any(
+        isinstance(row, dict) and "table" in row for row in table.get("rows", [])
+    )
+
+
+@register.filter
+def inline_add_button_text(json_string: str) -> str:
+    return json.loads(json_string)["options"]["addText"]
+
+
 class RenderCaptureNode(Node):
     def __init__(self, nodelist: NodeList, variable_name: str, silent: bool) -> None:
         self.nodelist = nodelist
