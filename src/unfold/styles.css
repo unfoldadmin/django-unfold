@@ -522,7 +522,7 @@ fieldset details[open] > summary:after {
 
 .calendarbox,
 .clockbox {
-  @apply bg-white border border-base-200 rounded-default shadow-xs w-80 z-50 dark:bg-base-800 dark:border-base-700 fixed! left-1/2! top-1/2! -translate-x-1/2 -translate-y-1/2;
+  @apply bg-white border border-base-200 rounded-default shadow-xs w-80 z-70 dark:bg-base-800 dark:border-base-700 fixed! left-1/2! top-1/2! -translate-x-1/2 -translate-y-1/2;
 }
 
 .calendar caption {
