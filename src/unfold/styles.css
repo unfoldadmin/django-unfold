@@ -23,6 +23,8 @@
 @source inline("{md:,lg:,xl:,}gap-{0.5,{1..16}}");
 @source inline("{md:,lg:,xl:,}grid-cols-{1..16}");
 @source inline("{md:,lg:,xl:,}col-span-{1..16}");
+@source inline("max-w-xl max-w-{1..7}xl");
+
 
 @layer base {
   *,
