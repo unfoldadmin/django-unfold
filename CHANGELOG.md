@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.78.1 (2026-02-03)
+
+### Bug Fixes
+
+- Calendar z-index ([#1837](https://github.com/unfoldadmin/django-unfold/pull/1837),
+  [`b89a3c9`](https://github.com/unfoldadmin/django-unfold/commit/b89a3c9e1bee5f897421be494a00c9c36439d3d4))
+
+
 ## v0.78.0 (2026-02-02)
 
 ### Bug Fixes
