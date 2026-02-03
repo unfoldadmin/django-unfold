@@ -11,8 +11,9 @@
         {% endif %}
 
         <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 {% element_classes 'main' %}">
-            {% include "unfold/helpers/header.html" %}
-
+            {% block header %}
+                {% include "unfold/helpers/header.html" %}
+            {% endblock %}
 
             {% block messages %}
                 <div class="px-4">
