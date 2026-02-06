@@ -57,7 +57,7 @@
                                                      {% elif item.variant.value == "primary" %}
                                                          text-primary-700 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-500/20
                                                      {% else %}
-                                                         text-base-700 dark:text-base-200 hover:text-base-700 dark:hover:text-base-200 hover:bg-base-100 dark:hover:bg-base-700/20
+                                                         hover:bg-base-100 dark:hover:bg-base-700/20
                                                      {% endif %}
                                                     " {% if blank %} target="_blank"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=item.attrs %}>
                         {% if item.icon %}
