@@ -1,4 +1,5 @@
 from collections.abc import Callable, Iterable
+from functools import wraps
 from typing import Any
 
 from django.contrib.admin.options import BaseModelAdmin
@@ -22,6 +23,7 @@ def action(
     variant: ActionVariant | None = ActionVariant.DEFAULT,
 ) -> ActionFunction:
     def decorator(func: Callable) -> ActionFunction:
+        @wraps(func)
         def inner(
             model_admin: BaseModelAdmin,
             request: HttpRequest,
