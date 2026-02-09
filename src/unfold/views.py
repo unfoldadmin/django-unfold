@@ -98,7 +98,7 @@ class BaseAutocompleteView(ListView):
             {
                 "results": [
                     {
-                        "id": obj.pk,
+                        "id": str(obj.pk),
                         "text": str(obj),
                     }
                     for obj in context["object_list"]
