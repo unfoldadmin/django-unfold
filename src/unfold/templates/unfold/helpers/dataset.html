@@ -5,11 +5,15 @@
         {% include "unfold/helpers/inline_heading.html" with title=dataset.model_verbose_name %}
     {% endif %}
 
-    {% if cl.search_fields %}
+    {% if cl.search_fields or action_form %}
         <div class="flex flex-col gap-4 justify-between mb-4  sm:flex-row empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
-            {% unfold_search_form cl %}
+            {% if cl.search_fields %}
+                {% unfold_search_form cl %}
+            {% endif %}
 
-            {% unfold_admin_actions %}
+            {% if action_form %}
+                {% unfold_admin_actions %}
+            {% endif %}
         </div>
     {% endif %}
 
