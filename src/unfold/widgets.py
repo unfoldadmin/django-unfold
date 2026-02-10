@@ -938,6 +938,21 @@ class AutocompleteWidgetMixin:
         )
         super().__init__(attrs, choices)
 
+    class Media:
+        extra = "" if settings.DEBUG else ".min"
+        js = (
+            f"admin/js/vendor/jquery/jquery{extra}.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "unfold/js/select2.init.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
+
 
 class UnfoldAdminAutocompleteWidget(AutocompleteWidgetMixin, Select):
     option_template_name = "unfold/widgets/select_option_autocomplete.html"
