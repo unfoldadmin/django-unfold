@@ -1,6 +1,49 @@
 # CHANGELOG
 
 
+## v0.79.0 (2026-02-11)
+
+### Bug Fixes
+
+- Actions dropdown colors ([#1846](https://github.com/unfoldadmin/django-unfold/pull/1846),
+  [`c023602`](https://github.com/unfoldadmin/django-unfold/commit/c023602db3c0eb4121a71b2ef9a607060d48de95))
+
+- Autocomplete json pk conversion ([#1855](https://github.com/unfoldadmin/django-unfold/pull/1855),
+  [`00f93f5`](https://github.com/unfoldadmin/django-unfold/commit/00f93f56a263fb219b45d25964a679bde40c42ae))
+
+- Dataset action button form id ([#1852](https://github.com/unfoldadmin/django-unfold/pull/1852),
+  [`c4d9d89`](https://github.com/unfoldadmin/django-unfold/commit/c4d9d891424f4941da4cde8b8d4861ec803cfe67))
+
+- Dataset action/search layout ([#1853](https://github.com/unfoldadmin/django-unfold/pull/1853),
+  [`da0ee71`](https://github.com/unfoldadmin/django-unfold/commit/da0ee71d10a1ca7691942f80ce886091311f6788))
+
+- Dataset active tab ([#1851](https://github.com/unfoldadmin/django-unfold/pull/1851),
+  [`f477d3d`](https://github.com/unfoldadmin/django-unfold/commit/f477d3d5c1b7cfcb098a8a17b5c7a942e7c5e807))
+
+- Header block in template ([#1839](https://github.com/unfoldadmin/django-unfold/pull/1839),
+  [`a921d8c`](https://github.com/unfoldadmin/django-unfold/commit/a921d8cc8fea6601e0d0b58dd0b7e4b56bb4f971))
+
+- Load media files for autocomplete
+  ([#1857](https://github.com/unfoldadmin/django-unfold/pull/1857),
+  [`d75eb1b`](https://github.com/unfoldadmin/django-unfold/commit/d75eb1b0510e245d7e4e200e8f6a7e9d2ea37e4c))
+
+- Object history message design ([#1841](https://github.com/unfoldadmin/django-unfold/pull/1841),
+  [`4843878`](https://github.com/unfoldadmin/django-unfold/commit/48438784cf733e2cd89438450f0ad26ccdc52b05))
+
+- Object history messages design ([#1845](https://github.com/unfoldadmin/django-unfold/pull/1845),
+  [`a9ae76c`](https://github.com/unfoldadmin/django-unfold/commit/a9ae76c12e1c1ce9c5dc098d9a86f81b1c4b6b86))
+
+### Documentation
+
+- Remove custom page breadcrumbs ([#1854](https://github.com/unfoldadmin/django-unfold/pull/1854),
+  [`0d97cca`](https://github.com/unfoldadmin/django-unfold/commit/0d97cca0c873f6a260c547ccce431bfa86cf91ac))
+
+### Features
+
+- Button component size ([#1840](https://github.com/unfoldadmin/django-unfold/pull/1840),
+  [`e3a7f9f`](https://github.com/unfoldadmin/django-unfold/commit/e3a7f9f61430d5a36ba6b07a17a4baaf546945a9))
+
+
 ## v0.78.1 (2026-02-03)
 
 ### Bug Fixes
