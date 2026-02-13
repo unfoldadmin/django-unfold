@@ -118,7 +118,7 @@ class DropdownForm(forms.Form):
     widget = UnfoldAdminSelectWidget(
         attrs={
             "data-theme": "admin-autocomplete",
-            "class": "unfold-admin-autocomplete admin-autocomplete",
+            "class": "unfold-admin-autocomplete",
         }
     )
     field = ChoiceField
@@ -138,7 +138,7 @@ class DropdownForm(forms.Form):
             self.widget = UnfoldAdminSelectMultipleWidget(
                 attrs={
                     "data-theme": "admin-autocomplete",
-                    "class": "unfold-admin-autocomplete admin-autocomplete",
+                    "class": "unfold-admin-autocomplete",
                 }
             )
             self.field = MultipleChoiceField
