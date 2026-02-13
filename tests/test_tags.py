@@ -13,7 +13,7 @@ from django.forms import Form
 from django.template import Context, Template, TemplateSyntaxError
 from django.template.context import RequestContext
 from django.urls import reverse
-from example.admin import UserAdmin
+from example.admin import ProjectDataset, UserAdmin
 from example.models import User
 
 from unfold.components import BaseComponent, register_component
@@ -1356,13 +1356,17 @@ def test_tags_unfold_admin_search_form_tag(rf, user_factory):
     assert "Type to search" in response
 
 
-def test_tags_unfold_admin_actions_tag(rf):
+def test_tags_unfold_admin_actions(rf):
     template = Template("{% load unfold_list %} {% unfold_admin_actions %}")
     response = template.render(
         RequestContext(
             rf.get("/"),
             {
                 "opts": get_user_model()._meta,
+                "dataset": ProjectDataset(
+                    request=rf.get("/"),
+                    extra_context={},
+                ),
             },
         )
     )
