@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n unfold %}
 
 <div class="actions flex flex-col gap-3 ml-auto order-last lg:order-none lg:flex-row lg:items-center">
     {% if actions_selection_counter %}
@@ -43,8 +43,11 @@
             {% endif %}
         {% endfor %}
 
-        <button type="submit" form="dataset-{{ dataset.model_name }}-group" x-show="action" class="bg-primary-600 cursor-pointer flex font-medium items-center justify-center px-3 py-2 rounded-md text-sm text-white whitespace-nowrap" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
-            {% trans "Run" %}
-        </button>
+        {% trans "Run the selected action" as title %}
+        {% with "dataset-"|add:dataset.model_name|add:"-group" as form_id %}
+            {% component "unfold/components/button.html" with submit=1 name="index" value=action_index|default:0 form=form_id extra_attrs='x-show="action"' title=title %}
+                {% trans "Run" %}
+            {% endcomponent %}
+        {% endwith %}
     </div>
 </div>

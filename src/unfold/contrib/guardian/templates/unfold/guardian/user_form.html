@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n unfold %}
 
 <form method="post">
     {% csrf_token %}
@@ -64,8 +64,9 @@
 
         <div class="bg-base-50 border-t border-base-200 flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-base-800">
             <div class="ml-auto">
-                {% trans "Manage user" as title %}
-                {% include "unfold/helpers/submit.html" with title=title name="submit_manage_user" %}
+                {% component "unfold/components/button.html" with submit=1 name="submit_manage_user" %}
+                    {% trans "Manage user" %}
+                {% endcomponent %}
             </div>
         </div>
     </div>
