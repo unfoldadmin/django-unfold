@@ -1,17 +1,17 @@
-{% load i18n admin_urls %}
+{% load i18n admin_urls unfold %}
 
 <div {% if not is_popup %}id="submit-row"{% endif %} class="relative lg:sticky lg:bottom-0 z-40">
     <div class="backdrop-blur-xs bg-white/80 rounded-b-default pb-4 px-4 dark:bg-base-900/80 lg:border-t lg:border-base-200 relative lg:scrollable-top lg:py-0 dark:border-base-800">
         <div class="flex flex-col-reverse gap-3 items-center mx-auto lg:flex-row-reverse container lg:h-[64px]">
             {% block submit-row %}
                 {% if show_save %}
-                    <button type="submit" form="{{ opts.model_name }}_form" name="_save" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-white w-full lg:w-auto">
-                        {% translate 'Save' %}
-                    </button>
+                    {% component "unfold/components/button.html" with submit=1 form=opts.model_name|add:"_form" name="_save" class="w-full lg:w-auto" %}
+                        {% trans "Save" %}
+                    {% endcomponent %}
                 {% endif %}
 
                 {% for action in actions_submit_line %}
-                    <button type="submit" form="{{ opts.model_name }}_form" {% if not action.attrs.name %}name="{{ action.action_name }}"{% endif %} class="border border-base-200 cursor-pointer flex font-medium gap-2 items-center justify-center px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:w-auto dark:border-base-700 dark:hover:text-base-200 dark:hover:bg-base-900" {% include "unfold/helpers/attrs.html" with attrs=action.attrs %}>
+                    {% component "unfold/components/button.html" with submit=1 form=opts.model_name|add:"_form" name=action.attrs.name|default:action.action_name variant="default" class="w-full lg:w-auto" attrs=action.attrs %}
                         {% if action.icon %}
                             <span class="material-symbols-outlined">
                                 {{ action.icon }}
@@ -19,46 +19,48 @@
                         {% endif %}
 
                         {{ action.description }}
-                    </button>
+                    {% endcomponent %}
                 {% endfor %}
 
                 {% if show_save_and_continue %}
-                    <button type="submit" form="{{ opts.model_name }}_form" name="_continue" class="border border-base-200 cursor-pointer font-medium px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
+                    {% component "unfold/components/button.html" with submit=1 form=opts.model_name|add:"_form" name="_continue" variant="default" class="w-full lg:w-auto" %}
                         {% if can_change %}
-                            {% translate 'Save and continue editing' %}
+                            {% trans "Save and continue editing" %}
                         {% else %}
-                            {% translate 'Save and view' %}
+                            {% trans "Save and view" %}
                         {% endif %}
-                    </button>
+                    {% endcomponent %}
                 {% endif %}
 
                 {% if show_save_and_add_another %}
-                    <button type="submit" form="{{ opts.model_name }}_form" name="_addanother" class="border border-base-200 cursor-pointer font-medium px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
-                        {% translate 'Save and add another' %}
-                    </button>
+                    {% component "unfold/components/button.html" with submit=1 form=opts.model_name|add:"_form" name="_addanother" variant="default" class="w-full lg:w-auto" %}
+                        {% trans "Save and add another" %}
+                    {% endcomponent %}
                 {% endif %}
 
                 {% if show_save_as_new %}
-                    <button type="submit" form="{{ opts.model_name }}_form" name="_saveasnew" class="border border-base-200 cursor-pointer font-medium px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
-                        {% translate 'Save as new' %}
-                    </button>
+                    {% component "unfold/components/button.html" with submit=1 form=opts.model_name|add:"_form" name="_saveasnew" variant="default" class="w-full lg:w-auto" %}
+                        {% trans "Save as new" %}
+                    {% endcomponent %}
                 {% endif %}
 
                 <div class="flex flex-col gap-3 mr-auto w-full lg:flex-row lg:w-auto">
                     {% if show_close or adminform.model_admin.change_form_show_cancel_button %}
                         {% url opts|admin_urlname:'changelist' as changelist_url %}
+                        {% add_preserved_filters changelist_url as link %}
 
-                        <a href="{% add_preserved_filters changelist_url %}" class="border border-base-200 cursor-pointer font-medium px-3 py-2 rounded-default text-center transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700  dark:hover:text-base-200 dark:hover:bg-base-900">
-                            {% translate 'Close' %}
-                        </a>
+                        {% component "unfold/components/button.html" with href=link variant="default" class="w-full lg:w-auto"%}
+                            {% trans "Close" %}
+                        {% endcomponent %}
                     {% endif %}
 
                     {% if show_delete_link and original %}
                         {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+                        {% add_preserved_filters delete_url as link %}
 
-                        <a href="{% add_preserved_filters delete_url %}" class="bg-red-600 cursor-pointer flex items-center justify-center font-medium h-[38px] ml-auto px-3 py-2 rounded-default text-center text-white w-full lg:w-auto dark:bg-red-500/20 dark:text-red-500">
-                            {% translate "Delete" %} {{ opts.verbose_name }}
-                        </a>
+                        {% component "unfold/components/button.html" with href=delete_url variant="danger" class="mr-auto w-full lg:w-auto" %}
+                            {% trans "Delete" %} {{ opts.verbose_name }}
+                        {% endcomponent %}
                     {% endif %}
                 </div>
             {% endblock %}

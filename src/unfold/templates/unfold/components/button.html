@@ -1,16 +1,18 @@
-<{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if name %}name="{{ name }}"{% endif %}
-class="font-medium flex group items-center gap-2 px-3 py-2 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
+<{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if form %}form="{{ form }}"{% endif%} {% if name %}name="{{ name }}"{% endif %} {% if value %}value="{{ value }}"{% endif %} {% if extra_attrs %}{{ extra_attrs }}{% endif %} {% if title %}title="{{ title }}"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=attrs %}
+class="font-medium inline-flex group items-center gap-2 px-3 py-2 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
 {% if size == "md" %}
     px-5 py-2.5 text-[14px]
 {% endif %}
 {% if variant == "default" %}
-    border border-base-200 bg-white text-font-important-light dark:border-base-700 dark:bg-transparent dark:text-font-important-dark
-{% elif variant == "secondary" %}
-    bg-base-100 border border-transparent dark:bg-base-800
+    border border-base-200 bg-white text-important dark:border-base-700 dark:bg-transparent {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
 {% elif variant == "ghost" %}
-    bg-transparent text-font-important-light dark:text-font-important-dark
+    border border-transparent bg-transparent text-important {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
+{% elif variant == "secondary" %}
+    bg-base-100 border border-transparent text-important dark:bg-base-800 {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
+{% elif variant == "danger" %}
+    border border-red-600 bg-red-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-red-600/80{% endif %}
 {% else %}
-    border border-base-200 bg-primary-600 border-transparent text-white
+    border border-base-200 bg-primary-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-primary-600/80{% endif %}
 {% endif %}{% if class %} {{ class }}{% endif %}" {% include "unfold/helpers/attrs.html" %} {% if extra_attrs %}{{ extra_attrs }}{% endif %}>
 {{ children }}
 </{% if href %}a{% else %}button{% endif%}>

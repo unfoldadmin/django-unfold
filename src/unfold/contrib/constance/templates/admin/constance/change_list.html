@@ -1,6 +1,6 @@
 {% extends "admin/base_site.html" %}
 
-{% load admin_list static i18n %}
+{% load admin_list static i18n unfold %}
 
 {% block extrahead %}
     {% url 'admin:jsi18n' as jsi18nurl %}
@@ -38,8 +38,9 @@
                             <tr>
                                 <td class="border-t border-base-200 px-3 py-2 dark:border-base-800" colspan="100%">
                                     <div class="flex justify-end">
-                                        {% trans "Save" as title %}
-                                        {% include "unfold/helpers/submit.html" with title=title %}
+                                        {% component "unfold/components/button.html" with submit=1 %}
+                                            {% trans "Save" %}
+                                        {% endcomponent %}
                                     </div>
                                 </td>
                             </tr>
