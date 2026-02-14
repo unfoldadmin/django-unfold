@@ -38,8 +38,6 @@
 
 @theme {
   --font-sans: 'Inter', sans-serif;
-  --shadow-raised: 0 2px 12px var(--color-base-300);
-  --shadow-raised-dark: 0 2px 12px var(--color-base-700);
 }
 
 @theme inline{
@@ -96,6 +94,10 @@
 
 @utility text-link {
   @apply text-primary-600 dark:text-primary-500;
+}
+
+@utility data-row {
+  @apply hover:bg-base-900/[.04] dark:hover:bg-base-200/[.04];
 }
 
 @utility field-sizing-content {

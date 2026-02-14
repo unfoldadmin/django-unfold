@@ -25,7 +25,7 @@
     </tr>
 
     {% for item in config_values %}
-        <tr class="border-t border-base-200 relative h-[55px] *:px-3 *:py-2 *:align-middle dark:border-base-800 hover:shadow-raised dark:hover:shadow-raised-dark hover:z-20" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
+        <tr class="data-row border-t border-base-200 relative h-[55px] *:px-3 *:py-2 *:align-middle dark:border-base-800" {% if fieldset.collapse %}x-show="rowsOpen"{% endif %}>
             <th class="font-normal leading-relaxed text-left max-w-sm">
                 {{ item.help_text|linebreaksbr }}
             </th>
