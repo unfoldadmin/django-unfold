@@ -97,7 +97,7 @@
 }
 
 @utility data-row {
-  @apply hover:bg-base-900/[.04] dark:hover:bg-base-200/[.04];
+  @apply hover:bg-base-950/4 dark:hover:bg-base-50/4;
 }
 
 @utility field-sizing-content {
