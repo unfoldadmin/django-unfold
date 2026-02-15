@@ -20,7 +20,6 @@ from django.contrib.admin.widgets import (
     AdminURLFieldWidget,
     AdminUUIDInputWidget,
     ForeignKeyRawIdWidget,
-    RelatedFieldWidgetWrapper,
 )
 from django.db.models import ManyToOneRel
 from django.forms import (
@@ -810,7 +809,7 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
         return context
 
 
-class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
+class UnfoldAdminCheckboxSelectMultipleWidget(CheckboxSelectMultiple):
     template_name = "unfold/widgets/radio.html"
     option_template_name = "unfold/widgets/radio_option.html"
 
@@ -822,6 +821,16 @@ class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
                 [*CHECKBOX_CLASSES, self.attrs.get("class", "") if self.attrs else ""]
             )
         }
+
+
+class UnfoldAdminCheckboxSelectMultiple(UnfoldAdminCheckboxSelectMultipleWidget):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        warnings.warn(
+            "UnfoldAdminCheckboxSelectMultiple is deprecated and will be removed in a future release. "
+            "Please use UnfoldAdminCheckboxSelectMultipleWidget instead.",
+            stacklevel=2,
+        )
+        super().__init__(*args, **kwargs)
 
 
 class UnfoldBooleanWidget(CheckboxInput):
@@ -854,10 +863,6 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
             },
             check_test=None,
         )
-
-
-class UnfoldRelatedFieldWidgetWrapper(RelatedFieldWidgetWrapper):
-    template_name = "unfold/widgets/related_widget_wrapper.html"
 
 
 class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
