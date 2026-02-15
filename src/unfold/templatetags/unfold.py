@@ -743,7 +743,7 @@ def header_title(context: RequestContext) -> str:
                 "link": reverse_lazy(
                     f"{current_app}:app_list", args=[model_admin.model._meta.app_label]
                 ),
-                "title": model_admin.model._meta.app_label,
+                "title": model_admin.model._meta.app_config.verbose_name,
             }
         )
 
