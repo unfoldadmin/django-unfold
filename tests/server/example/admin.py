@@ -64,7 +64,7 @@ from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationFo
 from unfold.paginator import InfinitePaginator
 from unfold.sections import TableSection, TemplateSection
 from unfold.widgets import (
-    UnfoldAdminCheckboxSelectMultiple,
+    UnfoldAdminCheckboxSelectMultipleWidget,
     UnfoldAdminLocationWidget,
     UnfoldAdminSelect2Widget,
 )
@@ -104,7 +104,7 @@ class ExtendedUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["status"].widget = UnfoldAdminSelect2Widget(choices=StatusChoices)
-        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultiple(
+        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultipleWidget(
             choices=Project.objects.all().values_list("id", "name")
         )
 

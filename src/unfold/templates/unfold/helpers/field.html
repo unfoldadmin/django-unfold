@@ -1,6 +1,6 @@
 {% load unfold %}
 
-{% if field.field.widget.input_type == "checkbox" and field.field.widget|class_name != "UnfoldAdminCheckboxSelectMultiple"%}
+{% if field.field.widget.input_type == "checkbox" and field.field.widget|class_name != "UnfoldAdminCheckboxSelectMultipleWidget"%}
     <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-5">
         <div class="flex flex-row gap-2 items-center">
             {{ field }}
