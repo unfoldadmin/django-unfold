@@ -4,7 +4,7 @@ class="font-medium inline-flex group items-center gap-2 px-3 py-2 relative round
     px-5 py-2.5 text-[14px]
 {% endif %}
 {% if variant == "default" %}
-    border border-base-200 bg-white text-important dark:border-base-700 dark:bg-transparent {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
+    border border-base-200 bg-white shadow-xs text-important dark:border-base-700 dark:bg-transparent {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
 {% elif variant == "ghost" %}
     border border-transparent bg-transparent text-important {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
 {% elif variant == "secondary" %}
