@@ -17,13 +17,13 @@ Enhance Django Admin with a modern interface and powerful tools to build interna
 
 ## Quickstart
 
-### Install the package
+**Install the package**
 
 ```sh
 pip install django-unfold
 ```
 
-### Change INSTALLED_APPS in settings.py
+**Change INSTALLED_APPS in settings.py**
 
 ```python
 INSTALLED_APPS = [
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-### Use Unfold ModelAdmin
+**Use Unfold ModelAdmin**
 
 ```python
 from unfold.admin import ModelAdmin
