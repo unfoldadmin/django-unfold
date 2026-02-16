@@ -1,6 +1,44 @@
 # CHANGELOG
 
 
+## v0.80.0 (2026-02-16)
+
+### Bug Fixes
+
+- Added shadow to default button variant
+  ([#1866](https://github.com/unfoldadmin/django-unfold/pull/1866),
+  [`bed97cb`](https://github.com/unfoldadmin/django-unfold/commit/bed97cb4a41a0b4509c21c99f0b45948299933ca))
+
+- Dataset top spacing in tab in case of error
+  ([#1868](https://github.com/unfoldadmin/django-unfold/pull/1868),
+  [`b2e2811`](https://github.com/unfoldadmin/django-unfold/commit/b2e281178e2c6b217586c74b3d48b96353d0e7a7))
+
+- Force clockbox z-index ([#1864](https://github.com/unfoldadmin/django-unfold/pull/1864),
+  [`dd632df`](https://github.com/unfoldadmin/django-unfold/commit/dd632dfdf6d89149dc2ec69b189292fca8fc7dd0))
+
+- Table hover color in light mode ([#1871](https://github.com/unfoldadmin/django-unfold/pull/1871),
+  [`efea932`](https://github.com/unfoldadmin/django-unfold/commit/efea9321bcbf417d82b4ce7a6b1f1bd8eaf5a8e8))
+
+- Use app verbose name in header title
+  ([#1869](https://github.com/unfoldadmin/django-unfold/pull/1869),
+  [`43418eb`](https://github.com/unfoldadmin/django-unfold/commit/43418eb750c38170674bd57ec0e03862fab845d5))
+
+- Widgets naming conventions ([#1867](https://github.com/unfoldadmin/django-unfold/pull/1867),
+  [`15226f4`](https://github.com/unfoldadmin/django-unfold/commit/15226f4df1547118c0b336a3a44c60059a3224db))
+
+### Features
+
+- Redesigned user avatar ([#1862](https://github.com/unfoldadmin/django-unfold/pull/1862),
+  [`46f0f90`](https://github.com/unfoldadmin/django-unfold/commit/46f0f9001922ab44b39e1834debcc469ec5b04a1))
+
+- Simple table row hover ([#1865](https://github.com/unfoldadmin/django-unfold/pull/1865),
+  [`aec2119`](https://github.com/unfoldadmin/django-unfold/commit/aec2119922e6068b8e22c04bdf7ccf37fefc175e))
+
+- Use button component + hover effect
+  ([#1860](https://github.com/unfoldadmin/django-unfold/pull/1860),
+  [`53f2896`](https://github.com/unfoldadmin/django-unfold/commit/53f2896115e114f2c2165083d573c7a02aaa31a9))
+
+
 ## v0.79.0 (2026-02-11)
 
 ### Bug Fixes
