@@ -168,7 +168,7 @@ def render_section(
     if isinstance(section_class, str):
         section_class: type[BaseSection] = import_string(section_class)
 
-    return section_class(context.get("request"), instance).render()
+    return section_class(context.request, instance).render()
 
 
 @register.simple_tag(name="has_nav_item_active")
