@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v0.80.1 (2026-02-17)
+
+### Bug Fixes
+
+- Django4.2 flatten context ([#1874](https://github.com/unfoldadmin/django-unfold/pull/1874),
+  [`9744566`](https://github.com/unfoldadmin/django-unfold/commit/9744566c255e40cc07f18ed984d03d309391aaf0))
+
+- Section request param ([#1873](https://github.com/unfoldadmin/django-unfold/pull/1873),
+  [`0ae17ae`](https://github.com/unfoldadmin/django-unfold/commit/0ae17ae19f81d4a1be69946a05966da08365783e))
+
+
 ## v0.80.0 (2026-02-16)
 
 ### Bug Fixes
