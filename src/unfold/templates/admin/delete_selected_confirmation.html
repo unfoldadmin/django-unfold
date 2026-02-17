@@ -59,14 +59,18 @@
             <form method="post" class="border-t border-base-200 px-4 py-3 dark:border-base-800">
                 {% csrf_token %}
 
+                {% if request.POST.dataset %}
+                    <input type="hidden" name="dataset" value="{{ request.POST.dataset }}">
+                {% endif %}
+
+                {% for obj in queryset %}
+                    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
+                {% endfor %}
+
+                <input type="hidden" name="action" value="delete_selected">
+                <input type="hidden" name="post" value="yes">
+
                 <div class="flex items-center">
-                    {% for obj in queryset %}
-                        <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}">
-                    {% endfor %}
-
-                    <input type="hidden" name="action" value="delete_selected">
-                    <input type="hidden" name="post" value="yes">
-
                     {% include "unfold/helpers/delete_submit_line.html" %}
                 </div>
             </form>
