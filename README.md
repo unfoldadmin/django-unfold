@@ -1,37 +1,57 @@
 [![screenshot](https://github.com/user-attachments/assets/8c2dc5c1-480b-49ad-bd2e-57369ca4e306)](https://unfoldadmin.com)
 
-## Unfold - Django Admin Theme
+## Unfold - Modern Django Admin
 
 [![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
 [![Discord](https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da)](https://discord.gg/9sQj9MEbNz)
 [![Build](https://img.shields.io/github/actions/workflow/status/unfoldadmin/django-unfold/release.yml?style=for-the-badge)](https://github.com/unfoldadmin/django-unfold/actions?query=workflow%3Arelease)
 ![Monthly downloads](https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge)
 
-Modern theme that upgrades Django admin with beautiful design, advanced features, and easy customization.
+Enhance Django Admin with a modern interface and powerful tools to build internal applications.
 
 - **Documentation:** The full documentation is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
-- **Unfold:** The demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
+- **Live demo:** The demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
 - **Formula:** A repository with a demo implementation is available at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula?utm_medium=github&utm_source=unfold).
 - **Turbo:** A Django & Next.js boilerplate implementing Unfold is available at [github.com/unfoldadmin/turbo](https://github.com/unfoldadmin/turbo?utm_medium=github&utm_source=unfold).
 - **Discord:** Join our Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
 
-## Professional services
+## Quickstart
 
-Need expert help with Django or Unfold? We offer services to support your project:
+**Install the package**
 
-- **Consulting**: Expert guidance on Django architecture, performance, feature development, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
-- **Support**: Assistance with integrating or customizing Unfold, including live 1:1 calls and implementation review. Fixed price, no ongoing commitment. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
-- **Studio**: Visually customize Django admin with own color schemes. Access a variety of dashboard templates, a password reset flow, and more. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+```sh
+pip install django-unfold
+```
 
-[![dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+**Change INSTALLED_APPS in settings.py**
 
-## Latest improvements
+```python
+INSTALLED_APPS = [
+    "unfold",
+    # Rest of the apps
+]
+```
 
-- **Datasets**: Display custom changelists on change form detail pages.
-- **Command**: Offers a command palette for quick searching across all models or custom-injected data.
-- **Constance**: Official `django-constance` support with a completely new design and UX improvements.
+**Use Unfold ModelAdmin**
 
-## Core features
+```python
+from unfold.admin import ModelAdmin
+
+@admin.register(MyModel)
+class MyModelAdmin(ModelAdmin):
+    pass
+```
+
+*Unfold works alongside the default Django admin and requires no migration of existing models or workflows. Unfold is actively developed and continuously evolving as new use cases and edge cases are discovered.*
+
+## Why Unfold?
+
+- Built on `django.contrib.admin`: Enhances the existing admin without replacing it.
+- Provides a modern interface and improved workflows.
+- Designed for real internal tools and backoffice apps.
+- Incremental adoption for existing projects.
+
+## Features
 
 - **Visual interface**: Provides a modern user interface based on the Tailwind CSS framework.
 - **Sidebar navigation**: Simplifies the creation of sidebar menus with icons, collapsible sections, and more.
@@ -42,28 +62,27 @@ Need expert help with Django or Unfold? We offer services to support your projec
 - **UI components**: Offers reusable interface components such as cards, buttons, and charts.
 - **Crispy forms**: Custom template pack for django-crispy-forms to style forms with Unfold's design system.
 - **WYSIWYG editor**: Built-in support for WYSIWYG editing through Trix.
-- **Array widget:** Built-in widget for `django.contrib.postgres.fields.ArrayField`.
+- **Array widget:** Support for `django.contrib.postgres.fields.ArrayField`.
 - **Inline tabs:** Group inlines into tab navigation in the change form.
 - **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form.
 - **Model tabs:** Allow defining custom tab navigation for models.
 - **Fieldset tabs:** Merge multiple fieldsets into tabs in the change form.
 - **Sortable inlines:** Allow sorting inlines by dragging and dropping.
-- **Command**: Offers a command palette for quick searching across all models or custom-injected data.
+- **Command palette**: Quickly search across models and custom data.
 - **Datasets**: Custom changelists `ModelAdmin` displayed on change form detail pages.
 - **Environment label:** Distinguish between environments by displaying a label.
 - **Nonrelated inlines:** Display nonrelated models as inlines in the change form.
 - **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance.
 - **Favicons:** Built-in support for configuring various site favicons.
-- **Themes:** Allow customization of color scheme, background color, border radius, and more.
+- **Theming:** Customize color schemes, backgrounds, border radius, and more.
 - **Font colors:** Adjust font colors for better readability.
 - **Changeform modes:** Display fields in compressed mode in the change form.
 - **Language switcher:** Allow changing language directly from the admin area.
-- **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load
+- **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load.
 - **Parallel admin:** Supports [running the default admin](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold) alongside Unfold.
 - **Third-party packages:** Provides default support for multiple popular applications.
 - **Configuration:** Allows basic options to be changed in `settings.py`.
 - **Dependencies:** Built entirely on `django.contrib.admin`.
-- **VS Code:** Project configuration and development container included.
 
 ## Third-party package support
 
@@ -78,9 +97,15 @@ Need expert help with Django or Unfold? We offer services to support your projec
 - [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)
 - [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/)
 
-## Community packages
+## Professional services
 
-- [django-unfold-markdown](https://pypi.org/project/django-unfold-markdown/) - [Integration guide](https://github.com/sergei-vasilev-dev/django-unfold-markdown)
+Need help integrating, customizing, or scaling Django Admin with Unfold?
+
+- **Consulting**: Expert guidance on Django architecture, performance, feature development, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
+- **Support**: Assistance with integrating or customizing Unfold, including live 1:1 calls and implementation review. Fixed price, no ongoing commitment. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
+- **Studio**: Extend Unfold with advanced dashboards, visual customization, and additional admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+
+[![dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
 
 ## Credits
 
