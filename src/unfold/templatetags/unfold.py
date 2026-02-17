@@ -2,6 +2,7 @@ import json
 from collections.abc import Iterable, Mapping
 from typing import Any
 
+from django import VERSION as DJANGO_VERSION
 from django import template
 from django.contrib.admin.helpers import (
     AdminField,
@@ -218,6 +219,23 @@ def tabs(adminform: AdminForm) -> list[Fieldset]:
     return result
 
 
+def _flatten_context(context: Context) -> dict[str, Any]:
+    """
+    Return the template context as a single flat dict.
+    On Django < 5, context.flatten() can raise ValueError for contexts
+    created with context.new() (Django #35417). Use a safe implementation.
+    """
+    if DJANGO_VERSION >= (5, 0):
+        return context.flatten()
+    # TODO: remove once Django 4.2 is not supported
+    # Django 4.2: build flat dict by resolving keys, avoid context.flatten()
+    keys = set()
+    for d in context.dicts:
+        if hasattr(d, "keys"):
+            keys.update(d.keys())
+    return {k: context[k] for k in keys}
+
+
 class RenderComponentNode(template.Node):
     def __init__(
         self,
@@ -246,7 +264,7 @@ class RenderComponentNode(template.Node):
             ).get_context_data(**values)
 
         context_copy = context.new()
-        context_copy.update(context.flatten())  # ty:ignore[invalid-argument-type]
+        context_copy.update(_flatten_context(context))
         context_copy.update(values)
         children = self.nodelist.render(context_copy)
 
@@ -258,7 +276,7 @@ class RenderComponentNode(template.Node):
             )
 
         if self.include_context:
-            values.update(context.flatten())
+            values.update(_flatten_context(context))
 
         return render_to_string(self.template_name, request=request, context=values)
 
