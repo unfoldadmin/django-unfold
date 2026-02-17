@@ -2,9 +2,11 @@ from typing import Any
 
 import django
 from django.contrib import messages
+from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.views.main import ERROR_FLAG, PAGE_VAR
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.db.models import QuerySet
 from django.http import HttpRequest, JsonResponse
 from django.views.generic import ListView
 
@@ -48,9 +50,17 @@ class DatasetChangeList(ChangeList):
 
         super().get_results(request)
 
-    def get_queryset(self, request, exclude_parameters=None):
+    def get_queryset(
+        self, request: HttpRequest, exclude_parameters: list[str | None] | None = None
+    ) -> QuerySet:
         self.query = self.dataset_search_query
         return super().get_queryset(request, exclude_parameters)
+
+    def get_filters(
+        self, request: str
+    ) -> tuple[list[ListFilter], bool, dict[str, bool | str], bool, bool]:
+        # Disable filters for dataset
+        return ([], False, {}, False, False)
 
 
 class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
