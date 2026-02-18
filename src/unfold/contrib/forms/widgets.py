@@ -42,15 +42,8 @@ class ArrayWidget(MultiWidget):
         self.choices = kwargs.get("choices")
         self.widget_class = widget_class
 
-        attrs = kwargs.get("attrs", {})
-        attrs.update(
-            {
-                "class": attrs.get("class", "") if attrs else "",
-            }
-        )
-
         widgets = [self.get_widget_instance()]
-        super().__init__(widgets, attrs=attrs)
+        super().__init__(widgets, attrs=kwargs.get("attrs", None))
 
     def get_widget_instance(self) -> Any:
         if hasattr(self, "widget_class") and self.widget_class is not None:
