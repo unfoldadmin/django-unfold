@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v0.80.2 (2026-02-18)
+
+### Bug Fixes
+
+- Dataset input on delete page ([#1878](https://github.com/unfoldadmin/django-unfold/pull/1878),
+  [`bb4908a`](https://github.com/unfoldadmin/django-unfold/commit/bb4908a4f05502af7d0993a10753ea7437f74a51))
+
+- Disable filters for dataset ([#1876](https://github.com/unfoldadmin/django-unfold/pull/1876),
+  [`ccebc51`](https://github.com/unfoldadmin/django-unfold/commit/ccebc517014c6243e26e79ebcd45827e583a943c))
+
+
 ## v0.80.1 (2026-02-17)
 
 ### Bug Fixes
