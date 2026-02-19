@@ -1,4 +1,5 @@
 import importlib
+import re
 from http import HTTPStatus
 
 import pytest
@@ -1431,3 +1432,50 @@ def test_tags_result_list_object_does_not_exist(rf, user_factory, monkeypatch):
     )
 
     assert "sample@example.com" not in response
+
+
+########################################################
+# Fieldset active tab
+########################################################
+@pytest.mark.parametrize(
+    ("fieldset_names", "active_name"),
+    [
+        # Latin
+        (["Personal info", "Permissions"], "Personal info"),
+        # Cyrillic
+        (["Личная информация", "Права"], "Личная информация"),
+        # Latin edge case (German ß)
+        (["Straße", "Berechtigungen"], "Straße"),
+        # Greek
+        (["Προσωπικές πληροφορίες", "Δικαιώματα"], "Προσωπικές πληροφορίες"),
+        # RTL (Arabic)
+        (["المعلومات الشخصية", "الأذونات"], "المعلومات الشخصية"),
+        # CJK (Chinese)
+        (["个人信息", "权限"], "个人信息"),
+    ],
+)
+def test_fieldset_active_tab(fieldset_names, active_name):
+    tabs = [{"name": fieldset_name} for fieldset_name in fieldset_names]
+
+    response = Template(
+        """
+        {% load unfold %}
+        {% for fieldset in tabs %}
+            <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|unicoded_slugify }}{% endif %}"
+                 x-show="activeFieldsetTab == '{{ fieldset.name|unicoded_slugify }}'">
+                Test
+            </div>
+        {% endfor %}
+        """
+    ).render(
+        Context(
+            {
+                "tabs": tabs,
+            }
+        )
+    )
+
+    tab_ids = re.findall(r"""x-show="activeFieldsetTab == '([^']*)'""", response)
+    fieldset_classes = re.findall(r'class="tab-wrapper fieldset-([^"]+)"', response)
+
+    assert fieldset_classes == tab_ids
