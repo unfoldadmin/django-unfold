@@ -115,16 +115,16 @@ exclude_commit_patterns = [
 upload_to_vcs_release = false
 
 [tool.pytest.ini_options]
-addopts = """\
-    --strict-config
-    --strict-markers
-    --cov=unfold
-    --cov-fail-under=87
-    --cov-report=term-missing
-    --reuse-db
-    --no-migrations
-    --ds=example.settings
-    """
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+    "--cov=unfold",
+    "--cov-fail-under=87",
+    "--cov-report=term-missing",
+    "--reuse-db",
+    "--no-migrations",
+    "--ds=example.settings",
+]
 pythonpath = "tests/server"
 django_find_project = false
 
@@ -133,10 +133,7 @@ show_missing = true
 skip_covered = true
 
 [tool.coverage.paths]
-source = [
-  "src/unfold",
-  "*/site-packages/unfold",
-]
+source = ["src/unfold"]
 
 [tool.ty.src]
 include = ["src/unfold"] # TODO: include tests
