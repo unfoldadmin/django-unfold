@@ -1,4 +1,5 @@
 import importlib
+import re
 from http import HTTPStatus
 
 import pytest
@@ -12,6 +13,7 @@ from django.core.paginator import Paginator
 from django.forms import Form
 from django.template import Context, Template, TemplateSyntaxError
 from django.template.context import RequestContext
+from django.template.defaultfilters import slugify
 from django.urls import reverse
 from example.admin import ProjectDataset, UserAdmin
 from example.models import User
@@ -1431,3 +1433,49 @@ def test_tags_result_list_object_does_not_exist(rf, user_factory, monkeypatch):
     )
 
     assert "sample@example.com" not in response
+
+
+########################################################
+# Fieldset active tab
+########################################################
+@pytest.mark.parametrize(
+    ("fieldset_names", "active_name"),
+    [
+        # Latin
+        (["Personal info", "Permissions"], "Personal info"),
+        # Cyrillic
+        (["Личная информация", "Права"], "Личная информация"),
+        # Latin edge case (German ß)
+        (["Straße", "Berechtigungen"], "Straße"),
+        # Greek
+        (["Προσωπικές πληροφορίες", "Δικαιώματα"], "Προσωπικές πληροφορίες"),
+        # RTL (Arabic)
+        (["المعلومات الشخصية", "الأذونات"], "المعلومات الشخصية"),
+        # CJK (Chinese)
+        (["个人信息", "权限"], "个人信息"),
+    ],
+)
+def test_fieldset_active_tab(fieldset_names, active_name):
+    response = Template(
+        """
+        {% for fieldset_name in fieldset_names %}
+            <a class="{% if active_tab == fieldset_name|slugify %}active{% endif %}"
+               x-bind:class="activeFieldsetTab == '{{ fieldset_name|slugify }}' && 'active'">
+                {{ fieldset_name }}
+            </a>
+        {% endfor %}
+        """
+    ).render(
+        Context(
+            {
+                "fieldset_names": fieldset_names,
+                "active_tab": slugify(active_name),
+            }
+        )
+    )
+
+    tab_ids = re.findall(r"""activeFieldsetTab == '([^']*)' && 'active'""", response)
+    assert len(tab_ids) == len(fieldset_names)
+    assert all(tab_ids)
+    assert len(set(tab_ids)) == len(tab_ids)
+    assert response.count('class="active"') == 1
