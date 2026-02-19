@@ -30,6 +30,10 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=255)),
             ],
+            options={
+                "verbose_name": "Category",
+                "verbose_name_plural": "Categories",
+            },
         ),
         migrations.CreateModel(
             name="Label",
@@ -78,21 +82,6 @@ class Migration(migrations.Migration):
         ),
         migrations.CreateModel(
             name="Tag",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("name", models.CharField(max_length=255)),
-            ],
-        ),
-        migrations.CreateModel(
-            name="Task",
             fields=[
                 (
                     "id",
@@ -346,7 +335,6 @@ class Migration(migrations.Migration):
                 ),
                 ("projects", models.ManyToManyField(blank=True, to="example.project")),
                 ("tags", models.ManyToManyField(blank=True, to="example.tag")),
-                ("tasks", models.ManyToManyField(blank=True, to="example.task")),
             ],
             options={
                 "verbose_name": "user",
@@ -423,5 +411,32 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
+        ),
+        migrations.CreateModel(
+            name="Task",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "project",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="example.project",
+                    ),
+                ),
+            ],
+        ),
+        migrations.AddField(
+            model_name="user",
+            name="tasks",
+            field=models.ManyToManyField(blank=True, to="example.task"),
         ),
     ]
