@@ -1,13 +1,13 @@
 {
 	"name": "django-unfold",
-	"description": "Modern Django admin theme",
+	"description": "Modern Django Admin",
 	"scripts": {
 		"tailwind:build": "npx @tailwindcss/cli -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --minify",
 		"tailwind:watch": "npx @tailwindcss/cli -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --watch --minify"
 	},
 	"devDependencies": {
-		"tailwindcss": "^4.1.16",
-		"@tailwindcss/cli": "^4.1.16",
+		"tailwindcss": "^4.2.0",
+		"@tailwindcss/cli": "^4.2.0",
 		"@tailwindcss/typography": "^0.5.19"
 	}
 }
