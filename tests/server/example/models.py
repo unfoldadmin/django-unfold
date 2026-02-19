@@ -127,6 +127,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
 
 class Label(models.Model):
     name = models.CharField(max_length=255)
@@ -143,6 +147,7 @@ class Project(models.Model):
 
 
 class Task(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
 
     def __str__(self):
