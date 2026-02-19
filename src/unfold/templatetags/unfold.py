@@ -21,11 +21,11 @@ from django.forms import BoundField, CheckboxSelectMultiple
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
-from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
@@ -865,7 +865,7 @@ def tabs_active(fieldsets: list[Fieldset]) -> str:
     active = ""
 
     if len(fieldsets) > 0 and hasattr(fieldsets[0], "name"):
-        active = slugify(str(fieldsets[0].name))
+        active = slugify(str(fieldsets[0].name), allow_unicode=True)
 
     for fieldset in fieldsets:
         for field_line in fieldset:
@@ -875,7 +875,7 @@ def tabs_active(fieldsets: list[Fieldset]) -> str:
                     and field.errors()
                     and hasattr(fieldset, "name")
                 ):
-                    active = slugify(str(fieldset.name))
+                    active = slugify(str(fieldset.name), allow_unicode=True)
 
     return active
 
@@ -900,6 +900,11 @@ def tabs_primary_active(inlines: list[InlineAdminFormSet]) -> str:
         if getattr(inline.opts, "tab", False) and inline.formset.errors:
             for error in inline.formset.errors:
                 if isinstance(error, dict) and len(error) > 0:
-                    active = slugify(str(inline.formset.prefix))
+                    active = slugify(str(inline.formset.prefix), allow_unicode=True)
 
     return active
+
+
+@register.filter
+def unicoded_slugify(value: str) -> str:
+    return slugify(value, allow_unicode=True)
