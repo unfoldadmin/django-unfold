@@ -3,7 +3,7 @@ name = "django-unfold"
 version = "0.80.2"
 description = "Modern Django admin theme"
 authors = []
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.11,<4.0"
 readme = "README.md"
 license = "MIT"
 keywords = [
@@ -14,7 +14,6 @@ keywords = [
 ]
 classifiers = [
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -75,7 +74,7 @@ build-backend = "hatchling.build"
 [tool.ruff]
 fix = true
 line-length = 88
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = [
@@ -147,7 +146,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{310,311,312,313,314}-django{42,50,51,52,60}
+        python{311,312,313,314}-django{42,50,51,52,60}
 
     [testenv]
     allowlist_externals = uv
