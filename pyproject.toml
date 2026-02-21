@@ -129,7 +129,7 @@ django_find_project = false
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-fail_under = 91
+fail_under = 92
 sort = "-miss"
 
 [tool.coverage.paths]

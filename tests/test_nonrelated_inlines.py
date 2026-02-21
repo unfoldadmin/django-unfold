@@ -47,7 +47,38 @@ def test_nonrelated_inlines(
     assert "New Project" in response.content.decode()
 
 
-# TODO: test new
+@pytest.mark.django_db
+def test_nonrelated_inline_add(admin_client, admin_user, category_factory):
+    category = category_factory(name="Test Category")
+    response = admin_client.get(
+        reverse("admin:example_category_change", args=(category.pk,))
+    )
+
+    assert response.status_code == HTTPStatus.OK
+
+    response = admin_client.post(
+        reverse("admin:example_category_change", args=(category.pk,)),
+        {
+            "name": "Test Category",
+            "example-project-TOTAL_FORMS": "4",
+            "example-project-INITIAL_FORMS": "0",
+            "example-project-MIN_NUM_FORMS": "0",
+            "example-project-MAX_NUM_FORMS": "1000",
+            "example-project-0-name": "New Project",
+            "_continue": True,
+        },
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "Test Category" in response.content.decode()
+    assert (
+        'The Category “<a href="/admin/example/category/1/change/">Test Category</a>” was changed successfully'
+        in response.content.decode()
+    )
+
+    assert "New Project" in response.content.decode()
+
+
 @pytest.mark.django_db
 def test_nonrelated_inline_delete(
     admin_client, admin_user, category_factory, project_factory
