@@ -896,6 +896,9 @@ def tabs_errors_count(fieldset: Fieldset) -> int:
 def tabs_primary_active(inlines: list[InlineAdminFormSet]) -> str:
     active = "general"
 
+    if not isinstance(inlines, list):
+        return active
+
     for inline in inlines:
         if getattr(inline.opts, "tab", False) and inline.formset.errors:
             for error in inline.formset.errors:
