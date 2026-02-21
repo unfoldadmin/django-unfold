@@ -746,6 +746,10 @@ div.jsoneditor-tree,
   @apply text-default dark:bg-base-900;
 }
 
+.ace-jsoneditor .ace_scrollbar {
+  @apply dark:invert;
+}
+
 .jsoneditor div.jsoneditor-tree {
   @apply bg-white dark:!bg-transparent;
 }
