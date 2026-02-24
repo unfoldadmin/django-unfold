@@ -38,7 +38,7 @@
 
             <td>
                 {% if item.default %}
-                    {% include "unfold/helpers/label.html" with text=item.default %}
+                    {% include "unfold/helpers/label.html" with text=item.default class="max-w-40 truncate" title=item.default %}
                 {% else %}
                     -
                 {% endif %}
