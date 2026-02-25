@@ -1,4 +1,5 @@
 from collections.abc import Callable, Iterable
+from functools import wraps
 from typing import Any
 
 from django.contrib.admin.options import BaseModelAdmin
@@ -6,9 +7,10 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
+from django.template.response import TemplateResponse
 
+from unfold.dataclasses import Action, Confirmation
 from unfold.enums import ActionVariant
-from unfold.typing import ActionFunction
 
 
 def action(
@@ -20,8 +22,10 @@ def action(
     attrs: dict[str, Any] | None = None,
     icon: str | None = None,
     variant: ActionVariant | None = ActionVariant.DEFAULT,
-) -> ActionFunction:
-    def decorator(func: Callable) -> ActionFunction:
+    confirmation: Confirmation | None = None,
+) -> Action:
+    def decorator(func: Callable) -> Action:
+        @wraps(func)
         def inner(
             model_admin: BaseModelAdmin,
             request: HttpRequest,
@@ -66,6 +70,16 @@ def action(
 
                 if not all(permission_checks):
                     raise PermissionDenied
+
+            if confirmation is not None and request.headers.get("HX-Request") == "true":
+                return TemplateResponse(
+                    request,
+                    "unfold/helpers/confirmation.html",
+                    {
+                        "confirmation": confirmation,
+                    },
+                )
+
             return func(model_admin, request, *args, **kwargs)
 
         if permissions is not None:
@@ -80,6 +94,9 @@ def action(
         if icon is not None:
             inner.icon = icon
 
+        if confirmation is not None:
+            inner.confirmation = confirmation
+
         if variant is not None:
             inner.variant = variant
         else:
@@ -91,8 +108,8 @@ def action(
 
     if function is None:
         return decorator
-    else:
-        return decorator(function)
+
+    return decorator(function)
 
 
 def display(

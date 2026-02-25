@@ -5,8 +5,14 @@
        {% if not link %}
            x-on:click="actionDropdownOpen = !actionDropdownOpen"
            x-bind:class="{'{% if action.variant.value == "default" %}text-primary-600 dark:text-primary-500{% endif %}': actionDropdownOpen }"
-       {% endif %}>
+       {% endif %}
 
+       {% if action.confirmation %}
+           hx-get="{{ link }}"
+           hx-target="#modal-content"
+           hx-select="#confirmation"
+           x-on:htmx:after-on-load="openModal = true"
+       {% endif %}>
         {% if action.icon %}
             <span class="material-symbols-outlined">
                 {{ action.icon }}

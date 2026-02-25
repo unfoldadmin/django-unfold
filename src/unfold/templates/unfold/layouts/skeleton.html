@@ -15,7 +15,7 @@
 {% capture as is_fullwidth silent %}{% block is_fullwidth %}{{ is_fullwidth }}{% endblock %}{% endcapture %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" {% if theme %}class="{{ theme }}"{% endif %} x-data="{ adminTheme: {% if theme %}'{{ theme }}'{% else %}$persist('auto').as('adminTheme'){% endif %} }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:"rtl,ltr,auto" }}" {% if theme %}class="{{ theme }}"{% endif %} x-data="{ openModal: false, adminTheme: {% if theme %}'{{ theme }}'{% else %}$persist('auto').as('adminTheme'){% endif %} }" x-bind:class="{'dark': adminTheme === 'dark' || (adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)}" x-cloak>
     <head>
         <title>{{ environment_title_prefix|default:"" }} {% block title %}{% endblock %}</title>
 
@@ -89,7 +89,7 @@
 
         {% block base %}{% endblock %}
 
-        <div id="modal-overlay" class="backdrop-blur-xs bg-base-900/80 bottom-0 fixed hidden left-0 mr-1 right-0 top-0 z-60"></div>
+        {% include "unfold/helpers/modal.html" %}
 
         {% include "unfold/helpers/command.html" %}
 
