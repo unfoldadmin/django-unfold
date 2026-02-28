@@ -126,9 +126,7 @@ class ActionModelAdminMixin(ModelAdmin):
             attrs=method.attrs if hasattr(method, "attrs") else None,
             icon=method.icon if hasattr(method, "icon") else None,
             variant=method.variant if hasattr(method, "variant") else None,
-            confirmation=method.confirmation
-            if hasattr(method, "confirmation")
-            else None,
+            dialog=method.dialog if hasattr(method, "dialog") else None,
         )
 
     def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
@@ -277,7 +275,7 @@ class ActionModelAdminMixin(ModelAdmin):
                 "icon": action.icon,
                 "variant": action.variant,
                 "attrs": action.method.attrs,
-                "confirmation": action.confirmation,
+                "dialog": action.dialog,
                 "path": get_action_path(action),
             }
 

@@ -1,0 +1,43 @@
+{% load i18n unfold %}
+
+<div id="dialog">
+    <div class="absolute top-3.5 right-3.5 text-icon-action z-70" x-on:click="openModal = false">
+        <span class="material-symbols-outlined">close</span>
+    </div>
+
+    <form method="post" novalidate hx-post="{{ request.build_absolute_uri }}" hx-target="#dialog" hx-swap="innerHTML">
+        {% csrf_token %}
+
+        {% if dialog.title %}
+            <div class="border-base-200 flex flex-col gap-2 pb-3 mb-3 dark:border-base-700">
+                <h1 class="font-semibold text-base text-important tracking-tight">
+                    {{ dialog.title }}
+                </h1>
+
+                {% if dialog.description %}
+                    <p class="leading-relaxed">
+                        {{ dialog.description }}
+                    </p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if form %}
+            <div class="flex flex-col gap-4">
+                {% for field in form %}
+                    {% include "unfold/helpers/field.html" %}
+                {% endfor %}
+                <div>
+        {% endif %}
+
+        <div class="border-t border-base-200 flex flex-row justify-between -mx-6 px-6 -mb-3 pt-3 dark:border-base-700">
+            {% component "unfold/components/button.html" with variant="default" href="#" extra_attrs="x-on:click='openModal = false'" %}
+                {% trans "Cancel" %}
+            {% endcomponent %}
+
+            {% component "unfold/components/button.html" with submit=1 %}
+                {% trans "Submit" %}
+            {% endcomponent %}
+        </div>
+    </form>
+</div>

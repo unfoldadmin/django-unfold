@@ -7,10 +7,11 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
-from django.template.response import TemplateResponse
+from django.shortcuts import render
 
-from unfold.dataclasses import Action, Confirmation
+from unfold.dataclasses import Action, ActionDialog
 from unfold.enums import ActionVariant
+from unfold.forms import BaseDialogForm
 
 
 def action(
@@ -22,7 +23,7 @@ def action(
     attrs: dict[str, Any] | None = None,
     icon: str | None = None,
     variant: ActionVariant | None = ActionVariant.DEFAULT,
-    confirmation: Confirmation | None = None,
+    dialog: ActionDialog | None = None,
 ) -> Action:
     def decorator(func: Callable) -> Action:
         @wraps(func)
@@ -71,12 +72,19 @@ def action(
                 if not all(permission_checks):
                     raise PermissionDenied
 
-            if confirmation is not None and request.headers.get("HX-Request") == "true":
-                return TemplateResponse(
+            if dialog:
+                form_class = dialog.get("form_class") or BaseDialogForm
+                form = form_class(data=request.POST or None, request=request)
+
+                if form.is_valid():
+                    return func(model_admin, request, form, *args, **kwargs)
+
+                return render(
                     request,
-                    "unfold/helpers/confirmation.html",
+                    "unfold/helpers/dialog.html",
                     {
-                        "confirmation": confirmation,
+                        "dialog": dialog,
+                        "form": form,
                     },
                 )
 
@@ -94,8 +102,8 @@ def action(
         if icon is not None:
             inner.icon = icon
 
-        if confirmation is not None:
-            inner.confirmation = confirmation
+        if dialog is not None:
+            inner.dialog = dialog
 
         if variant is not None:
             inner.variant = variant

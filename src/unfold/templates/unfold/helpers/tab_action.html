@@ -7,10 +7,10 @@
            x-bind:class="{'{% if action.variant.value == "default" %}text-primary-600 dark:text-primary-500{% endif %}': actionDropdownOpen }"
        {% endif %}
 
-       {% if action.confirmation %}
+       {% if action.dialog %}
            hx-get="{{ link }}"
            hx-target="#modal-content"
-           hx-select="#confirmation"
+           hx-select="#dialog"
            x-on:htmx:after-on-load="openModal = true"
        {% endif %}>
         {% if action.icon %}

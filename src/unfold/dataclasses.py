@@ -1,13 +1,17 @@
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
-from typing import Any, TypedDict
+from typing import TYPE_CHECKING, Any, TypedDict
 
 from unfold.enums import ActionVariant
 
+if TYPE_CHECKING:
+    from unfold.forms import BaseDialogForm
 
-class Confirmation(TypedDict):
+
+class ActionDialog(TypedDict):
     title: str
     description: str
+    form_class: type["BaseDialogForm"] | None
 
 
 @dataclass
@@ -17,7 +21,7 @@ class Action:
     url_path: str
     attrs: dict[str, Any]
     icon: str | None = None
-    confirmation: Confirmation | None = None
+    dialog: ActionDialog | None = None
 
 
 @dataclass
@@ -30,7 +34,7 @@ class UnfoldAction:
     object_id: int | str | None = None
     icon: str | None = None
     variant: ActionVariant | None = ActionVariant.DEFAULT
-    confirmation: Confirmation | None = None
+    dialog: ActionDialog | None = None
 
 
 @dataclass
