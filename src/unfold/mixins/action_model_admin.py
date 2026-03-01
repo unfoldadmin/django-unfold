@@ -38,6 +38,7 @@ class ActionModelAdminMixin(ModelAdmin):
                 "title": action.description,
                 "icon": action.icon,
                 "attrs": action.method.attrs,
+                "dialog": action.dialog,
                 # This is just a path name as string and in template is used in {% url %} tag
                 # with custom instance pk value
                 "raw_path": f"{self.admin_site.name}:{action.action_name}",

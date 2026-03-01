@@ -5,6 +5,119 @@ from django.urls import reverse_lazy
 
 
 ######################################################################
+# Dialog actions
+######################################################################
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "action",
+    [
+        "changelist_dialog_action_without_custom_form",
+        "changelist_dialog_action_with_custom_form",
+    ],
+)
+def test_dialog_actions_anonymous(action, client):
+    response = client.get(
+        reverse_lazy(f"admin:example_dialogactionuser_{action}"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert response.wsgi_request.path == "/admin/login/"
+    assert "Action successfully executed" not in response.content.decode()
+
+    response = client.post(
+        reverse_lazy(f"admin:example_dialogactionuser_{action}"),
+        {
+            "_form_submitted": True,
+        },
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert response.wsgi_request.path == "/admin/login/"
+    assert "Action successfully executed" not in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_dialog_actions_without_form_submitted(admin_client):
+    response = admin_client.post(
+        reverse_lazy(
+            "admin:example_dialogactionuser_changelist_dialog_action_without_custom_form"
+        ),
+        {
+            "_form_submitted": True,
+        },
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "HX-Redirect" in response.headers
+    assert response.headers["HX-Redirect"] == reverse_lazy(
+        "admin:example_dialogactionuser_changelist"
+    )
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_dialogactionuser_changelist"),
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Action successfully executed" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_dialog_actions_with_form_submitted(admin_client):
+    response = admin_client.post(
+        reverse_lazy(
+            "admin:example_dialogactionuser_changelist_dialog_action_with_custom_form"
+        ),
+        {
+            "confirm": "CONFIRM",
+            "_form_submitted": True,
+        },
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "HX-Redirect" in response.headers
+    assert response.headers["HX-Redirect"] == reverse_lazy(
+        "admin:example_dialogactionuser_changelist"
+    )
+
+    response = admin_client.get(
+        reverse_lazy("admin:example_dialogactionuser_changelist"),
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Action successfully executed" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_dialog_actions_with_form_validation_error(admin_client):
+    response = admin_client.post(
+        reverse_lazy(
+            "admin:example_dialogactionuser_changelist_dialog_action_with_custom_form"
+        ),
+        {
+            "_form_submitted": True,
+        },
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "HX-Redirect" not in response.headers
+    assert "This field is required." in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_dialog_actions_with_form_custom_validation_error(admin_client):
+    response = admin_client.post(
+        reverse_lazy(
+            "admin:example_dialogactionuser_changelist_dialog_action_with_custom_form"
+        ),
+        {
+            "confirm": "INVALID",
+            "_form_submitted": True,
+        },
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "HX-Redirect" not in response.headers
+    assert "You must confirm to proceed." in response.content.decode()
+
+
+######################################################################
 # Changelist actions
 ######################################################################
 @pytest.mark.django_db
@@ -15,6 +128,13 @@ def test_actions_list_anonymous(client):
     assert response.status_code == HTTPStatus.OK
     assert response.wsgi_request.path == "/admin/login/"
     assert "Changelist action successfully executed" not in response.content.decode()
+
+    response = client.post(
+        reverse_lazy("admin:example_actionuser_changelist_action"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert response.wsgi_request.path == "/admin/login/"
 
 
 @pytest.mark.django_db
