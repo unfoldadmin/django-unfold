@@ -13,19 +13,28 @@ from django.urls import reverse_lazy
     [
         "changelist_dialog_action_without_custom_form",
         "changelist_dialog_action_with_custom_form",
+        ("row_dialog_action_without_custom_form", 1),
+        ("row_dialog_action_with_custom_form", 1),
+        ("changeform_dialog_action_without_custom_form", 1),
+        ("changeform_dialog_action_with_custom_form", 1),
     ],
 )
 def test_dialog_actions_anonymous(action, client):
-    response = client.get(
-        reverse_lazy(f"admin:example_dialogactionuser_{action}"),
-        follow=True,
-    )
+    if isinstance(action, tuple):
+        url = reverse_lazy(
+            f"admin:example_dialogactionuser_{action[0]}", args=[action[1]]
+        )
+    else:
+        url = reverse_lazy(f"admin:example_dialogactionuser_{action}")
+
+    response = client.get(url, follow=True)
+
     assert response.status_code == HTTPStatus.OK
     assert response.wsgi_request.path == "/admin/login/"
     assert "Action successfully executed" not in response.content.decode()
 
     response = client.post(
-        reverse_lazy(f"admin:example_dialogactionuser_{action}"),
+        url,
         {
             "_form_submitted": True,
         },
@@ -37,11 +46,24 @@ def test_dialog_actions_anonymous(action, client):
 
 
 @pytest.mark.django_db
-def test_dialog_actions_without_form_submitted(admin_client):
+@pytest.mark.parametrize(
+    "action",
+    [
+        "changelist_dialog_action_without_custom_form",
+        ("row_dialog_action_without_custom_form", 1),
+        ("changeform_dialog_action_without_custom_form", 1),
+    ],
+)
+def test_dialog_actions_without_form_submitted(action, admin_client):
+    if isinstance(action, tuple):
+        url = reverse_lazy(
+            f"admin:example_dialogactionuser_{action[0]}", args=[action[1]]
+        )
+    else:
+        url = reverse_lazy(f"admin:example_dialogactionuser_{action}")
+
     response = admin_client.post(
-        reverse_lazy(
-            "admin:example_dialogactionuser_changelist_dialog_action_without_custom_form"
-        ),
+        url,
         {
             "_form_submitted": True,
         },
@@ -62,11 +84,24 @@ def test_dialog_actions_without_form_submitted(admin_client):
 
 
 @pytest.mark.django_db
-def test_dialog_actions_with_form_submitted(admin_client):
+@pytest.mark.parametrize(
+    "action",
+    [
+        "changelist_dialog_action_with_custom_form",
+        ("row_dialog_action_with_custom_form", 1),
+        ("changeform_dialog_action_with_custom_form", 1),
+    ],
+)
+def test_dialog_actions_with_form_submitted(action, admin_client):
+    if isinstance(action, tuple):
+        url = reverse_lazy(
+            f"admin:example_dialogactionuser_{action[0]}", args=[action[1]]
+        )
+    else:
+        url = reverse_lazy(f"admin:example_dialogactionuser_{action}")
+
     response = admin_client.post(
-        reverse_lazy(
-            "admin:example_dialogactionuser_changelist_dialog_action_with_custom_form"
-        ),
+        url,
         {
             "confirm": "CONFIRM",
             "_form_submitted": True,
@@ -87,11 +122,24 @@ def test_dialog_actions_with_form_submitted(admin_client):
 
 
 @pytest.mark.django_db
-def test_dialog_actions_with_form_validation_error(admin_client):
+@pytest.mark.parametrize(
+    "action",
+    [
+        "changelist_dialog_action_with_custom_form",
+        ("row_dialog_action_with_custom_form", 1),
+        ("changeform_dialog_action_with_custom_form", 1),
+    ],
+)
+def test_dialog_actions_with_form_validation_error(action, admin_client):
+    if isinstance(action, tuple):
+        url = reverse_lazy(
+            f"admin:example_dialogactionuser_{action[0]}", args=[action[1]]
+        )
+    else:
+        url = reverse_lazy(f"admin:example_dialogactionuser_{action}")
+
     response = admin_client.post(
-        reverse_lazy(
-            "admin:example_dialogactionuser_changelist_dialog_action_with_custom_form"
-        ),
+        url,
         {
             "_form_submitted": True,
         },
@@ -102,11 +150,24 @@ def test_dialog_actions_with_form_validation_error(admin_client):
 
 
 @pytest.mark.django_db
-def test_dialog_actions_with_form_custom_validation_error(admin_client):
+@pytest.mark.parametrize(
+    "action",
+    [
+        "changelist_dialog_action_with_custom_form",
+        ("row_dialog_action_with_custom_form", 1),
+        ("changeform_dialog_action_with_custom_form", 1),
+    ],
+)
+def test_dialog_actions_with_form_custom_validation_error(action, admin_client):
+    if isinstance(action, tuple):
+        url = reverse_lazy(
+            f"admin:example_dialogactionuser_{action[0]}", args=[action[1]]
+        )
+    else:
+        url = reverse_lazy(f"admin:example_dialogactionuser_{action}")
+
     response = admin_client.post(
-        reverse_lazy(
-            "admin:example_dialogactionuser_changelist_dialog_action_with_custom_form"
-        ),
+        url,
         {
             "confirm": "INVALID",
             "_form_submitted": True,

@@ -464,7 +464,7 @@ class DialogActionsUserAdmin(BaseUserAdmin, ModelAdmin):
         return HttpResponse(
             headers={
                 "HX-Redirect": reverse_lazy(
-                    "admin:example_dialogactionuser_change", args=(object_id,)
+                    "admin:example_dialogactionuser_changelist"
                 ),
             }
         )
@@ -483,7 +483,7 @@ class DialogActionsUserAdmin(BaseUserAdmin, ModelAdmin):
         return HttpResponse(
             headers={
                 "HX-Redirect": reverse_lazy(
-                    "admin:example_dialogactionuser_change", args=(object_id,)
+                    "admin:example_dialogactionuser_changelist"
                 ),
             }
         )
