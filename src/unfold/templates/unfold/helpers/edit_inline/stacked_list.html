@@ -1,6 +1,6 @@
 {% load i18n unfold %}
 
-<div class="formset-wrapper flex flex-col gap-3" {% if inline_admin_formset.is_collapsible %}x-data="{ open: {% if inline_admin_formset.errors %}true{% else %}false{% endif %} }"{% endif%}>
+<div class="formset-wrapper flex flex-col gap-3" {% if inline_admin_formset.is_collapsible and nested_inline %}x-data="{ open: {% if inline_admin_formset.errors %}true{% else %}false{% endif %} }"{% endif%}>
     {{ inline_admin_formset.formset.management_form }}
 
     {% include "unfold/helpers/edit_inline/inline_nested_heading.html" %}
