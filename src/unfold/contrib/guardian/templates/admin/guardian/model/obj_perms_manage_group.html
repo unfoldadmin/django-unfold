@@ -1,5 +1,5 @@
 {% extends "admin/change_form.html" %}
-{% load admin_urls i18n %}
+{% load admin_urls i18n unfold %}
 
 {% block extrahead %}{{ block.super }}
     {{ form.media }}
@@ -20,8 +20,9 @@
 
             <div class="bg-base-50 border-t border-base-200 flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-base-800">
                 <div class="ml-auto">
-                    {% trans "Save" as title %}
-                    {% include "unfold/helpers/submit.html" with title=title %}
+                    {% component "unfold/components/button.html" with submit=1 %}
+                        {% trans "Save" %}
+                    {% endcomponent %}
                 </div>
             </div>
         </form>

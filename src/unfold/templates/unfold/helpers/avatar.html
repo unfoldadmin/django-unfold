@@ -1,0 +1,7 @@
+{% with avatar_url=user.avatar_url %}
+    <div class="bg-base-200 bg-cover h-[38px] font-semibold flex items-center justify-center rounded-default relative select-none text-important min-w-[38px] w-[38px] dark:bg-base-700 after:absolute after:inset-0 after:inset-ring after:inset-ring-base-800/10 dark:after:inset-ring-base-200/10 after:rounded-default" {% if avatar_url %}style="background-image: url('{{ avatar_url }}');"{% endif %}>
+        {% if not avatar_url %}
+            {{ user.get_full_name.0|default:user.get_username.0|upper }}
+        {% endif %}
+    </div>
+{% endwith %}

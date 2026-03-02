@@ -468,15 +468,20 @@ function dateTimeShortcutsOverlay() {
     }
   });
 
-  const targets = document.querySelectorAll(".calendarbox, .clockbox");
+  const findCalendars = () => {
+    for (const target of document.querySelectorAll(".calendarbox, .clockbox")) {
+      observer.observe(target, {
+        attributes: true,
+        attributeFilter: ["style"],
+      });
+    }
+  };
 
-  for (const target of targets) {
-    observer.observe(target, {
-      attributes: true,
-      attributeFilter: ["style"],
-    });
-  }
-}
+  new MutationObserver(findCalendars).observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+};
 
 /*************************************************************
  * File upload path

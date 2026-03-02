@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold.widgets import (
     INPUT_CLASSES,
-    UnfoldAdminCheckboxSelectMultiple,
+    UnfoldAdminCheckboxSelectMultipleWidget,
     UnfoldAdminRadioSelectWidget,
     UnfoldAdminSelectMultipleWidget,
     UnfoldAdminSelectWidget,
@@ -84,7 +84,7 @@ class AutocompleteDropdownForm(forms.Form):
 
 class CheckboxForm(forms.Form):
     field = MultipleChoiceField
-    widget = UnfoldAdminCheckboxSelectMultiple
+    widget = UnfoldAdminCheckboxSelectMultipleWidget
 
     def __init__(
         self,

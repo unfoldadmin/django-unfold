@@ -7,7 +7,7 @@
                 <div class="{% if adminform.model_admin.compressed_fields %}border-b border-base-200 border-dashed dark:border-base-800{% endif %}">
                     <nav class="bg-base-100 cursor-pointer flex flex-col font-medium gap-1 m-2 p-1 rounded-default text-important dark:border-base-700 md:inline-flex md:flex-row md:w-auto dark:bg-white/[.06] *:flex *:flex-row *:gap-1 *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:hover:bg-base-700/[.06] *:dark:hover:bg-white/[.06] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:dark:bg-base-700 [&>.active]:hover:bg-white [&>.active]:dark:hover:bg-base-700">
                         {% for fieldset in tabs %}
-                            <a x-on:click="activeFieldsetTab = '{{ fieldset.name|slugify }}'" x-bind:class="activeFieldsetTab == '{{ fieldset.name|slugify }}' && 'active'">
+                            <a x-on:click="activeFieldsetTab = '{{ fieldset.name|unicoded_slugify }}'" x-bind:class="activeFieldsetTab == '{{ fieldset.name|unicoded_slugify }}' && 'active'">
                                 {{ fieldset.name }}
 
                                 {% with error_count=fieldset|tabs_errors_count %}
@@ -23,8 +23,8 @@
                 </div>
 
                 {% for fieldset in tabs %}
-                    <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|slugify }}{% endif %}"
-                         x-show="activeFieldsetTab == '{{ fieldset.name|slugify }}'">
+                    <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|unicoded_slugify }}{% endif %}"
+                         x-show="activeFieldsetTab == '{{ fieldset.name|unicoded_slugify }}'">
                         {% include 'admin/includes/fieldset.html' with stacked=1 %}
                     </div>
                 {% endfor %}

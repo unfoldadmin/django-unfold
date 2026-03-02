@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.contrib.admin.utils import label_for_field, lookup_field
 from django.db.models import Model
 from django.http import HttpRequest
@@ -24,6 +26,9 @@ class TableSection(BaseSection):
     height = None
 
     def render(self) -> str:
+        if self.related_name is None:
+            raise ValueError("TableSection must have a related_name")
+
         results = getattr(self.instance, self.related_name)
         headers = []
         rows = []
@@ -72,10 +77,17 @@ class TableSection(BaseSection):
 class TemplateSection(BaseSection):
     template_name = None
 
+    def get_context_data(self, request: HttpRequest, instance: Model) -> dict[str, Any]:
+        return {}
+
     def render(self) -> str:
+        if self.template_name is None:
+            raise ValueError("TemplateSection must have a template_name")
+
         return render_to_string(
             self.template_name,
             context={
+                **self.get_context_data(self.request, self.instance),
                 "request": self.request,
                 "instance": self.instance,
             },

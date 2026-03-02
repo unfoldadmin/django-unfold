@@ -973,11 +973,19 @@ def test_filters_autocomplete_select_filter(
     ],
 )
 def test_filters_autocomplete_select_multiple_filter(
-    admin_client, user_factory, task_factory, param, value, expected, not_expected
+    admin_client,
+    user_factory,
+    task_factory,
+    project_factory,
+    param,
+    value,
+    expected,
+    not_expected,
 ):
-    task1 = task_factory.create(name="task1")
-    task2 = task_factory.create(name="task2")
-    task_factory.create(name="task3")
+    project = project_factory.create(name="project1")
+    task1 = task_factory.create(name="task1", project=project)
+    task2 = task_factory.create(name="task2", project=project)
+    task_factory.create(name="task3", project=project)
 
     user_factory.create(username="sample1@example.com").tasks.add(task1)
     user_factory.create(username="sample2@example.com").tasks.add(task2)

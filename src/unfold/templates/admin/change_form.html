@@ -97,8 +97,8 @@
             {% endif %}
         </form>
 
-        {% if datasets %}
-            <div class="flex flex-col">
+        {% if datasets and datasets|length > 0 %}
+            <div class="flex flex-col {% if errors or adminform.form.non_field_errors %}mt-6{% endif %}">
                 {% for dataset in datasets %}
                     {{ dataset.contents }}
                 {% endfor %}

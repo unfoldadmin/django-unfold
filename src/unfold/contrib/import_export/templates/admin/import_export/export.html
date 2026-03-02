@@ -1,6 +1,6 @@
 {% extends "admin/import_export/base.html" %}
 
-{% load admin_urls i18n import_export_tags %}
+{% load admin_urls i18n import_export_tags unfold %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -73,8 +73,8 @@
             {% endfor %}
         </fieldset>
 
-        <button type="submit" class="bg-primary-600 border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-sm text-white">
-            {% translate 'Submit' %}
-        </button>
+        {% component "unfold/components/button.html" with submit=1 %}
+            {% translate "Submit" %}
+        {% endcomponent %}
     </form>
 {% endblock %}

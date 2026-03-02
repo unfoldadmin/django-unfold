@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n unfold  %}
 
 {% block import_form %}
     <form action="" method="post" enctype="multipart/form-data">
@@ -17,8 +17,8 @@
             {% endfor %}
         </fieldset>
 
-        <button type="submit" class="bg-primary-600 border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-sm text-white">
-            {% translate 'Submit' %}
-        </button>
+        {% component "unfold/components/button.html" with submit=1 %}
+            {% trans "Submit" %}
+        {% endcomponent %}
     </form>
 {% endblock %}

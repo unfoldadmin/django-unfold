@@ -51,6 +51,7 @@ class BaseDataset:
         list_display_links = self.model_admin_instance.get_list_display_links(
             self.request, list_display
         )
+        list_per_page = self.model_admin_instance.list_per_page
         sortable_by = self.model_admin_instance.get_sortable_by(self.request)
         search_fields = self.model_admin_instance.get_search_fields(self.request)
 
@@ -67,7 +68,7 @@ class BaseDataset:
             date_hierarchy=[],
             search_fields=search_fields,
             list_select_related=[],
-            list_per_page=10,
+            list_per_page=list_per_page,
             list_max_show_all=False,
             list_editable=[],
             sortable_by=sortable_by,

@@ -1,10 +1,12 @@
 {% extends 'admin/change_form.html' %}
-{% load i18n %}
+{% load i18n unfold %}
 
 {% block actions %}
     {{ block.super }}
 
     {% if show_change_form_export %}
-        <input type="submit" value="{% translate 'Export' %}" name="_export-item" class="bg-white text-base-500 border cursor-pointer flex font-medium items-center px-3 py-2 mr-3 rounded-default shadow-xs text-sm dark:bg-base-900 dark:border dark:border-base-700 dark:text-font-default-dark">
+        {% component "unfold/components/button.html" with submit=1 name="_export-item" variant="default" class="mr-3" %}
+            {% translate 'Export' %}
+        {% endcomponent %}
     {% endif %}
 {% endblock %}

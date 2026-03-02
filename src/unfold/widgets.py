@@ -20,7 +20,6 @@ from django.contrib.admin.widgets import (
     AdminURLFieldWidget,
     AdminUUIDInputWidget,
     ForeignKeyRawIdWidget,
-    RelatedFieldWidgetWrapper,
 )
 from django.db.models import ManyToOneRel
 from django.forms import (
@@ -165,21 +164,15 @@ CHECKBOX_CLASSES = [
     "block",
     "border",
     "border-base-300",
-    "cursor-pointer",
     "h-4",
     "min-w-4",
     "relative",
     "rounded-[4px]",
     "shadow-xs",
     "w-4",
-    "hover:border-base-400",
-    "dark:bg-base-700",
-    "dark:border-base-500",
+    "dark:bg-base-900",
+    "dark:border-base-700",
     "dark:checked:after:text-white",
-    "focus:outline",
-    "focus:outline-2",
-    "focus:outline-offset-2",
-    "focus:outline-primary-500",
     "after:absolute",
     r"after:content-['check\_small']",
     "after:flex!",
@@ -191,15 +184,12 @@ CHECKBOX_CLASSES = [
     "after:-ml-px",
     "after:-mt-px",
     "after:text-white",
-    "after:transition-all",
     "after:w-4",
-    "dark:after:text-base-700",
+    "dark:after:text-transparent",
     "checked:bg-primary-600",
     "dark:checked:bg-primary-600",
     "checked:border-primary-600",
     "dark:checked:border-primary-600",
-    "checked:transition-all",
-    "checked:hover:border-primary-600",
 ]
 
 RADIO_CLASSES = [
@@ -208,19 +198,13 @@ RADIO_CLASSES = [
     "block",
     "border",
     "border-base-300",
-    "cursor-pointer",
     "h-4",
     "min-w-4",
     "relative",
     "rounded-full",
     "w-4",
-    "dark:bg-base-700",
-    "dark:border-base-500",
-    "hover:border-base-400",
-    "focus:outline",
-    "focus:outline-2",
-    "focus:outline-offset-2",
-    "focus:outline-primary-500",
+    "dark:bg-base-900",
+    "dark:border-base-700",
     "after:absolute",
     "after:bg-transparent",
     "after:content-['']",
@@ -233,19 +217,15 @@ RADIO_CLASSES = [
     "after:rounded-full",
     "after:text-white",
     "after:top-1/2",
-    "after:transition-all",
     "after:-translate-x-1/2",
     "after:-translate-y-1/2",
-    "after:text-sm",
     "after:w-2",
     "dark:after:text-base-700",
     "dark:after:bg-transparent",
     "checked:bg-primary-600",
     "checked:border-primary-600",
-    "checked:transition-all",
     "checked:after:bg-white",
     "dark:checked:after:bg-base-900",
-    "checked:hover:border-base-900/20",
 ]
 
 SWITCH_CLASSES = [
@@ -810,7 +790,7 @@ class UnfoldAdminRadioSelectWidget(AdminRadioSelect):
         return context
 
 
-class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
+class UnfoldAdminCheckboxSelectMultipleWidget(CheckboxSelectMultiple):
     template_name = "unfold/widgets/radio.html"
     option_template_name = "unfold/widgets/radio_option.html"
 
@@ -822,6 +802,16 @@ class UnfoldAdminCheckboxSelectMultiple(CheckboxSelectMultiple):
                 [*CHECKBOX_CLASSES, self.attrs.get("class", "") if self.attrs else ""]
             )
         }
+
+
+class UnfoldAdminCheckboxSelectMultiple(UnfoldAdminCheckboxSelectMultipleWidget):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        warnings.warn(
+            "UnfoldAdminCheckboxSelectMultiple is deprecated and will be removed in a future release. "
+            "Please use UnfoldAdminCheckboxSelectMultipleWidget instead.",
+            stacklevel=2,
+        )
+        super().__init__(*args, **kwargs)
 
 
 class UnfoldBooleanWidget(CheckboxInput):
@@ -854,10 +844,6 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
             },
             check_test=None,
         )
-
-
-class UnfoldRelatedFieldWidgetWrapper(RelatedFieldWidgetWrapper):
-    template_name = "unfold/widgets/related_widget_wrapper.html"
 
 
 class UnfoldForeignKeyRawIdWidget(ForeignKeyRawIdWidget):
@@ -937,6 +923,21 @@ class AutocompleteWidgetMixin:
             }
         )
         super().__init__(attrs, choices)
+
+    class Media:
+        extra = "" if settings.DEBUG else ".min"
+        js = (
+            f"admin/js/vendor/jquery/jquery{extra}.js",
+            "admin/js/vendor/select2/select2.full.js",
+            "admin/js/jquery.init.js",
+            "unfold/js/select2.init.js",
+        )
+        css = {
+            "screen": (
+                "admin/css/vendor/select2/select2.css",
+                "admin/css/autocomplete.css",
+            ),
+        }
 
 
 class UnfoldAdminAutocompleteWidget(AutocompleteWidgetMixin, Select):

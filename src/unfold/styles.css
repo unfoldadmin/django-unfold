@@ -10,12 +10,12 @@
 }
 
 @source inline("aspect-square group-hover:block self-start font-bold bg-white/[.06] border-white/40 h-[64px] w-[65px]! left-[65px] {dark:,}text-white/{0..100..10} {dark:,}bg-white/{0..100..10} {dark:,}text-{base,primary}-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
-@source inline("{-,}{top,bottom,left,right}-{1/2,0..6} {!,}leading-[38px] leading-{6..16} text-{default,base,link,icon,subtle,important,xl,2xl,3xl,4xl}");
+@source inline("{-,}{top,bottom,left,right}-{1/2,{0..8}} {!,}leading-[38px] {lg:,}leading-{6..16} {md:,lg:,}text-{default,base,link,icon,subtle,important,lg,xl,2xl,3xl,4xl}");
 @source inline("bg-linear-to-{{t,r,b,l,tl,tr,bl,br}} {dark:,}{from,to}-{{{base,primary}-{50,{100..900..100},950}},white}");
 @source inline("rounded rounded-{t,r,b,l} rounded-{t,r,b,l}-default rounded-{xs,sm,md,lg,xl,2xl,3xl,full,none}");
 @source inline("{md:,lg:,xl:,2xl:,}{absolute,flex,relative,block,sticky}");
 @source inline("{-,}{lg:,}m{t,r,b,l,x,y,}-{0..24} {-,}{lg:,}p{t,r,b,l,x,y,}-{0..24}");
-@source inline("{md:,lg:,}border-{0,2} {md:,lg:,}border-{t,r,b,l}-{0,2}");
+@source inline("{md:,lg:,}border-{0,2} {md:,lg:,}border-{t,r,b,l} {md:,lg:,}border-{t,r,b,l}-{0,2}");
 @source inline("{!,}{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
 @source inline("{hover:,dark:,}border-base-{50,{100..900..100},950} {hover:,dark:,}border-transparent");
 @source inline("{hover:,dark:,}bg-base-{50,{100..900..100},950}");
@@ -23,6 +23,8 @@
 @source inline("{md:,lg:,xl:,}gap-{0.5,{1..16}}");
 @source inline("{md:,lg:,xl:,}grid-cols-{1..16}");
 @source inline("{md:,lg:,xl:,}col-span-{1..16}");
+@source inline("max-w-xl max-w-{1..7}xl");
+
 
 @layer base {
   *,
@@ -36,8 +38,6 @@
 
 @theme {
   --font-sans: 'Inter', sans-serif;
-  --shadow-raised: 0 2px 12px var(--color-base-300);
-  --shadow-raised-dark: 0 2px 12px var(--color-base-700);
 }
 
 @theme inline{
@@ -101,6 +101,10 @@
 
 @utility text-link {
   @apply text-primary-600 dark:text-primary-500;
+}
+
+@utility data-row {
+  @apply hover:bg-base-100 dark:hover:bg-base-50/4;
 }
 
 @utility field-sizing-content {
@@ -480,7 +484,7 @@ fieldset details > summary {
 }
 
 fieldset details > summary:after {
-  @apply material-symbols-outlined absolute cursor-pointer right-3 top-3.5;
+  @apply material-symbols-outlined absolute cursor-pointer right-3 top-2.5;
   content: "expand_more";
 }
 
@@ -497,7 +501,7 @@ fieldset details[open] > summary:after {
 
 .calendarbox,
 .clockbox {
-  @apply bg-white border border-base-200 rounded-default shadow-xs w-80 z-50 dark:bg-base-800 dark:border-base-700 fixed! left-1/2! top-1/2! -translate-x-1/2 -translate-y-1/2;
+  @apply bg-white border border-base-200 rounded-default shadow-xs w-80 !z-70 dark:bg-base-800 dark:border-base-700 fixed! left-1/2! top-1/2! -translate-x-1/2 -translate-y-1/2;
 }
 
 .calendar caption {
@@ -715,6 +719,10 @@ div.djangoql-completion .syntax-help {
 div.jsoneditor-tree,
 .ace-jsoneditor .ace_scroller {
   @apply text-default dark:bg-base-900;
+}
+
+.ace-jsoneditor .ace_scrollbar {
+  @apply dark:invert;
 }
 
 .jsoneditor div.jsoneditor-tree {

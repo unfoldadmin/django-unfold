@@ -13,7 +13,7 @@ from unfold.sites import UnfoldAdminSite
 from unfold.widgets import (
     UnfoldAdminAutocompleteWidget,
     UnfoldAdminBigIntegerFieldWidget,
-    UnfoldAdminCheckboxSelectMultiple,
+    UnfoldAdminCheckboxSelectMultipleWidget,
     UnfoldAdminColorInputWidget,
     UnfoldAdminDateWidget,
     UnfoldAdminDecimalFieldWidget,
@@ -85,7 +85,7 @@ from unfold.widgets import (
         UnfoldAdminMultipleAutocompleteWidget,
         UnfoldAdminSelect2Widget,
         UnfoldAdminSelect2MultipleWidget,
-        UnfoldAdminCheckboxSelectMultiple,
+        UnfoldAdminCheckboxSelectMultipleWidget,
         UnfoldAdminLocationWidget,
     ],
 )
@@ -101,7 +101,7 @@ def test_widgets_custom_css_class(widget_class):
     # Render the widget
     if widget_class in (
         UnfoldAdminRadioSelectWidget,
-        UnfoldAdminCheckboxSelectMultiple,
+        UnfoldAdminCheckboxSelectMultipleWidget,
     ):
         widget = widget_class(
             attrs={

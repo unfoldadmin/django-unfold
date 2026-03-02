@@ -60,13 +60,14 @@ from unfold.contrib.import_export.forms import (
     ImportForm,
     SelectableFieldsExportForm,
 )
+from unfold.contrib.inlines.admin import NonrelatedTabularInline
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 from unfold.paginator import InfinitePaginator
 from unfold.sections import TableSection, TemplateSection
 from unfold.widgets import (
-    UnfoldAdminCheckboxSelectMultiple,
+    UnfoldAdminCheckboxSelectMultipleWidget,
     UnfoldAdminLocationWidget,
     UnfoldAdminSelect2Widget,
 )
@@ -116,11 +117,21 @@ class ExtendedUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["status"].widget = UnfoldAdminSelect2Widget(choices=StatusChoices)
-        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultiple(
+        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultipleWidget(
             choices=Project.objects.all().values_list("id", "name")
         )
 
         self.fields["location"].widget = UnfoldAdminLocationWidget()
+
+
+class ProjectNonrelatedInline(NonrelatedTabularInline):
+    model = Project
+
+    def get_form_queryset(self, obj):
+        return self.model.objects.all()
+
+    def save_new_instance(self, parent, instance):
+        pass
 
 
 @admin.register(User)
@@ -158,6 +169,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
         "display_dropdown",
         "display_datetime",
         "display_username",
+        "weight",
     )
     list_display_links = ["username", "content_type"]
     list_editable = ["is_staff"]
@@ -828,6 +840,7 @@ class TagAdmin(ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(ModelAdmin):
     search_fields = ["name"]
+    inlines = [ProjectNonrelatedInline]
 
 
 @admin.register(Label)

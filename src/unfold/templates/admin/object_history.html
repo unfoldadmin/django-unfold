@@ -57,6 +57,7 @@
             {{ action_list.paginator.count }} {% blocktranslate count counter=action_list.paginator.count %}entry{% plural %}entries{% endblocktranslate %}
         </div>
     {% else %}
-        <p>{% translate 'This object doesn’t have a change history. It probably wasn’t added via this admin site.' %}</p>
+        {% trans 'This object doesn’t have a change history. It probably wasn’t added via this admin site.' as message %}
+        {% include "unfold/helpers/messages/info.html" with message=message %}
     {% endif %}
 {% endblock %}

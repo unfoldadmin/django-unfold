@@ -51,25 +51,6 @@ The template is straightforward, extend from `unfold/layouts/base.html` and the 
 
 {% load admin_urls i18n unfold %}
 
-{% block breadcrumbs %}{% if not is_popup %}
-    <div class="px-4">
-        <div class="container mb-6 mx-auto -my-3 lg:mb-12">
-            <ul class="flex flex-wrap">
-                {% url 'admin:index' as link %}
-                {% trans 'Home' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
-
-                {% url 'admin:formula_driver_changelist' as link %}
-                {% trans 'Drivers' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with link=link name=name %}
-
-                {% trans 'Custom page' as name %}
-                {% include 'unfold/helpers/breadcrumb_item.html' with name=name %}
-            </ul>
-        </div>
-    </div>
-{% endif %}{% endblock %}
-
 {% block content %}
     {% tab_list "drivers" %}
 
