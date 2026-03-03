@@ -1,13 +1,18 @@
-<span class="inline-block font-semibold h-6 leading-6 px-2 rounded-default text-[11px] uppercase whitespace-nowrap
-             {% if type == 'info' %}
+<span class="inline-block font-semibold rounded-default text-[11px] uppercase whitespace-nowrap
+             {% if size == "md" %}
+                 h-5 leading-5 px-1.5
+             {% else %}
+                 h-6 leading-6 px-2
+             {% endif %}
+             {% if type|default:variant == 'info' %}
                  bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400
-             {% elif type == 'danger' %}
+             {% elif type|default:variant == 'danger' %}
                  bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400
-             {% elif type == 'warning' %}
+             {% elif type|default:variant == 'warning' %}
                  bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400
-             {% elif type == 'success' %}
+             {% elif type|default:variant == 'success' %}
                  bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400
-             {% elif type == 'primary' %}
+             {% elif type|default:variant == 'primary' %}
                  bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-400
              {% else %}
                  bg-base-500/8 text-base-700 dark:bg-base-500/20 dark:text-base-200

@@ -241,6 +241,11 @@ class BaseInlineMixin:
     per_page = None
     hide_ordering_field = False
     collapsible = False
+    hide_title = False
+    tab = False
+    tab_count = False
+    tab_count_variant = None
+    tab_count_custom = None
 
 
 class TabularInline(BaseInlineMixin, BaseModelAdminMixin, BaseTabularInline):
