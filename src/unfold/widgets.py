@@ -20,6 +20,7 @@ from django.contrib.admin.widgets import (
     AdminURLFieldWidget,
     AdminUUIDInputWidget,
     ForeignKeyRawIdWidget,
+    RelatedFieldWidgetWrapper,
 )
 from django.db.models import ManyToOneRel
 from django.forms import (
@@ -960,6 +961,10 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
     option_template_name = (
         "unfold/widgets/select_option_modelchoicefield_autocomplete.html"
     )
+
+
+class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
+    template_name = "unfold/widgets/related_widget_wrapper.html"
 
 
 try:
