@@ -1,6 +1,23 @@
 # CHANGELOG
 
 
+## v0.82.0 (2026-03-03)
+
+### Bug Fixes
+
+- Center expand icon for collapsed fieldsets
+  ([`e5b30a6`](https://github.com/unfoldadmin/django-unfold/commit/e5b30a6f4e61a05e7cd3881513e94d6ad5e9cd06))
+
+### Features
+
+- Added UnfoldAdminRelatedFieldWrapperWidget
+  ([#1904](https://github.com/unfoldadmin/django-unfold/pull/1904),
+  [`7462d43`](https://github.com/unfoldadmin/django-unfold/commit/7462d43010cbf1d8573bd5fb9174547fdd42028c))
+
+- Dropped python 3.10 ([#1849](https://github.com/unfoldadmin/django-unfold/pull/1849),
+  [`50583ea`](https://github.com/unfoldadmin/django-unfold/commit/50583ea722c7e4555dd2589da0013ba72ecfbfcc))
+
+
 ## v0.81.0 (2026-02-25)
 
 ### Bug Fixes

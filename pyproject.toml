@@ -1,6 +1,6 @@
 [project]
 name = "django-unfold"
-version = "0.81.0"
+version = "0.82.0"
 description = "Modern Django admin theme"
 authors = []
 requires-python = ">=3.11,<4.0"
