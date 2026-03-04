@@ -15,8 +15,7 @@ class NonrelatedInlineModelFormSet(PaginationFormSetMixin, BaseModelFormSet):
         **kwargs: Any,
     ) -> None:
         self.instance = instance
-        super().__init__(**kwargs)
-        self.queryset = self.provided_queryset
+        super().__init__(provided_queryset=self.provided_queryset, **kwargs)
 
     @classmethod
     def get_default_prefix(cls: BaseModelFormSet) -> str:
