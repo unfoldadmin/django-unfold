@@ -60,7 +60,7 @@ def test_nonrelated_inlines_count(admin_client, category_factory, project_factor
     assert response.status_code == HTTPStatus.OK
 
     assert response.context["inline_admin_formsets"][0].formset.count == TOTAL_PROJECTS
-    assert TOTAL_PROJECTS in response.content.decode()
+    assert f"{TOTAL_PROJECTS}" in response.content.decode()
 
 
 def test_nonrelated_inlines_pagination(admin_client, category_factory, project_factory):
