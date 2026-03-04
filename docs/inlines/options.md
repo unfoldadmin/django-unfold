@@ -6,6 +6,31 @@ description: Customize Django Unfold inline options including title customizatio
 
 # Available options for Unfold inlines
 
+## Display count for inlines
+
+It is possible to display count of objects for inlines. You can set the count for an inline by providing `show_count` parameter which will run `count()` operation on the queryset. Be aware that this will run a query for each inline, so it is not recommended to use this for large querysets.
+
+If you want to customize the count, you can implement `get_count` method on the inline where you can for example change the formatting. To change the variant of the count badge, you can implement `get_count_variant` method on the inline.
+
+```python
+from django.utils.functional import cached_property
+
+from unfold.admin import StackedInline
+
+
+class SomeInline(StackedInline):
+    model = SomeModel
+    show_count = True  # This will run `count()`
+
+    def get_count(self, request, obj):
+        # You can customize the output of the count badge.
+        return "1/2"
+
+    def get_count_variant(self, request, obj):
+        # Implement for custom variant
+        return "primary" # danger, success, info, warning
+```
+
 ## Custom inline title
 
 By default, each inline row's title is derived from the model's `__str__` implementation. However, Unfold provides the ability to customize this title specifically for inlines by implementing a `get_inline_title` method on the model. This method can return a custom title that will only be used in inline contexts, allowing for more descriptive and context-specific labels.

@@ -26,15 +26,7 @@
                             {{ inline.opts.verbose_name_plural|capfirst }}
                         {% endif %}
 
-                        {% if inline.opts.tab_count %}
-                            <span class="text-xs text-subtle">
-                                {% if inline.opts.tab_count_custom %}
-                                    {% include "unfold/helpers/label.html" with text=inline.opts.tab_count_custom size="md" variant=inline.opts.tab_count_variant %}
-                                {% else %}
-                                    {% include "unfold/helpers/label.html" with text=inline.formset.queryset.count size="md" variant=inline.opts.tab_count_variant %}
-                                {% endif %}
-                            </span>
-                        {% endif %}
+                        {% include "unfold/helpers/inline_count.html" %}
 
                         {% include "unfold/helpers/tab_error_count.html" with error_count=inline.error_count %}
                     </a>
