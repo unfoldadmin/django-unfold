@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.83.1 (2026-03-05)
+
+### Bug Fixes
+
+- Label variant ([#1907](https://github.com/unfoldadmin/django-unfold/pull/1907),
+  [`7fc1434`](https://github.com/unfoldadmin/django-unfold/commit/7fc1434fc3eb0e9bfd56a0f08a23982c532e4222))
+
+
 ## v0.83.0 (2026-03-05)
 
 ### Features
