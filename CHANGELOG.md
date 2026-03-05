@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.83.0 (2026-03-05)
+
+### Features
+
+- Inlines count ([#1905](https://github.com/unfoldadmin/django-unfold/pull/1905),
+  [`3efe57e`](https://github.com/unfoldadmin/django-unfold/commit/3efe57e8597f0a5d2ec7b48aa1df2032238e63ef))
+
+
 ## v0.82.0 (2026-03-03)
 
 ### Bug Fixes
