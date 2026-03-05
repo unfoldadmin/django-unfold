@@ -4,15 +4,15 @@
              {% else %}
                  h-6 leading-6 px-2
              {% endif %}
-             {% if type|default:variant == 'info' %}
+             {% if type == 'info' or variant == 'info' %}
                  bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400
-             {% elif type|default:variant == 'danger' %}
+             {% elif type == 'danger' or variant == 'danger' %}
                  bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400
-             {% elif type|default:variant == 'warning' %}
+             {% elif type == 'warning' or variant == 'warning' %}
                  bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400
-             {% elif type|default:variant == 'success' %}
+             {% elif type == 'success' or variant == 'success' %}
                  bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400
-             {% elif type|default:variant == 'primary' %}
+             {% elif type == 'primary' or variant == 'primary' %}
                  bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-400
              {% else %}
                  bg-base-500/8 text-base-700 dark:bg-base-500/20 dark:text-base-200
