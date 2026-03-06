@@ -35,7 +35,6 @@ from unfold.mixins import (
     DatasetModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
-from unfold.typing import FieldsetsType
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
@@ -118,7 +117,7 @@ class ModelAdmin(
 
     def get_fieldsets(
         self, request: HttpRequest, obj: Model | None = None
-    ) -> FieldsetsType:
+    ) -> list | tuple:
         if not obj and self.add_fieldsets:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)

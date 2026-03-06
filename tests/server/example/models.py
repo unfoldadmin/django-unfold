@@ -109,6 +109,11 @@ class ActionUser(User):
         proxy = True
 
 
+class DialogActionUser(User):
+    class Meta:
+        proxy = True
+
+
 class FilterUser(User):
     class Meta:
         proxy = True

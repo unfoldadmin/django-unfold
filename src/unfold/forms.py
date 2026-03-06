@@ -263,3 +263,13 @@ class DatasetChangeListSearchForm(ChangeListSearchForm):
         self.fields = {
             search_var: forms.CharField(required=False, strip=False),
         }
+
+
+class BaseDialogForm(forms.Form):
+    _form_submitted = forms.BooleanField(
+        required=True, initial=True, widget=forms.HiddenInput
+    )
+
+    def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
+        self.request = request
+        super().__init__(*args, **kwargs)
