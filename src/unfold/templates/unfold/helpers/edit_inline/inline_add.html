@@ -1,0 +1,13 @@
+{% load unfold %}
+
+{% for inline_admin_form in inline_admin_formset %}
+    {% if forloop.last and inline_admin_formset.has_add_permission %}
+        <a href="#" class="add-row flex items-center font-medium -ml-1.5 -my-1.5 select-none text-primary-600 dark:text-primary-500">
+            <span class="flex items-center justify-center h-[38px] w-[38px]">
+                <span class="material-symbols-outlined bg-primary-600 flex items-center justify-center rounded-full text-base text-white h-[18px] w-[18px]">add</span>
+            </span>
+
+            <span>{{ inline_admin_formset.inline_formset_data|inline_add_button_text }}</span>
+        </a>
+    {% endif %}
+{% endfor %}
