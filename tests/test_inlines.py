@@ -117,6 +117,38 @@ def test_nested_inline_create_nested_object(client, admin_user):
 
 
 @pytest.mark.django_db
+def test_nested_inline_validate_nested_object(
+    client, admin_user, invoice_factory, invoice_item_factory
+):
+    client.force_login(admin_user)
+
+    invoice = invoice_factory(user=admin_user, name="Test Invoice")
+    invoice_item = invoice_item_factory(invoice=invoice, name="Test Invoice Item")
+
+    data = {
+        **USER_DATA,
+        "_continue": "1",
+        "invoice_set-TOTAL_FORMS": "1",
+        "invoice_set-INITIAL_FORMS": "0",
+        "invoice_set-0-name": invoice.name,
+        "invoice_set-0-id": invoice.pk,
+        "invoice_set-0-invoiceitem_set-TOTAL_FORMS": "1",
+        "invoice_set-0-invoiceitem_set-INITIAL_FORMS": "0",
+        "invoice_set-0-invoiceitem_set-0-name": "",
+        "invoice_set-0-invoiceitem_set-0-id": invoice_item.pk,
+    }
+
+    response = client.post(
+        reverse("admin:example_user_change", args=(admin_user.pk,)),
+        data=data,
+        follow=True,
+    )
+    assert InvoiceItem.objects.count() == 1
+    assert InvoiceItem.objects.first().name == "Test Invoice Item"
+    assert "This field is required." in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_nested_inline_delete_parent_object(
     client, admin_user, invoice_factory, invoice_item_factory
 ):
@@ -452,6 +484,69 @@ def test_nested_inline_add(permissions, result, client, staff_user, invoice_fact
     )
 
     assert InvoiceItem.objects.count() == result
+
+
+@pytest.mark.django_db
+def test_nested_inline_without_parent_permissions(
+    client, staff_user, invoice_factory, invoice_item_factory
+):
+    client.force_login(staff_user)
+
+    invoice = invoice_factory(
+        user=staff_user,
+        name="Parent Test Invoice",
+    )
+    invoice_item_factory(invoice=invoice, name="Nested Test Invoice Item")
+
+    # User does not have an access to anything
+    response = client.get(reverse("admin:example_user_change", args=(staff_user.pk,)))
+    assert "Parent Test Invoice" not in response.content.decode()
+    assert "Nested Test Invoice Item" not in response.content.decode()
+    assert "<span>Add another Invoice item</span>" not in response.content.decode()
+    assert "<span>Add another Invoice</span>" not in response.content.decode()
+
+    # User has an access to add or change parent and nested objects
+    staff_user.user_permissions.add(
+        Permission.objects.get(codename="view_invoice"),
+        Permission.objects.get(codename="add_invoice"),
+        Permission.objects.get(codename="change_invoice"),
+        Permission.objects.get(codename="add_invoiceitem"),
+        Permission.objects.get(codename="change_invoiceitem"),
+    )
+    response = client.get(reverse("admin:example_user_change", args=(staff_user.pk,)))
+    assert "Parent Test Invoice" in response.content.decode()
+    assert "Nested Test Invoice Item" in response.content.decode()
+    assert "<span>Add another Invoice item</span>" in response.content.decode()
+    assert "<span>Add another Invoice</span>" in response.content.decode()
+
+    # User does have an access to nested but not to parent
+    staff_user.user_permissions.remove(
+        Permission.objects.get(codename="add_invoice"),
+        Permission.objects.get(codename="change_invoice"),
+    )
+    response = client.get(reverse("admin:example_user_change", args=(staff_user.pk,)))
+    assert "Parent Test Invoice</div>" in response.content.decode()
+    assert 'value="Nested Test Invoice Item"' in response.content.decode()
+    assert "<span>Add another Invoice item</span>" in response.content.decode()
+    assert "<span>Add another Invoice</span>" not in response.content.decode()
+
+    # User does not have an access to main object
+    staff_user.user_permissions.add(
+        Permission.objects.get(codename="add_invoice"),
+        Permission.objects.get(codename="change_invoice"),
+    )
+    staff_user.user_permissions.remove(
+        Permission.objects.get(codename="change_user"),
+        Permission.objects.get(codename="add_user"),
+    )
+    response = client.get(reverse("admin:example_user_change", args=(staff_user.pk,)))
+
+    assert "Parent Test Invoice</div>" in response.content.decode()
+    assert "Nested Test Invoice Item</div>" in response.content.decode()
+    assert 'value="Parent Test Invoice"' not in response.content.decode()
+    assert 'value="Nested Test Invoice Item"' not in response.content.decode()
+    assert "<span>Add another Invoice item</span>" not in response.content.decode()
+    assert "<span>Add another Invoice</span>" not in response.content.decode()
 
 
 @pytest.mark.django_db

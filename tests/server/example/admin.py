@@ -116,12 +116,18 @@ class ProjectDataset(BaseDataset):
 class ExtendedUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["status"].widget = UnfoldAdminSelect2Widget(choices=StatusChoices)
-        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultipleWidget(
-            choices=Project.objects.all().values_list("id", "name")
-        )
+        if "status" in self.fields:
+            self.fields["status"].widget = UnfoldAdminSelect2Widget(
+                choices=StatusChoices
+            )
 
-        self.fields["location"].widget = UnfoldAdminLocationWidget()
+        if "projects" in self.fields:
+            self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultipleWidget(
+                choices=Project.objects.all().values_list("id", "name")
+            )
+
+        if "location" in self.fields:
+            self.fields["location"].widget = UnfoldAdminLocationWidget()
 
 
 class ProjectNonrelatedInline(NonrelatedTabularInline):

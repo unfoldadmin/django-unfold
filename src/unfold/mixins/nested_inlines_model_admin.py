@@ -89,7 +89,7 @@ class NestedInlinesModelAdminMixin:
         inline_instances: list[InlineModelAdmin],
         change: bool,
     ) -> None:
-        from unfold.admin import StackedInline, TabularInline
+        from unfold.admin import TabularInline
 
         for formset, inline in zip(formsets, inline_instances):
             # Existing forms in formset
@@ -107,9 +107,8 @@ class NestedInlinesModelAdminMixin:
                     if not inline_formset:
                         continue
 
-                    if issubclass(inline_class, StackedInline):
-                        inline_formset.inline_type = "stacked"
-                    elif issubclass(inline_class, TabularInline):
+                    inline_formset.inline_type = "stacked"
+                    if issubclass(inline_class, TabularInline):
                         inline_formset.inline_type = "tabular"
 
                     nested_formsets.append(inline_formset)
@@ -133,9 +132,8 @@ class NestedInlinesModelAdminMixin:
                     if not inline_formset:
                         continue
 
-                    if issubclass(inline_class, StackedInline):
-                        inline_formset.inline_type = "stacked"
-                    elif issubclass(inline_class, TabularInline):
+                    inline_formset.inline_type = "stacked"
+                    if issubclass(inline_class, TabularInline):
                         inline_formset.inline_type = "tabular"
 
                     formset.form.nested_formsets.append(inline_formset)
