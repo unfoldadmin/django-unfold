@@ -1,6 +1,39 @@
 # CHANGELOG
 
 
+## v0.83.1 (2026-03-05)
+
+### Bug Fixes
+
+- Label variant ([#1907](https://github.com/unfoldadmin/django-unfold/pull/1907),
+  [`7fc1434`](https://github.com/unfoldadmin/django-unfold/commit/7fc1434fc3eb0e9bfd56a0f08a23982c532e4222))
+
+
+## v0.83.0 (2026-03-05)
+
+### Features
+
+- Inlines count ([#1905](https://github.com/unfoldadmin/django-unfold/pull/1905),
+  [`3efe57e`](https://github.com/unfoldadmin/django-unfold/commit/3efe57e8597f0a5d2ec7b48aa1df2032238e63ef))
+
+
+## v0.82.0 (2026-03-03)
+
+### Bug Fixes
+
+- Center expand icon for collapsed fieldsets
+  ([`e5b30a6`](https://github.com/unfoldadmin/django-unfold/commit/e5b30a6f4e61a05e7cd3881513e94d6ad5e9cd06))
+
+### Features
+
+- Added UnfoldAdminRelatedFieldWrapperWidget
+  ([#1904](https://github.com/unfoldadmin/django-unfold/pull/1904),
+  [`7462d43`](https://github.com/unfoldadmin/django-unfold/commit/7462d43010cbf1d8573bd5fb9174547fdd42028c))
+
+- Dropped python 3.10 ([#1849](https://github.com/unfoldadmin/django-unfold/pull/1849),
+  [`50583ea`](https://github.com/unfoldadmin/django-unfold/commit/50583ea722c7e4555dd2589da0013ba72ecfbfcc))
+
+
 ## v0.81.0 (2026-02-25)
 
 ### Bug Fixes

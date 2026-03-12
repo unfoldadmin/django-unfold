@@ -126,9 +126,17 @@ class ExtendedUserChangeForm(UserChangeForm):
 
 class ProjectNonrelatedInline(NonrelatedTabularInline):
     model = Project
+    per_page = 5
+    show_count = True
+
+    def get_count(self, request, obj):
+        return self.get_form_queryset(obj).count()
+
+    def get_count_variant(self, request, obj):
+        return "primary"
 
     def get_form_queryset(self, obj):
-        return self.model.objects.all()
+        return self.model.objects.filter(is_active=True)
 
     def save_new_instance(self, parent, instance):
         pass

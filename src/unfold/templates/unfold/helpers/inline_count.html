@@ -1,0 +1,7 @@
+{% if inline.opts.show_count %}
+    {% if inline.formset.count %}
+        {% include "unfold/helpers/label.html" with text=inline.formset.count variant=inline.formset.count_variant|default:"" size="md" %}
+    {% else %}
+        {% include "unfold/helpers/label.html" with text=inline.formset.queryset.count variant=inline.formset.count_variant|default:"" size="md" %}
+    {% endif %}
+{% endif %}

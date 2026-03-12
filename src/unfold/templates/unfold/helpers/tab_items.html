@@ -26,6 +26,8 @@
                             {{ inline.opts.verbose_name_plural|capfirst }}
                         {% endif %}
 
+                        {% include "unfold/helpers/inline_count.html" %}
+
                         {% include "unfold/helpers/tab_error_count.html" with error_count=inline.error_count %}
                     </a>
                 {% endfor %}
