@@ -1,7 +1,11 @@
-<{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if form %}form="{{ form }}"{% endif%} {% if name %}name="{{ name }}"{% endif %} {% if value %}value="{{ value }}"{% endif %} {% if extra_attrs %}{{ extra_attrs }}{% endif %} {% if title %}title="{{ title }}"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=attrs %}
-class="font-medium inline-flex group items-center gap-2 px-3 py-2 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
+<{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if form %}form="{{ form }}"{% endif%} {% if name %}name="{{ name }}"{% endif %} {% if value %}value="{{ value }}"{% endif %} {% if title %}title="{{ title }}"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=attrs %}
+class="font-medium inline-flex group items-center gap-2 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
 {% if size == "md" %}
     px-5 py-2.5 text-[14px]
+{% elif size == "sm" %}
+    px-2.5 py-1.5
+{% else %}
+    px-3 py-2
 {% endif %}
 {% if variant == "default" %}
     border border-base-200 bg-white shadow-xs text-important dark:border-base-700 dark:bg-transparent {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
