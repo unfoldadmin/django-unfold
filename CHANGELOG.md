@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v0.84.0 (2026-03-13)
+
+### Bug Fixes
+
+- Handling of hidden widget in field template
+  ([#1908](https://github.com/unfoldadmin/django-unfold/pull/1908),
+  [`6689489`](https://github.com/unfoldadmin/django-unfold/commit/668948976a494286540bb6125292d8f8493cbcae))
+
+- Remove target blank for view site
+  ([#1909](https://github.com/unfoldadmin/django-unfold/pull/1909),
+  [`4751ccc`](https://github.com/unfoldadmin/django-unfold/commit/4751cccc5d275b79749994df28a0b04a08fec46a))
+
+### Features
+
+- Link component ([#1912](https://github.com/unfoldadmin/django-unfold/pull/1912),
+  [`7bb2fbd`](https://github.com/unfoldadmin/django-unfold/commit/7bb2fbd6c9276ebd360bec3f428d0616a42e144d))
+
+
 ## v0.83.1 (2026-03-05)
 
 ### Bug Fixes
