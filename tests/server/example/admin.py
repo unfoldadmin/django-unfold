@@ -16,6 +16,8 @@ from example.models import (
     Category,
     ColorChoices,
     FilterUser,
+    Invoice,
+    InvoiceItem,
     Label,
     Post,
     PriorityChoices,
@@ -27,7 +29,7 @@ from example.models import (
     Task,
     User,
 )
-from unfold.admin import ModelAdmin, StackedInline
+from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import (
     AllValuesCheckboxFilter,
     AutocompleteSelectFilter,
@@ -75,13 +77,23 @@ admin.site.unregister(Group)
 
 class UserTagInline(StackedInline):
     model = User.tags.through
-    per_page = 1
     collapsible = True
+    per_page = 10
     tab = True
 
     def get_queryset(self, request, *args, **kwargs):
         qs = super().get_queryset(request, *args, **kwargs)
         return qs.order_by("pk")
+
+
+class InvoiceItemInline(TabularInline):
+    model = InvoiceItem
+
+
+class UserInvoiceInline(TabularInline):
+    model = Invoice
+    inlines = [InvoiceItemInline]
+    # tab = True
 
 
 class PostInline(StackedInline):
@@ -104,12 +116,18 @@ class ProjectDataset(BaseDataset):
 class ExtendedUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["status"].widget = UnfoldAdminSelect2Widget(choices=StatusChoices)
-        self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultipleWidget(
-            choices=Project.objects.all().values_list("id", "name")
-        )
+        if "status" in self.fields:
+            self.fields["status"].widget = UnfoldAdminSelect2Widget(
+                choices=StatusChoices
+            )
 
-        self.fields["location"].widget = UnfoldAdminLocationWidget()
+        if "projects" in self.fields:
+            self.fields["projects"].widget = UnfoldAdminCheckboxSelectMultipleWidget(
+                choices=Project.objects.all().values_list("id", "name")
+            )
+
+        if "location" in self.fields:
+            self.fields["location"].widget = UnfoldAdminLocationWidget()
 
 
 class ProjectNonrelatedInline(NonrelatedTabularInline):
@@ -137,7 +155,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
     form = ExtendedUserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    inlines = [UserTagInline, PostInline]
+    inlines = [UserInvoiceInline, UserTagInline]
     change_form_datasets = [
         ProjectDataset,
     ]
