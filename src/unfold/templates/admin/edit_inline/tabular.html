@@ -1,7 +1,7 @@
 <div id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="tabular" {% if inline_admin_formset.opts.tab %}x-show="activeTab == '{{ inline_admin_formset.formset.prefix|slugify }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
     <div class="tabular inline-related {% if forloop.last %}last-related{% endif %}">
         <fieldset class="module relative {{ inline_admin_formset.classes }} min-w-0" aria-labelledby="{{ inline_admin_formset.formset.prefix }}-heading">
-            {% if inline_admin_formset.is_collapsible %}<details><summary>{% endif %}
+            {% if inline_admin_formset.is_collapsible %}<details><summary class="*:mb-0">{% endif %}
 
             {% include "unfold/helpers/inline_heading.html" %}
 
