@@ -488,6 +488,10 @@ fieldset details > summary:after {
   content: "expand_more";
 }
 
+fieldset details[open] > summary {
+  @apply mb-4;
+}
+
 fieldset details[open] > summary:after {
   @apply rotate-180;
 }
