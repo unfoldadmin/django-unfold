@@ -3,7 +3,7 @@
 <div class="flex flex-col gap-3" {% if inline_admin_formset.is_collapsible and nested_inline %}x-data="{ open: {% if inline_admin_formset.errors %}true{% else %}false{% endif %} }"{% endif%}>
     {% include "unfold/helpers/edit_inline/inline_nested_heading.html" %}
 
-    <div class="formset-wrapper border border-base-200 overflow-x-auto relative shadow-xs dark:border-base-800 rounded-default {% if nested_inline %}bg-white dark:bg-base-900{% endif %}" {% if not nested_inline %}data-simplebar data-simplebar-auto-hide="false"{% endif %} {% if inline_admin_formset.is_collapsible %}x-show="open"{% endif %}>
+    <div class="formset-wrapper border border-base-200 overflow-x-auto relative shadow-xs dark:border-base-800 rounded-default {% if nested_inline %}bg-white dark:bg-base-900{% endif %}" {% if not nested_inline %}data-simplebar data-simplebar-auto-hide="false"{% endif %} {% if inline_admin_formset.is_collapsible and nested_inline %}x-show="open"{% endif %}>
         {{ inline_admin_formset.formset.management_form }}
 
         {% include "unfold/helpers/edit_inline/inline_errors.html" %}
