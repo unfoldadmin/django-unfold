@@ -1,6 +1,26 @@
 # CHANGELOG
 
 
+## v0.85.0 (2026-03-16)
+
+### Bug Fixes
+
+- Collapsible inlines spacing ([#1914](https://github.com/unfoldadmin/django-unfold/pull/1914),
+  [`5c0743f`](https://github.com/unfoldadmin/django-unfold/commit/5c0743f6ede7faabcb2d2853cdc40def6d735399))
+
+- Command history dark mode separator color
+  ([#1915](https://github.com/unfoldadmin/django-unfold/pull/1915),
+  [`a5c25b3`](https://github.com/unfoldadmin/django-unfold/commit/a5c25b3b4c6d67b53da239a122dbb38af8d07d52))
+
+- Tabular inline open event ([#1913](https://github.com/unfoldadmin/django-unfold/pull/1913),
+  [`9448697`](https://github.com/unfoldadmin/django-unfold/commit/944869716a53463bd6446373c964f84358822398))
+
+### Features
+
+- Nested inlines ([#1570](https://github.com/unfoldadmin/django-unfold/pull/1570),
+  [`c3bc540`](https://github.com/unfoldadmin/django-unfold/commit/c3bc5401f97ccd10ffcc72260a5c1e7a152e5870))
+
+
 ## v0.84.0 (2026-03-13)
 
 ### Bug Fixes
