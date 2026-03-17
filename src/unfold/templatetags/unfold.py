@@ -463,9 +463,11 @@ def fieldset_line_classes(context: RequestContext) -> str:
                 "border-b",
                 "border-base-200",
                 "border-dashed",
+                "min-h-[59px]",
                 "group-[.last]/row:border-b-0",
                 "lg:border-l",
                 "lg:flex-row",
+                "lg:items-center",
                 "dark:border-base-800",
                 "lg:first:border-l-0",
             ]

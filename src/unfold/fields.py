@@ -213,7 +213,7 @@ class UnfoldAdminField(helpers.AdminField):
             classes.append("required")
 
         attrs = {"class": " ".join(classes)} if classes else {}
-        required = mark_safe(' <span class="text-red-600">*</span>')
+        required = mark_safe('<span class="text-red-600 dark:text-red-500">*</span>')
 
         return self.field.label_tag(
             contents=mark_safe(contents),
