@@ -17,6 +17,42 @@ window.addEventListener("load", (e) => {
 });
 
 /*************************************************************
+ * Switch theme
+ *************************************************************/
+function theme(defaultTheme = "auto") {
+  return {
+    adminTheme: Alpine.$persist(defaultTheme).as('adminTheme'),
+    switchTheme(theme) {
+      this.adminTheme = theme;
+    },
+    themeBindings: {
+      ['x-bind:class']() {
+        if (this.adminTheme === 'dark' || (this.adminTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          return 'dark';
+        }
+
+        if (this.adminTheme === 'light') {
+          return 'light';
+        }
+
+        return '';
+      },
+      ['x-on:keydown.window'](event) {
+        if ((event.metaKey || event.ctrlKey) && event.key === "e") {
+          event.preventDefault();
+
+          if (this.adminTheme == "light") {
+            this.adminTheme = "dark";
+          } else {
+            this.adminTheme = "light";
+          }
+        }
+      }
+    }
+  }
+}
+
+/*************************************************************
  * Scroll sidebar to active item
  *************************************************************/
 function scrollSidebarNav() {
