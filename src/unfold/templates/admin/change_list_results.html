@@ -23,15 +23,15 @@
 
                     <tr class="data-row block border border-base-200 mb-3 relative rounded-default lg:table-row lg:border-none lg:mb-0 lg:rounded-none dark:border-base-800">
                         {% if cl.model_admin.ordering_field %}
-                            <td class="align-middle flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:py-3 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px" x-sort:handle>
-                                <div class="cursor-move {% cycle ' hover:bg-base-50 dark:hover:bg-base-800' 'hover:bg-base-100 dark:hover:bg-base-800' %} flex h-[38px] w-[38px] items-center justify-center -ml-1.5 -my-1 rounded-default select-none transition-colors">
+                            <td class="align-middle flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px" x-sort:handle>
+                                <div class="cursor-move {% cycle ' hover:bg-base-50 dark:hover:bg-base-800' 'hover:bg-base-100 dark:hover:bg-base-800' %} flex h-[36px] w-[36px] items-center justify-center -ml-1.5 -my-1 rounded-default select-none transition-colors">
                                     <span class="material-symbols-outlined align-middle cursor-move">drag_indicator</span>
                                 </div>
                             </td>
                         {% endif %}
 
                         {% if cl.model_admin.list_sections|length > 0 %}
-                            <td class="align-middle cursor-pointer flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:py-3 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px"
+                            <td class="align-middle cursor-pointer flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px"
                                 data-label="{% trans "Expand row" %}"
                                 x-on:click="rowOpen = !rowOpen">
                                 <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-[50] lg:block" x-show="rowOpen"></div>
