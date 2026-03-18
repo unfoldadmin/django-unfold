@@ -48,6 +48,7 @@ class MyTrackerComponent(BaseComponent):
         context = super().get_context_data(**kwargs)
         context.update({
             "data": DATA
+            "size": "md", # Optional: size of tracker: "md", "sm"
         })
         return context
 ```
@@ -57,8 +58,14 @@ class MyTrackerComponent(BaseComponent):
 ```python
 DATA = [
     {
+        # Optional: configure custom color for the item
         "color": "bg-primary-400 dark:bg-primary-700",
+        # Optional: will show a tooltip on hover
         "tooltip": "Custom value 1",
+        # Optional: will make the item a link
+        "href": "https://example.com",
+        # Optional: add custom CSS classes to the item
+        "class": "custom-class",
     },
     {
         "color": "bg-primary-400 dark:bg-primary-700",
