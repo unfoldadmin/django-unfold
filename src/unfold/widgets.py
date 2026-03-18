@@ -116,17 +116,16 @@ TEXTAREA_CLASSES = [
     *BASE_INPUT_CLASSES,
     "max-w-4xl",
     "appearance-none",
-    "expandable",
-    "transition",
-    "transition-height",
-    "duration-75",
-    "ease-in-out",
 ]
 
 TEXTAREA_EXPANDABLE_CLASSES = [
     "block",
     "field-sizing-content",
     "min-h-[38px]",
+    "!max-w-2xl",
+    "transition-height",
+    "duration-75",
+    "ease-in-out",
 ]
 
 SELECT_CLASSES = [
