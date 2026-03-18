@@ -287,7 +287,7 @@ def test_unfold_admin_field():
     admin_field = UnfoldAdminField(form=ExampleForm(), field="username", is_first=True)
     assert (
         admin_field.label_tag()
-        == '<label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark required" for="id_username">Username <span class="text-red-600">*</span></label>'
+        == '<label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark required" for="id_username">Username<span class="text-red-600 dark:text-red-500">*</span></label>'
     )
 
 

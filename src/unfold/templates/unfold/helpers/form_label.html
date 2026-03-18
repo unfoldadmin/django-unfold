@@ -1,7 +1,3 @@
 <label for="{{ field.id_for_label }}" class="block font-semibold text-font-important-light dark:text-font-important-dark">
-    {{ field.label }}
-
-    {% if field.field.required %}
-        <span class="text-red-600">*</span>
-    {% endif %}
+    {{ field.label }}{% if field.field.required %}<span class="text-red-600 dark:text-red-500">*</span>{% endif %}
 </label>
