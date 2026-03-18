@@ -167,6 +167,29 @@ def prettify_json(data: Any, encoder: Any) -> SafeString | None:
     )
 
 
+def prettify_traceback(traceback: str) -> SafeString | None:
+    try:
+        from pygments import highlight
+        from pygments.formatters.html import HtmlFormatter
+        from pygments.lexers.python import PythonTracebackLexer
+    except ImportError:
+        return None
+
+    def format_response(response: str, theme: str) -> str:
+        formatter = HtmlFormatter(
+            style=theme,
+            noclasses=True,
+            nobackground=True,
+            prestyles="white-space: pre-wrap; word-wrap: break-word;",
+        )
+        return highlight(response, PythonTracebackLexer(), formatter)
+
+    return mark_safe(
+        f'<div class="block dark:hidden">{format_response(traceback, "colorful")}</div>'
+        f'<div class="hidden dark:block">{format_response(traceback, "monokai")}</div>'
+    )
+
+
 def parse_date_str(value: str) -> datetime.date | None:
     for format in settings.DATE_INPUT_FORMATS:
         try:
