@@ -204,13 +204,22 @@ class PaginationFormSetMixin:
         self,
         request: HttpRequest | None = None,
         per_page: int | None = None,
+        count: int | None = None,
+        count_variant: str | None = None,
+        provided_queryset: QuerySet | None = None,
         *args,
         **kwargs,
     ):
         self.request = request
         self.per_page = per_page
+        self.count = count
+        self.count_variant = count_variant
+        self.provided_queryset = provided_queryset
 
         super().__init__(*args, **kwargs)
+
+        if self.provided_queryset:
+            self.queryset = self.provided_queryset
 
         if self.per_page:
             self.paginator = Paginator(self.queryset, self.per_page)

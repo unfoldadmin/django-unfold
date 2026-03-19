@@ -1,16 +1,24 @@
-<span class="inline-block font-semibold h-6 leading-6 px-2 rounded-default text-[11px] uppercase whitespace-nowrap
-             {% if type == 'info' %}
-                 bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400
-             {% elif type == 'danger' %}
-                 bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400
-             {% elif type == 'warning' %}
-                 bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400
-             {% elif type == 'success' %}
-                 bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400
-             {% elif type == 'primary' %}
-                 bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-400
-             {% else %}
-                 bg-base-500/8 text-base-700 dark:bg-base-500/20 dark:text-base-200
-             {% endif %} {% if class %} {{ class }}{% endif %}" {% if title %} title="{{ title }}"{% endif %}>
-    {{ text }}
-</span>
+<{% if href %}a href="{{ href }}"{% else %}span{% endif %} class="inline-block font-semibold rounded-default text-[11px] uppercase whitespace-nowrap
+{% if size == "md" %}
+    h-5 leading-5 px-1.5
+{% else %}
+    h-6 leading-6 px-2
+{% endif %}
+{% if type == 'info' or variant == 'info' %}
+    bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400
+{% elif type == 'danger' or variant == 'danger' %}
+    bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400
+{% elif type == 'warning' or variant == 'warning' %}
+    bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400
+{% elif type == 'success' or variant == 'success' %}
+    bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400
+{% elif type == 'primary' or variant == 'primary' %}
+    bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-400
+{% else %}
+    bg-base-500/8 text-base-700 dark:bg-base-500/20 dark:text-base-200
+{% endif %} {% if class %} {{ class }}{% endif %}" {% if label_title %} title="{{ label_title }}"{% endif %}>
+{% if icon %}
+    <span class="material-symbols-outlined text-sm -ml-0.5 mr-0.5 align-[-3px]">{{ icon }}</span>
+{% endif %}
+{{ text }}
+</{% if href %}a{% else %}span{% endif %}>

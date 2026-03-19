@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+import factory
 import pytest
 from django.contrib import admin
 from django.urls import reverse
@@ -45,6 +46,75 @@ def test_nonrelated_inlines(
     )
     assert "New Category" in response.content.decode()
     assert "New Project" in response.content.decode()
+
+
+def test_nonrelated_inlines_count(admin_client, category_factory, project_factory):
+    TOTAL_PROJECTS = 27
+
+    category = category_factory(name="Test Category")
+    project_factory.create_batch(27, is_active=True)
+
+    response = admin_client.get(
+        reverse("admin:example_category_change", args=(category.pk,))
+    )
+    assert response.status_code == HTTPStatus.OK
+
+    assert response.context["inline_admin_formsets"][0].formset.count == TOTAL_PROJECTS
+    assert f"{TOTAL_PROJECTS}" in response.content.decode()
+
+
+def test_nonrelated_inlines_pagination(admin_client, category_factory, project_factory):
+    category = category_factory(name="Test Category")
+
+    project_factory.create_batch(
+        6,
+        name=factory.Iterator(
+            [
+                "Project A",
+                "Project B",
+                "Project C",
+                "Project D",
+                "Project E",
+                "Project F",
+            ]
+        ),
+        is_active=True,
+    )
+
+    project_factory.create_batch(
+        6,
+        name=factory.Iterator(
+            [
+                "Project 1",
+                "Project 2",
+                "Project 3",
+                "Project 4",
+                "Project 5",
+                "Project 6",
+            ]
+        ),
+        is_active=False,
+    )
+
+    response = admin_client.get(
+        reverse("admin:example_category_change", args=(category.pk,))
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Project A" in response.content.decode()
+    assert "Project B" in response.content.decode()
+    assert "Project C" in response.content.decode()
+    assert "Project D" in response.content.decode()
+    assert "Project E" in response.content.decode()
+    assert "Project F" not in response.content.decode()
+    assert "Project 1" not in response.content.decode()
+    assert "Project 2" not in response.content.decode()
+    assert "Project 3" not in response.content.decode()
+    assert "Project 4" not in response.content.decode()
+    assert "Project 5" not in response.content.decode()
+    assert "Project 6" not in response.content.decode()
+
+    assert "6 projects" in response.content.decode()
 
 
 @pytest.mark.django_db
@@ -195,8 +265,8 @@ def test_nonrelated_inlines_get_form_queryset_returns_queryset(
     category_factory, project_factory
 ):
     category = category_factory(name="Test Category")
-    project_factory(name="Project A")
-    project_factory(name="Project B")
+    project_factory(name="Project A", is_active=True)
+    project_factory(name="Project B", is_active=True)
 
     parent_admin = CategoryAdmin(Category, admin.site)
     inline = ProjectNonrelatedInline(parent_admin, admin.site)

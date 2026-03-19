@@ -1,5 +1,12 @@
-<ul class="flex flex-row gap-0.5 overflow-hidden rounded-default {% if class %}{{ class }}{% endif %}">
+<nav class="flex flex-row gap-0.5 overflow-hidden rounded-default {% if class %}{{ class }}{% endif %}">
     {% for item in data %}
-        <li class="h-8 px-px size-full {% if item.color %}{{ item.color }}{% else %}bg-base-300 dark:bg-base-400{% endif %} hover:opacity-50" title="{{ item.tooltip }}"></li>
+        <a {% if item.href %}href="{{ item.href }}"{% endif %} {% if item.tooltip %}title="{{ item.tooltip }}"{% endif %} class="px-px size-full {% if item.color %}{{ item.color }}{% else %}bg-base-300 dark:bg-base-400{% endif %} hover:opacity-50 {% if item.class %}{{ item.class }}{% endif %}
+                                                                                                                                 {% if size == "md" %}
+                                                                                                                                     h-6
+                                                                                                                                 {% elif size == "sm" %}
+                                                                                                                                     h-4
+                                                                                                                                 {% else %}
+                                                                                                                                     h-8
+                                                                                                                                 {% endif %}"></a>
     {% endfor %}
-</ul>
+</nav>

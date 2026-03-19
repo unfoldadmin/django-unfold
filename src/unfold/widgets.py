@@ -20,6 +20,7 @@ from django.contrib.admin.widgets import (
     AdminURLFieldWidget,
     AdminUUIDInputWidget,
     ForeignKeyRawIdWidget,
+    RelatedFieldWidgetWrapper,
 )
 from django.db.models import ManyToOneRel
 from django.forms import (
@@ -115,17 +116,13 @@ TEXTAREA_CLASSES = [
     *BASE_INPUT_CLASSES,
     "max-w-4xl",
     "appearance-none",
-    "expandable",
-    "transition",
-    "transition-height",
-    "duration-75",
-    "ease-in-out",
 ]
 
 TEXTAREA_EXPANDABLE_CLASSES = [
     "block",
     "field-sizing-content",
     "min-h-[38px]",
+    "!max-w-2xl",
 ]
 
 SELECT_CLASSES = [
@@ -236,7 +233,6 @@ SWITCH_CLASSES = [
     "h-5",
     "relative",
     "rounded-full",
-    "transition-colors",
     "w-8",
     "min-w-8",
     "disabled:cursor-not-allowed",
@@ -960,6 +956,10 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
     option_template_name = (
         "unfold/widgets/select_option_modelchoicefield_autocomplete.html"
     )
+
+
+class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
+    template_name = "unfold/widgets/related_widget_wrapper.html"
 
 
 try:

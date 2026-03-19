@@ -1,0 +1,9 @@
+<a {% if href %}href="{{ href }}"{% endif %} class="flex flex-row gap-2 items-center {% if class %}{{ class }}{% endif %}" {% if external %}target="_blank"{% endif %}>
+    {% if icon %}
+        <span class="material-symbols-outlined text-link">{{ icon }}</span>
+    {% endif %}
+
+    {{ children }}
+
+    {% if external %}<span class="material-symbols-outlined text-icon text-sm">open_in_new</span>{% endif %}
+</a>

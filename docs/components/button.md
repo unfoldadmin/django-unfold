@@ -54,8 +54,13 @@ To apply custom attributes to a button component, pass the `attrs` parameter wit
 
 | Parameter                         | Description                                            |
 | --------------------------------- | ------------------------------------------------------ |
+| variant                           | Color style: "default", "secondary", "danger", "ghost" |
+| size                              | Size: "sm", "md"                                       |
+| form                              | Form id                                                |
+| value                             | Value attribute                                        |
+| title                             | Title attribute                                        |
+| extra_attrs                       | String with additional attributes to add to the button |
 | submit                            | Button will have a type="submit" attribute             |
 | name                              | Adds a "name" attribute to the button                  |
 | href                              | Displays the button as a link                          |
-| variant                           | "default" value displays the button without any colors |
 | attrs                             | Dictionary with a list of custom attributes            |

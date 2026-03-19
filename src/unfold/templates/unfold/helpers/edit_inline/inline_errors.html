@@ -1,0 +1,9 @@
+{% spaceless %}
+    <div class="border-b border-base-200 p-3 pb-0 dark:border-base-800 empty:hidden">
+        {% include "unfold/helpers/messages/error.html" with errors=inline_admin_formset.formset.non_form_errors %}
+
+        {% for formset in inline_admin_formset.formset.form.nested_formsets %}
+            {% include "unfold/helpers/messages/error.html" with errors=formset.non_form_errors %}
+        {% endfor %}
+    </div>
+{% endspaceless %}

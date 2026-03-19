@@ -146,6 +146,7 @@ class Label(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -166,6 +167,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Invoice(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class InvoiceItem(models.Model):
+    name = models.CharField(max_length=255)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Profile(models.Model):

@@ -33,6 +33,7 @@ from unfold.mixins import (
     ActionModelAdminMixin,
     BaseModelAdminMixin,
     DatasetModelAdminMixin,
+    NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
 from unfold.views import ChangeList
@@ -48,7 +49,11 @@ checkbox = UnfoldBooleanWidget(
 
 
 class ModelAdmin(
-    BaseModelAdminMixin, ActionModelAdminMixin, DatasetModelAdminMixin, BaseModelAdmin
+    BaseModelAdminMixin,
+    ActionModelAdminMixin,
+    DatasetModelAdminMixin,
+    NestedInlinesModelAdminMixin,
+    BaseModelAdmin,
 ):
     action_form = ActionForm
     custom_urls = ()
@@ -75,10 +80,13 @@ class ModelAdmin(
 
     @property
     def media(self):
-        if not hasattr(self, "request"):
-            return super().media
-
         media = super().media
+
+        if hasattr(self, "nested_formset_media"):
+            media += self.nested_formset_media
+
+        if not hasattr(self, "request"):
+            return media
 
         for filter in self.get_list_filter(self.request):
             if (
@@ -227,6 +235,15 @@ class ModelAdmin(
             formset_kwargs["request"] = request
             formset_kwargs["per_page"] = inline.per_page
 
+        if hasattr(inline, "show_count") and inline.show_count:
+            if hasattr(inline, "get_count") and callable(inline.get_count):
+                formset_kwargs["count"] = inline.get_count(request, obj)
+
+            if hasattr(inline, "get_count_variant") and callable(
+                inline.get_count_variant
+            ):
+                formset_kwargs["count_variant"] = inline.get_count_variant(request, obj)
+
         return formset_kwargs
 
     def get_changeform_datasets(self, request: HttpRequest) -> list[type[BaseDataset]]:
@@ -240,6 +257,9 @@ class BaseInlineMixin:
     per_page = None
     hide_ordering_field = False
     collapsible = False
+    show_count = False
+    hide_title = False
+    tab = False
 
 
 class TabularInline(BaseInlineMixin, BaseModelAdminMixin, BaseTabularInline):
