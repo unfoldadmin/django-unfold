@@ -1,9 +1,11 @@
 <{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if form %}form="{{ form }}"{% endif%} {% if name %}name="{{ name }}"{% endif %} {% if value %}value="{{ value }}"{% endif %} {% if title %}title="{{ title }}"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=attrs %}
-class="font-medium inline-flex group items-center gap-2 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
+class="font-medium inline-flex group items-center gap-1 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
 {% if size == "md" %}
     px-5 py-2.5 text-[14px]
 {% elif size == "sm" %}
     px-2.5 py-1.5
+{% elif size == "xs" %}
+    px-2 py-1
 {% else %}
     px-3 py-2
 {% endif %}
@@ -17,6 +19,9 @@ class="font-medium inline-flex group items-center gap-2 relative rounded-default
     border border-red-600 bg-red-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-red-600/80{% endif %}
 {% else %}
     border border-base-200 bg-primary-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-primary-600/80{% endif %}
-{% endif %}{% if class %} {{ class }}{% endif %}" {% include "unfold/helpers/attrs.html" %} {% if extra_attrs %}{{ extra_attrs }}{% endif %}>
+{% endif %}
+{% if class %} {{ class }}{% endif %}" {% include "unfold/helpers/attrs.html" %} {% if extra_attrs %}{{ extra_attrs }}{% endif %}>
+
+{% if icon %}<span class="material-symbols-outlined -ml-0.5">{{ icon }}</span> {% endif %}
 {{ children }}
 </{% if href %}a{% else %}button{% endif%}>
