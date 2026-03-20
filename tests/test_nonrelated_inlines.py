@@ -11,11 +11,11 @@ from unfold.contrib.inlines.admin import NonrelatedTabularInline
 
 
 @pytest.mark.django_db
-def test_nonrelated_inlines(
+def test_nonrelated_inlines_change(
     admin_client, admin_user, category_factory, project_factory
 ):
     category = category_factory(name="Test Category")
-    project = project_factory(name="Test Project")
+    project = project_factory(name="Test Project", is_active=True)
 
     response = admin_client.get(
         reverse("admin:example_category_change", args=(category.pk,))
@@ -33,6 +33,7 @@ def test_nonrelated_inlines(
             "example-project-MAX_NUM_FORMS": "1000",
             "example-project-0-id": project.pk,
             "example-project-0-name": "New Project",
+            "example-project-0-is_active": True,
             "_continue": True,
         },
         follow=True,
@@ -46,6 +47,34 @@ def test_nonrelated_inlines(
     )
     assert "New Category" in response.content.decode()
     assert "New Project" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_nonrelated_inlines_create_parent(
+    admin_client, category_factory, project_factory
+):
+    project_factory(name="Another Project", is_active=False)
+    project_factory(name="Test Project", is_active=True)
+
+    response = admin_client.get(reverse("admin:example_category_add"))
+    assert response.status_code == HTTPStatus.OK
+    assert "Another Project" not in response.content.decode()
+    assert "Test Project" not in response.content.decode()
+
+    response = admin_client.post(
+        reverse("admin:example_category_add"),
+        {
+            "name": "Test Category",
+            "example-project-TOTAL_FORMS": "4",
+            "example-project-INITIAL_FORMS": "0",
+            "example-project-MIN_NUM_FORMS": "0",
+            "example-project-MAX_NUM_FORMS": "1000",
+            "_continue": True,
+        },
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "Test Project" in response.content.decode()
 
 
 def test_nonrelated_inlines_count(admin_client, category_factory, project_factory):
@@ -135,6 +164,7 @@ def test_nonrelated_inline_add(admin_client, admin_user, category_factory):
             "example-project-MIN_NUM_FORMS": "0",
             "example-project-MAX_NUM_FORMS": "1000",
             "example-project-0-name": "New Project",
+            "example-project-0-is_active": True,
             "_continue": True,
         },
         follow=True,
@@ -154,7 +184,7 @@ def test_nonrelated_inline_delete(
     admin_client, admin_user, category_factory, project_factory
 ):
     category = category_factory(name="Test Category")
-    project = project_factory(name="Test Project")
+    project = project_factory(name="Test Project", is_active=True)
 
     response = admin_client.get(
         reverse("admin:example_category_change", args=(category.pk,))
@@ -190,7 +220,7 @@ def test_nonrelated_inline_delete_with_protected_related_objects(
     admin_client, admin_user, category_factory, project_factory, task_factory
 ):
     category = category_factory(name="Test Category")
-    project = project_factory(name="Test Project")
+    project = project_factory(name="Test Project", is_active=True)
     _task = task_factory(name="Test Task", project=project)
 
     response = admin_client.get(
