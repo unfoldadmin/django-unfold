@@ -1,6 +1,48 @@
 # CHANGELOG
 
 
+## v0.86.0 (2026-03-20)
+
+### Bug Fixes
+
+- Changelist row height ([#1928](https://github.com/unfoldadmin/django-unfold/pull/1928),
+  [`292ceac`](https://github.com/unfoldadmin/django-unfold/commit/292ceac73ffa39d694d79a739a81999c71eff334))
+
+- Expandable textarea css classes ([#1923](https://github.com/unfoldadmin/django-unfold/pull/1923),
+  [`ad485d1`](https://github.com/unfoldadmin/django-unfold/commit/ad485d1b6828af0f83c957c8dc6d42e8b318fe88))
+
+- Readonly fields alignment ([#1922](https://github.com/unfoldadmin/django-unfold/pull/1922),
+  [`7a7b328`](https://github.com/unfoldadmin/django-unfold/commit/7a7b328c789747c7cd12ca58c30847f781a5964f))
+
+- Search results height ([#1926](https://github.com/unfoldadmin/django-unfold/pull/1926),
+  [`21b25fc`](https://github.com/unfoldadmin/django-unfold/commit/21b25fc33e1ef860bc71437de2f113c7b9811b95))
+
+- Use label as component in card ([#1919](https://github.com/unfoldadmin/django-unfold/pull/1919),
+  [`353b6ce`](https://github.com/unfoldadmin/django-unfold/commit/353b6ce85f1b2a9872a85bc007a25ac62a97ba83))
+
+### Features
+
+- Button new xs size ([#1927](https://github.com/unfoldadmin/django-unfold/pull/1927),
+  [`13578e8`](https://github.com/unfoldadmin/django-unfold/commit/13578e8e3ec319f736ea53587bfce34d100ae07e))
+
+- Keyboard shortcut for theme change
+  ([#1924](https://github.com/unfoldadmin/django-unfold/pull/1924),
+  [`11ffae0`](https://github.com/unfoldadmin/django-unfold/commit/11ffae0a060db5a7053e4681a67d3977b106ef68))
+
+- Label href and icon support ([#1920](https://github.com/unfoldadmin/django-unfold/pull/1920),
+  [`67ac831`](https://github.com/unfoldadmin/django-unfold/commit/67ac831e4a2b75ea80d1fced6321e6a53702fcf3))
+
+- New tracker options: size, href, and class
+  ([#1925](https://github.com/unfoldadmin/django-unfold/pull/1925),
+  [`992cf74`](https://github.com/unfoldadmin/django-unfold/commit/992cf7459476ba1b3544947205644a159e4b3de0))
+
+- Prettify traceback ([#1921](https://github.com/unfoldadmin/django-unfold/pull/1921),
+  [`bb7b1dc`](https://github.com/unfoldadmin/django-unfold/commit/bb7b1dc36272b3ca081c255cd3f29f4a02ae08b3))
+
+- Related widget actions dropdown ([#1918](https://github.com/unfoldadmin/django-unfold/pull/1918),
+  [`e40cb5a`](https://github.com/unfoldadmin/django-unfold/commit/e40cb5a87580bb5d43fbddfe7abc5f2b52bf8df1))
+
+
 ## v0.85.0 (2026-03-16)
 
 ### Bug Fixes
