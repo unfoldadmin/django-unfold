@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v0.86.1 (2026-03-20)
+
+### Bug Fixes
+
+- Nonrelated inlines provided empty queryset
+  ([#1930](https://github.com/unfoldadmin/django-unfold/pull/1930),
+  [`64bfc83`](https://github.com/unfoldadmin/django-unfold/commit/64bfc83a188ec338d86edcaf5b14e3eca0142b17))
+
+
 ## v0.86.0 (2026-03-20)
 
 ### Bug Fixes
