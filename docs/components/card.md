@@ -14,9 +14,9 @@ A card is a versatile content container used to visually separate and organize d
 {% trans "Card component title" as custom_title %}
 
 {% capture as custom_action %}
-    {% component "unfold/componentes/button.html" %}
+    {% component "unfold/components/button.html" %}
         Do something
-    {% endcomponent}
+    {% endcomponent %}
 {% endcapture %}
 
 {% component "unfold/components/card.html" with title=custom_title action=custom_action %}
