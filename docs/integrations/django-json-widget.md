@@ -1,5 +1,5 @@
 ---
-title: Django JSON Widget
+title: django-json-widget
 order: 0
 description: Stylish Django JSON Widget integration with Unfold admin theme.
 ---
