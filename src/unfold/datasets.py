@@ -9,6 +9,7 @@ from unfold.views import DatasetChangeList
 
 class BaseDataset:
     tab = False
+    title = None
 
     def __init__(
         self, request: HttpRequest, extra_context: dict[str, Any] | None
