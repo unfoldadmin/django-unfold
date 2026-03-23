@@ -2,6 +2,7 @@ import datetime
 from collections.abc import Generator
 from typing import Any
 
+from django.contrib.admin import SimpleListFilter
 from django.contrib.admin.options import IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
@@ -19,7 +20,7 @@ from django.db.models import Model
 from django.forms import ModelForm
 from django.template import Library
 from django.template.base import Parser, Token
-from django.template.loader import render_to_string
+from django.template.loader import get_template, render_to_string
 from django.urls import NoReverseMatch
 from django.utils.html import format_html
 from django.utils.safestring import SafeText, mark_safe
@@ -455,6 +456,71 @@ def unfold_search_form(cl):
         "is_popup_var": IS_POPUP_VAR,
         "is_facets_var": IS_FACETS_VAR,
     }
+
+
+@register.simple_tag
+def unfold_admin_list_filter(
+    cl: ChangeList, spec: SimpleListFilter, horizontal_layout: bool = False
+) -> str:
+    tpl = get_template(spec.template)
+
+    options = {}
+
+    if hasattr(spec, "field_path"):
+        field_path = spec.field_path
+    elif hasattr(spec, "parameter_name"):
+        field_path = spec.parameter_name
+
+    if field_path:
+        options = getattr(cl.model_admin, "list_filter_options", {}).get(field_path, {})
+
+    return tpl.render(
+        {
+            "title": options.get("title", spec.title),
+            "choices": list(spec.choices(cl)),
+            "spec": spec,
+            "horizontal": options.get("horizontal") and horizontal_layout,
+        }
+    )
+
+
+@register.filter
+def unfold_horizontal_filters(cl: ChangeList) -> list[SimpleListFilter]:
+    specs = []
+
+    for spec in cl.filter_specs:
+        if hasattr(spec, "field_path"):
+            field_path = spec.field_path
+        elif hasattr(spec, "parameter_name"):
+            field_path = spec.parameter_name
+
+        if options := getattr(cl.model_admin, "list_filter_options", {}).get(
+            field_path
+        ):
+            if options.get("horizontal"):
+                specs.append(spec)
+
+    return specs
+
+
+@register.filter
+def unfold_vertical_filters(cl: ChangeList) -> list[SimpleListFilter]:
+    specs = []
+
+    for spec in cl.filter_specs:
+        if hasattr(spec, "field_path"):
+            field_path = spec.field_path
+        elif hasattr(spec, "parameter_name"):
+            field_path = spec.parameter_name
+
+        options = getattr(cl.model_admin, "list_filter_options", {})
+
+        if (field_path in options and not options[field_path].get("horizontal")) or (
+            field_path not in options
+        ):
+            specs.append(spec)
+
+    return specs
 
 
 @register.tag(name="unfold_search_form")
