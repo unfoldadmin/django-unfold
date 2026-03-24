@@ -1,0 +1,6 @@
+<a href="{{ link }}"
+   class="flex items-center justify-center h-9 w-9 rounded-full border border-base-200 bg-base-200 text-font-important-light hover:bg-base-300 dark:border-base-700 dark:bg-base-800 dark:text-font-important-dark dark:hover:bg-base-700"
+   {% if blank %}target="_blank"{% endif %}
+   title="{{ title }}">
+    <span class="material-symbols-outlined">{{ icon }}</span>
+</a>

@@ -1,0 +1,12 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    {% if not is_popup and has_add_permission and has_change_permission %}
+        {% blocktrans with cl.opts.verbose_name_plural|escape as name asvar title %}Recover deleted {{ name }}{% endblocktrans %}
+        {% url opts|admin_urlname:'recoverlist' as recover_url %}
+        {% include "unfold/helpers/icon_action.html" with title=title link=recover_url icon="history" %}
+    {% endif %}
+
+    {{ block.super }}
+{% endblock %}

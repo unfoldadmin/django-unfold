@@ -1,0 +1,45 @@
+{% load i18n %}
+
+<div class="flex flex-col gap-4">
+    {% for field_diff in compare_data %}
+        <section class="overflow-hidden rounded-default border border-base-200 shadow-xs dark:border-base-800">
+            <header class="border-b border-base-200 px-4 py-3 dark:border-base-800">
+                <h2 class="text-sm font-medium text-font-important-light dark:text-font-important-dark">
+                    {% firstof field_diff.field.verbose_name field_diff.field.related_name %}
+                    {% if field_diff.is_related and not field_diff.follow %}
+                        <sup class="text-amber-600 dark:text-amber-400">*</sup>
+                    {% endif %}
+                </h2>
+
+                {% if field_diff.field.help_text %}
+                    <p class="mt-1 text-xs text-base-500 dark:text-base-400">{{ field_diff.field.help_text|safe }}</p>
+                {% endif %}
+            </header>
+
+            <div class="px-4 py-4">
+                {{ field_diff.diff }}
+            </div>
+        </section>
+    {% empty %}
+        {% trans "There are no differences." as message %}
+        {% include "unfold/helpers/messages/info.html" with message=message class="mb-0" %}
+    {% endfor %}
+
+    <section class="rounded-default border border-base-200 p-4 shadow-xs dark:border-base-800">
+        <h2 class="text-sm font-medium text-font-important-light dark:text-font-important-dark">
+            {% trans "Revision comment" %}
+        </h2>
+
+        <blockquote class="mt-3 rounded-default border border-base-200 bg-base-50 px-4 py-3 text-sm text-font-default-light dark:border-base-800 dark:bg-white/[.02] dark:text-font-default-dark">
+            {{ version2.revision.comment|default:_("(no comment exists)") }}
+        </blockquote>
+    </section>
+
+    {% if has_unfollowed_fields %}
+        {% blocktrans asvar note_message %}
+            Fields or entries marked with <sup>*</sup> are not under reversion control.
+            Some marked information may be incomplete or inaccurate.
+        {% endblocktrans %}
+        {% include "unfold/helpers/messages/warning.html" with message=note_message class="mb-0" %}
+    {% endif %}
+</div>

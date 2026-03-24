@@ -88,6 +88,7 @@ class MyModelAdmin(ModelAdmin):
 
 - [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)
 - [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/)
+- [django-reversion](https://github.com/etianen/django-reversion) / [django-reversion-compare](https://github.com/jedie/django-reversion-compare) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-reversion/)
 - [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)
 - [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/)
 - [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/)

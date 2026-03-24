@@ -1,6 +1,6 @@
 version = 1
 revision = 3
-requires-python = ">=3.10, <4.0"
+requires-python = ">=3.11, <4.0"
 
 [[package]]
 name = "annotated-types"
@@ -337,6 +337,33 @@ wheels = [
 ]
 
 [[package]]
+name = "django-reversion"
+version = "6.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9b/8b/72000ad3ba05cb72134f62ad093267e3d83d8fdf1406102d2a1a2ec7d55e/django_reversion-6.1.0.tar.gz", hash = "sha256:31dd7fee02e2a21af7c2d0a61c1c0f27ba07df2317c9a0a3f31d3ee40069025d", size = 76140, upload-time = "2025-12-12T20:23:51.948Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5e/8e/c80904ce5cb94f78cdd7d794cb7b4a8e8891a7515621bbce5f2a45de6555/django_reversion-6.1.0-py3-none-any.whl", hash = "sha256:1f5815791d9accdb0bad9d5982668f217dc65225be57041ae9641dbdcd838ce3", size = 86196, upload-time = "2025-12-12T20:23:50.18Z" },
+]
+
+[[package]]
+name = "django-reversion-compare"
+version = "0.19.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "diff-match-patch" },
+    { name = "django" },
+    { name = "django-reversion" },
+    { name = "rich" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f9/28/54ba992a2d1e716fe8950b90791688a5890de4f6f68b0e78a86c8abfaabe/django_reversion_compare-0.19.2.tar.gz", hash = "sha256:b27f0616759eb529693956dca776009d9608900c90a97b09aefeede5d6703bee", size = 194226, upload-time = "2026-02-06T17:18:40.352Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cf/7b/b2eb56cea8677109fadc6d0a53f33e4cc0ae85bb761914ec3d6cc09fdf92/django_reversion_compare-0.19.2-py3-none-any.whl", hash = "sha256:5100f70737ff84e814589f17245a9af2c4b76fbae89c85c196241b1568c19402", size = 128599, upload-time = "2026-02-06T17:18:38.923Z" },
+]
+
+[[package]]
 name = "django-simple-history"
 version = "3.11.0"
 source = { registry = "https://pypi.org/simple" }
@@ -378,7 +405,7 @@ wheels = [
 
 [[package]]
 name = "django-unfold"
-version = "0.82.0"
+version = "0.86.1"
 source = { editable = "." }
 dependencies = [
     { name = "django" },
@@ -391,6 +418,8 @@ dev = [
     { name = "django-import-export" },
     { name = "django-location-field" },
     { name = "django-money" },
+    { name = "django-reversion" },
+    { name = "django-reversion-compare" },
     { name = "django-simple-history" },
     { name = "django-stubs" },
     { name = "pillow" },
@@ -413,6 +442,8 @@ dev = [
     { name = "django-import-export", specifier = ">=4.3" },
     { name = "django-location-field", specifier = ">=2.7" },
     { name = "django-money", specifier = ">=3.5" },
+    { name = "django-reversion", specifier = ">=6.1" },
+    { name = "django-reversion-compare", specifier = ">=0.18.1" },
     { name = "django-simple-history", specifier = ">=3.11" },
     { name = "django-stubs", specifier = ">=5.2" },
     { name = "pillow", specifier = ">=12.1" },

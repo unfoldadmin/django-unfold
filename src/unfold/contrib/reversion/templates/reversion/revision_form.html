@@ -1,0 +1,27 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls unfold %}
+
+{% block object-tools %}{% endblock %}
+
+{% block form_top %}
+    <div class="flex flex-col gap-4">
+        <div class="flex">
+            {% url opts|admin_urlname:'history' object_id as history_url %}
+            {% add_preserved_filters history_url as history_link %}
+            {% component "unfold/components/button.html" with href=history_link variant="default" icon="arrow_back" %}
+                {% trans "Back to history" %}
+            {% endcomponent %}
+        </div>
+
+        {% blocktranslate asvar message %}Historic version. Press the save button below to revert to this version of the object.{% endblocktranslate %}
+        {% include "unfold/helpers/messages/warning.html" with message=message class="mb-0" %}
+    </div>
+{% endblock %}
+
+{% block submit_buttons_top %}
+    {% with is_popup=1 %}{{ block.super }}{% endwith %}
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+    {% with is_popup=1 %}{{ block.super }}{% endwith %}
+{% endblock %}
