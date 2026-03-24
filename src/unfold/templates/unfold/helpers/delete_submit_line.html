@@ -1,9 +1,15 @@
 {% load i18n unfold %}
 
 <div class="flex flex-col gap-3 items-center w-full lg:flex-row">
-    {% component "unfold/components/button.html" with href="#" variant="default" class="cancel-link w-full lg:mb-0 lg:w-auto" %}
-        {% trans "No, take me back" %}
-    {% endcomponent %}
+    {% if nested_cancel_url %}
+        {% component "unfold/components/button.html" with href=nested_cancel_url variant="default" class="w-full lg:mb-0 lg:w-auto" %}
+            {% trans "No, take me back" %}
+        {% endcomponent %}
+    {% else %}
+        {% component "unfold/components/button.html" with href="#" variant="default" class="cancel-link w-full lg:mb-0 lg:w-auto" %}
+            {% trans "No, take me back" %}
+        {% endcomponent %}
+    {% endif %}
 
     {% component "unfold/components/button.html" with submit=1 variant="danger" class="w-full lg:ml-auto lg:w-auto" %}
         {% trans "Yes, I’m sure" %}

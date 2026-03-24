@@ -1,6 +1,7 @@
 from collections.abc import Callable
 
 import pytest
+from django.contrib import admin
 from django.contrib.auth.models import AnonymousUser
 from django.test import override_settings
 from django.test.client import RequestFactory
@@ -116,3 +117,19 @@ def test_sidebar_navigation_with_lambda_link(admin_user):
     assert (
         context["sidebar_navigation"][0]["items"][0]["link"](request) == "/lambda/link"
     )
+
+
+@pytest.mark.django_db
+def test_sidebar_hides_models_opted_out_from_sidebar(admin_user):
+    request = RequestFactory().get("/rand")
+    request.user = admin_user
+
+    context = admin.site.each_context(request)
+
+    example_app = next(
+        app for app in context["available_apps"] if app["app_label"] == "example"
+    )
+    model_names = [model["object_name"] for model in example_app["models"]]
+
+    assert "Project" in model_names
+    assert "Task" not in model_names

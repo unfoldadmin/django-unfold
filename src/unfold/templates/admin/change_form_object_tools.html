@@ -1,10 +1,18 @@
 {% load i18n admin_urls %}
 
 {% block object-tools-items %}
+    {% for action in nested_object_tools %}
+        {% include "unfold/helpers/tab_action.html" with title=action.title link=action.link icon=action.icon %}
+    {% endfor %}
+
     {% if show_history %}
-        {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
+        {% if nested_history_url %}
+            {% add_preserved_filters nested_history_url as link %}
+        {% else %}
+            {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
+            {% add_preserved_filters history_url as link %}
+        {% endif %}
         {% trans 'History' as title %}
-        {% add_preserved_filters history_url as link %}
         {% include "unfold/helpers/tab_action.html" with title=title link=link icon="history" %}
     {% endif %}
 

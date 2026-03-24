@@ -1,10 +1,12 @@
 {% load i18n admin_urls %}
 
 {% if cl %}
-    {% url cl.opts|admin_urlname:"add" as add_url %}
+    {% url cl.opts|admin_urlname:"add" as default_add_url %}
+    {% firstof nested_add_url cl.add_url default_add_url as add_url %}
     {% blocktranslate with name=cl.opts.verbose_name asvar title %}Add {{ name }}{% endblocktranslate %}
 {% else %}
-    {% url opts|admin_urlname:"add" as add_url %}
+    {% url opts|admin_urlname:"add" as default_add_url %}
+    {% firstof nested_add_url default_add_url as add_url %}
     {% blocktranslate with name=opts.verbose_name asvar title %}Add {{ name }}{% endblocktranslate %}
 {% endif %}
 
