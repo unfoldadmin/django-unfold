@@ -25,6 +25,7 @@ from example.models import (
     Project,
     SectionUser,
     StatusChoices,
+    TabGroupUser,
     Tag,
     Task,
     User,
@@ -839,6 +840,23 @@ class ActionsUserAdmin(BaseUserAdmin, ModelAdmin):
 
     def has_submit_line_action_false_permission(self, request, object_id):
         return False
+
+
+class PostTabGroupInline(StackedInline):
+    model = Post
+    tab = True
+    tab_group = "this is a tab group"
+
+
+class InvoiceTabGroupInline(TabularInline):
+    model = Invoice
+    tab = True
+    tab_group = "this is a tab group"
+
+
+@admin.register(TabGroupUser)
+class TabGroupUserAdmin(UserAdmin):
+    inlines = [PostTabGroupInline, InvoiceTabGroupInline]
 
 
 @admin.register(Group)

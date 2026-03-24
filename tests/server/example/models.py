@@ -114,6 +114,11 @@ class FilterUser(User):
         proxy = True
 
 
+class TabGroupUser(User):
+    class Meta:
+        proxy = True
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=255)
 
