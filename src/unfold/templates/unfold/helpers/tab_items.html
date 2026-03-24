@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n unfold %}
 
 {% if inlines_list or tabs_list or datasets_list %}
     <div class="flex flex-row grow">
@@ -18,18 +18,17 @@
                     {% include "unfold/helpers/tab_error_count.html" with error_count=error_count %}
                 </a>
 
-                {% for inline in inlines_list %}
-                    <a href="#{{ inline.formset.prefix|slugify }}" x-on:click="activeTab = '{{ inline.formset.prefix|slugify }}'" x-bind:class="{'active': activeTab == '{{ inline.formset.prefix|slugify }}'}">
-                        {% if inline.formset.max_num == 1 %}
-                            {{ inline.opts.verbose_name|capfirst }}
-                        {% else %}
-                            {{ inline.opts.verbose_name_plural|capfirst }}
-                        {% endif %}
+                {% for tabgroup_element, tabgroup_name, inlines in inlines_list %}
+                    {% if tabgroup_element %}
+                        <a href="#{{ tabgroup_element|slugify }}" x-on:click="activeTab = '{{ tabgroup_element|slugify }}'" x-bind:class="{'active': activeTab == '{{ tabgroup_element|slugify }}'}">
+                            {{ tabgroup_name|capfirst }}
+                            {% if inlines|length == 1 %}
+                                {% include "unfold/helpers/inline_count.html" with inline=inlines.0 %}
+                            {% endif %}
 
-                        {% include "unfold/helpers/inline_count.html" %}
-
-                        {% include "unfold/helpers/tab_error_count.html" with error_count=inline.error_count %}
-                    </a>
+                            {% include "unfold/helpers/tab_error_count.html" with error_count=inlines|sum:"error_count" %}
+                        </a>
+                    {% endif %}
                 {% endfor %}
 
                 {% for dataset in datasets_list %}

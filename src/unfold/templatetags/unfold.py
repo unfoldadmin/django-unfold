@@ -11,6 +11,7 @@ from django.contrib.admin.helpers import (
     Fieldset,
     InlineAdminFormSet,
 )
+from django.contrib.admin.options import InlineModelAdmin
 from django.contrib.admin.views.main import PAGE_VAR, ChangeList
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.auth.models import AbstractUser
@@ -123,6 +124,7 @@ def action_list(context: RequestContext) -> str:
 @register.simple_tag(name="tab_list", takes_context=True)
 def tab_list(context: RequestContext, page: str, opts: Options | None = None) -> str:
     inlines_list = []
+    inline_tab_groups: dict[str, list[InlineModelAdmin]] = {}
     datasets_list = []
     data = {
         "is_popup": context.get("is_popup"),
@@ -143,8 +145,29 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
     if page == "changeform" and len(data.get("tabs_list") or []) == 0:
         for inline in context.get("inline_admin_formsets") or []:
             if opts and getattr(inline.opts, "tab", False):
-                inlines_list.append(inline)
-
+                if (tab_group := getattr(inline.opts, "tab_group", None)) is None:
+                    inlines_list.append(inline)
+                elif tab_group in inline_tab_groups:
+                    inline_tab_groups[tab_group].append(inline)
+                else:
+                    inlines_list.append(tab_group)
+                    inline_tab_groups[tab_group] = [inline]
+        inlines_list = [
+            (
+                inline_or_tab_group,
+                inline_or_tab_group,
+                inline_tab_groups.pop(inline_or_tab_group),
+            )
+            if isinstance(inline_or_tab_group, str)
+            else (
+                inline_or_tab_group.formset.prefix,
+                inline_or_tab_group.opts.verbose_name
+                if inline_or_tab_group.formset.max_num == 1
+                else inline_or_tab_group.opts.verbose_name_plural,
+                [inline_or_tab_group],
+            )
+            for inline_or_tab_group in inlines_list
+        ]
         if len(inlines_list) > 0:
             data["inlines_list"] = inlines_list
 
@@ -922,3 +945,8 @@ def tabs_primary_active(inlines: list[InlineAdminFormSet]) -> str:
 @register.filter
 def unicoded_slugify(value: str) -> str:
     return slugify(value, allow_unicode=True)
+
+
+@register.filter(name="sum")
+def sum_filter(objects: list, property_name: str) -> int:
+    return sum(getattr(obj, property_name, 0) for obj in objects)
