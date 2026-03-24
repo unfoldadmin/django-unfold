@@ -464,21 +464,22 @@ def unfold_admin_list_filter(
 ) -> str:
     tpl = get_template(spec.template)
 
-    options = {}
-
     if hasattr(spec, "field_path"):
         field_path = spec.field_path
     elif hasattr(spec, "parameter_name"):
         field_path = spec.parameter_name
+
+    options = {}
 
     if field_path:
         options = getattr(cl.model_admin, "list_filter_options", {}).get(field_path, {})
 
     return tpl.render(
         {
-            "title": options.get("title", spec.title),
+            "title": spec.title,
             "choices": list(spec.choices(cl)),
             "spec": spec,
+            "custom_title": options.get("title"),
             "horizontal": options.get("horizontal") and horizontal_layout,
         }
     )
