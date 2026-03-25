@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "unfold.contrib.forms",
     "unfold.contrib.inlines",
     "unfold.contrib.import_export",
+    "unfold.contrib.nested_admin",
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
     "unfold.contrib.location_field",

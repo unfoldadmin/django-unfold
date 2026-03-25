@@ -46,8 +46,12 @@
 
                 <div class="flex flex-col gap-3 mr-auto w-full lg:flex-row lg:w-auto">
                     {% if show_close or adminform.model_admin.change_form_show_cancel_button %}
-                        {% url opts|admin_urlname:'changelist' as changelist_url %}
-                        {% add_preserved_filters changelist_url as link %}
+                        {% if nested_changelist_url %}
+                            {% add_preserved_filters nested_changelist_url as link %}
+                        {% else %}
+                            {% url opts|admin_urlname:'changelist' as changelist_url %}
+                            {% add_preserved_filters changelist_url as link %}
+                        {% endif %}
 
                         {% component "unfold/components/button.html" with href=link variant="default" class="w-full lg:w-auto"%}
                             {% trans "Close" %}
@@ -55,10 +59,14 @@
                     {% endif %}
 
                     {% if show_delete_link and original %}
-                        {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
-                        {% add_preserved_filters delete_url as link %}
+                        {% if nested_delete_url %}
+                            {% add_preserved_filters nested_delete_url as link %}
+                        {% else %}
+                            {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+                            {% add_preserved_filters delete_url as link %}
+                        {% endif %}
 
-                        {% component "unfold/components/button.html" with href=delete_url variant="danger" class="mr-auto w-full lg:w-auto" %}
+                        {% component "unfold/components/button.html" with href=link variant="danger" class="mr-auto w-full lg:w-auto" %}
                             {% trans "Delete" %} {{ opts.verbose_name }}
                         {% endcomponent %}
                     {% endif %}

@@ -75,6 +75,7 @@ class ModelAdmin(
     change_form_datasets = ()
     compressed_fields = False
     show_add_link = True
+    show_in_sidebar = True
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
     checks_class = UnfoldModelAdminChecks

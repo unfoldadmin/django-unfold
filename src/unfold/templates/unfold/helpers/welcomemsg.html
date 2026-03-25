@@ -18,7 +18,17 @@
     {% include "unfold/helpers/header_back_button.html" %}
 
     <h1 class="overflow-hidden leading-5 text-ellipsis text-font-important-light whitespace-nowrap xl:text-base dark:text-font-important-dark">
-        {% header_title %}
+        {% if nested_breadcrumbs %}
+            {% for item in nested_breadcrumbs %}
+                <a href="{{ item.url }}" class="align-middle inline-block leading-5 tracking-tight">{{ item.title }}</a>
+
+                <span class="material-symbols-outlined inline-block align-middle leading-5 mx-2 text-base-400 dark:text-base-500">chevron_right</span>
+            {% endfor %}
+
+            <span class="align-middle inline-block leading-5 tracking-tight">{{ nested_current_title|capfirst }}</span>
+        {% else %}
+            {% header_title %}
+        {% endif %}
 
         {% if cl and cl.full_result_count != cl.result_count and cl.paginator|class_name != "InfinitePaginator" %}
             <span class="font-medium ml-2 text-font-subtle-light text-sm dark:text-font-subtle-dark">

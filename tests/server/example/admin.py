@@ -61,6 +61,10 @@ from unfold.contrib.import_export.forms import (
     SelectableFieldsExportForm,
 )
 from unfold.contrib.inlines.admin import NonrelatedTabularInline
+from unfold.contrib.nested_admin.admin import (
+    NestedChildAdminMixin,
+    NestedParentAdminMixin,
+)
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
@@ -863,7 +867,9 @@ class LabelAdmin(ModelAdmin):
 
 
 @admin.register(Project)
-class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
+class ProjectAdmin(NestedParentAdminMixin, ModelAdmin, ImportExportModelAdmin):
+    nested_child_model = Task
+    nested_child_fk_name = "project"
     paginator = InfinitePaginator
     list_per_page = 10
     import_form_class = ImportForm
@@ -872,8 +878,16 @@ class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
 
 
 @admin.register(Task)
-class TaskAdmin(ModelAdmin):
+class TaskAdmin(NestedChildAdminMixin, ModelAdmin):
+    nested_parent_fk = "project"
     search_fields = ["name"]
+    show_in_sidebar = False
+    actions_detail = ["preview"]
+
+    @action(description="Preview", url_path="preview")
+    def preview(self, request, object_id):
+        messages.success(request, f"Preview action executed for task {object_id}.")
+        return redirect(self.get_change_url(request, object_id))
 
 
 @admin.register(Profile)

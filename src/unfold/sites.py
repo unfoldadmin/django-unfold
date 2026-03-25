@@ -120,11 +120,41 @@ class UnfoldAdminSite(AdminSite):
         }
 
         context.update(data)
+        context["available_apps"] = self._get_sidebar_app_list(
+            request, context["available_apps"]
+        )
 
         if hasattr(self, "extra_context") and callable(self.extra_context):
             return self.extra_context(context, request)
 
         return context
+
+    def _get_sidebar_app_list(
+        self, request: HttpRequest, app_list: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        filtered_app_list: list[dict[str, Any]] = []
+
+        for app in app_list:
+            models = []
+
+            for model in app["models"]:
+                admin_instance = self._registry.get(model["model"])
+                if admin_instance is None:
+                    continue
+
+                if not getattr(admin_instance, "show_in_sidebar", True):
+                    continue
+
+                models.append(model)
+
+            if not models:
+                continue
+
+            filtered_app = app.copy()
+            filtered_app["models"] = models
+            filtered_app_list.append(filtered_app)
+
+        return filtered_app_list
 
     def index(
         self, request: HttpRequest, extra_context: dict[str, Any] | None = None
