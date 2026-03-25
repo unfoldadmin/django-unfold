@@ -9,6 +9,8 @@ from django.utils.html import format_html
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
+from reversion.admin import VersionAdmin
+from reversion_compare.admin import CompareVersionAdmin
 
 from example.models import (
     ActionUser,
@@ -847,7 +849,7 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 
 
 @admin.register(Tag)
-class TagAdmin(ModelAdmin):
+class TagAdmin(VersionAdmin, ModelAdmin):
     search_fields = ["name"]
 
 
@@ -858,7 +860,7 @@ class CategoryAdmin(ModelAdmin):
 
 
 @admin.register(Label)
-class LabelAdmin(ModelAdmin):
+class LabelAdmin(CompareVersionAdmin, ModelAdmin):
     search_fields = ["name"]
 
 

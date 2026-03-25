@@ -1,0 +1,102 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n admin_urls unfold %}
+
+{% block content %}
+    {% trans "Choose a date from the list below to revert to a previous version of this object." as message %}
+    {% include "unfold/helpers/messages/info.html" with message=message %}
+
+    {% if action_list %}
+        {% url opts|admin_urlname:'compare' object.pk as compare_base %}
+
+        <form method="get" action="{{ compare_base }}" class="flex flex-col gap-4">
+            <div class="flex justify-end">
+                {% if comparable %}
+                    {% component "unfold/components/button.html" with submit=1 variant="default" %}
+                        {% trans "Compare" %}
+                    {% endcomponent %}
+                {% else %}
+                    <button type="submit"
+                            disabled
+                            class="font-medium inline-flex group items-center gap-1 relative rounded-default justify-center whitespace-nowrap px-3 py-2 border border-base-200 bg-white shadow-xs text-important cursor-not-allowed opacity-50 dark:border-base-700 dark:bg-transparent">
+                        {% trans "Compare" %}
+                    </button>
+                {% endif %}
+            </div>
+
+            <table id="change-history" class="border-base-200 border-spacing-none border-separate mb-2 w-full lg:border lg:rounded-default lg:shadow-xs lg:dark:border-base-800">
+                <thead class="hidden lg:table-header-group text-base-900 dark:text-base-100">
+                    <tr>
+                        <th class="align-middle font-medium px-3 py-2 text-left lg:text-center">
+                            {% translate "Older" %}
+                        </th>
+                        <th class="align-middle font-medium px-3 py-2 text-left lg:text-center">
+                            {% translate "Newer" %}
+                        </th>
+                        <th class="align-middle font-medium px-3 py-2 text-left">
+                            {% translate "Date/time" %}
+                        </th>
+                        <th class="align-middle font-medium px-3 py-2 text-left">
+                            {% translate "User" %}
+                        </th>
+                        <th class="align-middle font-medium px-3 py-2 text-left">
+                            {% translate "Comment" %}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for action in action_list %}
+                        <tr class="block border mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                            <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell lg:text-center dark:border-base-800" data-label="{% translate 'Older' %}">
+                                {% if comparable %}
+                                    <input type="radio"
+                                           name="version_id1"
+                                           value="{{ action.version.pk|unlocalize }}"
+                                           class="appearance-none bg-white block border border-base-300 h-4 min-w-4 relative rounded-full w-4 dark:bg-base-900 dark:border-base-700 after:absolute after:bg-transparent after:content-[''] after:flex after:h-2 after:items-center after:justify-center after:leading-none after:left-1/2 after:rounded-full after:text-white after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-2 dark:after:text-base-700 dark:after:bg-transparent checked:bg-primary-600 checked:border-primary-600 checked:after:bg-white dark:checked:after:bg-base-900 mx-auto lg:inline-block{% if action.first %} invisible{% endif %}"
+                                           {% if version1.pk|unlocalize == action.version.pk|unlocalize or action.second %}checked="checked"{% endif %}>
+                                {% else %}
+                                    &mdash;
+                                {% endif %}
+                            </td>
+                            <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell lg:text-center dark:border-base-800" data-label="{% translate 'Newer' %}">
+                                {% if comparable %}
+                                    <input type="radio"
+                                           name="version_id2"
+                                           value="{{ action.version.pk|unlocalize }}"
+                                           class="appearance-none bg-white block border border-base-300 h-4 min-w-4 relative rounded-full w-4 dark:bg-base-900 dark:border-base-700 after:absolute after:bg-transparent after:content-[''] after:flex after:h-2 after:items-center after:justify-center after:leading-none after:left-1/2 after:rounded-full after:text-white after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-2 dark:after:text-base-700 dark:after:bg-transparent checked:bg-primary-600 checked:border-primary-600 checked:after:bg-white dark:checked:after:bg-base-900 mx-auto lg:inline-block"
+                                           {% if version2.pk|unlocalize == action.version.pk|unlocalize or action.first == 1 %}checked="checked"{% endif %}>
+                                {% else %}
+                                    &mdash;
+                                {% endif %}
+                            </td>
+                            <th class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% translate 'Date/time' %}">
+                                {% if action.url %}
+                                    <a href="{{ action.url }}" class="text-primary-600 hover:underline dark:text-primary-500">
+                                        {{ action.revision.date_created|date:"DATETIME_FORMAT" }}
+                                    </a>
+                                {% else %}
+                                    {{ action.revision.date_created|date:"DATETIME_FORMAT" }}
+                                {% endif %}
+                            </th>
+                            <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% translate 'User' %}">
+                                {% if action.revision.user %}
+                                    {{ action.revision.user.get_username }}
+                                    {% if action.revision.user.get_full_name %}
+                                        ({{ action.revision.user.get_full_name }})
+                                    {% endif %}
+                                {% else %}
+                                    &mdash;
+                                {% endif %}
+                            </td>
+                            <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% translate 'Comment' %}">
+                                {{ action.revision.comment|default:"" }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    {% else %}
+        {% trans "This object doesn’t have a change history. It probably wasn’t added via this admin site." as message %}
+        {% include "unfold/helpers/messages/warning.html" with message=message %}
+    {% endif %}
+{% endblock %}

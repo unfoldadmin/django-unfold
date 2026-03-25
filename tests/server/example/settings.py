@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "unfold.contrib.inlines",
     "unfold.contrib.import_export",
     "unfold.contrib.guardian",
+    "unfold.contrib.reversion",
     "unfold.contrib.simple_history",
     "unfold.contrib.location_field",
     "unfold.contrib.constance",
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     "constance",
     "import_export",
     "location_field",
+    "reversion",
+    "reversion_compare",
 ]
 
 MIDDLEWARE = [

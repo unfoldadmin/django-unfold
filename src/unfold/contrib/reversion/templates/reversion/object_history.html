@@ -1,0 +1,52 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block content %}
+    {% trans "Choose a date from the list below to revert to a previous version of this object." as message %}
+    {% include "unfold/helpers/messages/info.html" with message=message %}
+
+    {% if action_list %}
+        <table id="change-history" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-default lg:shadow-xs lg:dark:border-base-800">
+            <thead class="hidden lg:table-header-group text-base-900 dark:text-base-100">
+                <tr>
+                    <th class="align-middle font-medium px-3 py-2 text-left">
+                        {% translate "Date/time" %}
+                    </th>
+                    <th class="align-middle font-medium px-3 py-2 text-left">
+                        {% translate "User" %}
+                    </th>
+                    <th class="align-middle font-medium px-3 py-2 text-left">
+                        {% translate "Comment" %}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for action in action_list %}
+                    <tr class="block border mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                        <th class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% translate 'Date/time' %}">
+                            <a href="{{ action.url }}" class="text-primary-600 hover:underline dark:text-primary-500">
+                                {{ action.revision.date_created|date:"DATETIME_FORMAT" }}
+                            </a>
+                        </th>
+                        <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% translate 'User' %}">
+                            {% if action.revision.user %}
+                                {{ action.revision.user.get_username }}
+                                {% if action.revision.user.get_full_name %}
+                                    ({{ action.revision.user.get_full_name }})
+                                {% endif %}
+                            {% else %}
+                                &mdash;
+                            {% endif %}
+                        </td>
+                        <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% translate 'Comment' %}">
+                            {{ action.revision.get_comment|linebreaksbr|default:"" }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% trans "This object doesn’t have a change history. It probably wasn’t added via this admin site." as message %}
+        {% include "unfold/helpers/messages/warning.html" with message=message %}
+    {% endif %}
+{% endblock %}

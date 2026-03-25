@@ -1,0 +1,40 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls l10n unfold %}
+
+{% block content %}
+    {% trans "Choose a date from the list below to recover a deleted version of an object." as message %}
+    {% include "unfold/helpers/messages/info.html" with message=message %}
+
+    {% if deleted %}
+        <table id="change-history" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-default lg:shadow-xs lg:dark:border-base-800">
+            <thead class="hidden lg:table-header-group text-base-900 dark:text-base-100">
+                <tr>
+                    <th class="align-middle font-medium px-3 py-2 text-left">
+                        {% translate "Date/time" %}
+                    </th>
+                    <th class="align-middle font-medium px-3 py-2 text-left">
+                        {{ opts.verbose_name|capfirst }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for deletion in deleted %}
+                    <tr class="block border mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
+                        <th class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% translate 'Date/time' %}">
+                            <a href="{% url opts|admin_urlname:'recover' deletion.pk|unlocalize %}"
+                               class="text-primary-600 hover:underline dark:text-primary-500">
+                                {{ deletion.revision.date_created|date:"DATETIME_FORMAT" }}
+                            </a>
+                        </th>
+                        <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{{ opts.verbose_name|capfirst }}">
+                            {{ deletion.object_repr }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% trans "There are no deleted objects to recover." as message %}
+        {% include "unfold/helpers/messages/warning.html" with message=message %}
+    {% endif %}
+{% endblock %}

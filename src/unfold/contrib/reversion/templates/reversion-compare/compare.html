@@ -1,0 +1,52 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static admin_urls unfold %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'reversion_compare.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'unfold/reversion/css/reversion-compare.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% url opts|admin_urlname:'history' original.pk as history_url %}
+    {% url opts|admin_urlname:'revision' version1.object_id version1.id as save_url_local %}
+
+    <div class="reversion-compare flex flex-col gap-4">
+        <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <h1 class="text-2xl font-semibold tracking-tight text-font-important-light dark:text-font-important-dark">
+                {% blocktrans %}Compare{% endblocktrans %} {{ original|default:obj }}
+            </h1>
+
+            <div class="flex flex-wrap gap-2">
+                {% if prev_url %}
+                    {% component "unfold/components/button.html" with href=prev_url variant="default" icon="arrow_back" %}
+                        {% trans "Previous" %}
+                    {% endcomponent %}
+                {% endif %}
+
+                {% if next_url %}
+                    {% component "unfold/components/button.html" with href=next_url variant="default" %}
+                        {% trans "Next" %}
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    {% endcomponent %}
+                {% endif %}
+
+                {% component "unfold/components/button.html" with href=history_url variant="default" %}
+                    {% trans "Back to history" %}
+                {% endcomponent %}
+
+                {% component "unfold/components/button.html" with href=save_url|default:save_url_local variant="secondary" icon="restore_page" %}
+                    {% trans "Revert to this version" %}
+                {% endcomponent %}
+            </div>
+        </div>
+
+        <p class="mb-0 text-sm text-base-500 dark:text-base-400">
+            {% blocktrans with date1=version1.revision.date_created|date:_("DATETIME_FORMAT") date2=version2.revision.date_created|date:_("DATETIME_FORMAT") %}
+                Compare <strong>{{ date1 }}</strong> with <strong>{{ date2 }}</strong>:
+            {% endblocktrans %}
+        </p>
+
+        {% include "reversion-compare/compare_partial.html" %}
+    </div>
+{% endblock %}
