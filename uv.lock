@@ -1,6 +1,6 @@
 version = 1
 revision = 3
-requires-python = ">=3.10, <4.0"
+requires-python = ">=3.11, <4.0"
 
 [[package]]
 name = "annotated-types"
@@ -378,7 +378,7 @@ wheels = [
 
 [[package]]
 name = "django-unfold"
-version = "0.82.0"
+version = "0.86.1"
 source = { editable = "." }
 dependencies = [
     { name = "django" },
@@ -398,6 +398,7 @@ dev = [
     { name = "pytest-cov" },
     { name = "pytest-django" },
     { name = "pytest-factoryboy" },
+    { name = "pytest-mock" },
     { name = "python-semantic-release" },
     { name = "six" },
     { name = "tox" },
@@ -420,6 +421,7 @@ dev = [
     { name = "pytest-cov", specifier = ">=7.0" },
     { name = "pytest-django", specifier = ">=4.11" },
     { name = "pytest-factoryboy", specifier = ">=2.8" },
+    { name = "pytest-mock", specifier = ">=3.15.1" },
     { name = "python-semantic-release", specifier = ">=10.5" },
     { name = "six", specifier = ">=1.17" },
     { name = "tox", specifier = ">=4.32" },
@@ -942,6 +944,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/91/8a/a0f9c58bf176b0d39b630a6e29cccebec9a429dfeb62204bbb9b632fb798/pytest_factoryboy-2.8.1.tar.gz", hash = "sha256:2221d48b31b8b8ccaa739c6a162fb50a43a4de6dff6043f249d2807a3462548d", size = 16906, upload-time = "2025-07-01T04:05:38.901Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/06/2f/4f73a79196b4acb0f902520a805caa22f8ba0adbecdfb028a371404c2537/pytest_factoryboy-2.8.1-py3-none-any.whl", hash = "sha256:91c762cb236bf34b11efdf2e54bafae33114488235621e8b2c4bd9fd77838784", size = 16413, upload-time = "2025-07-01T04:05:37.344Z" },
+]
+
+[[package]]
+name = "pytest-mock"
+version = "3.15.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/68/14/eb014d26be205d38ad5ad20d9a80f7d201472e08167f0bb4361e251084a9/pytest_mock-3.15.1.tar.gz", hash = "sha256:1849a238f6f396da19762269de72cb1814ab44416fa73a8686deac10b0d87a0f", size = 34036, upload-time = "2025-09-16T16:37:27.081Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5a/cc/06253936f4a7fa2e0f48dfe6d851d9c56df896a9ab09ac019d70b760619c/pytest_mock-3.15.1-py3-none-any.whl", hash = "sha256:0a25e2eb88fe5168d535041d09a4529a188176ae608a6d249ee65abc0949630d", size = 10095, upload-time = "2025-09-16T16:37:25.734Z" },
 ]
 
 [[package]]

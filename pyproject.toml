@@ -50,6 +50,7 @@ dev = [
     "pytest-cov>=7.0",
     "pytest-django>=4.11",
     "pytest-factoryboy>=2.8",
+    "pytest-mock>=3.15",
     "python-semantic-release>=10.5",
     "six>=1.17",
     "tox>=4.32",

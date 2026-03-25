@@ -72,6 +72,7 @@ CONFIG_DEFAULTS = {
             "important-dark": "var(--color-base-100)",  # text-base-100
         },
     },
+    "GLOBAL_CALLBACK": None,
     "DASHBOARD_CALLBACK": None,
     "ENVIRONMENT": None,
     "ENVIRONMENT_TITLE_PREFIX": None,
