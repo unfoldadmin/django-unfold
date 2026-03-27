@@ -15,9 +15,9 @@
 
     {% if cl.formset and cl.result_count %}
         <div class="ml-auto">
-            <button type="submit" name="_save" form="changelist-form" class="bg-primary-600 block border border-transparent cursor-pointer font-medium px-3 py-2 rounded-default text-white w-full">
+            {% component "unfold/components/button.html" with submit=1 name="_save" form="changelist-form" class="w-full" %}
                 {% translate 'Save' %}
-            </button>
+            {% endcomponent %}
         </div>
     {% endif %}
 </div>
