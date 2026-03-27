@@ -517,6 +517,8 @@ function dateTimeShortcutsOverlay() {
     childList: true,
     subtree: true,
   });
+
+  findCalendars();
 };
 
 /*************************************************************
