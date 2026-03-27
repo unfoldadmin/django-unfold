@@ -73,7 +73,7 @@ class ModelAdmin(
     change_form_outer_before_template = None
     change_form_outer_after_template = None
     change_form_datasets = ()
-    compressed_fields = False
+    compressed_fields = True
     show_add_link = True
     readonly_preprocess_fields = {}
     warn_unsaved_form = False

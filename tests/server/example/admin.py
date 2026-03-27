@@ -160,7 +160,6 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
         ProjectDataset,
     ]
     autocomplete_fields = ["tags"]
-    compressed_fields = True
     readonly_fields = [
         "custom_readonly_field",
         "another_readonly_field",
