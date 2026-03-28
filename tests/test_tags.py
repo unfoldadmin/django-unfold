@@ -16,8 +16,9 @@ from django.template import Context, Template, TemplateSyntaxError
 from django.template.context import RequestContext
 from django.urls import reverse
 from example.admin import ProjectDataset, UserAdmin
-from example.models import User
+from example.models import Invoice, Post, User
 
+from unfold.admin import StackedInline, TabularInline
 from unfold.components import BaseComponent, register_component
 from unfold.enums import ActionVariant
 from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
@@ -207,6 +208,140 @@ def test_tags_tab_list_changeform_inlines(user_factory, rf):
     assert "General" in changeform_view.render().content.decode()
     assert "User-tag relationships" in changeform_view.render().content.decode()
     assert "Projects" in changeform_view.render().content.decode()
+
+
+@pytest.mark.django_db
+def test_tags_tab_list_tab_group_single_tab(user_factory, rf):
+    class PostTabGroupInline(StackedInline):
+        model = Post
+        tab = True
+        tab_group = "this is a tab group"
+
+    class InvoiceTabGroupInline(TabularInline):
+        model = Invoice
+        tab = True
+        tab_group = "this is a tab group"
+
+    class GroupedTabAdmin(UserAdmin):
+        inlines = [PostTabGroupInline, InvoiceTabGroupInline]
+
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    admin_instance = GroupedTabAdmin(User, UnfoldAdminSite())
+    changeform_view = admin_instance.changeform_view(
+        request=request, object_id=str(user.pk)
+    )
+    content = changeform_view.render().content.decode()
+
+    assert "This is a tab group" in content
+    assert content.count('href="#this-is-a-tab-group"') == 1
+
+
+@pytest.mark.django_db
+def test_tags_tab_list_tab_group_preserves_solo_tabs(user_factory, rf):
+    class PostTabGroupInline(StackedInline):
+        model = Post
+        tab = True
+        tab_group = "this is a tab group"
+
+    class InvoiceSoloTabInline(TabularInline):
+        model = Invoice
+        tab = True  # no tab_group — gets its own tab
+
+    class MixedTabAdmin(UserAdmin):
+        inlines = [PostTabGroupInline, InvoiceSoloTabInline]
+
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    admin_instance = MixedTabAdmin(User, UnfoldAdminSite())
+    changeform_view = admin_instance.changeform_view(
+        request=request, object_id=str(user.pk)
+    )
+    content = changeform_view.render().content.decode()
+
+    assert "This is a tab group" in content
+    assert "Invoices" in content
+    assert content.count('href="#this-is-a-tab-group"') == 1
+
+
+@pytest.mark.django_db
+def test_tags_tab_list_tab_group_error_count_sum(user_factory, rf, monkeypatch):
+    class PostTabGroupInline(StackedInline):
+        model = Post
+        tab = True
+        tab_group = "this is a tab group"
+
+    class InvoiceTabGroupInline(TabularInline):
+        model = Invoice
+        tab = True
+        tab_group = "this is a tab group"
+
+    class GroupedTabAdmin(UserAdmin):
+        inlines = [PostTabGroupInline, InvoiceTabGroupInline]
+
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    admin_instance = GroupedTabAdmin(User, UnfoldAdminSite())
+    changeform_view = admin_instance.changeform_view(
+        request=request, object_id=str(user.pk)
+    )
+    context_data = (
+        changeform_view.context_data
+        if hasattr(changeform_view, "context_data")
+        else changeform_view.context
+    )
+
+    formsets = context_data["inline_admin_formsets"]
+
+    class ErrorsPost:
+        @property
+        def errors(self):
+            return [{"field": ["Error 1."]}, {"field": ["Error 2."]}]
+
+    class ErrorsInvoice:
+        @property
+        def errors(self):
+            return [{"field": ["Error 3."]}]
+
+    monkeypatch.setattr(formsets[0].formset.__class__, "errors", ErrorsPost.errors)
+    monkeypatch.setattr(formsets[1].formset.__class__, "errors", ErrorsInvoice.errors)
+
+    response = Template("{% load unfold %}{% tab_list 'changeform' opts %}").render(
+        RequestContext(
+            request,
+            {
+                "opts": get_user_model()._meta,
+                "adminform": context_data["adminform"],
+                "inline_admin_formsets": formsets,
+            },
+        )
+    )
+
+    # 2 errors from PostTabGroupInline + 1 from InvoiceTabGroupInline = 3
+    assert "3" in response
+
+
+def test_tags_sum_filter():
+    class Item:
+        def __init__(self, value):
+            self.value = value
+
+    template = Template("{% load unfold %}{{ items|sum:'value' }}")
+
+    result = template.render(Context({"items": [Item(3), Item(5), Item(2)]}))
+    assert result.strip() == "10"
+
+    result = template.render(Context({"items": []}))
+    assert result.strip() == "0"
+
+    result = template.render(Context({"items": [Item(7)]}))
+    assert result.strip() == "7"
 
 
 @pytest.mark.django_db

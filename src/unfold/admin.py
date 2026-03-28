@@ -261,6 +261,7 @@ class BaseInlineMixin:
     show_count = False
     hide_title = False
     tab = False
+    tab_group = None
 
 
 class TabularInline(BaseInlineMixin, BaseModelAdminMixin, BaseTabularInline):

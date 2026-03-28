@@ -3,9 +3,24 @@ from http import HTTPStatus
 import pytest
 from django.contrib.auth.models import Permission
 from django.urls import reverse
+from example.admin import TabGroupUserAdmin
 from example.models import Invoice, InvoiceItem
 
 from .factories import TagFactory
+
+TAB_GROUP_USER_DATA = {
+    "is_active": True,
+    "is_staff": True,
+    "is_superuser": True,
+    "username": "admin@example.com",
+    "email": "admin@example.com",
+    "date_joined_0": "2026-01-01",
+    "date_joined_1": "00:00:00",
+    "post_set-TOTAL_FORMS": "0",
+    "post_set-INITIAL_FORMS": "0",
+    "invoice_set-TOTAL_FORMS": "0",
+    "invoice_set-INITIAL_FORMS": "0",
+}
 
 USER_DATA = {
     "is_active": True,
@@ -576,4 +591,23 @@ def test_nested_inline_without_parent(client, admin_user):
     assert "Please correct the errors below." in response.content.decode()
     assert (
         "You can not create nested object without parent" in response.content.decode()
+    )
+
+
+@pytest.mark.django_db
+def test_tab_group_renders_single_tab(client, admin_user):
+    client.force_login(admin_user)
+
+    response = client.get(
+        reverse("admin:example_tabgroupuser_change", args=(admin_user.pk,))
+    )
+    content = response.content.decode()
+
+    assert response.status_code == HTTPStatus.OK
+    # The grouped tab label appears (capfirst of "this is a tab group")
+    assert "This is a tab group" in content
+    # Only one tab link for the group, not one per inline
+    assert content.count('href="#this-is-a-tab-group"') == 1
+    assert content.count("x-show=\"activeTab == 'this-is-a-tab-group'\"") == len(
+        TabGroupUserAdmin.inlines
     )
