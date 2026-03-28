@@ -5,7 +5,7 @@
         <nav id="tabs-items" class="bg-base-100 flex flex-row font-medium gap-1 p-1 rounded-default text-important md:w-auto *:flex *:flex-row *:gap-1 *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:hover:bg-base-700/[.06] dark:bg-white/[.06] *:dark:hover:bg-white/[.06] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:dark:bg-base-700 [&>.active]:hover:bg-white [&>.active]:dark:hover:bg-base-700">
             {% for item in tabs_list %}
                 {% if item.has_permission %}
-                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}{% if item.inline %}#{{ item.inline|slugify }}{% endif %}" class="{% if item.active and not item.inline %}active{% endif %}" {% if item.inline %}x-on:click="activeTab = '{{ item.inline|slugify }}'" x-bind:class="{'active': activeTab == '{{ item.inline|slugify }}'}"{% endif %}>
+                    <a href="{% if item.link_callback %}{{ item.link_callback }}{% else %}{{ item.link }}{% endif %}{% if item.inline %}#{{ item.inline|slugify }}{% endif %}" class="{% if item.active and not item.inline %}active{% endif %}" {% if item.inline %}data-tab-id="{{ item.inline|slugify }}" x-on:click="activeTab = '{{ item.inline|slugify }}'" x-bind:class="{'active': activeTab == '{{ item.inline|slugify }}'}"{% endif %}>
                         {{ item.title }}
                     </a>
                 {% endif %}
@@ -20,7 +20,7 @@
 
                 {% for tabgroup_element, tabgroup_name, inlines in inlines_list %}
                     {% if tabgroup_element %}
-                        <a href="#{{ tabgroup_element|slugify }}" x-on:click="activeTab = '{{ tabgroup_element|slugify }}'" x-bind:class="{'active': activeTab == '{{ tabgroup_element|slugify }}'}">
+                        <a data-tab-id="{{ tabgroup_element|slugify }}" href="#{{ tabgroup_element|slugify }}" x-on:click="activeTab = '{{ tabgroup_element|slugify }}'" x-bind:class="{'active': activeTab == '{{ tabgroup_element|slugify }}'}">
                             {{ tabgroup_name|capfirst }}
                             {% if inlines|length == 1 %}
                                 {% include "unfold/helpers/inline_count.html" with inline=inlines.0 %}
@@ -33,7 +33,7 @@
 
                 {% for dataset in datasets_list %}
                     {% if dataset.tab %}
-                        <a href="#dataset-{{ dataset.model_name }}" x-on:click="activeTab = 'dataset-{{ dataset.model_name }}'" x-bind:class="{'active': activeTab == 'dataset-{{ dataset.model_name }}'}">
+                        <a data-tab-id="dataset-{{ dataset.model_name }}" href="#dataset-{{ dataset.model_name }}" x-on:click="activeTab = 'dataset-{{ dataset.model_name }}'" x-bind:class="{'active': activeTab == 'dataset-{{ dataset.model_name }}'}">
                             {% if dataset.title %}
                                 {{ dataset.title }}
                             {% else %}
