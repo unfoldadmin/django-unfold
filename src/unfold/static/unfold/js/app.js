@@ -21,6 +21,7 @@ window.addEventListener("load", (e) => {
  *************************************************************/
 function theme(defaultTheme = "auto") {
   return {
+    openModal: false,
     adminTheme: Alpine.$persist(defaultTheme).as('adminTheme'),
     switchTheme(theme) {
       this.adminTheme = theme;

@@ -1,4 +1,5 @@
 from collections.abc import Callable, Iterable
+from functools import wraps
 from typing import Any
 
 from django.contrib.admin.options import BaseModelAdmin
@@ -6,9 +7,11 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 
+from unfold.dataclasses import Action, ActionDialog
 from unfold.enums import ActionVariant
-from unfold.typing import ActionFunction
+from unfold.forms import BaseDialogForm
 
 
 def action(
@@ -20,8 +23,10 @@ def action(
     attrs: dict[str, Any] | None = None,
     icon: str | None = None,
     variant: ActionVariant | None = ActionVariant.DEFAULT,
-) -> ActionFunction:
-    def decorator(func: Callable) -> ActionFunction:
+    dialog: ActionDialog | None = None,
+) -> Action:
+    def decorator(func: Callable) -> Action:
+        @wraps(func)
         def inner(
             model_admin: BaseModelAdmin,
             request: HttpRequest,
@@ -66,6 +71,23 @@ def action(
 
                 if not all(permission_checks):
                     raise PermissionDenied
+
+            if dialog:
+                form_class = dialog.get("form_class") or BaseDialogForm
+                form = form_class(data=request.POST or None, request=request)
+
+                if form.is_valid():
+                    return func(model_admin, request, form, *args, **kwargs)
+
+                return render(
+                    request,
+                    "unfold/helpers/dialog.html",
+                    {
+                        "dialog": dialog,
+                        "form": form,
+                    },
+                )
+
             return func(model_admin, request, *args, **kwargs)
 
         if permissions is not None:
@@ -80,6 +102,9 @@ def action(
         if icon is not None:
             inner.icon = icon
 
+        if dialog is not None:
+            inner.dialog = dialog
+
         if variant is not None:
             inner.variant = variant
         else:
@@ -91,8 +116,8 @@ def action(
 
     if function is None:
         return decorator
-    else:
-        return decorator(function)
+
+    return decorator(function)
 
 
 def display(
