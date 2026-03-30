@@ -1,10 +1,10 @@
 {% load i18n unfold %}
 
 <div class="flex gap-2 {% if horizontal %}flex-row items-center{% else %}flex-col{% endif %}">
-    <h3 class="font-semibold text-font-important-light dark:text-font-important-dark">
+    <h3 class="font-semibold text-important">
         {% if custom_title == "" %}
         {% elif custom_title %}
-            {{ title }}
+            {{ custom_title }}
         {% else %}
             {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
         {% endif %}
