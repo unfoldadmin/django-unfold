@@ -1,6 +1,8 @@
 <{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if form %}form="{{ form }}"{% endif%} {% if name %}name="{{ name }}"{% endif %} {% if value %}value="{{ value }}"{% endif %} {% if title %}title="{{ title }}"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=attrs %}
 class="font-medium inline-flex group items-center gap-1 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
-{% if size == "md" %}
+{% if size == "lg" %}
+    px-5.5 py-3 text-[15px]
+{% elif size == "md" %}
     px-5 py-2.5 text-[14px]
 {% elif size == "sm" %}
     px-2.5 py-1.5
