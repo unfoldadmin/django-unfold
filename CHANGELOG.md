@@ -1,6 +1,33 @@
 # CHANGELOG
 
 
+## v0.87.0 (2026-03-25)
+
+### Bug Fixes
+
+- File widget label size ([#1937](https://github.com/unfoldadmin/django-unfold/pull/1937),
+  [`3a89e4b`](https://github.com/unfoldadmin/django-unfold/commit/3a89e4b4d71106053916c27f7f949fe68d1cfb8f))
+
+- Sidebar chevron transition ([#1931](https://github.com/unfoldadmin/django-unfold/pull/1931),
+  [`f5644f0`](https://github.com/unfoldadmin/django-unfold/commit/f5644f0e528394ea31aea71d36d9169dfcdd4ed4))
+
+### Documentation
+
+- Card documentation example ([#1932](https://github.com/unfoldadmin/django-unfold/pull/1932),
+  [`ee0f900`](https://github.com/unfoldadmin/django-unfold/commit/ee0f900b0b1ca79ed754a27c5f107c618d90b393))
+
+- Chapter name ([#1933](https://github.com/unfoldadmin/django-unfold/pull/1933),
+  [`1460869`](https://github.com/unfoldadmin/django-unfold/commit/1460869b3555853f2303bcf88ca49c26560e2262))
+
+### Features
+
+- Dataset custom title ([#1934](https://github.com/unfoldadmin/django-unfold/pull/1934),
+  [`5d75201`](https://github.com/unfoldadmin/django-unfold/commit/5d75201cb5dbc764e245d3e63ecb43096497790e))
+
+- Global callback ([#1944](https://github.com/unfoldadmin/django-unfold/pull/1944),
+  [`f3cd2cb`](https://github.com/unfoldadmin/django-unfold/commit/f3cd2cb48f4d45b49b9d04dd31dd108a5e356974))
+
+
 ## v0.86.1 (2026-03-20)
 
 ### Bug Fixes

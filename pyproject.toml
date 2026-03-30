@@ -1,6 +1,6 @@
 [project]
 name = "django-unfold"
-version = "0.86.1"
+version = "0.87.0"
 description = "Modern Django admin theme"
 authors = []
 requires-python = ">=3.11,<4.0"
@@ -50,6 +50,7 @@ dev = [
     "pytest-cov>=7.0",
     "pytest-django>=4.11",
     "pytest-factoryboy>=2.8",
+    "pytest-mock>=3.15",
     "python-semantic-release>=10.5",
     "six>=1.17",
     "tox>=4.32",
