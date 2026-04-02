@@ -24,6 +24,8 @@
 @source inline("{md:,lg:,xl:,}grid-cols-{1..16}");
 @source inline("{md:,lg:,xl:,}col-span-{1..16}");
 @source inline("max-w-xl max-w-{1..7}xl");
+@source inline("transition-{all,transform,opacity,move}");
+@source inline("outline outline-{0..4} outline-offset-{0..4} {hover:,dark:,}outline-{base,primary}-{50,{100..900..100},950}");
 
 
 @layer base {
@@ -113,6 +115,10 @@
 
 @utility border-spacing-none {
   border-spacing: 0;
+}
+
+@utility transition-move {
+  transition-property: transform,translate,scale,rotate,margin;
 }
 
 @utility material-symbols-outlined {
@@ -669,8 +675,8 @@ trix-toolbar[id^="trix-toolbar-"] {
 /*******************************************************
  Simplebar
  *******************************************************/
-.simplebar-track .simplebar-scrollbar::before {
-  @apply bg-base-900/80  dark:bg-base-400/80;
+.simplebar-track .simplebar-scrollbar {
+  @apply before:bg-base-900/80 dark:before:bg-base-400/80;
 }
 
 .simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
