@@ -55,7 +55,10 @@ data = {
                 "rows": [
                     ["g", "h"]
                 ]
-            }
+            },
+            "attrs": {
+                "data-sample": "example",
+            },
         }
     ]
 }
