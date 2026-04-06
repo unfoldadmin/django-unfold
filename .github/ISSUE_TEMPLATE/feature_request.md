@@ -5,6 +5,10 @@ about: "Suggest a new idea which you would like to see"
 
 <!-- Please provide all the information asked below. Without details it is hard to help you and your issue will be closed. -->
 
+**Did you used AI to write this feature request?**
+
+For example: Yes or No
+
 **Do you have any examples?**
 
 For example: link or screenshot
