@@ -75,7 +75,7 @@ BASE_CLASSES = [
     "border-base-200",
     "bg-white",
     "font-medium",
-    "min-w-48",
+    "min-w-20",
     "placeholder-base-400",
     "rounded-default",
     "shadow-xs",

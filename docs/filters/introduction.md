@@ -20,3 +20,25 @@ INSTALLED_APPS = [
 ```
 
 **Note:** When implementing filters with input fields, users need a way to submit their values since default filters don't include a submit button. To add a submit button to the filter form, set the `list_filter_submit` boolean flag to `True` in your `unfold.admin.ModelAdmin` class.
+
+
+## Filters options
+
+```python
+from unfold.admin import ModelAdmin
+
+from .models import MyModel
+
+
+@admin.register(MyModel)
+class MyModelAdmin(ModelAdmin):
+    list_filter = (
+        "category",
+    )
+    list_filter_options = {
+        "category": {
+            "title": _("Category"),
+            "horizontal": True,
+        },
+    }
+```
