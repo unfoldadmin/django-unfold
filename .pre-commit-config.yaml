@@ -8,7 +8,7 @@ repos:
       - id: check-symlinks
       - id: check-toml
       - id: end-of-file-fixer
-        exclude: CHANGELOG.md
+        exclude: ^(CHANGELOG\.md|src/unfold/static/unfold/css/styles\.css)$
       - id: trailing-whitespace
         exclude: CHANGELOG.md
   - repo: https://github.com/astral-sh/ruff-pre-commit
