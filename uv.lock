@@ -378,7 +378,7 @@ wheels = [
 
 [[package]]
 name = "django-unfold"
-version = "0.87.0"
+version = "0.88.0"
 source = { editable = "." }
 dependencies = [
     { name = "django" },
@@ -405,7 +405,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "django", specifier = ">=4.2" }]
+requires-dist = [{ name = "django", specifier = ">=5.0" }]
 
 [package.metadata.requires-dev]
 dev = [

@@ -33,4 +33,4 @@ repos:
     rev: 1.30.0
     hooks:
       - id: django-upgrade
-        args: ['--target-version', '4.2']
+        args: ['--target-version', '5.0']
