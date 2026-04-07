@@ -5,6 +5,10 @@ about: "If you are sure you found a new issue, create bug report"
 
 <!-- Please provide all the information asked below. Without details it is hard to help you and your issue will be closed. -->
 
+**Did you used AI to write this issue?**
+
+For example: Yes or No
+
 **What version of Unfold are you using?**
 
 For example: 0.30.0 or main
