@@ -1,6 +1,39 @@
 # CHANGELOG
 
 
+## v0.88.0 (2026-04-07)
+
+### Bug Fixes
+
+- Button hovers ([#1950](https://github.com/unfoldadmin/django-unfold/pull/1950),
+  [`e4e0571`](https://github.com/unfoldadmin/django-unfold/commit/e4e0571985a192923de339df768efa53ed7e2447))
+
+- Button icon margin ([#1952](https://github.com/unfoldadmin/django-unfold/pull/1952),
+  [`f711bf6`](https://github.com/unfoldadmin/django-unfold/commit/f711bf620bef0a184270d8062489190eec04f0cd))
+
+- Enable dateTimeShortcutsOverlay for initial DOM
+  ([#1947](https://github.com/unfoldadmin/django-unfold/pull/1947),
+  [`f816929`](https://github.com/unfoldadmin/django-unfold/commit/f8169295a581045de30779b3f0d7f469bd175c5e))
+
+- Remove unbound template blocks ([#1940](https://github.com/unfoldadmin/django-unfold/pull/1940),
+  [`2504f15`](https://github.com/unfoldadmin/django-unfold/commit/2504f15991db8c1dabba3ba484646c4b57eb2c2d))
+
+- Remove unused redirect params ([#1965](https://github.com/unfoldadmin/django-unfold/pull/1965),
+  [`c90a7f0`](https://github.com/unfoldadmin/django-unfold/commit/c90a7f07ff576185873bc959b3e7f9f7f47d6aa2))
+
+### Features
+
+- Enable compressed fields by default
+  ([#1949](https://github.com/unfoldadmin/django-unfold/pull/1949),
+  [`a09e54c`](https://github.com/unfoldadmin/django-unfold/commit/a09e54cc09462a021e1c41ed99565fc95867ef73))
+
+- New lg button size ([#1951](https://github.com/unfoldadmin/django-unfold/pull/1951),
+  [`2f4ef16`](https://github.com/unfoldadmin/django-unfold/commit/2f4ef16bbdd54c2c57f4dfbcd15f29668e0bd098))
+
+- Table component attrs ([#1957](https://github.com/unfoldadmin/django-unfold/pull/1957),
+  [`017dd12`](https://github.com/unfoldadmin/django-unfold/commit/017dd12d50924efcb3079c9631f3d39a158ae107))
+
+
 ## v0.87.0 (2026-03-25)
 
 ### Bug Fixes
