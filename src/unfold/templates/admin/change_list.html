@@ -54,19 +54,15 @@
                     {% endif %}
 
                     {% spaceless %}
-                        <div class="flex flex-col gap-4 mb-4 sm:flex-row empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
+                        <div class="flex flex-col flex-wrap gap-3 mb-4 sm:flex-row empty:hidden lg:border lg:border-base-200 lg:dark:border-base-800 lg:-mb-8 lg:p-3 lg:pb-11 lg:rounded-t-default">
                             {% block search %}
                                 {% search_form cl %}
                             {% endblock %}
 
-                            {% block filters %}
-                                {% if cl.has_filters %}
-                                    <a class="{% if cl.has_active_filters %}bg-primary-600 border-primary-600 text-white{% else %}bg-white border-base-200 hover:text-primary-600 dark:bg-base-900 dark:border-base-700 dark:hover:text-primary-500{% endif %} border cursor-pointer flex font-medium gap-2 group items-center px-3 py-2 rounded-default shadow-xs text-sm lg:ml-auto md:mt-0 {% if not cl.model_admin.list_filter_sheet %}2xl:hidden{% endif %}" x-on:click="filterOpen = true" x-on:keydown.escape.window="filterOpen = false">
-                                        {% trans "Filters" %}
+                            {% include "unfold/helpers/change_list_filter_horizontal.html" %}
 
-                                        <span class="material-symbols-outlined md-18 ml-auto">filter_list</span>
-                                    </a>
-                                {% endif %}
+                            {% block filters %}
+                                {% include "unfold/helpers/change_list_filter_button.html" %}
                             {% endblock %}
                         </div>
                     {% endspaceless %}
@@ -90,9 +86,7 @@
                     {% endif %}
                 </div>
 
-                {% if cl.has_filters %}
-                    {% include "unfold/helpers/change_list_filter.html" %}
-                {% endif %}
+                {% include "unfold/helpers/change_list_filter_vertical.html" %}
             </div>
         </div>
     </div>

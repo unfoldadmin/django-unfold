@@ -1,9 +1,15 @@
 {% load i18n unfold %}
 
-<div>
-    <h3 class="font-semibold mb-2 text-font-important-light dark:text-font-important-dark">
-        {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
-    </h3>
+<div class="flex gap-2 {% if horizontal %}flex-row items-center{% else %}flex-col{% endif %}">
+    {% if not horizontal %}
+        <h3 class="font-semibold text-important">
+            {% if custom_title|length > 0 %}
+                {{ custom_title }}
+            {% elif custom_title != "" %}
+                {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
+            {% endif %}
+        </h3>
+    {% endif %}
 
     {% for choice in choices %}
         {% if choice.selected and spec.lookup_val.0 %}
@@ -11,25 +17,43 @@
         {% endif %}
     {% endfor %}
 
-    {% if spec|class_name == "BooleanFieldListFilter" or spec.horizontal %}
-        <ul class="dark:bg-base-900 border border-base-200 flex min-w-20 rounded-default shadow-xs text-font-default-light dark:border-base-700 dark:text-font-default-dark w-full">
+    {% if horizontal %}
+        <nav class="bg-base-100 flex flex-row font-medium gap-1 p-1 rounded-default text-important md:w-auto *:flex *:flex-row *:gap-1 *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:hover:bg-base-700/[.06] dark:bg-white/[.06] *:dark:hover:bg-white/[.06] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:dark:bg-base-700 [&>.active]:hover:bg-white [&>.active]:dark:hover:bg-base-700">
+            <span class="font-semibold text-important hover:!bg-transparent">
+                {% if custom_title|length > 0 %}
+                    {{ custom_title }}
+                {% elif custom_title != "" %}
+                    {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
+                {% endif %}
+            </span>
+
             {% for choice in choices %}
-                <li class="basis-1/3 border-r border-base-200 grow truncate last:border-r-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
-                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block py-2 text-center hover:text-primary-600 dark:hover:text-primary-500">
-                        {{ choice.display }}
-                    </a>
-                </li>
+                <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="{% if choice.selected %}active{% endif %}">
+                    {{ choice.display }}
+                </a>
             {% endfor %}
-        </ul>
+        </nav>
     {% else %}
-        <ul class="border border-base-200 flex flex-col rounded-default shadow-xs dark:border-base-700">
-            {% for choice in choices %}
-                <li class="border-b border-base-200 last:border-b-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
-                    <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block px-3 py-2 hover:text-primary-600 dark:hover:text-primary-500">
-                        {{ choice.display }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+        {% if spec|class_name == "BooleanFieldListFilter" or spec.horizontal %}
+            <ul class="dark:bg-base-900 border border-base-200 flex min-w-20 rounded-default shadow-xs text-font-default-light dark:border-base-700 dark:text-font-default-dark w-full">
+                {% for choice in choices %}
+                    <li class="basis-1/3 border-r border-base-200 grow truncate last:border-r-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
+                        <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block py-2 text-center hover:text-primary-600 dark:hover:text-primary-500">
+                            {{ choice.display }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <ul class="border border-base-200 flex rounded-default shadow-xs dark:border-base-700 {% if horizontal %}flex-row{% else %}flex-col{% endif %}">
+                {% for choice in choices %}
+                    <li class="border-base-200 dark:border-base-700 {% if horizontal %}border-r last:border-r-0{% else %}border-b last:border-b-0{% endif %} {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
+                        <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block px-3 py-2 truncate hover:text-primary-600 dark:hover:text-primary-500">
+                            {{ choice.display }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% endif %}
 </div>
