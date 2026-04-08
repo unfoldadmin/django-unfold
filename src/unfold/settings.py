@@ -7,6 +7,7 @@ from unfold.widgets import (
     CHECKBOX_CLASSES,
     FILE_CLASSES,
     INPUT_CLASSES,
+    PROSE_CLASSES,
     RADIO_CLASSES,
     SWITCH_CLASSES,
 )
@@ -28,6 +29,7 @@ CONFIG_DEFAULTS = {
     "SHOW_BACK_BUTTON": False,
     "FORMS": {
         "classes": {
+            "prose": " ".join(PROSE_CLASSES),
             "text_input": " ".join(INPUT_CLASSES),
             "checkbox": " ".join(CHECKBOX_CLASSES),
             "button": " ".join(BUTTON_CLASSES),
