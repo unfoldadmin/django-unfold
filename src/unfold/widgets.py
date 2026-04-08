@@ -150,7 +150,7 @@ PROSE_CLASSES = [
     "prose-ol:flex",
     "prose-ol:flex-col",
     "prose-ol:gap-0.5",
-    "prose-ol:mt-0",
+    "prose-ol:m-0",
     "prose-ul:list-disc",
     "prose-ul:flex",
     "prose-ul:flex-col",
