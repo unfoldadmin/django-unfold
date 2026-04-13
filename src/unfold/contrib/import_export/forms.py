@@ -1,5 +1,6 @@
 from django.forms import Form
 from django.forms.fields import BooleanField
+from django.utils.translation import gettext_lazy as _
 from import_export.forms import ExportForm as BaseExportForm
 from import_export.forms import ImportForm as BaseImportForm
 from import_export.forms import (
@@ -21,8 +22,14 @@ class ImportExportWidgetsMixin(Form):
             choices=self.fields["resource"].choices  # ty:ignore[unresolved-attribute]
         )
 
+        format_choices = self.fields["format"].choices
+
+        # Provide better label for default choice
+        if len(format_choices) > 1 and format_choices[0][1] == "---":
+            format_choices[0] = ("", _("Select format"))
+
         self.fields["format"].widget = UnfoldAdminSelectWidget(
-            choices=self.fields["format"].choices  # ty:ignore[unresolved-attribute]
+            choices=format_choices  # ty:ignore[unresolved-attribute]
         )
 
 
