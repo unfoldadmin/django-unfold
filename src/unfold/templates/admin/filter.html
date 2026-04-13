@@ -2,7 +2,9 @@
 
 <div>
     <h3 class="font-semibold mb-2 text-font-important-light dark:text-font-important-dark">
-        {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
+        {% block filter_title %}
+            {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
+        {% endblock %}
     </h3>
 
     {% for choice in choices %}
