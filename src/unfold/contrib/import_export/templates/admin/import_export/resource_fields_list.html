@@ -10,7 +10,7 @@
 
         {% if fields_list|length <= 1 %}
             <code class="font-medium">
-                {{ fields_list.0.1|join:", " }}
+                {{ fields_list.0.1|join:"," }}
             </code>
         {% else %}
             <dl>
@@ -22,5 +22,7 @@
         {% endif %}
     {% endcapture %}
 
-    {% include "unfold/helpers/messages/info.html" with message=fields_help %}
+    {% if fields_list|length > 0 %}
+        {% include "unfold/helpers/messages/info.html" with message=fields_help %}
+    {% endif %}
 {% endblock %}
