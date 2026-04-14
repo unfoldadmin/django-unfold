@@ -1,4 +1,4 @@
-from django.forms import Form
+from django.forms import Form, HiddenInput
 from django.forms.fields import BooleanField
 from django.utils.translation import gettext_lazy as _
 from import_export.forms import ExportForm as BaseExportForm
@@ -18,18 +18,22 @@ class ImportExportWidgetsMixin(Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["resource"].widget = UnfoldAdminSelectWidget(
-            choices=self.fields["resource"].choices  # ty:ignore[unresolved-attribute]
-        )
+        if not isinstance(self.fields["resource"].widget, HiddenInput):
+            self.fields["resource"].widget = UnfoldAdminSelectWidget(
+                choices=self.fields["resource"].choices  # ty:ignore[unresolved-attribute]
+            )
 
-        format_choices = self.fields["format"].choices
+        format_choices = self.fields["format"].choices  # ty:ignore[unresolved-attribute]
 
         # Provide better label for default choice
         if len(format_choices) > 1 and format_choices[0][1] == "---":
             format_choices[0] = ("", _("Select format"))
 
         self.fields["format"].widget = UnfoldAdminSelectWidget(
-            choices=format_choices  # ty:ignore[unresolved-attribute]
+            choices=format_choices,
+            attrs={
+                "readonly": True if len(format_choices) == 1 else False,
+            },
         )
 
 
