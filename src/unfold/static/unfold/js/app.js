@@ -1059,7 +1059,7 @@ function getCurrentTab() {
     return null
   }
 
-  if (!document.getElementById(`${fragment}-group`)) {
+  if (!document.querySelector(`[data-tab-id="${fragment}"]`)) {
     return null;
   }
 

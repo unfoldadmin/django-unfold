@@ -15,7 +15,7 @@
                         <span class="font-medium text-primary-600">{{ i }}</span>
                     {% else %}
                         <a class="cursor-pointer"
-                           hx-get="?{% querystring_params pagination_key i %}{% if has_tab %}#{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}"
+                           hx-get="?{% querystring_params pagination_key i %}{% if has_tab %}#{% if inline_admin_formset.opts.tab_group %}{{ inline_admin_formset.opts.tab_group|slugify}}{% else %}{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}{% endif %}"
                            hx-push-url="true"
                            hx-swap="outerHTML"
                            hx-select="#{{ inline_admin_formset.formset.prefix }}-data"

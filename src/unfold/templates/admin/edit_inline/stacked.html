@@ -1,4 +1,4 @@
-<div id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="stacked" {% if inline_admin_formset.opts.tab %}x-show="activeTab == '{{ inline_admin_formset.formset.prefix|slugify }}'"{% else %}x-show="activeTab == 'general'"{% endif %}>
+<div id="{{ inline_admin_formset.formset.prefix }}-group" data-inline-type="stacked" x-show="activeTab == '{% if inline_admin_formset.opts.tab %}{% if inline_admin_formset.opts.tab_group %}{{ inline_admin_formset.opts.tab_group|slugify}}{% else %}{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}{% else %}general{% endif %}'">
     <fieldset class="module relative {{ inline_admin_formset.classes }}" aria-labelledby="{{ inline_admin_formset.formset.prefix }}-heading">
         {% if inline_admin_formset.is_collapsible %}<details><summary class="*:mb-0">{% endif %}
 
