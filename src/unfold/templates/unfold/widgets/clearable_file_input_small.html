@@ -17,7 +17,7 @@
         <label for="{{ widget.attrs.id }}" class="flex grow relative">
             <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="grow font-medium min-w-0 px-3 py-2 text-ellipsis">
 
-            <span class="absolute opacity-0 inset-0 z-10 cursor-pointer *:cursor-pointer">
+            <span class="absolute opacity-0 inset-0 z-10 cursor-pointer *:cursor-pointer *:h-[36px] *:w-full">
                 <input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %} />
             </span>
         </label>
