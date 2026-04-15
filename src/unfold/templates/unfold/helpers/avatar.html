@@ -1,5 +1,16 @@
 {% with avatar_url=user.avatar_url %}
-    <div class="bg-base-200 bg-cover h-[38px] font-semibold flex items-center justify-center rounded-default relative select-none text-important min-w-[38px] w-[38px] dark:bg-base-700 after:absolute after:inset-0 after:inset-ring after:inset-ring-base-800/10 dark:after:inset-ring-base-200/10 after:rounded-default" {% if avatar_url %}style="background-image: url('{{ avatar_url }}');"{% endif %}>
+    <div class="bg-base-200 bg-cover font-semibold flex items-center justify-center relative select-none text-important dark:bg-base-700 after:absolute after:inset-0 after:inset-ring after:inset-ring-base-800/10 dark:after:inset-ring-base-200/10
+                {% if size == "md" %}
+                    h-[34px] min-w-[34px] w-[34px]
+                {% elif size == "sm" %}
+                    h-[30px] min-w-[30px] w-[30px]
+                {% elif size == "xs" %}
+                    h-[26px] min-w-[26px] w-[26px] text-xs
+                {% else %}
+                    h-[38px] min-w-[38px] w-[38px]
+                {% endif %}
+                {% if circle %}rounded-full after:rounded-full{% else %}rounded-default after:rounded-default{% endif %}"
+         {% if avatar_url %}style="background-image: url('{{ avatar_url }}');"{% endif %}>
         {% if not avatar_url %}
             {{ user.get_full_name.0|default:user.get_username.0|upper }}
         {% endif %}

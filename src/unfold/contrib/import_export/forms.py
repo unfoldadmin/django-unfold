@@ -1,4 +1,6 @@
+from django.forms import Form, HiddenInput
 from django.forms.fields import BooleanField
+from django.utils.translation import gettext_lazy as _
 from import_export.forms import ExportForm as BaseExportForm
 from import_export.forms import ImportForm as BaseImportForm
 from import_export.forms import (
@@ -6,47 +8,53 @@ from import_export.forms import (
 )
 
 from unfold.widgets import (
-    SELECT_CLASSES,
     UnfoldAdminFileFieldWidget,
+    UnfoldAdminSelectWidget,
     UnfoldBooleanWidget,
 )
 
 
-class ImportForm(BaseImportForm):
+class ImportExportWidgetsMixin(Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["resource"].widget.attrs["class"] = " ".join(
-            [self.fields["resource"].widget.attrs.get("class", ""), *SELECT_CLASSES]
+        if not isinstance(self.fields["resource"].widget, HiddenInput):
+            self.fields["resource"].widget = UnfoldAdminSelectWidget(
+                choices=self.fields["resource"].choices  # ty:ignore[unresolved-attribute]
+            )
+
+        format_choices = self.fields["format"].choices  # ty:ignore[unresolved-attribute]
+
+        # Provide better label for default choice
+        if len(format_choices) > 1 and format_choices[0][1] == "---":
+            format_choices[0] = ("", _("Select format"))
+
+        self.fields["format"].widget = UnfoldAdminSelectWidget(
+            choices=format_choices,
+            attrs={
+                "readonly": True if len(format_choices) == 1 else False,
+            },
         )
+
+
+class ImportForm(ImportExportWidgetsMixin, BaseImportForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         self.fields["import_file"].widget = UnfoldAdminFileFieldWidget(
             attrs=self.fields["import_file"].widget.attrs
         )
-        self.fields["format"].widget.attrs["class"] = " ".join(
-            [self.fields["format"].widget.attrs.get("class", ""), *SELECT_CLASSES]
-        )
 
 
-class ExportForm(BaseExportForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["resource"].widget.attrs["class"] = " ".join(
-            [self.fields["resource"].widget.attrs.get("class", ""), *SELECT_CLASSES]
-        )
-        self.fields["format"].widget.attrs["class"] = " ".join(
-            [self.fields["format"].widget.attrs.get("class", ""), *SELECT_CLASSES]
-        )
+class ExportForm(ImportExportWidgetsMixin, BaseExportForm):
+    pass
 
 
-class SelectableFieldsExportForm(BaseSelectableFieldsExportForm):
+class SelectableFieldsExportForm(
+    ImportExportWidgetsMixin, BaseSelectableFieldsExportForm
+):
     def __init__(self, formats, resources, **kwargs):
         super().__init__(formats, resources, **kwargs)
-        self.fields["resource"].widget.attrs["class"] = " ".join(
-            [self.fields["resource"].widget.attrs.get("class", ""), *SELECT_CLASSES]
-        )
-        self.fields["format"].widget.attrs["class"] = " ".join(
-            [self.fields["format"].widget.attrs.get("class", ""), *SELECT_CLASSES]
-        )
 
         for _key, field in self.fields.items():
             if isinstance(field, BooleanField):

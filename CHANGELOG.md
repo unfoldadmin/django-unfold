@@ -1,6 +1,22 @@
 # CHANGELOG
 
 
+## v0.89.0 (2026-04-09)
+
+### Bug Fixes
+
+- Avatar sizes ([#1969](https://github.com/unfoldadmin/django-unfold/pull/1969),
+  [`3b87344`](https://github.com/unfoldadmin/django-unfold/commit/3b87344f0029f5292104a400083144044fe432c7))
+
+- Improved prose styles ([#1968](https://github.com/unfoldadmin/django-unfold/pull/1968),
+  [`b08533d`](https://github.com/unfoldadmin/django-unfold/commit/b08533d72b49693c5bbc772dc815358a6c39605d))
+
+### Features
+
+- Inline before/after template ([#1967](https://github.com/unfoldadmin/django-unfold/pull/1967),
+  [`e645f55`](https://github.com/unfoldadmin/django-unfold/commit/e645f55b94d429a1ae1094dbca88396d1c393dba))
+
+
 ## v0.88.0 (2026-04-07)
 
 ### Bug Fixes
