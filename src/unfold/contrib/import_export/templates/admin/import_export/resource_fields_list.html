@@ -10,7 +10,7 @@
 
         {% if fields_list|length <= 1 %}
             <code>
-                {{ fields_list.0.1|join:"," }}
+                {{ fields_list.0.1|join:", " }}
             </code>
         {% else %}
             <div class="flex flex-col gap-1 mt-2">
@@ -18,7 +18,7 @@
                     <div>
                         <span class="font-semibold">{{ resource }}</span>:
                         <code>
-                            {{ fields|join:"," }}
+                            {{ fields|join:", " }}
                         </code>
                     </div>
                 {% endfor %}
