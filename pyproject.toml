@@ -18,7 +18,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
-    "Framework :: Django :: 4.2",
     "Framework :: Django :: 5.0",
     "Framework :: Django :: 5.1",
     "Framework :: Django :: 5.2",
@@ -27,7 +26,7 @@ classifiers = [
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
 ]
-dependencies = ["django>=4.2"]
+dependencies = ["django>=5.0"]
 
 [project.urls]
 Homepage = "https://unfoldadmin.com"
@@ -147,7 +146,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{311,312,313,314}-django{42,50,51,52,60}
+        python{311,312,313,314}-django{50,51,52,60}
 
     [testenv]
     allowlist_externals = uv
