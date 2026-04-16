@@ -1,6 +1,32 @@
 # CHANGELOG
 
 
+## v0.90.0 (2026-04-16)
+
+### Bug Fixes
+
+- File input active area ([#1978](https://github.com/unfoldadmin/django-unfold/pull/1978),
+  [`dacdbe7`](https://github.com/unfoldadmin/django-unfold/commit/dacdbe745a487347ba3a4eaf28f0318298be808a))
+
+- File input layout ([#1977](https://github.com/unfoldadmin/django-unfold/pull/1977),
+  [`f8700b6`](https://github.com/unfoldadmin/django-unfold/commit/f8700b61127ba54802a0f3d2fc1c883c9b15f5a4))
+
+- Import/export diff styles ([#1979](https://github.com/unfoldadmin/django-unfold/pull/1979),
+  [`1d789e0`](https://github.com/unfoldadmin/django-unfold/commit/1d789e01048579c887a5ac65a3a469bd54752b0d))
+
+- Import/export ui ([#1971](https://github.com/unfoldadmin/django-unfold/pull/1971),
+  [`f2598ef`](https://github.com/unfoldadmin/django-unfold/commit/f2598efdf1576701e705337628b91e59903c5a9e))
+
+- Import/export validation messages
+  ([#1980](https://github.com/unfoldadmin/django-unfold/pull/1980),
+  [`2abda71`](https://github.com/unfoldadmin/django-unfold/commit/2abda71bb930ec350ae7a5f77a33ae6dc0f65cea))
+
+### Features
+
+- Remove django 4.2 support ([#1966](https://github.com/unfoldadmin/django-unfold/pull/1966),
+  [`2d7615d`](https://github.com/unfoldadmin/django-unfold/commit/2d7615dde8e9cd33736d7a0ac189b723089e3d89))
+
+
 ## v0.89.0 (2026-04-09)
 
 ### Bug Fixes
