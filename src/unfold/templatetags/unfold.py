@@ -31,6 +31,7 @@ from django.utils.translation import gettext_lazy as _
 from unfold.components import ComponentRegistry
 from unfold.enums import ActionVariant
 from unfold.sections import BaseSection
+from unfold.utils import prettify_traceback
 from unfold.widgets import (
     UnfoldAdminMoneyWidget,
     UnfoldAdminSelect2Widget,
@@ -922,3 +923,8 @@ def tabs_primary_active(inlines: list[InlineAdminFormSet]) -> str:
 @register.filter
 def unicoded_slugify(value: str) -> str:
     return slugify(value, allow_unicode=True)
+
+
+@register.filter
+def format_traceback(traceback: str) -> str:
+    return prettify_traceback(traceback) or ""

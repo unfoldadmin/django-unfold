@@ -1,3 +1,5 @@
-<label for="{{ field.id_for_label }}" class="block font-semibold text-font-important-light dark:text-font-important-dark">
+{% load unfold %}
+
+<label for="{{ field.id_for_label }}" class="block {% if field.field.widget|class_name != "UnfoldBooleanWidget" %}font-semibold text-important{% endif %}">
     {{ field.label }}{% if field.field.required %}<span class="text-red-600 dark:text-red-500">*</span>{% endif %}
 </label>

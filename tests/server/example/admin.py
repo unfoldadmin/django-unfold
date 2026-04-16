@@ -11,6 +11,7 @@ from django.utils.html import format_html
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
+from import_export.resources import ModelResource
 
 from example.models import (
     ActionUser,
@@ -157,10 +158,23 @@ class ProjectNonrelatedInline(NonrelatedTabularInline):
         pass
 
 
+class UserAnotherResource(ModelResource):
+    class Meta:
+        model = User
+        fields = ["username", "last_name"]
+
+
+class UserResource(ModelResource):
+    class Meta:
+        model = User
+        fields = ["username", "first_name"]
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
+    resource_classes = [UserResource, UserAnotherResource]
     form = ExtendedUserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
@@ -169,7 +183,6 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
         ProjectDataset,
     ]
     autocomplete_fields = ["tags"]
-    compressed_fields = True
     readonly_fields = [
         "custom_readonly_field",
         "another_readonly_field",

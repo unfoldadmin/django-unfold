@@ -14,8 +14,7 @@ from django.contrib.contenttypes.admin import (
     GenericTabularInline as BaseGenericTabularInline,
 )
 from django.db.models import BLANK_CHOICE_DASH, Model
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect
+from django.http import HttpRequest
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, path
 from django.utils.safestring import mark_safe
@@ -72,7 +71,7 @@ class ModelAdmin(
     change_form_outer_before_template = None
     change_form_outer_after_template = None
     change_form_datasets = ()
-    compressed_fields = False
+    compressed_fields = True
     show_add_link = True
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
@@ -208,20 +207,6 @@ class ModelAdmin(
     @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
     def action_checkbox(self, obj: Model) -> str:
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
-
-    def response_change(self, request: HttpRequest, obj: Model) -> HttpResponse:
-        res = super().response_change(request, obj)
-        if "next" in request.GET:
-            return redirect(request.GET["next"])
-        return res
-
-    def response_add(
-        self, request: HttpRequest, obj: Model, post_url_continue: str | None = None
-    ) -> HttpResponse:
-        res = super().response_add(request, obj, post_url_continue)
-        if "next" in request.GET:
-            return redirect(request.GET["next"])
-        return res
 
     def get_changelist(self, request: HttpRequest, **kwargs: Any) -> ChangeList:
         return ChangeList

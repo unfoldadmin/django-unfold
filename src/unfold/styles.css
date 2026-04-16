@@ -10,20 +10,22 @@
 }
 
 @source inline("aspect-square group-hover:block self-start font-bold bg-white/[.06] border-white/40 h-[64px] w-[65px]! left-[65px] {dark:,}text-white/{0..100..10} {dark:,}bg-white/{0..100..10} {dark:,}text-{base,primary}-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
-@source inline("{-,}{top,bottom,left,right}-{1/2,{0..8}} {!,}leading-[38px] {lg:,}leading-{6..16} {md:,lg:,}text-{default,base,link,icon,subtle,important,lg,xl,2xl,3xl,4xl}");
+@source inline("{-,}{top,bottom,left,right}-{1/2,{0..8}} {!,}leading-[38px] {lg:,}leading-{6..16} {md:,lg:,}text-{default,base,link,icon,subtle,important,transparent,lg,xl,2xl,3xl,4xl}");
 @source inline("bg-linear-to-{{t,r,b,l,tl,tr,bl,br}} {dark:,}{from,to}-{{{base,primary}-{50,{100..900..100},950}},white}");
 @source inline("rounded rounded-none rounded-[1px] rounded-{t,r,b,l} rounded-{t,r,b,l}-default rounded-{xs,sm,md,lg,xl,2xl,3xl,full,none}");
 @source inline("{md:,lg:,xl:,2xl:,}{absolute,flex,relative,block,sticky}");
-@source inline("{!,}{-,}{lg:,}m{t,r,b,l,x,y,}-{0..24} {!,}{-,}{lg:,}p{t,r,b,l,x,y,}-{0..24}");
+@source inline("{!,}{-,}{lg:,}m{t,r,b,l,x,y,}-{px,{0..24}} {!,}{-,}{lg:,}p{t,r,b,l,x,y,}-{px,{0..24}}");
 @source inline("{md:,lg:,}border-{0,2} {md:,lg:,}border-{t,r,b,l} {md:,lg:,}border-{t,r,b,l}-{0,2}");
 @source inline("{!,}{hover:,dark:,}bg-primary-{50,{100..900..100},950}");
 @source inline("{hover:,dark:,}border-base-{50,{100..900..100},950} {hover:,dark:,}border-transparent");
-@source inline("{hover:,dark:,}bg-{base,red,green,blue,orange}-{50,{100..900..100},950}");
-@source inline("{md:,lg:,}{min-h,h,min-w,w}-{1..10} {md:,lg:,}h-{1..10} {md:,lg:,}w-{1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5,1/6,2/6,3/6,4/6,5/6,1/7,2/7,3/7,4/7,5/7,6/7,1..10,96}");
+@source inline("{hover:,dark:,}bg-{base,red,green,blue,orange}-{50,{100..900..100},950} bg-clip-text");
+@source inline("{md:,lg:,}{min-h,h,min-w,w}-{1..10} {md:,lg:,}h-{1..10} {md:,lg:,}w-{fit,1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5,1/6,2/6,3/6,4/6,5/6,1/7,2/7,3/7,4/7,5/7,6/7,1..10,96}");
 @source inline("{md:,lg:,xl:,}gap-{0.5,{1..16}}");
 @source inline("{md:,lg:,xl:,}grid-cols-{1..16}");
 @source inline("{md:,lg:,xl:,}col-span-{1..16}");
 @source inline("max-w-xl max-w-{1..7}xl");
+@source inline("transition-{all,transform,opacity,move}");
+@source inline("outline outline-{0..4} outline-offset-{0..4} {hover:,dark:,}outline-{base,primary}-{50,{100..900..100},950}");
 
 
 @layer base {
@@ -119,6 +121,10 @@
   border-spacing: 0;
 }
 
+@utility transition-move {
+  transition-property: transform,translate,scale,rotate,margin;
+}
+
 @utility material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
@@ -172,25 +178,6 @@
  *******************************************************/
 input[type="search"]::-webkit-search-cancel-button {
   @apply z-10 dark:invert;
-}
-
-/*******************************************************
- Select
- *******************************************************/
-select:not([class*="bg-none"]):not([multiple]) {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3e%3cpath fill='#6B7280' d='M24 31.4 11.3 18.7l2.85-2.8L24 25.8l9.85-9.85 2.85 2.8Z'/%3e%3c/svg%3e");
-  background-position: right 0.7rem center;
-  background-repeat: no-repeat;
-  background-size: 1.125rem 1.125rem;
-}
-
-#changelist-actions select:not([class*="bg-none"]):not([multiple]) {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3e%3cpath fill='#ffffff' d='M24 31.4 11.3 18.7l2.85-2.8L24 25.8l9.85-9.85 2.85 2.8Z'/%3e%3c/svg%3e");
-}
-
-select:after {
-  content: "";
-  display: block;
 }
 
 /*******************************************************
@@ -673,8 +660,8 @@ trix-toolbar[id^="trix-toolbar-"] {
 /*******************************************************
  Simplebar
  *******************************************************/
-.simplebar-track .simplebar-scrollbar::before {
-  @apply bg-base-900/80  dark:bg-base-400/80;
+.simplebar-track .simplebar-scrollbar {
+  @apply before:bg-base-900/80 dark:before:bg-base-400/80;
 }
 
 .simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
@@ -715,6 +702,17 @@ div.djangoql-completion .syntax-help {
 .djangoql-toggle {
   @apply appearance-none bg-white block border border-base-300 cursor-pointer h-4 min-w-4 relative rounded-[4px] shadow-xs w-4 hover:border-base-400 dark:bg-base-700 dark:border-base-500 dark:checked:after:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 after:absolute after:content-['check\_small'] after:flex! after:h-4 after:items-center after:justify-center after:leading-none after:material-symbols-outlined after:-ml-px after:-mt-px after:text-white after:transition-all after:w-4 dark:after:text-base-700 checked:bg-primary-600 dark:checked:bg-primary-600 checked:border-primary-600 dark:checked:border-primary-600 checked:transition-all checked:hover:border-primary-600;
   @apply relative -ml-4.5;
+}
+
+/*******************************************************
+ Django Import Export
+ *******************************************************/
+.import-preview-table ins {
+  @apply !bg-green-100 !no-underline text-green-700 dark:!bg-green-500/20 dark:!text-green-400;
+}
+
+.import-preview-table del {
+  @apply !bg-red-100 !no-underline text-red-700 dark:!bg-red-500/20 dark:!text-red-400;
 }
 
 /*******************************************************

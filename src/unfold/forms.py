@@ -218,7 +218,7 @@ class PaginationFormSetMixin:
 
         super().__init__(*args, **kwargs)
 
-        if self.provided_queryset:
+        if self.provided_queryset is not None:
             self.queryset = self.provided_queryset
 
         if self.per_page:

@@ -121,6 +121,14 @@ class UnfoldAdminSite(AdminSite):
 
         context.update(data)
 
+        global_callback = get_config(self.settings_name)["GLOBAL_CALLBACK"]
+
+        if isinstance(global_callback, str):
+            global_context = import_string(global_callback)(request)
+
+            if isinstance(global_context, dict):
+                context.update(global_context)
+
         if hasattr(self, "extra_context") and callable(self.extra_context):
             return self.extra_context(context, request)
 

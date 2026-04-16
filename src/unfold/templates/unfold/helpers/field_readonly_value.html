@@ -1,1 +1,5 @@
-<div class="readonly break-words {% if field.is_json %}max-w-4xl{% else %}max-w-2xl{% endif %} *:rounded-default">{% if value %}{{ value }}{% elif field.contents %}{% if field.is_file %}{% include "unfold/helpers/field_readonly_value_file.html" %}{% else %}{% if field.contents == "None" %}-{% else %}{{ field.contents }}{% endif %}{% endif %}{% else %}-{% endif %}</div>
+{% if outline %}
+    <div class="{{ form_classes.text_input }} !bg-base-50 dark:!bg-white/[.04]">{% if value %}{{ value }}{% elif field.contents %}{% if field.is_file %}{% include "unfold/helpers/field_readonly_value_file.html" %}{% else %}{% if field.contents == "None" %}-{% else %}{{ field.contents }}{% endif %}{% endif %}{% else %}-{% endif %}</div>
+{% else %}
+    <div class="readonly break-words {% if field.is_json %}max-w-4xl{% else %}max-w-2xl{% endif %} *:rounded-default">{% if value %}{{ value }}{% elif field.contents %}{% if field.is_file %}{% include "unfold/helpers/field_readonly_value_file.html" %}{% else %}{% if field.contents == "None" %}-{% else %}{{ field.contents }}{% endif %}{% endif %}{% else %}-{% endif %}</div>
+{% endif %}

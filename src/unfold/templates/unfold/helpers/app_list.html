@@ -18,7 +18,7 @@
                             {% include "unfold/helpers/app_list_badge.html" with item=group %}
 
                             {% if group.collapsible %}
-                                <span class="material-symbols-outlined ml-auto transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
+                                <span class="material-symbols-outlined ml-auto transition-transform group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': navigationOpen}">
                                     chevron_right
                                 </span>
                             {% endif %}
