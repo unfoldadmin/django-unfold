@@ -27,13 +27,21 @@
 
         {% for row in result.invalid_rows %}
             <tbody>
-                <tr>
-                    <td colspan="100%" class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
-                        <div class="flex flex-col gap-2 *:mb-0">
-                            {% if row.non_field_specific_errors %}
+                {% if row.non_field_specific_errors or row.field_specific_errors %}
+                    <tr>
+                        <td colspan="100%" class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
+                            <div class="flex flex-col gap-2 *:mb-0">
                                 {% for field_name, error_list in row.field_specific_errors.items %}
                                     {% capture as error_message silent %}
-                                        <span class="font-semibold">{{ field_name }}</span>: {{ error }}
+                                        <div class="flex flex-row gap-1">
+                                            <span class="font-semibold">{{ field_name }}:</span>
+
+                                            <ul>
+                                                {% for error in error_list %}
+                                                    <li>{{ error }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
                                     {% endcapture %}
 
                                     {% include "unfold/helpers/messages/error.html" with error=error_message %}
@@ -41,15 +49,21 @@
 
                                 {% for error in row.non_field_specific_errors %}
                                     {% capture as error_message silent %}
-                                        <span class="font-semibold">{% trans "Non field specific" %}</span>: {{ error }}
+                                        <div class="flex flex-row gap-1">
+                                            <span class="font-semibold">{% trans "Non field specific" %}:</span>
+
+                                            <span>
+                                                {{ error }}
+                                            </span>
+                                        </div>
                                     {% endcapture %}
 
                                     {% include "unfold/helpers/messages/error.html" with error=error_message %}
                                 {% endfor %}
-                            {% endif %}
-                        </div>
-                    </td>
-                </tr>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
 
                 <tr class="block border border-base-200 mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
                     <td data-label="{% trans "Row" %}" class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
