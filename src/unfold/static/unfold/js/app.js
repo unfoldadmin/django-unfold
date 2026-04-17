@@ -23,6 +23,15 @@ function theme(defaultTheme = "auto") {
   return {
     openModal: false,
     adminTheme: Alpine.$persist(defaultTheme).as('adminTheme'),
+    init() {
+      this.$watch('openModal', (value) => {
+        if (value) {
+          document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
+        } else {
+          document.getElementsByTagName("body")[0].classList.remove("overflow-hidden");
+        }
+      });
+    },
     switchTheme(theme) {
       this.adminTheme = theme;
     },
