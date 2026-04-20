@@ -12,6 +12,7 @@ class ActionDialog(TypedDict):
     title: str
     description: str
     form_class: type["BaseDialogForm"] | None
+    submit_text: str | None
 
 
 @dataclass
