@@ -8,11 +8,13 @@
     <form method="post" novalidate hx-post="{{ request.build_absolute_uri }}" hx-target="#dialog-form" hx-select="#dialog-form" hx-swap="outerHTML" hx-indicator="#dialog-preloader">
         {% csrf_token %}
 
-        {% if dialog.title %}
+        {% if dialog.title or dialog.description %}
             <div class="border-base-200 flex flex-col gap-2 mb-6 dark:border-base-700">
-                <h1 class="font-semibold text-base text-important tracking-tight">
-                    {{ dialog.title }}
-                </h1>
+                {% if dialog.title %}
+                    <h1 class="font-semibold text-base text-important tracking-tight">
+                        {{ dialog.title }}
+                    </h1>
+                {% endif %}
 
                 {% if dialog.description %}
                     <p class="leading-relaxed">
