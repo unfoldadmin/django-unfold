@@ -75,6 +75,7 @@ def action(
             if dialog:
                 form_class = dialog.get("form_class") or BaseDialogForm
                 form = form_class(data=request.POST or None, request=request)
+                submit_text = dialog.get("submit_text", "")
 
                 if form.is_valid():
                     return func(model_admin, request, form, *args, **kwargs)
@@ -85,6 +86,7 @@ def action(
                     {
                         "dialog": dialog,
                         "form": form,
+                        "submit_text": submit_text,
                     },
                 )
 

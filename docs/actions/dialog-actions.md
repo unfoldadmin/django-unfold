@@ -23,6 +23,7 @@ class SomeModelAdmin(ModelAdmin):
         dialog={
             "title": "Changelist dialog action",
             "description": "This is a dialog action",
+            "submit_text": "My custom submit button text",  # Default: "Submit"
         },
     )
     def changelist_dialog_action(self, request, form):

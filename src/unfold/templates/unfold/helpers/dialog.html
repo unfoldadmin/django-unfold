@@ -41,7 +41,8 @@
                 </span>
 
                 <span class="[.htmx-request+&]:opacity-0 relative z-10">
-                    {% trans "Submit" %}
+                    {% trans "Submit" as submit_label %}
+                    {{ submit_text|default:submit_label }}
                 </span>
             {% endcomponent %}
         </div>
