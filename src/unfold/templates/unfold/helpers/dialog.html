@@ -25,9 +25,15 @@
         {% endif %}
 
         <div id="dialog-form">
-            {% for field in form %}
-                {% include "unfold/helpers/field.html" %}
-            {% endfor %}
+            {{ form.render_before_template }}
+
+            <div class="flex flex-col gap-3 *:mb-0">
+                {% for field in form %}
+                    {% include "unfold/helpers/field.html" %}
+                {% endfor %}
+            </div>
+
+            {{ form.render_after_template }}
         </div>
 
         <div class="border-t border-base-200 flex flex-row justify-between -mx-6 mt-6 px-6 -mb-3 pt-3 dark:border-base-700">
@@ -43,8 +49,8 @@
                 </span>
 
                 <span class="[.htmx-request+&]:opacity-0 relative z-10">
-                    {% trans "Submit" as submit_label %}
-                    {{ submit_text|default:submit_label }}
+                    {% trans "Submit" as default_label %}
+                    {{ form_submit_text|default:default_label }}
                 </span>
             {% endcomponent %}
         </div>

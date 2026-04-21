@@ -1,11 +1,12 @@
 ---
 title: Actions with dialog
-description:
+description: Enhance your Django admin with dialog actions, offering customizable confirmation pop-ups for actions.
 order: 1
 ---
 
 # Actions with dialog
 
+When an action is triggered, a confirmation modal window appears before the action is processed. The user is then prompted to either confirm the action to proceed or cancel it.
 
 ## Simple dialog
 
@@ -49,6 +50,10 @@ class SomeModelAdmin(ModelAdmin):
 ```
 
 ## Custom confirmation form
+
+When using a dialog action, a custom confirmation form is displayed before the action is processed. This form must be valid for the action to proceed. By default, this form is present even if no visible fields are defined.
+
+To customize this dialog form, always inherit from `BaseDialogForm` rather than `forms.Form`. The `BaseDialogForm` provides essential features and hooks required for dialog actions to function correctly.
 
 ```python
 from unfold.admin import ModelAdmin
@@ -104,4 +109,30 @@ class SomeModelAdmin(ModelAdmin):
                 "HX-Redirect": reverse_lazy("admin:mypapp_somemodel_changelist"),
             }
         )
+```
+
+# Form before/after templates
+
+Custom HTML templates can be rendered before or after the dialog form by specifying the `form_before_template` and `form_after_template` attributes on your form class. You can add new template variables to the context by defining the `get_before_template_context` and `get_after_template_context` methods.
+
+For detail actions, the context methods `get_before_template_context` and `get_after_template_context` receive an `object_id` parameter, which you can use to access additional data related to the current object.
+
+```python
+from unfold.forms import BaseDialogForm
+
+
+class SomeForm(BaseDialogForm):
+    form_before_template = "some/form_before.html"
+    form_after_template = "some/form_after.html"
+
+    # If it is not a detail action, remove object_id parameter
+    def get_before_template_context(self, request, object_id):
+        return {
+            "sample": "example1"
+        }
+
+    def get_after_template_context(self, request, object_id):
+        return {
+            "sample": sample2,
+        }
 ```
