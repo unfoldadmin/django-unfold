@@ -145,7 +145,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{311,312,313,314}-django{50,51,52,60}
+        python{311,312,313,314}-django{51,52,60}
 
     [testenv]
     allowlist_externals = uv
