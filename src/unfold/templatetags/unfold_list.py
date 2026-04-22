@@ -2,6 +2,7 @@ import datetime
 from collections.abc import Generator
 from typing import Any
 
+from django import VERSION as DJANGO_VERSION
 from django.contrib.admin.options import IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
@@ -406,6 +407,14 @@ def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
 
 @register.tag(name="unfold_result_list")
 def result_list_tag(parser: Parser, token: Token) -> InclusionAdminNode:
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_result_list",
+            parser,
+            token,
+            func=result_list,
+            template_name="change_list_results.html",
+        )
     return InclusionAdminNode(
         parser,
         token,
@@ -459,6 +468,15 @@ def unfold_search_form(cl):
 
 @register.tag(name="unfold_search_form")
 def unfold_search_form_tag(parser, token):
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_search_form",
+            parser,
+            token,
+            func=unfold_search_form,
+            template_name="search_form.html",
+            takes_context=False,
+        )
     return InclusionAdminNode(
         parser,
         token,
@@ -470,6 +488,14 @@ def unfold_search_form_tag(parser, token):
 
 @register.tag(name="unfold_admin_actions")
 def unfold_admin_actions_tag(parser, token):
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_admin_actions",
+            parser,
+            token,
+            func=admin_actions,
+            template_name="dataset_actions.html",
+        )
     return InclusionAdminNode(
         parser,
         token,
