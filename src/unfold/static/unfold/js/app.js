@@ -379,7 +379,7 @@ function searchCommand() {
         this.scrollToActiveItem();
       }
     },
-    selectItem(addHistory) {
+    selectItem(addHistory, openInNewTab=false) {
       const link = this.items[this.currentIndex - 1].querySelector("a");
       const data = {
         title: link.dataset.title,
@@ -392,7 +392,11 @@ function searchCommand() {
         this.addToHistory(data);
       }
 
-      window.location = link.href;
+      if (openInNewTab) {
+        window.open(link.href, "_blank");
+      } else {
+        window.location = link.href;
+      }
     },
     addToHistory(data) {
       let commandHistory = JSON.parse(
