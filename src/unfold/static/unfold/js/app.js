@@ -181,6 +181,28 @@ const moveRecords = (e) => {
 };
 
 /*************************************************************
+ * Change list filters
+ *************************************************************/
+function changeList(hasFilters = false) {
+  return {
+    hasFilters,
+    filterOpen: false,
+    applyShortcut(event) {
+      if (
+        this.hasFilters &&
+        event.key.toLowerCase() === "f" &&
+        document.activeElement.tagName.toLowerCase() !== "input" &&
+        document.activeElement.tagName.toLowerCase() !== "textarea" &&
+        !document.activeElement.isContentEditable
+      ) {
+        event.preventDefault();
+        this.filterOpen = true;
+      }
+    },
+  };
+}
+
+/*************************************************************
  * Search form
  *************************************************************/
 function searchForm() {
