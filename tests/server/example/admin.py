@@ -480,6 +480,8 @@ class DialogActionsUserAdmin(BaseUserAdmin, ModelAdmin):
     actions_list = [
         "changelist_dialog_action_without_custom_form",
         "changelist_dialog_action_with_custom_form",
+        "changelist_dialog_action_with_permissions_true",
+        "changelist_dialog_action_with_permissions_false",
     ]
     actions_row = [
         "row_dialog_action_without_custom_form",
@@ -544,6 +546,50 @@ class DialogActionsUserAdmin(BaseUserAdmin, ModelAdmin):
                 ),
             }
         )
+
+    @action(
+        description="Dialog action with permissions true",
+        permissions=["changelist_dialog_action_with_permissions_true"],
+        dialog={
+            "title": "Changelist dialog action with permissions true",
+            "description": "This is a dialog action with permissions true",
+        },
+    )
+    def changelist_dialog_action_with_permissions_true(self, request, form):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    def has_changelist_dialog_action_with_permissions_true_permission(self, request):
+        return True
+
+    @action(
+        description="Dialog action with permissions false",
+        permissions=["changelist_dialog_action_with_permissions_false"],
+        dialog={
+            "title": "Changelist dialog action with permissions false",
+            "description": "This is a dialog action with permissions false",
+        },
+    )
+    def changelist_dialog_action_with_permissions_false(self, request, form):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    def has_changelist_dialog_action_with_permissions_false_permission(self, request):
+        return False
 
     @action(
         description="Dialog action with form",
