@@ -1,10 +1,10 @@
 from collections.abc import Callable
 from typing import Any
 
+from django.contrib.admin import ModelAdmin
 from django.db.models import Model
 from django.forms import Form
-from django.http import HttpRequest
-from django.template.response import TemplateResponse
+from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 
 from unfold.dataclasses import UnfoldAction
@@ -12,7 +12,7 @@ from unfold.enums import ActionVariant
 from unfold.exceptions import UnfoldException
 
 
-class ActionModelAdminMixin:
+class ActionModelAdminMixin(ModelAdmin):
     """
     Adds support for various ModelAdmin actions (list, detail, row, submit line)
     """
@@ -26,7 +26,7 @@ class ActionModelAdminMixin:
 
     def changelist_view(
         self, request: HttpRequest, extra_context: dict[str, str] | None = None
-    ) -> TemplateResponse:
+    ) -> HttpResponse:
         """
         Changelist contains `actions_list` and `actions_row` custom actions. In case of `actions_row` they
         are displayed in the each row of the table.
@@ -38,6 +38,7 @@ class ActionModelAdminMixin:
                 "title": action.description,
                 "icon": action.icon,
                 "attrs": action.method.attrs,
+                "dialog": action.dialog,
                 # This is just a path name as string and in template is used in {% url %} tag
                 # with custom instance pk value
                 "raw_path": f"{self.admin_site.name}:{action.action_name}",
@@ -126,6 +127,7 @@ class ActionModelAdminMixin:
             attrs=method.attrs if hasattr(method, "attrs") else None,
             icon=method.icon if hasattr(method, "icon") else None,
             variant=method.variant if hasattr(method, "variant") else None,
+            dialog=method.dialog if hasattr(method, "dialog") else None,
         )
 
     def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
@@ -274,6 +276,7 @@ class ActionModelAdminMixin:
                 "icon": action.icon,
                 "variant": action.variant,
                 "attrs": action.method.attrs,
+                "dialog": action.dialog,
                 "path": get_action_path(action),
             }
 

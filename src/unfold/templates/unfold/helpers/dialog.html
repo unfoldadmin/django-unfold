@@ -1,0 +1,58 @@
+{% load i18n unfold %}
+
+<div id="dialog">
+    <div class="absolute top-3.5 right-3.5 text-icon-action z-70" x-on:click="openModal = false">
+        <span class="material-symbols-outlined">close</span>
+    </div>
+
+    <form method="post" novalidate hx-post="{{ request.build_absolute_uri }}" hx-target="#dialog-form" hx-select="#dialog-form" hx-swap="outerHTML" hx-indicator="#dialog-preloader">
+        {% csrf_token %}
+
+        {% if dialog.title or dialog.description %}
+            <div class="border-base-200 flex flex-col gap-2 dark:border-base-700">
+                {% if dialog.title %}
+                    <h1 class="font-semibold text-base text-important tracking-tight">
+                        {{ dialog.title }}
+                    </h1>
+                {% endif %}
+
+                {% if dialog.description %}
+                    <p class="leading-relaxed">
+                        {{ dialog.description }}
+                    </p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div id="dialog-form" class="mb-6 {% if form.fields|length > 1 %}mt-6{% endif %}">
+            {{ form.render_before_template }}
+
+            <div class="flex flex-col gap-3 *:mb-0">
+                {% for field in form %}
+                    {% include "unfold/helpers/field.html" %}
+                {% endfor %}
+            </div>
+
+            {{ form.render_after_template }}
+        </div>
+
+        <div class="border-t border-base-200 flex flex-row justify-between -mx-6 px-6 -mb-3 pt-3 dark:border-base-700">
+            {% component "unfold/components/button.html" with variant="default" href="#" extra_attrs="x-on:click='openModal = false'" %}
+                {% trans "Cancel" %}
+            {% endcomponent %}
+
+            {% component "unfold/components/button.html" with submit=1 %}
+                <span id="dialog-preloader" class="items-center cursor-default justify-center hidden peer absolute inset-0 opacity-0 [&.htmx-request]:opacity-100 [&.htmx-request]:flex z-20">
+                    <span class="material-symbols-outlined animate-spin ">
+                        refresh
+                    </span>
+                </span>
+
+                <span class="[.htmx-request+&]:opacity-0 relative z-10">
+                    {% trans "Submit" as default_label %}
+                    {{ form_submit_text|default:default_label }}
+                </span>
+            {% endcomponent %}
+        </div>
+    </form>
+</div>

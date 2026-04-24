@@ -49,43 +49,7 @@
         {% endfor %}
     </div>
 
-    {% if sidebar_show_all_applications and app_list|length > 0 %}
-        <div class="mt-auto" x-data="{ openAllApplications: false }">
-            <a class="cursor-pointer flex items-center h-[64px] px-6 py-3 text-sm dark:text-font-default-dark hover:text-primary-600 dark:hover:text-primary-500" x-on:click="openAllApplications = !openAllApplications">
-                <span class="material-symbols-outlined md-18 mr-3">
-                    apps
-                </span>
-
-                <span>
-                    {% trans "All applications" %}
-                </span>
-            </a>
-
-            <div class="absolute bottom-0 left-0 right-0 top-0 z-50 md:left-72" x-cloak x-show="openAllApplications">
-                <div class="absolute bg-base-900/80 backdrop-blur-xs bottom-0 left-0 right-0 top-0 z-10 w-screen"></div>
-
-                <div class="bg-white flex flex-col h-full overflow-x-hidden overflow-y-auto py-5 px-8 relative text-sm w-80 z-20 dark:bg-base-900 dark:border-r dark:border-base-800" x-on:click.outside="openAllApplications = false" x-on:keydown.escape.window="openAllApplications = false" data-simplebar>
-                    {% for app in app_list %}
-                        <div class="mb-6 last:mb-0">
-                            <h2 class="mb-4 font-semibold text-font-important-light truncate dark:text-font-important-dark">
-                                {{ app.name }}
-                            </h2>
-
-                            <ul>
-                                {% for model in app.models %}
-                                    <li class="block mb-4 last:mb-0">
-                                        <a href="{{ model.admin_url }}" class="block truncate hover:text-primary-600 dark:hover:text-primary-500">
-                                            {{ model.name }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    {% include "unfold/helpers/app_list_all.html" %}
 {% else %}
     <p>
         {% trans "You don’t have permission to view or edit anything." as error_message %}

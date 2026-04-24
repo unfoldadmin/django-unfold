@@ -1,8 +1,6 @@
 {% load unfold %}
 
-{% if field.field.widget.input_type == "hidden" %}
-    {{ field }}
-{% elif field.field.widget.input_type == "checkbox" and field.field.widget|class_name != "UnfoldAdminCheckboxSelectMultipleWidget" %}
+{% if field.field.widget.input_type == "checkbox" and field.field.widget|class_name != "UnfoldAdminCheckboxSelectMultipleWidget" %}
     <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-4">
         <div class="flex flex-row gap-2 items-center">
             {{ field }}
@@ -14,6 +12,8 @@
 
         {% include "unfold/helpers/help_text.html" with help_text=field.help_text %}
     </div>
+{% elif field.field.widget.input_type == "hidden" %}
+    {{ field }}
 {% else %}
     <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-4">
         <div class="flex flex-col gap-2">

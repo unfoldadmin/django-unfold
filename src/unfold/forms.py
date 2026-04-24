@@ -18,6 +18,7 @@ from django.core.paginator import Page, Paginator
 from django.db.models import QuerySet
 from django.forms import BaseInlineFormSet
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 
@@ -263,3 +264,51 @@ class DatasetChangeListSearchForm(ChangeListSearchForm):
         self.fields = {
             search_var: forms.CharField(required=False, strip=False),
         }
+
+
+class BaseDialogForm(forms.Form):
+    form_before_template: str | None = None
+    form_after_template: str | None = None
+
+    _form_submitted = forms.BooleanField(
+        required=True, initial=True, widget=forms.HiddenInput
+    )
+
+    def __init__(
+        self,
+        request: HttpRequest,
+        object_id: int | str | None = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
+        self.request = request
+        self.object_id = object_id
+        super().__init__(*args, **kwargs)
+
+    def get_before_template_context(
+        self, request: HttpRequest, object_id: int | str | None = None
+    ) -> dict[str, Any]:
+        return {}
+
+    def get_after_template_context(
+        self, request: HttpRequest, object_id: int | str | None = None
+    ) -> dict[str, Any]:
+        return {}
+
+    def render_before_template(self) -> str:
+        if self.form_before_template:
+            return render_to_string(
+                self.form_before_template,
+                self.get_before_template_context(self.request, self.object_id),
+            )
+
+        return ""
+
+    def render_after_template(self) -> str:
+        if self.form_after_template:
+            return render_to_string(
+                self.form_after_template,
+                self.get_after_template_context(self.request, self.object_id),
+            )
+
+        return ""
