@@ -34,6 +34,12 @@
                 {{ item.form_field }}
 
                 {% include "unfold/helpers/form_errors.html" with errors=item.form_field.errors %}
+
+                {% if item.is_file %}
+                    <p class="mt-2 text-xs">
+                        {% trans "Current file" %}: <a href="{% get_media_prefix as MEDIA_URL %}{{ MEDIA_URL }}{{ item.value }}" target="_blank" class="text-link">{{ item.value }}</a>
+                    </p>
+                {% endif %}
             </td>
 
             <td>
