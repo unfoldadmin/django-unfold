@@ -1,7 +1,7 @@
 [project]
 name = "django-unfold"
 version = "0.90.0"
-description = "Modern Django admin theme"
+description = "Modern Django Admin"
 authors = []
 requires-python = ">=3.11,<4.0"
 readme = "README.md"
@@ -36,22 +36,22 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 
 [dependency-groups]
 dev = [
-    "django-constance>=4.3",
-    "django-guardian>=3.2",
-    "django-import-export>=4.3",
-    "django-location-field>=2.7",
-    "django-money>=3.5",
-    "django-simple-history>=3.11",
-    "django-stubs>=5.2",
-    "pillow>=12.1",
-    "pytest>=9.0",
-    "pytest-cov>=7.0",
-    "pytest-django>=4.11",
-    "pytest-factoryboy>=2.8",
-    "pytest-mock>=3.15",
-    "python-semantic-release>=10.5",
-    "six>=1.17",
-    "tox>=4.32",
+    "django-constance==4.3.5",
+    "django-guardian==3.3.1",
+    "django-import-export==4.4.0",
+    "django-location-field==2.7.3",
+    "django-money==3.6.0",
+    "django-simple-history==3.11.0",
+    "django-stubs==6.0.3",
+    "pillow==12.2.0",
+    "pytest==9.0.3",
+    "pytest-cov==7.1.0",
+    "pytest-django==4.12.0",
+    "pytest-factoryboy==2.8.1",
+    "pytest-mock==3.15.1",
+    "python-semantic-release==10.5.3",
+    "tox==4.53.0",
+    "six==1.17.0",
 ]
 
 [tool.uv]
