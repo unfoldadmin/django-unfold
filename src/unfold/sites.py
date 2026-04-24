@@ -17,15 +17,6 @@ from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 
 from unfold.dataclasses import DropdownItem, Favicon, SearchResult
-
-try:
-    from django.contrib.auth.decorators import login_not_required
-except ImportError:
-
-    def login_not_required(func: Callable) -> Callable:
-        return func
-
-
 from unfold.settings import get_config
 from unfold.utils import convert_color
 
