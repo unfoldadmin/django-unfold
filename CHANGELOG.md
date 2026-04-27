@@ -1,6 +1,40 @@
 # CHANGELOG
 
 
+## v0.91.0 (2026-04-27)
+
+### Bug Fixes
+
+- Constance show file link ([#1994](https://github.com/unfoldadmin/django-unfold/pull/1994),
+  [`0a1e0f4`](https://github.com/unfoldadmin/django-unfold/commit/0a1e0f4003ca49c0f86216c13456aa074081c3eb))
+
+- Django 6.1 template tag parameter
+  ([`96c9b68`](https://github.com/unfoldadmin/django-unfold/commit/96c9b68a64af6dee5955ff00955ec9d67e78173d))
+
+- Header title truncate ([#1987](https://github.com/unfoldadmin/django-unfold/pull/1987),
+  [`ac8b294`](https://github.com/unfoldadmin/django-unfold/commit/ac8b2940be27b41b3a931c1e8e6427842171c591))
+
+- Import/export guess format ([#1997](https://github.com/unfoldadmin/django-unfold/pull/1997),
+  [`bb2e6b0`](https://github.com/unfoldadmin/django-unfold/commit/bb2e6b06e0772efb56da37aed7b10083412580ba))
+
+- Inline errors display formatting ([#1990](https://github.com/unfoldadmin/django-unfold/pull/1990),
+  [`e12c7f2`](https://github.com/unfoldadmin/django-unfold/commit/e12c7f2947e19e9ca55e234adefa7b3823456877))
+
+- Tabs dropdown dark mode border ([#1991](https://github.com/unfoldadmin/django-unfold/pull/1991),
+  [`99c0786`](https://github.com/unfoldadmin/django-unfold/commit/99c0786a7cd66eee9fae32d8f01228ac7303f9b6))
+
+### Features
+
+- Action confirmation dialog ([#1898](https://github.com/unfoldadmin/django-unfold/pull/1898),
+  [`1fd4e7e`](https://github.com/unfoldadmin/django-unfold/commit/1fd4e7ec74f042a14f289c4b3cdaa61462af4a8b))
+
+- Command open in new tab shortcut ([#1986](https://github.com/unfoldadmin/django-unfold/pull/1986),
+  [`ade87eb`](https://github.com/unfoldadmin/django-unfold/commit/ade87ebf9ae34abb96b2baf9c3243f111c819d93))
+
+- Remove django 5.0 support ([#1981](https://github.com/unfoldadmin/django-unfold/pull/1981),
+  [`6112235`](https://github.com/unfoldadmin/django-unfold/commit/6112235254ce891cb6cdf437dee572ea6929a73b))
+
+
 ## v0.90.0 (2026-04-16)
 
 ### Bug Fixes
