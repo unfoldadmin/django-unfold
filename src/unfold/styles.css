@@ -9,7 +9,7 @@
   }
 }
 
-@source inline("aspect-square group-hover:block self-start font-bold bg-white/[.06] border-white/40 h-[64px] w-[65px]! left-[65px] {dark:,}text-white/{0..100..10} {dark:,}bg-white/{0..100..10} {dark:,}text-{base,primary}-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
+@source inline("aspect-square flex-1 group-hover:block self-start font-bold bg-white/[.06] border-white/40 h-[64px] w-[65px]! left-[65px] {dark:,}text-white/{0..100..10} {dark:,}bg-white/{0..100..10} {dark:,}text-{base,primary}-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
 @source inline("{-,}{top,bottom,left,right}-{1/2,{0..8}} {!,}leading-[38px] {lg:,}leading-{6..16} {md:,lg:,}text-{default,base,link,icon,subtle,important,transparent,lg,xl,2xl,3xl,4xl}");
 @source inline("bg-linear-to-{{t,r,b,l,tl,tr,bl,br}} {dark:,}{from,to}-{{{base,primary}-{50,{100..900..100},950}},white}");
 @source inline("rounded rounded-none rounded-[1px] rounded-{t,r,b,l} rounded-{t,r,b,l}-default rounded-{xs,sm,md,lg,xl,2xl,3xl,full,none}");
