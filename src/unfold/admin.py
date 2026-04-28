@@ -111,6 +111,19 @@ class ModelAdmin(
 
         return super().changelist_view(request, extra_context)
 
+    def changeform_view(
+        self,
+        request: HttpRequest,
+        object_id: str | None = None,
+        form_url: str = "",
+        extra_context: dict[str, Any] | None = None,
+    ) -> Any:
+        from unfold.forms import AdminForm, Fieldline
+
+        helpers.AdminForm = AdminForm
+        helpers.Fieldline = Fieldline
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
     def get_list_display(self, request: HttpRequest) -> list | tuple:
         list_display = super().get_list_display(request)
 
