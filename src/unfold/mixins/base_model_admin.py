@@ -2,7 +2,6 @@ import copy
 from typing import Any
 
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import (
@@ -17,7 +16,6 @@ from django.forms.fields import TypedChoiceField
 from django.forms.models import ModelChoiceField, ModelMultipleChoiceField
 from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest
-from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from unfold import widgets
@@ -25,6 +23,9 @@ from unfold.overrides import FORMFIELD_OVERRIDES
 
 
 class BaseModelAdminMixin(BaseModelAdmin):
+    # List of all db fields which are not available in autocomplete_fields
+    missing_autocomplete_fields: list[str] = []
+
     def __init__(self, model: type[models.Model], admin_site: AdminSite) -> None:
         overrides = copy.deepcopy(FORMFIELD_OVERRIDES)
 
@@ -147,12 +148,4 @@ class BaseModelAdminMixin(BaseModelAdmin):
         ):
             return
 
-        messages.warning(
-            request,
-            format_html(
-                _(
-                    'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
-                ),  # ty:ignore[invalid-argument-type]
-                field_name=db_field.name,
-            ),
-        )
+        self.missing_autocomplete_fields.append(db_field.name)
