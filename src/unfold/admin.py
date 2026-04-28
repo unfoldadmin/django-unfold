@@ -126,16 +126,17 @@ class ModelAdmin(
 
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
-        for missing_field in set(self.missing_autocomplete_fields):
-            messages.warning(
-                request,
-                format_html(
-                    _(
-                        'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
-                    ),  # ty:ignore[invalid-argument-type]
-                    field_name=missing_field,
-                ),
-            )
+        if request.method == "GET":
+            for missing_field in sorted(set(self.missing_autocomplete_fields)):
+                messages.warning(
+                    request,
+                    format_html(
+                        _(
+                            'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
+                        ),  # ty:ignore[invalid-argument-type]
+                        field_name=missing_field,
+                    ),
+                )
 
         return response
 
