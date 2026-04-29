@@ -31,8 +31,8 @@ from unfold.forms import (
 )
 from unfold.mixins import (
     ActionModelAdminMixin,
-    BaseModelAdminMixin,
     DatasetModelAdminMixin,
+    FormFieldModelAdminMixin,
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
@@ -49,7 +49,7 @@ checkbox = UnfoldBooleanWidget(
 
 
 class ModelAdmin(
-    BaseModelAdminMixin,
+    FormFieldModelAdminMixin,
     ActionModelAdminMixin,
     DatasetModelAdminMixin,
     NestedInlinesModelAdminMixin,
@@ -127,8 +127,8 @@ class ModelAdmin(
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
         if request.method == "GET":
-            for missing_field in sorted(set(self.missing_autocomplete_fields)):
-                messages.warning(
+            for missing_field in sorted(set(self._autocomplete_fields_missing)):
+                self.message_user(
                     request,
                     format_html(
                         _(
@@ -136,6 +136,7 @@ class ModelAdmin(
                         ),  # ty:ignore[invalid-argument-type]
                         field_name=missing_field,
                     ),
+                    messages.WARNING,
                 )
 
         return response
@@ -276,21 +277,21 @@ class BaseInlineMixin:
     tab = False
 
 
-class TabularInline(BaseInlineMixin, BaseModelAdminMixin, BaseTabularInline):
+class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):
     formset = PaginationInlineFormSet
 
 
-class StackedInline(BaseInlineMixin, BaseModelAdminMixin, BaseStackedInline):
+class StackedInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseStackedInline):
     formset = PaginationInlineFormSet
 
 
 class GenericStackedInline(
-    BaseInlineMixin, BaseModelAdminMixin, BaseGenericStackedInline
+    BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericStackedInline
 ):
     formset = PaginationGenericInlineFormSet
 
 
 class GenericTabularInline(
-    BaseInlineMixin, BaseModelAdminMixin, BaseGenericTabularInline
+    BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericTabularInline
 ):
     formset = PaginationGenericInlineFormSet

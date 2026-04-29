@@ -20,11 +20,13 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold import widgets
 from unfold.overrides import FORMFIELD_OVERRIDES
+from unfold.utils import get_setting_value
 
 
-class BaseModelAdminMixin(BaseModelAdmin):
+class FormFieldModelAdminMixin(BaseModelAdmin):
     # List of all db fields which are not available in autocomplete_fields
-    missing_autocomplete_fields: list[str] = []
+    _autocomplete_fields_missing: list[str] = []
+    autocomplete_fields_excluded_from_warnings: list[str] = []
 
     def __init__(self, model: type[models.Model], admin_site: AdminSite) -> None:
         overrides = copy.deepcopy(FORMFIELD_OVERRIDES)
@@ -120,7 +122,7 @@ class BaseModelAdminMixin(BaseModelAdmin):
 
         return formfield
 
-    def _check_autocomplete_field(
+    def _check_autocomplete_field(  # noqa: PLR0911
         self,
         db_field: Field,
         formfield: ModelChoiceField | ModelMultipleChoiceField | None,
@@ -128,6 +130,10 @@ class BaseModelAdminMixin(BaseModelAdmin):
     ) -> None:
         # Run only in debug mode
         if not settings.DEBUG:
+            return
+
+        # Show warnings only if enabled in UNFOLD settings
+        if get_setting_value("SHOW_UI_WARNINGS", request) is False:
             return
 
         # Field is already in autocomplete_fields
@@ -148,4 +154,8 @@ class BaseModelAdminMixin(BaseModelAdmin):
         ):
             return
 
-        self.missing_autocomplete_fields.append(db_field.name)
+        # Sometimes we want to exclude a field from the warnings
+        if db_field.name in self.autocomplete_fields_excluded_from_warnings:
+            return
+
+        self._autocomplete_fields_missing.append(db_field.name)
