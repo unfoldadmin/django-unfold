@@ -241,7 +241,7 @@ def get_setting_value(key: str, *args: Any, **kwargs: Any) -> Any:
     settings_name = kwargs.pop("settings_name", "UNFOLD")
     config = get_config(settings_name)
 
-    if key in config and config[key]:
+    if key in config:
         return resolve_setting_value(config[key], *args)
 
 

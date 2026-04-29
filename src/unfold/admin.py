@@ -2,6 +2,7 @@ from functools import update_wrapper
 from typing import Any
 
 from django import forms
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
@@ -36,6 +37,7 @@ from unfold.mixins import (
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
+from unfold.utils import get_setting_value
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
@@ -126,7 +128,11 @@ class ModelAdmin(
 
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
-        if request.method == "GET":
+        if (
+            request.method == "GET"
+            and settings.DEBUG
+            and get_setting_value("SHOW_UI_WARNINGS", request) is True
+        ):
             for missing_field in sorted(set(self._autocomplete_fields_missing)):
                 self.message_user(
                     request,

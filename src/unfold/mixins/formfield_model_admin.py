@@ -1,7 +1,6 @@
 import copy
 from typing import Any
 
-from django.conf import settings
 from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import (
@@ -20,7 +19,6 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold import widgets
 from unfold.overrides import FORMFIELD_OVERRIDES
-from unfold.utils import get_setting_value
 
 
 class FormFieldModelAdminMixin(BaseModelAdmin):
@@ -128,14 +126,6 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
         formfield: ModelChoiceField | ModelMultipleChoiceField | None,
         request: HttpRequest,
     ) -> None:
-        # Run only in debug mode
-        if not settings.DEBUG:
-            return
-
-        # Show warnings only if enabled in UNFOLD settings
-        if get_setting_value("SHOW_UI_WARNINGS", request) is False:
-            return
-
         # Field is already in autocomplete_fields
         if db_field.name in self.get_autocomplete_fields(request):
             return
@@ -158,4 +148,6 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
         if db_field.name in self.autocomplete_fields_excluded_from_warnings:
             return
 
-        self._autocomplete_fields_missing.append(db_field.name)
+        self._autocomplete_fields_missing.append(
+            f"{self.__class__.__name__}.{db_field.name}"
+        )
