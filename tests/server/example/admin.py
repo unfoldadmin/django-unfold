@@ -90,6 +90,7 @@ class UserTagInline(StackedInline):
     collapsible = True
     per_page = 10
     tab = True
+    readonly_fields = ["user"]
 
     def get_queryset(self, request, *args, **kwargs):
         qs = super().get_queryset(request, *args, **kwargs)
@@ -98,6 +99,7 @@ class UserTagInline(StackedInline):
 
 class InvoiceItemInline(TabularInline):
     model = InvoiceItem
+    raw_id_fields = ["invoice"]
 
 
 class UserInvoiceInline(TabularInline):
@@ -183,6 +185,9 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
         ProjectDataset,
     ]
     autocomplete_fields = ["tags"]
+    autocomplete_fields_excluded_from_warnings = [
+        "projects",
+    ]
     readonly_fields = [
         "custom_readonly_field",
         "another_readonly_field",

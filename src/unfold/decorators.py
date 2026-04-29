@@ -131,7 +131,7 @@ def display(
     boolean: bool | None = None,
     image: bool | None = None,
     ordering: str | Combinable | BaseExpression | None = None,
-    description: str | None = None,
+    description: str | Any | None = None,
     empty_value: str | None = None,
     dropdown: bool | None = None,
     label: bool | str | dict[str, str] | None = None,

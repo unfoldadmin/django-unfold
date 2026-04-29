@@ -1,7 +1,6 @@
 import copy
 from typing import Any
 
-from django.conf import settings
 from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import (
@@ -22,9 +21,10 @@ from unfold import widgets
 from unfold.overrides import FORMFIELD_OVERRIDES
 
 
-class BaseModelAdminMixin(BaseModelAdmin):
+class FormFieldModelAdminMixin(BaseModelAdmin):
     # List of all db fields which are not available in autocomplete_fields
-    missing_autocomplete_fields: list[str] = []
+    _autocomplete_fields_missing: list[str] = []
+    autocomplete_fields_excluded_from_warnings: list[str] = []
 
     def __init__(self, model: type[models.Model], admin_site: AdminSite) -> None:
         overrides = copy.deepcopy(FORMFIELD_OVERRIDES)
@@ -120,16 +120,12 @@ class BaseModelAdminMixin(BaseModelAdmin):
 
         return formfield
 
-    def _check_autocomplete_field(
+    def _check_autocomplete_field(  # noqa: PLR0911
         self,
         db_field: Field,
         formfield: ModelChoiceField | ModelMultipleChoiceField | None,
         request: HttpRequest,
     ) -> None:
-        # Run only in debug mode
-        if not settings.DEBUG:
-            return
-
         # Field is already in autocomplete_fields
         if db_field.name in self.get_autocomplete_fields(request):
             return
@@ -148,4 +144,10 @@ class BaseModelAdminMixin(BaseModelAdmin):
         ):
             return
 
-        self.missing_autocomplete_fields.append(db_field.name)
+        # Sometimes we want to exclude a field from the warnings
+        if db_field.name in self.autocomplete_fields_excluded_from_warnings:
+            return
+
+        self._autocomplete_fields_missing.append(
+            f"{self.__class__.__name__}.{db_field.name}"
+        )

@@ -2,6 +2,7 @@ from functools import update_wrapper
 from typing import Any
 
 from django import forms
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
@@ -31,11 +32,12 @@ from unfold.forms import (
 )
 from unfold.mixins import (
     ActionModelAdminMixin,
-    BaseModelAdminMixin,
     DatasetModelAdminMixin,
+    FormFieldModelAdminMixin,
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
+from unfold.utils import get_setting_value
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
@@ -49,7 +51,7 @@ checkbox = UnfoldBooleanWidget(
 
 
 class ModelAdmin(
-    BaseModelAdminMixin,
+    FormFieldModelAdminMixin,
     ActionModelAdminMixin,
     DatasetModelAdminMixin,
     NestedInlinesModelAdminMixin,
@@ -126,9 +128,13 @@ class ModelAdmin(
 
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
-        if request.method == "GET":
-            for missing_field in sorted(set(self.missing_autocomplete_fields)):
-                messages.warning(
+        if (
+            request.method == "GET"
+            and settings.DEBUG
+            and get_setting_value("SHOW_UI_WARNINGS", request) is True
+        ):
+            for missing_field in sorted(set(self._autocomplete_fields_missing)):
+                self.message_user(
                     request,
                     format_html(
                         _(
@@ -136,6 +142,7 @@ class ModelAdmin(
                         ),  # ty:ignore[invalid-argument-type]
                         field_name=missing_field,
                     ),
+                    messages.WARNING,
                 )
 
         return response
@@ -276,21 +283,21 @@ class BaseInlineMixin:
     tab = False
 
 
-class TabularInline(BaseInlineMixin, BaseModelAdminMixin, BaseTabularInline):
+class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):
     formset = PaginationInlineFormSet
 
 
-class StackedInline(BaseInlineMixin, BaseModelAdminMixin, BaseStackedInline):
+class StackedInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseStackedInline):
     formset = PaginationInlineFormSet
 
 
 class GenericStackedInline(
-    BaseInlineMixin, BaseModelAdminMixin, BaseGenericStackedInline
+    BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericStackedInline
 ):
     formset = PaginationGenericInlineFormSet
 
 
 class GenericTabularInline(
-    BaseInlineMixin, BaseModelAdminMixin, BaseGenericTabularInline
+    BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericTabularInline
 ):
     formset = PaginationGenericInlineFormSet
