@@ -14,9 +14,7 @@ def ui_warnings_callback_true(request):
 @override_settings(
     UNFOLD={
         **CONFIG_DEFAULTS,
-        **{
-            "SHOW_UI_WARNINGS": True,
-        },
+        "SHOW_UI_WARNINGS": True,
     }
 )
 def test_ui_warnings_not_in_debug_mode(admin_client):
@@ -29,9 +27,7 @@ def test_ui_warnings_not_in_debug_mode(admin_client):
     DEBUG=True,
     UNFOLD={
         **CONFIG_DEFAULTS,
-        **{
-            "SHOW_UI_WARNINGS": True,
-        },
+        "SHOW_UI_WARNINGS": True,
     },
 )
 def test_ui_warnings_enabled(admin_client):
@@ -44,9 +40,7 @@ def test_ui_warnings_enabled(admin_client):
     DEBUG=True,
     UNFOLD={
         **CONFIG_DEFAULTS,
-        **{
-            "SHOW_UI_WARNINGS": False,
-        },
+        "SHOW_UI_WARNINGS": False,
     },
 )
 def test_ui_warnings_disabled(admin_client):
