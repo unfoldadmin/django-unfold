@@ -3,7 +3,7 @@ from collections.abc import Generator
 from typing import Any
 
 from django import VERSION as DJANGO_VERSION
-from django.contrib.admin.options import IS_POPUP_VAR
+from django.contrib.admin.options import IS_FACETS_VAR, IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
     _coerce_field_name,  # ty:ignore[unresolved-import]
@@ -36,17 +36,10 @@ from unfold.utils import (
 from unfold.views import DatasetChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
-try:
-    from django.contrib.admin.options import IS_FACETS_VAR
-except ImportError:
-    # TODO: remove once django 4.x is not supported
-    IS_FACETS_VAR: str | None = None
-
 register = Library()
 
 LINK_CLASSES = [
-    "text-font-important-light",
-    "dark:text-font-important-dark",
+    "text-important",
 ]
 
 ROW_CLASSES = [

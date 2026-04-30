@@ -1,13 +1,9 @@
 from collections.abc import Iterator
-from typing import Any
 
 from django.contrib import admin
 from django.contrib.admin.views.main import ChangeList
-from django.db.models import Model
-from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
-from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin.mixins import (
     ChoicesMixin,
     MultiValueMixin,
@@ -50,17 +46,6 @@ class RadioFilter(admin.SimpleListFilter):
 class CheckboxFilter(RadioFilter):
     form_class = CheckboxForm
     all_option = None
-
-    # TODO: remove once django 4.x is not supported
-    def __init__(
-        self,
-        request: HttpRequest,
-        params: dict[str, Any],
-        model: type[Model],
-        model_admin: ModelAdmin,
-    ) -> None:
-        self.request = request
-        super().__init__(request, params, model, model_admin)
 
     def value(self) -> list[str] | None:  # ty:ignore[invalid-method-override]
         if self.parameter_name:
