@@ -141,6 +141,71 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@layer components {
+  .tooltip {
+    @apply relative;
+
+    @variant after {
+      @apply absolute bg-base-900 content-[attr(data-tooltip)] hidden py-1 px-1.5 rounded-default text-xs text-white left-1/2 -top-2 -translate-x-1/2 -translate-y-full whitespace-nowrap z-[1000];
+    }
+
+    @variant before {
+      @apply absolute border-4 border-base-900 left-1/2 -translate-x-1/2 h-0 hidden rotate-45 -top-3.5 w-0 z-[999];
+    }
+
+    @variant dark {
+      @variant after {
+        @apply bg-base-700;
+      }
+
+      @variant before {
+        @apply border-base-700;
+      }
+    }
+
+    @variant hover {
+      @variant after {
+        @apply block;
+      }
+
+      @variant before {
+        @apply block;
+      }
+    }
+  }
+
+  .tooltip-bottom {
+    @variant after {
+      @apply -bottom-2 top-auto translate-y-full;
+    }
+
+    @variant before {
+      @apply -bottom-3.5 top-auto;
+    }
+  }
+
+  .tooltip-left {
+    @variant after {
+      @apply -left-2 top-1/2 -translate-y-1/2 -translate-x-full;
+    }
+
+    @variant before {
+      @apply -left-3.5 top-1/2 -translate-y-1/2 translate-x-[0px];
+    }
+  }
+
+  .tooltip-right {
+    @variant after {
+      @apply left-auto -right-2 top-1/2 -translate-y-1/2 translate-x-full;
+    }
+
+    @variant before {
+      @apply left-auto -right-3.5 top-1/2 -translate-y-1/2 translate-x-[0px];
+    }
+  }
+}
+
+
 @utility scrollable-top {
   @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-base-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
 }
