@@ -1,11 +1,9 @@
 import copy
-import importlib
 import re
 from http import HTTPStatus
 
 import pytest
 from django import forms
-from django.contrib.admin import options
 from django.contrib.admin.helpers import AdminField
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
@@ -1335,14 +1333,6 @@ def test_tags_unfold_admin_actions(rf):
         )
     )
     assert "Run the selected action" in response
-
-
-def test_tags_is_facet_var_django42(monkeypatch):
-    monkeypatch.delattr(options, "IS_FACETS_VAR", raising=False)
-    from unfold.templatetags import unfold_list as unfold_list_modified
-
-    importlib.reload(unfold_list_modified)
-    assert unfold_list_modified.IS_FACETS_VAR is None
 
 
 @pytest.mark.django_db
