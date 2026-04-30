@@ -2,7 +2,6 @@ import json
 from collections.abc import Iterable, Mapping
 from typing import Any
 
-from django import VERSION as DJANGO_VERSION
 from django import template
 from django.contrib.admin.helpers import (
     AdminField,
@@ -220,23 +219,6 @@ def tabs(adminform: AdminForm) -> list[Fieldset]:
     return result
 
 
-def _flatten_context(context: Context) -> dict[str, Any]:
-    """
-    Return the template context as a single flat dict.
-    On Django < 5, context.flatten() can raise ValueError for contexts
-    created with context.new() (Django #35417). Use a safe implementation.
-    """
-    if DJANGO_VERSION >= (5, 0):
-        return context.flatten()
-    # TODO: remove once Django 4.2 is not supported
-    # Django 4.2: build flat dict by resolving keys, avoid context.flatten()
-    keys = set()
-    for d in context.dicts:
-        if hasattr(d, "keys"):
-            keys.update(d.keys())
-    return {k: context[k] for k in keys}
-
-
 class RenderComponentNode(template.Node):
     def __init__(
         self,
@@ -244,8 +226,8 @@ class RenderComponentNode(template.Node):
         nodelist: NodeList,
         extra_context: dict | None = None,
         include_context: bool = False,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ):
         self.template_name = template_name
         self.nodelist = nodelist
@@ -265,7 +247,7 @@ class RenderComponentNode(template.Node):
             ).get_context_data(**values)
 
         context_copy = context.new()
-        context_copy.update(_flatten_context(context))
+        context_copy.update(context.flatten())
         context_copy.update(values)
         children = self.nodelist.render(context_copy)
 
@@ -277,7 +259,7 @@ class RenderComponentNode(template.Node):
             )
 
         if self.include_context:
-            values.update(_flatten_context(context))
+            values.update(context.flatten())
 
         return render_to_string(self.template_name, request=request, context=values)
 
@@ -553,6 +535,9 @@ def changeform_data(adminform: AdminForm) -> str:
     for fieldset in adminform:
         for line in fieldset:
             for field in line:
+                if isinstance(field, AdminReadonlyField):
+                    continue
+
                 if isinstance(field.field, dict):
                     continue
 
@@ -572,9 +557,7 @@ def changeform_data(adminform: AdminForm) -> str:
 
 
 @register.filter
-def changeform_condition(
-    field: AdminField | AdminReadonlyField,
-) -> AdminField | AdminReadonlyField:
+def changeform_condition(field: AdminField) -> AdminField:
     if isinstance(field.field, dict):
         return field
 
@@ -631,38 +614,6 @@ def querystring_params(
     result[query_key] = query_value
 
     return result.urlencode()
-
-
-@register.simple_tag(name="unfold_querystring", takes_context=True)
-def unfold_querystring(context, *args, **kwargs):
-    """
-    Duplicated querystring template tag from Django core to allow
-    it using in Django 4.x.
-    TODO: Once 4.x is not supported, remove it.
-    """
-    if not args:
-        args = [context.request.GET]
-    params = QueryDict(mutable=True)
-    for d in [*args, kwargs]:
-        if not isinstance(d, Mapping):
-            raise TemplateSyntaxError(
-                "querystring requires mappings for positional arguments (got "
-                f"{d!r} instead)."
-            )
-        for key, value in d.items():
-            if not isinstance(key, str):
-                raise TemplateSyntaxError(
-                    f"querystring requires strings for mapping keys (got {key!r} "
-                    "instead)."
-                )
-            if value is None:
-                params.pop(key, None)
-            elif isinstance(value, Iterable) and not isinstance(value, str):
-                params.setlist(key, value)
-            else:
-                params[key] = value
-    query_string = params.urlencode() if params else ""
-    return f"?{query_string}"
 
 
 @register.simple_tag(takes_context=True)
