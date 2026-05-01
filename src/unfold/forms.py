@@ -1,6 +1,7 @@
 from collections.abc import Generator
 from typing import Any, Union
 
+from django import VERSION as DJANGO_VERSION
 from django import forms
 from django.contrib.admin.forms import (
     AdminAuthenticationForm,
@@ -91,10 +92,7 @@ class ActionForm(forms.Form):
 
 class AuthenticationForm(AdminAuthenticationForm):
     def __init__(
-        self,
-        request: HttpRequest | None = None,
-        *args,
-        **kwargs,
+        self, request: HttpRequest | None = None, *args: Any, **kwargs: Any
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
@@ -122,32 +120,32 @@ class UserCreationForm(BaseUserCreationForm):
 
 
 class UserChangeForm(BaseUserChangeForm):
-    def __init__(
-        self,
-        *args,
-        **kwargs,
-    ) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.fields["password"].widget = UnfoldReadOnlyPasswordHashWidget()
 
-        self.fields["password"].help_text = _(
-            "Raw passwords are not stored, so there is no way to see this "
-            "user’s password, but you can change the password using "
-            '<a href="{}" class="text-primary-600 dark:text-primary-500">this form</a>.'
-        )
+        # TODO: remove once django 5.2 is not supported
+        if DJANGO_VERSION <= (6, 0):
+            self.fields[
+                "password"
+            ].widget.template_name = "auth/widgets/read_only_password_hash_old.html"
 
-        password = self.fields.get("password")
-        if password:
-            password.help_text = mark_safe(password.help_text.format("../password/"))
+            self.fields["password"].help_text = _(
+                "Raw passwords are not stored, so there is no way to see this "
+                "user’s password, but you can change the password using "
+                '<a href="{}" class="text-primary-600 dark:text-primary-500">this form</a>.'
+            )
+
+            password = self.fields.get("password")
+
+            if password:
+                password.help_text = mark_safe(
+                    password.help_text.format("../password/")
+                )
 
 
 class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
-    def __init__(
-        self,
-        user: User,
-        *args,
-        **kwargs,
-    ) -> None:
+    def __init__(self, user: User, *args: Any, **kwargs: Any) -> None:
         super().__init__(user, *args, **kwargs)
 
         self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
@@ -155,7 +153,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
 
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
-    def __init__(self, user: User, *args, **kwargs) -> None:
+    def __init__(self, user: User, *args: Any, **kwargs: Any) -> None:
         super().__init__(user, *args, **kwargs)
 
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
@@ -208,8 +206,8 @@ class PaginationFormSetMixin:
         count: int | None = None,
         count_variant: str | None = None,
         provided_queryset: QuerySet | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ):
         self.request = request
         self.per_page = per_page
