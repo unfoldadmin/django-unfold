@@ -371,6 +371,7 @@ def fieldset_rows_classes(context: RequestContext) -> str:
             [
                 "border",
                 "border-base-200",
+                "overflow-hidden",
                 "rounded-default",
                 "shadow-xs",
                 "dark:border-base-800",
