@@ -1,6 +1,43 @@
 # CHANGELOG
 
 
+## v0.92.0 (2026-05-01)
+
+### Bug Fixes
+
+- Duplicate error messages for missing autocomplete fields
+  ([#2002](https://github.com/unfoldadmin/django-unfold/pull/2002),
+  [`802fc6e`](https://github.com/unfoldadmin/django-unfold/commit/802fc6e2d293463ab715beab0a0860f09f4d9dbc))
+
+- Import/export base errors ([#2007](https://github.com/unfoldadmin/django-unfold/pull/2007),
+  [`c57478e`](https://github.com/unfoldadmin/django-unfold/commit/c57478e35efa1de97f167cdb8c802060892894db))
+
+- Optional autocomplete fields warning
+  ([#2004](https://github.com/unfoldadmin/django-unfold/pull/2004),
+  [`394f322`](https://github.com/unfoldadmin/django-unfold/commit/394f322df5c79711ffaf59ca094ec7ae555b639c))
+
+- Readonly fields performance ([#2005](https://github.com/unfoldadmin/django-unfold/pull/2005),
+  [`0f64be7`](https://github.com/unfoldadmin/django-unfold/commit/0f64be7024f05f2aff6dab081d4bf6ee0c7200ad))
+
+- Warning messages error order ([#2003](https://github.com/unfoldadmin/django-unfold/pull/2003),
+  [`5f57371`](https://github.com/unfoldadmin/django-unfold/commit/5f57371c1b6a8503868f3fef5b4a7669f84e4840))
+
+### Features
+
+- Primary message type ([#2000](https://github.com/unfoldadmin/django-unfold/pull/2000),
+  [`83c7c1f`](https://github.com/unfoldadmin/django-unfold/commit/83c7c1f828f2fdcc0ceecaf82b92e8402e266228))
+
+- Remove python 3.11 ([#1999](https://github.com/unfoldadmin/django-unfold/pull/1999),
+  [`c8dba66`](https://github.com/unfoldadmin/django-unfold/commit/c8dba66d9495f48ba37f9e7a1bf87b056cb58beb))
+
+- Tooltip css class ([#2011](https://github.com/unfoldadmin/django-unfold/pull/2011),
+  [`0a1acd8`](https://github.com/unfoldadmin/django-unfold/commit/0a1acd8563962ff04cab42ab876fd334945a2ba2))
+
+- Warn about missing autocomplete fields
+  ([#2001](https://github.com/unfoldadmin/django-unfold/pull/2001),
+  [`fd9ff14`](https://github.com/unfoldadmin/django-unfold/commit/fd9ff14eb461e19789d31ba064039399895e75eb))
+
+
 ## v0.91.0 (2026-04-27)
 
 ### Bug Fixes

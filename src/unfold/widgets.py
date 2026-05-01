@@ -891,16 +891,6 @@ class UnfoldAdminPasswordToggleWidget(UnfoldAdminPasswordWidget):
     template_name = "unfold/widgets/password_toggle.html"
 
 
-class UnfoldAdminPasswordInput(UnfoldAdminPasswordWidget):
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        warnings.warn(
-            "UnfoldAdminPasswordInput is deprecated and will be removed in a future release. "
-            "Please use UnfoldAdminPasswordWidget instead.",
-            stacklevel=2,
-        )
-        super().__init__(*args, **kwargs)
-
-
 class AutocompleteWidgetMixin:
     is_required: bool
 
