@@ -17,6 +17,7 @@ from django.forms import ModelChoiceField, ModelMultipleChoiceField, Widget
 from django.forms.utils import flatatt
 from django.template.defaultfilters import linebreaksbr
 from django.urls import NoReverseMatch, reverse, reverse_lazy
+from django.utils.functional import cached_property
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeString, SafeText, mark_safe
@@ -37,11 +38,6 @@ if TYPE_CHECKING:
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     model_admin: "ModelAdmin"
-
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
-
-        self.resolved_field = self._resolve_field()
 
     def label_tag(self) -> SafeText:
         attrs = {
@@ -112,16 +108,17 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def _get_contents(self) -> SafeString:  # noqa: PLR0912
         from unfold.utils import _boolean_icon
 
-        field, obj, model_admin = (
+        field, _obj, _model_admin = (
             self.field["field"],
             self.form.instance,
             self.model_admin,
         )
-        try:
-            f, attr, value = lookup_field(field, obj, model_admin)
-        except (AttributeError, ValueError, ObjectDoesNotExist):
+
+        if isinstance(self.resolved_field, bool):
             result_repr = self.empty_value_display
         else:
+            f, attr, value = self.resolved_field
+
             if isinstance(field, str) and field in self.form.fields:
                 widget = self.form[field].field.widget
                 # This isn't elegant but suffices for contrib.auth's
@@ -176,7 +173,8 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
         return contents
 
-    def _resolve_field(self) -> bool | tuple[Field | None, str | None, Any]:
+    @cached_property
+    def resolved_field(self) -> bool | tuple[Field | None, str | None, Any]:
         field, obj, model_admin = (
             self.field["field"],
             self.form.instance,

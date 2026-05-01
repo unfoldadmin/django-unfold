@@ -9,7 +9,7 @@
   }
 }
 
-@source inline("aspect-square group-hover:block self-start font-bold bg-white/[.06] border-white/40 h-[64px] w-[65px]! left-[65px] {dark:,}text-white/{0..100..10} {dark:,}bg-white/{0..100..10} {dark:,}text-{base,primary}-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
+@source inline("aspect-square flex-1 group-hover:block self-start font-bold bg-white/[.06] border-white/40 h-[64px] w-[65px]! left-[65px] {dark:,}text-white/{0..100..10} {dark:,}bg-white/{0..100..10} {dark:,}text-{base,primary}-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
 @source inline("{-,}{top,bottom,left,right}-{1/2,{0..8}} {!,}leading-[38px] {lg:,}leading-{6..16} {md:,lg:,}text-{default,base,link,icon,subtle,important,transparent,lg,xl,2xl,3xl,4xl}");
 @source inline("bg-linear-to-{{t,r,b,l,tl,tr,bl,br}} {dark:,}{from,to}-{{{base,primary}-{50,{100..900..100},950}},white}");
 @source inline("rounded rounded-none rounded-[1px] rounded-{t,r,b,l} rounded-{t,r,b,l}-default rounded-{xs,sm,md,lg,xl,2xl,3xl,full,none}");
@@ -101,6 +101,10 @@
   @apply text-base-400 dark:text-base-500;
 }
 
+@utility text-icon-action {
+  @apply cursor-pointer text-base-400 dark:text-base-500 hover:text-base-700 dark:hover:text-base-200;
+}
+
 @utility text-link {
   @apply text-primary-600 dark:text-primary-500;
 }
@@ -136,6 +140,71 @@
   -moz-font-feature-settings: 'liga';
   -moz-osx-font-smoothing: grayscale;
 }
+
+@layer components {
+  .tooltip {
+    @apply relative;
+
+    @variant after {
+      @apply absolute bg-base-900 content-[attr(data-tooltip)] hidden py-1 px-1.5 rounded-default text-xs text-white left-1/2 -top-2 -translate-x-1/2 -translate-y-full whitespace-nowrap z-[1000];
+    }
+
+    @variant before {
+      @apply absolute border-4 border-base-900 left-1/2 -translate-x-1/2 h-0 hidden rotate-45 -top-3.5 w-0 z-[999];
+    }
+
+    @variant dark {
+      @variant after {
+        @apply bg-base-700;
+      }
+
+      @variant before {
+        @apply border-base-700;
+      }
+    }
+
+    @variant hover {
+      @variant after {
+        @apply block;
+      }
+
+      @variant before {
+        @apply block;
+      }
+    }
+  }
+
+  .tooltip-bottom {
+    @variant after {
+      @apply -bottom-2 top-auto translate-y-full;
+    }
+
+    @variant before {
+      @apply -bottom-3.5 top-auto;
+    }
+  }
+
+  .tooltip-left {
+    @variant after {
+      @apply -left-2 top-1/2 -translate-y-1/2 -translate-x-full;
+    }
+
+    @variant before {
+      @apply -left-3.5 top-1/2 -translate-y-1/2 translate-x-[0px];
+    }
+  }
+
+  .tooltip-right {
+    @variant after {
+      @apply left-auto -right-2 top-1/2 -translate-y-1/2 translate-x-full;
+    }
+
+    @variant before {
+      @apply left-auto -right-3.5 top-1/2 -translate-y-1/2 translate-x-[0px];
+    }
+  }
+}
+
 
 @utility scrollable-top {
   @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-base-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
@@ -174,25 +243,6 @@
  *******************************************************/
 input[type="search"]::-webkit-search-cancel-button {
   @apply z-10 dark:invert;
-}
-
-/*******************************************************
- Select
- *******************************************************/
-select:not([class*="bg-none"]):not([multiple]) {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3e%3cpath fill='#6B7280' d='M24 31.4 11.3 18.7l2.85-2.8L24 25.8l9.85-9.85 2.85 2.8Z'/%3e%3c/svg%3e");
-  background-position: right 0.7rem center;
-  background-repeat: no-repeat;
-  background-size: 1.125rem 1.125rem;
-}
-
-#changelist-actions select:not([class*="bg-none"]):not([multiple]) {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3e%3cpath fill='#ffffff' d='M24 31.4 11.3 18.7l2.85-2.8L24 25.8l9.85-9.85 2.85 2.8Z'/%3e%3c/svg%3e");
-}
-
-select:after {
-  content: "";
-  display: block;
 }
 
 /*******************************************************
@@ -717,6 +767,17 @@ div.djangoql-completion .syntax-help {
 .djangoql-toggle {
   @apply appearance-none bg-white block border border-base-300 cursor-pointer h-4 min-w-4 relative rounded-[4px] shadow-xs w-4 hover:border-base-400 dark:bg-base-700 dark:border-base-500 dark:checked:after:text-white focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 after:absolute after:content-['check\_small'] after:flex! after:h-4 after:items-center after:justify-center after:leading-none after:material-symbols-outlined after:-ml-px after:-mt-px after:text-white after:transition-all after:w-4 dark:after:text-base-700 checked:bg-primary-600 dark:checked:bg-primary-600 checked:border-primary-600 dark:checked:border-primary-600 checked:transition-all checked:hover:border-primary-600;
   @apply relative -ml-4.5;
+}
+
+/*******************************************************
+ Django Import Export
+ *******************************************************/
+.import-preview-table ins {
+  @apply !bg-green-100 !no-underline text-green-700 dark:!bg-green-500/20 dark:!text-green-400;
+}
+
+.import-preview-table del {
+  @apply !bg-red-100 !no-underline text-red-700 dark:!bg-red-500/20 dark:!text-red-400;
 }
 
 /*******************************************************

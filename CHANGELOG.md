@@ -1,6 +1,152 @@
 # CHANGELOG
 
 
+## v0.92.0 (2026-05-01)
+
+### Bug Fixes
+
+- Duplicate error messages for missing autocomplete fields
+  ([#2002](https://github.com/unfoldadmin/django-unfold/pull/2002),
+  [`802fc6e`](https://github.com/unfoldadmin/django-unfold/commit/802fc6e2d293463ab715beab0a0860f09f4d9dbc))
+
+- Import/export base errors ([#2007](https://github.com/unfoldadmin/django-unfold/pull/2007),
+  [`c57478e`](https://github.com/unfoldadmin/django-unfold/commit/c57478e35efa1de97f167cdb8c802060892894db))
+
+- Optional autocomplete fields warning
+  ([#2004](https://github.com/unfoldadmin/django-unfold/pull/2004),
+  [`394f322`](https://github.com/unfoldadmin/django-unfold/commit/394f322df5c79711ffaf59ca094ec7ae555b639c))
+
+- Readonly fields performance ([#2005](https://github.com/unfoldadmin/django-unfold/pull/2005),
+  [`0f64be7`](https://github.com/unfoldadmin/django-unfold/commit/0f64be7024f05f2aff6dab081d4bf6ee0c7200ad))
+
+- Warning messages error order ([#2003](https://github.com/unfoldadmin/django-unfold/pull/2003),
+  [`5f57371`](https://github.com/unfoldadmin/django-unfold/commit/5f57371c1b6a8503868f3fef5b4a7669f84e4840))
+
+### Features
+
+- Primary message type ([#2000](https://github.com/unfoldadmin/django-unfold/pull/2000),
+  [`83c7c1f`](https://github.com/unfoldadmin/django-unfold/commit/83c7c1f828f2fdcc0ceecaf82b92e8402e266228))
+
+- Remove python 3.11 ([#1999](https://github.com/unfoldadmin/django-unfold/pull/1999),
+  [`c8dba66`](https://github.com/unfoldadmin/django-unfold/commit/c8dba66d9495f48ba37f9e7a1bf87b056cb58beb))
+
+- Tooltip css class ([#2011](https://github.com/unfoldadmin/django-unfold/pull/2011),
+  [`0a1acd8`](https://github.com/unfoldadmin/django-unfold/commit/0a1acd8563962ff04cab42ab876fd334945a2ba2))
+
+- Warn about missing autocomplete fields
+  ([#2001](https://github.com/unfoldadmin/django-unfold/pull/2001),
+  [`fd9ff14`](https://github.com/unfoldadmin/django-unfold/commit/fd9ff14eb461e19789d31ba064039399895e75eb))
+
+
+## v0.91.0 (2026-04-27)
+
+### Bug Fixes
+
+- Constance show file link ([#1994](https://github.com/unfoldadmin/django-unfold/pull/1994),
+  [`0a1e0f4`](https://github.com/unfoldadmin/django-unfold/commit/0a1e0f4003ca49c0f86216c13456aa074081c3eb))
+
+- Django 6.1 template tag parameter
+  ([`96c9b68`](https://github.com/unfoldadmin/django-unfold/commit/96c9b68a64af6dee5955ff00955ec9d67e78173d))
+
+- Header title truncate ([#1987](https://github.com/unfoldadmin/django-unfold/pull/1987),
+  [`ac8b294`](https://github.com/unfoldadmin/django-unfold/commit/ac8b2940be27b41b3a931c1e8e6427842171c591))
+
+- Import/export guess format ([#1997](https://github.com/unfoldadmin/django-unfold/pull/1997),
+  [`bb2e6b0`](https://github.com/unfoldadmin/django-unfold/commit/bb2e6b06e0772efb56da37aed7b10083412580ba))
+
+- Inline errors display formatting ([#1990](https://github.com/unfoldadmin/django-unfold/pull/1990),
+  [`e12c7f2`](https://github.com/unfoldadmin/django-unfold/commit/e12c7f2947e19e9ca55e234adefa7b3823456877))
+
+- Tabs dropdown dark mode border ([#1991](https://github.com/unfoldadmin/django-unfold/pull/1991),
+  [`99c0786`](https://github.com/unfoldadmin/django-unfold/commit/99c0786a7cd66eee9fae32d8f01228ac7303f9b6))
+
+### Features
+
+- Action confirmation dialog ([#1898](https://github.com/unfoldadmin/django-unfold/pull/1898),
+  [`1fd4e7e`](https://github.com/unfoldadmin/django-unfold/commit/1fd4e7ec74f042a14f289c4b3cdaa61462af4a8b))
+
+- Command open in new tab shortcut ([#1986](https://github.com/unfoldadmin/django-unfold/pull/1986),
+  [`ade87eb`](https://github.com/unfoldadmin/django-unfold/commit/ade87ebf9ae34abb96b2baf9c3243f111c819d93))
+
+- Remove django 5.0 support ([#1981](https://github.com/unfoldadmin/django-unfold/pull/1981),
+  [`6112235`](https://github.com/unfoldadmin/django-unfold/commit/6112235254ce891cb6cdf437dee572ea6929a73b))
+
+
+## v0.90.0 (2026-04-16)
+
+### Bug Fixes
+
+- File input active area ([#1978](https://github.com/unfoldadmin/django-unfold/pull/1978),
+  [`dacdbe7`](https://github.com/unfoldadmin/django-unfold/commit/dacdbe745a487347ba3a4eaf28f0318298be808a))
+
+- File input layout ([#1977](https://github.com/unfoldadmin/django-unfold/pull/1977),
+  [`f8700b6`](https://github.com/unfoldadmin/django-unfold/commit/f8700b61127ba54802a0f3d2fc1c883c9b15f5a4))
+
+- Import/export diff styles ([#1979](https://github.com/unfoldadmin/django-unfold/pull/1979),
+  [`1d789e0`](https://github.com/unfoldadmin/django-unfold/commit/1d789e01048579c887a5ac65a3a469bd54752b0d))
+
+- Import/export ui ([#1971](https://github.com/unfoldadmin/django-unfold/pull/1971),
+  [`f2598ef`](https://github.com/unfoldadmin/django-unfold/commit/f2598efdf1576701e705337628b91e59903c5a9e))
+
+- Import/export validation messages
+  ([#1980](https://github.com/unfoldadmin/django-unfold/pull/1980),
+  [`2abda71`](https://github.com/unfoldadmin/django-unfold/commit/2abda71bb930ec350ae7a5f77a33ae6dc0f65cea))
+
+### Features
+
+- Remove django 4.2 support ([#1966](https://github.com/unfoldadmin/django-unfold/pull/1966),
+  [`2d7615d`](https://github.com/unfoldadmin/django-unfold/commit/2d7615dde8e9cd33736d7a0ac189b723089e3d89))
+
+
+## v0.89.0 (2026-04-09)
+
+### Bug Fixes
+
+- Avatar sizes ([#1969](https://github.com/unfoldadmin/django-unfold/pull/1969),
+  [`3b87344`](https://github.com/unfoldadmin/django-unfold/commit/3b87344f0029f5292104a400083144044fe432c7))
+
+- Improved prose styles ([#1968](https://github.com/unfoldadmin/django-unfold/pull/1968),
+  [`b08533d`](https://github.com/unfoldadmin/django-unfold/commit/b08533d72b49693c5bbc772dc815358a6c39605d))
+
+### Features
+
+- Inline before/after template ([#1967](https://github.com/unfoldadmin/django-unfold/pull/1967),
+  [`e645f55`](https://github.com/unfoldadmin/django-unfold/commit/e645f55b94d429a1ae1094dbca88396d1c393dba))
+
+
+## v0.88.0 (2026-04-07)
+
+### Bug Fixes
+
+- Button hovers ([#1950](https://github.com/unfoldadmin/django-unfold/pull/1950),
+  [`e4e0571`](https://github.com/unfoldadmin/django-unfold/commit/e4e0571985a192923de339df768efa53ed7e2447))
+
+- Button icon margin ([#1952](https://github.com/unfoldadmin/django-unfold/pull/1952),
+  [`f711bf6`](https://github.com/unfoldadmin/django-unfold/commit/f711bf620bef0a184270d8062489190eec04f0cd))
+
+- Enable dateTimeShortcutsOverlay for initial DOM
+  ([#1947](https://github.com/unfoldadmin/django-unfold/pull/1947),
+  [`f816929`](https://github.com/unfoldadmin/django-unfold/commit/f8169295a581045de30779b3f0d7f469bd175c5e))
+
+- Remove unbound template blocks ([#1940](https://github.com/unfoldadmin/django-unfold/pull/1940),
+  [`2504f15`](https://github.com/unfoldadmin/django-unfold/commit/2504f15991db8c1dabba3ba484646c4b57eb2c2d))
+
+- Remove unused redirect params ([#1965](https://github.com/unfoldadmin/django-unfold/pull/1965),
+  [`c90a7f0`](https://github.com/unfoldadmin/django-unfold/commit/c90a7f07ff576185873bc959b3e7f9f7f47d6aa2))
+
+### Features
+
+- Enable compressed fields by default
+  ([#1949](https://github.com/unfoldadmin/django-unfold/pull/1949),
+  [`a09e54c`](https://github.com/unfoldadmin/django-unfold/commit/a09e54cc09462a021e1c41ed99565fc95867ef73))
+
+- New lg button size ([#1951](https://github.com/unfoldadmin/django-unfold/pull/1951),
+  [`2f4ef16`](https://github.com/unfoldadmin/django-unfold/commit/2f4ef16bbdd54c2c57f4dfbcd15f29668e0bd098))
+
+- Table component attrs ([#1957](https://github.com/unfoldadmin/django-unfold/pull/1957),
+  [`017dd12`](https://github.com/unfoldadmin/django-unfold/commit/017dd12d50924efcb3079c9631f3d39a158ae107))
+
+
 ## v0.87.0 (2026-03-25)
 
 ### Bug Fixes

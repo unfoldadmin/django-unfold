@@ -14,6 +14,24 @@ def test_actions_list_anonymous(client):
     )
     assert response.status_code == HTTPStatus.OK
     assert response.wsgi_request.path == "/admin/login/"
+    assert "Changelist action successfully executed" not in response.content.decode()
+
+    response = client.post(
+        reverse_lazy("admin:example_actionuser_changelist_action"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert response.wsgi_request.path == "/admin/login/"
+
+
+@pytest.mark.django_db
+def test_actions_list_admin(admin_client):
+    response = admin_client.get(
+        reverse_lazy("admin:example_actionuser_changelist_action"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "Changelist action successfully executed" in response.content.decode()
 
 
 @pytest.mark.django_db

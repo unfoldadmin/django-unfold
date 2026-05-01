@@ -11,21 +11,12 @@ from django.core.paginator import Paginator
 from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
-from django.urls import URLPattern, path, reverse, reverse_lazy
+from django.urls import URLPattern, URLResolver, path, reverse, reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
 
 from unfold.dataclasses import DropdownItem, Favicon, SearchResult
-
-try:
-    from django.contrib.auth.decorators import login_not_required
-except ImportError:
-
-    def login_not_required(func: Callable) -> Callable:
-        return func
-
-
 from unfold.settings import get_config
 from unfold.utils import convert_color
 
@@ -46,7 +37,7 @@ class UnfoldAdminSite(AdminSite):
         elif self.login_form is None:
             self.login_form = AuthenticationForm
 
-    def get_urls(self) -> list[URLPattern]:
+    def get_urls(self) -> list[URLResolver | URLPattern]:
         extra_urls = []
 
         if hasattr(self, "extra_urls") and callable(self.extra_urls):
@@ -248,7 +239,7 @@ class UnfoldAdminSite(AdminSite):
 
     def search(
         self, request: HttpRequest, extra_context: dict[str, Any] | None = None
-    ) -> TemplateResponse:
+    ) -> TemplateResponse | HttpResponse:
         start_time = time.time()
 
         CACHE_TIMEOUT = 5 * 60
@@ -328,7 +319,7 @@ class UnfoldAdminSite(AdminSite):
 
     def password_change(
         self, request: HttpRequest, extra_context: dict[str, Any] | None = None
-    ) -> HttpResponse:
+    ) -> TemplateResponse:
         from django.contrib.auth.views import PasswordChangeView
 
         from unfold.forms import AdminOwnPasswordChangeForm
@@ -367,7 +358,7 @@ class UnfoldAdminSite(AdminSite):
         return results
 
     def _get_navigation_items(
-        self, request: HttpRequest, items: list[dict], tabs: list[dict] = None
+        self, request: HttpRequest, items: list[dict], tabs: list[dict] | None = None
     ) -> list:
         allowed_items = []
 
@@ -535,7 +526,7 @@ class UnfoldAdminSite(AdminSite):
 
         return False
 
-    def _get_config(self, key: str, *args) -> Any:
+    def _get_config(self, key: str, *args: Any) -> Any:
         config = get_config(self.settings_name)
 
         if key in config and config[key]:
@@ -555,7 +546,7 @@ class UnfoldAdminSite(AdminSite):
 
         return images
 
-    def _get_colors(self, key: str, *args) -> dict[str, dict[str, str]]:
+    def _get_colors(self, key: str, *args: Any) -> dict[str, dict[str, str]]:
         colors = self._get_config(key, *args)
 
         for name, weights in colors.items():
@@ -567,7 +558,7 @@ class UnfoldAdminSite(AdminSite):
 
         return colors
 
-    def _get_list(self, key: str, *args) -> list[Any]:
+    def _get_list(self, key: str, *args: Any) -> list[Any]:
         items = get_config(self.settings_name)[key]
 
         if isinstance(items, list):
@@ -575,7 +566,7 @@ class UnfoldAdminSite(AdminSite):
 
         return []
 
-    def _get_favicons(self, key: str, *args) -> list[Favicon]:
+    def _get_favicons(self, key: str, *args: Any) -> list[Favicon]:
         favicons = self._get_config(key, *args)
 
         if not favicons:
@@ -591,7 +582,7 @@ class UnfoldAdminSite(AdminSite):
             for item in favicons
         ]
 
-    def _get_site_dropdown_items(self, key: str, *args) -> list[dict[str, Any]]:
+    def _get_site_dropdown_items(self, key: str, *args: Any) -> list[DropdownItem]:
         items = self._get_config(key, *args)
 
         if not items:

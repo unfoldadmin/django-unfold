@@ -2,6 +2,8 @@ from functools import update_wrapper
 from typing import Any, TypedDict
 
 from django import forms
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
@@ -15,9 +17,8 @@ from django.contrib.contenttypes.admin import (
 )
 from django.db.models import BLANK_CHOICE_DASH, Model
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.urls import URLPattern, path
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
@@ -31,12 +32,12 @@ from unfold.forms import (
 )
 from unfold.mixins import (
     ActionModelAdminMixin,
-    BaseModelAdminMixin,
     DatasetModelAdminMixin,
+    FormFieldModelAdminMixin,
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
-from unfold.typing import FieldsetsType
+from unfold.utils import get_setting_value
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
@@ -55,7 +56,7 @@ class ListFilterOptionsItem(TypedDict):
 
 
 class ModelAdmin(
-    BaseModelAdminMixin,
+    FormFieldModelAdminMixin,
     ActionModelAdminMixin,
     DatasetModelAdminMixin,
     NestedInlinesModelAdminMixin,
@@ -109,7 +110,7 @@ class ModelAdmin(
 
     def changelist_view(
         self, request: HttpRequest, extra_context: dict[str, str] | None = None
-    ) -> TemplateResponse:
+    ) -> HttpResponse:
         self.request = request
 
         if self.ordering_field and self.ordering_field not in self.list_editable:
@@ -118,6 +119,39 @@ class ModelAdmin(
             self.list_editable = list_editable
 
         return super().changelist_view(request, extra_context)
+
+    def changeform_view(
+        self,
+        request: HttpRequest,
+        object_id: str | None = None,
+        form_url: str = "",
+        extra_context: dict[str, Any] | None = None,
+    ) -> Any:
+        from unfold.forms import AdminForm, Fieldline
+
+        helpers.AdminForm = AdminForm  # ty:ignore
+        helpers.Fieldline = Fieldline  # ty:ignore
+
+        response = super().changeform_view(request, object_id, form_url, extra_context)
+
+        if (
+            request.method == "GET"
+            and settings.DEBUG
+            and get_setting_value("SHOW_UI_WARNINGS", request) is True
+        ):
+            for missing_field in sorted(set(self._autocomplete_fields_missing)):
+                self.message_user(
+                    request,
+                    format_html(
+                        _(
+                            'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
+                        ),  # ty:ignore[invalid-argument-type]
+                        field_name=missing_field,
+                    ),
+                    messages.WARNING,
+                )
+
+        return response
 
     def get_list_display(self, request: HttpRequest) -> list | tuple:
         list_display = super().get_list_display(request)
@@ -132,7 +166,7 @@ class ModelAdmin(
 
     def get_fieldsets(
         self, request: HttpRequest, obj: Model | None = None
-    ) -> FieldsetsType:
+    ) -> list | tuple:
         if not obj and self.add_fieldsets:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
@@ -216,20 +250,6 @@ class ModelAdmin(
     def action_checkbox(self, obj: Model) -> str:
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
-    def response_change(self, request: HttpRequest, obj: Model) -> HttpResponse:
-        res = super().response_change(request, obj)
-        if "next" in request.GET:
-            return redirect(request.GET["next"])
-        return res
-
-    def response_add(
-        self, request: HttpRequest, obj: Model, post_url_continue: str | None = None
-    ) -> HttpResponse:
-        res = super().response_add(request, obj, post_url_continue)
-        if "next" in request.GET:
-            return redirect(request.GET["next"])
-        return res
-
     def get_changelist(self, request: HttpRequest, **kwargs: Any) -> ChangeList:
         return ChangeList
 
@@ -269,21 +289,21 @@ class BaseInlineMixin:
     tab = False
 
 
-class TabularInline(BaseInlineMixin, BaseModelAdminMixin, BaseTabularInline):
+class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):
     formset = PaginationInlineFormSet
 
 
-class StackedInline(BaseInlineMixin, BaseModelAdminMixin, BaseStackedInline):
+class StackedInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseStackedInline):
     formset = PaginationInlineFormSet
 
 
 class GenericStackedInline(
-    BaseInlineMixin, BaseModelAdminMixin, BaseGenericStackedInline
+    BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericStackedInline
 ):
     formset = PaginationGenericInlineFormSet
 
 
 class GenericTabularInline(
-    BaseInlineMixin, BaseModelAdminMixin, BaseGenericTabularInline
+    BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericTabularInline
 ):
     formset = PaginationGenericInlineFormSet

@@ -1,20 +1,24 @@
+from django import forms
 from django.contrib import admin, messages
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from django.core.validators import EMPTY_VALUES
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.html import format_html
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
+from import_export.resources import ModelResource
 
 from example.models import (
     ActionUser,
     ApprovalChoices,
     Category,
     ColorChoices,
+    DialogActionUser,
     FilterUser,
     Invoice,
     InvoiceItem,
@@ -63,13 +67,19 @@ from unfold.contrib.import_export.forms import (
 from unfold.contrib.inlines.admin import NonrelatedTabularInline
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
-from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
+from unfold.forms import (
+    AdminPasswordChangeForm,
+    BaseDialogForm,
+    UserChangeForm,
+    UserCreationForm,
+)
 from unfold.paginator import InfinitePaginator
 from unfold.sections import TableSection, TemplateSection
 from unfold.widgets import (
     UnfoldAdminCheckboxSelectMultipleWidget,
     UnfoldAdminLocationWidget,
     UnfoldAdminSelect2Widget,
+    UnfoldAdminTextInputWidget,
 )
 
 admin.site.unregister(Group)
@@ -80,6 +90,7 @@ class UserTagInline(StackedInline):
     collapsible = True
     per_page = 10
     tab = True
+    readonly_fields = ["user"]
 
     def get_queryset(self, request, *args, **kwargs):
         qs = super().get_queryset(request, *args, **kwargs)
@@ -88,6 +99,7 @@ class UserTagInline(StackedInline):
 
 class InvoiceItemInline(TabularInline):
     model = InvoiceItem
+    raw_id_fields = ["invoice"]
 
 
 class UserInvoiceInline(TabularInline):
@@ -148,10 +160,23 @@ class ProjectNonrelatedInline(NonrelatedTabularInline):
         pass
 
 
+class UserAnotherResource(ModelResource):
+    class Meta:
+        model = User
+        fields = ["username", "last_name"]
+
+
+class UserResource(ModelResource):
+    class Meta:
+        model = User
+        fields = ["username", "first_name"]
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
+    resource_classes = [UserResource, UserAnotherResource]
     form = ExtendedUserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
@@ -160,6 +185,9 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
         ProjectDataset,
     ]
     autocomplete_fields = ["tags"]
+    autocomplete_fields_excluded_from_warnings = [
+        "projects",
+    ]
     readonly_fields = [
         "custom_readonly_field",
         "another_readonly_field",
@@ -438,6 +466,191 @@ class FilterUserAdmin(UserAdmin):
             },
         ),
     ]
+
+
+class DialogActionForm(BaseDialogForm):
+    confirm = forms.CharField(
+        label="Type 'CONFIRM' to proceed", widget=UnfoldAdminTextInputWidget
+    )
+
+    def clean_confirm(self):
+        if self.cleaned_data["confirm"] != "CONFIRM":
+            raise forms.ValidationError("You must confirm to proceed.")
+
+        return self.cleaned_data["confirm"]
+
+
+@admin.register(DialogActionUser)
+class DialogActionsUserAdmin(BaseUserAdmin, ModelAdmin):
+    actions_list = [
+        "changelist_dialog_action_without_custom_form",
+        "changelist_dialog_action_with_custom_form",
+        "changelist_dialog_action_with_permissions_true",
+        "changelist_dialog_action_with_permissions_false",
+    ]
+    actions_row = [
+        "row_dialog_action_without_custom_form",
+        "row_dialog_action_with_custom_form",
+    ]
+    actions_detail = [
+        "changeform_dialog_action_without_custom_form",
+        "changeform_dialog_action_with_custom_form",
+    ]
+
+    @action(
+        description="Dialog action",
+        dialog={
+            "title": "Changelist dialog action",
+            "description": "This is a dialog action",
+        },
+    )
+    def changeform_dialog_action_without_custom_form(self, request, form, object_id):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    @action(
+        description="Dialog action with form",
+        dialog={
+            "title": "Changelist dialog action with custom form",
+            "description": "This is a dialog action",
+            "form_class": DialogActionForm,
+        },
+    )
+    def changeform_dialog_action_with_custom_form(self, request, form, object_id):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    @action(
+        description="Dialog action",
+        dialog={
+            "title": "Changelist dialog action",
+            "description": "This is a dialog action",
+        },
+    )
+    def changelist_dialog_action_without_custom_form(self, request, form):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    @action(
+        description="Dialog action with permissions true",
+        permissions=["changelist_dialog_action_with_permissions_true"],
+        dialog={
+            "title": "Changelist dialog action with permissions true",
+            "description": "This is a dialog action with permissions true",
+        },
+    )
+    def changelist_dialog_action_with_permissions_true(self, request, form):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    def has_changelist_dialog_action_with_permissions_true_permission(self, request):
+        return True
+
+    @action(
+        description="Dialog action with permissions false",
+        permissions=["changelist_dialog_action_with_permissions_false"],
+        dialog={
+            "title": "Changelist dialog action with permissions false",
+            "description": "This is a dialog action with permissions false",
+        },
+    )
+    def changelist_dialog_action_with_permissions_false(self, request, form):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    def has_changelist_dialog_action_with_permissions_false_permission(self, request):
+        return False
+
+    @action(
+        description="Dialog action with form",
+        dialog={
+            "title": "Changelist dialog action with custom form",
+            "description": "This is a dialog action",
+            "form_class": DialogActionForm,
+        },
+    )
+    def changelist_dialog_action_with_custom_form(self, request, form):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    @action(
+        description="Dialog action",
+        dialog={
+            "title": "Row dialog action",
+            "description": "This is a dialog action",
+        },
+    )
+    def row_dialog_action_without_custom_form(self, request, form, object_id):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
+
+    @action(
+        description="Dialog action with form",
+        dialog={
+            "title": "Row dialog action with custom form",
+            "description": "This is a dialog action",
+            "form_class": DialogActionForm,
+        },
+    )
+    def row_dialog_action_with_custom_form(self, request, form, object_id):
+        messages.success(request, "Action successfully executed")
+
+        return HttpResponse(
+            headers={
+                "HX-Redirect": reverse_lazy(
+                    "admin:example_dialogactionuser_changelist"
+                ),
+            }
+        )
 
 
 @admin.register(ActionUser)
