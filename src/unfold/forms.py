@@ -126,10 +126,6 @@ class UserChangeForm(BaseUserChangeForm):
 
         # TODO: remove once django 5.2 is not supported
         if DJANGO_VERSION <= (6, 0):
-            self.fields[
-                "password"
-            ].widget.template_name = "auth/widgets/read_only_password_hash_old.html"
-
             self.fields["password"].help_text = _(
                 "Raw passwords are not stored, so there is no way to see this "
                 "user’s password, but you can change the password using "
@@ -142,6 +138,10 @@ class UserChangeForm(BaseUserChangeForm):
                 password.help_text = mark_safe(
                     password.help_text.format("../password/")
                 )
+        else:
+            self.fields[
+                "password"
+            ].widget.template_name = "auth/widgets/read_only_password_hash_new.html"
 
 
 class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
