@@ -1,5 +1,5 @@
 from functools import update_wrapper
-from typing import Any
+from typing import Any, TypedDict
 
 from django import forms
 from django.conf import settings
@@ -50,6 +50,11 @@ checkbox = UnfoldBooleanWidget(
 )
 
 
+class ListFilterOptionsItem(TypedDict):
+    title: str | None
+    horizontal: bool | None
+
+
 class ModelAdmin(
     FormFieldModelAdminMixin,
     ActionModelAdminMixin,
@@ -65,6 +70,7 @@ class ModelAdmin(
     list_horizontal_scrollbar_top = False
     list_filter_submit = False
     list_filter_sheet = True
+    list_filter_options: dict[str, ListFilterOptionsItem] = {}
     list_fullwidth = False
     list_disable_select_all = False
     list_before_template = None
