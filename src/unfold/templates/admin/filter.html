@@ -3,9 +3,11 @@
 <div class="flex gap-2 {% if horizontal %}flex-row items-center{% else %}flex-col{% endif %}">
     {% if not horizontal %}
         <h3 class="font-semibold text-important">
-            {% if custom_title|length > 0 %}
-                {{ custom_title }}
-            {% elif custom_title != "" %}
+            {% if has_label %}
+                {% if label %}
+                    {{ label }}
+                {% endif %}
+            {% else %}
                 {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
             {% endif %}
         </h3>
@@ -25,7 +27,7 @@
                         {{ label }}
                     </span>
                 {% endif %}
-            {% elif custom_title != "" %}
+            {% else %}
                 <span class="font-semibold text-important hover:!bg-transparent">
                     {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
                 </span>
