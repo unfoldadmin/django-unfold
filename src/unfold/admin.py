@@ -51,7 +51,7 @@ checkbox = UnfoldBooleanWidget(
 
 
 class ListFilterOptionsItem(TypedDict):
-    title: str | None
+    label: str | None
     horizontal: bool | None
 
 

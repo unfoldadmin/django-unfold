@@ -2,7 +2,7 @@
 
 {% with horizontal_filters=cl|unfold_horizontal_filters %}
     {% if horizontal_filters|length > 0 %}
-        <form method="get" class="flex flex-col flex-wrap gap-3 grow lg:flex-row">
+        <form method="get" class="flex flex-col flex-wrap gap-3 grow *:mb-0 [&_.form-field]:min-w-[260px] lg:flex-row" oninput="this.submit()">
             {% for spec in horizontal_filters %}
                 {% unfold_admin_list_filter cl spec True %}
             {% endfor %}

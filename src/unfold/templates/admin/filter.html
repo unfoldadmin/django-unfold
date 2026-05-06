@@ -19,10 +19,12 @@
 
     {% if horizontal %}
         <nav class="bg-base-100 flex flex-row font-medium gap-1 p-1 rounded-default text-important md:w-auto *:flex *:flex-row *:gap-1 *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:hover:bg-base-700/[.06] dark:bg-white/[.06] *:dark:hover:bg-white/[.06] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:dark:bg-base-700 [&>.active]:hover:bg-white [&>.active]:dark:hover:bg-base-700">
-            {% if custom_title|length > 0 %}
-                <span class="font-semibold text-important hover:!bg-transparent">
-                    {{ custom_title }}
-                </span>
+            {% if has_label %}
+                {% if label %}
+                    <span class="font-semibold text-important hover:!bg-transparent">
+                        {{ label }}
+                    </span>
+                {% endif %}
             {% elif custom_title != "" %}
                 <span class="font-semibold text-important hover:!bg-transparent">
                     {% blocktranslate with filter_title=title %} By {{ filter_title }} {% endblocktranslate %}
