@@ -64,16 +64,14 @@ class DatasetChangeList(ChangeList):
 
 
 class UnfoldSiteViewMixin(PermissionRequiredMixin, ContextMixin, View):
-    admin_site: AdminSite
+    admin_site: AdminSite | None = None
 
-    def __init__(self, admin_site: AdminSite, **kwargs: Any) -> None:
+    def __init__(self, admin_site: AdminSite | None = None, **kwargs: Any) -> None:
         self.admin_site = admin_site
         super().__init__(**kwargs)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data()
-
-        if not hasattr(self, "admin_site"):
+        if self.admin_site is None:
             raise UnfoldException(
                 "UnfoldSiteViewMixin was not provided with 'admin_site' argument"
             )
@@ -82,6 +80,8 @@ class UnfoldSiteViewMixin(PermissionRequiredMixin, ContextMixin, View):
             raise UnfoldException(
                 "UnfoldSiteViewMixin was not provided with 'title' attribute"
             )
+
+        context = super().get_context_data()
 
         context.update(
             **self.admin_site.each_context(self.request),
@@ -94,16 +94,14 @@ class UnfoldSiteViewMixin(PermissionRequiredMixin, ContextMixin, View):
 
 
 class UnfoldModelAdminViewMixin(PermissionRequiredMixin, ContextMixin, View):
-    model_admin: "ModelAdmin"
+    model_admin: "ModelAdmin | None" = None
 
-    def __init__(self, model_admin: "ModelAdmin", **kwargs: Any) -> None:
+    def __init__(self, model_admin: "ModelAdmin | None" = None, **kwargs: Any) -> None:
         self.model_admin = model_admin
         super().__init__(**kwargs)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        self.request.current_app = self.model_admin.admin_site.name
-
-        if not hasattr(self, "model_admin"):
+        if self.model_admin is None:
             raise UnfoldException(
                 "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"
             )
@@ -113,14 +111,18 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin, ContextMixin, View):
                 "UnfoldModelAdminViewMixin was not provided with 'title' attribute"
             )
 
-        return super().get_context_data(
-            **kwargs,
-            **self.model_admin.admin_site.each_context(self.request),
-            **{
+        self.request.current_app = self.model_admin.admin_site.name
+
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                **self.model_admin.admin_site.each_context(self.request),
                 "title": self.title,
                 "model_admin": self.model_admin,
-            },
+            }
         )
+
+        return context
 
 
 class BaseAutocompleteView(ListView):
