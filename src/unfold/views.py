@@ -1,6 +1,7 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django.contrib import messages
+from django.contrib.admin import AdminSite
 from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -10,10 +11,11 @@ from django.views import View
 from django.views.generic import ListView
 from django.views.generic.base import ContextMixin
 
-from unfold.admin import ModelAdmin
 from unfold.exceptions import UnfoldException
 from unfold.forms import DatasetChangeListSearchForm
-from unfold.sites import UnfoldAdminSite
+
+if TYPE_CHECKING:
+    from django.contrib.admin.options import ModelAdmin
 
 
 class ChangeList(BaseChangeList):
@@ -62,19 +64,14 @@ class DatasetChangeList(ChangeList):
 
 
 class UnfoldSiteViewMixin(PermissionRequiredMixin, ContextMixin, View):
-    admin_site: UnfoldAdminSite | None = None
+    admin_site: AdminSite
 
-    def __init__(self, admin_site: UnfoldAdminSite, **kwargs: Any):
+    def __init__(self, admin_site: AdminSite, **kwargs: Any) -> None:
         self.admin_site = admin_site
         super().__init__(**kwargs)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data()
-
-        if self.admin_site is None:
-            raise UnfoldException(
-                "UnfoldSiteViewMixin was not provided with 'admin_site' argument"
-            )
 
         if not hasattr(self, "admin_site"):
             raise UnfoldException(
@@ -97,18 +94,13 @@ class UnfoldSiteViewMixin(PermissionRequiredMixin, ContextMixin, View):
 
 
 class UnfoldModelAdminViewMixin(PermissionRequiredMixin, ContextMixin, View):
-    model_admin: ModelAdmin | None = None
+    model_admin: "ModelAdmin"
 
-    def __init__(self, model_admin: ModelAdmin | None = None, **kwargs: Any):
+    def __init__(self, model_admin: "ModelAdmin", **kwargs: Any) -> None:
         self.model_admin = model_admin
         super().__init__(**kwargs)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        if self.model_admin is None:
-            raise UnfoldException(
-                "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"
-            )
-
         self.request.current_app = self.model_admin.admin_site.name
 
         if not hasattr(self, "model_admin"):
