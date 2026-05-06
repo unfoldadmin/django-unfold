@@ -37,7 +37,7 @@ class MyModelAdmin(ModelAdmin):
     )
     list_filter_options = {
         "category": {
-            "title": _("Category"),
+            "label": _("Category"),
             "horizontal": True,
         },
     }
