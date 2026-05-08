@@ -38,20 +38,13 @@ class UnfoldAdminSite(AdminSite):
             self.login_form = AuthenticationForm
 
     def get_urls(self) -> list[URLResolver | URLPattern]:
-        extra_urls = []
-
-        if hasattr(self, "extra_urls") and callable(self.extra_urls):
-            extra_urls = self.extra_urls()
-
-        urlpatterns = (
+        return (
             [
                 path("search/", self.admin_view(self.search), name="search"),
             ]
-            + extra_urls
+            + self._get_extra_urls()
             + super().get_urls()
         )
-
-        return urlpatterns
 
     def each_context(self, request: HttpRequest) -> dict[str, Any]:
         context = super().each_context(request)
@@ -615,3 +608,32 @@ class UnfoldAdminSite(AdminSite):
             return value(*args)
 
         return value
+
+    def _get_extra_urls(self) -> list[URLResolver | URLPattern]:
+        extra_urls: list[URLResolver | URLPattern] = []
+
+        if hasattr(self, "extra_urls") and callable(self.extra_urls):
+            extra_urls = self.extra_urls()
+
+        site_views = self._get_config("SITE_VIEWS")
+
+        if site_views is None:
+            return extra_urls
+
+        for url_conf in site_views:
+            url, name, path_to_view = url_conf
+
+            if not isinstance(path_to_view, str):
+                continue
+
+            view = import_string(path_to_view).as_view(admin_site=self)
+
+            extra_urls.append(
+                path(
+                    url,
+                    self.admin_view(view),
+                    name=name,
+                )
+            )
+
+        return extra_urls

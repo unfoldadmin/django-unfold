@@ -33,6 +33,7 @@ from example.models import (
     Task,
     User,
 )
+from example.views import ModelExtraUrlView
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import (
     AllValuesCheckboxFilter,
@@ -1081,6 +1082,15 @@ class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
     search_fields = ["name"]
+
+    def get_custom_urls(self):
+        return [
+            (
+                "extra-url",
+                "custom_url_name",
+                ModelExtraUrlView.as_view(model_admin=self),
+            ),
+        ]
 
 
 @admin.register(Task)

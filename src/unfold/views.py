@@ -1,15 +1,21 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django.contrib import messages
+from django.contrib.admin import AdminSite
 from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import QuerySet
 from django.http import HttpRequest, JsonResponse
+from django.views import View
 from django.views.generic import ListView
+from django.views.generic.base import ContextMixin
 
 from unfold.exceptions import UnfoldException
 from unfold.forms import DatasetChangeListSearchForm
+
+if TYPE_CHECKING:
+    from django.contrib.admin.options import ModelAdmin
 
 
 class ChangeList(BaseChangeList):
@@ -21,12 +27,13 @@ class DatasetChangeList(ChangeList):
     is_dataset = True
 
     def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
-        self.search_var = f"{kwargs.get('model')._meta.model_name}-q"
-        self.page_var = f"{kwargs.get('model')._meta.model_name}-p"
+        self.search_var = f"{kwargs['model']._meta.model_name}-q"
+        self.page_var = f"{kwargs['model']._meta.model_name}-p"
 
         _search_form = DatasetChangeListSearchForm(
             request.GET, search_var=self.search_var
         )
+
         if not _search_form.is_valid():
             for error in _search_form.errors.values():
                 messages.error(request, ", ".join(error))
@@ -50,27 +57,51 @@ class DatasetChangeList(ChangeList):
         return super().get_queryset(request, exclude_parameters)
 
     def get_filters(
-        self, request: str
+        self, request: HttpRequest
     ) -> tuple[list[ListFilter], bool, dict[str, bool | str], bool, bool]:
         # Disable filters for dataset
         return ([], False, {}, False, False)
 
 
-class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
-    """
-    Prepares views to be displayed in admin
-    """
+class UnfoldSiteViewMixin(PermissionRequiredMixin, ContextMixin, View):
+    admin_site: AdminSite | None = None
 
-    model_admin = None
+    def __init__(self, admin_site: AdminSite | None = None, **kwargs: Any) -> None:
+        self.admin_site = admin_site
+        super().__init__(**kwargs)
 
-    def __init__(self, model_admin, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        if self.admin_site is None:
+            raise UnfoldException(
+                "UnfoldSiteViewMixin was not provided with 'admin_site' argument"
+            )
+
+        if not hasattr(self, "title"):
+            raise UnfoldException(
+                "UnfoldSiteViewMixin was not provided with 'title' attribute"
+            )
+
+        context = super().get_context_data()
+
+        context.update(
+            **self.admin_site.each_context(self.request),
+            **{
+                "title": self.title,
+            },
+        )
+
+        return context
+
+
+class UnfoldModelAdminViewMixin(PermissionRequiredMixin, ContextMixin, View):
+    model_admin: "ModelAdmin | None" = None
+
+    def __init__(self, model_admin: "ModelAdmin | None" = None, **kwargs: Any) -> None:
         self.model_admin = model_admin
         super().__init__(**kwargs)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        self.request.current_app = self.model_admin.admin_site.name
-
-        if not hasattr(self, "model_admin"):
+        if self.model_admin is None:
             raise UnfoldException(
                 "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"
             )
@@ -80,14 +111,18 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
                 "UnfoldModelAdminViewMixin was not provided with 'title' attribute"
             )
 
-        return super().get_context_data(
-            **kwargs,
-            **self.model_admin.admin_site.each_context(self.request),
-            **{
+        self.request.current_app = self.model_admin.admin_site.name
+
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                **self.model_admin.admin_site.each_context(self.request),
                 "title": self.title,
                 "model_admin": self.model_admin,
-            },
+            }
         )
+
+        return context
 
 
 class BaseAutocompleteView(ListView):
