@@ -1,14 +1,19 @@
 {% load i18n unfold %}
 
-<div class="relative z-60">
-    <div class="fixed hidden xl:relative xl:block w-[288px] {% element_classes 'navigation_wrapper' %}" x-bind:class="{'xl:hidden!': !sidebarDesktopOpen, 'block!': sidebarMobileOpen}">
+<div class="relative z-60" x-bind:class="{'select-none': resizing}" x-on:mousemove.window="if (resizing) { width = Math.min(max, Math.max(min, $event.clientX)); localStorage.setItem('sidebarWidth', width); }" x-on:mouseup.window="resizing = false" x-data="{ width: localStorage.getItem('sidebarWidth') || 288, min: 220, max: 360, resizing: false }">
+    <div class="fixed hidden xl:relative xl:block {% element_classes 'navigation_wrapper' %}" x-bind:class="{'xl:hidden!': !sidebarDesktopOpen, 'block!': sidebarMobileOpen}" x-bind:style="`width: ${width}px`">
         <div class="bg-base-50 relative z-30 dark:bg-base-900">
-            <div id="nav-sidebar" class="bg-base-50 border-r border-base-200 bottom-0 fixed max-h-screen top-0 w-[288px] dark:border-base-800 dark:bg-base-900 {% element_classes 'navigation' %}">
+            <div id="nav-sidebar" class="bg-base-50 border-r border-base-200 bottom-0 fixed max-h-screen top-0  dark:border-base-800 dark:bg-base-900 {% element_classes 'navigation' %}" x-bind:style="`width: ${width}px`">
                 {% if templates.navigation %}
                     {% include templates.navigation %}
                 {% else %}
                     {% include "unfold/helpers/navigation.html" %}
                 {% endif %}
+
+                <div class="absolute bottom-0 cursor-col-resize flex group items-center justify-center right-[-3px] top-0 resize w-[7px]" x-on:mousedown="resizing = true">
+                    <div class="h-full w-[3px] transition-colors group-hover:bg-base-300 group-hover:dark:bg-base-700">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
