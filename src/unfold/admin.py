@@ -19,12 +19,11 @@ from django.db.models import BLANK_CHOICE_DASH, Model
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from unfold.checks import UnfoldModelAdminChecks
-from unfold.datasets import BaseDataset
 from unfold.forms import (
     ActionForm,
     PaginationGenericInlineFormSet,
@@ -79,7 +78,6 @@ class ModelAdmin(
     change_form_after_template = None
     change_form_outer_before_template = None
     change_form_outer_after_template = None
-    change_form_datasets = ()
     compressed_fields = True
     show_add_link = True
     readonly_preprocess_fields = {}
@@ -247,10 +245,10 @@ class ModelAdmin(
         return super().get_action_choices(request, default_choices)
 
     @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
-    def action_checkbox(self, obj: Model) -> str:
+    def action_checkbox(self, obj: Model) -> SafeString:
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
-    def get_changelist(self, request: HttpRequest, **kwargs: Any) -> ChangeList:
+    def get_changelist(self, request: HttpRequest, **kwargs: Any) -> type[ChangeList]:
         return ChangeList
 
     def get_formset_kwargs(
@@ -272,9 +270,6 @@ class ModelAdmin(
                 formset_kwargs["count_variant"] = inline.get_count_variant(request, obj)
 
         return formset_kwargs
-
-    def get_changeform_datasets(self, request: HttpRequest) -> list[type[BaseDataset]]:
-        return self.change_form_datasets
 
 
 class BaseInlineMixin:
