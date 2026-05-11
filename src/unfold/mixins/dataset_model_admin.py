@@ -1,22 +1,25 @@
 from typing import Any
 
 from django.contrib import messages
-from django.contrib.admin import helpers
+from django.contrib.admin import ModelAdmin, helpers
 from django.contrib.admin.views import main
 from django.contrib.admin.views.main import IGNORED_PARAMS
-from django.http import HttpRequest, HttpResponseRedirect
-from django.template.response import TemplateResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 
+from unfold.datasets import BaseDataset
 
-class DatasetModelAdminMixin:
+
+class DatasetModelAdminMixin(ModelAdmin):
+    change_form_datasets: list[type[BaseDataset]] | tuple[type[BaseDataset], ...] = ()
+
     def changeform_view(
         self,
         request: HttpRequest,
         object_id: str | None = None,
         form_url: str = "",
         extra_context: dict[str, Any] | None = None,
-    ) -> TemplateResponse:
+    ) -> HttpResponse:
         self.request = request
         extra_context = extra_context or {}
         datasets = self.get_changeform_datasets(request)
@@ -75,3 +78,8 @@ class DatasetModelAdminMixin:
                 return response
 
         return super().changeform_view(request, object_id, form_url, extra_context)
+
+    def get_changeform_datasets(
+        self, request: HttpRequest
+    ) -> list[type[BaseDataset]] | tuple[type[BaseDataset], ...]:
+        return self.change_form_datasets
