@@ -1,7 +1,8 @@
+from unittest.mock import patch
+
 import pytest
 from django.apps import apps
 from django.core.checks import Tags, run_checks
-from unittest.mock import patch
 
 
 @pytest.mark.django_db
@@ -14,6 +15,7 @@ def test_run_all_checks():
     )
 
     assert errors == []
+
 
 @pytest.mark.django_db
 def test_checks_during_initial_migration():
