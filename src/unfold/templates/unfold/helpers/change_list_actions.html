@@ -2,7 +2,7 @@
 
 {% if actions_on_top %}
     {% if cl.search_fields or action_form or cl.has_filters %}
-        <div class="bottom-0 right-0 hidden group-has-[input.action-select:checked]:flex fixed gap-3 lg:bottom-[64px] lg:h-[64px] items-center p-3 z-50 lg:flex-row">
+        <div class="bottom-0 right-0 hidden group-has-[input.action-select:checked]:flex fixed gap-3 lg:bottom-[64px] lg:h-[64px] items-center p-3 z-50 lg:flex-row" {% if not is_popup %}x-bind:style="{left: sidebarDesktopOpen ? sidebarWidth + 'px' : '0px'}"{% endif %}>
             <div id="changelist-actions-wrapper" class="grow group changelist-actions">
                 {% if action_form %}
                     {% admin_actions %}
