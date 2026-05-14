@@ -3,7 +3,7 @@
 {% load i18n admin_urls static admin_modify unfold %}
 
 {% block extrahead %}{{ block.super }}
-    <script src="{% url 'admin:jsi18n' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% url 'admin:jsi18n' %}"></script>
     {{ media }}
 {% endblock %}
 
@@ -80,7 +80,7 @@
                 {% block after_related_objects %}{% endblock %}
 
                 {% block admin_change_form_document_ready %}
-                    <script id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}"{% if adminform and add %} data-model-name="{{ opts.model_name }}"{% endif %} async></script>
+                    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} id="django-admin-form-add-constants" src="{% static 'admin/js/change_form.js' %}"{% if adminform and add %} data-model-name="{{ opts.model_name }}"{% endif %} async></script>
                 {% endblock %}
 
                 {% prepopulated_fields_js %}

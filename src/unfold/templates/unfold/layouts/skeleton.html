@@ -33,23 +33,23 @@
         <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
         <link href="{% static 'unfold/css/simplebar/simplebar.css' %}" rel="stylesheet">
 
-        <script src="{% static 'unfold/js/alpine/alpine.anchor.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine/alpine.persist.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine/alpine.sort.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine/alpine.resize.js' %}" defer></script>
-        <script src="{% static 'unfold/js/alpine/alpine.js' %}" defer></script>
-        <script src="{% static 'unfold/js/htmx/htmx.js' %}"></script>
-        <script src="{% static 'unfold/js/chart/chart.js' %}"></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/alpine/alpine.anchor.js' %}" defer></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/alpine/alpine.persist.js' %}" defer></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/alpine/alpine.sort.js' %}" defer></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/alpine/alpine.resize.js' %}" defer></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/alpine/alpine.js' %}" defer></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/htmx/htmx.js' %}"></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/chart/chart.js' %}"></script>
 
         {% for script in scripts %}
-            <script src="{{ script }}"></script>
+            <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{{ script }}"></script>
         {% endfor %}
 
         {% block extrastyle %}{% endblock %}
 
         {% block extrahead %}{% endblock %}
 
-        <script src="{% static 'unfold/js/app.js' %}"></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/app.js' %}"></script>
 
         {% block responsive %}
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,6 +93,6 @@
 
         {% include "unfold/helpers/command.html" %}
 
-        <script src="{% static 'unfold/js/simplebar/simplebar.js' %}"></script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/simplebar/simplebar.js' %}"></script>
     </body>
 </html>

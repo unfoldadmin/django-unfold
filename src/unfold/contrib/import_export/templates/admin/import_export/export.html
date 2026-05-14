@@ -4,7 +4,7 @@
 
 {% block extrahead %}
     {{ block.super }}
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 
     {{ form.media }}
 {% endblock %}
