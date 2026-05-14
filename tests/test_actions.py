@@ -1,7 +1,38 @@
 from http import HTTPStatus
 
 import pytest
+from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
+
+from unfold.admin import ModelAdmin
+from unfold.exceptions import UnfoldException
+from unfold.sites import UnfoldAdminSite
+
+User = get_user_model()
+
+
+def test_actions_exception_non_existing_method():
+    class SampleModelAdmin(ModelAdmin):
+        actions_list = ["non_existing_action"]
+
+    with pytest.raises(
+        UnfoldException,
+        match="Method non_existing_action specified does not exist on current object",
+    ):
+        SampleModelAdmin(model=User, admin_site=UnfoldAdminSite()).get_unfold_action(
+            "non_existing_action"
+        )
+
+
+def test_actions_exception_action_is_not_callable():
+    class SampleModelAdmin(ModelAdmin):
+        actions_list = ["this_is_property"]
+        this_is_property = None
+
+    with pytest.raises(UnfoldException, match="this_is_property is not callable"):
+        SampleModelAdmin(model=User, admin_site=UnfoldAdminSite()).get_unfold_action(
+            "this_is_property"
+        )
 
 
 ######################################################################

@@ -1,11 +1,12 @@
 import copy
+from typing import Any
 
 from django import forms
 from django.db import models
 
 from unfold import widgets
 
-FORMFIELD_OVERRIDES = {
+FORMFIELD_OVERRIDES: dict[Any, Any] = {
     models.DateTimeField: {
         "form_class": forms.SplitDateTimeField,
         "widget": widgets.UnfoldAdminSplitDateTimeWidget,
@@ -44,7 +45,7 @@ try:
             IntegerRangeField: {"widget": widgets.UnfoldAdminIntegerRangeWidget},
         }
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 
 ######################################################################
@@ -58,7 +59,7 @@ try:
             MoneyField: {"widget": widgets.UnfoldAdminMoneyWidget},
         }
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 
 ######################################################################

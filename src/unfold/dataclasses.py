@@ -23,6 +23,7 @@ class Action:
     attrs: dict[str, Any]
     icon: str | None = None
     dialog: ActionDialog | None = None
+    variant: ActionVariant | None = ActionVariant.DEFAULT
 
 
 @dataclass
