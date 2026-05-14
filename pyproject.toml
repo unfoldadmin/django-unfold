@@ -52,6 +52,7 @@ dev = [
     "python-semantic-release==10.5.3",
     "tox==4.53.0",
     "six==1.17.0",
+    "psycopg[binary]>=3.3.4",
 ]
 
 [tool.uv]
