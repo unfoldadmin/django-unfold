@@ -10,7 +10,7 @@
 Enhance Django Admin with a modern interface and powerful tools to build internal applications.
 
 - **Documentation:** The full documentation is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
-- **Live demo:** The demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
+- **Live demo:** The demo site is available at [demo.unfoldadmin.com](https://demo.unfoldadmin.com?utm_medium=github&utm_source=unfold).
 - **Demo repository:** A repository with a demo implementation is available at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula?utm_medium=github&utm_source=unfold).
 - **Discord:** Join our Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
 
