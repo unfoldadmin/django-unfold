@@ -72,7 +72,7 @@
                  "
     >
         {% if colors %}
-            <style id="unfold-theme-colors">
+            <style {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} id="unfold-theme-colors">
                 :root {
                     {% if border_radius %}
                         --border-radius: {{ border_radius }};

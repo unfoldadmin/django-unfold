@@ -9,7 +9,7 @@
     {{ media.css }}
 
     {% if not actions_on_top and not actions_on_bottom %}
-        <style>
+        <style {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %}>
             #changelist table thead th:first-child {width: inherit}
         </style>
     {% endif %}
