@@ -36,10 +36,7 @@ class ActionModelAdminMixin(ModelAdmin):
 
         for action in self.get_actions_row(request):
             action_attrs = deepcopy(action.method.attrs)
-
-            # Special handling for changelist row actions where some particular
-            # actions should be displayed as buttons instead as items in dropdown
-            display_in_dropdown = action_attrs.pop("display_in_dropdown", True)
+            extra_options = deepcopy(action.method.extra_options)
 
             actions_row.append(
                 {
@@ -47,7 +44,9 @@ class ActionModelAdminMixin(ModelAdmin):
                     "icon": action.icon,
                     "attrs": action_attrs,
                     "dialog": action.dialog,
-                    "display_in_dropdown": display_in_dropdown,
+                    "display_in_dropdown": extra_options.get(
+                        "display_in_dropdown", True
+                    ),
                     # This is just a path name as string and in template is used in {% url %} tag
                     # with custom instance pk value
                     "raw_path": f"{self.admin_site.name}:{action.action_name}",
@@ -136,6 +135,9 @@ class ActionModelAdminMixin(ModelAdmin):
             icon=method.icon if hasattr(method, "icon") else None,
             variant=method.variant if hasattr(method, "variant") else None,
             dialog=method.dialog if hasattr(method, "dialog") else None,
+            extra_options=method.extra_options
+            if hasattr(method, "extra_options")
+            else {},
         )
 
     def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
