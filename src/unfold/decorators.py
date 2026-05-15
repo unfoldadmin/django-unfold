@@ -24,6 +24,7 @@ def action(
     icon: str | None = None,
     variant: ActionVariant | None = ActionVariant.DEFAULT,
     dialog: ActionDialog | None = None,
+    extra_options: dict[str, Any] | None = None,
 ) -> Action:
     def decorator(func: Callable) -> Action:
         @wraps(func)
@@ -31,7 +32,7 @@ def action(
             model_admin: BaseModelAdmin,
             request: HttpRequest,
             *args: Any,
-            **kwargs,
+            **kwargs: Any,
         ) -> HttpResponse | None:
             if permissions:
                 permission_rules = []
@@ -114,6 +115,11 @@ def action(
             inner.variant = variant
         else:
             inner.variant = ActionVariant.DEFAULT
+
+        if extra_options is None:
+            inner.extra_options = {}
+        else:
+            inner.extra_options = extra_options
 
         inner.attrs = attrs or {}
         inner.original_function_name = func.__name__
