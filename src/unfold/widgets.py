@@ -1,5 +1,4 @@
 import json
-import warnings
 from collections.abc import Callable
 from typing import Any
 
@@ -807,16 +806,6 @@ class UnfoldAdminCheckboxSelectMultipleWidget(CheckboxSelectMultiple):
         }
 
 
-class UnfoldAdminCheckboxSelectMultiple(UnfoldAdminCheckboxSelectMultipleWidget):
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        warnings.warn(
-            "UnfoldAdminCheckboxSelectMultiple is deprecated and will be removed in a future release. "
-            "Please use UnfoldAdminCheckboxSelectMultipleWidget instead.",
-            stacklevel=2,
-        )
-        super().__init__(*args, **kwargs)
-
-
 class UnfoldBooleanWidget(CheckboxInput):
     def __init__(
         self, attrs: dict[str, Any] | None = None, check_test: Callable | None = None
@@ -889,16 +878,6 @@ class UnfoldAdminPasswordWidget(PasswordInput):
 
 class UnfoldAdminPasswordToggleWidget(UnfoldAdminPasswordWidget):
     template_name = "unfold/widgets/password_toggle.html"
-
-
-class UnfoldAdminPasswordInput(UnfoldAdminPasswordWidget):
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        warnings.warn(
-            "UnfoldAdminPasswordInput is deprecated and will be removed in a future release. "
-            "Please use UnfoldAdminPasswordWidget instead.",
-            stacklevel=2,
-        )
-        super().__init__(*args, **kwargs)
 
 
 class AutocompleteWidgetMixin:

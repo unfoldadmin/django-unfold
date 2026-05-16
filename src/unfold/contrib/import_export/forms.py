@@ -32,6 +32,7 @@ class ImportExportWidgetsMixin(Form):
         self.fields["format"].widget = UnfoldAdminSelectWidget(
             choices=format_choices,
             attrs={
+                "class": self.fields["format"].widget.attrs.get("class", ""),
                 "readonly": True if len(format_choices) == 1 else False,
             },
         )

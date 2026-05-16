@@ -25,8 +25,9 @@ CONFIG_DEFAULTS = {
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
     "SHOW_LANGUAGES": False,
-    "LANGUAGE_FLAGS": {},
     "SHOW_BACK_BUTTON": False,
+    "SHOW_UI_WARNINGS": False,
+    "LANGUAGE_FLAGS": {},
     "FORMS": {
         "classes": {
             "prose": " ".join(PROSE_CLASSES),

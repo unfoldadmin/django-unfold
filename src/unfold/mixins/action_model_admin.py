@@ -1,18 +1,18 @@
-from collections.abc import Callable
+from copy import deepcopy
 from typing import Any
 
+from django.contrib.admin import ModelAdmin
 from django.db.models import Model
 from django.forms import Form
-from django.http import HttpRequest
-from django.template.response import TemplateResponse
+from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 
-from unfold.dataclasses import UnfoldAction
+from unfold.dataclasses import Action, UnfoldAction
 from unfold.enums import ActionVariant
 from unfold.exceptions import UnfoldException
 
 
-class ActionModelAdminMixin:
+class ActionModelAdminMixin(ModelAdmin):
     """
     Adds support for various ModelAdmin actions (list, detail, row, submit line)
     """
@@ -25,25 +25,33 @@ class ActionModelAdminMixin:
     actions_submit_line = ()  # Displayed in changeform in the submit line (form buttons)
 
     def changelist_view(
-        self, request: HttpRequest, extra_context: dict[str, str] | None = None
-    ) -> TemplateResponse:
+        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
+    ) -> HttpResponse:
         """
         Changelist contains `actions_list` and `actions_row` custom actions. In case of `actions_row` they
         are displayed in the each row of the table.
         """
         extra_context = extra_context or {}
+        actions_row = []
 
-        actions_row = [
-            {
-                "title": action.description,
-                "icon": action.icon,
-                "attrs": action.method.attrs,
-                # This is just a path name as string and in template is used in {% url %} tag
-                # with custom instance pk value
-                "raw_path": f"{self.admin_site.name}:{action.action_name}",
-            }
-            for action in self.get_actions_row(request)
-        ]
+        for action in self.get_actions_row(request):
+            action_attrs = deepcopy(action.method.attrs)
+            extra_options = deepcopy(action.method.extra_options)
+
+            actions_row.append(
+                {
+                    "title": action.description,
+                    "icon": action.icon,
+                    "attrs": action_attrs,
+                    "dialog": action.dialog,
+                    "display_in_dropdown": extra_options.get(
+                        "display_in_dropdown", True
+                    ),
+                    # This is just a path name as string and in template is used in {% url %} tag
+                    # with custom instance pk value
+                    "raw_path": f"{self.admin_site.name}:{action.action_name}",
+                }
+            )
 
         # `actions_list` may contain custom structure with dropdowns so it is needed
         # to use `_get_actions_navigation` to build the final structure for the template
@@ -110,7 +118,7 @@ class ActionModelAdminMixin:
             if action.action_name not in request.POST:
                 continue
 
-            action.method(request, obj)
+            action.method(request, obj)  # type: ignore
 
     def get_unfold_action(self, action: str) -> UnfoldAction:
         """
@@ -121,11 +129,15 @@ class ActionModelAdminMixin:
         return UnfoldAction(
             action_name=f"{self.model._meta.app_label}_{self.model._meta.model_name}_{action}",
             method=method,
-            description=self._get_action_description(method, action),
+            description=self._get_action_description(method, action),  # type: ignore
             path=getattr(method, "url_path", action),
             attrs=method.attrs if hasattr(method, "attrs") else None,
             icon=method.icon if hasattr(method, "icon") else None,
             variant=method.variant if hasattr(method, "variant") else None,
+            dialog=method.dialog if hasattr(method, "dialog") else None,
+            extra_options=method.extra_options
+            if hasattr(method, "extra_options")
+            else {},
         )
 
     def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
@@ -137,7 +149,7 @@ class ActionModelAdminMixin:
         )
 
     def get_actions_detail(
-        self, request: HttpRequest, object_id: int
+        self, request: HttpRequest, object_id: int | str
     ) -> list[UnfoldAction]:
         """
         Filters `actions_detail` by permissions and returns list of UnfoldAction objects.
@@ -155,7 +167,7 @@ class ActionModelAdminMixin:
         )
 
     def get_actions_submit_line(
-        self, request: HttpRequest, object_id: int
+        self, request: HttpRequest, object_id: int | str
     ) -> list[UnfoldAction]:
         """
         Filters `actions_submit_line` by permissions and returns list of UnfoldAction objects.
@@ -164,7 +176,7 @@ class ActionModelAdminMixin:
             request, self._get_base_actions_submit_line(), object_id
         )
 
-    def _extract_action_names(self, actions: list[str | dict]) -> list[str]:
+    def _extract_action_names(self, actions: list[str | dict] | tuple[()]) -> list[str]:
         """
         Gets the list of only actions names from the actions structure provided in ModelAdmin
         """
@@ -214,7 +226,7 @@ class ActionModelAdminMixin:
             for action in self._extract_action_names(self.actions_submit_line) or []
         ]
 
-    def _get_instance_method(self, method_name: str) -> Callable:
+    def _get_instance_method(self, method_name: str) -> Action:
         """
         Searches for method on self instance based on method_name and returns it if it exists.
         If it does not exist or is not callable, it raises UnfoldException
@@ -233,7 +245,7 @@ class ActionModelAdminMixin:
 
     def _get_actions_navigation(
         self,
-        provided_actions: list[str | dict],
+        provided_actions: list[str | dict] | tuple[()],
         allowed_actions: list[UnfoldAction],
         object_id: str | None = None,
     ) -> list[str | dict]:
@@ -242,7 +254,7 @@ class ActionModelAdminMixin:
         """
         navigation = []
 
-        def get_action_by_name(name: str) -> UnfoldAction:
+        def get_action_by_name(name: str) -> UnfoldAction | None:
             """
             Searches for an action in allowed_actions by its name.
             """
@@ -274,6 +286,7 @@ class ActionModelAdminMixin:
                 "icon": action.icon,
                 "variant": action.variant,
                 "attrs": action.method.attrs,
+                "dialog": action.dialog,
                 "path": get_action_path(action),
             }
 
@@ -335,7 +348,7 @@ class ActionModelAdminMixin:
 
             for permission_rule in permission_rules:
                 if isinstance(permission_rule, str) and "." in permission_rule:
-                    permission_checks.append(request.user.has_perm(permission_rule))
+                    permission_checks.append(request.user.has_perm(permission_rule))  # type: ignore
                 elif object_id:
                     permission_checks.append(permission_rule(request, object_id))
                 else:

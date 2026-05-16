@@ -1,6 +1,7 @@
 from collections.abc import Generator
 from typing import Any, Union
 
+from django import VERSION as DJANGO_VERSION
 from django import forms
 from django.contrib.admin.forms import (
     AdminAuthenticationForm,
@@ -18,6 +19,7 @@ from django.core.paginator import Page, Paginator
 from django.db.models import QuerySet
 from django.forms import BaseInlineFormSet
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 
@@ -90,10 +92,7 @@ class ActionForm(forms.Form):
 
 class AuthenticationForm(AdminAuthenticationForm):
     def __init__(
-        self,
-        request: HttpRequest | None = None,
-        *args,
-        **kwargs,
+        self, request: HttpRequest | None = None, *args: Any, **kwargs: Any
     ) -> None:
         super().__init__(request, *args, **kwargs)
 
@@ -121,32 +120,32 @@ class UserCreationForm(BaseUserCreationForm):
 
 
 class UserChangeForm(BaseUserChangeForm):
-    def __init__(
-        self,
-        *args,
-        **kwargs,
-    ) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.fields["password"].widget = UnfoldReadOnlyPasswordHashWidget()
 
-        self.fields["password"].help_text = _(
-            "Raw passwords are not stored, so there is no way to see this "
-            "user’s password, but you can change the password using "
-            '<a href="{}" class="text-primary-600 dark:text-primary-500">this form</a>.'
-        )
+        # TODO: remove once django 5.2 is not supported
+        if DJANGO_VERSION <= (6, 0):
+            self.fields["password"].help_text = _(
+                "Raw passwords are not stored, so there is no way to see this "
+                "user’s password, but you can change the password using "
+                '<a href="{}" class="text-primary-600 dark:text-primary-500">this form</a>.'
+            )
 
-        password = self.fields.get("password")
-        if password:
-            password.help_text = mark_safe(password.help_text.format("../password/"))
+            password = self.fields.get("password")
+
+            if password:
+                password.help_text = mark_safe(
+                    password.help_text.format("../password/")
+                )
+        else:
+            self.fields[
+                "password"
+            ].widget.template_name = "auth/widgets/read_only_password_hash_new.html"
 
 
 class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
-    def __init__(
-        self,
-        user: User,
-        *args,
-        **kwargs,
-    ) -> None:
+    def __init__(self, user: User, *args: Any, **kwargs: Any) -> None:
         super().__init__(user, *args, **kwargs)
 
         self.fields["password1"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
@@ -154,7 +153,7 @@ class AdminPasswordChangeForm(BaseAdminPasswordChangeForm):
 
 
 class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
-    def __init__(self, user: User, *args, **kwargs) -> None:
+    def __init__(self, user: User, *args: Any, **kwargs: Any) -> None:
         super().__init__(user, *args, **kwargs)
 
         self.fields["old_password"].widget.attrs["class"] = " ".join(INPUT_CLASSES)
@@ -207,8 +206,8 @@ class PaginationFormSetMixin:
         count: int | None = None,
         count_variant: str | None = None,
         provided_queryset: QuerySet | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ):
         self.request = request
         self.per_page = per_page
@@ -263,3 +262,51 @@ class DatasetChangeListSearchForm(ChangeListSearchForm):
         self.fields = {
             search_var: forms.CharField(required=False, strip=False),
         }
+
+
+class BaseDialogForm(forms.Form):
+    form_before_template: str | None = None
+    form_after_template: str | None = None
+
+    _form_submitted = forms.BooleanField(
+        required=True, initial=True, widget=forms.HiddenInput
+    )
+
+    def __init__(
+        self,
+        request: HttpRequest,
+        object_id: int | str | None = None,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
+        self.request = request
+        self.object_id = object_id
+        super().__init__(*args, **kwargs)
+
+    def get_before_template_context(
+        self, request: HttpRequest, object_id: int | str | None = None
+    ) -> dict[str, Any]:
+        return {}
+
+    def get_after_template_context(
+        self, request: HttpRequest, object_id: int | str | None = None
+    ) -> dict[str, Any]:
+        return {}
+
+    def render_before_template(self) -> str:
+        if self.form_before_template:
+            return render_to_string(
+                self.form_before_template,
+                self.get_before_template_context(self.request, self.object_id),
+            )
+
+        return ""
+
+    def render_after_template(self) -> str:
+        if self.form_after_template:
+            return render_to_string(
+                self.form_after_template,
+                self.get_after_template_context(self.request, self.object_id),
+            )
+
+        return ""

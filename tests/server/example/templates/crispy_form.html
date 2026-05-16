@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+
+{% load admin_urls crispy_forms_tags i18n unfold %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+    {% tab_list "users" %}
+
+    <div class="flex flex-col gap-8 mb-8">
+        {% crispy form "unfold_crispy" %}
+    </div>
+{% endblock %}

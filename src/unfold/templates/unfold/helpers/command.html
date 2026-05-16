@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <div class="backdrop-blur-xs bg-base-900/80 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]"
+    <div class="backdrop-blur-xs bg-base-900/20 flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000] dark:bg-base-900/80"
          x-data="searchCommand()"
          x-on:opencommand.window="handleOpen()"
          x-on:keydown.window="handleShortcut($event)"
@@ -30,7 +30,9 @@
                     x-on:keydown.escape.prevent="handleEscape()"
                     x-on:keydown.arrow-down.prevent="nextItem()"
                     x-on:keydown.arrow-up.prevent="prevItem()"
-                    x-on:keydown.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %})"
+                    x-on:keydown.meta.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %}, true)"
+                    x-on:keydown.ctrl.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %}, true)"
+                    x-on:keydown.enter.prevent="if (!$event.metaKey && !$event.ctrlKey) selectItem({% if command_show_history %}true{% else %}false{% endif %}, false)"
                     hx-get="{% url "admin:search" %}?extended=1"
                     hx-trigger="keyup changed delay:500ms"
                     hx-select="#command-results-list"

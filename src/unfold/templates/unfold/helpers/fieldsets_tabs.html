@@ -4,8 +4,8 @@
     {% if tabs %}
         {% with active_tab=tabs|tabs_active %}
             <div class="{% fieldset_rows_classes %}" x-data="{ activeFieldsetTab: '{{ active_tab }}'}" x-show="activeTab == 'general'">
-                <div class="{% if adminform.model_admin.compressed_fields %}border-b border-base-200 border-dashed dark:border-base-800{% endif %}">
-                    <nav class="bg-base-100 cursor-pointer flex flex-col font-medium gap-1 m-2 p-1 rounded-default text-important dark:border-base-700 md:inline-flex md:flex-row md:w-auto dark:bg-white/[.06] *:flex *:flex-row *:gap-1 *:items-center *:px-2.5 *:py-[5px] *:rounded-default *:hover:bg-base-700/[.06] *:dark:hover:bg-white/[.06] [&>.active]:bg-white [&>.active]:shadow-xs [&>.active]:dark:bg-base-700 [&>.active]:hover:bg-white [&>.active]:dark:hover:bg-base-700">
+                <div class="border-b border-base-200 dark:border-base-800">
+                    <nav class="flex flex-row items-center *:border-x *:border-transparent *:font-medium *:text-important *:first:border-l-0 *:cursor-pointer *:relative *:py-2 *:px-3.5 *:hover:text-primary-600 dark:*:hover:text-primary-500 dark:*:border-transparent [&>.active]:bg-white dark:[&>.active]:bg-base-900 [&>.active]:border-base-200 dark:[&>.active]:border-base-800  [&>.active]:text-primary-600 dark:[&>.active]:text-primary-500 [&>.active]:after:absolute [&>.active]:after:content-[''] [&>.active]:after:-bottom-px [&>.active]:after:left-0 [&>.active]:after:right-0 [&>.active]:after:h-px [&>.active]:after:bg-white dark:[&>.active]:after:bg-base-900">
                         {% for fieldset in tabs %}
                             <a x-on:click="activeFieldsetTab = '{{ fieldset.name|unicoded_slugify }}'" x-bind:class="activeFieldsetTab == '{{ fieldset.name|unicoded_slugify }}' && 'active'">
                                 {{ fieldset.name }}

@@ -12,7 +12,7 @@
                     <li class="border-b border-base-200 dark:border-base-700 last:border-b-0"
                         x-bind:class="{'active': currentIndex === index + 1}"
                         x-on:mouseenter="currentIndex = index + 1">
-                        <a class="block flex flex-row gap-4 items-center p-4 transition-colors"
+                        <a class="block flex flex-row gap-4 items-center p-4"
                            x-bind:data-title="item.title"
                            x-bind:data-description="item.description"
                            x-bind:href="item.link"

@@ -1,9 +1,9 @@
 {% load unfold %}
 
-<{% if href %}a href="{{ href }}"{% else %}div{% endif %} class="bg-white block flex flex-col grow overflow-hidden p-6 relative rounded-default shadow-xs dark:bg-base-900 dark:border-base-800 {% if not disable_border %}border border-base-200 {% else %}shadow-base-500/20{% endif %} {% if href %}cursor-pointer transition-all hover:border-base-300 hover:shadow-md dark:hover:border-base-700 dark:hover:shadow-base-800/50 {% endif %}{% if class %} {{ class }}{% endif %}">
+<{% if href %}a href="{{ href }}"{% else %}div{% endif %} class="bg-white block flex flex-col grow overflow-hidden {% if size == "md" %}p-3{% else %}p-6{% endif %} relative rounded-default shadow-xs dark:bg-base-900 dark:border-base-800 {% if not disable_border %}border border-base-200 {% else %}shadow-base-500/20{% endif %} {% if href %}cursor-pointer transition-all hover:border-base-300 hover:shadow-md dark:hover:border-base-700 dark:hover:shadow-base-800/50 {% endif %}{% if class %} {{ class }}{% endif %}">
 
 {% if title %}
-    <div class="border-b border-base-200 flex flex-row items-center mb-6 -mt-6 -mx-6 py-4 px-6 dark:border-base-800 {% if title_class %} {{ title_class }}{% endif %}">
+    <div class="border-b border-base-200 flex flex-row items-center {% if size == "md" %}mb-3 -mt-3 -mx-3 p-3{% else %} mb-6 -mt-6 -mx-6 py-4 px-6{% endif %} dark:border-base-800 {% if title_class %} {{ title_class }}{% endif %}">
         <h2 class="font-semibold text-[15px] text-important">
             {{ title }}
         </h2>
@@ -31,7 +31,7 @@
 </div>
 
 {% if footer %}
-    <div class="border-t border-base-200 flex items-center -mb-6 -mx-6 mt-6 pb-2 pt-2 px-6 text-sm dark:border-base-800">
+    <div class="border-t border-base-200 flex items-center {% if size == "md" %}-mb-3 -mx-3 mt-3 px-3 py-2{% else %}-mb-6 -mx-6 mt-6 pb-2 pt-2 px-6{% endif %} dark:border-base-800">
         {{ footer }}
     </div>
 {% endif %}

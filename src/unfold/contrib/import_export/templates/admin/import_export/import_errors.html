@@ -4,9 +4,7 @@
     <ul>
         {% for error in result.base_errors  %}
             <li>
-                {{ error.error }}
-
-                <div class="traceback">{{ error.traceback|linebreaks }}</div>
+                {% include "unfold/helpers/messages/error.html" with error=error.error %}
             </li>
         {% endfor %}
 

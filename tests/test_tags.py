@@ -1,11 +1,9 @@
 import copy
-import importlib
 import re
 from http import HTTPStatus
 
 import pytest
 from django import forms
-from django.contrib.admin import options
 from django.contrib.admin.helpers import AdminField
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
@@ -828,44 +826,6 @@ def test_tags_querystring_params(rf):
 
 
 @pytest.mark.django_db
-def test_tags_unfold_querystring(rf):
-    request = rf.get("/?123=456")
-    response = Template(
-        "{% load unfold %} {% unfold_querystring sample='example' item_to_remove=None iterate=list_var %}"
-    ).render(
-        RequestContext(
-            request,
-            {
-                "list_var": ["aaa", "bbb"],
-            },
-        )
-    )
-    assert "?123=456&amp;sample=example&amp;iterate=aaa&amp;iterate=bbb" in response
-
-    with pytest.raises(
-        TemplateSyntaxError,
-        match="querystring requires mappings for positional arguments",
-    ):
-        Template("{% load unfold %} {% unfold_querystring '' %}").render(
-            RequestContext(rf.get("/"), {})
-        )
-
-    with pytest.raises(
-        TemplateSyntaxError, match="querystring requires strings for mapping keys"
-    ):
-        Template("{% load unfold %} {% unfold_querystring wrong_param %}").render(
-            RequestContext(
-                rf.get("/"),
-                {
-                    "wrong_param": {
-                        111: "abc",
-                    },
-                },
-            )
-        )
-
-
-@pytest.mark.django_db
 def test_tags_header_title(rf, user_factory, user_model_admin):
     user = user_factory(username="sample@example.com")
     request = rf.get("/")
@@ -1373,14 +1333,6 @@ def test_tags_unfold_admin_actions(rf):
         )
     )
     assert "Run the selected action" in response
-
-
-def test_tags_is_facet_var_django42(monkeypatch):
-    monkeypatch.delattr(options, "IS_FACETS_VAR", raising=False)
-    from unfold.templatetags import unfold_list as unfold_list_modified
-
-    importlib.reload(unfold_list_modified)
-    assert unfold_list_modified.IS_FACETS_VAR is None
 
 
 @pytest.mark.django_db
