@@ -21,6 +21,7 @@ window.addEventListener("load", (e) => {
  *************************************************************/
 function theme(defaultTheme = "auto") {
   return {
+    sidebarWidth: localStorage.getItem('sidebarWidth') || 288,
     openModal: false,
     filterOpen: false,
     openAllApplications: false,

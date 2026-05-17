@@ -1,39 +1,54 @@
-{% load i18n %}
+{% load i18n unfold %}
 
 {% if actions %}
     <td data-label="{% trans "More actions" %}" class="field-actions_holder align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left text-sm lg:py-3 lg:table-cell dark:border-base-800 lg:w-px before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:font-semibold before:text-font-important-light before:mr-auto first:border-t-0 lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800 dark:before:text-font-important-dark">
         {% with action_id=instance_pk|cut:"-" %}
-            <div class="group/action leading-none relative" x-data="{ openActionsId{{ action_id }}: false }">
-                <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 leading-7! justify-center rounded-default text-center text-base-400 w-7 group-hover/action:bg-base-100 group-hover/action:text-base-700 dark:text-font-default-dark dark:group-hover/action:bg-base-800 dark:group-hover/action:text-white"
-                      x-on:click="openActionsId{{ action_id }} = !openActionsId{{ action_id }}"
-                      x-bind:class="{'bg-base-100 text-base-700 dark:bg-base-800 dark:text-white': openActionsId{{ action_id }} }">
-                    more_horiz
-                </span>
+            <div class="flex flex-row gap-1 items-center">
+                {% for action in actions %}
+                    {% if not action.display_in_dropdown %}
+                        {% url action.raw_path instance_pk as action_url %}
+                        {% component "unfold/components/button.html" with href=action_url size="xs" variant="default" icon=action.icon class="self-center lg:-my-2"%}
+                            {{ action.title }}
+                        {% endcomponent %}
+                    {% endif %}
+                {% endfor %}
 
-                <template x-teleport="body">
-                    <nav x-anchor.bottom-end.offset.4="$refs.rowDropdown{{ action_id }}" class="bg-white border border-base-200 flex flex-col py-1 rounded-default shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openActionsId{{ action_id }}" x-transition x-on:click.outside="openActionsId{{ action_id }} = false">
-                        {% for action in actions %}
-                            <a href="{% url action.raw_path instance_pk %}"
-                               {% if action.dialog %}
-                                   hx-get="{% url action.raw_path instance_pk %}"
-                                   hx-target="#modal-content"
-                                   hx-select="#dialog"
-                                   x-on:htmx:after-on-load="openModal = true"
-                               {% endif %}
-                               class="flex items-center gap-2 mx-1 px-3 py-2 max-h-[30px] rounded-default hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
-                                {% if action.icon %}
-                                    <span class="material-symbols-outlined">
-                                        {{ action.icon }}
-                                    </span>
-                                {% endif %}
+                {% if actions|has_row_action_in_dropdown %}
+                    <div class="group/action leading-none relative" x-data="{ openActionsId{{ action_id }}: false }">
+                        <span x-ref="rowDropdown{{ action_id }}" class="cursor-pointer flex h-7 material-symbols-outlined md-18 -my-1 leading-7! justify-center rounded-default text-center text-base-400 w-7 group-hover/action:bg-base-100 group-hover/action:text-base-700 dark:text-font-default-dark dark:group-hover/action:bg-base-800 dark:group-hover/action:text-white"
+                              x-on:click="openActionsId{{ action_id }} = !openActionsId{{ action_id }}"
+                              x-bind:class="{'bg-base-100 text-base-700 dark:bg-base-800 dark:text-white': openActionsId{{ action_id }} }">
+                            more_horiz
+                        </span>
 
-                                <span class="grow truncate">
-                                    {{ action.title }}
-                                </span>
-                            </a>
-                        {% endfor %}
-                    </nav>
-                </template>
+                        <template x-teleport="body">
+                            <nav x-anchor.bottom-end.offset.4="$refs.rowDropdown{{ action_id }}" class="bg-white border border-base-200 flex flex-col py-1 rounded-default shadow-lg text-sm top-7 z-50 w-48 dark:bg-base-800 dark:border-base-700" x-cloak x-show="openActionsId{{ action_id }}" x-transition x-on:click.outside="openActionsId{{ action_id }} = false">
+                                {% for action in actions %}
+                                    {% if action.display_in_dropdown %}
+                                        <a href="{% url action.raw_path instance_pk %}"
+                                           {% if action.dialog %}
+                                               hx-get="{% url action.raw_path instance_pk %}"
+                                               hx-target="#modal-content"
+                                               hx-select="#dialog"
+                                               x-on:htmx:after-on-load="openModal = true"
+                                           {% endif %}
+                                           class="flex items-center gap-2 mx-1 px-3 py-2 max-h-[30px] rounded-default hover:bg-base-100 dark:hover:bg-base-700 dark:hover:text-base-200"{% for attr_name, attr_value in action.attrs.items %} {{ attr_name }}="{{ attr_value }}"{% endfor %}>
+                                            {% if action.icon %}
+                                                <span class="material-symbols-outlined">
+                                                    {{ action.icon }}
+                                                </span>
+                                            {% endif %}
+
+                                            <span class="grow truncate">
+                                                {{ action.title }}
+                                            </span>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </nav>
+                        </template>
+                    </div>
+                {% endif %}
             </div>
         {% endwith %}
     </td>

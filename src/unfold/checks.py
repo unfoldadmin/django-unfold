@@ -5,12 +5,13 @@ from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.auth.models import Permission
 from django.core import checks
 from django.db import connection as db_connection
+from django.core.checks import CheckMessage
 
 from unfold.dataclasses import UnfoldAction
 
 
 class UnfoldModelAdminChecks(ModelAdminChecks):
-    def check(self, admin_obj: BaseModelAdmin, **kwargs) -> list[checks.Error]:
+    def check(self, admin_obj: BaseModelAdmin, **kwargs) -> list[CheckMessage]:
         return [
             *super().check(admin_obj, **kwargs),
             *self._check_unfold_action_permission_methods(admin_obj),
@@ -46,7 +47,7 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
                     ).exists():
                         errors.append(
                             checks.Error(
-                                f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",
+                                f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",  # type: ignore
                                 obj=obj.__class__,
                                 id="admin.E129",
                             )
@@ -59,7 +60,7 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
                 if not hasattr(obj, method_name):
                     errors.append(
                         checks.Error(
-                            f"{obj.__class__.__name__} must define a {method_name}() method for the {action.method.original_function_name}() action.",
+                            f"{obj.__class__.__name__} must define a {method_name}() method for the {action.method.original_function_name}() action.",  # type: ignore
                             obj=obj.__class__,
                             id="admin.E129",
                         )

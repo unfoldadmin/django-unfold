@@ -117,7 +117,7 @@ class PostInline(StackedInline):
 
 
 class ProjectDatasetModelAdmin(ModelAdmin):
-    pass
+    search_fields = ["name"]
 
 
 class ProjectDataset(BaseDataset):
