@@ -4,8 +4,8 @@ from django.contrib.admin.checks import ModelAdminChecks
 from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.auth.models import Permission
 from django.core import checks
-from django.db import connection as db_connection
 from django.core.checks import CheckMessage
+from django.db import connection as db_connection
 
 from unfold.dataclasses import UnfoldAction
 

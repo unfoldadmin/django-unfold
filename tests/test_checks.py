@@ -41,6 +41,8 @@ def test_checks_during_initial_migration():
         )
 
     assert errors == []
+
+
 def test_actions_exception_action_has_wrong_permission_method():
     admin.site.unregister(User)
 
