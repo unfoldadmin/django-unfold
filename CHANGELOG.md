@@ -1,6 +1,35 @@
 # CHANGELOG
 
 
+## v0.94.0 (2026-05-18)
+
+### Bug Fixes
+
+- Center and prevent repetition of user avatars
+  ([#2031](https://github.com/unfoldadmin/django-unfold/pull/2031),
+  [`cd689c9`](https://github.com/unfoldadmin/django-unfold/commit/cd689c905c91eb9da55376f48d808cae48ec1a62))
+
+- Changelist actions positioning ([#2034](https://github.com/unfoldadmin/django-unfold/pull/2034),
+  [`ffbf5cc`](https://github.com/unfoldadmin/django-unfold/commit/ffbf5ccdd77b6572aeae81e703f2722ac15e4d59))
+
+- Crispy forms formset margin ([#2040](https://github.com/unfoldadmin/django-unfold/pull/2040),
+  [`e447af2`](https://github.com/unfoldadmin/django-unfold/commit/e447af2b867b1da95315618d360eed6242dc05d9))
+
+### Features
+
+- Card component md size ([#2041](https://github.com/unfoldadmin/django-unfold/pull/2041),
+  [`6ccf3f9`](https://github.com/unfoldadmin/django-unfold/commit/6ccf3f90b91c3ea60703ba91131390c642f8ae09))
+
+- Changelist row action as button ([#2036](https://github.com/unfoldadmin/django-unfold/pull/2036),
+  [`2db16da`](https://github.com/unfoldadmin/django-unfold/commit/2db16da525c36cadef354b8f7c29338485b12f24))
+
+- Extra options for actions ([#2039](https://github.com/unfoldadmin/django-unfold/pull/2039),
+  [`5ac14b9`](https://github.com/unfoldadmin/django-unfold/commit/5ac14b9f10e3871e061b875fedf5a0ee7adda337))
+
+- Resizable sidebar ([#2026](https://github.com/unfoldadmin/django-unfold/pull/2026),
+  [`449100e`](https://github.com/unfoldadmin/django-unfold/commit/449100e8e15b3fb54f9a8d15190d31e86a3f6a34))
+
+
 ## v0.93.0 (2026-05-11)
 
 ### Bug Fixes
