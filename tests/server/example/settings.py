@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "constance",
     "import_export",
     "location_field",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -98,6 +99,10 @@ PASSWORD_HASHERS = [
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CRISPY_TEMPLATE_PACK = "unfold_crispy"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
@@ -186,3 +191,7 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict(
         },
     }
 )
+
+UNFOLD = {
+    "TABS": "example.utils.tabs_callback",
+}

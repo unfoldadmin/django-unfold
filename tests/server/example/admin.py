@@ -33,6 +33,7 @@ from example.models import (
     Task,
     User,
 )
+from example.views import CrispyFormView
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import (
     AllValuesCheckboxFilter,
@@ -116,7 +117,7 @@ class PostInline(StackedInline):
 
 
 class ProjectDatasetModelAdmin(ModelAdmin):
-    pass
+    search_fields = ["name"]
 
 
 class ProjectDataset(BaseDataset):
@@ -261,6 +262,15 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
+
+    def get_custom_urls(self):
+        return [
+            (
+                "crispy-form",
+                "crispy_form",
+                CrispyFormView.as_view(model_admin=self),
+            ),
+        ]
 
     @display(description="Custom readonly field")
     def custom_readonly_field(self, obj):

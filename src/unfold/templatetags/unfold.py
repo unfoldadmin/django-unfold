@@ -191,6 +191,11 @@ def has_active_item(items: list[dict]) -> bool:
 
 
 @register.filter
+def has_row_action_in_dropdown(actions: list[dict]) -> bool:
+    return any(action.get("display_in_dropdown", True) for action in actions)
+
+
+@register.filter
 def class_name(value: Any) -> str:
     return value.__class__.__name__
 

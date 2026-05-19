@@ -1,6 +1,6 @@
 [project]
 name = "django-unfold"
-version = "0.92.0"
+version = "0.94.0"
 description = "Modern Django Admin"
 authors = []
 requires-python = ">=3.12,<4.0"
@@ -36,6 +36,7 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 [dependency-groups]
 dev = [
     "django-constance==4.3.5",
+    "django-crispy-forms==2.6.0",
     "django-guardian==3.3.1",
     "django-import-export==4.4.0",
     "django-location-field==2.7.3",
@@ -51,6 +52,7 @@ dev = [
     "python-semantic-release==10.5.3",
     "tox==4.53.0",
     "six==1.17.0",
+    "psycopg[binary]>=3.3.4",
 ]
 
 [tool.uv]
@@ -126,7 +128,7 @@ django_find_project = false
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-fail_under = 92
+fail_under = 95.0
 sort = "-miss"
 
 [tool.coverage.paths]

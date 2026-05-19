@@ -365,6 +365,9 @@ class UnfoldAdminSite(AdminSite):
         for item in items:
             link = item.get("link")
 
+            if not link:
+                continue
+
             if "active" in item:
                 item["active"] = self._get_value(item["active"], request)
             else:
@@ -504,14 +507,14 @@ class UnfoldAdminSite(AdminSite):
         return False
 
     def _get_is_tab_active(
-        self, request: HttpRequest, tabs: list[dict], link: str
+        self, request: HttpRequest, tabs: list[dict], nav_link: str
     ) -> bool:
-        for tab in tabs:
+        for tab_opts in tabs:
             has_primary_link = False
             has_tab_link_active = False
 
-            for tab_item in tab["items"]:
-                if link == tab_item["link"]:
+            for tab_item in tab_opts["items"]:
+                if nav_link == tab_item["link"]:
                     has_primary_link = True
                     continue
 
