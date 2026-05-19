@@ -19,19 +19,19 @@
     <head>
         <title>{{ environment_title_prefix|default:"" }} {% block title %}{% endblock %}</title>
 
-        <link href="{% static "unfold/fonts/inter/styles.css" %}" rel="stylesheet">
-        <link href="{% static "unfold/fonts/material-symbols/styles.css" %}" rel="stylesheet">
+        <link {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} href="{% static "unfold/fonts/inter/styles.css" %}" rel="stylesheet">
+        <link {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} href="{% static "unfold/fonts/material-symbols/styles.css" %}" rel="stylesheet">
 
         {% for style in styles %}
-            <link href="{{ style }}" rel="stylesheet">
+            <link {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} href="{{ style }}" rel="stylesheet">
         {% endfor %}
 
         {% for favicon in site_favicons %}
             <link {% if favicon.rel %}rel="{{ favicon.rel }}"{% endif %} {% if favicon.href %}href="{{ favicon.href }}"{% endif %} {% if favicon.type %}type="{{ favicon.type }}"{% endif %} {% if favicon.sizes %}sizes="{{ favicon.sizes }}"{% endif %}>
         {% endfor %}
 
-        <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
-        <link href="{% static 'unfold/css/simplebar/simplebar.css' %}" rel="stylesheet">
+        <link {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
+        <link {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} href="{% static 'unfold/css/simplebar/simplebar.css' %}" rel="stylesheet">
 
         <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/alpine/alpine.anchor.js' %}" defer></script>
         <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% static 'unfold/js/alpine/alpine.persist.js' %}" defer></script>
