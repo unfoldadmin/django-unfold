@@ -952,7 +952,9 @@ class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
 class UnfoldAdminJSONSchemaWidget(UnfoldAdminTextareaWidget):
     template_name = "unfold/widgets/json_schema.html"
 
-    def get_context(self, name, value, attrs):
+    def get_context(
+        self, name: str, value: Any, attrs: dict[str, Any] | None
+    ) -> dict[str, Any]:
         schema = self.attrs.pop("schema")
 
         context = super().get_context(name, value, attrs)
