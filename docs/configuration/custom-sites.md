@@ -50,7 +50,7 @@ class UserAdmin(ModelAdmin):
 
 ## Overriding the default admin site
 
-If you want to override the default admin site by setting the `default_site` attribute of a custom `django.contrib.admin.apps.AdminConfig` class, you must install Unfold using `unfold.apps.AppConfig` instead of just `unfold` in `INSTALLED_APPS`.
+If you want to override the default admin site by setting the `default_site` attribute of a custom `django.contrib.admin.apps.AdminConfig` class, you must install Unfold using `unfold.apps.BasicAppConfig` instead of just `unfold` in `INSTALLED_APPS`.
 
 ```python
 # settings.py
