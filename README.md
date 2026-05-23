@@ -118,3 +118,4 @@ Need help integrating, customizing, or scaling Django Admin with Unfold?
 - **Range Slider**: [noUiSlider](https://github.com/leongersen/noUiSlider) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **Number Formatting**: [wNumb](https://github.com/leongersen/wnumb) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **WYSIWYG Editor**: [Trix](https://github.com/basecamp/trix) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- **JSON Schema Editor**: [Jedison](https://github.com/germanbisurgi/jedison) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).

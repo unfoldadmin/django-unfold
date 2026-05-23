@@ -34,6 +34,7 @@ from django.forms import (
     SelectMultiple,
 )
 from django.forms.widgets import Input
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from unfold.exceptions import UnfoldException
@@ -946,6 +947,27 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
 
 class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
     template_name = "unfold/widgets/related_widget_wrapper.html"
+
+
+class UnfoldAdminJSONSchemaWidget(UnfoldAdminTextareaWidget):
+    template_name = "unfold/widgets/json_schema.html"
+
+    def get_context(self, name, value, attrs):
+        schema = self.attrs.pop("schema")
+
+        context = super().get_context(name, value, attrs)
+        context.update(
+            {
+                "schema": mark_safe(json.dumps(schema)),
+            }
+        )
+
+        return context
+
+    class Media:
+        js = [
+            "unfold/js/jedison/jedison.js",
+        ]
 
 
 try:

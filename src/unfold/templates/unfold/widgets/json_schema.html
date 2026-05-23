@@ -1,0 +1,18 @@
+<textarea name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+
+<div id="jedison-container"></div>
+
+<script>
+    const jedison = new Jedison.Create({
+        container: document.querySelector('#jedison-container'),
+        theme: new Jedison.Theme(),
+        schema: {{ schema }}
+    })
+
+    const el = document.getElementById('{{ widget.attrs.id }}');
+    jedison.setValue(JSON.parse(el.value))
+
+    jedison.on("change", function (initiator) {
+        el.value = JSON.stringify(jedison.getValue());
+    });
+</script>
