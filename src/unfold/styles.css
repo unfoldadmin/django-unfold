@@ -9,6 +9,8 @@
   }
 }
 
+@custom-variant aria-invalid (&[aria-invalid="true"]);
+
 @source inline("aspect-square flex-1 group-hover:block self-start font-bold bg-white/[.06] border-white/40 h-[64px] w-[65px]! left-[65px] {dark:,}text-white/{0..100..10} {dark:,}bg-white/{0..100..10} {dark:,}text-{base,primary}-{50,{100..900},950} dark:hover:bg-white/[.06] {-,}translate-{x,y}-{1/2}");
 @source inline("{-,}{top,bottom,left,right}-{1/2,{0..8}} {!,}leading-[38px] {lg:,}leading-{6..16} {md:,lg:,}text-{default,base,link,icon,subtle,important,transparent,lg,xl,2xl,3xl,4xl}");
 @source inline("bg-linear-to-{{t,r,b,l,tl,tr,bl,br}} {dark:,}{from,to}-{{{base,primary}-{50,{100..900..100},950}},white}");
@@ -204,7 +206,6 @@
     }
   }
 }
-
 
 @utility scrollable-top {
   @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-base-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
@@ -1128,4 +1129,37 @@ div.jsoneditor-tree,
 
 .jsoneditor-modal table td, .jsoneditor-modal table th {
   @apply !font-sans !text-default;
+}
+
+/*******************************************************
+ Jedison
+ *******************************************************/
+#jedison-container {
+  @apply border border-base-200 max-w-2xl overflow-hidden p-3 rounded-default shadow-xs dark:border-base-700;
+}
+
+.jedi-children-slot {
+  @apply flex flex-col gap-3;
+}
+
+.jedi-description {
+  @apply mt-2 text-subtle text-xs;
+}
+
+/* Legend */
+.jedi-editor-legend {
+  @apply border-b border-base-200 flex flex-row mb-3 pb-3 justify-between -mx-3 px-3 dark:border-base-700 w-[calc(100%+24px)];
+}
+
+.jedi-editor-legend label {
+  @apply font-semibold text-important;
+}
+
+/* Messages */
+.jedi-editor-card-body > .jedi-messages-slot .jedi-error-message {
+  @apply bg-red-100 leading-[18px] mb-3 px-3 py-2.5 rounded-default text-red-700 dark:bg-red-500/20 dark:text-red-400;
+}
+
+.jedi-editor-card-body .group .jedi-error-message {
+  @apply mt-2 text-red-600 text-xs dark:text-red-500;
 }

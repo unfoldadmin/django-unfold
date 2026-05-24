@@ -2,10 +2,12 @@
 
 <div id="jedison-container"></div>
 
+{{ form_classes|json_script:"formClasses" }}
+
 <script>
     const jedison = new Jedison.Create({
         container: document.querySelector('#jedison-container'),
-        theme: new Jedison.Theme(),
+        theme: new ThemeUnfold(JSON.parse(document.getElementById('formClasses').textContent)),
         schema: {{ schema }}
     })
 
