@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from os import environ
 from pathlib import Path
+from warnings import filterwarnings
 
 from django.core.management.utils import get_random_secret_key
 from django.utils.translation import gettext_lazy as _
@@ -18,6 +19,13 @@ ALLOWED_HOSTS = ["localhost"]
 AUTH_USER_MODEL = "example.User"
 
 USE_TZ = False
+
+# TODO: remove once the setting is removed
+filterwarnings(
+    "ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated."
+)
+
+FORMS_URLFIELD_ASSUME_HTTPS = True
 
 INSTALLED_APPS = [
     "unfold",
