@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.utils.html import format_html
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+from hijack.contrib.admin import HijackUserAdminMixin
 from import_export.admin import ImportExportModelAdmin
 from import_export.resources import ModelResource
 
@@ -174,7 +175,9 @@ class UserResource(ModelResource):
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
+class UserAdmin(
+    HijackUserAdminMixin, BaseUserAdmin, ModelAdmin, ImportExportModelAdmin
+):
     import_form_class = ImportForm
     export_form_class = ExportForm
     resource_classes = [UserResource, UserAnotherResource]
@@ -271,6 +274,9 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
                 CrispyFormView.as_view(model_admin=self),
             ),
         ]
+
+    def get_hijack_user(self, obj):
+        return obj
 
     @display(description="Custom readonly field")
     def custom_readonly_field(self, obj):
