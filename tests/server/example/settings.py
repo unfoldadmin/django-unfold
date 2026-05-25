@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "unfold.contrib.import_export",
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
+    "unfold.contrib.hijack",
     "unfold.contrib.location_field",
     "unfold.contrib.constance",
     "django.contrib.admin",
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     "import_export",
     "location_field",
     "crispy_forms",
+    "hijack",
+    "hijack.contrib.admin",
 ]
 
 MIDDLEWARE = [
@@ -58,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "hijack.middleware.HijackUserMiddleware",
 ]
 
 ROOT_URLCONF = "example.urls"
