@@ -247,6 +247,17 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /*******************************************************
+ Dialog
+ *******************************************************/
+dialog {
+  @apply bg-white fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 relative rounded-default p-6 w-md dark:bg-base-800;
+}
+
+dialog::backdrop {
+  @apply backdrop-blur-xs bg-base-900/20 dark:bg-base-900/80;
+}
+
+/*******************************************************
  Table
  *******************************************************/
 table tr.selected td,
