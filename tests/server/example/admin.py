@@ -155,7 +155,7 @@ class ProjectNonrelatedInline(NonrelatedTabularInline):
         return "primary"
 
     def get_form_queryset(self, obj):
-        return self.model.objects.filter(is_active=True)
+        return self.model.objects.filter(is_active=True).order_by("pk")
 
     def save_new_instance(self, parent, instance):
         pass
