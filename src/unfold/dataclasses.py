@@ -1,5 +1,5 @@
 from collections.abc import Callable, Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, TypedDict
 
 from unfold.enums import ActionVariant
@@ -24,6 +24,7 @@ class Action:
     icon: str | None = None
     dialog: ActionDialog | None = None
     variant: ActionVariant | None = ActionVariant.DEFAULT
+    extra_options: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -37,6 +38,7 @@ class UnfoldAction:
     icon: str | None = None
     variant: ActionVariant | None = ActionVariant.DEFAULT
     dialog: ActionDialog | None = None
+    extra_options: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
