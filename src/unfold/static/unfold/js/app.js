@@ -20,11 +20,21 @@ window.addEventListener("load", (e) => {
  * Switch theme
  *************************************************************/
 function theme(defaultTheme = "auto") {
+  // When the server forces a THEME, it must be authoritative on every load.
+  // Alpine.$persist would otherwise hydrate from a stale localStorage value
+  // written by an earlier session or by Ctrl+E, silently overriding the server.
+  const forcedTheme = defaultTheme && defaultTheme !== "auto" ? defaultTheme : null;
+
+  if (forcedTheme) {
+    localStorage.setItem("adminTheme", JSON.stringify(forcedTheme));
+  }
+
   return {
     sidebarWidth: localStorage.getItem('sidebarWidth') || 288,
     openModal: false,
     filterOpen: false,
     openAllApplications: false,
+    forcedTheme: forcedTheme,
     adminTheme: Alpine.$persist(defaultTheme).as('adminTheme'),
     init() {
         this.$watch('openModal', (value) => {
@@ -52,6 +62,9 @@ function theme(defaultTheme = "auto") {
         });
     },
     switchTheme(theme) {
+      if (this.forcedTheme) {
+        return;
+      }
       this.adminTheme = theme;
     },
     themeBindings: {
@@ -67,6 +80,10 @@ function theme(defaultTheme = "auto") {
         return '';
       },
       ['x-on:keydown.window'](event) {
+        if (this.forcedTheme) {
+          return;
+        }
+
         if ((event.metaKey || event.ctrlKey) && event.key === "e") {
           event.preventDefault();
 
