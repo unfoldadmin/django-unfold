@@ -45,11 +45,11 @@
             <div class="bg-white border border-b-0 border-base-200 flex flex-col grow -mx-px px-px min-h-0 rounded-default dark:border-base-700 dark:bg-white/[.04]">
                 <div class="grow h-full overflow-y-auto" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)">
                     <div id="command-results"></div>
-                </div>
 
-                {% if command_show_history %}
-                    {% include "unfold/helpers/command_history.html" %}
-                {% endif %}
+                    {% if command_show_history %}
+                        {% include "unfold/helpers/command_history.html" %}
+                    {% endif %}
+                </div>
 
                 {% include "unfold/helpers/command_help.html" %}
             </div>
