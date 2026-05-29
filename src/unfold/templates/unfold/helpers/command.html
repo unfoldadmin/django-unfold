@@ -6,7 +6,7 @@
          x-on:opencommand.window="handleOpen()"
          x-on:keydown.window="handleShortcut($event)"
          x-show="openCommandResults">
-        <div class="bg-white flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full dark:bg-base-800" x-on:click.outside="handleOutsideClick()">
+        <div class="bg-base-50 dark:bg-base-800 flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-on:click.outside="handleOutsideClick()">
             <div class="flex flex-row items-center px-4 w-full">
                 <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
                     <span class="block material-symbols-outlined text-xl text-base-400 dark:text-base-500 group-[.htmx-request]:hidden">
@@ -22,7 +22,7 @@
                     autocomplete="off"
                     type="search"
                     placeholder="{% trans "Type to search" %}"
-                    class="font-medium grow px-2 py-4 placeholder-font-subtle-light text-font-default-light focus:outline-hidden dark:placeholder-font-subtle-dark dark:text-font-default-dark"
+                    class="[&::-webkit-search-cancel-button]:hidden font-medium grow px-2 py-4 placeholder-text-subtle text-important focus:outline-hidden"
                     name="s"
                     id="search-input-command"
                     x-ref="searchInputCommand"
@@ -42,14 +42,16 @@
                 {% include "unfold/helpers/shortcut.html" with shortcut="esc" %}
             </div>
 
-            <div class="grow h-full overflow-auto w-full dark:border-base-700" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)" x-bind:class="{'border-t border-base-200': items !== undefined && items.length > 0}">
-                <div id="command-results"></div>
+            <div class="bg-white border border-b-0 border-base-200 flex flex-col grow -mx-px px-px min-h-0 rounded-default dark:border-base-700 dark:bg-white/[.04]">
+                <div class="grow h-full overflow-y-auto" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)">
+                    <div id="command-results"></div>
+                </div>
 
                 {% if command_show_history %}
                     {% include "unfold/helpers/command_history.html" %}
                 {% endif %}
 
-                <div id="command-results-note"></div>
+                {% include "unfold/helpers/command_help.html" %}
             </div>
         </div>
     </div>
