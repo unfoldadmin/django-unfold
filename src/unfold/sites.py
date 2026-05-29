@@ -306,6 +306,7 @@ class UnfoldAdminSite(AdminSite):
             request,
             template=template_name,
             context={
+                "search_term": search_term,
                 "page_obj": paginator,
                 "results": paginator.page(request.GET.get("page", 1)),
                 "page_counter": (int(request.GET.get("page", 1)) - 1) * PER_PAGE,

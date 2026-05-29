@@ -40,15 +40,21 @@
             {% endfor %}
         </ul>
     {% else %}
-        {% trans "Nothing matched your search" as message %}
-        {% include "unfold/helpers/command_empty.html" with message=message %}
+        <ul>
+            <li>
+                {% trans "Nothing matched your search" as message %}
+                {% include "unfold/helpers/command_empty.html" with message=message %}
+            </li>
+        </ul>
     {% endif %}
 </div>
 
-<div id="command-results-note" class="ml-auto" x-show="hasResults">
-    {% blocktranslate count counter=page_obj.count with time=execution_time|floatformat:2 %}
-        Found {{ counter }} result in {{ time }} seconds
-    {% plural %}
-        Found {{ counter }} results in {{ time }} seconds
-    {% endblocktranslate %}
+<div id="command-results-note" class="ml-auto">
+    {% if results %}
+        {% blocktranslate count counter=page_obj.count with time=execution_time|floatformat:2 %}
+            Found {{ counter }} result in {{ time }} seconds
+        {% plural %}
+            Found {{ counter }} results in {{ time }} seconds
+        {% endblocktranslate %}
+    {% endif %}
 </div>
