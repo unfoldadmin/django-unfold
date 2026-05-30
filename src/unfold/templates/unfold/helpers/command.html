@@ -27,7 +27,7 @@
                     id="search-input-command"
                     x-ref="searchInputCommand"
                     hx-indicator="#command-submit"
-                    x-on:keydown.escape.prevent="handleEscape()"
+                    x-on:keydown.escape.prevent="handleClear()"
                     x-on:keydown.arrow-down.prevent="nextItem()"
                     x-on:keydown.arrow-up.prevent="prevItem()"
                     x-on:keydown.meta.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %}, true)"
@@ -39,10 +39,12 @@
                     hx-select-oob="#command-results-note"
                     hx-target="#command-results">
 
-                {% include "unfold/helpers/shortcut.html" with shortcut="esc" %}
+                <span class="material-symbols-outlined text-icon-action" x-on:click="handleClear()">
+                    close
+                </span>
             </div>
 
-            <div class="bg-white border border-b-0 border-base-200 flex flex-col grow -mx-px px-px min-h-0 rounded-default dark:border-base-700 dark:bg-white/[.04]">
+            <div class="bg-white border border-b-0 border-base-200 flex flex-col grow -mx-px min-h-0 rounded-default dark:border-base-700 dark:bg-white/[.04]">
                 <div class="grow h-full overflow-y-auto" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)">
                     <div id="command-results"></div>
 
