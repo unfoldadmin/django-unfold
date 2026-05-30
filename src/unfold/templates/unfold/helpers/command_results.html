@@ -52,9 +52,9 @@
 <div id="command-results-note" class="ml-auto">
     {% if results %}
         {% blocktranslate count counter=page_obj.count with time=execution_time|floatformat:2 %}
-            Found {{ counter }} result in {{ time }} seconds
+            Found <span class="font-medium text-important">{{ counter }}</span> result in {{ time }} seconds
         {% plural %}
-            Found {{ counter }} results in {{ time }} seconds
+            Found <span class="font-medium text-important">{{ counter }}</span> results in {{ time }} seconds
         {% endblocktranslate %}
     {% endif %}
 </div>

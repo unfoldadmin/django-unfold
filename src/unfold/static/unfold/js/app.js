@@ -286,10 +286,10 @@ function searchCommand() {
 	return {
 		el: document.getElementById("command-results"),
 		items: undefined,
-		hasResults: false,
-		openCommandResults: false,
-		currentIndex: 0,
 		totalItems: 0,
+		currentIndex: 0,
+		hasResponse: false,
+		openCommandResults: false,
 		searchTerm: "",
 		commandHistory: JSON.parse(localStorage.getItem("commandHistory") || "[]"),
 		handleOpen() {
@@ -314,7 +314,7 @@ function searchCommand() {
 				this.handleOpen();
 			}
 		},
-		handleEscape() {
+		handleClear() {
 			if (this.$refs.searchInputCommand.value === "") {
 				this.toggleBodyOverflow();
 				this.openCommandResults = false;
@@ -344,6 +344,8 @@ function searchCommand() {
 				return;
 			}
 
+			this.hasResponse = event.detail.xhr.response.length > 0;
+
 			const commandResultsList = document.getElementById(
 				"command-results-list",
 			);
@@ -366,10 +368,11 @@ function searchCommand() {
 				}
 			}
 
-			this.hasResults = this.totalItems > 0;
-
-			if (!this.hasResults) {
+			if (!this.hasResponse && this.commandHistory.length > 0) {
+				this.currentIndex = 0;
 				this.items = document.querySelectorAll("#command-history li");
+				this.totalItems = this.items.length;
+				document.getElementById("command-results-note").innerHTML = "";
 			}
 
 			this.searchTerm = this.$refs.searchInputCommand.value;
