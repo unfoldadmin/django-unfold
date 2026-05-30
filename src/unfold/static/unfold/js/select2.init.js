@@ -21,6 +21,7 @@
   $.fn.djangoFilterSelect2 = function () {
     $.each(this, function (i, element) {
       $(element).select2({
+        closeOnSelect: !element.multiple,
         ajax: {
           data: (params) => {
             return {
