@@ -44,6 +44,7 @@ dev = [
     "django-money==3.6.0",
     "django-simple-history==3.11.0",
     "django-stubs==6.0.3",
+    "jsonschema==4.26.0",
     "pillow==12.2.0",
     "pytest==9.0.3",
     "pytest-cov==7.1.0",
@@ -51,9 +52,9 @@ dev = [
     "pytest-factoryboy==2.8.1",
     "pytest-mock==3.15.1",
     "python-semantic-release==10.5.3",
-    "tox==4.53.0",
     "six==1.17.0",
     "psycopg[binary]==3.3.4",
+    "tox==4.53.0",
 ]
 
 [tool.uv]
