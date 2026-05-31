@@ -395,7 +395,7 @@ def fieldset_row_classes(context: RequestContext) -> str:
     ]
 
     formset = context.get("inline_admin_formset", None)
-    line = context.get("line") or []
+    line = context.get("line", [])
 
     # Hide the field in case of ordering field for sorting
     for field in line:
@@ -407,7 +407,7 @@ def fieldset_row_classes(context: RequestContext) -> str:
         ):
             classes.append("hidden")
 
-    if len(line.fields) > 1:
+    if line and len(line.fields) > 1:
         classes.extend(
             [
                 "grid",
@@ -415,7 +415,7 @@ def fieldset_row_classes(context: RequestContext) -> str:
             ]
         )
 
-    if not line.has_visible_field:
+    if line and not line.has_visible_field:
         classes.append("hidden")
 
     return " ".join(set(classes))
