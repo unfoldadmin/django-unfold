@@ -34,7 +34,6 @@ from django.forms import (
     SelectMultiple,
 )
 from django.forms.widgets import Input
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from unfold.exceptions import UnfoldException
@@ -973,7 +972,8 @@ class UnfoldAdminJSONSchemaWidget(UnfoldAdminTextareaWidget):
 
         context.update(
             {
-                "schema": mark_safe(json.dumps(schema)),
+                "schema": schema,
+                "schema_id": f"jsonschema-{context['widget']['attrs']['id']}",
                 "form_classes": forms.get("classes", ""),
             }
         )

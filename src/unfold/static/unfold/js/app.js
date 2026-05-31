@@ -1,4 +1,6 @@
 window.addEventListener("load", (e) => {
+	initJSONSchemaEditor();
+
 	fileInputUpdatePath();
 
 	dateTimeShortcutsOverlay();
@@ -15,6 +17,31 @@ window.addEventListener("load", (e) => {
 
 	scrollSidebarNav();
 });
+
+/*************************************************************
+ * JSON Schema Editor
+ *************************************************************/
+function initJSONSchemaEditor() {
+	document.querySelectorAll(".jsonschema-container").forEach((container) => {
+		const el = document.getElementById(container.dataset.targetId);
+
+		const instance = new Jedison.Create({
+			container: container,
+			theme: new ThemeUnfold(
+				JSON.parse(document.getElementById("formClasses").textContent),
+			),
+			schema: JSON.parse(
+				document.getElementById(container.dataset.schemaId).textContent,
+			),
+		});
+
+		instance.setValue(JSON.parse(el.value));
+
+		instance.on("change", () => {
+			el.value = JSON.stringify(instance.getValue());
+		});
+	});
+}
 
 /*************************************************************
  * Switch theme
