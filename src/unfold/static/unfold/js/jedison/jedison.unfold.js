@@ -3,6 +3,44 @@ class ThemeUnfold extends Jedison.Theme {
 		super();
 
 		this.formClasses = formClasses;
+		this.buttonClasses = [
+			"border",
+			"border-base-200",
+			"bg-primary-600",
+			"border-transparent",
+			"text-white",
+			"cursor-pointer",
+			"font-medium",
+			"inline-flex",
+			"group",
+			"items-center",
+			"gap-1",
+			"mt-3",
+			"px-3",
+			"py-2",
+			"relative",
+			"rounded-default",
+			"justify-center",
+			"whitespace-nowrap",
+			"hover:bg-primary-600/80",
+		];
+	}
+
+	getMultipleControl(config = {}) {
+		const multipleControl = super.getMultipleControl(config);
+		const { container } = multipleControl;
+
+		container.classList.add(
+			...["flex", "flex-col", "gap-3", "max-w-2xl", "w-full"],
+		);
+
+		return multipleControl;
+	}
+
+	getAddPropertyButton(config) {
+		const btn = super.getAddPropertyButton(config);
+		btn.classList.add(...this.buttonClasses, "w-full");
+		return btn;
 	}
 
 	getLabel(config) {
@@ -17,7 +55,7 @@ class ThemeUnfold extends Jedison.Theme {
 		const { input, container, messages, description } = control;
 		this.addCssClasses(input, "text_input");
 
-		container.classList.add("group");
+		container.classList.add(...["group", "relative"]);
 		container.appendChild(messages);
 		container.appendChild(description);
 		return control;
@@ -29,7 +67,7 @@ class ThemeUnfold extends Jedison.Theme {
 
 		this.addCssClasses(input, "select");
 
-		container.classList.add("group");
+		container.classList.add(...["group", "relative", "select-wrapper"]);
 		container.appendChild(messages);
 		container.appendChild(description);
 		return control;
@@ -41,7 +79,7 @@ class ThemeUnfold extends Jedison.Theme {
 
 		this.addCssClasses(input, "textarea");
 
-		container.classList.add("group");
+		container.classList.add(["group", "relative"]);
 		container.appendChild(messages);
 		container.appendChild(description);
 		return control;
