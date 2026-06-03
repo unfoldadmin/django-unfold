@@ -40,7 +40,7 @@ def test_command_search_non_existing_record(admin_client):
         reverse("admin:search") + "?s=non-existing-record&extended=1"
     )
     assert response.status_code == HTTPStatus.OK
-    assert "No results matching your query" in response.content.decode()
+    assert "Nothing matched your search" in response.content.decode()
 
 
 @override_settings(

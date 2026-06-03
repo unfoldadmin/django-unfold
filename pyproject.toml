@@ -1,6 +1,6 @@
 [project]
 name = "django-unfold"
-version = "0.94.0"
+version = "0.95.0"
 description = "Modern Django Admin"
 authors = []
 requires-python = ">=3.12,<4.0"
@@ -53,7 +53,7 @@ dev = [
     "python-semantic-release==10.5.3",
     "tox==4.53.0",
     "six==1.17.0",
-    "psycopg[binary]>=3.3.4",
+    "psycopg[binary]==3.3.4",
 ]
 
 [tool.uv]
