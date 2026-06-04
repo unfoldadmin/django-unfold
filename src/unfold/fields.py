@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Any
 
+from django import forms
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import lookup_field, quote
 from django.core.exceptions import ObjectDoesNotExist
@@ -239,3 +240,14 @@ class UnfoldAdminMultipleAutocompleteModelChoiceField(
     AutocompleteFieldMixin, ModelMultipleChoiceField
 ):
     widget = UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget
+
+
+class UnfoldAdminJSONSchemaField(forms.JSONField):
+    def __init__(self, schema: dict[str, Any], *args: Any, **kwargs: Any) -> None:
+        self.schema = schema
+        super().__init__(*args, **kwargs)
+
+    def widget_attrs(self, widget: Widget) -> dict[str, Any]:
+        attrs = super().widget_attrs(widget)
+        attrs.update({"schema": self.schema})
+        return attrs

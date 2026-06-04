@@ -84,12 +84,16 @@ BASE_CLASSES = [
     "focus:-outline-offset-2",
     "focus:outline-primary-600",
     "group-[.errors]:border-red-600",
+    "aria-invalid:border-red-600",
     "focus:group-[.errors]:outline-red-600",
+    "focus:aria-invalid:outline-red-600",
     "dark:bg-base-900",
     "dark:border-base-700",
     "dark:text-font-default-dark",
     "dark:group-[.errors]:border-red-500",
+    "dark:aria-invalid:border-red-500",
     "dark:focus:group-[.errors]:outline-red-500",
+    "dark:focus:aria-invalid:outline-red-500",
     "dark:scheme-dark",
     "group-[.primary]:border-transparent",
     "disabled:!bg-base-50",
@@ -946,6 +950,41 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
 
 class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
     template_name = "unfold/widgets/related_widget_wrapper.html"
+
+
+class UnfoldAdminJSONSchemaWidget(UnfoldAdminTextareaWidget):
+    template_name = "unfold/widgets/json_schema.html"
+
+    def __init__(self, attrs: dict[str, Any] | None = None) -> None:
+        super().__init__(attrs)
+
+        self.attrs["class"] += " hidden"
+
+    def get_context(
+        self, name: str, value: Any, attrs: dict[str, Any] | None
+    ) -> dict[str, Any]:
+        from unfold.utils import get_setting_value
+
+        schema = self.attrs.pop("schema")
+
+        context = super().get_context(name, value, attrs)
+        forms = get_setting_value("FORMS")
+
+        context.update(
+            {
+                "schema": schema,
+                "schema_id": f"jsonschema-{context['widget']['attrs']['id']}",
+                "form_classes": forms.get("classes", ""),
+            }
+        )
+
+        return context
+
+    class Media:
+        js = [
+            "unfold/js/jedison/jedison.js",
+            "unfold/js/jedison/jedison.unfold.js",
+        ]
 
 
 try:

@@ -7,9 +7,12 @@ from unfold.widgets import (
     CHECKBOX_CLASSES,
     FILE_CLASSES,
     INPUT_CLASSES,
+    LABEL_CLASSES,
     PROSE_CLASSES,
     RADIO_CLASSES,
+    SELECT_CLASSES,
     SWITCH_CLASSES,
+    TEXTAREA_CLASSES,
 )
 
 CONFIG_DEFAULTS = {
@@ -30,8 +33,11 @@ CONFIG_DEFAULTS = {
     "LANGUAGE_FLAGS": {},
     "FORMS": {
         "classes": {
+            "label": " ".join(LABEL_CLASSES),
             "prose": " ".join(PROSE_CLASSES),
             "text_input": " ".join(INPUT_CLASSES),
+            "textarea": " ".join(TEXTAREA_CLASSES),
+            "select": " ".join(SELECT_CLASSES),
             "checkbox": " ".join(CHECKBOX_CLASSES),
             "button": " ".join(BUTTON_CLASSES),
             "radio": " ".join(RADIO_CLASSES),
