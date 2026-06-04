@@ -22,6 +22,14 @@ window.addEventListener("load", (e) => {
 function theme(defaultTheme = "auto") {
 	return {
 		sidebarWidth: localStorage.getItem("sidebarWidth") || 288,
+		sidebarOpen: true,
+		sidebarToggle() {
+			this.sidebarOpen = !this.sidebarOpen;
+
+			if (window.innerWidth > 1280) {
+				localStorage.setItem("sidebarOpen", this.sidebarOpen ? "1" : "0");
+			}
+		},
 		openModal: false,
 		filterOpen: false,
 		openAllApplications: false,
@@ -67,6 +75,14 @@ function theme(defaultTheme = "auto") {
 			this.adminTheme = theme;
 		},
 		themeBindings: {
+			["x-resize.window"]() {
+				if (window.innerWidth <= 1280) {
+					this.sidebarOpen = false;
+				} else {
+					this.sidebarOpen =
+						localStorage.getItem("sidebarOpen") === "0" ? false : true;
+				}
+			},
 			["x-bind:class"]() {
 				if (
 					this.adminTheme === "dark" ||
