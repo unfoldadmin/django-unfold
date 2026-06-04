@@ -371,7 +371,7 @@ def fieldset_rows_classes(context: RequestContext) -> str:
         "aligned",
     ]
 
-    if not context.get("stacked"):
+    if not context.get("stacked") and not context.get("fieldset_tab"):
         classes.extend(
             [
                 "border",
