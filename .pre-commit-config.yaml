@@ -33,7 +33,7 @@ repos:
     rev: 1.30.0
     hooks:
       - id: django-upgrade
-        args: ['--target-version', '5.1']
+        args: ['--target-version', '5.2']
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
     rev: v1.25.2
     hooks:
