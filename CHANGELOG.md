@@ -1,6 +1,49 @@
 # CHANGELOG
 
 
+## v0.96.0 (2026-06-05)
+
+### Bug Fixes
+
+- Django-simple-history UI improvements
+  ([#2069](https://github.com/unfoldadmin/django-unfold/pull/2069),
+  [`c96c0ce`](https://github.com/unfoldadmin/django-unfold/commit/c96c0ce2a683426aa72904b256080f0eb5d6c62d))
+
+### Features
+
+- Redesigned stacked inline ([#2071](https://github.com/unfoldadmin/django-unfold/pull/2071),
+  [`eedf429`](https://github.com/unfoldadmin/django-unfold/commit/eedf4292cc5642b89ad0fcd4b02d7eebf3b1d2f6))
+
+
+## v0.95.0 (2026-06-01)
+
+### Bug Fixes
+
+- Command history ([#2060](https://github.com/unfoldadmin/django-unfold/pull/2060),
+  [`a967655`](https://github.com/unfoldadmin/django-unfold/commit/a967655669d62e0b59c3fe239eb74d135ab0cefa))
+
+- Command UX ([#2062](https://github.com/unfoldadmin/django-unfold/pull/2062),
+  [`eff0b02`](https://github.com/unfoldadmin/django-unfold/commit/eff0b02fd450752250565e320a5598a2c37b5e42))
+
+- Dropdown hiding for multiple autocomplete filter
+  ([#2057](https://github.com/unfoldadmin/django-unfold/pull/2057),
+  [`d1b621a`](https://github.com/unfoldadmin/django-unfold/commit/d1b621a4b771ca3b2ffc887a9449ad2ca821302f))
+
+- Header vertical spacing ([#2053](https://github.com/unfoldadmin/django-unfold/pull/2053),
+  [`edb1e93`](https://github.com/unfoldadmin/django-unfold/commit/edb1e93004171f46d523117b196d290bf7958e5f))
+
+- Table component included in card ([#2043](https://github.com/unfoldadmin/django-unfold/pull/2043),
+  [`062184b`](https://github.com/unfoldadmin/django-unfold/commit/062184b41149c998067e027189aeb40b3c1385d0))
+
+### Features
+
+- Django-hijack support ([#2049](https://github.com/unfoldadmin/django-unfold/pull/2049),
+  [`35b5ff5`](https://github.com/unfoldadmin/django-unfold/commit/35b5ff5e77546d7ed1334a6c8cc05948e48dd89c))
+
+- Redesigned command ([#2058](https://github.com/unfoldadmin/django-unfold/pull/2058),
+  [`57166da`](https://github.com/unfoldadmin/django-unfold/commit/57166da7e658de44c38026a269445760e0cb3d5c))
+
+
 ## v0.94.0 (2026-05-18)
 
 ### Bug Fixes
