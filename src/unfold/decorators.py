@@ -168,7 +168,7 @@ def display(
             func.dropdown = dropdown
         if wrapper_class is not None:
             func.wrapper_class = wrapper_class
-            
+
         return func
 
     if function is None:

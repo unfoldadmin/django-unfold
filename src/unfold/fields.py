@@ -92,14 +92,14 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def wrapper_class(self) -> str:
         if isinstance(self.resolved_field, bool) or not self.resolved_field:
             return ""
-        
+
         f, attr, value = self.resolved_field
 
         if hasattr(attr, "wrapper_class"):
             return str(attr.wrapper_class)
-        
+
         return ""
-        
+
     def contents(self) -> SafeString:
         contents = self._get_contents()
         contents = self._preprocess_field(contents)
@@ -219,7 +219,7 @@ class UnfoldAdminField(helpers.AdminField):
             " ".join(CHECKBOX_LABEL_CLASSES if self.is_checkbox else LABEL_CLASSES)
         )
 
-        if self.field.field.required:   
+        if self.field.field.required:
             classes.append("required")
 
         attrs = {"class": " ".join(classes)} if classes else {}
