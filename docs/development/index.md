@@ -7,7 +7,7 @@ order: 12
 
 ## Starting the testing server
 
-The Unfold repository contains a testing server that you can use to test any changes you make to the code. To start the server, navigate to `tests/server` and run `uv run -- python manage.py runserver`. This will start the server at `http://localhost:8000`.
+The Unfold repository contains a testing server that you can use to test any changes you make to the code. To start the server, navigate to `tests/server` and run `uv run -- python manage.py migrate` then `uv run -- python manage.py runserver`. This will start the server at `http://localhost:8000`.
 
 Before running the server, you don't need to install anything, as `uv` will automatically take care of the dependencies.
 
