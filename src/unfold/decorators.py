@@ -142,6 +142,7 @@ def display(
     dropdown: bool | None = None,
     label: bool | str | dict[str, str] | None = None,
     header: bool | None = None,
+    wrapper_class: str | None = None,
 ) -> Callable:
     def decorator(func: Callable[[Model], Any]) -> Callable:
         if boolean is not None and empty_value is not None:
@@ -165,6 +166,8 @@ def display(
             func.header = header
         if dropdown is not None:
             func.dropdown = dropdown
+        if wrapper_class is not None:
+            func.wrapper_class = wrapper_class
 
         return func
 
