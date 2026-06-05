@@ -85,6 +85,10 @@
   }
 }
 
+@utility bg-striped-dark {
+  background-image: repeating-linear-gradient(45deg, var(--color-base-800) 0px, var(--color-base-800) 1px, transparent 2px, transparent 10px);
+}
+
 @utility text-important {
  @apply text-font-important-light dark:text-font-important-dark;
 }

@@ -1,6 +1,20 @@
 # CHANGELOG
 
 
+## v0.96.0 (2026-06-05)
+
+### Bug Fixes
+
+- Django-simple-history UI improvements
+  ([#2069](https://github.com/unfoldadmin/django-unfold/pull/2069),
+  [`c96c0ce`](https://github.com/unfoldadmin/django-unfold/commit/c96c0ce2a683426aa72904b256080f0eb5d6c62d))
+
+### Features
+
+- Redesigned stacked inline ([#2071](https://github.com/unfoldadmin/django-unfold/pull/2071),
+  [`eedf429`](https://github.com/unfoldadmin/django-unfold/commit/eedf4292cc5642b89ad0fcd4b02d7eebf3b1d2f6))
+
+
 ## v0.95.0 (2026-06-01)
 
 ### Bug Fixes
