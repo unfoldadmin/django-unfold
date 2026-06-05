@@ -5,6 +5,7 @@ from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.auth.models import Permission
 from django.core import checks
 from django.core.checks import CheckMessage
+from django.db.utils import OperationalError
 
 from unfold.dataclasses import UnfoldAction
 
@@ -37,17 +38,22 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
                 if "." in permission:
                     app_label, codename = permission.split(".")
 
-                    if not Permission.objects.filter(
-                        content_type__app_label=app_label,
-                        codename=codename,
-                    ).exists():
-                        errors.append(
-                            checks.Error(
-                                f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",  # type: ignore
-                                obj=obj.__class__,
-                                id="admin.E129",
+                    try:
+                        if not Permission.objects.filter(
+                            content_type__app_label=app_label,
+                            codename=codename,
+                        ).exists():
+                            errors.append(
+                                checks.Error(
+                                    f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",  # type: ignore
+                                    obj=obj.__class__,
+                                    id="admin.E129",
+                                )
                             )
-                        )
+                    except OperationalError:
+                        # can happen if run before initial migration has run
+                        # this disregarding of error is needed to run initial migration
+                        pass
 
                     continue
 
