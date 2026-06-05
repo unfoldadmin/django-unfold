@@ -395,7 +395,10 @@ def fieldset_row_classes(context: RequestContext) -> str:
     ]
 
     formset = context.get("inline_admin_formset", None)
-    line = context.get("line") or []
+    line = context.get("line")
+
+    if not line:
+        return " ".join(set(classes))
 
     # Hide the field in case of ordering field for sorting
     for field in line:
