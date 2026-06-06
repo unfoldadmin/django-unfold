@@ -278,7 +278,7 @@ class UserAdmin(
     def get_hijack_user(self, obj):
         return obj
 
-    @display(description="Custom readonly field")
+    @display(description="Custom readonly field", wrapper_class="bg-red-500")
     def custom_readonly_field(self, obj):
         return "Custom readonly field"
 
