@@ -3,7 +3,7 @@ from collections.abc import Generator
 from typing import Any
 
 from django import VERSION as DJANGO_VERSION
-from django.contrib.admin import SimpleListFilter
+from django.contrib.admin import ListFilter, SimpleListFilter
 from django.contrib.admin.options import IS_FACETS_VAR, IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
@@ -246,7 +246,10 @@ def items_for_result(  # noqa: PLR0915, PLR0912
                     result_repr = display_for_label(value, empty_value_display, label)
                 elif dropdown:
                     result_repr = display_for_dropdown(
-                        result, field_name, value, empty_value_display
+                        result,
+                        field_name,  # ty:ignore[invalid-argument-type]
+                        value,
+                        empty_value_display,
                     )
                 elif header:
                     result_repr = display_for_header(value, empty_value_display)
@@ -271,7 +274,7 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
         # If list_display_links not defined, add the link tag to the first field
 
-        if link_in_col(first, field_name, cl):
+        if link_in_col(first, field_name, cl):  # ty:ignore[invalid-argument-type]
             table_tag = "th" if first else "td"
             first = False
 
@@ -403,10 +406,10 @@ def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
 def result_list_tag(parser: Parser, token: Token) -> InclusionAdminNode:
     if DJANGO_VERSION >= (6, 1):
         return InclusionAdminNode(
-            "unfold_result_list",
-            parser,
-            token,
-            func=result_list,
+            "unfold_result_list",  # type: ignore
+            parser,  # type: ignore
+            token,  # type: ignore
+            func=result_list,  # type: ignore
             template_name="change_list_results.html",
         )
     return InclusionAdminNode(
@@ -489,7 +492,7 @@ def unfold_admin_list_filter(
 
 
 @register.filter
-def unfold_horizontal_filters(cl: ChangeList) -> list[SimpleListFilter]:
+def unfold_horizontal_filters(cl: ChangeList) -> list[ListFilter]:
     specs = []
 
     for spec in cl.filter_specs:
@@ -508,7 +511,7 @@ def unfold_horizontal_filters(cl: ChangeList) -> list[SimpleListFilter]:
 
 
 @register.filter
-def unfold_vertical_filters(cl: ChangeList) -> list[SimpleListFilter]:
+def unfold_vertical_filters(cl: ChangeList) -> list[ListFilter]:
     specs = []
 
     for spec in cl.filter_specs:
@@ -531,10 +534,10 @@ def unfold_vertical_filters(cl: ChangeList) -> list[SimpleListFilter]:
 def unfold_search_form_tag(parser, token):
     if DJANGO_VERSION >= (6, 1):
         return InclusionAdminNode(
-            "unfold_search_form",
+            "unfold_search_form",  # type: ignore
             parser,
             token,
-            func=unfold_search_form,
+            func=unfold_search_form,  # type: ignore
             template_name="search_form.html",
             takes_context=False,
         )
@@ -551,10 +554,10 @@ def unfold_search_form_tag(parser, token):
 def unfold_admin_actions_tag(parser, token):
     if DJANGO_VERSION >= (6, 1):
         return InclusionAdminNode(
-            "unfold_admin_actions",
+            "unfold_admin_actions",  # type: ignore
             parser,
             token,
-            func=admin_actions,
+            func=admin_actions,  # type: ignore
             template_name="dataset_actions.html",
         )
     return InclusionAdminNode(

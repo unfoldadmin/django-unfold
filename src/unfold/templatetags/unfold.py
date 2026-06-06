@@ -436,10 +436,10 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "px-3",
         "py-2.5",
     ]
-    field = context.get("field")
+    field: AdminField | None = context.get("field")
     adminform = context.get("adminform")
 
-    if hasattr(field.field, "name") and field.field.name:
+    if field and hasattr(field.field, "name") and field.field.name:
         classes.append(f"field-{field.field.name}")
 
     if hasattr(field, "errors") and field.errors():
@@ -610,8 +610,11 @@ def elided_page_range(paginator: Paginator, number: int) -> Iterable[int | str] 
 def querystring_params(
     context: RequestContext, query_key: str, query_value: str
 ) -> str:
-    request = context.get("request")
+    request: HttpRequest | None = context.get("request")
     result = QueryDict(mutable=True)
+
+    if request is None:
+        return ""
 
     for key, values in request.GET.lists():
         if key == query_key:
