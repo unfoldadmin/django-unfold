@@ -92,7 +92,7 @@ class UserTagInline(StackedInline):
     collapsible = True
     per_page = 10
     tab = True
-    readonly_fields = ["user"]
+    fields = ["tag"]
 
     def get_queryset(self, request, *args, **kwargs):
         qs = super().get_queryset(request, *args, **kwargs)
@@ -107,7 +107,7 @@ class InvoiceItemInline(TabularInline):
 class UserInvoiceInline(TabularInline):
     model = Invoice
     inlines = [InvoiceItemInline]
-    # tab = True
+    fields = ["name"]
 
 
 class PostInline(StackedInline):

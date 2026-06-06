@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.admin.sites import AdminSite
-from django.contrib.admin.utils import flatten_fieldsets
 from django.contrib.admin.widgets import (
     FilteredSelectMultiple,
     RelatedFieldWidgetWrapper,
@@ -138,21 +137,16 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
         )
 
     def _display_autocomplete_fields_warnings(self, request: HttpRequest) -> None:
-        fields = flatten_fieldsets(self.get_fieldsets(request))
-
         for missing_field in sorted(self._autocomplete_fields_missing):
-            _class_name, field_name = missing_field.split(".")
-
-            if field_name in fields:
-                messages.warning(
-                    request,
-                    format_html(
-                        _(
-                            'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
-                        ),  # ty:ignore[invalid-argument-type]
-                        field_name=missing_field,
-                    ),
-                )
+            messages.warning(
+                request,
+                format_html(
+                    _(
+                        'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
+                    ),  # ty:ignore[invalid-argument-type]
+                    field_name=missing_field,
+                ),
+            )
 
             if missing_field in self._autocomplete_fields_missing:
                 self._autocomplete_fields_missing.remove(missing_field)

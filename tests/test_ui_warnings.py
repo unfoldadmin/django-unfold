@@ -4,7 +4,7 @@ from django.test.utils import override_settings
 
 from unfold.settings import CONFIG_DEFAULTS
 
-TESTING_MESSAGE = 'Field <strong class="font-semibold">UserInvoiceInline.user</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
+TESTING_MESSAGE = 'Field <strong class="font-semibold">UserTagInline.tag</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
 
 
 def ui_warnings_callback_true(request):
