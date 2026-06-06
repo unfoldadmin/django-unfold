@@ -1,6 +1,40 @@
 # CHANGELOG
 
 
+## v0.97.0 (2026-06-06)
+
+### Bug Fixes
+
+- Checkon wrapper_class in readonly template
+  ([#2083](https://github.com/unfoldadmin/django-unfold/pull/2083),
+  [`0d76bd9`](https://github.com/unfoldadmin/django-unfold/commit/0d76bd97d1f5af22a0c3049f4d5f5df33fd1a55a))
+
+- Fieldset row classes without line
+  ([#2077](https://github.com/unfoldadmin/django-unfold/pull/2077),
+  [`6156b5e`](https://github.com/unfoldadmin/django-unfold/commit/6156b5e4f94cca4e68892394fcaa8646c36b48b2))
+
+- Show ui warnings performance ([#2081](https://github.com/unfoldadmin/django-unfold/pull/2081),
+  [`229e45c`](https://github.com/unfoldadmin/django-unfold/commit/229e45cc37bf24ea09788e3a14baa31ddab14ff7))
+
+- Theme switch min layout ([#2079](https://github.com/unfoldadmin/django-unfold/pull/2079),
+  [`a2953df`](https://github.com/unfoldadmin/django-unfold/commit/a2953df8bb5f28e21aedbcc0d976b299a30e0029))
+
+- Warn about missing permission during migration
+  ([#2075](https://github.com/unfoldadmin/django-unfold/pull/2075),
+  [`10b16fd`](https://github.com/unfoldadmin/django-unfold/commit/10b16fdf565bb126bed27f702b906b876f17cd97))
+
+### Features
+
+- Dropped django 5.1 ([#2064](https://github.com/unfoldadmin/django-unfold/pull/2064),
+  [`4e7efce`](https://github.com/unfoldadmin/django-unfold/commit/4e7efced9ace88f9a2c70e9e8fed15c3f6f80648))
+
+- Readonly field wrapper class ([#2078](https://github.com/unfoldadmin/django-unfold/pull/2078),
+  [`84a8702`](https://github.com/unfoldadmin/django-unfold/commit/84a87028dcf30691a713c15e9ec67eeff0715ef2))
+
+- Toggle sidebar shortcut ([#2073](https://github.com/unfoldadmin/django-unfold/pull/2073),
+  [`3a19d28`](https://github.com/unfoldadmin/django-unfold/commit/3a19d286aa5ad79ea146f202ffdd1e72737785e3))
+
+
 ## v0.96.0 (2026-06-05)
 
 ### Bug Fixes
