@@ -2,8 +2,6 @@ from functools import update_wrapper
 from typing import Any, TypedDict
 
 from django import forms
-from django.conf import settings
-from django.contrib import messages
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
@@ -18,7 +16,6 @@ from django.contrib.contenttypes.admin import (
 from django.db.models import BLANK_CHOICE_DASH, Model
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
-from django.utils.html import format_html
 from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
@@ -36,7 +33,6 @@ from unfold.mixins import (
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
-from unfold.utils import get_setting_value
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
@@ -132,22 +128,8 @@ class ModelAdmin(
 
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
-        if (
-            request.method == "GET"
-            and settings.DEBUG
-            and get_setting_value("SHOW_UI_WARNINGS", request) is True
-        ):
-            for missing_field in sorted(set(self._autocomplete_fields_missing)):
-                self.message_user(
-                    request,
-                    format_html(
-                        _(
-                            'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
-                        ),  # ty:ignore[invalid-argument-type]
-                        field_name=missing_field,
-                    ),
-                    messages.WARNING,
-                )
+        if self._show_ui_warnings(request):
+            self._display_autocomplete_fields_warnings(request)
 
         return response
 
