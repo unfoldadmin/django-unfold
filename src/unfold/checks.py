@@ -42,7 +42,7 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
                         codename=codename,
                     ).exists():
                         errors.append(
-                            checks.Warning(
+                            checks.Error(
                                 f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",  # type: ignore
                                 obj=obj.__class__,
                                 id="admin.E129",
