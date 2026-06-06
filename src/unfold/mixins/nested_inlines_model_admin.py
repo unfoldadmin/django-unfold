@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.contrib.admin import options
+from django.contrib.admin import ModelAdmin, options
 from django.contrib.admin.helpers import InlineAdminFormSet
 from django.contrib.admin.options import InlineModelAdmin
 from django.db.models import Model
@@ -35,7 +35,7 @@ def nested_all_valid(formsets: list[BaseInlineFormSet]) -> bool:
     return validation_result
 
 
-class NestedInlinesModelAdminMixin:
+class NestedInlinesModelAdminMixin(ModelAdmin):
     # Build custom media for all nested formsets and process it
     # later in media property in ModelAdmin
     nested_formset_media = Media()

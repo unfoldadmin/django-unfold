@@ -8,11 +8,12 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Model
 from django.template.loader import render_to_string
-from django.utils import formats, timezone
+from django.utils import formats
 from django.utils.hashable import make_hashable
 from django.utils.html import format_html
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeString, SafeText, mark_safe
+from django.utils.timezone import template_localtime  # type: ignore
 
 from unfold.exceptions import UnfoldException
 from unfold.settings import get_config
@@ -86,9 +87,7 @@ def display_for_label(value: Any, empty_value_display: str, label: Any) -> SafeT
 
 
 def display_for_value(  # noqa: PLR0911
-    value: Any,
-    empty_value_display: str,
-    boolean: bool = False,
+    value: Any, empty_value_display: str, boolean: bool = False
 ) -> str:
     if boolean:
         return _boolean_icon(value)
@@ -97,7 +96,7 @@ def display_for_value(  # noqa: PLR0911
     elif isinstance(value, bool):
         return str(value)
     elif isinstance(value, datetime.datetime):
-        return formats.localize(timezone.template_localtime(value))
+        return formats.localize(template_localtime(value))
     elif isinstance(value, datetime.date | datetime.time):
         return formats.localize(value)
     elif Money is not None and isinstance(value, Money):
@@ -124,7 +123,7 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str: 
     elif value is None or value == "":
         return empty_value_display
     elif isinstance(field, models.DateTimeField):
-        return formats.localize(timezone.template_localtime(value))
+        return formats.localize(template_localtime(value))
     elif isinstance(field, models.DateField | models.TimeField):
         return formats.localize(value)
     elif MoneyField is not None and isinstance(field, MoneyField):

@@ -1,10 +1,11 @@
 from typing import Any
 
 from django.contrib import messages
+from django.contrib.admin import ModelAdmin
 from django.contrib.admin.filters import ListFilter
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import QuerySet
+from django.db.models import Model, QuerySet
 from django.http import HttpRequest, JsonResponse
 from django.views.generic import ListView
 
@@ -21,15 +22,20 @@ class DatasetChangeList(ChangeList):
     is_dataset = True
 
     def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
-        self.search_var = f"{kwargs.get('model')._meta.model_name}-q"
-        self.page_var = f"{kwargs.get('model')._meta.model_name}-p"
+        if not kwargs.get("model"):
+            raise UnfoldException("DatasetChangeList requires a model")
+
+        model: Model = kwargs["model"]
+
+        self.search_var = f"{model._meta.model_name}-q"
+        self.page_var = f"{model._meta.model_name}-p"
 
         _search_form = DatasetChangeListSearchForm(
             request.GET, search_var=self.search_var
         )
         if not _search_form.is_valid():
             for error in _search_form.errors.values():
-                messages.error(request, ", ".join(error))
+                messages.error(request, ", ".join(str(e) for e in error))
 
         self.dataset_search_query = _search_form.cleaned_data.get(self.search_var) or ""
 
@@ -50,7 +56,7 @@ class DatasetChangeList(ChangeList):
         return super().get_queryset(request, exclude_parameters)
 
     def get_filters(
-        self, request: str
+        self, request: HttpRequest
     ) -> tuple[list[ListFilter], bool, dict[str, bool | str], bool, bool]:
         # Disable filters for dataset
         return ([], False, {}, False, False)
@@ -61,13 +67,19 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
     Prepares views to be displayed in admin
     """
 
-    model_admin = None
+    request: HttpRequest
+    model_admin: ModelAdmin | None = None
 
-    def __init__(self, model_admin, **kwargs):
+    def __init__(self, model_admin: ModelAdmin, **kwargs: Any) -> None:
         self.model_admin = model_admin
         super().__init__(**kwargs)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        if self.model_admin is None:
+            raise UnfoldException(
+                "UnfoldModelAdminViewMixin was not provided with 'model_admin' argument"
+            )
+
         self.request.current_app = self.model_admin.admin_site.name
 
         if not hasattr(self, "model_admin"):
@@ -80,7 +92,7 @@ class UnfoldModelAdminViewMixin(PermissionRequiredMixin):
                 "UnfoldModelAdminViewMixin was not provided with 'title' attribute"
             )
 
-        return super().get_context_data(
+        return super().get_context_data(  # ty:ignore[unresolved-attribute]
             **kwargs,
             **self.model_admin.admin_site.each_context(self.request),
             **{
