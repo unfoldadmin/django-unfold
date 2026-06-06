@@ -5,6 +5,7 @@ from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.auth.models import Permission
 from django.core import checks
 from django.core.checks import CheckMessage
+from django.db import connection as db_connection
 
 from unfold.dataclasses import UnfoldAction
 
@@ -27,6 +28,9 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
             *obj._get_base_actions_row(),
             *obj._get_base_actions_submit_line(),
         ]
+        # Check if auth_permission table exists in DB
+        if "auth_permission" not in db_connection.introspection.table_names():
+            return []
         errors = []
         for action in actions:
             if not hasattr(action.method, "allowed_permissions"):
