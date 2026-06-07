@@ -1,4 +1,6 @@
-{% if item.badge %}
+{% firstof item.badge_callback item.badge as badge_value %}
+
+{% if badge_value %}
     <span class="font-semibold h-[18px] leading-[18px] ml-2 px-1 relative rounded-xs text-center text-[11px] whitespace-nowrap uppercase min-w-[18px]
                  {% if item.badge_style == "solid" %}
                      text-white text-shadow-xs
@@ -35,10 +37,6 @@
                      {% endif %}
                  {% endif %}
                 ">
-        {% if item.badge_callback %}
-            {{ item.badge_callback }}
-        {% else %}
-            {{ item.badge }}
-        {% endif %}
+        {{ badge_value }}
     </span>
 {% endif %}
