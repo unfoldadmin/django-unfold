@@ -6,6 +6,9 @@ from django.test.utils import override_settings
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+from django.contrib.auth.models import User
+from django.test import Client
+
 from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
@@ -286,3 +289,68 @@ def test_navigation_items_with_tabs():
     sidebar = admin_site.get_sidebar_list(request)
     assert sidebar[0]["items"][0]["active"] is True
     assert sidebar[0]["items"][1]["active"] is False
+
+
+def sidebar_badge_callback(request):
+    if 'badge_str' in request.GET:
+        return str(request.GET['badge_str'])
+    if 'badge_int' in request.GET:
+        return int(request.GET['badge_int'])
+    if 'badge_bool' in request.GET:
+        return bool(request.GET['badge_bool'])
+
+    return None
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Example Title 1",
+                                "link": "/menu-link-1",
+                                "badge": "tests.test_sidebar_navigation.sidebar_badge_callback",
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+@pytest.mark.django_db
+def test_sidebar_navigation_badge_callback_presence(client, staff_user):
+    # 
+    BADGE_INDICATION_STRING='<span class="font-semibold h-[18px] leading-[18px] ml-2 px-1 relative rounded-xs text-center text-[11px] whitespace-nowrap uppercase min-w-[18px]'
+
+    client.force_login(staff_user)
+
+    # The string "badge"
+    response = client.get(reverse_lazy("admin:index", query={'badge_str': 'badge'}))
+    assert BADGE_INDICATION_STRING in response.content.decode(), "Badge should be displayed for `'badge'`"
+
+    # Empty string ""
+    response = client.get(reverse_lazy("admin:index", query={'badge_str': ''}))
+    assert BADGE_INDICATION_STRING not in response.content.decode(), "Badge should not be displayed for `''`"
+
+    # The number 3
+    response = client.get(reverse_lazy("admin:index", query={'badge_int': '3'}))
+    assert BADGE_INDICATION_STRING in response.content.decode(), "Badge should be displayed for `3`"
+
+    # The number 0
+    response = client.get(reverse_lazy("admin:index", query={'badge_int': '0'}))
+    assert BADGE_INDICATION_STRING in response.content.decode(), "Badge should be displayed for `0`"
+
+    # Boolean True
+    response = client.get(reverse_lazy("admin:index", query={'badge_bool': 'True'}))
+    assert BADGE_INDICATION_STRING in response.content.decode(), "Badge should be displayed for `True`"
+
+    # Boolean False
+    response = client.get(reverse_lazy("admin:index", query={'badge_bool': ''}))
+    assert BADGE_INDICATION_STRING in response.content.decode(), "Badge should be displayed for `False`"
+
+    # None
+    response = client.get(reverse_lazy("admin:index", query={}))
+    assert BADGE_INDICATION_STRING in response.content.decode(), "Badge should be displayed for `None`"
