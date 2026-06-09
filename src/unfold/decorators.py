@@ -8,6 +8,7 @@ from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django_stubs_ext import StrOrPromise
 
 from unfold.dataclasses import Action, ActionDialog
 from unfold.enums import ActionVariant
@@ -18,7 +19,7 @@ def action(
     function: Callable | None = None,
     *,
     permissions: Iterable[str] | None = None,
-    description: str | None = None,
+    description: StrOrPromise | None = None,
     url_path: str | None = None,
     attrs: dict[str, Any] | None = None,
     icon: str | None = None,
@@ -137,10 +138,10 @@ def display(
     boolean: bool | None = None,
     image: bool | None = None,
     ordering: str | Combinable | BaseExpression | None = None,
-    description: str | Any | None = None,
+    description: StrOrPromise | Any | None = None,
     empty_value: str | None = None,
     dropdown: bool | None = None,
-    label: bool | str | dict[str, str] | None = None,
+    label: bool | StrOrPromise | dict[str, str] | None = None,
     header: bool | None = None,
     wrapper_class: str | None = None,
 ) -> Callable:
