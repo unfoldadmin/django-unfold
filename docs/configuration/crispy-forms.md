@@ -109,7 +109,7 @@ For consistent styling with the Unfold admin interface, specify the `"unfold_cri
 
 {% block extrahead %}
     {{ block.super }}
-    <script src="{% url 'admin:jsi18n' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% url 'admin:jsi18n' %}"></script>
     {{ form.media }}
 {% endblock %}
 
@@ -203,7 +203,7 @@ class CrispyFormsetView(UnfoldModelAdminViewMixin, FormView):
 
 {% block extrahead %}
     {{ block.super }}
-    <script src="{% url 'admin:jsi18n' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% url 'admin:jsi18n' %}"></script>
 {% endblock %}
 
 {% block content %}

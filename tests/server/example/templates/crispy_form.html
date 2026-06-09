@@ -4,7 +4,7 @@
 
 {% block extrahead %}
     {{ block.super }}
-    <script src="{% url 'admin:jsi18n' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% url 'admin:jsi18n' %}"></script>
 {% endblock %}
 
 {% block branding %}

@@ -85,7 +85,7 @@ This is the template for the form. Please note that the breadcrumbs are empty in
 
 {% block extrahead %}
     {{ block.super }}
-    <script src="{% url 'admin:jsi18n' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} src="{% url 'admin:jsi18n' %}"></script>
     {{ form.media }}
 {% endblock %}
 

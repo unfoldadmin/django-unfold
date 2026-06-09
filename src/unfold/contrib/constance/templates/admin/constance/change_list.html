@@ -4,10 +4,10 @@
 
 {% block extrahead %}
     {% url 'admin:jsi18n' as jsi18nurl %}
-    <script type="text/javascript" src="{{ jsi18nurl|default:'../../jsi18n/' }}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} type="text/javascript" src="{{ jsi18nurl|default:'../../jsi18n/' }}"></script>
     {{ block.super }}
     {{ media.js }}
-    <script type="text/javascript" src="{% static 'admin/js/constance.js' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} type="text/javascript" src="{% static 'admin/js/constance.js' %}"></script>
 {% endblock %}
 
 {% block is_fullwidth %}1{% endblock %}

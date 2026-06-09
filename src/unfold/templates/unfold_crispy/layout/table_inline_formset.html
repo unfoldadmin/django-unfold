@@ -79,7 +79,7 @@
     {% endif %}
 
     {% if form_add and formset_id %}
-        <script>
+        <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %}>
             document.getElementById('{{ formset_id }}-add-row-button').addEventListener('click', function() {
                 const formTotalEl = document.querySelector(`#{{ formset_id }} input[name*="TOTAL_FORMS"]`)
                 const formCount = parseInt(formTotalEl.value);

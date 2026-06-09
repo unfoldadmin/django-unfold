@@ -5,13 +5,13 @@
 {% block extrastyle %}
     {{ block.super }}
 
-    <link rel="stylesheet" type="text/css" href="{% static "import_export/import.css" %}" />
+    <link {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} rel="stylesheet" type="text/css" href="{% static "import_export/import.css" %}" />
 {% endblock %}
 
 {% block extrahead %}
     {{ block.super }}
 
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    <script {% if csp_nonce %}nonce="{{ csp_nonce }}"{% endif %} type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
 
     {% if confirm_form %}
         {{ confirm_form.media }}
