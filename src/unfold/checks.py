@@ -5,6 +5,7 @@ from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.auth.models import Permission
 from django.core import checks
 from django.core.checks import CheckMessage
+from django.db import OperationalError, ProgrammingError
 
 from unfold.dataclasses import UnfoldAction
 
@@ -37,13 +38,18 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
                 if "." in permission:
                     app_label, codename = permission.split(".")
 
-                    if not Permission.objects.filter(
-                        content_type__app_label=app_label,
-                        codename=codename,
-                    ).exists():
+                    try:
+                        exists = Permission.objects.filter(
+                            content_type__app_label=app_label,
+                            codename=codename,
+                        ).exists()
+                    except (OperationalError, ProgrammingError):
+                        continue
+
+                    if not exists:
                         errors.append(
                             checks.Error(
-                                f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",  # type: ignore
+                                f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",
                                 obj=obj.__class__,
                                 id="admin.E129",
                             )
