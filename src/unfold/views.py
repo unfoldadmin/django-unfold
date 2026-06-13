@@ -1,9 +1,7 @@
 from typing import Any
 
-import django
 from django.contrib import messages
 from django.contrib.admin.filters import ListFilter
-from django.contrib.admin.views.main import ERROR_FLAG, PAGE_VAR
 from django.contrib.admin.views.main import ChangeList as BaseChangeList
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import QuerySet
@@ -17,11 +15,6 @@ from unfold.forms import DatasetChangeListSearchForm
 class ChangeList(BaseChangeList):
     def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
         super().__init__(request, *args, **kwargs)
-
-        if django.VERSION < (5, 0):
-            self.filter_params = dict(request.GET.lists())
-            self.filter_params.pop(PAGE_VAR, None)
-            self.filter_params.pop(ERROR_FLAG, None)
 
 
 class DatasetChangeList(ChangeList):

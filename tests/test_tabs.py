@@ -7,6 +7,14 @@ from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
 
+def deny_permission(request):
+    return False
+
+
+def allow_permission(request):
+    return True
+
+
 def tabs_callback(request):
     return [
         {
@@ -18,6 +26,106 @@ def tabs_callback(request):
             ],
         },
     ]
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "TABS": [
+                {
+                    "items": [
+                        {
+                            "title": "Example Title",
+                            "link": "https://example.com",
+                            "permission": lambda request: False,
+                        }
+                    ],
+                }
+            ]
+        },
+    }
+)
+def test_tabs_check_tab_lambda_deny_permission():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    tabs = admin_site.get_tabs_list(request)
+    assert not tabs[0]["items"][0]["has_permission"]
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "TABS": [
+                {
+                    "items": [
+                        {
+                            "title": "Example Title",
+                            "link": "https://example.com",
+                            "permission": lambda request: True,
+                        }
+                    ]
+                }
+            ]
+        },
+    }
+)
+def test_tabs_check_tab_lambda_allow_permission():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    tabs = admin_site.get_tabs_list(request)
+    assert tabs[0]["items"][0]["has_permission"]
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "TABS": [
+                {
+                    "items": [
+                        {
+                            "title": "Example Title",
+                            "link": "https://example.com",
+                            "permission": "tests.test_tabs.deny_permission",
+                        }
+                    ],
+                }
+            ]
+        },
+    }
+)
+def test_tabs_check_tab_path_deny_permission():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    tabs = admin_site.get_tabs_list(request)
+    assert not tabs[0]["items"][0]["has_permission"]
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "TABS": [
+                {
+                    "items": [
+                        {
+                            "title": "Example Title",
+                            "link": "https://example.com",
+                            "permission": "tests.test_tabs.allow_permission",
+                        }
+                    ],
+                }
+            ]
+        },
+    }
+)
+def test_tabs_check_tab_path_allow_permission():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    tabs = admin_site.get_tabs_list(request)
+    assert tabs[0]["items"][0]["has_permission"]
 
 
 @override_settings(

@@ -2,7 +2,9 @@ import datetime
 from collections.abc import Generator
 from typing import Any
 
-from django.contrib.admin.options import IS_POPUP_VAR
+from django import VERSION as DJANGO_VERSION
+from django.contrib.admin import SimpleListFilter
+from django.contrib.admin.options import IS_FACETS_VAR, IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
     _coerce_field_name,  # ty:ignore[unresolved-import]
@@ -19,7 +21,7 @@ from django.db.models import Model
 from django.forms import ModelForm
 from django.template import Library
 from django.template.base import Parser, Token
-from django.template.loader import render_to_string
+from django.template.loader import get_template, render_to_string
 from django.urls import NoReverseMatch
 from django.utils.html import format_html
 from django.utils.safestring import SafeText, mark_safe
@@ -35,17 +37,10 @@ from unfold.utils import (
 from unfold.views import DatasetChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
-try:
-    from django.contrib.admin.options import IS_FACETS_VAR
-except ImportError:
-    # TODO: remove once django 4.x is not supported
-    IS_FACETS_VAR: str | None = None
-
 register = Library()
 
 LINK_CLASSES = [
-    "text-font-important-light",
-    "dark:text-font-important-dark",
+    "text-important",
 ]
 
 ROW_CLASSES = [
@@ -406,6 +401,14 @@ def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
 
 @register.tag(name="unfold_result_list")
 def result_list_tag(parser: Parser, token: Token) -> InclusionAdminNode:
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_result_list",
+            parser,
+            token,
+            func=result_list,
+            template_name="change_list_results.html",
+        )
     return InclusionAdminNode(
         parser,
         token,
@@ -457,8 +460,84 @@ def unfold_search_form(cl):
     }
 
 
+@register.simple_tag
+def unfold_admin_list_filter(
+    cl: ChangeList, spec: SimpleListFilter, horizontal_layout: bool = False
+) -> str:
+    tpl = get_template(spec.template)
+
+    if hasattr(spec, "field_path"):
+        field_path = spec.field_path
+    elif hasattr(spec, "parameter_name"):
+        field_path = spec.parameter_name
+
+    options = {}
+
+    if field_path:
+        options = getattr(cl.model_admin, "list_filter_options", {}).get(field_path, {})
+
+    return tpl.render(
+        {
+            "title": spec.title,
+            "choices": list(spec.choices(cl)),
+            "spec": spec,
+            "label": options.get("label"),
+            "has_label": "label" in options,
+            "horizontal": options.get("horizontal") and horizontal_layout,
+        }
+    )
+
+
+@register.filter
+def unfold_horizontal_filters(cl: ChangeList) -> list[SimpleListFilter]:
+    specs = []
+
+    for spec in cl.filter_specs:
+        if hasattr(spec, "field_path"):
+            field_path = spec.field_path
+        elif hasattr(spec, "parameter_name"):
+            field_path = spec.parameter_name
+
+        if options := getattr(cl.model_admin, "list_filter_options", {}).get(
+            field_path
+        ):
+            if options.get("horizontal"):
+                specs.append(spec)
+
+    return specs
+
+
+@register.filter
+def unfold_vertical_filters(cl: ChangeList) -> list[SimpleListFilter]:
+    specs = []
+
+    for spec in cl.filter_specs:
+        if hasattr(spec, "field_path"):
+            field_path = spec.field_path
+        elif hasattr(spec, "parameter_name"):
+            field_path = spec.parameter_name
+
+        options = getattr(cl.model_admin, "list_filter_options", {})
+
+        if (field_path in options and not options[field_path].get("horizontal")) or (
+            field_path not in options
+        ):
+            specs.append(spec)
+
+    return specs
+
+
 @register.tag(name="unfold_search_form")
 def unfold_search_form_tag(parser, token):
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_search_form",
+            parser,
+            token,
+            func=unfold_search_form,
+            template_name="search_form.html",
+            takes_context=False,
+        )
     return InclusionAdminNode(
         parser,
         token,
@@ -470,6 +549,14 @@ def unfold_search_form_tag(parser, token):
 
 @register.tag(name="unfold_admin_actions")
 def unfold_admin_actions_tag(parser, token):
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_admin_actions",
+            parser,
+            token,
+            func=admin_actions,
+            template_name="dataset_actions.html",
+        )
     return InclusionAdminNode(
         parser,
         token,

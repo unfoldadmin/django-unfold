@@ -1,6 +1,6 @@
 {% spaceless %}
     {% for part in parts %}
-        <{% if part.link %}a href="{{ part.link }}"{% else %}span{% endif %} class="align-middle inline-block leading-5 tracking-tight">
+        <{% if part.link %}a href="{{ part.link }}"{% else %}span{% endif %} class="align-middle inline-block leading-5 min-w-0 truncate tracking-tight">
         {{ part.title|capfirst }}
         </{% if part.link %}a{% else %}span{% endif %} >
 

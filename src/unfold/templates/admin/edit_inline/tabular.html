@@ -7,7 +7,15 @@
 
             {% if inline_admin_formset.is_collapsible %}</summary>{% endif %}
 
+            {% if inline_admin_formset.opts.template_before %}
+                {% include inline_admin_formset.opts.template_before %}
+            {% endif %}
+
             {% include "unfold/helpers/edit_inline/tabular_table.html" %}
+
+            {% if inline_admin_formset.opts.template_after %}
+                {% include inline_admin_formset.opts.template_after %}
+            {% endif %}
 
             {% if inline_admin_formset.is_collapsible %}</details>{% endif %}
         </fieldset>

@@ -1,0 +1,12 @@
+<div id="modal-overlay" class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 mr-1 right-0 top-0 z-60 dark:bg-base-900/80"
+     x-cloak
+     x-show="openModal"
+     x-on:keydown.escape.window="openModal = false">
+</div>
+
+<div class="bottom-0 flex items-center justify-center left-0 right-0 fixed top-0 z-70"
+     x-cloak
+     x-show="openModal"
+     x-on:keydown.escape.window="openModal = false">
+    <div id="modal-content" class="bg-white relative rounded-default p-6 w-md dark:bg-base-800" x-on:click.outside="openModal = false"></div>
+</div>

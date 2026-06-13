@@ -39,6 +39,14 @@ class CustomAdminClass(ModelAdmin):
     # Display submit button in filters
     list_filter_submit = False
 
+    # Custom filter options
+    list_filter_options = {
+        "your_filter_field_path": {
+            "label": "Custom label", # Optional: custom label for the filter
+            "horizontal": True, # Optional: display filter in horizontal layout
+        }
+    }
+
     # Display changelist in fullwidth
     list_fullwidth = False
 

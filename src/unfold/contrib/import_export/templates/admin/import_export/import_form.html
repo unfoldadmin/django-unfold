@@ -6,19 +6,24 @@
 
         {% include "admin/import_export/resource_fields_list.html" with import_or_export="import" %}
 
-        <fieldset class="border border-base-200 mb-8 rounded-default pt-2.5 px-3 shadow-xs dark:border-base-800">
-            {% for field in form %}
-                {% if field.field.widget.attrs.readonly %}
-                    {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
-                    {{ field.as_hidden }}
-                {% else %}
-                    {% include "unfold/helpers/field.html" with field=field %}
-                {% endif %}
-            {% endfor %}
-        </fieldset>
+        <fieldset class="border border-base-200 mb-8 rounded-default p-3 shadow-xs dark:border-base-800">
+            <div class="flex flex-col gap-3 mb-3 *:mb-0">
+                {% for field in form %}
+                    {% if field.field.widget.attrs.readonly %}
+                        {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value outline=1 %}
 
-        {% component "unfold/components/button.html" with submit=1 %}
-            {% trans "Submit" %}
-        {% endcomponent %}
+                        {{ field.as_hidden }}
+                    {% else %}
+                        {% include "unfold/helpers/field.html" with field=field %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="border-t border-base-200 flex justify-end -mx-3 pt-3 px-3 dark:border-base-800">
+                {% component "unfold/components/button.html" with submit=1 %}
+                    {% trans "Submit" %}
+                {% endcomponent %}
+            </div>
+        </fieldset>
     </form>
 {% endblock %}

@@ -1,7 +1,38 @@
 from http import HTTPStatus
 
 import pytest
+from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
+
+from unfold.admin import ModelAdmin
+from unfold.exceptions import UnfoldException
+from unfold.sites import UnfoldAdminSite
+
+User = get_user_model()
+
+
+def test_actions_exception_non_existing_method():
+    class SampleModelAdmin(ModelAdmin):
+        actions_list = ["non_existing_action"]
+
+    with pytest.raises(
+        UnfoldException,
+        match="Method non_existing_action specified does not exist on current object",
+    ):
+        SampleModelAdmin(model=User, admin_site=UnfoldAdminSite()).get_unfold_action(
+            "non_existing_action"
+        )
+
+
+def test_actions_exception_action_is_not_callable():
+    class SampleModelAdmin(ModelAdmin):
+        actions_list = ["this_is_property"]
+        this_is_property = None
+
+    with pytest.raises(UnfoldException, match="this_is_property is not callable"):
+        SampleModelAdmin(model=User, admin_site=UnfoldAdminSite()).get_unfold_action(
+            "this_is_property"
+        )
 
 
 ######################################################################
@@ -14,6 +45,24 @@ def test_actions_list_anonymous(client):
     )
     assert response.status_code == HTTPStatus.OK
     assert response.wsgi_request.path == "/admin/login/"
+    assert "Changelist action successfully executed" not in response.content.decode()
+
+    response = client.post(
+        reverse_lazy("admin:example_actionuser_changelist_action"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert response.wsgi_request.path == "/admin/login/"
+
+
+@pytest.mark.django_db
+def test_actions_list_admin(admin_client):
+    response = admin_client.get(
+        reverse_lazy("admin:example_actionuser_changelist_action"),
+        follow=True,
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert "Changelist action successfully executed" in response.content.decode()
 
 
 @pytest.mark.django_db

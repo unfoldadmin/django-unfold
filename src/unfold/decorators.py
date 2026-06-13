@@ -1,4 +1,5 @@
 from collections.abc import Callable, Iterable
+from functools import wraps
 from typing import Any
 
 from django.contrib.admin.options import BaseModelAdmin
@@ -6,9 +7,11 @@ from django.core.exceptions import PermissionDenied
 from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 
+from unfold.dataclasses import Action, ActionDialog
 from unfold.enums import ActionVariant
-from unfold.typing import ActionFunction
+from unfold.forms import BaseDialogForm
 
 
 def action(
@@ -20,13 +23,16 @@ def action(
     attrs: dict[str, Any] | None = None,
     icon: str | None = None,
     variant: ActionVariant | None = ActionVariant.DEFAULT,
-) -> ActionFunction:
-    def decorator(func: Callable) -> ActionFunction:
+    dialog: ActionDialog | None = None,
+    extra_options: dict[str, Any] | None = None,
+) -> Action:
+    def decorator(func: Callable) -> Action:
+        @wraps(func)
         def inner(
             model_admin: BaseModelAdmin,
             request: HttpRequest,
             *args: Any,
-            **kwargs,
+            **kwargs: Any,
         ) -> HttpResponse | None:
             if permissions:
                 permission_rules = []
@@ -66,6 +72,28 @@ def action(
 
                 if not all(permission_checks):
                     raise PermissionDenied
+
+            if dialog:
+                form_class = dialog.get("form_class") or BaseDialogForm
+                form = form_class(
+                    data=request.POST or None,
+                    request=request,
+                    object_id=kwargs.get("object_id"),
+                )
+
+                if form.is_valid():
+                    return func(model_admin, request, form, *args, **kwargs)
+
+                return render(
+                    request,
+                    "unfold/helpers/dialog.html",
+                    {
+                        "dialog": dialog,
+                        "form": form,
+                        "form_submit_text": dialog.get("form_submit_text", ""),
+                    },
+                )
+
             return func(model_admin, request, *args, **kwargs)
 
         if permissions is not None:
@@ -80,10 +108,18 @@ def action(
         if icon is not None:
             inner.icon = icon
 
+        if dialog is not None:
+            inner.dialog = dialog
+
         if variant is not None:
             inner.variant = variant
         else:
             inner.variant = ActionVariant.DEFAULT
+
+        if extra_options is None:
+            inner.extra_options = {}
+        else:
+            inner.extra_options = extra_options
 
         inner.attrs = attrs or {}
         inner.original_function_name = func.__name__
@@ -91,8 +127,8 @@ def action(
 
     if function is None:
         return decorator
-    else:
-        return decorator(function)
+
+    return decorator(function)
 
 
 def display(
@@ -101,11 +137,12 @@ def display(
     boolean: bool | None = None,
     image: bool | None = None,
     ordering: str | Combinable | BaseExpression | None = None,
-    description: str | None = None,
+    description: str | Any | None = None,
     empty_value: str | None = None,
     dropdown: bool | None = None,
     label: bool | str | dict[str, str] | None = None,
     header: bool | None = None,
+    wrapper_class: str | None = None,
 ) -> Callable:
     def decorator(func: Callable[[Model], Any]) -> Callable:
         if boolean is not None and empty_value is not None:
@@ -129,6 +166,8 @@ def display(
             func.header = header
         if dropdown is not None:
             func.dropdown = dropdown
+        if wrapper_class is not None:
+            func.wrapper_class = wrapper_class
 
         return func
 
