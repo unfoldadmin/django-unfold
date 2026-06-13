@@ -168,11 +168,11 @@ def test_navigations_items_with_permissions():
     request = RequestFactory().get("/rand")
     sidebar = admin_site.get_sidebar_list(request)
 
+    # This fork filters out items whose permission callback returns False,
+    # so only the permitted item remains in the sidebar.
+    assert len(sidebar[0]["items"]) == 1
     assert sidebar[0]["items"][0]["title"] == "Example Title 1"
     assert sidebar[0]["items"][0]["has_permission"] is True
-
-    assert sidebar[0]["items"][1]["title"] == "Example Title 2"
-    assert sidebar[0]["items"][1]["has_permission"] is False
 
 
 @override_settings(
@@ -236,7 +236,49 @@ def test_navigation_items_with_empty_link():
     admin_site = UnfoldAdminSite()
     request = RequestFactory().get("/rand")
     sidebar = admin_site.get_sidebar_list(request)
-    assert len(sidebar[0]["items"]) == 0
+
+    # This fork drops link-less leaf items and omits any group left with no
+    # visible items, so the sidebar ends up empty.
+    assert sidebar == []
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Submenu parent",
+                                # No link of its own — it only groups children.
+                                "items": [
+                                    {
+                                        "title": "Child 1",
+                                        "link": "https://example.com/1",
+                                    },
+                                ],
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_items_nested_submenu_without_link():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    sidebar = admin_site.get_sidebar_list(request)
+
+    # Regression: a link-less item that has nested children is a submenu
+    # parent and must be preserved (upstream's "drop link-less items" guard
+    # otherwise hides the whole submenu).
+    assert len(sidebar[0]["items"]) == 1
+    assert sidebar[0]["items"][0]["title"] == "Submenu parent"
+    assert len(sidebar[0]["items"][0]["items"]) == 1
+    assert sidebar[0]["items"][0]["items"][0]["title"] == "Child 1"
 
 
 @override_settings(

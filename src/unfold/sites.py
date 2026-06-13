@@ -395,17 +395,23 @@ class UnfoldAdminSite(AdminSite):
         Falls back to True for non-model links (dashboard, etc).
         Superusers always see everything.
         """
-        if request.user.is_superuser:
-            return True
-
         match = re.search(r"/admin/(\w+)/(\w+)/", link)
 
+        # Non-model links (dashboard, external URLs, etc.) are always visible.
         if not match:
+            return True
+
+        user = getattr(request, "user", None)
+
+        if user is None:
+            return False
+
+        if user.is_superuser:
             return True
 
         app_label, model_name = match.group(1), match.group(2)
 
-        return request.user.has_perm(f"{app_label}.view_{model_name}")
+        return user.has_perm(f"{app_label}.view_{model_name}")
     
     def _get_navigation_items(
         self, request: HttpRequest, items: list[dict], tabs: list[dict] | None = None
@@ -415,7 +421,10 @@ class UnfoldAdminSite(AdminSite):
         for item in items:
             link = item.get("link")
 
-            if not link:
+            # Keep link-less items only when they are nested groups (submenu
+            # parents); drop genuinely empty leaf items. Upstream's original
+            # guard dropped every link-less item, which hid nested submenus.
+            if not link and "items" not in item:
                 continue
 
             if "active" in item:
