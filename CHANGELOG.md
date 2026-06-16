@@ -1,6 +1,21 @@
 # CHANGELOG
 
 
+## v0.97.1 (2026-06-16)
+
+### Bug Fixes
+
+- Sidebar open/close on mobile ([#2096](https://github.com/unfoldadmin/django-unfold/pull/2096),
+  [`44902d4`](https://github.com/unfoldadmin/django-unfold/commit/44902d4350882c774358d3132972b5510588a8c3))
+
+- Typo in ModelAdmin docs ([#2095](https://github.com/unfoldadmin/django-unfold/pull/2095),
+  [`812e5bc`](https://github.com/unfoldadmin/django-unfold/commit/812e5bccd84e0a7f4a5b4df6895bedbc9755dd83))
+
+- Use request.user to not collide with user context on other views
+  ([#2089](https://github.com/unfoldadmin/django-unfold/pull/2089),
+  [`1f6397a`](https://github.com/unfoldadmin/django-unfold/commit/1f6397a515820aa931aa353daa47b8a318e289e6))
+
+
 ## v0.97.0 (2026-06-06)
 
 ### Bug Fixes
