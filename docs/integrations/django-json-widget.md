@@ -4,7 +4,7 @@ order: 0
 description: Stylish Django JSON Widget integration with Unfold admin theme.
 ---
 
-# Django JSON Widget
+# django-json-widget
 
 To use Django JSON Widget with Unfold, simply follow the [official installation instructions](https://pypi.org/project/django-json-widget/). No additional configuration or changes to your `INSTALLED_APPS` are necessary, Unfold will style the widget automatically.
 
