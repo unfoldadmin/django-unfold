@@ -1,4 +1,4 @@
-{% load crispy_forms_tags crispy_forms_utils crispy_forms_field i18n %}
+{% load crispy_forms_tags crispy_forms_utils crispy_forms_field i18n unfold %}
 
 {% specialspaceless %}
     {% if formset_tag %}
@@ -60,11 +60,19 @@
 
                     <tr id="{{ formset_id }}-add-row-wrapper">
                         <td colspan="100%" class="border-t border-base-200 p-3 dark:border-base-800">
-                            <div class="flex justify-end">
-                                <button type="button" id="{{ formset_id }}-add-row-button" class="border border-base-200 font-medium px-3 py-2 rounded-default transition-all w-full hover:bg-base-50 lg:block lg:w-auto dark:border-base-700 dark:hover:text-base-200 dark:hover:bg-base-900">
-                                    {% trans "Add row" %}
-                                </button>
-                            </div>
+                            <button type="button" id="{{ formset_id }}-add-row-button"  class="cursor-pointer flex items-center font-medium -ml-1.5 -my-1.5 select-none text-primary-600 dark:text-primary-500">
+                                <span class="flex items-center justify-center h-[38px] w-[38px]">
+                                    <span class="material-symbols-outlined bg-primary-600 flex items-center justify-center rounded-full text-base text-white h-[18px] w-[18px]">add</span>
+                                </span>
+                                                                
+                                <span>                                                       
+                                    {% if formset.model %}
+                                        {% trans "Add" %} {{ formset.model|model_verbose_name }}
+                                    {% else %}
+                                        {% trans "Add row" %}
+                                    {% endif %}
+                                </span>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
