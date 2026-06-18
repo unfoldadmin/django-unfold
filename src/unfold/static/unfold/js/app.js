@@ -1,4 +1,4 @@
-window.addEventListener("load", (e) => {
+window.addEventListener("load", () => {
 	fileInputUpdatePath();
 
 	dateTimeShortcutsOverlay();
