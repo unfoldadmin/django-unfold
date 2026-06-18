@@ -33,7 +33,7 @@
                     x-on:keydown.meta.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %}, true)"
                     x-on:keydown.ctrl.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %}, true)"
                     x-on:keydown.enter.prevent="if (!$event.metaKey && !$event.ctrlKey) selectItem({% if command_show_history %}true{% else %}false{% endif %}, false)"
-                    hx-get="{% url "admin:search" %}?extended=1"
+                    hx-get="{% url "admin:search" %}"
                     hx-trigger="keyup changed delay:500ms"
                     hx-select="#command-results-list"
                     hx-select-oob="#command-results-note"

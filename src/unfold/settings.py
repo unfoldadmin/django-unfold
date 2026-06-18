@@ -95,7 +95,6 @@ CONFIG_DEFAULTS = {
     },
     "SIDEBAR": {
         "show_search": False,
-        "command_search": False,
         "show_all_applications": False,
         "navigation": [],
     },
