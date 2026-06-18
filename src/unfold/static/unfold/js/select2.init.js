@@ -42,5 +42,9 @@
 		$(".unfold-admin-autocomplete").djangoCustomSelect2();
 
 		$(".unfold-filter-autocomplete").djangoFilterSelect2();
+
+		document.addEventListener("formset:added", (event) => {
+			$(event.target).find(".unfold-admin-autocomplete").djangoCustomSelect2();
+		});
 	});
 }
