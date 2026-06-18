@@ -112,6 +112,8 @@ function theme(defaultTheme = "auto") {
 			["x-on:keydown.window"](event) {
 				if (
 					event.key === "[" &&
+					!event.metaKey &&
+					!event.ctrlKey &&
 					document.activeElement.tagName.toLowerCase() !== "input" &&
 					document.activeElement.tagName.toLowerCase() !== "textarea" &&
 					!document.activeElement.isContentEditable
