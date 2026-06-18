@@ -1,6 +1,30 @@
 # CHANGELOG
 
 
+## v0.97.2 (2026-06-18)
+
+### Bug Fixes
+
+- Last item not visible in changelist when actions displayed
+  ([#2097](https://github.com/unfoldadmin/django-unfold/pull/2097),
+  [`6bc356c`](https://github.com/unfoldadmin/django-unfold/commit/6bc356c08977f5c57dbd2dafc983395d3c391bca))
+
+- Null boolean readonly field icon ([#2101](https://github.com/unfoldadmin/django-unfold/pull/2101),
+  [`ac3d06b`](https://github.com/unfoldadmin/django-unfold/commit/ac3d06bd6a777296d3daa199ca24ffa415161004))
+
+- Readonly field outline variant ([#2102](https://github.com/unfoldadmin/django-unfold/pull/2102),
+  [`1ab2ad9`](https://github.com/unfoldadmin/django-unfold/commit/1ab2ad9a47b7d97819a875ff116a65d14e67ae05))
+
+- Toggle sidebar shortcut in chrome
+  ([#2100](https://github.com/unfoldadmin/django-unfold/pull/2100),
+  [`f2f2c4e`](https://github.com/unfoldadmin/django-unfold/commit/f2f2c4ea838423625feee60d491d5442ec665340))
+
+### Documentation
+
+- Django-hijack ([#2098](https://github.com/unfoldadmin/django-unfold/pull/2098),
+  [`2807c84`](https://github.com/unfoldadmin/django-unfold/commit/2807c844a5cc7c038addcc7465f1ffa4bbf6f303))
+
+
 ## v0.97.1 (2026-06-16)
 
 ### Bug Fixes
