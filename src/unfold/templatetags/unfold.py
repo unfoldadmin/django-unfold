@@ -888,3 +888,8 @@ def unicoded_slugify(value: str) -> str:
 @register.filter
 def format_traceback(traceback: str) -> str:
     return prettify_traceback(traceback) or ""
+
+
+@register.filter
+def model_verbose_name(model: type[Model]) -> str:
+    return str(model._meta.verbose_name)
