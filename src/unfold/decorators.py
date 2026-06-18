@@ -140,7 +140,7 @@ def display(
     boolean: bool | None = None,
     image: bool | None = None,
     ordering: str | Combinable | BaseExpression | None = None,
-    description: "StrOrPromise | Any | None" = None,
+    description: "StrOrPromise | None" = None,
     empty_value: str | None = None,
     dropdown: bool | None = None,
     label: "bool | StrOrPromise | dict[str, str] | None" = None,
