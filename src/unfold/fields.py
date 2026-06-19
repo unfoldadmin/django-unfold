@@ -88,6 +88,18 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         f, attr, value = self.resolved_field
         return isinstance(f, ImageField | FileField)
 
+    @property
+    def wrapper_class(self) -> str:
+        if isinstance(self.resolved_field, bool) or not self.resolved_field:
+            return ""
+
+        f, attr, value = self.resolved_field
+
+        if hasattr(attr, "wrapper_class"):
+            return str(attr.wrapper_class)
+
+        return ""
+
     def contents(self) -> SafeString:
         contents = self._get_contents()
         contents = self._preprocess_field(contents)

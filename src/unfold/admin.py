@@ -2,8 +2,6 @@ from functools import update_wrapper
 from typing import Any, TypedDict
 
 from django import forms
-from django.conf import settings
-from django.contrib import messages
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
@@ -18,13 +16,11 @@ from django.contrib.contenttypes.admin import (
 from django.db.models import BLANK_CHOICE_DASH, Model
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
 from unfold.checks import UnfoldModelAdminChecks
-from unfold.datasets import BaseDataset
 from unfold.forms import (
     ActionForm,
     PaginationGenericInlineFormSet,
@@ -37,7 +33,6 @@ from unfold.mixins import (
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
-from unfold.utils import get_setting_value
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
@@ -51,7 +46,7 @@ checkbox = UnfoldBooleanWidget(
 
 
 class ListFilterOptionsItem(TypedDict):
-    title: str | None
+    label: str | None
     horizontal: bool | None
 
 
@@ -79,7 +74,6 @@ class ModelAdmin(
     change_form_after_template = None
     change_form_outer_before_template = None
     change_form_outer_after_template = None
-    change_form_datasets = ()
     compressed_fields = True
     show_add_link = True
     readonly_preprocess_fields = {}
@@ -134,22 +128,8 @@ class ModelAdmin(
 
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
-        if (
-            request.method == "GET"
-            and settings.DEBUG
-            and get_setting_value("SHOW_UI_WARNINGS", request) is True
-        ):
-            for missing_field in sorted(set(self._autocomplete_fields_missing)):
-                self.message_user(
-                    request,
-                    format_html(
-                        _(
-                            'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
-                        ),  # ty:ignore[invalid-argument-type]
-                        field_name=missing_field,
-                    ),
-                    messages.WARNING,
-                )
+        if self._show_ui_warnings(request):
+            self._display_autocomplete_fields_warnings(request)
 
         return response
 
@@ -247,10 +227,10 @@ class ModelAdmin(
         return super().get_action_choices(request, default_choices)
 
     @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
-    def action_checkbox(self, obj: Model) -> str:
+    def action_checkbox(self, obj: Model) -> SafeString:
         return checkbox.render(helpers.ACTION_CHECKBOX_NAME, str(obj.pk))
 
-    def get_changelist(self, request: HttpRequest, **kwargs: Any) -> ChangeList:
+    def get_changelist(self, request: HttpRequest, **kwargs: Any) -> type[ChangeList]:
         return ChangeList
 
     def get_formset_kwargs(
@@ -272,9 +252,6 @@ class ModelAdmin(
                 formset_kwargs["count_variant"] = inline.get_count_variant(request, obj)
 
         return formset_kwargs
-
-    def get_changeform_datasets(self, request: HttpRequest) -> list[type[BaseDataset]]:
-        return self.change_form_datasets
 
 
 class BaseInlineMixin:

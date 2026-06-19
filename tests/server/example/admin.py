@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.utils.html import format_html
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+from hijack.contrib.admin import HijackUserAdminMixin
 from import_export.admin import ImportExportModelAdmin
 from import_export.resources import ModelResource
 
@@ -33,7 +34,7 @@ from example.models import (
     Task,
     User,
 )
-from example.views import ModelExtraUrlView
+from example.views import CrispyFormView, ModelExtraUrlView
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import (
     AllValuesCheckboxFilter,
@@ -91,7 +92,7 @@ class UserTagInline(StackedInline):
     collapsible = True
     per_page = 10
     tab = True
-    readonly_fields = ["user"]
+    fields = ["tag"]
 
     def get_queryset(self, request, *args, **kwargs):
         qs = super().get_queryset(request, *args, **kwargs)
@@ -106,7 +107,7 @@ class InvoiceItemInline(TabularInline):
 class UserInvoiceInline(TabularInline):
     model = Invoice
     inlines = [InvoiceItemInline]
-    # tab = True
+    fields = ["name"]
 
 
 class PostInline(StackedInline):
@@ -117,7 +118,7 @@ class PostInline(StackedInline):
 
 
 class ProjectDatasetModelAdmin(ModelAdmin):
-    pass
+    search_fields = ["name"]
 
 
 class ProjectDataset(BaseDataset):
@@ -155,7 +156,7 @@ class ProjectNonrelatedInline(NonrelatedTabularInline):
         return "primary"
 
     def get_form_queryset(self, obj):
-        return self.model.objects.filter(is_active=True)
+        return self.model.objects.filter(is_active=True).order_by("pk")
 
     def save_new_instance(self, parent, instance):
         pass
@@ -174,7 +175,9 @@ class UserResource(ModelResource):
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
+class UserAdmin(
+    HijackUserAdminMixin, BaseUserAdmin, ModelAdmin, ImportExportModelAdmin
+):
     import_form_class = ImportForm
     export_form_class = ExportForm
     resource_classes = [UserResource, UserAnotherResource]
@@ -263,7 +266,19 @@ class UserAdmin(BaseUserAdmin, ModelAdmin, ImportExportModelAdmin):
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
 
-    @display(description="Custom readonly field")
+    def get_custom_urls(self):
+        return [
+            (
+                "crispy-form",
+                "crispy_form",
+                CrispyFormView.as_view(model_admin=self),
+            ),
+        ]
+
+    def get_hijack_user(self, obj):
+        return obj
+
+    @display(description="Custom readonly field", wrapper_class="bg-red-500")
     def custom_readonly_field(self, obj):
         return "Custom readonly field"
 

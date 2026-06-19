@@ -1,4 +1,4 @@
-<{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if submit %}type="submit"{% endif%} {% if form %}form="{{ form }}"{% endif%} {% if name %}name="{{ name }}"{% endif %} {% if value %}value="{{ value }}"{% endif %} {% if title %}title="{{ title }}"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=attrs %}
+<{% if href %}a href="{{ href }}"{% else %}button{% endif%} {% if type %}type="{{ type }}"{% endif %} {% if submit %}type="submit"{% endif%} {% if form %}form="{{ form }}"{% endif%} {% if name %}name="{{ name }}"{% endif %} {% if value %}value="{{ value }}"{% endif %} {% if title %}title="{{ title }}"{% endif %} {% include "unfold/helpers/attrs.html" with attrs=attrs %}
 class="font-medium inline-flex group items-center gap-1 relative rounded-default justify-center whitespace-nowrap {% if attrs.disabled %}cursor-not-allowed opacity-50{% else %}cursor-pointer{% endif %}
 {% if size == "lg" %}
     gap-2 px-5.5 py-3 text-[15px]

@@ -119,7 +119,6 @@ UNFOLD = {
     },
     "SIDEBAR": {
         "show_search": False,  # Search in applications and models names
-        "command_search": False,  # Replace the sidebar search with the command search
         "show_all_applications": False,  # Dropdown with all applications and models
         "navigation": [
             {

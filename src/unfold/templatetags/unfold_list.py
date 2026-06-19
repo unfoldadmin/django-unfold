@@ -481,7 +481,8 @@ def unfold_admin_list_filter(
             "title": spec.title,
             "choices": list(spec.choices(cl)),
             "spec": spec,
-            "custom_title": options.get("title"),
+            "label": options.get("label"),
+            "has_label": "label" in options,
             "horizontal": options.get("horizontal") and horizontal_layout,
         }
     )

@@ -1,7 +1,7 @@
 {% load unfold %}
 
 {% if field.field.widget.input_type == "checkbox" and field.field.widget|class_name != "UnfoldAdminCheckboxSelectMultipleWidget" %}
-    <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-4">
+    <div class="{% if field.errors %}errors {% endif %}form-checkbox flex flex-col group mb-4">
         <div class="flex flex-row gap-2 items-center">
             {{ field }}
 
@@ -15,10 +15,9 @@
 {% elif field.field.widget.input_type == "hidden" %}
     {{ field }}
 {% else %}
-    <div class="{% if field.errors %}errors {% endif %}flex flex-col group mb-4 {% if horizontal %}justify-center{% endif %}">
+    <div class="{% if field.errors %}errors {% endif %}form-field flex flex-col group mb-4 {% if horizontal %}justify-center{% endif %}">
         <div class="flex gap-2 {% if horizontal %}flex-row items-center{% else %}flex-col{% endif %}">
             {% include "unfold/helpers/form_label.html" with field=field %}
-
             {{ field }}
         </div>
 

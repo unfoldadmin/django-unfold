@@ -1,6 +1,6 @@
 [project]
 name = "django-unfold"
-version = "0.92.0"
+version = "0.98.0"
 description = "Modern Django Admin"
 authors = []
 requires-python = ">=3.12,<4.0"
@@ -17,14 +17,13 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
-    "Framework :: Django :: 5.1",
     "Framework :: Django :: 5.2",
     "Framework :: Django :: 6.0",
     "Operating System :: OS Independent",
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
 ]
-dependencies = ["django>=5.1"]
+dependencies = ["django>=5.2"]
 
 [project.urls]
 Homepage = "https://unfoldadmin.com"
@@ -36,7 +35,9 @@ Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md
 [dependency-groups]
 dev = [
     "django-constance==4.3.5",
+    "django-crispy-forms==2.6.0",
     "django-guardian==3.3.1",
+    "django-hijack==3.7.8",
     "django-import-export==4.4.0",
     "django-location-field==2.7.3",
     "django-money==3.6.0",
@@ -51,6 +52,7 @@ dev = [
     "python-semantic-release==10.5.3",
     "tox==4.53.0",
     "six==1.17.0",
+    "psycopg[binary]==3.3.4",
 ]
 
 [tool.uv]
@@ -126,7 +128,7 @@ django_find_project = false
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-fail_under = 92
+fail_under = 95.5
 sort = "-miss"
 
 [tool.coverage.paths]
@@ -144,7 +146,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{312,313,314}-django{51,52,60}
+        python{312,313,314}-django{52,60}
 
     [testenv]
     allowlist_externals = uv

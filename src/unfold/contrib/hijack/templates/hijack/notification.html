@@ -1,0 +1,25 @@
+{% load i18n static %}
+
+<div id="djhj" class="bottom-3.5 px-3 left-1/2 -translate-x-1/2 fixed max-w-screen z-90">
+    <div class="bg-primary-600 flex flex-row justify-between gap-4 items-center p-1.5 pl-3 rounded-default text-white dark:bg-primary-500">
+        <p class="truncate [&_em]:font-semibold [&_em]:not-italic">
+            {% blocktrans trimmed with user=request.user %}
+                You are currently working on behalf of <em>{{ user }}</em>.
+            {% endblocktrans %}
+        </p>
+
+        <form action="{% url 'hijack:release' %}" method="POST" class="flex flex-row items-center gap-2">
+            {% csrf_token %}
+
+            <input type="hidden" name="next" value="{{ request.path }}">
+
+            <button type="submit" class="material-symbols-outlined bg-white/[.16] cursor-pointer h-6 rounded-default w-6 hover:bg-white/[.24]" title="{% trans 'stop impersonating' %}">
+                back_hand
+            </button>
+
+            <button onclick="document.getElementById('djhj').style.display = 'none';" type="button" class="material-symbols-outlined bg-white/[.16] cursor-pointer h-6 rounded-default w-6 hover:bg-white/[.24]" title="{% trans 'hide warning' %}">
+                close
+            </button>
+        </form>
+    </div>
+</div>

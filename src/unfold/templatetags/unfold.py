@@ -191,6 +191,11 @@ def has_active_item(items: list[dict]) -> bool:
 
 
 @register.filter
+def has_row_action_in_dropdown(actions: list[dict]) -> bool:
+    return any(action.get("display_in_dropdown", True) for action in actions)
+
+
+@register.filter
 def class_name(value: Any) -> str:
     return value.__class__.__name__
 
@@ -366,7 +371,7 @@ def fieldset_rows_classes(context: RequestContext) -> str:
         "aligned",
     ]
 
-    if not context.get("stacked"):
+    if not context.get("stacked") and not context.get("fieldset_tab"):
         classes.extend(
             [
                 "border",
@@ -390,7 +395,10 @@ def fieldset_row_classes(context: RequestContext) -> str:
     ]
 
     formset = context.get("inline_admin_formset", None)
-    line = context.get("line") or []
+    line = context.get("line")
+
+    if not line:
+        return " ".join(set(classes))
 
     # Hide the field in case of ordering field for sorting
     for field in line:
@@ -880,3 +888,8 @@ def unicoded_slugify(value: str) -> str:
 @register.filter
 def format_traceback(traceback: str) -> str:
     return prettify_traceback(traceback) or ""
+
+
+@register.filter
+def model_verbose_name(model: type[Model]) -> str:
+    return str(model._meta.verbose_name)

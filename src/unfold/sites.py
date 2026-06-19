@@ -89,9 +89,6 @@ class UnfoldAdminSite(AdminSite):
             "command_show_history": self._get_config("COMMAND", request).get(
                 "show_history"
             ),
-            "sidebar_command_search": self._get_config("SIDEBAR", request).get(
-                "command_search"
-            ),
             "sidebar_show_all_applications": self._get_value(
                 sidebar_config.get("show_all_applications"), request
             ),
@@ -239,52 +236,41 @@ class UnfoldAdminSite(AdminSite):
         PER_PAGE = 100
 
         search_term = request.GET.get("s")
-        extended_search = "extended" in request.GET
         app_list = super().get_app_list(request)
-        template_name = "unfold/helpers/search_results.html"
 
         if search_term in EMPTY_VALUES:
             return HttpResponse()
 
         search_term = search_term.lower()
+
         search_key_base = f"{request.user.pk}_{search_term}"
         cache_key = (
             f"unfold_search_{hashlib.sha256(force_bytes(search_key_base)).hexdigest()}"
         )
         cache_results = cache.get(cache_key)
 
-        if extended_search:
-            template_name = "unfold/helpers/command_results.html"
-
         if cache_results:
             results = cache_results
         else:
             results = self._search_apps(app_list, search_term)
 
-            if extended_search:
-                if search_callback := self._get_config("COMMAND", request).get(
-                    "search_callback"
-                ):
-                    results.extend(
-                        self._get_value(search_callback, request, search_term)
-                    )
+            if search_callback := self._get_config("COMMAND", request).get(
+                "search_callback"
+            ):
+                results.extend(self._get_value(search_callback, request, search_term))
 
-                search_models = self._get_value(
-                    self._get_config("COMMAND", request).get("search_models"), request
+            search_models = self._get_value(
+                self._get_config("COMMAND", request).get("search_models"), request
+            )
+
+            if search_models is True or isinstance(search_models, list | tuple):
+                allowed_models = (
+                    search_models if isinstance(search_models, list | tuple) else None
                 )
 
-                if search_models is True or isinstance(search_models, list | tuple):
-                    allowed_models = (
-                        search_models
-                        if isinstance(search_models, list | tuple)
-                        else None
-                    )
-
-                    results.extend(
-                        self._search_models(
-                            request, app_list, search_term, allowed_models
-                        )
-                    )
+                results.extend(
+                    self._search_models(request, app_list, search_term, allowed_models)
+                )
 
             cache.set(cache_key, results, timeout=CACHE_TIMEOUT)
 
@@ -297,8 +283,9 @@ class UnfoldAdminSite(AdminSite):
 
         return TemplateResponse(
             request,
-            template=template_name,
+            template="unfold/helpers/command_results.html",
             context={
+                "search_term": search_term,
                 "page_obj": paginator,
                 "results": paginator.page(request.GET.get("page", 1)),
                 "page_counter": (int(request.GET.get("page", 1)) - 1) * PER_PAGE,
@@ -357,6 +344,9 @@ class UnfoldAdminSite(AdminSite):
 
         for item in items:
             link = item.get("link")
+
+            if not link:
+                continue
 
             if "active" in item:
                 item["active"] = self._get_value(item["active"], request)
@@ -497,14 +487,14 @@ class UnfoldAdminSite(AdminSite):
         return False
 
     def _get_is_tab_active(
-        self, request: HttpRequest, tabs: list[dict], link: str
+        self, request: HttpRequest, tabs: list[dict], nav_link: str
     ) -> bool:
-        for tab in tabs:
+        for tab_opts in tabs:
             has_primary_link = False
             has_tab_link_active = False
 
-            for tab_item in tab["items"]:
-                if link == tab_item["link"]:
+            for tab_item in tab_opts["items"]:
+                if nav_link == tab_item["link"]:
                     has_primary_link = True
                     continue
 
