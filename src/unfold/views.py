@@ -81,8 +81,9 @@ class UnfoldSiteViewMixin(PermissionRequiredMixin, ContextMixin, View):
                 "UnfoldSiteViewMixin was not provided with 'title' attribute"
             )
 
-        context = super().get_context_data()
+        self.request.current_app = self.admin_site.name
 
+        context = super().get_context_data(**kwargs)
         context.update(
             **self.admin_site.each_context(self.request),
             **{

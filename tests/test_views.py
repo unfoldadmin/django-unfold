@@ -26,7 +26,7 @@ def test_site_extra_url_view_anonymous_user(client):
 
 
 @pytest.mark.django_db
-def test_site_extra_url_view_no_enough_permissions(settings, client, staff_user):
+def test_site_extra_url_view_not_enough_permissions(settings, client, staff_user):
     client.force_login(staff_user)
     response = client.get(reverse("admin:extra_url_name"))
 
@@ -55,7 +55,7 @@ def test_model_extra_url_view_anonymous_user(client):
 
 
 @pytest.mark.django_db
-def test_model_extra_url_view_no_enough_permissions(settings, client, staff_user):
+def test_model_extra_url_view_not_enough_permissions(settings, client, staff_user):
     client.force_login(staff_user)
     response = client.get(reverse("admin:custom_url_name"))
 
