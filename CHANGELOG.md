@@ -1,6 +1,29 @@
 # CHANGELOG
 
 
+## v0.98.0 (2026-06-19)
+
+### Bug Fixes
+
+- Changelist actions bottom position
+  ([#2109](https://github.com/unfoldadmin/django-unfold/pull/2109),
+  [`97679c6`](https://github.com/unfoldadmin/django-unfold/commit/97679c6a26613677a15e189dbe34ea3045b3e822))
+
+- Crispy formset add button ([#2108](https://github.com/unfoldadmin/django-unfold/pull/2108),
+  [`b83c1cc`](https://github.com/unfoldadmin/django-unfold/commit/b83c1cc6af6d9e035f72a8beaea6f30613c1ccae))
+
+- Init unfold select2 in formset ([#2107](https://github.com/unfoldadmin/django-unfold/pull/2107),
+  [`fdac6d6`](https://github.com/unfoldadmin/django-unfold/commit/fdac6d67ed20dd523f510372535d774e02c82219))
+
+- Show all apps margin ([#2104](https://github.com/unfoldadmin/django-unfold/pull/2104),
+  [`81d35c8`](https://github.com/unfoldadmin/django-unfold/commit/81d35c8ef76ddd90c774ace33cab22e791225bef))
+
+### Features
+
+- Command search as default ([#2103](https://github.com/unfoldadmin/django-unfold/pull/2103),
+  [`fe394de`](https://github.com/unfoldadmin/django-unfold/commit/fe394dea29346dfe4efe3a4044dd778efdbef9cd))
+
+
 ## v0.97.2 (2026-06-18)
 
 ### Bug Fixes
