@@ -1432,3 +1432,15 @@ def test_fieldset_active_tab(fieldset_names, active_name):
     fieldset_classes = re.findall(r'class="tab-wrapper fieldset-([^"]+)"', response)
 
     assert fieldset_classes == tab_ids
+
+
+def test_tags_model_verbose_name():
+    response = Template("""{% load unfold %}{{ model|model_verbose_name }}""").render(
+        Context(
+            {
+                "model": User,
+            }
+        )
+    )
+
+    assert response == "user"

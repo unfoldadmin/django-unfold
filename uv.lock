@@ -275,6 +275,18 @@ wheels = [
 ]
 
 [[package]]
+name = "django-hijack"
+version = "3.7.8"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8c/b3/4b87f0bb4d0ca9128cd7fae37d434a0a4c7855c20759e33f2fa58a9d8a74/django_hijack-3.7.8.tar.gz", hash = "sha256:f28afb2be24430e348b8887c2f04337b1b77b66a44e4a6cd3a40902926d9e5fb", size = 14476, upload-time = "2026-04-19T18:07:15.284Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/d3/c55448947bf88198add5bc5843915135e855e02c0bebf89c1b3419e582ec/django_hijack-3.7.8-py3-none-any.whl", hash = "sha256:8967e4f4e528e0cc06b4f0829fbc1a55a493cc3ce8c0d088d51d9a40404a32de", size = 31444, upload-time = "2026-04-19T18:07:13.859Z" },
+]
+
+[[package]]
 name = "django-import-export"
 version = "4.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -351,7 +363,7 @@ wheels = [
 
 [[package]]
 name = "django-unfold"
-version = "0.93.0"
+version = "0.94.0"
 source = { editable = "." }
 dependencies = [
     { name = "django" },
@@ -362,6 +374,7 @@ dev = [
     { name = "django-constance" },
     { name = "django-crispy-forms" },
     { name = "django-guardian" },
+    { name = "django-hijack" },
     { name = "django-import-export" },
     { name = "django-location-field" },
     { name = "django-money" },
@@ -387,13 +400,14 @@ dev = [
     { name = "django-constance", specifier = "==4.3.5" },
     { name = "django-crispy-forms", specifier = "==2.6.0" },
     { name = "django-guardian", specifier = "==3.3.1" },
+    { name = "django-hijack", specifier = "==3.7.8" },
     { name = "django-import-export", specifier = "==4.4.0" },
     { name = "django-location-field", specifier = "==2.7.3" },
     { name = "django-money", specifier = "==3.6.0" },
     { name = "django-simple-history", specifier = "==3.11.0" },
     { name = "django-stubs", specifier = "==6.0.3" },
     { name = "pillow", specifier = "==12.2.0" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.3.4" },
+    { name = "psycopg", extras = ["binary"], specifier = "==3.3.4" },
     { name = "pytest", specifier = "==9.0.3" },
     { name = "pytest-cov", specifier = "==7.1.0" },
     { name = "pytest-django", specifier = "==4.12.0" },
@@ -472,11 +486,11 @@ wheels = [
 
 [[package]]
 name = "idna"
-version = "3.10"
+version = "3.15"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9", size = 190490, upload-time = "2024-09-15T18:07:39.745Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/82/77/7b3966d0b9d1d31a36ddf1746926a11dface89a83409bf1483f0237aa758/idna-3.15.tar.gz", hash = "sha256:ca962446ea538f7092a95e057da437618e886f4d349216d2b1e294abfdb65fdc", size = 199245, upload-time = "2026-05-12T22:45:57.011Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3", size = 70442, upload-time = "2024-09-15T18:07:37.964Z" },
+    { url = "https://files.pythonhosted.org/packages/d2/23/408243171aa9aaba178d3e2559159c24c1171a641aa83b67bdd3394ead8e/idna-3.15-py3-none-any.whl", hash = "sha256:048adeaf8c2d788c40fee287673ccaa74c24ffd8dcf09ffa555a2fbb59f10ac8", size = 72340, upload-time = "2026-05-12T22:45:55.733Z" },
 ]
 
 [[package]]
