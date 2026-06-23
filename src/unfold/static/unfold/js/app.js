@@ -1146,11 +1146,9 @@ function crispyFormsetReindex(formsetId) {
 }
 
 function crispyFormsetDelete(target) {
-	let rows = document.querySelectorAll(".crispy-formset-delete");
-
-	if (target) {
-		let rows = target.querySelectorAll(".crispy-formset-delete");
-	}
+	const rows = target
+		? target.querySelectorAll(".crispy-formset-delete")
+		: document.querySelectorAll(".crispy-formset-delete");
 
 	rows.forEach((el) => {
 		el.addEventListener("click", () => {
@@ -1158,48 +1156,85 @@ function crispyFormsetDelete(target) {
 			const formTotalEl = document.querySelector(
 				`#${formsetId} input[name*="TOTAL_FORMS"]`,
 			);
+			const formMinEl = document.querySelector(
+				`#${formsetId} input[name*="MIN_NUM_FORMS"]`,
+			);
+			const totalForms = parseInt(formTotalEl.value, 10);
+			const minNumForms = parseInt(formMinEl.value, 10);
+
+			if (totalForms <= minNumForms) {
+				return;
+			}
+
 			const rowToDelete = el.closest(".dynamic-form");
 
 			rowToDelete.remove();
 			formTotalEl.value = formTotalEl.value - 1;
 
 			crispyFormsetReindex(formsetId);
+			crispyFormsetToggleAdd(formsetId);
 		});
 	});
+}
+
+function crispyFormsetAdd(target) {
+	const formsetId = target.dataset.formsetId;
+	const formTotalEl = document.querySelector(
+		`#${formsetId} input[name*="TOTAL_FORMS"]`,
+	);
+	const formCount = parseInt(formTotalEl.value, 10);
+
+	const newForm = document
+		.querySelector(`#${formsetId} .empty-form`)
+		.cloneNode(true);
+
+	newForm.classList.remove("empty-form", "hidden");
+	newForm.classList.add("dynamic-form");
+	newForm.innerHTML = newForm.innerHTML.replaceAll(/__prefix__/g, formCount);
+
+	document.getElementById(`${formsetId}-rows`).insertBefore(newForm, null);
+
+	formTotalEl.value = formCount + 1;
+
+	newForm.dispatchEvent(
+		new CustomEvent("formset:added", {
+			bubbles: true,
+		}),
+	);
+
+	crispyFormsetToggleAdd(formsetId);
+}
+
+function crispyFormsetToggleAdd(formsetId) {
+	const totalForms = parseInt(
+		document.querySelector(`#${formsetId} input[name*="TOTAL_FORMS"]`).value,
+		10,
+	);
+
+	const maxNumForms = parseInt(
+		document.querySelector(`#${formsetId} input[name*="MAX_NUM_FORMS"]`).value,
+		10,
+	);
+
+	if (totalForms >= maxNumForms) {
+		document
+			.getElementById(`${formsetId}-add-row-wrapper`)
+			.classList.add("hidden");
+	} else {
+		document
+			.getElementById(`${formsetId}-add-row-wrapper`)
+			.classList.remove("hidden");
+	}
 }
 
 function crispyFormset() {
 	document
 		.querySelectorAll(".crispy-formset-add")
 		.forEach((formsetAddButton) => {
+			crispyFormsetToggleAdd(formsetAddButton.dataset.formsetId);
+
 			formsetAddButton.addEventListener("click", () => {
-				const formsetId = formsetAddButton.dataset.formsetId;
-				const formTotalEl = document.querySelector(
-					`#${formsetId} input[name*="TOTAL_FORMS"]`,
-				);
-				const formCount = parseInt(formTotalEl.value);
-				const newForm = document
-					.querySelector(`#${formsetId} .empty-form`)
-					.cloneNode(true);
-
-				newForm.classList.remove("empty-form", "hidden");
-				newForm.classList.add("dynamic-form");
-				newForm.innerHTML = newForm.innerHTML.replaceAll(
-					/__prefix__/g,
-					formCount,
-				);
-
-				document
-					.getElementById(`${formsetId}-rows`)
-					.insertBefore(newForm, null);
-
-				formTotalEl.value = formCount + 1;
-
-				newForm.dispatchEvent(
-					new CustomEvent("formset:added", {
-						bubbles: true,
-					}),
-				);
+				crispyFormsetAdd(formsetAddButton);
 			});
 		});
 
