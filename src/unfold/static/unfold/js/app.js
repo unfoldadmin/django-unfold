@@ -567,9 +567,10 @@ function dateTimeShortcutsOverlay() {
 	const observer = new MutationObserver((mutations) => {
 		for (const mutationRecord of mutations) {
 			const display = mutationRecord.target.style.display;
+			const hasOpenAttribute = mutationRecord.target.hasAttribute("open");
 			const overlay = document.getElementById("modal-overlay");
 
-			if (display === "block") {
+			if (display === "block" || hasOpenAttribute) {
 				overlay.style.display = "block";
 			} else {
 				overlay.style.display = "none";
@@ -581,7 +582,7 @@ function dateTimeShortcutsOverlay() {
 		for (const target of document.querySelectorAll(".calendarbox, .clockbox")) {
 			observer.observe(target, {
 				attributes: true,
-				attributeFilter: ["style"],
+				attributeFilter: ["style", "open"],
 			});
 		}
 	};
