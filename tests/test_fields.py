@@ -1,3 +1,4 @@
+import django
 import pytest
 from django import forms
 from django.contrib.auth import get_user_model
@@ -123,7 +124,11 @@ def test_unfold_admin_readonly_field_html(user_factory):
 
 
 @pytest.mark.django_db
-def test_unfold_admin_readonly_field_password(user_factory):
+@pytest.mark.skipif(
+    django.VERSION[:2] != (5, 2),
+    reason="Only runs on Django 5.2",
+)
+def test_unfold_admin_readonly_field_password_older(user_factory):
     user = user_factory(username="sample2@example.com")
     readonly_field = UnfoldAdminReadonlyField(
         form=ExampleForm(instance=user),
@@ -132,6 +137,22 @@ def test_unfold_admin_readonly_field_password(user_factory):
         model_admin=UserAdmin(get_user_model(), UnfoldAdminSite()),
     )
     assert "No password set." in readonly_field.contents()
+
+
+@pytest.mark.django_db
+@pytest.mark.skipif(
+    django.VERSION[:2] <= (5, 2),
+    reason="Requires Django > 5.2",
+)
+def test_unfold_admin_readonly_field_password(user_factory):
+    user = user_factory(username="sample2@example.com")
+    readonly_field = UnfoldAdminReadonlyField(
+        form=ExampleForm(instance=user),
+        field="password",
+        is_first=True,
+        model_admin=UserAdmin(get_user_model(), UnfoldAdminSite()),
+    )
+    assert "-" in readonly_field.contents()
 
 
 @pytest.mark.django_db
