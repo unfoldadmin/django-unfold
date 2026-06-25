@@ -1,6 +1,21 @@
 # CHANGELOG
 
 
+## v0.99.0 (2026-06-23)
+
+### Features
+
+- Crispy formset delete rows ([#2112](https://github.com/unfoldadmin/django-unfold/pull/2112),
+  [`ad8c6dd`](https://github.com/unfoldadmin/django-unfold/commit/ad8c6dd9b1a33db3eff001e9fe95891b8b4a6cd1))
+
+- Crispy formset respect min/max num of forms
+  ([#2115](https://github.com/unfoldadmin/django-unfold/pull/2115),
+  [`e876810`](https://github.com/unfoldadmin/django-unfold/commit/e876810c21616120684f9d971b1890b3c013bb87))
+
+- Custom site views ([#2022](https://github.com/unfoldadmin/django-unfold/pull/2022),
+  [`7a9ef75`](https://github.com/unfoldadmin/django-unfold/commit/7a9ef75f0582bd68252e417864efebf7cfab1112))
+
+
 ## v0.98.0 (2026-06-19)
 
 ### Bug Fixes
