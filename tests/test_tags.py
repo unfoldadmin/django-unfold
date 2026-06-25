@@ -4,7 +4,7 @@ from http import HTTPStatus
 
 import pytest
 from django import forms
-from django.contrib.admin.helpers import AdminField
+from django.contrib.admin.helpers import AdminField, AdminForm
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
@@ -17,10 +17,16 @@ from example.admin import ProjectDataset, UserAdmin
 from example.models import User
 
 from unfold.components import BaseComponent, register_component
+from unfold.contrib.forms.widgets import ArrayWidget
 from unfold.enums import ActionVariant
 from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 from unfold.sites import UnfoldAdminSite
 from unfold.views import ChangeList
+from unfold.widgets import (
+    UnfoldAdminIntegerRangeWidget,
+    UnfoldAdminSplitDateTimeVerticalWidget,
+    UnfoldAdminTextInputWidget,
+)
 
 
 @pytest.mark.django_db
@@ -662,6 +668,38 @@ def test_tags_changeform_data(rf, user_factory):
     assert '"username": null' in response
 
 
+def test_tags_changeform_data_skips_unflagged_multiwidget(rf):
+    """
+    A MultiWidget that does not opt into per-item bindings is skipped by
+    changeform_condition, so changeform_data must not declare a scope variable
+    for it either — otherwise the x-data object carries a dead key.
+    """
+    class CustomMultiWidget(forms.MultiWidget):
+        def __init__(self, attrs=None):
+            super().__init__([forms.TextInput(), forms.TextInput()], attrs)
+
+        def decompress(self, value):
+            return [None, None]
+
+    class DataForm(forms.Form):
+        title = forms.CharField()
+        combo = forms.Field(widget=CustomMultiWidget(), required=False)
+
+    admin_form = AdminForm(DataForm(), [(None, {"fields": ["title", "combo"]})], {})
+
+    response = Template("{% load unfold %} {{ adminform|changeform_data }}").render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "adminform": admin_form,
+            },
+        )
+    )
+
+    assert '"title": null' in response
+    assert "combo" not in response
+
+
 @pytest.mark.django_db
 def test_tags_changeform_condition_field(rf):
     form = UserAdmin(User, UnfoldAdminSite()).get_form(None)()
@@ -767,6 +805,92 @@ def test_tags_changeform_condition_readonly_field(rf, user_factory):
 
     assert "Custom readonly field" in response
     assert "readonly" in response
+
+
+def test_tags_changeform_condition_field_array(rf):
+    class ArrayForm(forms.Form):
+        authors = forms.CharField(
+            widget=ArrayWidget(widget_class=UnfoldAdminTextInputWidget)
+        )
+
+    form = ArrayForm(initial={"authors": ["Thomas", "Fari", "Richard"]})
+    admin_field = AdminField(form, "authors", False)
+
+    response = Template(
+        "{% load unfold %} {% with admin_field|changeform_condition as field %}{{ field.field }}{% endwith %}"
+    ).render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "admin_field": admin_field,
+            },
+        )
+    )
+
+    # ArrayWidget is a MultiWidget whose subwidgets all share the field name, so
+    # a scalar x-model.fill binding would be copied onto every item input and
+    # collapse the array to its first value. changeform_condition must skip it.
+    assert "x-model.fill" not in response
+
+    # Each item keeps its own distinct value (not collapsed to the first).
+    assert 'value="Thomas"' in response
+    assert 'value="Fari"' in response
+    assert 'value="Richard"' in response
+
+
+def _render_changeform_condition(rf, widget, field_name):
+    form_class = type(
+        "ConditionForm",
+        (forms.Form,),
+        {field_name: forms.Field(widget=widget, required=False)},
+    )
+    admin_field = AdminField(form_class(), field_name, False)
+
+    return Template(
+        "{% load unfold %} {% with admin_field|changeform_condition as field %}{{ field.field }}{% endwith %}"
+    ).render(
+        RequestContext(
+            rf.get("/"),
+            {
+                "admin_field": admin_field,
+            },
+        )
+    )
+
+
+def test_tags_changeform_condition_field_integer_range(rf):
+    # Fixed-subwidget MultiWidget that opts into per-item binding: each input
+    # must bind to its own distinct scope variable, never a shared scalar.
+    response = _render_changeform_condition(
+        rf, UnfoldAdminIntegerRangeWidget(), "score"
+    )
+
+    assert 'x-model.fill="score_0"' in response
+    assert 'x-model.fill="score_1"' in response
+
+
+def test_tags_changeform_condition_field_split_datetime_vertical(rf):
+    response = _render_changeform_condition(
+        rf, UnfoldAdminSplitDateTimeVerticalWidget(), "when"
+    )
+
+    assert 'x-model.fill="when_0"' in response
+    assert 'x-model.fill="when_1"' in response
+
+
+def test_tags_changeform_condition_field_custom_multiwidget_skipped(rf):
+    # A MultiWidget that does NOT declare supports_conditional_per_item must be
+    # skipped (safe default): a shared scalar would collapse its subwidgets.
+    class CustomMultiWidget(forms.MultiWidget):
+        def __init__(self, attrs=None):
+            super().__init__([forms.TextInput(), forms.TextInput()], attrs)
+
+        def decompress(self, value):
+            return [None, None]
+
+    response = _render_changeform_condition(rf, CustomMultiWidget(), "custom")
+
+    assert "x-model.fill" not in response
 
 
 @pytest.mark.django_db

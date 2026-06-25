@@ -380,6 +380,7 @@ class UnfoldAdminUUIDInputWidget(AdminUUIDInputWidget):
 
 class UnfoldAdminIntegerRangeWidget(MultiWidget):
     template_name = "unfold/widgets/range.html"
+    supports_conditional_per_item = True
 
     def __init__(self, attrs: dict[str, Any] | None = None) -> None:
         attrs = attrs or {}
@@ -582,6 +583,7 @@ class UnfoldAdminExpandableTextareaWidget(UnfoldAdminTextareaWidget):
 
 class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
     template_name = "unfold/widgets/split_datetime.html"
+    supports_conditional_per_item = True
 
     def __init__(self, attrs: dict[str, Any] | None = None) -> None:
         widgets = [
@@ -600,6 +602,7 @@ class UnfoldAdminSplitDateTimeWidget(AdminSplitDateTime):
 
 class UnfoldAdminSplitDateTimeVerticalWidget(AdminSplitDateTime):
     template_name = "unfold/widgets/split_datetime_vertical.html"
+    supports_conditional_per_item = True
 
     def __init__(
         self,
@@ -954,6 +957,7 @@ try:
 
     class UnfoldAdminMoneyWidget(MoneyWidget):
         template_name = "unfold/widgets/split_money.html"
+        supports_conditional_per_item = True
 
         def __init__(self, *args: Any, **kwargs: Any) -> None:
             attrs = {}

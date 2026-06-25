@@ -17,6 +17,7 @@ from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
 from django.forms import BoundField, CheckboxSelectMultiple
+from django.forms.widgets import MultiWidget, Widget
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
@@ -31,11 +32,7 @@ from unfold.components import ComponentRegistry
 from unfold.enums import ActionVariant
 from unfold.sections import BaseSection
 from unfold.utils import prettify_traceback
-from unfold.widgets import (
-    UnfoldAdminMoneyWidget,
-    UnfoldAdminSelect2Widget,
-    UnfoldAdminSplitDateTimeWidget,
-)
+from unfold.widgets import UnfoldAdminSelect2Widget
 
 register = Library()
 
@@ -54,6 +51,10 @@ def _count_errors_in_general(
                     count += 1
 
     return count
+
+
+def _supports_conditional_per_item(widget: Widget) -> bool:
+    return getattr(widget, "supports_conditional_per_item", False)
 
 
 def _count_errors_in_inline(inline: InlineAdminFormSet) -> int:
@@ -550,13 +551,12 @@ def changeform_data(adminform: AdminForm) -> str:
                 if isinstance(field.field, dict):
                     continue
 
-                if isinstance(
-                    field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-                ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
-                    for index, _widget in enumerate(field.field.field.widget.widgets):
-                        fields[
-                            f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
-                        ] = None
+                if isinstance(field.field.field.widget, MultiWidget):
+                    if _supports_conditional_per_item(field.field.field.widget):
+                        for index, _widget in enumerate(field.field.field.widget.widgets):
+                            fields[
+                                f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
+                            ] = None
                 elif isinstance(field.field.field.widget, CheckboxSelectMultiple):
                     fields[field.field.name] = []
                 else:
@@ -580,15 +580,14 @@ def changeform_condition(field: AdminField) -> AdminField:
         field.field.field.widget.attrs["x-init"] = mark_safe(
             f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
         )
-    elif isinstance(
-        field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-    ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
-        for index, widget in enumerate(field.field.field.widget.widgets):
-            field_name = (
-                f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
-            )
+    elif isinstance(field.field.field.widget, MultiWidget):
+        if _supports_conditional_per_item(field.field.field.widget):
+            for index, widget in enumerate(field.field.field.widget.widgets):
+                field_name = (
+                    f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
+                )
 
-            widget.attrs["x-model.fill"] = field_name
+                widget.attrs["x-model.fill"] = field_name
     else:
         field.field.field.widget.attrs["x-model.fill"] = field.field.name
 

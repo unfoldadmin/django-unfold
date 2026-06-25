@@ -52,3 +52,10 @@ class CustomAdminClass(ModelAdmin):
         form.base_fields["array_field"].widget = ArrayWidget(choices=SomeChoices)
         return form
 ```
+
+## Conditional fields
+
+`ArrayWidget` renders a dynamic list of inputs that all share the field name, so it cannot be used as a *source* in
+[conditional fields](/docs/configuration/conditional-fields/) — a single Alpine binding would be copied onto every
+input and collapse the array to its first value. Unfold therefore skips binding it, and no extra configuration is
+needed. An array field can still be a conditional *target*: it can be shown or hidden based on another field's value.
