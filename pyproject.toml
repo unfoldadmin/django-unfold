@@ -146,12 +146,14 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{312,313,314}-django{52,60}
-
+        python{312,313,314}-django{52,60,61b1}
     [testenv]
     allowlist_externals = uv
     skip_install = true
     set_env =
         PYTHONDEVMODE = 1
-    commands = uv run -- pytest tests/
+    commands =
+        django52: uv run --with "Django>=5.2,<5.3" -- pytest tests/
+        django60: uv run --with "Django>=6.0,<6.1" -- pytest tests/
+        django61b1: uv run --with "Django==6.1b1" -- pytest tests/
 """
