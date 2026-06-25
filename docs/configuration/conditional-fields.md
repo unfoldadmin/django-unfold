@@ -45,13 +45,13 @@ The `conditional_fields` dictionary uses a straightforward key-value structure:
 
 When a user interacts with your form, Django Unfold evaluates these expressions in real-time, showing or hiding fields accordingly. This creates a responsive, interactive experience without requiring page reloads.
 
-For fields rendered with a fixed-subwidget `MultiWidget` (such as split date-time, money, or integer range widgets), 
+For fields rendered with a fixed-subwidget `MultiWidget` (such as split date-time, money, or integer range widgets),
 Django Unfold automatically handles the complexity by assigning numeric suffixes to each widget component. For example,
 a date-time field named `date_start` would have its widgets accessible as `date_start_0` and `date_start_1` in your
 conditional expressions.
 
 > **Note on dynamic multi-widgets.** Widgets whose inputs are added/removed dynamically or share a single name — most
-> notably the `ArrayWidget` — cannot act as a condition *source*. A single Alpine binding would be copied onto every 
+> notably the `ArrayWidget` — cannot act as a condition *source*. A single Alpine binding would be copied onto every
 > input and collapse the field's value, so Unfold safely skips binding them. Such fields still work as condition
 > *targets* (they can be shown or hidden by other fields' conditions). If you build a custom `MultiWidget` whose
 > subwidgets are fixed and have distinct names, you can opt it into per-item bindings by setting

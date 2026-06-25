@@ -553,7 +553,9 @@ def changeform_data(adminform: AdminForm) -> str:
 
                 if isinstance(field.field.field.widget, MultiWidget):
                     if _supports_conditional_per_item(field.field.field.widget):
-                        for index, _widget in enumerate(field.field.field.widget.widgets):
+                        for index, _widget in enumerate(
+                            field.field.field.widget.widgets
+                        ):
                             fields[
                                 f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
                             ] = None

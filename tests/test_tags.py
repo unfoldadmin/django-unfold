@@ -674,6 +674,7 @@ def test_tags_changeform_data_skips_unflagged_multiwidget(rf):
     changeform_condition, so changeform_data must not declare a scope variable
     for it either — otherwise the x-data object carries a dead key.
     """
+
     class CustomMultiWidget(forms.MultiWidget):
         def __init__(self, attrs=None):
             super().__init__([forms.TextInput(), forms.TextInput()], attrs)
