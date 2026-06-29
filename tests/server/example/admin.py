@@ -69,6 +69,7 @@ from unfold.contrib.import_export.forms import (
 from unfold.contrib.inlines.admin import NonrelatedTabularInline
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
+from unfold.enums import ActionVariant
 from unfold.forms import (
     AdminPasswordChangeForm,
     BaseDialogForm,
@@ -691,6 +692,7 @@ class ActionsUserAdmin(BaseUserAdmin, ModelAdmin):
     ]
     actions_row = [
         "changelist_row_action",
+        "changelist_row_action_danger_inline",
         "changelist_row_action_mixed_permissions_true",
         "changelist_row_action_mixed_permissions_false",
         "changelist_row_action_mixed_permissions_perm_not_granted",
@@ -815,6 +817,17 @@ class ActionsUserAdmin(BaseUserAdmin, ModelAdmin):
     @action(description="Changelist row action")
     def changelist_row_action(self, request, object_id):
         messages.success(request, "Changelist row action successfully executed")
+        return redirect(reverse_lazy("admin:example_user_changelist"))
+
+    @action(
+        description="Changelist row action danger inline",
+        variant=ActionVariant.DANGER,
+        extra_options={"display_in_dropdown": False},
+    )
+    def changelist_row_action_danger_inline(self, request, object_id):
+        messages.success(
+            request, "Changelist row action danger inline successfully executed"
+        )
         return redirect(reverse_lazy("admin:example_user_changelist"))
 
     @action(
