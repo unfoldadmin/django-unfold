@@ -263,6 +263,17 @@ def test_actions_row(client, admin_user):
 
 
 @pytest.mark.django_db
+def test_actions_row_inline_variant(client, admin_user):
+    client.force_login(admin_user)
+    response = client.get(reverse_lazy("admin:example_actionuser_changelist"))
+    content = response.content.decode()
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Changelist row action danger inline" in content
+    assert "bg-red-600" in content
+
+
+@pytest.mark.django_db
 def test_actions_row_mixed_permissions_true(client, staff_user):
     client.force_login(staff_user)
     response = client.get(reverse_lazy("admin:example_actionuser_changelist"))
