@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div id="changelist-actions" class="actions mx-1 text-white {% if not cl.model_admin.list_fullwidth %}mx-auto{% endif %}" x-bind:style="'width: ' + changeListWidth + 'px'">
-    <div class="bg-primary-600 flex flex-col gap-3 mx-3 p-1.5 rounded-default dark:bg-primary-500 sm:flex-row sm:items-center lg:items-center">
+    <div class="bg-primary-600 flex flex-col gap-3 p-1.5 rounded-default dark:bg-primary-500 sm:flex-row sm:items-center lg:items-center">
         {% block actions %}
             <div class="group primary flex flex-row gap-2 lg:flex-row" x-data="{action: '', selectAcross: 0}">
                 {% block actions-form %}

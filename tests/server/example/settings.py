@@ -205,5 +205,8 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict(
 )
 
 UNFOLD = {
+    "SITE_VIEWS": [
+        ("extra-url", "extra_url_name", "example.views.SiteExtraUrlView"),
+    ],
     "TABS": "example.utils.tabs_callback",
 }

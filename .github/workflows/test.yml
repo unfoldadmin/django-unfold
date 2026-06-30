@@ -14,7 +14,7 @@ permissions: {}
 
 jobs:
   tests:
-    name: Python ${{ matrix.python-version }}
+    name: Python ${{ matrix.python-version }} / Django ${{ matrix.django-version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -23,9 +23,13 @@ jobs:
           - "3.12"
           - "3.13"
           - "3.14"
+        django-version:
+          - "52"
+          - "60"
+          - "61b1"
     steps:
       - name: Checkout code
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
       - name: Set up Python
@@ -33,6 +37,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install uv
-        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
-      - name: Run tox targets for ${{ matrix.python-version }}
-        run: uv run -- tox run -f python$(echo ${{ matrix.python-version }} | tr -d .)
+        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+      - name: Run tox
+        run: uv run -- tox run -e python$(echo ${{ matrix.python-version }} | tr -d .)-django${{ matrix.django-version }}

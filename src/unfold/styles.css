@@ -243,6 +243,13 @@
 }
 
 /*******************************************************
+ Dialog
+ *******************************************************/
+dialog::backdrop {
+  @apply bg-transparent;
+}
+
+/*******************************************************
  Search
  *******************************************************/
 input[type="search"]::-webkit-search-cancel-button {
@@ -264,19 +271,23 @@ table tr.selected th {
   @apply absolute flex flex-row-reverse items-center right-px text-[0px] top-px;
 }
 
-.datetimeshortcuts a {
-  @apply flex items-center h-9 text-[0px] text-base-400 transition hover:text-base-700;
+.datetimeshortcuts a,
+.datetimeshortcuts button {
+  @apply cursor-pointer flex items-center h-9 text-[0px] text-base-400 transition hover:text-base-700;
 }
 
-.datetimeshortcuts a:first-child {
+.datetimeshortcuts a:first-child,
+.datetimeshortcuts button:first-child {
   @apply hidden;
 }
 
-.datetimeshortcuts a:first-child:after {
+.datetimeshortcuts a:first-child:after,
+.datetimeshortcuts button:first-child:after {
   @apply content-['update'] flex h-9 items-center justify-center leading-none material-symbols-outlined px-3 py-2 text-center hover:text-base-700 dark:border-base-700 dark:hover:text-base-700;
 }
 
-.datetimeshortcuts a:first-child:after {
+.datetimeshortcuts a:first-child:after,
+.datetimeshortcuts button:first-child:after {
   @apply flex;
 }
 

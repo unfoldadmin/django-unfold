@@ -28,6 +28,10 @@ UNFOLD = {
         # ...
     ],
     "SITE_URL": "/",
+    "SITE_VIEWS": [
+        ("some-path-to-view", "name_of_view_1", "path.to.view_itself_1"),
+        ("other-path-to-view", "another_name_of_view_2", "path.to.view_itself_2"),
+    ],
     # "SITE_ICON": lambda request: static("icon.svg"),  # both modes, optimise for 32px height
     "SITE_ICON": {
         "light": lambda request: static("icon-light.svg"),  # light mode
@@ -115,7 +119,6 @@ UNFOLD = {
     },
     "SIDEBAR": {
         "show_search": False,  # Search in applications and models names
-        "command_search": False,  # Replace the sidebar search with the command search
         "show_all_applications": False,  # Dropdown with all applications and models
         "navigation": [
             {

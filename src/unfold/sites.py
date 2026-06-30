@@ -38,20 +38,13 @@ class UnfoldAdminSite(AdminSite):
             self.login_form = AuthenticationForm
 
     def get_urls(self) -> list[URLResolver | URLPattern]:
-        extra_urls = []
-
-        if hasattr(self, "extra_urls") and callable(self.extra_urls):
-            extra_urls = self.extra_urls()
-
-        urlpatterns = (
+        return (
             [
                 path("search/", self.admin_view(self.search), name="search"),
             ]
-            + extra_urls
+            + self._get_extra_urls()
             + super().get_urls()
         )
-
-        return urlpatterns
 
     def each_context(self, request: HttpRequest) -> dict[str, Any]:
         context = super().each_context(request)
@@ -95,9 +88,6 @@ class UnfoldAdminSite(AdminSite):
             "scripts": self._get_list("SCRIPTS", request),
             "command_show_history": self._get_config("COMMAND", request).get(
                 "show_history"
-            ),
-            "sidebar_command_search": self._get_config("SIDEBAR", request).get(
-                "command_search"
             ),
             "sidebar_show_all_applications": self._get_value(
                 sidebar_config.get("show_all_applications"), request
@@ -246,52 +236,41 @@ class UnfoldAdminSite(AdminSite):
         PER_PAGE = 100
 
         search_term = request.GET.get("s")
-        extended_search = "extended" in request.GET
         app_list = super().get_app_list(request)
-        template_name = "unfold/helpers/search_results.html"
 
         if search_term in EMPTY_VALUES:
             return HttpResponse()
 
         search_term = search_term.lower()
+
         search_key_base = f"{request.user.pk}_{search_term}"
         cache_key = (
             f"unfold_search_{hashlib.sha256(force_bytes(search_key_base)).hexdigest()}"
         )
         cache_results = cache.get(cache_key)
 
-        if extended_search:
-            template_name = "unfold/helpers/command_results.html"
-
         if cache_results:
             results = cache_results
         else:
             results = self._search_apps(app_list, search_term)
 
-            if extended_search:
-                if search_callback := self._get_config("COMMAND", request).get(
-                    "search_callback"
-                ):
-                    results.extend(
-                        self._get_value(search_callback, request, search_term)
-                    )
+            if search_callback := self._get_config("COMMAND", request).get(
+                "search_callback"
+            ):
+                results.extend(self._get_value(search_callback, request, search_term))
 
-                search_models = self._get_value(
-                    self._get_config("COMMAND", request).get("search_models"), request
+            search_models = self._get_value(
+                self._get_config("COMMAND", request).get("search_models"), request
+            )
+
+            if search_models is True or isinstance(search_models, list | tuple):
+                allowed_models = (
+                    search_models if isinstance(search_models, list | tuple) else None
                 )
 
-                if search_models is True or isinstance(search_models, list | tuple):
-                    allowed_models = (
-                        search_models
-                        if isinstance(search_models, list | tuple)
-                        else None
-                    )
-
-                    results.extend(
-                        self._search_models(
-                            request, app_list, search_term, allowed_models
-                        )
-                    )
+                results.extend(
+                    self._search_models(request, app_list, search_term, allowed_models)
+                )
 
             cache.set(cache_key, results, timeout=CACHE_TIMEOUT)
 
@@ -304,7 +283,7 @@ class UnfoldAdminSite(AdminSite):
 
         return TemplateResponse(
             request,
-            template=template_name,
+            template="unfold/helpers/command_results.html",
             context={
                 "search_term": search_term,
                 "page_obj": paginator,
@@ -619,3 +598,32 @@ class UnfoldAdminSite(AdminSite):
             return value(*args)
 
         return value
+
+    def _get_extra_urls(self) -> list[URLResolver | URLPattern]:
+        extra_urls: list[URLResolver | URLPattern] = []
+
+        if hasattr(self, "extra_urls") and callable(self.extra_urls):
+            extra_urls = self.extra_urls()
+
+        site_views = self._get_config("SITE_VIEWS")
+
+        if site_views is None:
+            return extra_urls
+
+        for url_conf in site_views:
+            url, name, path_to_view = url_conf
+
+            if not isinstance(path_to_view, str):
+                continue
+
+            view = import_string(path_to_view).as_view(admin_site=self)
+
+            extra_urls.append(
+                path(
+                    url,
+                    self.admin_view(view),
+                    name=name,
+                )
+            )
+
+        return extra_urls
