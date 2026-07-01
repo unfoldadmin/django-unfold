@@ -1,6 +1,22 @@
 # CHANGELOG
 
 
+## v0.99.1 (2026-07-01)
+
+### Bug Fixes
+
+- Django 6.1 calendar and time ([#2118](https://github.com/unfoldadmin/django-unfold/pull/2118),
+  [`929ee15`](https://github.com/unfoldadmin/django-unfold/commit/929ee15c8fc9c9af42eec0f33640b5016ed210a1))
+
+- Internal dataset name ([#2128](https://github.com/unfoldadmin/django-unfold/pull/2128),
+  [`51f41ea`](https://github.com/unfoldadmin/django-unfold/commit/51f41eaa0db840171f8f29644b40749cd4c1b059))
+
+### Documentation
+
+- Typo in table component
+  ([`8b50da0`](https://github.com/unfoldadmin/django-unfold/commit/8b50da0b2ef98e7966c1f25bbe7277e95c0408c2))
+
+
 ## v0.99.0 (2026-06-23)
 
 ### Features
