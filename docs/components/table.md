@@ -72,4 +72,4 @@ data = {
 | title                             | Custom table title                         |
 | striped                           | Stripes for odd rows                       |
 | card_included                     | Special styling when in "card" component   |
-| height                            | Max height, displays scroolbar             |
+| height                            | Max height, displays scrollbar             |
