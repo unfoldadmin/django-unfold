@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from django.urls import reverse
+from example.models import Project
 
 
 def test_datasets_no_selected_items(admin_client):
@@ -49,3 +50,39 @@ def test_datasets_success_action(admin_client, project_factory):
     )
 
     assert response.status_code == HTTPStatus.OK
+
+
+def test_datasets_delete_selected_confirmation(admin_client, project_factory):
+    project1 = project_factory(name="Test Project")
+    project2 = project_factory(name="Another Project")
+
+    response = admin_client.post(
+        reverse("admin:example_user_change", args=[1]),
+        {
+            "_selected_action": [project1.pk, project2.pk],
+            "_dataset": "ProjectDataset",
+            "action": "delete_selected",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    content = response.content.decode()
+    assert 'name="_dataset"' in content
+    assert "ProjectDataset" in content
+    assert project1.name in content
+    assert project2.name in content
+
+    response = admin_client.post(
+        reverse("admin:example_user_change", args=[1]),
+        {
+            "_selected_action": [project1.pk, project2.pk],
+            "_dataset": "ProjectDataset",
+            "action": "delete_selected",
+            "post": "yes",
+        },
+        follow=True,
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert Project.objects.all().count() == 0
