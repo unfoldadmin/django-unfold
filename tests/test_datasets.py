@@ -7,7 +7,7 @@ def test_datasets_no_selected_items(admin_client):
     response = admin_client.post(
         reverse("admin:example_user_change", args=[1]),
         {
-            "dataset": "ProjectDataset",
+            "_dataset": "ProjectDataset",
         },
         follow=True,
     )
@@ -26,7 +26,7 @@ def test_datasets_no_dataset_found(admin_client, project_factory):
         reverse("admin:example_user_change", args=[1]),
         {
             "_selected_action": [project.pk],
-            "dataset": "NonExistingDataset",
+            "_dataset": "NonExistingDataset",
         },
         follow=True,
     )
@@ -42,7 +42,7 @@ def test_datasets_success_action(admin_client, project_factory):
         reverse("admin:example_user_change", args=[1]),
         {
             "_selected_action": [project.pk],
-            "dataset": "ProjectDataset",
+            "_dataset": "ProjectDataset",
             "action": "delete_selected",
         },
         follow=True,
