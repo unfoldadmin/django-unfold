@@ -126,16 +126,26 @@ function theme(defaultTheme = "auto") {
 				return "";
 			},
 			["x-on:keydown.window"](event) {
-				if (
-					event.key === "[" &&
-					!event.metaKey &&
-					!event.ctrlKey &&
-					document.activeElement.tagName.toLowerCase() !== "input" &&
-					document.activeElement.tagName.toLowerCase() !== "textarea" &&
-					!document.activeElement.isContentEditable
-				) {
+				const isInput =
+					document.activeElement.tagName.toLowerCase() === "input" ||
+					document.activeElement.tagName.toLowerCase() === "textarea" ||
+					document.activeElement.isContentEditable;
+
+				if (isInput) {
+					return;
+				}
+
+				if (!event.metaKey && !event.ctrlKey && event.key === "[") {
 					event.preventDefault();
 					this.sidebarToggle();
+				}
+
+				if (!event.metaKey && !event.ctrlKey && event.key === "c") {
+					const addLink = document.querySelector(".addlink");
+
+					if (addLink) {
+						addLink.click();
+					}
 				}
 
 				if ((event.metaKey || event.ctrlKey) && event.key === "e") {
