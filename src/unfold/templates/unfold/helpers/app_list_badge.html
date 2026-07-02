@@ -8,6 +8,8 @@
             {% include "unfold/helpers/badge.html" with value=badge_result style=item.badge_style variant=item.badge_variant %}
         {% endif %}
     {% else %}
-        {% include "unfold/helpers/badge.html" with value=item.badge style=item.badge_style variant=item.badge_variant %}
+        {% if item.badge %}
+            {% include "unfold/helpers/badge.html" with value=item.badge style=item.badge_style variant=item.badge_variant %}
+        {% endif %}
     {% endif %}
 {% endif %}
