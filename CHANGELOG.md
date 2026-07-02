@@ -1,6 +1,176 @@
 # CHANGELOG
 
 
+## v0.99.1 (2026-07-01)
+
+### Bug Fixes
+
+- Django 6.1 calendar and time ([#2118](https://github.com/unfoldadmin/django-unfold/pull/2118),
+  [`929ee15`](https://github.com/unfoldadmin/django-unfold/commit/929ee15c8fc9c9af42eec0f33640b5016ed210a1))
+
+- Internal dataset name ([#2128](https://github.com/unfoldadmin/django-unfold/pull/2128),
+  [`51f41ea`](https://github.com/unfoldadmin/django-unfold/commit/51f41eaa0db840171f8f29644b40749cd4c1b059))
+
+### Documentation
+
+- Typo in table component
+  ([`8b50da0`](https://github.com/unfoldadmin/django-unfold/commit/8b50da0b2ef98e7966c1f25bbe7277e95c0408c2))
+
+
+## v0.99.0 (2026-06-23)
+
+### Features
+
+- Crispy formset delete rows ([#2112](https://github.com/unfoldadmin/django-unfold/pull/2112),
+  [`ad8c6dd`](https://github.com/unfoldadmin/django-unfold/commit/ad8c6dd9b1a33db3eff001e9fe95891b8b4a6cd1))
+
+- Crispy formset respect min/max num of forms
+  ([#2115](https://github.com/unfoldadmin/django-unfold/pull/2115),
+  [`e876810`](https://github.com/unfoldadmin/django-unfold/commit/e876810c21616120684f9d971b1890b3c013bb87))
+
+- Custom site views ([#2022](https://github.com/unfoldadmin/django-unfold/pull/2022),
+  [`7a9ef75`](https://github.com/unfoldadmin/django-unfold/commit/7a9ef75f0582bd68252e417864efebf7cfab1112))
+
+
+## v0.98.0 (2026-06-19)
+
+### Bug Fixes
+
+- Changelist actions bottom position
+  ([#2109](https://github.com/unfoldadmin/django-unfold/pull/2109),
+  [`97679c6`](https://github.com/unfoldadmin/django-unfold/commit/97679c6a26613677a15e189dbe34ea3045b3e822))
+
+- Crispy formset add button ([#2108](https://github.com/unfoldadmin/django-unfold/pull/2108),
+  [`b83c1cc`](https://github.com/unfoldadmin/django-unfold/commit/b83c1cc6af6d9e035f72a8beaea6f30613c1ccae))
+
+- Init unfold select2 in formset ([#2107](https://github.com/unfoldadmin/django-unfold/pull/2107),
+  [`fdac6d6`](https://github.com/unfoldadmin/django-unfold/commit/fdac6d67ed20dd523f510372535d774e02c82219))
+
+- Show all apps margin ([#2104](https://github.com/unfoldadmin/django-unfold/pull/2104),
+  [`81d35c8`](https://github.com/unfoldadmin/django-unfold/commit/81d35c8ef76ddd90c774ace33cab22e791225bef))
+
+### Features
+
+- Command search as default ([#2103](https://github.com/unfoldadmin/django-unfold/pull/2103),
+  [`fe394de`](https://github.com/unfoldadmin/django-unfold/commit/fe394dea29346dfe4efe3a4044dd778efdbef9cd))
+
+
+## v0.97.2 (2026-06-18)
+
+### Bug Fixes
+
+- Last item not visible in changelist when actions displayed
+  ([#2097](https://github.com/unfoldadmin/django-unfold/pull/2097),
+  [`6bc356c`](https://github.com/unfoldadmin/django-unfold/commit/6bc356c08977f5c57dbd2dafc983395d3c391bca))
+
+- Null boolean readonly field icon ([#2101](https://github.com/unfoldadmin/django-unfold/pull/2101),
+  [`ac3d06b`](https://github.com/unfoldadmin/django-unfold/commit/ac3d06bd6a777296d3daa199ca24ffa415161004))
+
+- Readonly field outline variant ([#2102](https://github.com/unfoldadmin/django-unfold/pull/2102),
+  [`1ab2ad9`](https://github.com/unfoldadmin/django-unfold/commit/1ab2ad9a47b7d97819a875ff116a65d14e67ae05))
+
+- Toggle sidebar shortcut in chrome
+  ([#2100](https://github.com/unfoldadmin/django-unfold/pull/2100),
+  [`f2f2c4e`](https://github.com/unfoldadmin/django-unfold/commit/f2f2c4ea838423625feee60d491d5442ec665340))
+
+### Documentation
+
+- Django-hijack ([#2098](https://github.com/unfoldadmin/django-unfold/pull/2098),
+  [`2807c84`](https://github.com/unfoldadmin/django-unfold/commit/2807c844a5cc7c038addcc7465f1ffa4bbf6f303))
+
+
+## v0.97.1 (2026-06-16)
+
+### Bug Fixes
+
+- Sidebar open/close on mobile ([#2096](https://github.com/unfoldadmin/django-unfold/pull/2096),
+  [`44902d4`](https://github.com/unfoldadmin/django-unfold/commit/44902d4350882c774358d3132972b5510588a8c3))
+
+- Typo in ModelAdmin docs ([#2095](https://github.com/unfoldadmin/django-unfold/pull/2095),
+  [`812e5bc`](https://github.com/unfoldadmin/django-unfold/commit/812e5bccd84e0a7f4a5b4df6895bedbc9755dd83))
+
+- Use request.user to not collide with user context on other views
+  ([#2089](https://github.com/unfoldadmin/django-unfold/pull/2089),
+  [`1f6397a`](https://github.com/unfoldadmin/django-unfold/commit/1f6397a515820aa931aa353daa47b8a318e289e6))
+
+
+## v0.97.0 (2026-06-06)
+
+### Bug Fixes
+
+- Checkon wrapper_class in readonly template
+  ([#2083](https://github.com/unfoldadmin/django-unfold/pull/2083),
+  [`0d76bd9`](https://github.com/unfoldadmin/django-unfold/commit/0d76bd97d1f5af22a0c3049f4d5f5df33fd1a55a))
+
+- Fieldset row classes without line
+  ([#2077](https://github.com/unfoldadmin/django-unfold/pull/2077),
+  [`6156b5e`](https://github.com/unfoldadmin/django-unfold/commit/6156b5e4f94cca4e68892394fcaa8646c36b48b2))
+
+- Show ui warnings performance ([#2081](https://github.com/unfoldadmin/django-unfold/pull/2081),
+  [`229e45c`](https://github.com/unfoldadmin/django-unfold/commit/229e45cc37bf24ea09788e3a14baa31ddab14ff7))
+
+- Theme switch min layout ([#2079](https://github.com/unfoldadmin/django-unfold/pull/2079),
+  [`a2953df`](https://github.com/unfoldadmin/django-unfold/commit/a2953df8bb5f28e21aedbcc0d976b299a30e0029))
+
+- Warn about missing permission during migration
+  ([#2075](https://github.com/unfoldadmin/django-unfold/pull/2075),
+  [`10b16fd`](https://github.com/unfoldadmin/django-unfold/commit/10b16fdf565bb126bed27f702b906b876f17cd97))
+
+### Features
+
+- Dropped django 5.1 ([#2064](https://github.com/unfoldadmin/django-unfold/pull/2064),
+  [`4e7efce`](https://github.com/unfoldadmin/django-unfold/commit/4e7efced9ace88f9a2c70e9e8fed15c3f6f80648))
+
+- Readonly field wrapper class ([#2078](https://github.com/unfoldadmin/django-unfold/pull/2078),
+  [`84a8702`](https://github.com/unfoldadmin/django-unfold/commit/84a87028dcf30691a713c15e9ec67eeff0715ef2))
+
+- Toggle sidebar shortcut ([#2073](https://github.com/unfoldadmin/django-unfold/pull/2073),
+  [`3a19d28`](https://github.com/unfoldadmin/django-unfold/commit/3a19d286aa5ad79ea146f202ffdd1e72737785e3))
+
+
+## v0.96.0 (2026-06-05)
+
+### Bug Fixes
+
+- Django-simple-history UI improvements
+  ([#2069](https://github.com/unfoldadmin/django-unfold/pull/2069),
+  [`c96c0ce`](https://github.com/unfoldadmin/django-unfold/commit/c96c0ce2a683426aa72904b256080f0eb5d6c62d))
+
+### Features
+
+- Redesigned stacked inline ([#2071](https://github.com/unfoldadmin/django-unfold/pull/2071),
+  [`eedf429`](https://github.com/unfoldadmin/django-unfold/commit/eedf4292cc5642b89ad0fcd4b02d7eebf3b1d2f6))
+
+
+## v0.95.0 (2026-06-01)
+
+### Bug Fixes
+
+- Command history ([#2060](https://github.com/unfoldadmin/django-unfold/pull/2060),
+  [`a967655`](https://github.com/unfoldadmin/django-unfold/commit/a967655669d62e0b59c3fe239eb74d135ab0cefa))
+
+- Command UX ([#2062](https://github.com/unfoldadmin/django-unfold/pull/2062),
+  [`eff0b02`](https://github.com/unfoldadmin/django-unfold/commit/eff0b02fd450752250565e320a5598a2c37b5e42))
+
+- Dropdown hiding for multiple autocomplete filter
+  ([#2057](https://github.com/unfoldadmin/django-unfold/pull/2057),
+  [`d1b621a`](https://github.com/unfoldadmin/django-unfold/commit/d1b621a4b771ca3b2ffc887a9449ad2ca821302f))
+
+- Header vertical spacing ([#2053](https://github.com/unfoldadmin/django-unfold/pull/2053),
+  [`edb1e93`](https://github.com/unfoldadmin/django-unfold/commit/edb1e93004171f46d523117b196d290bf7958e5f))
+
+- Table component included in card ([#2043](https://github.com/unfoldadmin/django-unfold/pull/2043),
+  [`062184b`](https://github.com/unfoldadmin/django-unfold/commit/062184b41149c998067e027189aeb40b3c1385d0))
+
+### Features
+
+- Django-hijack support ([#2049](https://github.com/unfoldadmin/django-unfold/pull/2049),
+  [`35b5ff5`](https://github.com/unfoldadmin/django-unfold/commit/35b5ff5e77546d7ed1334a6c8cc05948e48dd89c))
+
+- Redesigned command ([#2058](https://github.com/unfoldadmin/django-unfold/pull/2058),
+  [`57166da`](https://github.com/unfoldadmin/django-unfold/commit/57166da7e658de44c38026a269445760e0cb3d5c))
+
+
 ## v0.94.0 (2026-05-18)
 
 ### Bug Fixes

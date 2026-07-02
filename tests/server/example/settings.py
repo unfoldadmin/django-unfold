@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from os import environ
 from pathlib import Path
+from warnings import filterwarnings
 
 from django.core.management.utils import get_random_secret_key
 from django.utils.translation import gettext_lazy as _
@@ -19,6 +20,13 @@ AUTH_USER_MODEL = "example.User"
 
 USE_TZ = False
 
+# TODO: remove once the setting is removed
+filterwarnings(
+    "ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated."
+)
+
+FORMS_URLFIELD_ASSUME_HTTPS = True
+
 INSTALLED_APPS = [
     "unfold",
     "unfold.contrib.filters",
@@ -27,6 +35,7 @@ INSTALLED_APPS = [
     "unfold.contrib.import_export",
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
+    "unfold.contrib.hijack",
     "unfold.contrib.location_field",
     "unfold.contrib.constance",
     "django.contrib.admin",
@@ -40,6 +49,8 @@ INSTALLED_APPS = [
     "import_export",
     "location_field",
     "crispy_forms",
+    "hijack",
+    "hijack.contrib.admin",
 ]
 
 MIDDLEWARE = [
@@ -50,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "hijack.middleware.HijackUserMiddleware",
 ]
 
 ROOT_URLCONF = "example.urls"
@@ -193,5 +205,8 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict(
 )
 
 UNFOLD = {
+    "SITE_VIEWS": [
+        ("extra-url", "extra_url_name", "example.views.SiteExtraUrlView"),
+    ],
     "TABS": "example.utils.tabs_callback",
 }
