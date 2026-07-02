@@ -140,6 +140,16 @@ function theme(defaultTheme = "auto") {
 					this.sidebarToggle();
 				}
 
+				if (!event.metaKey && !event.ctrlKey && event.key === "f") {
+					const filterOpenButton = document.querySelector(
+						".filter-open-button",
+					);
+
+					if (filterOpenButton) {
+						this.filterOpen = !this.filterOpen;
+					}
+				}
+
 				if (!event.metaKey && !event.ctrlKey && event.key === "c") {
 					const addLink = document.querySelector(".addlink");
 
