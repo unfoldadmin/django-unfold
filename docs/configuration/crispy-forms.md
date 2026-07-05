@@ -121,7 +121,7 @@ For consistent styling with the Unfold admin interface, specify the `"unfold_cri
 [![Django Crispy Form](/static/docs/configuration/django-crispy-forms.webp)](/static/docs/configuration/django-crispy-forms.webp)
 
 
-To see a live example of Django Crispy Forms integration with Unfold, visit our [interactive demo site](https://demo.unfoldadmin.com/en/admin/formula/driver/crispy-form). This demo showcases a fully functional form implementation using the techniques described above, including custom layouts, widgets, and styling. You can explore the form's behavior, test its validation, and see how it seamlessly integrates with Unfold's admin interface design. The source code for this demo is also available in our [GitHub repository](https://github.com/unfoldadmin/django-unfold), making it easy to reference when building your own forms.
+To see a live example of Django Crispy Forms integration with Unfold, visit our [interactive demo site](https://demo.unfoldadmin.com/en/admin/formula/driver/crispy-vertical-form). This demo showcases a fully functional form implementation using the techniques described above, including custom layouts, widgets, and styling. You can explore the form's behavior, test its validation, and see how it seamlessly integrates with Unfold's admin interface design. The source code for this demo is also available in our [GitHub repository](https://github.com/unfoldadmin/django-unfold), making it easy to reference when building your own forms.
 
 ## Creating formsets with django-crispy-forms
 
