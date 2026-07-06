@@ -1,6 +1,33 @@
 # CHANGELOG
 
 
+## v0.100.0 (2026-07-06)
+
+### Bug Fixes
+
+- Badge callback ([#2133](https://github.com/unfoldadmin/django-unfold/pull/2133),
+  [`916e045`](https://github.com/unfoldadmin/django-unfold/commit/916e04579daffb10c2be0c1fa12a0561e95a746b))
+
+- Filter background color ([#2132](https://github.com/unfoldadmin/django-unfold/pull/2132),
+  [`5b6c4d7`](https://github.com/unfoldadmin/django-unfold/commit/5b6c4d753a1e258c954a0a42bd83c5addd153034))
+
+### Documentation
+
+- Crispy form doc demo URL ([#2135](https://github.com/unfoldadmin/django-unfold/pull/2135),
+  [`fa014e8`](https://github.com/unfoldadmin/django-unfold/commit/fa014e83e54825be491fc7471e310b49fa17ad30))
+
+- Custom site app name ([#2047](https://github.com/unfoldadmin/django-unfold/pull/2047),
+  [`d79567c`](https://github.com/unfoldadmin/django-unfold/commit/d79567cd78c4e3abb62c652cda8588977fe13b1c))
+
+### Features
+
+- Add link shortcut ([#2130](https://github.com/unfoldadmin/django-unfold/pull/2130),
+  [`19de972`](https://github.com/unfoldadmin/django-unfold/commit/19de9721fbbb1b604b668eef88ff7b01be3f0e66))
+
+- Toggle filter shortcut ([#2131](https://github.com/unfoldadmin/django-unfold/pull/2131),
+  [`675fdb1`](https://github.com/unfoldadmin/django-unfold/commit/675fdb1017060cc8ff2cd683b8e03186b0785e13))
+
+
 ## v0.99.1 (2026-07-01)
 
 ### Bug Fixes
