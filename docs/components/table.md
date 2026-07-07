@@ -51,6 +51,7 @@ data = {
         {
             "cols": ["c", "d"], # Cols in row
             "table": {
+                "collapsible": True, # Collapsible nested table
                 "headers": [
                     "col3",
                     {
