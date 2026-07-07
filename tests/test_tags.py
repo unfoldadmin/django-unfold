@@ -245,6 +245,33 @@ def test_tags_is_list():
 
 
 @pytest.mark.django_db
+def test_tags_is_not_list():
+    response = Template(
+        "{% load unfold %}{% if value|is_list %}is_list{% endif %}"
+    ).render(Context({"value": "example"}))
+
+    assert "is_list" not in response
+
+
+@pytest.mark.django_db
+def test_tags_is_dict():
+    response = Template(
+        "{% load unfold %}{% if value|is_dict %}is_dict{% endif %}"
+    ).render(Context({"value": {"aaa": "bbb"}}))
+
+    assert "is_dict" in response
+
+
+@pytest.mark.django_db
+def test_tags_is_not_dict():
+    response = Template(
+        "{% load unfold %}{% if value|is_dict %}is_dict{% endif %}"
+    ).render(Context({"value": "example"}))
+
+    assert "is_dict" not in response
+
+
+@pytest.mark.django_db
 def test_tags_has_nav_item_active():
     response = Template(
         "{% load unfold %}{% has_nav_item_active items as is_active %} {% if is_active %}active item{% else %}inactive{% endif %}"

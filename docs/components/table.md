@@ -51,9 +51,21 @@ data = {
         {
             "cols": ["c", "d"], # Cols in row
             "table": {
-                "headers": ["col2", "col3"],
+                "headers": [
+                    "col3",
+                    {
+                        "content": "col4",
+                        "class": "text-blue-500", # custom CSS class
+                    },
+                ],
                 "rows": [
-                    ["g", "h"]
+                    [
+                        "g",
+                        {
+                            "content": "h",
+                            "class": "text-red-500", # custom CSS class
+                        },
+                    ]
                 ]
             },
             "attrs": {
