@@ -14,8 +14,12 @@
                     <thead class="text-font-important-light dark:text-font-important-dark {% if height %}sticky top-0 z-100{% endif %}">
                         <tr class="bg-base-50 dark:bg-base-900">
                             {% for header in table.headers %}
-                                <th class="align-middle border-b border-base-200 font-semibold py-2 text-left whitespace-nowrap hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02] {% if card_included == 1 %}{% if card_size == "md" %}first:pl-3 last:pr-3{% else %}first:pl-6 last:pr-6{% endif %}{% endif %}">
-                                    {{ header|capfirst }}
+                                <th class="align-middle border-b border-base-200 font-semibold py-2 text-left whitespace-nowrap hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02] {% if card_included == 1 %}{% if card_size == "md" %}first:pl-3 last:pr-3{% else %}first:pl-6 last:pr-6{% endif %}{% endif %} {% if header|is_dict and header.class %}{{ header.class }}{% endif %}">
+                                    {% if header|is_dict %}
+                                        {{ header.content }}
+                                    {% else %}
+                                        {{ header|capfirst }}
+                                    {% endif %}
                                 </th>
                             {% endfor %}
                         </tr>
@@ -27,7 +31,7 @@
                         <tbody class="block relative lg:table-row-group" {% if row.attrs %}{% include "unfold/helpers/attrs.html" with attrs=row.attrs %} {% endif %} {% if row.table.collapsible %}x-data="{ rowOpen: false }"{% endif %}>
                             <tr class="data-row {% if striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} {% if not card_included == 1 %}border border-base-200 mb-3 rounded-default shadow-xs{% else %}border-b border-base-200 {% if forloop.last %}last:border-b-0{% endif %}{% endif %} lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800 relative">
                                 {% for cell in row.cols|default:row %}
-                                    <td class="px-3 py-1.5 h-[45px] align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden {% if not forloop.parentloop.first %}lg:first:border-t{% endif %} lg:table-cell dark:border-base-800 {% if card_included == 1 %}{% if card_size == "md" %}lg:first:pl-3 lg:last:pr-3{% else %}lg:first:pl-6 lg:last:pr-6{% endif %}{% endif %}" {% if table.headers %}data-label="{{ table.headers|index:forloop.counter0 }}"{% endif %}>
+                                    <td class="px-3 py-1.5 h-[45px] align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden {% if not forloop.parentloop.first %}lg:first:border-t{% endif %} lg:table-cell dark:border-base-800 {% if card_included == 1 %}{% if card_size == "md" %}lg:first:pl-3 lg:last:pr-3{% else %}lg:first:pl-6 lg:last:pr-6{% endif %}{% endif %} {% if cell|is_dict and cell.class %}{{ cell.class }}{% endif %}" {% if table.headers %}data-label="{{ table.headers|index:forloop.counter0 }}"{% endif %}>
                                         {% if row.table.rows|length > 0 %}
                                             <div class="flex items-center gap-2">
                                                 {% if forloop.first and row.table.rows|length > 0 and row.table.collapsible %}
@@ -37,11 +41,19 @@
                                                 {% endif %}
 
                                                 <div class="align-middle">
-                                                    {{ cell }}
+                                                    {% if cell|is_dict %}
+                                                        {{ cell.content}}
+                                                    {% else %}
+                                                        {{ cell }}
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         {% else %}
-                                            {{ cell }}
+                                            {% if cell|is_dict %}
+                                                {{ cell.content }}
+                                            {% else %}
+                                                {{ cell }}
+                                            {% endif %}
                                         {% endif %}
                                     </td>
                                 {% endfor %}
@@ -59,8 +71,12 @@
                                                 <thead>
                                                     <tr class="bg-base-50 dark:bg-white/[.02]">
                                                         {% for header in row.table.headers %}
-                                                            <th class="align-middle border-b border-t border-base-200 font-semibold py-2 text-important text-left whitespace-nowrap sortable column-description hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02]">
-                                                                {{ header }}
+                                                            <th class="align-middle border-b border-t border-base-200 font-semibold py-2 text-important text-left whitespace-nowrap sortable column-description hidden px-3 lg:table-cell dark:border-base-800 dark:bg-white/[.02] {% if header|is_dict and header.class %}{{ header.class }}{% endif %}">
+                                                                {% if header|is_dict %}
+                                                                    {{ header.content }}
+                                                                {% else %}
+                                                                    {{ header }}
+                                                                {% endif %}
                                                             </th>
                                                         {% endfor %}
                                                     </tr>
@@ -71,8 +87,12 @@
                                                 {% for nested_row in row.table.rows %}
                                                     <tr class="data-row {% if row.table.striped == 1 %}{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}{% endif %} block group {% if forloop.first %}first-row{% endif %} border border-base-200 mb-3 rounded-default lg:table-row lg:border-none lg:mb-0 dark:border-base-800 relative">
                                                         {% for cell in nested_row %}
-                                                            <td class="px-3 py-1.5 h-[45px] align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden {% if not forloop.parentloop.first %}lg:first:border-t{% endif %} lg:table-cell dark:border-base-800" {% if row.table.headers %}data-label="{{ row.table.headers|index:forloop.counter0 }}"{% endif %}>
-                                                                {{ cell }}
+                                                            <td class="px-3 py-1.5 h-[45px] align-middle flex border-t border-base-200 font-normal gap-4 min-w-0 overflow-hidden text-left before:flex before:capitalize before:content-[attr(data-label)] before:font-semibold before:text-font-important-light dark:before:text-font-important-dark before:items-center before:mr-auto first:border-t-0 lg:group-[.first-row]:border-t-0 lg:before:hidden {% if not forloop.parentloop.first %}lg:first:border-t{% endif %} lg:table-cell dark:border-base-800 {% if cell|is_dict and cell.class %}{{ cell.class }}{% endif %}" {% if row.table.headers %}data-label="{{ row.table.headers|index:forloop.counter0 }}"{% endif %}>
+                                                                {% if cell|is_dict %}
+                                                                    {{ cell.content }}
+                                                                {% else %}
+                                                                    {{ cell }}
+                                                                {% endif %}
                                                             </td>
                                                         {% endfor %}
                                                     </tr>
