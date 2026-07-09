@@ -1,9 +1,10 @@
 from collections.abc import Callable
 
 import pytest
+from django.contrib.auth.models import Permission
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from unfold.settings import CONFIG_DEFAULTS
@@ -328,3 +329,54 @@ def test_navigation_items_with_tabs():
     sidebar = admin_site.get_sidebar_list(request)
     assert sidebar[0]["items"][0]["active"] is True
     assert sidebar[0]["items"][1]["active"] is False
+
+
+@pytest.mark.urls("tests.urls_secret_admin")
+@pytest.mark.django_db
+def test_navigation_items_permission_check_with_custom_admin_url(django_user_model):
+    # Regression: permission inference used a hardcoded "/admin/" regex, so
+    # when the admin was mounted on a different prefix (e.g. a secret
+    # DJANGO_ADMIN_URL in production) items were shown to every user.
+    link = reverse("admin:example_user_changelist")
+    assert link.startswith("/secret-panel/")
+
+    with override_settings(
+        UNFOLD={
+            **CONFIG_DEFAULTS,
+            **{
+                "SIDEBAR": {
+                    "navigation": [
+                        {
+                            "items": [
+                                {
+                                    "title": "Users",
+                                    "link": link,
+                                },
+                            ]
+                        }
+                    ]
+                }
+            },
+        }
+    ):
+        admin_site = UnfoldAdminSite()
+        request = RequestFactory().get("/rand")
+
+        user = django_user_model.objects.create_user(
+            username="viewer", password="password"
+        )
+        request.user = user
+
+        # Without the view permission the item (and its empty group) is hidden.
+        assert admin_site.get_sidebar_list(request) == []
+
+        user.user_permissions.add(
+            Permission.objects.get(
+                codename="view_user", content_type__app_label="example"
+            )
+        )
+        # Re-fetch to drop the cached permission set.
+        request.user = django_user_model.objects.get(pk=user.pk)
+
+        sidebar = admin_site.get_sidebar_list(request)
+        assert sidebar[0]["items"][0]["title"] == "Users"

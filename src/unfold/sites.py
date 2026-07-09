@@ -1,4 +1,3 @@
-import re
 import copy
 import hashlib
 import time
@@ -12,7 +11,15 @@ from django.core.paginator import Paginator
 from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
-from django.urls import URLPattern, URLResolver, path, reverse, reverse_lazy
+from django.urls import (
+    Resolver404,
+    URLPattern,
+    URLResolver,
+    path,
+    resolve,
+    reverse,
+    reverse_lazy,
+)
 from django.utils.encoding import force_bytes
 from django.utils.functional import lazy
 from django.utils.module_loading import import_string
@@ -389,16 +396,23 @@ class UnfoldAdminSite(AdminSite):
     # NEW METHOD
     def _user_can_see(self, request: HttpRequest, link: str) -> bool:
         """
-        Infers app_label + model_name from admin URL and checks Django's
-        built-in view permission, which respects group assignments.
-        e.g. /admin/core/agent/ -> checks core.view_agent
-        Falls back to True for non-model links (dashboard, etc).
+        Resolves the link against the URLconf and, for model admin views,
+        checks the same permission that guards the route itself
+        (ModelAdmin.has_view_permission), so menu visibility matches the
+        403 behaviour regardless of the URL prefix the admin is mounted on.
+        Non-model links (dashboard, external URLs, etc.) stay visible.
         Superusers always see everything.
         """
-        match = re.search(r"/admin/(\w+)/(\w+)/", link)
+        try:
+            match = resolve(urlparse(str(link)).path)
+        except Resolver404:
+            # External or non-routable links are always visible.
+            return True
 
-        # Non-model links (dashboard, external URLs, etc.) are always visible.
-        if not match:
+        model_admin = getattr(match.func, "model_admin", None)
+
+        # Non-model admin views (dashboard, custom pages, etc.).
+        if model_admin is None:
             return True
 
         user = getattr(request, "user", None)
@@ -409,9 +423,7 @@ class UnfoldAdminSite(AdminSite):
         if user.is_superuser:
             return True
 
-        app_label, model_name = match.group(1), match.group(2)
-
-        return user.has_perm(f"{app_label}.view_{model_name}")
+        return model_admin.has_view_permission(request)
     
     def _get_navigation_items(
         self, request: HttpRequest, items: list[dict], tabs: list[dict] | None = None
