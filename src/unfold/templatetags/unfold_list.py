@@ -94,6 +94,31 @@ CHECKBOX_CLASSES = [
     "dark:before:text-font-important-dark",
 ]
 
+ROW_CLASSES_NON_RESPONSIVE = [
+    "align-middle",
+    "table-cell",
+    "border-t",
+    "border-base-200",
+    "font-normal",
+    "px-3",
+    "py-1.5",
+    "h-[45px]",
+    "text-left",
+    "dark:border-base-800",
+]
+
+CHECKBOX_CLASSES_NON_RESPONSIVE = [
+    "action-checkbox",
+    "align-middle",
+    "table-cell",
+    "border-t",
+    "border-base-200",
+    "px-3",
+    "py-2",
+    "text-left",
+    "dark:border-base-800",
+]
+
 
 def result_headers(cl):
     """
@@ -216,15 +241,23 @@ def items_for_result(  # noqa: PLR0915, PLR0912
     pk = cl.lookup_opts.pk.attname
     headers = list(result_headers(cl))
 
+    list_responsive_table = getattr(cl.model_admin, "list_responsive_table", True)
+
     for field_index, field_name in enumerate(cl.list_display):
         empty_value_display = cl.model_admin.get_empty_value_display()
         ordering_field = getattr(cl.model_admin, "ordering_field", None)
         hide_ordering_field = getattr(cl.model_admin, "hide_ordering_field", False)
 
-        row_classes = [
-            f"field-{_coerce_field_name(field_name, field_index)}",
-            *ROW_CLASSES,
-        ]
+        if list_responsive_table:
+            row_classes = [
+                f"field-{_coerce_field_name(field_name, field_index)}",
+                *ROW_CLASSES,
+            ]
+        else:
+            row_classes = [
+                f"field-{_coerce_field_name(field_name, field_index)}",
+                *ROW_CLASSES_NON_RESPONSIVE,
+            ]
 
         try:
             f, attr, value = lookup_field(field_name, result, cl.model_admin)
@@ -236,7 +269,10 @@ def items_for_result(  # noqa: PLR0915, PLR0912
             )
             if f is None or f.auto_created:
                 if field_name == "action_checkbox":
-                    row_classes = CHECKBOX_CLASSES
+                    if list_responsive_table:
+                        row_classes = CHECKBOX_CLASSES
+                    else:
+                        row_classes = CHECKBOX_CLASSES_NON_RESPONSIVE
                 boolean = getattr(attr, "boolean", False)
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)

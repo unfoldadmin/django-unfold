@@ -1471,3 +1471,38 @@ def test_tags_model_verbose_name():
     )
 
     assert response == "user"
+
+
+@pytest.mark.django_db
+def test_list_responsive_table_default_is_true(user_factory, rf):
+    """By default list_responsive_table=True, so the changelist uses responsive (block) classes."""
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    user_admin = UserAdmin(User, UnfoldAdminSite())
+    changelist_view = user_admin.changelist_view(request=request)
+
+    content = changelist_view.render().content.decode()
+    assert "result-list" in content
+    assert 'block lg:table' in content
+
+
+@pytest.mark.django_db
+def test_list_responsive_table_false_uses_standard_table(user_factory, rf):
+    """When list_responsive_table=False the changelist renders as a standard table."""
+    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
+    request = rf.get("/")
+    request.user = user
+
+    NonResponsiveUserAdmin = type(
+        "NonResponsiveUserAdmin",
+        (UserAdmin,),
+        {"list_responsive_table": False},
+    )
+    admin_instance = NonResponsiveUserAdmin(User, UnfoldAdminSite())
+    changelist_view = admin_instance.changelist_view(request=request)
+
+    content = changelist_view.render().content.decode()
+    assert 'block lg:table' not in content
+    assert "result-list" in content

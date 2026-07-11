@@ -56,6 +56,9 @@ class CustomAdminClass(ModelAdmin):
     # Position horizontal scrollbar in changelist at the top
     list_horizontal_scrollbar_top = False
 
+    # Display changelist table in a responsive mobile layout
+    list_responsive_table = True  # Default: True
+
     # Disable select all action in changelist
     list_disable_select_all = False
 
