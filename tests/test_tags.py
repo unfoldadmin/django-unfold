@@ -1485,7 +1485,7 @@ def test_list_responsive_table_default_is_true(user_factory, rf):
 
     content = changelist_view.render().content.decode()
     assert "result-list" in content
-    assert 'block lg:table' in content
+    assert "block lg:table" in content
 
 
 @pytest.mark.django_db
@@ -1504,5 +1504,5 @@ def test_list_responsive_table_false_uses_standard_table(user_factory, rf):
     changelist_view = admin_instance.changelist_view(request=request)
 
     content = changelist_view.render().content.decode()
-    assert 'block lg:table' not in content
+    assert "block lg:table" not in content
     assert "result-list" in content

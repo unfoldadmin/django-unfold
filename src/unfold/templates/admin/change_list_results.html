@@ -1,85 +1,85 @@
 {% load admin_urls i18n unfold %}
 
 {% if result_hidden_fields %}
-<div class="hiddenfields">
-    {% for item in result_hidden_fields %}{{ item }}{% endfor %}
-</div>
+    <div class="hiddenfields">
+        {% for item in result_hidden_fields %}{{ item }}{% endfor %}
+    </div>
 {% endif %}
 
 {% if results %}
-<div class="{% if cl.model_admin.list_responsive_table %}{% if cl.search_fields or cl.has_filters %}lg:rounded-b-default{% else %}lg:rounded-default{% endif %} -mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:shadow-xs lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900{% else %}{% if cl.search_fields or cl.has_filters %}rounded-b-default{% else %}rounded-default{% endif %} {% if not cl.model_admin.list_responsive_table %}not-lg:rounded-t-default{% endif %} overflow-x-auto border border-base-200 mx-0 px-0 shadow-xs dark:border-base-800 bg-white dark:bg-base-900{% endif %} {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}"
-    data-simplebar data-simplebar-auto-hide="false">
-    <table id="result_list"
-        class="result-list border-base-200 border-spacing-none border-separate w-full {% if cl.model_admin.list_responsive_table %}block lg:table{% else %}table{% endif %}"
-        {% if cl.model_admin.ordering_field %}x-sort.ghost x-on:end="sortRecords"
-        data-ordering-field="{{ cl.model_admin.ordering_field }}" {% endif %}>
-        {% include 'unfold/helpers/change_list_headers.html' %}
+    <div class="{% if cl.model_admin.list_responsive_table %}{% if cl.search_fields or cl.has_filters %}lg:rounded-b-default{% else %}lg:rounded-default{% endif %} -mx-1 px-1 overflow-x-auto lg:border lg:border-base-200 lg:mx-0 lg:px-0 lg:shadow-xs lg:dark:border-base-800 lg:bg-white lg:dark:bg-base-900{% else %}{% if cl.search_fields or cl.has_filters %}rounded-b-default{% else %}rounded-default{% endif %} {% if not cl.model_admin.list_responsive_table %}not-lg:rounded-t-default{% endif %} overflow-x-auto border border-base-200 mx-0 px-0 shadow-xs dark:border-base-800 bg-white dark:bg-base-900{% endif %} {% if cl.model_admin.list_horizontal_scrollbar_top %}simplebar-horizontal-scrollbar-top{% endif %}"
+         data-simplebar data-simplebar-auto-hide="false">
+        <table id="result_list"
+               class="result-list border-base-200 border-spacing-none border-separate w-full {% if cl.model_admin.list_responsive_table %}block lg:table{% else %}table{% endif %}"
+               {% if cl.model_admin.ordering_field %}x-sort.ghost x-on:end="sortRecords"
+                   data-ordering-field="{{ cl.model_admin.ordering_field }}" {% endif %}>
+                {% include 'unfold/helpers/change_list_headers.html' %}
 
-        {% for result in results %}
-        <tbody
-            class="relative {% if cl.model_admin.list_responsive_table %}block lg:table-row-group{% else %}table-row-group{% endif %} {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}"
-            x-data="{rowOpen: false}" {% if cl.model_admin.ordering_field %}x-sort:item{% endif %}>
-            {% if result.form and result.form.non_field_errors %}
-            <tr>
-                <td class="text-left" colspan="{{ result|length }}">
-                    {{ result.form.non_field_errors }}
-                </td>
-            </tr>
-            {% endif %}
+                {% for result in results %}
+                    <tbody
+                        class="relative {% if cl.model_admin.list_responsive_table %}block lg:table-row-group{% else %}table-row-group{% endif %} {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}"
+                        x-data="{rowOpen: false}" {% if cl.model_admin.ordering_field %}x-sort:item{% endif %}>
+                        {% if result.form and result.form.non_field_errors %}
+                            <tr>
+                                <td class="text-left" colspan="{{ result|length }}">
+                                    {{ result.form.non_field_errors }}
+                                </td>
+                            </tr>
+                        {% endif %}
 
-            <tr
-                class="data-row {% if cl.model_admin.list_responsive_table %}block border border-base-200 mb-3 relative rounded-default lg:table-row lg:border-none lg:mb-0 lg:rounded-none dark:border-base-800{% else %}table-row{% endif %}">
-                {% if cl.model_admin.ordering_field %}
-                <td class="{% if cl.model_admin.list_responsive_table %}align-middle flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px{% else %}align-middle table-cell border-t border-base-200 font-normal pl-3 pr-0 dark:border-base-800 w-px{% endif %}"
-                    x-sort:handle>
-                    <div
-                        class="cursor-move {% cycle ' hover:bg-base-50 dark:hover:bg-base-800' 'hover:bg-base-100 dark:hover:bg-base-800' %} flex h-[36px] w-[36px] items-center justify-center -ml-1.5 -my-1 rounded-default select-none transition-colors">
-                        <span class="material-symbols-outlined align-middle cursor-move">drag_indicator</span>
-                    </div>
-                </td>
-                {% endif %}
+                        <tr
+                            class="data-row {% if cl.model_admin.list_responsive_table %}block border border-base-200 mb-3 relative rounded-default lg:table-row lg:border-none lg:mb-0 lg:rounded-none dark:border-base-800{% else %}table-row{% endif %}">
+                            {% if cl.model_admin.ordering_field %}
+                                <td class="{% if cl.model_admin.list_responsive_table %}align-middle flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px{% else %}align-middle table-cell border-t border-base-200 font-normal pl-3 pr-0 dark:border-base-800 w-px{% endif %}"
+                                    x-sort:handle>
+                                    <div
+                                        class="cursor-move {% cycle ' hover:bg-base-50 dark:hover:bg-base-800' 'hover:bg-base-100 dark:hover:bg-base-800' %} flex h-[36px] w-[36px] items-center justify-center -ml-1.5 -my-1 rounded-default select-none transition-colors">
+                                        <span class="material-symbols-outlined align-middle cursor-move">drag_indicator</span>
+                                    </div>
+                                </td>
+                            {% endif %}
 
-                {% if cl.model_admin.list_sections|length > 0 %}
-                <td class="{% if cl.model_admin.list_responsive_table %}align-middle cursor-pointer flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px{% else %}align-middle cursor-pointer table-cell border-t border-base-200 font-normal pl-3 pr-0 dark:border-base-800 w-px{% endif %}"
-                    data-label="{% trans " Expand row" %}" x-on:click="rowOpen = !rowOpen">
-                    <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-[50] lg:block"
-                        x-show="rowOpen"></div>
-                    <span
-                        class="material-symbols-outlined select-none block! h-[18px] w-[18px] -rotate-90 transition-all"
-                        x-bind:class="rowOpen && 'rotate-0'">
-                        expand_more
-                    </span>
-                </td>
-                {% endif %}
+                            {% if cl.model_admin.list_sections|length > 0 %}
+                                <td class="{% if cl.model_admin.list_responsive_table %}align-middle cursor-pointer flex border-b border-base-200 font-normal px-2.5 py-2 relative text-left before:font-semibold before:text-font-important-light before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:border-b-0 lg:border-t lg:pl-3 lg:pr-0 lg:table-cell dark:border-base-800 dark:lg:border-base-800 dark:before:text-font-important-dark lg:w-px{% else %}align-middle cursor-pointer table-cell border-t border-base-200 font-normal pl-3 pr-0 dark:border-base-800 w-px{% endif %}"
+                                    data-label="{% trans " Expand row" %}" x-on:click="rowOpen = !rowOpen">
+                                    <div class="absolute bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-[50] lg:block"
+                                         x-show="rowOpen"></div>
+                                    <span
+                                        class="material-symbols-outlined select-none block! h-[18px] w-[18px] -rotate-90 transition-all"
+                                        x-bind:class="rowOpen && 'rotate-0'">
+                                        expand_more
+                                    </span>
+                                </td>
+                            {% endif %}
 
-                {% for item in result %}
-                {{ item }}
+                            {% for item in result %}
+                                {{ item }}
+                            {% endfor %}
+
+                            {% include 'unfold/helpers/actions_row.html' with actions=actions_row instance_pk=result.instance.pk %}
+                        </tr>
+
+                        {% if cl.model_admin.list_sections|length > 0 %}
+                            <tr class="{% if cl.model_admin.list_responsive_table %}block mb-3 relative z-30 lg:table-row{% else %}table-row relative z-30{% endif %}"
+                                x-show="rowOpen">
+                                <td colspan="100%"
+                                    class="{% if cl.model_admin.list_responsive_table %}border bg-base-200/10 block border-base-200 relative rounded-default p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800{% else %}bg-base-200/10 border-t p-3 shadow-inner table-cell dark:border-base-800{% endif %}">
+                                    <div
+                                        class="absolute bg-primary-600 h-full {% if cl.model_admin.list_responsive_table %}hidden lg:block{% endif %} left-0 top-0 w-0.5">
+                                    </div>
+
+                                    <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">
+                                        {% for section in cl.model_admin.list_sections %}
+                                            {% render_section cl.model_admin.list_sections|index:forloop.counter0 result.instance %}
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
                 {% endfor %}
-
-                {% include 'unfold/helpers/actions_row.html' with actions=actions_row instance_pk=result.instance.pk %}
-            </tr>
-
-            {% if cl.model_admin.list_sections|length > 0 %}
-            <tr class="{% if cl.model_admin.list_responsive_table %}block mb-3 relative z-30 lg:table-row{% else %}table-row relative z-30{% endif %}"
-                x-show="rowOpen">
-                <td colspan="100%"
-                    class="{% if cl.model_admin.list_responsive_table %}border bg-base-200/10 block border-base-200 relative rounded-default p-3 lg:shadow-inner lg:border-0 lg:border-t lg:rounded-none lg:table-cell dark:border-base-800{% else %}bg-base-200/10 border-t p-3 shadow-inner table-cell dark:border-base-800{% endif %}">
-                    <div
-                        class="absolute bg-primary-600 h-full {% if cl.model_admin.list_responsive_table %}hidden lg:block{% endif %} left-0 top-0 w-0.5">
-                    </div>
-
-                    <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">
-                        {% for section in cl.model_admin.list_sections %}
-                        {% render_section cl.model_admin.list_sections|index:forloop.counter0 result.instance %}
-                        {% endfor %}
-                    </div>
-                </td>
-            </tr>
-            {% endif %}
-        </tbody>
-        {% endfor %}
-    </table>
-</div>
+            </table>
+    </div>
 {% else %}
-{% include 'unfold/helpers/empty_results.html' %}
+    {% include 'unfold/helpers/empty_results.html' %}
 {% endif %}
