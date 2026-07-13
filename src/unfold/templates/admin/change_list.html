@@ -67,7 +67,7 @@
                         </div>
                     {% endspaceless %}
 
-                    <form id="changelist-form" class="group" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
+                    <form id="changelist-form" class="group has-[input.action-select:checked]:pb-16" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>
                         {% csrf_token %}
 
                         {% if cl.formset %}
