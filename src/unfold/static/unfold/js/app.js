@@ -35,6 +35,16 @@ function getCurrentTab() {
 /*************************************************************
  * Switch theme
  *************************************************************/
+function isFilterModalOpen() {
+	const changelistFilter = document.getElementById("changelist-filter-close");
+
+	if (changelistFilter) {
+		return window.getComputedStyle(changelistFilter).display === "block";
+	}
+
+	return false;
+}
+
 function theme(defaultTheme = "auto") {
 	return {
 		sidebarWidth: localStorage.getItem("sidebarWidth") || 288,
@@ -59,6 +69,7 @@ function theme(defaultTheme = "auto") {
 		},
 		openModal: false,
 		filterOpen: false,
+		filterModalOpen: false,
 		openAllApplications: false,
 		adminTheme: Alpine.$persist(defaultTheme).as("adminTheme"),
 		init() {
@@ -75,14 +86,18 @@ function theme(defaultTheme = "auto") {
 			});
 
 			this.$watch("filterOpen", (value) => {
-				if (value) {
-					document
-						.getElementsByTagName("body")[0]
-						.classList.add("overflow-hidden");
-				} else {
-					document
-						.getElementsByTagName("body")[0]
-						.classList.remove("overflow-hidden");
+				if (isFilterModalOpen()) {
+					if (value) {
+						this.filterModalOpen = true;
+						document
+							.getElementsByTagName("body")[0]
+							.classList.add("overflow-hidden");
+					} else {
+						this.filterModalOpen = false;
+						document
+							.getElementsByTagName("body")[0]
+							.classList.remove("overflow-hidden");
+					}
 				}
 			});
 
