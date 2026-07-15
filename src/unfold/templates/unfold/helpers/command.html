@@ -5,6 +5,7 @@
          x-data="searchCommand()"
          x-on:opencommand.window="handleOpen()"
          x-on:keydown.window="handleShortcut($event)"
+         x-trap="openCommandResults"
          x-show="openCommandResults">
         <div class="bg-base-50 dark:bg-base-800 flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-on:click.outside="handleOutsideClick()">
             <div class="flex flex-row items-center px-4 w-full">
