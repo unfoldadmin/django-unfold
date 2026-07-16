@@ -58,7 +58,7 @@
                         {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
                         {% add_preserved_filters delete_url as link %}
 
-                        {% component "unfold/components/button.html" with href=delete_url variant="danger" class="mr-auto w-full lg:w-auto" %}
+                        {% component "unfold/components/button.html" with href=link variant="danger" class="mr-auto w-full lg:w-auto" %}
                             {% trans "Delete" %} {{ opts.verbose_name }}
                         {% endcomponent %}
                     {% endif %}
