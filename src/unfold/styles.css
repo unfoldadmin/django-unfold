@@ -93,6 +93,14 @@
   @apply scrollbar-thin scrollbar-thumb-base-900/40 dark:scrollbar-thumb-base-400/40 scrollbar-track-transparent;
 }
 
+@utility scrollbar-default-hover {
+  @apply scrollbar-thin scrollbar-thumb-transparent;
+
+  @variant hover {
+    @apply scrollbar-thumb-base-900/40 dark:scrollbar-thumb-base-400/40 scrollbar-track-transparent
+  }
+}
+
 @utility text-important {
  @apply text-font-important-light dark:text-font-important-dark;
 }
