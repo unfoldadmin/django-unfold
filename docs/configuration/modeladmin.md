@@ -53,9 +53,6 @@ class CustomAdminClass(ModelAdmin):
     # Set to False, to enable filter as "sidebar"
     list_filter_sheet = True
 
-    # Position horizontal scrollbar in changelist at the top
-    list_horizontal_scrollbar_top = False
-
     # Disable select all action in changelist
     list_disable_select_all = False
 

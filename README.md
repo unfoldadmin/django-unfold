@@ -115,7 +115,6 @@ Need help integrating, customizing, or scaling Django Admin with Unfold?
 - **Charts**: [Chart.js](https://github.com/chartjs/Chart.js) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **JavaScript Framework**: [Alpine.js](https://github.com/alpinejs/alpine) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **AJAX calls**: [HTMX](https://htmx.org/) - Licensed under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause).
-- **Custom Scrollbars**: [SimpleBar](https://github.com/Grsmto/simplebar) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **Range Slider**: [noUiSlider](https://github.com/leongersen/noUiSlider) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **Number Formatting**: [wNumb](https://github.com/leongersen/wnumb) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - **WYSIWYG Editor**: [Trix](https://github.com/basecamp/trix) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
