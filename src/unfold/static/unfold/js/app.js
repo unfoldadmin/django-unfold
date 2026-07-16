@@ -197,10 +197,9 @@ function scrollSidebarNav() {
 		return;
 	}
 
-	const instance = SimpleBar.instances.get(sidebarNav);
 	const activeItem = sidebarNav.querySelector("a.active");
 
-	if (!instance || !activeItem) {
+	if (!activeItem) {
 		return;
 	}
 
@@ -213,8 +212,10 @@ function scrollSidebarNav() {
 		);
 	}
 
-	if (instance && !isActiveItemVisible()) {
-		instance.getScrollElement().scroll(0, activeItem.offsetTop);
+	if (!isActiveItemVisible()) {
+		sidebarNav.scrollTo({
+			top: activeItem.offsetTop,
+		});
 	}
 }
 

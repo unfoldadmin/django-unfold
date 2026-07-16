@@ -46,7 +46,7 @@
             </div>
 
             <div class="bg-white border border-b-0 border-base-200 flex flex-col grow -mx-px min-h-0 rounded-default dark:border-base-700 dark:bg-white/[.04]">
-                <div class="grow h-full overflow-y-auto" data-simplebar x-on:htmx:after-swap="handleContentLoaded($event)">
+                <div class="grow h-full overflow-y-auto scrollbar-default" x-on:htmx:after-swap="handleContentLoaded($event)">
                     <div id="command-results"></div>
 
                     {% if command_show_history %}

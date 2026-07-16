@@ -89,6 +89,10 @@
   background-image: repeating-linear-gradient(45deg, var(--color-base-800) 0px, var(--color-base-800) 1px, transparent 2px, transparent 10px);
 }
 
+@utility scrollbar-default {
+  @apply scrollbar-thin scrollbar-thumb-base-900/40 dark:scrollbar-thumb-base-400/40 scrollbar-track-transparent;
+}
+
 @utility text-important {
  @apply text-font-important-light dark:text-font-important-dark;
 }
@@ -735,17 +739,6 @@ trix-toolbar[id^="trix-toolbar-"] {
 
 .ui-tabs.ui-widget .ui-tabs-nav li.ui-tabs-active a {
   @apply flex flex-row font-medium items-center px-2.5 py-1 rounded-default  bg-white shadow-xs text-base-700 hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-white;
-}
-
-/*******************************************************
- Simplebar
- *******************************************************/
-.simplebar-track .simplebar-scrollbar {
-  @apply before:bg-base-900/80 dark:before:bg-base-400/80;
-}
-
-.simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
-  @apply top-9
 }
 
 /*******************************************************
