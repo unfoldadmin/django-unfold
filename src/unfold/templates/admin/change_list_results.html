@@ -23,7 +23,7 @@
 
                     <tr class="data-row relative">
                         {% if cl.model_admin.ordering_field %}
-                            <td class="align-middle font-normal px-2.5 py-2 relative text-left lg:pl-3 lg:pr-0 w-px" x-sort:handle>
+                            <td class="align-middle border-t border-base-200 font-normal px-2.5 py-2 relative text-left lg:pl-3 lg:pr-0 w-px dark:border-base-800" x-sort:handle>
                                 <div class="cursor-move {% cycle ' hover:bg-base-50 dark:hover:bg-base-800' 'hover:bg-base-100 dark:hover:bg-base-800' %} flex h-[36px] w-[36px] items-center justify-center -ml-1.5 -my-1 rounded-default select-none transition-colors">
                                     <span class="material-symbols-outlined align-middle cursor-move">drag_indicator</span>
                                 </div>
@@ -31,7 +31,7 @@
                         {% endif %}
 
                         {% if cl.model_admin.list_sections|length > 0 %}
-                            <td class="align-middle cursor-pointer font-normal px-2.5 py-2 relative text-left lg:pl-3 lg:pr-0 w-px"
+                            <td class="align-middle border-t border-base-200 cursor-pointer font-normal px-2.5 py-2 relative text-left lg:pl-3 lg:pr-0 w-px dark:border-base-800"
                                 data-label="{% trans "Expand row" %}"
                                 x-on:click="rowOpen = !rowOpen">
                                 <div class="block bg-primary-600 -bottom-px hidden left-0 top-0 w-0.5 z-[50]" x-show="rowOpen"></div>
