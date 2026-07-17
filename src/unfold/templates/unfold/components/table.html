@@ -8,7 +8,7 @@
     {% endif %}
 
     <div class="{% if card_included == 1 %}{% if card_size == "md" %}-m-3{% else %}-m-6{% endif %}{% else %} bg-white border border-base-200 flex flex-col grow overflow-hidden rounded-default shadow-xs{% endif %} dark:border-base-800 dark:bg-base-900">
-        <div {% if height %}style="max-height: {{ height }}px;"{% endif %} class="overflow-x-auto">
+        <div {% if height %}style="max-height: {{ height }}px;"{% endif %} class="overflow-x-auto scrollbar-default">
             <table class="border-spacing-none border-separate w-full {% if table_class %}{{ table_class }}{% endif %}">
                 {% if table.headers %}
                     <thead class="text-important {% if height %}sticky top-0 z-100{% endif %}">
