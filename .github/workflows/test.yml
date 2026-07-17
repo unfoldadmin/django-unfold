@@ -37,6 +37,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install uv
-        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+        uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
       - name: Run tox
         run: uv run -- tox run -e python$(echo ${{ matrix.python-version }} | tr -d .)-django${{ matrix.django-version }}
