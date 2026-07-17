@@ -43,9 +43,8 @@ LINK_CLASSES = [
     "text-important",
 ]
 
-ROW_CLASSES = [
+TABLE_CELL_CLASSES = [
     "align-middle",
-    "flex",
     "border-t",
     "border-base-200",
     "font-normal",
@@ -57,41 +56,19 @@ ROW_CLASSES = [
     "py-1.5",
     "h-[45px]",
     "text-left",
-    "before:flex",
-    "before:capitalize",
-    "before:content-[attr(data-label)]",
-    "before:items-center",
-    "before:font-semibold",
-    "before:text-font-important-light",
-    "before:mr-auto",
-    "first:border-t-0",
-    "lg:before:hidden",
-    "lg:first:border-t",
-    "lg:table-cell",
+    "first:border-t",
     "dark:border-base-800",
-    "dark:before:text-font-important-dark",
 ]
 
-CHECKBOX_CLASSES = [
+TABLE_ACTION_CELL_CLASSES = [
     "action-checkbox",
     "align-middle",
-    "flex",
-    "items-center",
-    "px-3",
+    "pl-3",
     "py-2",
     "text-left",
-    "before:block",
-    "before:capitalize",
-    "before:content-[attr(data-label)]",
-    "before:font-semibold",
-    "before:mr-auto",
-    "before:text-font-important-light",
-    "lg:before:hidden",
-    "lg:border-t",
-    "lg:border-base-200",
-    "lg:table-cell",
-    "dark:lg:border-base-800",
-    "dark:before:text-font-important-dark",
+    "border-t",
+    "border-base-200",
+    "dark:border-base-800",
 ]
 
 
@@ -223,7 +200,7 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
         row_classes = [
             f"field-{_coerce_field_name(field_name, field_index)}",
-            *ROW_CLASSES,
+            *TABLE_CELL_CLASSES,
         ]
 
         try:
@@ -236,7 +213,7 @@ def items_for_result(  # noqa: PLR0915, PLR0912
             )
             if f is None or f.auto_created:
                 if field_name == "action_checkbox":
-                    row_classes = CHECKBOX_CLASSES
+                    row_classes = TABLE_ACTION_CELL_CLASSES
                 boolean = getattr(attr, "boolean", False)
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)
