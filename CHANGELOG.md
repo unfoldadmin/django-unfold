@@ -1,6 +1,48 @@
 # CHANGELOG
 
 
+## v0.101.0 (2026-07-17)
+
+### Bug Fixes
+
+- Choice filter dark background color
+  ([#2148](https://github.com/unfoldadmin/django-unfold/pull/2148),
+  [`db49a7d`](https://github.com/unfoldadmin/django-unfold/commit/db49a7d64d9539e934c08900ddedb6fd70f9011e))
+
+- Firefox background rendering ([#2151](https://github.com/unfoldadmin/django-unfold/pull/2151),
+  [`b914d3d`](https://github.com/unfoldadmin/django-unfold/commit/b914d3da9a25096bb07f23edcea0c309f6fcfda9))
+
+- Optional sidebar scrollbar ([#2152](https://github.com/unfoldadmin/django-unfold/pull/2152),
+  [`647ee27`](https://github.com/unfoldadmin/django-unfold/commit/647ee2709952d5817610a3ef2919f8139a4fa6b9))
+
+- Preserve filters after delete (#1897)
+  ([#2149](https://github.com/unfoldadmin/django-unfold/pull/2149),
+  [`a90fc6f`](https://github.com/unfoldadmin/django-unfold/commit/a90fc6ff8ec4296999c82b276226700916024f1d))
+
+- Table scrollbar ([#2153](https://github.com/unfoldadmin/django-unfold/pull/2153),
+  [`95c4f68`](https://github.com/unfoldadmin/django-unfold/commit/95c4f683e3625960f35c42a7d5c61c6d60ea6540))
+
+- Trap focus for command ([#2146](https://github.com/unfoldadmin/django-unfold/pull/2146),
+  [`1ce2af2`](https://github.com/unfoldadmin/django-unfold/commit/1ce2af25936b4721b58d4feddb1dba93d9d9dd1f))
+
+- Trap modal focus ([#2147](https://github.com/unfoldadmin/django-unfold/pull/2147),
+  [`02ae1de`](https://github.com/unfoldadmin/django-unfold/commit/02ae1de92194a8f93509814d307629e4d7d5fcc6))
+
+### Features
+
+- Simplify scrollbars ([#2150](https://github.com/unfoldadmin/django-unfold/pull/2150),
+  [`fc2eaa9`](https://github.com/unfoldadmin/django-unfold/commit/fc2eaa9b2622d1ca22e1003d760314168e2e5814))
+
+- Table component css class ([#2138](https://github.com/unfoldadmin/django-unfold/pull/2138),
+  [`4c5f51f`](https://github.com/unfoldadmin/django-unfold/commit/4c5f51f66475fe979b441ef8dc572888c067da76))
+
+- Table component scrolling ([#2139](https://github.com/unfoldadmin/django-unfold/pull/2139),
+  [`b3fe775`](https://github.com/unfoldadmin/django-unfold/commit/b3fe7755b26547b30c552d9a86d2ab269f1c3f5a))
+
+- Trap focus for modal filter ([#2145](https://github.com/unfoldadmin/django-unfold/pull/2145),
+  [`a71d2ec`](https://github.com/unfoldadmin/django-unfold/commit/a71d2ec76f19e7d1b75015ff06f2afb2afe8ea45))
+
+
 ## v0.100.0 (2026-07-06)
 
 ### Bug Fixes
