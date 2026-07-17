@@ -753,7 +753,7 @@ trix-toolbar[id^="trix-toolbar-"] {
  DjangoQL
  *******************************************************/
 textarea#searchbar {
-  @apply font-medium placeholder-base-400 leading-[35px] max-h-[35px] min-h-[35px] whitespace-nowrap !w-full focus:outline-none;
+  @apply font-medium placeholder-base-400 leading-[36px] max-h-[36px] min-h-[36px] whitespace-nowrap !w-full focus:outline-none;
 }
 
 div.djangoql-completion {
