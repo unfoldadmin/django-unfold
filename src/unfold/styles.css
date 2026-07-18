@@ -89,6 +89,18 @@
   background-image: repeating-linear-gradient(45deg, var(--color-base-800) 0px, var(--color-base-800) 1px, transparent 2px, transparent 10px);
 }
 
+@utility scrollbar-default {
+  @apply scrollbar-thin scrollbar-thumb-base-900/40 dark:scrollbar-thumb-base-400/40 scrollbar-track-transparent;
+}
+
+@utility scrollbar-default-hover {
+  @apply scrollbar-thin scrollbar-thumb-transparent;
+
+  @variant hover {
+    @apply scrollbar-thumb-base-900/40 dark:scrollbar-thumb-base-400/40 scrollbar-track-transparent
+  }
+}
+
 @utility text-important {
  @apply text-font-important-light dark:text-font-important-dark;
 }
@@ -243,6 +255,13 @@
 }
 
 /*******************************************************
+ Dialog
+ *******************************************************/
+dialog::backdrop {
+  @apply bg-transparent;
+}
+
+/*******************************************************
  Search
  *******************************************************/
 input[type="search"]::-webkit-search-cancel-button {
@@ -264,19 +283,23 @@ table tr.selected th {
   @apply absolute flex flex-row-reverse items-center right-px text-[0px] top-px;
 }
 
-.datetimeshortcuts a {
-  @apply flex items-center h-9 text-[0px] text-base-400 transition hover:text-base-700;
+.datetimeshortcuts a,
+.datetimeshortcuts button {
+  @apply cursor-pointer flex items-center h-9 text-[0px] text-base-400 transition hover:text-base-700;
 }
 
-.datetimeshortcuts a:first-child {
+.datetimeshortcuts a:first-child,
+.datetimeshortcuts button:first-child {
   @apply hidden;
 }
 
-.datetimeshortcuts a:first-child:after {
+.datetimeshortcuts a:first-child:after,
+.datetimeshortcuts button:first-child:after {
   @apply content-['update'] flex h-9 items-center justify-center leading-none material-symbols-outlined px-3 py-2 text-center hover:text-base-700 dark:border-base-700 dark:hover:text-base-700;
 }
 
-.datetimeshortcuts a:first-child:after {
+.datetimeshortcuts a:first-child:after,
+.datetimeshortcuts button:first-child:after {
   @apply flex;
 }
 
@@ -727,21 +750,10 @@ trix-toolbar[id^="trix-toolbar-"] {
 }
 
 /*******************************************************
- Simplebar
- *******************************************************/
-.simplebar-track .simplebar-scrollbar {
-  @apply before:bg-base-900/80 dark:before:bg-base-400/80;
-}
-
-.simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
-  @apply top-9
-}
-
-/*******************************************************
  DjangoQL
  *******************************************************/
 textarea#searchbar {
-  @apply font-medium placeholder-base-400 leading-[35px] max-h-[35px] min-h-[35px] whitespace-nowrap !w-full focus:outline-none;
+  @apply font-medium placeholder-base-400 leading-[36px] max-h-[36px] min-h-[36px] whitespace-nowrap !w-full focus:outline-none;
 }
 
 div.djangoql-completion {

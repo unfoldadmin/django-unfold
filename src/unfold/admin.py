@@ -62,7 +62,6 @@ class ModelAdmin(
     add_fieldsets = ()
     ordering_field = None
     hide_ordering_field = False
-    list_horizontal_scrollbar_top = False
     list_filter_submit = False
     list_filter_sheet = True
     list_filter_options: dict[str, ListFilterOptionsItem] = {}

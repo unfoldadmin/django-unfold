@@ -1,7 +1,7 @@
 {% load i18n unfold %}
 
 {% if sidebar_navigation %}
-    <div id="nav-sidebar-apps" class="h-0 grow overflow-auto" data-simplebar>
+    <div id="nav-sidebar-apps" class="h-0 grow overflow-auto scrollbar-default-hover">
         {% for group in sidebar_navigation %}
             {% if group.items %}
                 {% has_nav_item_active group.items as has_active %}

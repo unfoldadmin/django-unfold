@@ -31,11 +31,11 @@
         {% endfor %}
 
         <link href="{% static 'unfold/css/styles.css' %}" rel="stylesheet">
-        <link href="{% static 'unfold/css/simplebar/simplebar.css' %}" rel="stylesheet">
 
         <script src="{% static 'unfold/js/alpine/alpine.anchor.js' %}" defer></script>
         <script src="{% static 'unfold/js/alpine/alpine.persist.js' %}" defer></script>
         <script src="{% static 'unfold/js/alpine/alpine.sort.js' %}" defer></script>
+        <script src="{% static 'unfold/js/alpine/alpine.focus.js' %}" defer></script>
         <script src="{% static 'unfold/js/alpine/alpine.resize.js' %}" defer></script>
         <script src="{% static 'unfold/js/alpine/alpine.js' %}" defer></script>
         <script src="{% static 'unfold/js/htmx/htmx.js' %}"></script>
@@ -82,7 +82,5 @@
         {% include "unfold/helpers/modal.html" %}
 
         {% include "unfold/helpers/command.html" %}
-
-        <script src="{% static 'unfold/js/simplebar/simplebar.js' %}"></script>
     </body>
 </html>

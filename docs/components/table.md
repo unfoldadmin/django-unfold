@@ -51,9 +51,22 @@ data = {
         {
             "cols": ["c", "d"], # Cols in row
             "table": {
-                "headers": ["col2", "col3"],
+                "collapsible": True, # Collapsible nested table
+                "headers": [
+                    "col3",
+                    {
+                        "content": "col4",
+                        "class": "text-blue-500", # custom CSS class
+                    },
+                ],
                 "rows": [
-                    ["g", "h"]
+                    [
+                        "g",
+                        {
+                            "content": "h",
+                            "class": "text-red-500", # custom CSS class
+                        },
+                    ]
                 ]
             },
             "attrs": {
@@ -72,4 +85,4 @@ data = {
 | title                             | Custom table title                         |
 | striped                           | Stripes for odd rows                       |
 | card_included                     | Special styling when in "card" component   |
-| height                            | Max height, displays scroolbar             |
+| height                            | Max height, displays scrollbar             |

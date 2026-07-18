@@ -1,5 +1,4 @@
 {% load crispy_forms_tags crispy_forms_utils crispy_forms_field i18n unfold %}
-
 {% specialspaceless %}
     {% if formset_tag %}
         <form {{ flat_attrs }} method="{{ form_method }}" {% if formset.is_multipart %} enctype="multipart/form-data"{% endif %}>
@@ -42,9 +41,13 @@
                         </tr>
                     {% endif %}
 
-                    <tr>
+                    <tr class="{% if form.instance.pk %}original-form{% else %}dynamic-form{% endif %}">
                         {% for field in form %}
-                            {% include 'unfold_crispy/field.html' with tag="td" %}
+                            {% if form.instance.pk %}
+                                {% include 'unfold_crispy/field.html' with tag="td" formset=1 %}
+                            {% else %}
+                                {% include 'unfold_crispy/field.html' with tag="td" formset=1 dynamic=1 %}
+                            {% endif %}
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -54,13 +57,13 @@
                 <tbody>
                     <tr class="hidden empty-form">
                         {% for field in formset.empty_form %}
-                            {% include 'unfold_crispy/field.html' with tag="td" %}
+                            {% include 'unfold_crispy/field.html' with tag="td" formset=1 dynamic=1 %}
                         {% endfor %}
                     </tr>
 
                     <tr id="{{ formset_id }}-add-row-wrapper">
                         <td colspan="100%" class="border-t border-base-200 p-3 dark:border-base-800">
-                            <button type="button" id="{{ formset_id }}-add-row-button"  class="cursor-pointer flex items-center font-medium -ml-1.5 -my-1.5 select-none text-primary-600 dark:text-primary-500">
+                            <button type="button" id="{{ formset_id }}-add-row-button" data-formset-id="{{ formset_id }}" class="crispy-formset-add cursor-pointer flex items-center font-medium -ml-1.5 -my-1.5 select-none text-primary-600 dark:text-primary-500">
                                 <span class="flex items-center justify-center h-[38px] w-[38px]">
                                     <span class="material-symbols-outlined bg-primary-600 flex items-center justify-center rounded-full text-base text-white h-[18px] w-[18px]">add</span>
                                 </span>
@@ -84,29 +87,5 @@
 
     {% if formset_tag %}
         </form>
-    {% endif %}
-
-    {% if form_add and formset_id %}
-        <script>
-            document.getElementById('{{ formset_id }}-add-row-button').addEventListener('click', function() {
-                const formTotalEl = document.querySelector(`#{{ formset_id }} input[name*="TOTAL_FORMS"]`)
-                const formCount = parseInt(formTotalEl.value);
-                const newForm = document.querySelector('#{{ formset_id }} .empty-form').cloneNode(true);
-
-                newForm.classList.remove('empty-form', 'hidden');
-                newForm.innerHTML = newForm.innerHTML.replaceAll(/__prefix__/g, formCount);
-
-                document.getElementById('{{ formset_id }}-rows').insertBefore(
-                    newForm,
-                    document.getElementById("#{{ formset_id }}-add-row-wrapper")
-                )
-
-                formTotalEl.value = formCount + 1;
-
-                newForm.dispatchEvent(new CustomEvent('formset:added', {
-                    bubbles: true
-                }));
-            });
-        </script>
     {% endif %}
 {% endspecialspaceless %}

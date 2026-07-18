@@ -1,13 +1,26 @@
 from collections.abc import Callable
+from http import HTTPStatus
 
 import pytest
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
+
+
+def badge_callback(request):
+    return "badge callback"
+
+
+def badge_callback_none(request):
+    return None
+
+
+def badge_callback_empty(request):
+    return ""
 
 
 def sidebar_callback(request):
@@ -286,3 +299,109 @@ def test_navigation_items_with_tabs():
     sidebar = admin_site.get_sidebar_list(request)
     assert sidebar[0]["items"][0]["active"] is True
     assert sidebar[0]["items"][1]["active"] is False
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Example Title 1",
+                                "link": "/menu-link-1",
+                                "badge": "hello badge",
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_badge_rendered(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+    assert response.status_code == HTTPStatus.OK
+    assert "hello badge" in response.content.decode()
+    assert "sidebar-badge" in response.content.decode()
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Example Title 1",
+                                "link": "/menu-link-1",
+                                "badge": "tests.test_sidebar_navigation.badge_callback",
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_badge_string_properly_rendered(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+    assert response.status_code == HTTPStatus.OK
+    assert "badge callback" in response.content.decode()
+    assert "sidebar-badge" in response.content.decode()
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Example Title 1",
+                                "link": "/menu-link-1",
+                                "badge": "tests.test_sidebar_navigation.badge_callback_empty",
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_badge_empty_string_not_rendered(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+    assert response.status_code == HTTPStatus.OK
+    assert "sidebar-badge" not in response.content.decode()
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Example Title 1",
+                                "link": "/menu-link-1",
+                                "badge": "tests.test_sidebar_navigation.badge_callback_none",
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_badge_none_not_rendered(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+    assert response.status_code == HTTPStatus.OK
+    assert "sidebar-badge" not in response.content.decode()

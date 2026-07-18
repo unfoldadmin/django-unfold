@@ -1,8 +1,8 @@
 {% load i18n unfold %}
 
-<div id="command-results-list">
+<div id="command-results-list" class="flex flex-col gap-1.5">
     {% if results %}
-        <ul class="flex flex-col gap-1.5 p-4">
+        <ul class="flex flex-col gap-1.5 px-4 first:pt-4 last:pb-4">
             {% for item in results %}
                 <li class="group"
                     {% if forloop.last and results.next_page_number %}

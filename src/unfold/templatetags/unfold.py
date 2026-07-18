@@ -206,6 +206,11 @@ def is_list(value: Any) -> bool:
 
 
 @register.filter
+def is_dict(value: Any) -> bool:
+    return isinstance(value, dict)
+
+
+@register.filter
 def index(indexable: Mapping[int, Any], i: int) -> Any:
     try:
         return indexable[i]
