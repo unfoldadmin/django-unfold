@@ -16,6 +16,7 @@ CONFIG_DEFAULTS = {
     "SITE_TITLE": None,
     "SITE_HEADER": None,
     "SITE_SUBHEADER": None,
+    "SITE_VERSION": None,
     "SITE_DROPDOWN": None,
     "SITE_URL": "/",
     "SITE_VIEWS": [],
