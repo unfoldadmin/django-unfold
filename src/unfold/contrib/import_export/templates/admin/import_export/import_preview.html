@@ -1,45 +1,47 @@
 {% load admin_urls i18n import_export_tags unfold %}
 
 {% block preview %}
-    <table class="import-preview-table border-base-200 border-spacing-none border-separate overflow-hidden w-full lg:border lg:rounded-default lg:shadow-xs lg:dark:border-base-800">
-        <thead class="hidden lg:table-header-group text-base-900 dark:text-base-100">
-            <tr>
-                <th class="align-middle capitalize font-semibold px-3 py-2 text-left"></th>
+    <div class="border border-base-200 mb-3 overflow-auto scrollbar-default w-full rounded-default shadow-xs dark:border-base-800">
+        <table class="import-preview-table border-spacing-none border-separate w-full">
+            <thead class="text-important whitespace-nowrap">
+                <tr class="*:font-semibold *:px-3 *:py-2 *:text-left">
+                    <th></th>
 
-                {% for field in result.diff_headers %}
-                    <th class="align-middle capitalize font-semibold px-3 py-2 text-left">
-                        {{ field }}
-                    </th>
-                {% endfor %}
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for row in result.valid_rows %}
-                <tr class="{{ row.import_type }} {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} block border mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
-                    <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
-                        {% if row.import_type == 'new' %}
-                            {% trans "New" as label_title %}
-                            {% include "unfold/helpers/label.html" with text=label_title variant="success" %}
-                        {% elif row.import_type == 'skip' %}
-                            {% trans "Skipped" as label_title %}
-                            {% include "unfold/helpers/label.html" with text=label_title variant="warning" %}
-                        {% elif row.import_type == 'delete' %}
-                            {% trans "Delete" as label_title %}
-                            {% include "unfold/helpers/label.html" with text=label_title variant="danger" %}
-                        {% elif row.import_type == 'update' %}
-                            {% trans "Update" as label_title %}
-                            {% include "unfold/helpers/label.html" with text=label_title variant="info" %}
-                        {% endif %}
-                    </td>
-
-                    {% for field in row.diff %}
-                        <td data-label="{{ result.diff_headers|index:forloop.counter0 }}" class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left before:block before:capitalize before:content-[attr(data-label)] before:mr-auto lg:before:hidden lg:py-3 lg:table-cell dark:border-base-800">
+                    {% for field in result.diff_headers %}
+                        <th>
                             {{ field }}
-                        </td>
+                        </th>
                     {% endfor %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                {% for row in result.valid_rows %}
+                    <tr class="data-row {{ row.import_type }} {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} *:border-t *:border-base-200 *:font-normal *:px-3 *:py-2 *:text-left *:dark:border-base-800">
+                        <td class="h-[45px]">
+                            {% if row.import_type == 'new' %}
+                                {% trans "New" as label_title %}
+                                {% include "unfold/helpers/label.html" with text=label_title variant="success" %}
+                            {% elif row.import_type == 'skip' %}
+                                {% trans "Skipped" as label_title %}
+                                {% include "unfold/helpers/label.html" with text=label_title variant="warning" %}
+                            {% elif row.import_type == 'delete' %}
+                                {% trans "Delete" as label_title %}
+                                {% include "unfold/helpers/label.html" with text=label_title variant="danger" %}
+                            {% elif row.import_type == 'update' %}
+                                {% trans "Update" as label_title %}
+                                {% include "unfold/helpers/label.html" with text=label_title variant="info" %}
+                            {% endif %}
+                        </td>
+
+                        {% for field in row.diff %}
+                            <td data-label="{{ result.diff_headers|index:forloop.counter0 }}">
+                                {{ field }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

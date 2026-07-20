@@ -6,11 +6,18 @@
 
         {{ confirm_form.as_p }}
 
-        <div class="flex mb-3 gap-3 items-center">
-            {% trans "Below is a preview of data to be imported. If you are satisfied with the results, click 'Confirm import'" %}
-            {% component "unfold/components/button.html" with submit=1 variant="primary" class="ml-auto" %}
-                {% trans "Confirm import" %}
-            {% endcomponent %}
-        </div>
+        {% capture as message silent %}
+            <div class="flex flex-row gap-1">
+                <p class="grow">
+                    {% trans "Below is a preview of data to be imported. If you are satisfied with the results, click 'Confirm import'" %}
+                </p>
+
+                {% component "unfold/components/button.html" with submit=1 variant="primary" class="ml-auto -mr-1.5 -my-1" size="xs" %}
+                    {% trans "Confirm import" %}
+                {% endcomponent %}
+            </div>
+        {% endcapture %}
+
+        {% include "unfold/helpers/messages/primary.html" with message=message %}
     </form>
 {% endblock %}
