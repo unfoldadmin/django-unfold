@@ -1,60 +1,62 @@
 {% load i18n unfold %}
 
-<form method="post">
+<form method="post" novalidate>
     {% csrf_token %}
 
-    <h2 class="font-semibold mb-3 text-font-important-light dark:text-font-important-dark">
+    <h2 class="font-semibold text-base tracking-tight mb-3 text-important">
         {% trans "User permissions" %}
     </h2>
 
     {% if users_perms.items %}
-        <table id="user-permissions" class="border-base-200 border-spacing-none border-separate mb-6 w-full lg:border lg:rounded-default lg:shadow-xs lg:dark:border-base-800">
-            <thead class="hidden lg:table-header-group text-font-important-light dark:text-font-important-dark">
-                <tr>
-                    <th class="align-middle font-semibold px-3 py-2 text-left">
-                        {% trans "User" %}
-                    </th>
-
-                    {% for perm in model_perms %}
-                        <th class="align-middle font-semibold px-3 py-2 text-left">
-                            {{ perm.name }}
-                        </th>
-                    {% endfor %}
-
-                    <th class="align-middle font-semibold px-3 py-2 text-right">
-                        {% trans "Action" %}
-                    </th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for user, user_perms in users_perms.items %}
-                    <tr class="block border mb-3 rounded-default shadow-xs lg:table-row lg:border-none lg:mb-0 lg:shadow-none dark:border-base-800">
-                        <th class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans "User" %}">
-                            <span>
-                                {{ user }}
-                            </span>
+        <div class="border border-base-200 border-spacing-none mb-3 overflow-auto scrollbar-default w-full rounded-default shadow-xs dark:border-base-800">
+            <table id="user-permissions" class="border-spacing-none border-separate w-full">
+                <thead class="text-important whitespace-nowrap">
+                    <tr class="*:font-semibold *:px-3 *:py-2 *:text-left">
+                        <th>
+                            {% trans "User" %}
                         </th>
 
                         {% for perm in model_perms %}
-                            <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-left  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{{ perm.name }}">
-                                {% if perm.codename in user_perms %}
-                                    {% include "unfold/helpers/boolean.html" with value=True %}
-                                {% else %}
-                                    {% include "unfold/helpers/boolean.html" with value=False %}
-                                {% endif %}
-                            </td>
+                            <th>
+                                {{ perm.name }}
+                            </th>
                         {% endfor %}
 
-                        <td class="align-middle flex border-t border-base-200 font-normal px-3 py-2 text-right  before:flex before:capitalize before:content-[attr(data-label)] before:items-center before:mr-auto  first:border-t-0  lg:before:hidden lg:first:border-t lg:py-3 lg:table-cell dark:border-base-800" data-label="{% trans "Action" %}">
-                            <a href="user-manage/{{ user.id|safe }}/" class="hover:text-base-700 dark:hover:text-white">
-                                {% trans "Edit" %}
-                            </a>
-                        </td>
+                        <th></th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    {% for user, user_perms in users_perms.items %}
+                        <tr class="data-row {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} *:border-t *:border-base-200 *:font-normal *:px-3 *:py-2 *:text-left *:dark:border-base-800">
+                            <td class="h-[45px]">
+                                <span>
+                                    {{ user }}
+                                </span>
+                            </td>
+
+                            {% for perm in model_perms %}
+                                <td>
+                                    {% if perm.codename in user_perms %}
+                                        {% include "unfold/helpers/boolean.html" with value=True %}
+                                    {% else %}
+                                        {% include "unfold/helpers/boolean.html" with value=False %}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+
+                            <td class="w-px">
+                                {% capture as href silent %}user-manage/{{ user.id|safe }}/{% endcapture %}
+
+                                {% component "unfold/components/button.html" with size="xs" variant="default" href=href %}
+                                    {% trans "Edit" %}
+                                {% endcomponent %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 
     <div class="border border-base-200 overflow-hidden rounded-default p-3 shadow-xs dark:border-base-800">
@@ -62,12 +64,10 @@
             {% include "admin/guardian/model/field.html" %}
         {% endfor %}
 
-        <div class="bg-base-50 border-t border-base-200 flex flex-row -m-3 p-3 dark:bg-white/[.02] dark:border-base-800">
-            <div class="ml-auto">
-                {% component "unfold/components/button.html" with submit=1 name="submit_manage_user" %}
-                    {% trans "Manage user" %}
-                {% endcomponent %}
-            </div>
+        <div class="border-t border-base-200 flex justify-end -mx-3 pt-3 px-3 dark:border-base-800">
+            {% component "unfold/components/button.html" with submit=1 name="submit_manage_user" %}
+                {% trans "Manage user" %}
+            {% endcomponent %}
         </div>
     </div>
 </form>
