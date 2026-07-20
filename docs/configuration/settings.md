@@ -19,6 +19,7 @@ UNFOLD = {
     "SITE_TITLE": "Custom suffix in <title> tag",
     "SITE_HEADER": "Appears in sidebar at the top",
     "SITE_SUBHEADER": "Appears under SITE_HEADER",
+    "SITE_VERSION": "0.1.0",
     "SITE_DROPDOWN": [
         {
             "icon": "diamond",

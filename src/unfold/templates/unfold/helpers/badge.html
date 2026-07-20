@@ -26,6 +26,12 @@
                  {% else %}
                      bg-primary-100 text-primary-700 dark:bg-primary-500/20 dark:text-primary-400
                  {% endif %}
+             {% elif variant == "default" %}
+                 {% if style == "solid" %}
+                     bg-base-500
+                 {% else %}
+                     bg-base-100 text-base-700 dark:bg-base-500/20 dark:text-base-400
+                 {% endif %}
              {% else %}
                  {% if style == "solid" %}
                      bg-red-500

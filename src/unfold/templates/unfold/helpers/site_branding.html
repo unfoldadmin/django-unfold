@@ -1,9 +1,13 @@
-<div id="site-name">
+<div id="site-name" class="flex items-center">
     {% if site_dropdown %}
         {{ site_header|default:_('Django administration') }}
     {% else %}
         <a href="{% url 'admin:index' %}">
             {{ site_header|default:_('Django administration') }}
         </a>
+    {% endif %}
+
+    {% if site_version %}
+        {% include "unfold/helpers/badge.html" with value=site_version variant="default" style="solid" %}
     {% endif %}
 </div>
