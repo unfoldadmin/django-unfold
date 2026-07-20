@@ -66,6 +66,7 @@ class ModelAdmin(
     list_filter_sheet = True
     list_filter_options: dict[str, ListFilterOptionsItem] = {}
     list_fullwidth = False
+    changeform_fullwidth = False
     list_disable_select_all = False
     list_before_template = None
     list_after_template = None
