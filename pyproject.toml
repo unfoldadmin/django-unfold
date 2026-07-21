@@ -43,7 +43,7 @@ dev = [
     "django-money==3.6.0",
     "django-simple-history==3.11.0",
     "django-stubs==6.0.3",
-    "pillow==12.2.0",
+    "pillow==12.3.0",
     "pytest==9.0.3",
     "pytest-cov==7.1.0",
     "pytest-django==4.12.0",
