@@ -191,7 +191,6 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
     first = True
     pk = cl.lookup_opts.pk.attname
-    headers = list(result_headers(cl))
 
     for field_index, field_name in enumerate(cl.list_display):
         empty_value_display = cl.model_admin.get_empty_value_display()
@@ -280,10 +279,9 @@ def items_for_result(  # noqa: PLR0915, PLR0912
                 )
             row_class = mark_safe(f' class="{" ".join(row_classes)}"')
             yield format_html(
-                '<{}{} data-label="{}">{}</{}>',
+                "<{}{}>{}</{}>",
                 table_tag,
                 row_class,
-                headers[field_index]["text"],
                 link_or_text,
                 table_tag,
             )
@@ -316,16 +314,14 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
             if field_index != 0:
                 yield format_html(
-                    '<td{} data-label="{}">{}</td>',
+                    "<td{}>{}</td>",
                     row_class,
-                    headers[field_index]["text"],
                     result_repr,
                 )
             else:
                 yield format_html(
-                    '<td{} data-label="{}">{}</td>',
+                    "<td{}>{}</td>",
                     row_class,
-                    _("Select record"),
                     result_repr,
                 )
 
