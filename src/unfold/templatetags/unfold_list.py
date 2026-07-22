@@ -1,5 +1,5 @@
 import datetime
-from collections.abc import Generator
+from collections.abc import Generator, Sequence
 from typing import Any
 
 from django import VERSION as DJANGO_VERSION
@@ -180,7 +180,10 @@ def result_headers(cl):
 
 
 def items_for_result(  # noqa: PLR0915, PLR0912
-    cl: ChangeList, result: Model, form
+    cl: ChangeList,
+    result: Model,
+    form,
+    headers: Sequence[dict[str, Any]] | None = None,
 ) -> Generator[SafeText, None, None]:
     def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
@@ -191,7 +194,9 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
     first = True
     pk = cl.lookup_opts.pk.attname
-    headers = list(result_headers(cl))
+
+    if headers is None:
+        headers = list(result_headers(cl))
 
     for field_index, field_name in enumerate(cl.list_display):
         empty_value_display = cl.model_admin.get_empty_value_display()
@@ -345,13 +350,18 @@ class UnfoldResultList(ResultList):
         super().__init__(form, *items)
 
 
-def results(cl: ChangeList):
+def results(
+    cl: ChangeList, headers: Sequence[dict[str, Any]] | None = None
+) -> Generator[UnfoldResultList, None, None]:
+    if headers is None:
+        headers = list(result_headers(cl))
+
     if hasattr(cl, "formset") and cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms):
-            yield UnfoldResultList(res, form, items_for_result(cl, res, form))
+            yield UnfoldResultList(res, form, items_for_result(cl, res, form, headers))
     else:
         for res in cl.result_list:
-            yield UnfoldResultList(res, None, items_for_result(cl, res, None))
+            yield UnfoldResultList(res, None, items_for_result(cl, res, None, headers))
 
 
 def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
@@ -370,7 +380,7 @@ def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
         "result_hidden_fields": list(result_hidden_fields(cl)),
         "result_headers": headers,
         "num_sorted_fields": num_sorted_fields,
-        "results": list(results(cl)),
+        "results": list(results(cl, headers)),
         "actions_row": context.get("actions_row"),
         "has_add_permission": cl.model_admin.has_add_permission(context["request"]),
     }
