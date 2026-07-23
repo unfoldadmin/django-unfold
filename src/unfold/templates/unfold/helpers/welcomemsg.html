@@ -17,7 +17,7 @@
         {% header_title %}
 
         {% if cl and cl.full_result_count != cl.result_count and cl.paginator|class_name != "InfinitePaginator" %}
-            <span class="font-medium ml-2 text-subtle">
+            <span class="font-medium ml-2 text-subtle text-xs">
                 {% blocktranslate count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktranslate %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktranslate with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktranslate %}{% else %}{% translate "Show all" %}{% endif %}</a>)
             </span>
         {% endif %}
