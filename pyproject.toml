@@ -59,7 +59,6 @@ django60 = ["django>=6.0,<6.1"]
 django61 = ["django>=6.1rc1,<6.2"]
 
 [tool.uv]
-default-groups = ["dev"]
 conflicts = [
     [
         { group = "django52" },
