@@ -54,6 +54,9 @@ dev = [
     "six~=1.17.0",
     "psycopg[binary]~=3.3.4",
 ]
+django52 = ["django>=5.2,<6"]
+django60 = ["django>=6.0,<6.1"]
+django61 = ["django>=6.1rc1,<6.2"]
 
 [tool.uv]
 default-groups = ["dev"]
@@ -153,7 +156,7 @@ legacy_tox_ini = """
     set_env =
         PYTHONDEVMODE = 1
     commands =
-        django52: uv run --with "Django>=5.2,<5.3" -- pytest tests/
-        django60: uv run --with "Django>=6.0,<6.1" -- pytest tests/
-        django61b1: uv run --with "Django==6.1b1" -- pytest tests/
+        django52: uv run --with django52 -- pytest .
+        django60: uv run --with django60 -- pytest .
+        django61: uv run --with django61 -- pytest .
 """
