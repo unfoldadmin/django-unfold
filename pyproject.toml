@@ -60,6 +60,13 @@ django61 = ["django>=6.1rc1,<6.2"]
 
 [tool.uv]
 default-groups = ["dev"]
+conflicts = [
+    [
+        { group = "django52" },
+        { group = "django60" },
+        { group = "django61" },
+    ],
+]
 
 [tool.hatch.build.targets.sdist]
 include = ["src/unfold"]
