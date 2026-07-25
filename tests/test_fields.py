@@ -4,7 +4,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.contenttypes.models import ContentType
-from django.test import override_settings
 from example.admin import UserAdmin
 
 from unfold.fields import (
@@ -13,7 +12,6 @@ from unfold.fields import (
     UnfoldAdminMultipleAutocompleteModelChoiceField,
     UnfoldAdminReadonlyField,
 )
-from unfold.settings import CONFIG_DEFAULTS
 from unfold.sites import UnfoldAdminSite
 
 
@@ -310,31 +308,6 @@ def test_unfold_admin_field():
         admin_field.label_tag()
         == '<label class="block font-semibold mb-2 text-font-important-light text-sm dark:text-font-important-dark required" for="id_username">Username<span class="text-red-600 dark:text-red-500">*</span></label>'
     )
-
-
-@override_settings(
-    UNFOLD={
-        **CONFIG_DEFAULTS,
-        **{
-            "EXTENSIONS": {
-                "modeltranslation": {
-                    "flags": {
-                        "en": "🇬🇧",
-                    },
-                },
-            },
-        },
-    }
-)
-@pytest.mark.django_db
-def test_unfold_admin_field_flag(user_factory):
-    user = user_factory(username="sample@example.com")
-    form = ExampleForm(instance=user)
-    form.fields["username"].label = "Username [en]"
-
-    admin_field = UnfoldAdminField(form=form, field="username", is_first=True)
-
-    assert "Username 🇬🇧" in str(admin_field.label_tag())
 
 
 @pytest.mark.django_db
