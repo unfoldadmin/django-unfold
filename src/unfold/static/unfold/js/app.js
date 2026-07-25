@@ -73,43 +73,9 @@ function theme(defaultTheme = "auto") {
 		openAllApplications: false,
 		adminTheme: Alpine.$persist(defaultTheme).as("adminTheme"),
 		init() {
-			this.$watch("openModal", (value) => {
-				if (value) {
-					document
-						.getElementsByTagName("body")[0]
-						.classList.add("overflow-hidden");
-				} else {
-					document
-						.getElementsByTagName("body")[0]
-						.classList.remove("overflow-hidden");
-				}
-			});
-
 			this.$watch("filterOpen", (value) => {
 				if (isFilterModalOpen()) {
-					if (value) {
-						this.filterModalOpen = true;
-						document
-							.getElementsByTagName("body")[0]
-							.classList.add("overflow-hidden");
-					} else {
-						this.filterModalOpen = false;
-						document
-							.getElementsByTagName("body")[0]
-							.classList.remove("overflow-hidden");
-					}
-				}
-			});
-
-			this.$watch("openAllApplications", (value) => {
-				if (value) {
-					document
-						.getElementsByTagName("body")[0]
-						.classList.add("overflow-hidden");
-				} else {
-					document
-						.getElementsByTagName("body")[0]
-						.classList.remove("overflow-hidden");
+					this.filterModalOpen = !!value;
 				}
 			});
 		},
@@ -346,7 +312,6 @@ function searchCommand() {
 		commandHistory: JSON.parse(localStorage.getItem("commandHistory") || "[]"),
 		handleOpen() {
 			this.openCommandResults = true;
-			this.toggleBodyOverflow();
 			setTimeout(() => {
 				this.$refs.searchInputCommand.focus();
 			}, 20);
@@ -368,7 +333,6 @@ function searchCommand() {
 		},
 		handleClear() {
 			if (this.$refs.searchInputCommand.value === "") {
-				this.toggleBodyOverflow();
 				this.openCommandResults = false;
 				this.el.innerHTML = "";
 				this.searchTerm = "";
@@ -380,7 +344,6 @@ function searchCommand() {
 			}
 		},
 		handleOutsideClick() {
-			this.toggleBodyOverflow();
 			this.$refs.searchInputCommand.value = "";
 			this.searchTerm = "";
 			this.openCommandResults = false;
@@ -428,11 +391,6 @@ function searchCommand() {
 			}
 
 			this.searchTerm = this.$refs.searchInputCommand.value;
-		},
-		toggleBodyOverflow() {
-			document
-				.getElementsByTagName("body")[0]
-				.classList.toggle("overflow-hidden");
 		},
 		scrollToActiveItem() {
 			const item = this.items[this.currentIndex - 1];
