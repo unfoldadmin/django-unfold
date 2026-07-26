@@ -67,6 +67,7 @@ function theme(defaultTheme = "auto") {
 				localStorage.setItem("sidebarOpen", this.sidebarOpen ? "1" : "0");
 			}
 		},
+		shortcutsOpen: false,
 		openModal: false,
 		filterOpen: false,
 		filterModalOpen: false,
@@ -114,6 +115,11 @@ function theme(defaultTheme = "auto") {
 
 				if (isInput) {
 					return;
+				}
+
+				if (event.shiftKey && event.key === "?") {
+					event.preventDefault();
+					this.shortcutsOpen = !this.shortcutsOpen;
 				}
 
 				if (!event.metaKey && !event.ctrlKey && event.key === "[") {

@@ -10,9 +10,9 @@
             </div>
 
             {% if 'Macintosh' in request.META.HTTP_USER_AGENT %}
-                {% include "unfold/helpers/shortcut.html" with shortcut="⌘K" %}
+                {% include "unfold/helpers/shortcut.html" with icon="keyboard_command_key" shortcut="k" %}
             {% else %}
-                {% include "unfold/helpers/shortcut.html" with shortcut="Ctrl + K" %}
+                {% include "unfold/helpers/shortcut.html" with icon="keyboard_control_key" shortcut="k" %}
             {% endif %}
         </div>
     </div>
