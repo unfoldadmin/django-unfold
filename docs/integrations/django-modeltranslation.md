@@ -6,6 +6,8 @@ description: Learn how to integrate django-modeltranslation with Django Unfold a
 
 # django-modeltranslation
 
+**Note:** this functionality has been deprecated in django-unfold 0.102.0
+
 Unfold provides built-in support for django-modeltranslation, a powerful Django application that enables model translation functionality. The integration includes a custom implementation of the `TabbedTranslationAdmin` admin class, which provides tabbed navigation for managing translations with Unfold's enhanced styling and user interface components. This seamless integration ensures that translation management maintains visual consistency with the rest of your admin interface while providing all the powerful features of django-modeltranslation.
 
 ```python

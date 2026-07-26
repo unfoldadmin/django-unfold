@@ -23,7 +23,6 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeString, SafeText, mark_safe
 from django.utils.text import capfirst
 
-from unfold.settings import get_config
 from unfold.utils import display_for_field, prettify_json
 from unfold.widgets import (
     CHECKBOX_LABEL_CLASSES,
@@ -204,15 +203,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 class UnfoldAdminField(helpers.AdminField):
     def label_tag(self) -> SafeText:
         classes = []
-
-        # TODO load config from current AdminSite (override Fieldline.__iter__ method)
-        flags = get_config()["EXTENSIONS"]["modeltranslation"]["flags"]
-
-        for lang, flag in flags.items():
-            if f"[{lang}]" in self.field.label:
-                self.field.label = self.field.label.replace(f"[{lang}]", flag)
-                break
-
         contents = conditional_escape(self.field.label)
 
         classes.append(
