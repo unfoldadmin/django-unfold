@@ -1,0 +1,137 @@
+{% load i18n %}
+
+<div x-show="shortcutsOpen" x-cloak x-trap.noscroll="shortcutsOpen" x-on:click.outside="shortcutsOpen = false" x-on:keydown.escape.window="shortcutsOpen = false">
+    <div class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 right-0 top-0 z-60 dark:bg-base-900/80"></div>
+
+    <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-on:click.outside="shortcutsOpen = false">
+        <div class="bg-white dark:bg-base-800 flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full">
+            <div class="border-b border-base-200 flex flex-col gap-2 px-4 py-3 dark:border-base-700">
+                <h1 class="font-semibold text-base text-important tracking-tight">
+                    {% trans "Available shortcuts" %}
+                </h1>
+            </div>
+
+            <div class="flex flex-col gap-4 p-4 overflow-y-auto scrollbar-default">
+                <div>
+                    <h2 class="font-semibold mb-2 text-important">
+                        {% trans "Global shortcuts" %}
+                    </h2>
+
+                    <ul class="border border-base-200 rounded-default shadow-xs dark:border-base-700 *:border-b *:border-base-200 *:last:border-b-0 *:flex *:flex-row *:justify-between *:items-center *:gap-2 *:px-3 *:py-2 *:last:border-b-0 dark:*:border-base-700">
+                        <li>
+                            <span>{% trans "Open command tool" %}</span>
+
+                            <span>
+                                {% if 'Macintosh' in request.META.HTTP_USER_AGENT %}
+                                    {% include "unfold/helpers/shortcut.html" with icon="keyboard_command_key" shortcut="k" %}
+                                {% else %}
+                                    {% include "unfold/helpers/shortcut.html" with icon="keyboard_control_key" shortcut="k" %}
+                                {% endif %}
+                            </span>
+                        </li>
+
+                        <li>
+                            <span>{% trans "Open shortcuts list" %}</span>
+                            <span>
+                                {% include "unfold/helpers/shortcut.html" with icon="shift" shortcut="?" %}
+                            </span>
+                        </li>
+
+                        <li>
+                            <span>{% trans "Toggle sidebar" %}</span>
+                            <span>
+                                {% include "unfold/helpers/shortcut.html" with shortcut="[" %}
+                            </span>
+                        </li>
+
+                        <li>
+                            <span>{% trans "Toggle dark/light mode" %}</span>
+                            <span>
+                                {% if 'Macintosh' in request.META.HTTP_USER_AGENT %}
+                                    {% include "unfold/helpers/shortcut.html" with icon="keyboard_command_key" shortcut="e" %}
+                                {% else %}
+                                    {% include "unfold/helpers/shortcut.html" with icon="keyboard_control_key" shortcut="e" %}
+                                {% endif %}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="font-semibold mb-2 text-important">
+                        {% trans "Changelist shortcuts" %}
+                    </h2>
+
+                    <ul class="border border-base-200 rounded-default shadow-xs dark:border-base-700 *:border-b *:border-base-200 *:last:border-b-0 *:flex *:flex-row *:justify-between *:items-center *:gap-2 *:px-3 *:py-2 *:last:border-b-0 dark:*:border-base-700">
+                        <li>
+                            <span>{% trans "Toggle filter" %}</span>
+                            <span>
+                                {% include "unfold/helpers/shortcut.html" with shortcut="f" %}
+                            </span>
+                        </li>
+
+                        <li>
+                            <span>{% trans "Create new record" %}</span>
+                            <span>
+                                {% include "unfold/helpers/shortcut.html" with shortcut="c" %}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="font-semibold mb-2 text-important">
+                        {% trans "Command tool shortcuts" %}
+                    </h2>
+
+                    <ul class="border border-base-200 rounded-default shadow-xs dark:border-base-700 *:border-b *:border-base-200 *:last:border-b-0 *:flex *:flex-row *:justify-between *:items-center *:gap-2 *:px-3 *:py-2 *:last:border-b-0 dark:*:border-base-700">
+                        <li>
+                            <span>
+                                {% trans "Navigate" %}
+                            </span>
+
+                            <span class="flex flex-row items-center gap-2">
+                                {% include "unfold/helpers/shortcut.html" with icon="arrow_downward_alt" %}
+                                {% include "unfold/helpers/shortcut.html" with icon="arrow_upward_alt" %}
+                            </span>
+                        </li>
+
+                        <li>
+                            <span>
+                                {% trans "Open selection" %}
+                            </span>
+
+                            <span>
+                                {% include "unfold/helpers/shortcut.html" with icon="keyboard_return" %}
+                            </span>
+                        </li>
+
+                        <li>
+                            <span>
+                                {% trans "Open selection in new tab" %}
+                            </span>
+
+                            <span>
+                                {% if 'Macintosh' in request.META.HTTP_USER_AGENT %}
+                                    {% include "unfold/helpers/shortcut.html" with icon="keyboard_command_keykeyboard_return" %}
+                                {% else %}
+                                    {% include "unfold/helpers/shortcut.html" with icon="keyboard_control_keykeyboard_return" %}
+                                {% endif %}
+                            </span>
+                        </li>
+
+                        <li>
+                            <span>
+                                {% trans "Clear" %}
+                            </span>
+
+                            <span>
+                                {% include "unfold/helpers/shortcut.html" with shortcut="esc" %}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
