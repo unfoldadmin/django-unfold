@@ -90,7 +90,6 @@ class MyModelAdmin(ModelAdmin):
 - [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)
 - [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/)
 - [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/)
-- [django-modeltranslation](https://github.com/deschler/django-modeltranslation) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-modeltranslation/)
 - [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
 - [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
 - [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)

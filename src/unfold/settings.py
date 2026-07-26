@@ -106,7 +106,6 @@ CONFIG_DEFAULTS = {
         "redirect_after": None,
         "form": None,
     },
-    "EXTENSIONS": {"modeltranslation": {"flags": {}}},
 }
 
 

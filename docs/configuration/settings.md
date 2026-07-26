@@ -109,15 +109,6 @@ UNFOLD = {
             "important-dark": "var(--color-base-100)",  # text-base-100
         },
     },
-    "EXTENSIONS": {
-        "modeltranslation": {
-            "flags": {
-                "en": "🇬🇧",
-                "fr": "🇫🇷",
-                "nl": "🇧🇪",
-            },
-        },
-    },
     "SIDEBAR": {
         "show_search": False,  # Search in applications and models names
         "show_all_applications": False,  # Dropdown with all applications and models
