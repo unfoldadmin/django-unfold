@@ -8,7 +8,7 @@
 
 {% if results %}
     <div class="{% if cl.search_fields or cl.has_filters %}rounded-default lg:rounded-t-none lg:rounded-b-default{% else %}lg:rounded-default{% endif %} overflow-x-auto scrollbar-default border border-base-200 shadow-xs dark:border-base-800 bg-white dark:bg-base-900">
-        <table id="result_list" class="result-list border-spacing-none border-separate whitespace-nowrap w-full" {% if cl.model_admin.ordering_field %}x-sort.ghost x-on:end="sortRecords" data-ordering-field="{{ cl.model_admin.ordering_field }}"{% endif %}>
+        <table id="result_list" class="result-list border-spacing-none border-separate w-full" {% if cl.model_admin.ordering_field %}x-sort.ghost x-on:end="sortRecords" data-ordering-field="{{ cl.model_admin.ordering_field }}"{% endif %}>
             {% include 'unfold/helpers/change_list_headers.html' %}
 
             {% for result in results %}
