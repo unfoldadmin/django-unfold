@@ -50,6 +50,9 @@ class CustomAdminClass(ModelAdmin):
     # Display changelist in fullwidth
     list_fullwidth = False
 
+    # Display changeform in fullwidth
+    changeform_fullwidth = False
+
     # Set to False, to enable filter as "sidebar"
     list_filter_sheet = True
 
