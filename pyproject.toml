@@ -103,6 +103,7 @@ ignore = [
     "C901",    # too complex
     "PLC0415", # `import` should be at the top-level of a file
     "PLR0913", # Too many arguments in function definition
+    "PLR0917", # Too many positional arguments
 ]
 
 [tool.semantic_release]
