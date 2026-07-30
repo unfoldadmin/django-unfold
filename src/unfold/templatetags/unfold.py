@@ -440,35 +440,25 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "group/line",
         "px-3",
         "py-2.5",
+        "border-b",
+        "border-base-200",
+        "border-dashed",
+        "min-h-[59px]",
+        "group-[.last]/row:border-b-0",
+        "lg:border-l",
+        "lg:flex-row",
+        "lg:items-center",
+        "dark:border-base-800",
+        "lg:first:border-l-0",
     ]
+
     field = context.get("field")
-    adminform = context.get("adminform")
 
     if hasattr(field.field, "name") and field.field.name:
         classes.append(f"field-{field.field.name}")
 
     if hasattr(field, "errors") and field.errors():
         classes.append("errors")
-
-    if (
-        adminform
-        and hasattr(adminform.model_admin, "compressed_fields")
-        and adminform.model_admin.compressed_fields
-    ):
-        classes.extend(
-            [
-                "border-b",
-                "border-base-200",
-                "border-dashed",
-                "min-h-[59px]",
-                "group-[.last]/row:border-b-0",
-                "lg:border-l",
-                "lg:flex-row",
-                "lg:items-center",
-                "dark:border-base-800",
-                "lg:first:border-l-0",
-            ]
-        )
 
     return " ".join(set(classes))
 
