@@ -11,13 +11,16 @@
         <form method="post">
             {% csrf_token %}
 
-            {% trans "Object" as title %}
-            {% include "unfold/helpers/field_readonly.html" with title=title value=object %}
+            <div class="flex flex-col -mx-3 -mt-3">
+                {% trans "Object" as title %}
+                {% include "unfold/helpers/field_readonly.html" with title=title value=object row="1" %}
 
-            {% trans "User" as title %}
-            {% include "unfold/helpers/field_readonly.html" with title=title value=user_obj %}
+                {% trans "User" as title %}
+                {% include "unfold/helpers/field_readonly.html" with title=title value=user_obj row="1" %}
 
-            {% include "unfold/helpers/field.html" with field=form.permissions %}
+                {% trans "Permissions" as title %}
+                {% include "unfold/helpers/field_readonly.html" with title=title value=form.permissions row="1" wrapper_class="max-w-full" %}
+            </div>
 
             <div class="border-t border-base-200 flex justify-end -mx-3 pt-3 px-3 dark:border-base-800">
                 {% component "unfold/components/button.html" with submit=1 %}
