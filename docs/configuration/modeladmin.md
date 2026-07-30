@@ -24,9 +24,6 @@ class CustomAdminClass(ModelAdmin):
     # Display add link in changelist / changeform
     show_add_link = True  # Default: True
 
-    # Display fields in changeform in compressed mode
-    compressed_fields = True  # Default: True
-
     # Warn before leaving unsaved changes in changeform
     warn_unsaved_form = True  # Default: False
 
