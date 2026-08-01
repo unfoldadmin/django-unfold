@@ -13,6 +13,9 @@ from django.utils.translation import gettext_lazy as _
 from hijack.contrib.admin import HijackUserAdminMixin
 from import_export.admin import ImportExportModelAdmin
 from import_export.resources import ModelResource
+from waffle.admin import SampleAdmin as BaseSampleAdmin
+from waffle.admin import SwitchAdmin as BaseSwitchAdmin
+from waffle.models import Flag, Sample, Switch
 
 from example.models import (
     ActionUser,
@@ -67,6 +70,7 @@ from unfold.contrib.import_export.forms import (
     SelectableFieldsExportForm,
 )
 from unfold.contrib.inlines.admin import NonrelatedTabularInline
+from unfold.contrib.waffle.admin import FlagAdmin as BaseFlagAdmin
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
 from unfold.forms import (
@@ -85,6 +89,24 @@ from unfold.widgets import (
 )
 
 admin.site.unregister(Group)
+admin.site.unregister(Flag)
+admin.site.unregister(Switch)
+admin.site.unregister(Sample)
+
+
+@admin.register(Flag)
+class FlagAdmin(BaseFlagAdmin):
+    pass
+
+
+@admin.register(Switch)
+class SwitchAdmin(ModelAdmin, BaseSwitchAdmin):
+    pass
+
+
+@admin.register(Sample)
+class SampleAdmin(ModelAdmin, BaseSampleAdmin):
+    pass
 
 
 class UserTagInline(StackedInline):

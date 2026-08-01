@@ -412,7 +412,7 @@ wheels = [
 
 [[package]]
 name = "django-unfold"
-version = "0.101.0"
+version = "0.102.0"
 source = { editable = "." }
 dependencies = [
     { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
@@ -431,6 +431,7 @@ dev = [
     { name = "django-money" },
     { name = "django-simple-history" },
     { name = "django-stubs" },
+    { name = "django-waffle" },
     { name = "pillow" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pytest" },
@@ -464,8 +465,9 @@ dev = [
     { name = "django-import-export", specifier = "~=4.4.1" },
     { name = "django-location-field", specifier = "~=2.7.3" },
     { name = "django-money", specifier = "~=3.6.1" },
-    { name = "django-simple-history", specifier = "==3.13.0" },
+    { name = "django-simple-history", specifier = "~=3.13.0" },
     { name = "django-stubs", specifier = "~=6.0.7" },
+    { name = "django-waffle", specifier = "~=5.0.0" },
     { name = "pillow", specifier = "~=12.3.0" },
     { name = "psycopg", extras = ["binary"], specifier = "~=3.3.4" },
     { name = "pytest", specifier = "~=9.1.1" },
@@ -480,6 +482,20 @@ dev = [
 django52 = [{ name = "django", specifier = ">=5.2,<6" }]
 django60 = [{ name = "django", specifier = ">=6.0,<6.1" }]
 django61 = [{ name = "django", specifier = ">=6.1rc1,<6.2" }]
+
+[[package]]
+name = "django-waffle"
+version = "5.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
+    { name = "django", version = "6.1rc1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/22/e1/6f533da0d4ac89f427dfd9410e39bfc14ae3a23335ecd549d76be4b2a834/django_waffle-5.0.0.tar.gz", hash = "sha256:62f9d00eedf68dafb82657beab56e601bddedc1ea1ccfef91d83df8658708509", size = 37761, upload-time = "2025-06-12T07:38:54.895Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7a/d2/6f0d664bd35a3fdd0403655c7c32ec290704923f11541ef356b180cd8fbf/django_waffle-5.0.0-py3-none-any.whl", hash = "sha256:3312851d9d926b76b9e90712355781700a383b82b5bf2b61e1f1be97532c0f3d", size = 48137, upload-time = "2025-06-12T07:38:53.698Z" },
+]
 
 [[package]]
 name = "dotty-dict"

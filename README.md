@@ -95,6 +95,7 @@ class MyModelAdmin(ModelAdmin):
 - [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)
 - [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/)
 - [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/)
+- [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/)
 
 ## Professional services
 
