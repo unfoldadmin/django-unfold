@@ -832,7 +832,7 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
                     [*SWITCH_CLASSES, attrs.get("class", "") if attrs else ""]
                 ),
             },
-            check_test=None,
+            check_test,
         )
 
 
