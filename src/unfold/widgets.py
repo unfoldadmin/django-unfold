@@ -810,8 +810,6 @@ class UnfoldBooleanWidget(CheckboxInput):
     def __init__(
         self, attrs: dict[str, Any] | None = None, check_test: Callable | None = None
     ) -> None:
-        attrs = attrs or {}
-
         super().__init__(
             {
                 **(attrs or {}),
