@@ -16,7 +16,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import BoundField, CheckboxSelectMultiple
+from django.forms import BoundField, CheckboxSelectMultiple, MultiWidget
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
@@ -547,7 +547,9 @@ def changeform_data(adminform: AdminForm) -> str:
 
                 if isinstance(
                     field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-                ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
+                ) or isinstance(
+                     field.field.field.widget, UnfoldAdminMoneyWidget
+                ) or isinstance(field.field.field.widget, MultiWidget):
                     for index, _widget in enumerate(field.field.field.widget.widgets):
                         fields[
                             f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
@@ -577,7 +579,9 @@ def changeform_condition(field: AdminField) -> AdminField:
         )
     elif isinstance(
         field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-    ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
+    ) or isinstance(
+        field.field.field.widget, UnfoldAdminMoneyWidget
+    ) or isinstance(field.field.field.widget, MultiWidget):
         for index, widget in enumerate(field.field.field.widget.widgets):
             field_name = (
                 f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
