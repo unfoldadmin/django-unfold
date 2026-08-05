@@ -545,11 +545,11 @@ def changeform_data(adminform: AdminForm) -> str:
                 if isinstance(field.field, dict):
                     continue
 
-                if isinstance(
-                    field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-                ) or isinstance(
-                     field.field.field.widget, UnfoldAdminMoneyWidget
-                ) or isinstance(field.field.field.widget, MultiWidget):
+                if (
+                    isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget)
+                    or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget)
+                    or isinstance(field.field.field.widget, MultiWidget)
+                ):
                     for index, _widget in enumerate(field.field.field.widget.widgets):
                         fields[
                             f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
@@ -577,11 +577,11 @@ def changeform_condition(field: AdminField) -> AdminField:
         field.field.field.widget.attrs["x-init"] = mark_safe(
             f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
         )
-    elif isinstance(
-        field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-    ) or isinstance(
-        field.field.field.widget, UnfoldAdminMoneyWidget
-    ) or isinstance(field.field.field.widget, MultiWidget):
+    elif (
+        isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget)
+        or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget)
+        or isinstance(field.field.field.widget, MultiWidget)
+    ):
         for index, widget in enumerate(field.field.field.widget.widgets):
             field_name = (
                 f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
