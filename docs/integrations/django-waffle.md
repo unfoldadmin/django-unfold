@@ -10,17 +10,6 @@ To use django-waffle with Django Unfold, you should first unregister the default
 
 For the `FlagAdmin`, however, Unfold provides its own custom admin class (`unfold.contrib.waffle.admin.FlagAdmin`) because the `users` field in django-waffle uses a custom implementation, which Unfold replaces with an autocomplete widget to enhance usability.
 
-```python
-# settings.py
-
-INSTALLED_APPS = [
-    # ...
-    "unfold.contrib.waffle",
-    # ...
-    "waffle",
-]
-```
-
 Unregister the default Waffle admin models and register them again using Unfold's admin classes.
 
 ```python
@@ -32,7 +21,7 @@ from waffle.admin import SampleAdmin as BaseSampleAdmin
 from waffle.admin import SwitchAdmin as BaseSwitchAdmin
 from waffle.models import Flag, Sample, Switch
 
-from unfold.model import ModelAdmin
+from unfold.admin import ModelAdmin
 # This is custom admin class for Flag model
 from unfold.contrib.waffle.admin import FlagAdmin as BaseFlagAdmin
 

@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     "unfold.contrib.location_field",  # optional, if django-location-field package is used
     "unfold.contrib.constance",  # optional, if django-constance package is used
     "unfold.contrib.hijack",  # optional, if django-hijack package is used
-    "unfold.contrib.waffle",  # optional, if django-waffle package is used
     "django.contrib.admin",  # required
 ]
 ```
