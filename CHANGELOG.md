@@ -1,6 +1,30 @@
 # CHANGELOG
 
 
+## v0.103.0 (2026-08-06)
+
+### Bug Fixes
+
+- Boolean widget check test ([#2193](https://github.com/unfoldadmin/django-unfold/pull/2193),
+  [`f2424e6`](https://github.com/unfoldadmin/django-unfold/commit/f2424e6b0fddc67132f9383e9ddad94b7971d700))
+
+- Django guardian manage form ([#2188](https://github.com/unfoldadmin/django-unfold/pull/2188),
+  [`4c088bc`](https://github.com/unfoldadmin/django-unfold/commit/4c088bc804ffe4bbe5d509a509151dacbd076a71))
+
+- Remove nowrap from changelist table
+  ([#2186](https://github.com/unfoldadmin/django-unfold/pull/2186),
+  [`456ede4`](https://github.com/unfoldadmin/django-unfold/commit/456ede4b723fee185bd0022193e3cfa856e967c3))
+
+### Features
+
+- Django waffle support ([#2189](https://github.com/unfoldadmin/django-unfold/pull/2189),
+  [`9926746`](https://github.com/unfoldadmin/django-unfold/commit/9926746fb1290906b7d400252d4920b8bc1bf0cf))
+
+- Remove uncompressed fields support
+  ([#2187](https://github.com/unfoldadmin/django-unfold/pull/2187),
+  [`3f7024c`](https://github.com/unfoldadmin/django-unfold/commit/3f7024c810bf0e4b7859f74d0abc9b7937816d5b))
+
+
 ## v0.102.0 (2026-07-27)
 
 ### Bug Fixes
