@@ -1,10 +1,10 @@
 {% load unfold %}
 
-<div class="border-b border-base-200 flex gap-3 items-center h-[65px] mb-4 dark:border-base-800 px-3 {% element_classes 'navigation_header' %}" {% if site_dropdown %}x-data="{ openDropdown: false }"{% endif %}>
+<div class="border-b border-base-200 flex gap-3 items-center h-[65px] mb-4 dark:border-base-800 px-3 {% element_classes 'navigation_header' %}">
     <div class="bg-transparent flex font-semibold gap-3 grow min-w-0 h-[64px] items-center px-3 {% if site_dropdown %}cursor-pointer -mx-3 px-6 hover:bg-base-100 dark:hover:bg-white/[.06]{% endif %}"
          {% if site_dropdown %}
-             x-on:click="openDropdown = !openDropdown"
-             x-bind:class="{'bg-base-100 dark:bg-white/[.06]': openDropdown, 'bg-transparent': !openDropdown}"
+             x-on:click="siteDropdownOpen = !siteDropdownOpen"
+             x-bind:class="{'bg-base-100 dark:bg-white/[.06]': siteDropdownOpen, 'bg-transparent': !siteDropdownOpen}"
          {% endif %}
     >
         {% if site_logo %}
