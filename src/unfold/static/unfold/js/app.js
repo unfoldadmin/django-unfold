@@ -67,6 +67,7 @@ function theme(defaultTheme = "auto") {
 				localStorage.setItem("sidebarOpen", this.sidebarOpen ? "1" : "0");
 			}
 		},
+		siteDropdownOpen: false,
 		shortcutsOpen: false,
 		openModal: false,
 		filterOpen: false,
