@@ -31,6 +31,8 @@
                         x-on:keydown.arrow-up.prevent="prevItem()"
                         x-on:keydown.meta.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %}, true)"
                         x-on:keydown.ctrl.enter.prevent="selectItem({% if command_show_history %}true{% else %}false{% endif %}, true)"
+                        x-on:keydown.meta.k.prevent="handleOpen()"
+                        x-on:keydown.ctrl.k.prevent="handleOpen()"
                         x-on:keydown.enter.prevent="if (!$event.metaKey && !$event.ctrlKey) selectItem({% if command_show_history %}true{% else %}false{% endif %}, false)"
                         hx-get="{% url "admin:search" %}"
                         hx-trigger="keyup changed delay:500ms"

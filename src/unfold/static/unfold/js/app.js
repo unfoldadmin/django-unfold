@@ -318,13 +318,16 @@ function searchCommand() {
 		searchTerm: "",
 		commandHistory: JSON.parse(localStorage.getItem("commandHistory") || "[]"),
 		handleOpen() {
-			this.openCommandResults = true;
-			setTimeout(() => {
-				this.$refs.searchInputCommand.focus();
-			}, 20);
+			this.openCommandResults = !this.openCommandResults;
 
-			this.items = document.querySelectorAll("#command-history li");
-			this.totalItems = this.items.length;
+			if (this.openCommandResults) {
+				Alpine.nextTick(() => {
+					this.$refs.searchInputCommand.focus();
+				});
+
+				this.items = document.querySelectorAll("#command-history li");
+				this.totalItems = this.items.length;
+			}
 		},
 		handleShortcut(event) {
 			if (
