@@ -125,6 +125,7 @@ UNFOLD = {
                         "badge": "sample_app.badge_callback",
                         "badge_variant": "info", # info, success, warning, primary, danger
                         "badge_style": "solid", # background fill style
+                        "badge_class": "ml-auto", # additional class for badge
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
