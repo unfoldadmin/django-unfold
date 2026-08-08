@@ -121,7 +121,12 @@ UNFOLD = {
                     {
                         "title": _("Dashboard"),
                         "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
+                        "icon_template": "helpers/icon/dashboard.svg",
                         "link": reverse_lazy("admin:index"),
+                        "link_attrs": {
+                            "title": "Exampl title",
+                            "target": "_blank",
+                        },
                         "badge": "sample_app.badge_callback",
                         "badge_variant": "info", # info, success, warning, primary, danger
                         "badge_style": "solid", # background fill style
