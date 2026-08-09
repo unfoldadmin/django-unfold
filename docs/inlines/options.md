@@ -53,7 +53,7 @@ class MyInline(TabularInline):
 
 ## Hide title row
 
-You can hide the title row for both `StackedInline` and `TabularInline` by setting the `hide_title` attribute to `True`. This feature is particularly useful when you want to create a more compact and streamlined interface. Please note that for `StackedInline`, the delete permission (`can_delete`) must be disabled to hide the title row, as the delete checkbox is contained within it.
+You can hide the title row for both `StackedInline` and `TabularInline` by setting the `show_title` attribute to `False`. This feature is particularly useful when you want to create a more compact and streamlined interface. Please note that for `StackedInline`, the delete permission (`can_delete`) must be disabled to hide the title row, as the delete checkbox is contained within it.
 
 ```python
 # admin.py
@@ -61,10 +61,9 @@ You can hide the title row for both `StackedInline` and `TabularInline` by setti
 from django.contrib.auth.models import User
 from unfold.admin import TabularInline
 
-
 class MyInline(TabularInline):
     model = User
-    hide_title = True
+    show_title = True
 ```
 
 ## Collapsible StackedInline

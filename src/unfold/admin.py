@@ -1,3 +1,4 @@
+import warnings
 from functools import update_wrapper
 from typing import Any, TypedDict
 
@@ -257,11 +258,23 @@ class BaseInlineMixin:
     readonly_preprocess_fields = {}
     ordering_field = None
     per_page = None
-    hide_ordering_field = False
-    collapsible = False
     show_count = False
-    hide_title = False
+    show_title = True
+    hide_ordering_field = False  # TODO: rename to show_ordering_field
+    collapsible = False
     tab = False
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        if hasattr(self, "hide_title"):
+            warnings.warn(
+                "'hide_title' is deprecated, please use 'show_title' instead.",
+                FutureWarning,
+                stacklevel=2,
+            )
+
+            self.show_title = not self.hide_title
+
+        super().__init__(*args, **kwargs)
 
 
 class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):
