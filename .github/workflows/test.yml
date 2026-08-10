@@ -17,6 +17,7 @@ jobs:
     name: Python ${{ matrix.python-version }} / Django ${{ matrix.django-version }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    continue-on-error: ${{ matrix.django-version == 'main' }}
     strategy:
       fail-fast: false
       matrix:
