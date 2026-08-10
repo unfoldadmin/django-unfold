@@ -59,6 +59,7 @@ dev = [
 django52 = ["django>=5.2,<6"]
 django60 = ["django>=6.0,<6.1"]
 django61 = ["django>=6.1,<6.2"]
+djangomain = ["django @ git+https://github.com/django/django@main",]
 
 [tool.uv]
 conflicts = [
@@ -66,8 +67,10 @@ conflicts = [
         { group = "django52" },
         { group = "django60" },
         { group = "django61" },
+        { group = "djangomain" },
     ],
 ]
+
 
 [tool.hatch.build.targets.sdist]
 include = ["src/unfold"]
@@ -158,7 +161,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{312,313,314}-django{52,60,61}
+        python{312,313,314}-django{52,60,61,main}
     [testenv]
     allowlist_externals = uv
     skip_install = true
@@ -168,4 +171,5 @@ legacy_tox_ini = """
         django52: uv run --group django52 -- pytest .
         django60: uv run --group django60 -- pytest .
         django61: uv run --group django61 -- pytest .
+        djangomain: uv run --group djangomain --upgrade-package -- pytest .
 """
