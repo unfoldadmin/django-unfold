@@ -5,6 +5,7 @@ conflicts = [[
     { package = "django-unfold", group = "django52" },
     { package = "django-unfold", group = "django60" },
     { package = "django-unfold", group = "django61" },
+    { package = "django-unfold", group = "djangomain" },
 ]]
 
 [[package]]
@@ -118,7 +119,7 @@ name = "click"
 version = "8.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/76/d4/81420972a676e8ffea40450d8c8c92943e7218a78fe9b64359836cc9876b/click-8.4.2.tar.gz", hash = "sha256:9a6cea6e60b17ebe0a44c5cc636d94f09bd66142c1cd7d8b4cd731c4917a15f6", size = 338000, upload-time = "2026-06-24T17:45:15.148Z" }
 wheels = [
@@ -250,9 +251,9 @@ name = "django"
 version = "5.2.16"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "asgiref", marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "sqlparse", marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-13-django-unfold-django52') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "asgiref", marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "sqlparse", marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-13-django-unfold-django52') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a9/26/889449d521ae508b26de715954faecd8bcf3f740affb81b2d146a83b42a5/django-5.2.16.tar.gz", hash = "sha256:59ea02020c3136fce14bef0bbece21a10a4febef5eed1c51c22ae468efa22200", size = 10890894, upload-time = "2026-07-07T13:52:17.005Z" }
 wheels = [
@@ -264,9 +265,9 @@ name = "django"
 version = "6.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "asgiref", marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "sqlparse", marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
+    { name = "asgiref", marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "sqlparse", marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/89/55/664f24ff81c9ea19cb7dfc851afeae1f3c2390c7aee01d4ded68b5c1580d/django-6.0.7.tar.gz", hash = "sha256:2998503fc083124fb58037084bfa00de323c7c743f05f1b4284e77bff0ab8890", size = 10921299, upload-time = "2026-07-07T13:51:26.485Z" }
 wheels = [
@@ -280,11 +281,21 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "sqlparse" },
-    { name = "tzdata", marker = "(sys_platform == 'win32' and extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-13-django-unfold-django61') or (sys_platform == 'win32' and extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e2/42/6cb20996733984c1f6661daeda3877990836c76c633c6c8879d39f7120eb/django-6.1.tar.gz", hash = "sha256:86a2aacd59b817e4d6ac2ebfe22356c58f66f7b24e503f71b7c2fead677ee48b", size = 11223034, upload-time = "2026-08-05T19:21:53.789Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/91/9c/ce847620134cfab903e75690c498af73b46abbede2912ea89bd76d5c1e76/django-6.1-py3-none-any.whl", hash = "sha256:6c132cd980c9392b06807d4ca52d72530d631dc65a85d9dacede00a780cefbbe", size = 8417399, upload-time = "2026-08-05T19:21:47.285Z" },
+]
+
+[[package]]
+name = "django"
+version = "6.2.dev20260810134203"
+source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }
+dependencies = [
+    { name = "asgiref", marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "sqlparse", marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 
 [[package]]
@@ -301,9 +312,10 @@ name = "django-crispy-forms"
 version = "2.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/73/42/c2cfb672493730b963ef377b103e29871c56348a215d0ae8cf362fe8ab1e/django_crispy_forms-2.6.tar.gz", hash = "sha256:4921a1087c6cd4f9fa3c139654c1de1c1c385f8bd6729aaee530bc0121ab4b93", size = 1097838, upload-time = "2026-03-01T09:03:37.138Z" }
 wheels = [
@@ -315,10 +327,11 @@ name = "django-guardian"
 version = "3.3.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
-    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f4/27/2924c6ebb788d5b76ca9f28ba4da82a2d828e56bb0f9b973dd523e797da4/django_guardian-3.3.3.tar.gz", hash = "sha256:fa9be851e5e7df4fccd0b0d7a171042cdbfaf0412a9aa54c56361d642eaccff1", size = 111083, upload-time = "2026-07-22T23:35:21.784Z" }
 wheels = [
@@ -330,9 +343,10 @@ name = "django-hijack"
 version = "3.7.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8c/b3/4b87f0bb4d0ca9128cd7fae37d434a0a4c7855c20759e33f2fa58a9d8a74/django_hijack-3.7.8.tar.gz", hash = "sha256:f28afb2be24430e348b8887c2f04337b1b77b66a44e4a6cd3a40902926d9e5fb", size = 14476, upload-time = "2026-04-19T18:07:15.284Z" }
 wheels = [
@@ -345,9 +359,10 @@ version = "4.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "diff-match-patch" },
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
     { name = "tablib" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/92/32/5b83cc46a70ac94c1d17144097bf8aee7d9bb401d0863652c8d5ce1d2e50/django_import_export-4.4.1.tar.gz", hash = "sha256:165dc7fdcd56a6356342eef3f88f3f3682b64b6f67e9a259a137e8b57aeff10c", size = 2238690, upload-time = "2026-05-05T12:42:44.295Z" }
@@ -368,9 +383,10 @@ name = "django-money"
 version = "3.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
     { name = "py-moneyed" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5e/a1/2a86adff207bd7562a26da2319746fba516978a946fe0864fad96640ecae/django_money-3.6.1.tar.gz", hash = "sha256:9b25d992a457af932eef1e5fef0098dd3ff0c92f4255d2d6d452af772b2fdde5", size = 45020, upload-time = "2026-06-07T10:52:34.363Z" }
@@ -383,9 +399,10 @@ name = "django-simple-history"
 version = "3.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6b/1c/0689c13c0aa36df828947692f4e309f93c58e075219735c423edbbf6227d/django_simple_history-3.13.0.tar.gz", hash = "sha256:ca3c1e4ccd5f16f45fbbef6015ee2a246465fd9bd924100df8e9dfb368c4f26c", size = 236759, upload-time = "2026-07-22T13:41:29.588Z" }
 wheels = [
@@ -397,9 +414,10 @@ name = "django-stubs"
 version = "6.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
     { name = "django-stubs-ext" },
     { name = "types-pyyaml" },
     { name = "typing-extensions" },
@@ -414,9 +432,10 @@ name = "django-stubs-ext"
 version = "6.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/36/50/917f7224ea470e89cdcdc93d3dfe75b8391adf976cf12f2ecdb5f5d122be/django_stubs_ext-6.0.7.tar.gz", hash = "sha256:c3172c5126614fd2a44d0196b313b44c21f717cb09477ba52b447d41f4ce613e", size = 6665, upload-time = "2026-07-14T10:07:56.933Z" }
@@ -426,12 +445,13 @@ wheels = [
 
 [[package]]
 name = "django-unfold"
-version = "0.103.0"
+version = "0.104.0"
 source = { editable = "." }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 
 [package.dev-dependencies]
@@ -466,6 +486,9 @@ django60 = [
 django61 = [
     { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" } },
 ]
+djangomain = [
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" } },
+]
 
 [package.metadata]
 requires-dist = [{ name = "django", specifier = ">=5.2" }]
@@ -496,15 +519,17 @@ dev = [
 django52 = [{ name = "django", specifier = ">=5.2,<6" }]
 django60 = [{ name = "django", specifier = ">=6.0,<6.1" }]
 django61 = [{ name = "django", specifier = ">=6.1,<6.2" }]
+djangomain = [{ name = "django", git = "https://github.com/django/django?rev=main" }]
 
 [[package]]
 name = "django-waffle"
 version = "5.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61')" },
-    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60')" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260810134203", source = { git = "https://github.com/django/django?rev=main#b5388a3a80cafcce2e34196d8e81cf5b48eb33bb" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/22/e1/6f533da0d4ac89f427dfd9410e39bfc14ae3a23335ecd549d76be4b2a834/django_waffle-5.0.0.tar.gz", hash = "sha256:62f9d00eedf68dafb82657beab56e601bddedc1ea1ccfef91d83df8658708509", size = 37761, upload-time = "2025-06-12T07:38:54.895Z" }
 wheels = [
@@ -537,7 +562,7 @@ name = "faker"
 version = "40.36.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "tzdata", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "tzdata", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/98/d2/026af1e002bbc6df534d1f8262b18ec79a974f928e9290bfbfdfe7c7b2af/faker-40.36.0.tar.gz", hash = "sha256:754048c76c03afa7de83eee8f4bcee3cf668cbb7d995f54a4e9678db7f110308", size = 2025903, upload-time = "2026-07-24T21:11:33.088Z" }
 wheels = [
@@ -812,8 +837,8 @@ name = "psycopg"
 version = "3.3.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
-    { name = "tzdata", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "tzdata", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/db/2f/cb91e5502ec9de1de6f1b76cfbf69531932725361168bb06963620c77e2e/psycopg-3.3.4.tar.gz", hash = "sha256:e21207764952cff81b6b8bdacad9a3939f2793367fdac2987b3aac36a651b5bc", size = 165799, upload-time = "2026-05-01T23:31:55.179Z" }
 wheels = [
@@ -822,7 +847,7 @@ wheels = [
 
 [package.optional-dependencies]
 binary = [
-    { name = "psycopg-binary", marker = "implementation_name != 'pypy' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "psycopg-binary", marker = "implementation_name != 'pypy' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
 ]
 
 [[package]]
@@ -994,7 +1019,7 @@ name = "pytest"
 version = "9.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61')" },
+    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
     { name = "iniconfig" },
     { name = "packaging" },
     { name = "pluggy" },
