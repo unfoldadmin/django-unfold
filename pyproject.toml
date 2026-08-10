@@ -170,5 +170,5 @@ legacy_tox_ini = """
         django52: uv run --group django52 -- pytest .
         django60: uv run --group django60 -- pytest .
         django61: uv run --group django61 -- pytest .
-        djangomain: uv run --group djangomain --upgrade-package -- pytest .
+        djangomain: uv run --group djangomain --upgrade-package django -- pytest .
 """
