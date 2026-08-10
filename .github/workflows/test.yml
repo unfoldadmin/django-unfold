@@ -17,7 +17,7 @@ jobs:
     name: Python ${{ matrix.python-version }} / Django ${{ matrix.django-version }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    continue-on-error: ${{ matrix.django-version == 'main' }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
@@ -29,7 +29,19 @@ jobs:
           - "52"
           - "60"
           - "61"
-          - "main"
+        experimental:
+          - false
+        include:
+          - python-version: "3.12"
+            django-version: "main"
+            experimental: true
+          - python-version: "3.13"
+            django-version: "main"
+            experimental: true
+          - python-version: "3.14"
+            django-version: "main"
+            experimental: true
+
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
