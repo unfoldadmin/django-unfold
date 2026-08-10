@@ -1,6 +1,51 @@
 # CHANGELOG
 
 
+## v0.104.0 (2026-08-10)
+
+### Bug Fixes
+
+- Adjust sidebar items spacing ([#2206](https://github.com/unfoldadmin/django-unfold/pull/2206),
+  [`6a23e11`](https://github.com/unfoldadmin/django-unfold/commit/6a23e11cc87d0686bd1e23ef86909eafafbffca7))
+
+- Command open shortcut ([#2205](https://github.com/unfoldadmin/django-unfold/pull/2205),
+  [`351091e`](https://github.com/unfoldadmin/django-unfold/commit/351091ef06c5c150134a8c48e5ef9b400d1c24d6))
+
+- Grammar in issue templates ([#2198](https://github.com/unfoldadmin/django-unfold/pull/2198),
+  [`58520b2`](https://github.com/unfoldadmin/django-unfold/commit/58520b2339a74a156fdc0885f349446c1a0f90ac))
+
+- Side dropdown display on sidebar width change
+  ([#2204](https://github.com/unfoldadmin/django-unfold/pull/2204),
+  [`49124fa`](https://github.com/unfoldadmin/django-unfold/commit/49124faefac07b11ba19b0646eff9d08ff7e2240))
+
+- Site dropdown width ([#2201](https://github.com/unfoldadmin/django-unfold/pull/2201),
+  [`fd52264`](https://github.com/unfoldadmin/django-unfold/commit/fd522646e270f629bdacf5f8c4a0d3d1abfcff7c))
+
+- Site version as plain text ([#2200](https://github.com/unfoldadmin/django-unfold/pull/2200),
+  [`76df798`](https://github.com/unfoldadmin/django-unfold/commit/76df798a56fa1e60b0768577cf4c4b55bdd0595c))
+
+### Documentation
+
+- Waffle installation improvements ([#2202](https://github.com/unfoldadmin/django-unfold/pull/2202),
+  [`96827d2`](https://github.com/unfoldadmin/django-unfold/commit/96827d2b3480923c4e6d3029f5341147971c8a60))
+
+### Features
+
+- Custom sidebar badge css class ([#2208](https://github.com/unfoldadmin/django-unfold/pull/2208),
+  [`09621b8`](https://github.com/unfoldadmin/django-unfold/commit/09621b8be8bcd742b5e31379faf0274388bcc59b))
+
+- Django 6.1 ([#2199](https://github.com/unfoldadmin/django-unfold/pull/2199),
+  [`2a0ec2f`](https://github.com/unfoldadmin/django-unfold/commit/2a0ec2f5137501b28e2410634f935b2f4cafff32))
+
+- Rename inline hide_title to show_title
+  ([#2212](https://github.com/unfoldadmin/django-unfold/pull/2212),
+  [`c00ee9c`](https://github.com/unfoldadmin/django-unfold/commit/c00ee9cb452b9768fa3a729570c88570420334c9))
+
+- Sidebar links custom icon template
+  ([#2210](https://github.com/unfoldadmin/django-unfold/pull/2210),
+  [`fbce676`](https://github.com/unfoldadmin/django-unfold/commit/fbce6765366d70887b4accc324e85f69795260ea))
+
+
 ## v0.103.0 (2026-08-06)
 
 ### Bug Fixes
