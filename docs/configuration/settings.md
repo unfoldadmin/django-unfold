@@ -124,7 +124,7 @@ UNFOLD = {
                         "icon_template": "helpers/icon/dashboard.svg",
                         "link": reverse_lazy("admin:index"),
                         "link_attrs": {
-                            "title": "Exampl title",
+                            "title": "Example title",
                             "target": "_blank",
                         },
                         "badge": "sample_app.badge_callback",
