@@ -331,7 +331,7 @@ class UnfoldAdminSite(AdminSite):
                 try:
                     callback = import_string(group["badge"])
                     group["badge_callback"] = lazy(callback)(request)
-                except ImportError:
+                except (ImportError, ValueError):
                     pass
 
             results.append(group)
@@ -374,7 +374,7 @@ class UnfoldAdminSite(AdminSite):
                 try:
                     callback = import_string(item["badge"])
                     item["badge_callback"] = lazy(callback)(request)
-                except ImportError:
+                except (ImportError, ValueError):
                     pass
 
             # Process nested items
@@ -441,7 +441,7 @@ class UnfoldAdminSite(AdminSite):
         if isinstance(callback, str):
             try:
                 callback = import_string(callback)
-            except ImportError:
+            except (ImportError, ValueError):
                 pass
 
         if isinstance(callback, str) or isinstance(callback, Callable):
@@ -590,7 +590,7 @@ class UnfoldAdminSite(AdminSite):
             try:
                 callback = import_string(value)
                 return callback(*args)
-            except ImportError:
+            except (ImportError, ValueError):
                 pass
 
             return value
