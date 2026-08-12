@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v0.104.1 (2026-08-12)
+
+### Bug Fixes
+
+- Django 6.2 import_string ([#2214](https://github.com/unfoldadmin/django-unfold/pull/2214),
+  [`fcfae7a`](https://github.com/unfoldadmin/django-unfold/commit/fcfae7a6ea514f52548b073dccc6ac58a42f6984))
+
+- Documentation splling ([#2218](https://github.com/unfoldadmin/django-unfold/pull/2218),
+  [`496de13`](https://github.com/unfoldadmin/django-unfold/commit/496de13951b7417eb94823fb3944b1ab936714dd))
+
+
 ## v0.104.0 (2026-08-10)
 
 ### Bug Fixes
