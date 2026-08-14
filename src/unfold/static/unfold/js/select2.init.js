@@ -19,8 +19,11 @@
 
 	$.fn.djangoFilterSelect2 = function () {
 		$.each(this, (_index, element) => {
+			const formParent = this.closest('#filter-form');
+
 			$(element).select2({
 				closeOnSelect: !element.multiple,
+				...(formParent.length ? { dropdownParent: formParent } : {}),
 				ajax: {
 					data: (params) => {
 						return {
