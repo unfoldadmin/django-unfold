@@ -7,7 +7,7 @@
 
             <div class="bg-white flex ml-auto m-4 overflow-hidden rounded-default shadow-xs w-80 dark:bg-base-800 z-20 {% if not cl.model_admin.list_filter_sheet %} 2xl:shadow-none 2xl:overflow-visible 2xl:border-0 2xl:shadow-none 2xl:sticky 2xl:top-4 2xl:dark:border-base-800 2xl:bg-transparent 2xl:dark:bg-transparent! 2xl:m-0{% endif %}">
                 <div class="grow h-full overflow-auto relative {% if not cl.model_admin.list_filter_sheet %} 2xl:overflow-visible{% endif %}">
-                    <{% if cl.model_admin.list_filter_submit %}form id="filter-form" method="get"{% else %}div{% endif %} class="flex flex-col h-full outline-none {% if not cl.model_admin.list_filter_sheet %}2xl:px-0{% endif %}" x-trap.noscroll="filterModalOpen">
+                    <{% if cl.model_admin.list_filter_submit %}form id="filter-form" method="get"{% else %}div{% endif %} class="flex flex-col h-full outline-none {% if not cl.model_admin.list_filter_sheet %}2xl:px-0{% endif %}" x-trap.noautofocus.noscroll="filterModalOpen">
                     {% if cl.model_admin.list_filter_submit %}
                         {% preserve_filters %}
                     {% endif %}
