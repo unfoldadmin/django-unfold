@@ -221,6 +221,14 @@
   }
 }
 
+@utility range-input {
+  @apply appearance-none absolute h-1 pointer-events-none rounded-default w-full z-0;
+
+  &::-webkit-slider-thumb,
+  &::-moz-range-thumb {
+    @apply appearance-none border bg-white cursor-pointer h-3.5 w-3.5 rounded-full border-base-200 pointer-events-auto shadow-xs z-50;
+  }
+}
 
 @utility scrollable-top {
   @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-base-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
@@ -686,33 +694,6 @@ fieldset details[open] > summary:after {
 .htmx-indicator.htmx-swapping:after {
   @apply absolute animate-spin h-4 inset-1/2 material-symbols-outlined md-16 text-base-400 w-4;
   content: "sync";
-}
-
-/*******************************************************
- Filters
- *******************************************************/
-#changelist-filter .admin-numeric-filter-slider .noUi-handle {
-  @apply bg-white border border-base-200 cursor-pointer h-4 -right-4 rounded-full shadow-xs w-4 dark:bg-base-200 dark:border-base-200;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-handle-upper {
-  @apply right-0;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-handle:after {
-  content: none;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-handle:before {
-  content: none;
-}
-
-#changelist-filter .admin-numeric-filter-slider.noUi-target {
-  @apply bg-base-200 border-0 h-1 shadow-none dark:bg-base-600;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-connect {
-  @apply bg-primary-600 border-0 h-1;
 }
 
 /*******************************************************

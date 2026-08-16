@@ -224,20 +224,14 @@ class RangeNumericForm(forms.Form):
 
 
 class SliderNumericForm(RangeNumericForm):
-    class Media:
-        css = {"all": ("unfold/filters/css/nouislider/nouislider.min.css",)}
-        js = (
-            "unfold/filters/js/wnumb/wNumb.min.js",
-            "unfold/filters/js/nouislider/nouislider.min.js",
-            "unfold/filters/js/admin-numeric-filter.js",
-        )
+    pass
 
 
 class RangeDateForm(forms.Form):
     class Media:
         js = [
             "admin/js/calendar.js",
-            "unfold/filters/js/DateTimeShortcuts.js",
+            "admin/js/admin/DateTimeShortcuts.js",
         ]
 
     def __init__(self, name: str, *args, **kwargs) -> None:
@@ -250,7 +244,7 @@ class RangeDateForm(forms.Form):
             widget=forms.DateInput(
                 attrs={
                     "placeholder": _("From"),
-                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vDateField " + " ".join(INPUT_CLASSES),
                 }
             ),
         )
@@ -260,7 +254,7 @@ class RangeDateForm(forms.Form):
             widget=forms.DateInput(
                 attrs={
                     "placeholder": _("To"),
-                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vDateField " + " ".join(INPUT_CLASSES),
                 }
             ),
         )
@@ -270,7 +264,7 @@ class RangeDateTimeForm(forms.Form):
     class Media:
         js = [
             "admin/js/calendar.js",
-            "unfold/filters/js/DateTimeShortcuts.js",
+            "admin/js/admin/DateTimeShortcuts.js",
         ]
 
     def __init__(self, name: str, *args, **kwargs) -> None:
@@ -284,12 +278,12 @@ class RangeDateTimeForm(forms.Form):
                 date_label="",
                 date_attrs={
                     "placeholder": _("Date from"),
-                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vDateField " + " ".join(INPUT_CLASSES),
                 },
                 time_label="",
                 time_attrs={
                     "placeholder": _("Time"),
-                    "class": "vCustomTimeField " + " ".join(INPUT_CLASSES),
+                    "class": "vTimeField " + " ".join(INPUT_CLASSES),
                 },
             ),
         )
@@ -300,12 +294,12 @@ class RangeDateTimeForm(forms.Form):
                 date_label="",
                 date_attrs={
                     "placeholder": _("Date to"),
-                    "class": "vCustomDateField " + " ".join(INPUT_CLASSES),
+                    "class": "vDateField " + " ".join(INPUT_CLASSES),
                 },
                 time_label="",
                 time_attrs={
                     "placeholder": _("Time"),
-                    "class": "vCustomTimeField " + " ".join(INPUT_CLASSES),
+                    "class": "vTimeField " + " ".join(INPUT_CLASSES),
                 },
             ),
         )
