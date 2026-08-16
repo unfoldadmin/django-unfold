@@ -8,12 +8,13 @@
         </h3>
 
         {% if choice.min is not None and choice.max is not None and choice.step %}
-
             <div class="admin-numeric-filter-wrapper-group flex flex-row gap-4 mb-4">
                 {{ choice.form.as_p }}
             </div>
 
-            <div class="admin-numeric-filter-slider" data-min="{{ choice.min|unlocalize }}" data-max="{{ choice.max|unlocalize }}" data-decimals="{{ choice.decimals }}" data-step="{{ choice.step|unlocalize }}">
+            <div class="bg-base-200 h-1 relative rounded-default *:absolute dark:bg-base-600">
+                <input class="range-filter range-filter-from range-input z-10" type="range" value="{{ choice.value_from|unlocalize }}" min="{{ choice.min|unlocalize }}" max="{{ choice.max|unlocalize }}" step="{{ choice.step|unlocalize }}">
+                <input class="range-filter range-filter-to range-input" type="range" value="{{ choice.value_to|unlocalize }}" min="{{ choice.min|unlocalize }}" max="{{ choice.max|unlocalize }}" step="{{ choice.step|unlocalize }}">
             </div>
         {% else %}
             <div class="admin-numeric-filter-slider-error dark:text-font-default-dark">
