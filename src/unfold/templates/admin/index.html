@@ -9,11 +9,5 @@
 {% endblock %}
 
 {% block content %}
-    <div class="flex flex-col lg:flex-row lg:gap-8">
-        <div class="grow">
-            {% include "unfold/helpers/app_list_default.html" %}
-        </div>
-
-        {% include "unfold/helpers/history.html" %}
-    </div>
+    {% include "unfold/helpers/dashboard_default.html" %}
 {% endblock %}
