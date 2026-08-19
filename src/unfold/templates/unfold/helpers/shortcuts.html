@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<div x-show="shortcutsOpen" x-cloak x-trap.noscroll="shortcutsOpen" x-on:click.outside="shortcutsOpen = false" x-on:keydown.escape.window="shortcutsOpen = false">
+<div x-show="shortcutsOpen" x-cloak x-trap.noautofocus.noscroll="shortcutsOpen" x-on:click.outside="shortcutsOpen = false" x-on:keydown.escape.window="shortcutsOpen = false">
     <div class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 right-0 top-0 z-60 dark:bg-base-900/80"></div>
 
     <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-on:click.outside="shortcutsOpen = false">

@@ -4,7 +4,7 @@
     <div x-data="searchCommand()" x-show="openCommandResults" x-cloak x-on:opencommand.window="handleOpen()" x-on:keydown.window="handleShortcut($event)">
         <div class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 right-0 top-0 z-60 dark:bg-base-900/80"></div>
 
-        <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-trap.noscroll="openCommandResults">
+        <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-trap.noautofocus.noscroll="openCommandResults">
             <div class="bg-base-50 dark:bg-base-800 flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-on:click.outside="handleOutsideClick()">
                 <div class="flex flex-row items-center px-4 w-full">
                     <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
