@@ -1,13 +1,14 @@
 <div id="modal-overlay" class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 mr-1 right-0 top-0 z-60 dark:bg-base-900/80"
      x-cloak
-     x-show="openModal"
-     x-on:keydown.escape.window="openModal = false">
+     x-show="openModal || shortcutsOpen || filterModalOpen || openCommandResults"
+     x-on:keydown.escape.window="openModal = shortcutsOpen = filterModalOpen = openCommandResults = false">
 </div>
 
-<div class="bottom-0 flex items-center justify-center left-0 right-0 fixed top-0 z-70"
+<div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]"
      x-cloak
      x-show="openModal"
+     x-transition
      x-trap.noautofocus.noscroll="openModal"
      x-on:keydown.escape.window="openModal = false">
-    <div id="modal-content" class="bg-white relative rounded-default p-6 w-md dark:bg-base-800" x-on:click.outside="openModal = false"></div>
+    <div id="modal-content" class="bg-white dark:bg-base-800 flex flex-col max-w-2xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-on:click.outside="openModal = false"></div>
 </div>

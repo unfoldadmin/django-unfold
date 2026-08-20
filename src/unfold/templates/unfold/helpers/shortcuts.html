@@ -1,10 +1,8 @@
 {% load i18n %}
 
-<div x-show="shortcutsOpen" x-cloak x-trap.noautofocus.noscroll="shortcutsOpen" x-on:click.outside="shortcutsOpen = false" x-on:keydown.escape.window="shortcutsOpen = false">
-    <div class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 right-0 top-0 z-60 dark:bg-base-900/80"></div>
-
-    <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-on:click.outside="shortcutsOpen = false">
-        <div class="bg-white dark:bg-base-800 flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full">
+{% if request.user.is_staff %}
+    <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-show="shortcutsOpen" x-transition x-transition:leave.duration.0ms x-cloak x-trap.noautofocus.noscroll="shortcutsOpen" x-on:keydown.escape.window="shortcutsOpen = false">
+        <div class="bg-white dark:bg-base-800 flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-on:click.outside="shortcutsOpen = false">
             <div class="border-b border-base-200 flex flex-col gap-2 px-4 py-3 dark:border-base-700">
                 <h1 class="font-semibold text-base text-important tracking-tight">
                     {% trans "Available shortcuts" %}
@@ -134,4 +132,4 @@
             </div>
         </div>
     </div>
-</div>
+{% endif %}
