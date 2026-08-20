@@ -71,6 +71,7 @@ function theme(defaultTheme = "auto") {
 		},
 		siteDropdownOpen: false,
 		shortcutsOpen: false,
+		openCommandResults: false,
 		openModal: false,
 		filterOpen: false,
 		filterModalOpen: false,
@@ -316,7 +317,6 @@ function searchCommand() {
 		totalItems: 0,
 		currentIndex: 0,
 		hasResponse: false,
-		openCommandResults: false,
 		searchTerm: "",
 		commandHistory: JSON.parse(localStorage.getItem("commandHistory") || "[]"),
 		handleOpen() {
