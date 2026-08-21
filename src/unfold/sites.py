@@ -351,14 +351,13 @@ class UnfoldAdminSite(AdminSite):
 
             if "active" in item:
                 item["active"] = self._get_value(item["active"], request)
+            elif tabs and self._get_is_tab_active(request, tabs, link):
+                # Checks if any tab item is active and then marks the sidebar link as active
+                item["active"] = True
             else:
                 item["active"] = self._get_is_active(
                     request, item.get("link_callback") or link
                 )
-
-            # Checks if any tab item is active and then marks the sidebar link as active
-            if tabs and self._get_is_tab_active(request, tabs, link):
-                item["active"] = True
 
             # Link callback
             if isinstance(link, Callable):
