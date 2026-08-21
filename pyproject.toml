@@ -55,6 +55,7 @@ dev = [
     "tox~=4.58.0",
     "six~=1.17.0",
     "psycopg[binary]~=3.3.4",
+    "pre-commit~=4.6.2",
 ]
 django52 = ["django>=5.2,<6"]
 django60 = ["django>=6.0,<6.1"]
