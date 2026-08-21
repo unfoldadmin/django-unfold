@@ -71,6 +71,7 @@ class MyInline(TabularInline):
 Unfold enhances the `StackedInline` functionality by introducing a collapsible mode. When enabled, this feature allows you to display multiple records in a space-efficient manner by defaulting to a collapsed state. This is particularly useful when dealing with forms that contain numerous inline entries, as it helps maintain a clean and organized interface.
 
 Key features of collapsible StackedInlines:
+
 - Records are collapsed by default, saving vertical space
 - Users can expand individual records as needed
 - Records containing validation errors automatically expand to highlight the issues
