@@ -42,6 +42,7 @@ class ActionModelAdminMixin(ModelAdmin):
                 {
                     "title": action.description,
                     "icon": action.icon,
+                    "variant": action.variant,
                     "attrs": action_attrs,
                     "dialog": action.dialog,
                     "display_in_dropdown": extra_options.get(
