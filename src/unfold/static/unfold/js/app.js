@@ -1,3 +1,7 @@
+window.addEventListener("DOMContentLoaded", () => {
+	blurDjangoQLSearch();
+});
+
 window.addEventListener("load", () => {
 	fileInputUpdatePath();
 
@@ -19,6 +23,10 @@ window.addEventListener("load", () => {
 
 	crispyFormset();
 });
+
+function blurDjangoQLSearch() {
+	document.getElementById("searchbar")?.blur()
+}
 
 function getCurrentTab() {
 	const fragment = window.location.hash?.replace("#", "");
@@ -124,6 +132,11 @@ function theme(defaultTheme = "auto") {
 				if (event.shiftKey && event.key === "?") {
 					event.preventDefault();
 					this.shortcutsOpen = !this.shortcutsOpen;
+				}
+
+				if (event.key === "/") {
+					event.preventDefault();
+					document.getElementById("searchbar")?.focus();
 				}
 
 				if (!event.metaKey && !event.ctrlKey && event.key === "[") {
@@ -287,25 +300,6 @@ const moveRecords = (e) => {
 		return false;
 	}
 };
-
-/*************************************************************
- * Search form
- *************************************************************/
-function searchForm() {
-	return {
-		applyShortcut(event) {
-			if (
-				event.key === "/" &&
-				document.activeElement.tagName.toLowerCase() !== "input" &&
-				document.activeElement.tagName.toLowerCase() !== "textarea" &&
-				!document.activeElement.isContentEditable
-			) {
-				event.preventDefault();
-				this.$refs.searchInput.focus();
-			}
-		},
-	};
-}
 
 /*************************************************************
  * Search command
