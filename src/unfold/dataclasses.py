@@ -1,18 +1,20 @@
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import TYPE_CHECKING, Any, NotRequired, TypedDict
 
 from unfold.enums import ActionVariant
 
 if TYPE_CHECKING:
+    from django_stubs_ext import StrOrPromise
+
     from unfold.forms import BaseDialogForm
 
 
 class ActionDialog(TypedDict):
-    title: str
-    description: str
-    form_class: type["BaseDialogForm"] | None
-    form_submit_text: str | None
+    title: "StrOrPromise"
+    description: NotRequired["StrOrPromise | None"]
+    form_class: NotRequired[type["BaseDialogForm"] | None]
+    form_submit_text: NotRequired["StrOrPromise | None"]
 
 
 @dataclass
