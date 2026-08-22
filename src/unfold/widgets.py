@@ -2,6 +2,7 @@ import json
 from collections.abc import Callable
 from typing import Any
 
+from django import forms
 from django.conf import settings
 from django.contrib.admin.options import VERTICAL
 from django.contrib.admin.sites import AdminSite
@@ -975,7 +976,7 @@ try:
 
 except ImportError:
 
-    class UnfoldAdminMoneyWidget:
+    class UnfoldAdminMoneyWidget(forms.Widget):
         def __init__(self, *args: Any, **kwargs: Any) -> None:
             raise UnfoldException("django-money not installed")
 
