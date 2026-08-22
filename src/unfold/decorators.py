@@ -28,7 +28,7 @@ def action(
     variant: ActionVariant | None = ActionVariant.DEFAULT,
     dialog: ActionDialog | None = None,
     extra_options: dict[str, Any] | None = None,
-) -> Action:
+) -> Callable:
     def decorator(func: Callable) -> Action:
         @wraps(func)
         def inner(
