@@ -16,11 +16,13 @@
             {% endblock %}
 
             {% block messages %}
-                <div class="px-4">
-                    <div class="{% if not cl.model_admin.list_fullwidth and is_fullwidth != "1" %}container{% endif %} mx-auto {% element_classes 'messages' %}">
-                        {% include "unfold/helpers/messages.html" %}
+                {% if messages %}
+                    <div class="px-4">
+                        <div class="{% if not cl.model_admin.list_fullwidth and is_fullwidth != "1" %}container{% endif %} mx-auto {% element_classes 'messages' %}">
+                            {% include "unfold/helpers/messages.html" %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             {% endblock messages %}
 
             <div class="@container px-4 pb-4 grow">
