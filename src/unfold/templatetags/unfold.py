@@ -483,36 +483,42 @@ def action_item_classes(context: RequestContext, action: dict) -> str:
             "bg-primary-600",
             "text-white",
             "dark:border-primary-500",
+            "hover:bg-primary-600/80",
         ],
         ActionVariant.DANGER: [
             "border-red-700",
             "bg-red-600",
             "text-white",
             "dark:border-red-500",
+            "hover:bg-red-600/80",
         ],
         ActionVariant.SUCCESS: [
             "border-green-700",
             "bg-green-600",
             "text-white",
             "dark:border-green-500",
+            "hover:bg-green-600/80",
         ],
         ActionVariant.INFO: [
             "border-blue-700",
             "bg-blue-600",
             "text-white",
             "dark:border-blue-500",
+            "hover:bg-blue-600/80",
         ],
         ActionVariant.WARNING: [
             "border-orange-700",
             "bg-orange-600",
             "text-white",
             "dark:border-orange-500",
+            "hover:bg-orange-600/80",
         ],
         ActionVariant.DEFAULT: [
             "border-base-200",
             "hover:text-primary-600",
             "dark:hover:text-primary-500",
             "dark:border-base-700",
+            "hover:bg-base-500/8",
         ],
     }
 
