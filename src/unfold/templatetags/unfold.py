@@ -415,14 +415,6 @@ def fieldset_row_classes(context: RequestContext) -> str:
         ):
             classes.append("hidden")
 
-    if len(line.fields) > 1:
-        classes.extend(
-            [
-                "grid",
-                f"lg:grid-cols-{len(line.fields)}",
-            ]
-        )
-
     if not line.has_visible_field:
         classes.append("hidden")
 
@@ -445,11 +437,9 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "border-dashed",
         "min-h-[59px]",
         "group-[.last]/row:border-b-0",
-        "lg:border-l",
         "lg:flex-row",
         "lg:items-center",
         "dark:border-base-800",
-        "lg:first:border-l-0",
     ]
 
     field = context.get("field")
