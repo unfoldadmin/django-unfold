@@ -3,12 +3,16 @@
 {% get_admin_log 20 as admin_log for_user user %}
 
 {% if admin_log %}
-    <div id="content-related" class="">
-        <div id="recent-actions-module">
+    <div id="content-related" class="border border-base-200 flex flex-col shadow-xs dark:border-base-800 rounded-lg py-3 lg:min-w-80 lg:max-w-80">
+        <h2 class="border-b border-base-200 font-semibold text-important mb-3 pb-3 px-3 dark:border-base-800">
+            {% trans "Recent actions" %}
+        </h2>
+
+        <div id="recent-actions-module" class="lg:h-0 grow overflow-y-auto scrollbar-default-hover px-3">
             <ul class="actionlist relative flex flex-col gap-6 after:content-[''] after:block after:w-full after:absolute after:top-2 after:bottom-2 after:left-[17px] after:w-[1px]! after:bg-base-200 dark:after:bg-base-800 after:z-10">
                 {% for entry in admin_log %}
                     <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} flex flex-row gap-3 items-center relative z-20">
-                        <span class="material-symbols-outlined border-3 border-white dark:border-base-900 flex items-center justify-center rounded-full w-[36px] h-[36px] {% if entry.is_deletion %}bg-red-600 text-white{% elif entry.is_addition %}bg-green-600 text-white{% else %}bg-base-100 text-default dark:bg-base-800{% endif %}">
+                        <span class="material-symbols-outlined border-3 border-white dark:border-base-900 flex items-center justify-center rounded-full w-[36px] min-w-[36px] h-[36px] {% if entry.is_deletion %}bg-red-600 text-white{% elif entry.is_addition %}bg-green-600 text-white{% else %}bg-base-100 text-default dark:bg-base-800{% endif %}">
                             {% if entry.is_addition %}
                                 add
                             {% elif entry.is_change %}
@@ -18,8 +22,8 @@
                             {% endif %}
                         </span>
 
-                        <div class="flex flex-col gap-0.5">
-                            <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+                        <div class="flex flex-col gap-0.5 min-w-0">
+                            <div class="truncate whitespace-nowrap">
                                 <span class="font-medium text-important">
                                     {% if entry.is_deletion or not entry.get_admin_url %}
                                         {{ entry.object_repr }}
