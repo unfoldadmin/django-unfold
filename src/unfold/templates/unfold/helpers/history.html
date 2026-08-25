@@ -1,35 +1,39 @@
 {% load i18n log %}
 
-{% get_admin_log 10 as admin_log for_user user %}
+{% get_admin_log 20 as admin_log for_user user %}
 
 {% if admin_log %}
-    <div id="content-related" class="lg:w-96">
-        <div id="recent-actions-module" class="module bg-base-50 rounded-default p-3 dark:bg-base-800">
-            <h2 class="mb-3 font-semibold text-base-900 dark:text-base-100">
-                {% translate 'Recent actions' %}
-            </h2>
-
-            <ul class="actionlist">
+    <div id="content-related" class="">
+        <div id="recent-actions-module">
+            <ul class="actionlist relative flex flex-col gap-6 after:content-[''] after:block after:w-full after:absolute after:top-2 after:bottom-2 after:left-[17px] after:w-[1px]! after:bg-base-200 after:dark:bg-base-800 after:z-10">
                 {% for entry in admin_log %}
-                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} border border-base-400/10 bg-white mb-3 p-3 rounded-default shadow-xs last:mb-0 dark:bg-base-900">
-                        <div class="mb-3 overflow-hidden text-ellipsis whitespace-nowrap">
-                            {% if entry.is_deletion or not entry.get_admin_url %}
-                                {{ entry.object_repr }}
-                            {% else %}
-                                <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                    <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %} flex flex-row gap-3 items-center relative z-20">
+                        <span class="material-symbols-outlined border-3 border-white flex items-center justify-center rounded-full w-[36px] h-[36px] {% if entry.is_deletion %}bg-red-600 text-white{% elif entry.is_addition %}bg-green-600 text-white{% else %}bg-base-100 text-default{% endif %}">
+                            {% if entry.is_addition %}
+                                add
+                            {% elif entry.is_change %}
+                                edit
+                            {% elif entry.is_deletion %}
+                                delete
                             {% endif %}
-                        </div>
+                        </span>
 
-                        <div class="border-base-100 border-t flex pt-3 dark:border-base-800">
-                            <div>
-                                {% if entry.content_type %}
-                                    {% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}
-                                {% else %}
-                                    {% translate 'Unknown content' %}
-                                {% endif %}
+                        <div class="flex flex-col gap-0.5">
+                            <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+                                <span class="font-medium text-important">
+                                    {% if entry.is_deletion or not entry.get_admin_url %}
+                                        {{ entry.object_repr }}
+                                    {% else %}
+                                        <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                                    {% endif %}
+                                </span>
+
+                                <span class="text-subtle">
+                                    ({% if entry.content_type %}{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}{% else %}{% trans 'Unknown content' %}{% endif %})
+                                </span>
                             </div>
 
-                            <div class="ml-auto">
+                            <div class="text-subtle text-xs">
                                 {{ entry.action_time }}
                             </div>
                         </div>
