@@ -21,32 +21,31 @@ To run the tests, navigate to the root of the repository and run the command bel
 uv run -- pytest .
 ```
 
-## Developing with a changed Poetry path
-
-If you want to develop a new feature or fix an issue directly in your project that uses Poetry for dependency management, you can link the `django-unfold` dependency in your `pyproject.toml` to the local repository. The prerequisites are to have `django-unfold` installed and to be using Poetry for dependency management at the same time.
-
-### Poetry configuration
-
-To add a new feature or fix an issue, the easiest approach is to use django-unfold with Poetry. The process looks like this:
-
-- Install django-unfold via `poetry add django-unfold`
-- Clone the repository to your local computer
-- Edit _pyproject.toml_ and update the django-unfold line to: `django-unfold = { path = "../django-unfold", develop = true}`
-- Lock and update via `poetry lock && poetry update`
-
 ## Compiling Tailwind
 
-The project contains a package.json with all dependencies required to compile the CSS file. The Tailwind configuration file is set to check all HTML, JS and Python files for Tailwind class occurrences. The prerequisite is to have Node.js installed on your computer.
+Unfold uses [Tailwind CSS](https://tailwindcss.com/) for styling and utility-first CSS classes. To work on or change styles, you'll need to compile Tailwind whenever you make updates to `src/unfold/styles.css` or related class usage.
 
-```bash
-# Install dependencies
-npm install
+### Installing Tailwind CLI
 
-# run after each change in code
-npm run tailwind:watch
+To compile Tailwind CSS, you must have the standalone [tailwindcss CLI](https://tailwindcss.com/docs/installation) installed.
 
-# run once
-npm run tailwind:build
+**On macOS (using Homebrew):**
+
+```sh
+brew install tailwindcss
+```
+
+**On other platforms:**
+
+You can download a prebuilt binary from the [Tailwind CSS release page](https://github.com/tailwindlabs/tailwindcss/releases) or follow instructions for your OS.
+
+
+### Compiling CSS
+
+After installing `tailwindcss`, compile your CSS with the following command (run from your project root):
+
+```sh
+tailwindcss -i src/unfold/styles.css -o src/unfold/static/unfold/css/styles.css --minify --watch
 ```
 
 Some components like datepickers, calendars or selectors in the admin interface cannot be styled by overriding HTML templates, so their default styles are overridden in **styles.css**.
