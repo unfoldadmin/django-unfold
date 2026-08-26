@@ -1,5 +1,7 @@
 <div id="modal-overlay" class="backdrop-blur-xs bg-base-900/20 bottom-0 fixed left-0 mr-1 right-0 top-0 z-60 dark:bg-base-900/80"
      x-cloak
+     x-transition.opacity.duration.25ms
+     x-transition:leave.duration.0ms
      x-show="openModal || shortcutsOpen || filterModalOpen || openCommandResults"
      x-on:keydown.escape.window="openModal = shortcutsOpen = filterModalOpen = openCommandResults = false">
 </div>
