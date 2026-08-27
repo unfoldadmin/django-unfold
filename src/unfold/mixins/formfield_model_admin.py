@@ -103,7 +103,7 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
             elif db_field.name in self.get_autocomplete_fields(request):
                 dependency = self.get_autocomplete_dependency_config(db_field.name)
                 if dependency:
-                    kwargs["widget"] = widgets.DependentAutocompleteSelect(
+                    kwargs["widget"] = widgets.UnfoldAdminDependentAutocompleteSelect(
                         db_field,
                         self.admin_site,
                         using=kwargs.get("using"),

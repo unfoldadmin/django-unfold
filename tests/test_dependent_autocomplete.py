@@ -13,7 +13,7 @@ from example.models import Address, City, Country, Person, PersonLocation, State
 from unfold.admin import GenericTabularInline, ModelAdmin, TabularInline
 from unfold.sites import UnfoldAdminSite
 from unfold.views import DependentAutocompleteJsonView
-from unfold.widgets import DependentAutocompleteSelect
+from unfold.widgets import UnfoldAdminDependentAutocompleteSelect
 
 
 @pytest.fixture
@@ -66,7 +66,7 @@ def result_texts(response):
 
 def test_dependent_autocomplete_media_loads_after_jquery_init():
     field = Address._meta.get_field("selected_state")
-    widget = DependentAutocompleteSelect(
+    widget = UnfoldAdminDependentAutocompleteSelect(
         field,
         site,
         parent_field_name="selected_country",

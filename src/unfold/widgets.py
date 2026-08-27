@@ -953,7 +953,7 @@ class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
     template_name = "unfold/widgets/related_widget_wrapper.html"
 
 
-class DependentAutocompleteSelect(AutocompleteSelect):
+class UnfoldAdminDependentAutocompleteSelect(AutocompleteSelect):
     """Native admin autocomplete widget with one ForeignKey parent dependency."""
 
     def __init__(
