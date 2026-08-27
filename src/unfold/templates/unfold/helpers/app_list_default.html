@@ -11,7 +11,7 @@
 
             <table class="border border-base-200 border-spacing-none border-separate rounded-default overflow-hidden shadow-xs w-full dark:border-base-800">
                 {% for model in app.models %}
-                    <tr class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %} *:border-b *:border-base-200 dark:*:border-base-800 last:*:border-b-0">
+                    <tr class="model-{{ model.object_name|lower }}{% if model.admin_url in request.path %} current-model{% endif %} *:border-b *:border-base-200 dark:*:border-base-800 last:*:border-b-0 hover:bg-base-50 dark:hover:bg-white/[.02]">
                         {% if model.admin_url %}
                             <th scope="row" class="font-normal px-3 py-2.5 text-left text-important">
                                 <a href="{{ model.admin_url }}"{% if model.admin_url in request.path %} aria-current="page"{% endif %}>
