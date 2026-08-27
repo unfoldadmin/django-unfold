@@ -190,3 +190,67 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class State(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
+
+class City(models.Model):
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+
+
+class Address(models.Model):
+    selected_country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    selected_state = models.ForeignKey(State, on_delete=models.CASCADE)
+    selected_city = models.ForeignKey(City, on_delete=models.CASCADE)
+    backup_city = models.ForeignKey(
+        City,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="backup_addresses",
+    )
+    street = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.street
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class PersonLocation(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    selected_country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    selected_state = models.ForeignKey(State, on_delete=models.CASCADE)
+    selected_city = models.ForeignKey(City, on_delete=models.CASCADE)
+    street = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.street
