@@ -27,6 +27,13 @@ class CustomAdminClass(ModelAdmin):
     # Warn before leaving unsaved changes in changeform
     warn_unsaved_form = True  # Default: False
 
+    # Limit autocomplete options based on another ForeignKey
+    autocomplete_fields = ["state", "city"]
+    autocomplete_dependencies = {
+        "state": "country",
+        "city": "state",
+    }
+
     # Preprocess content of readonly fields before render
     readonly_preprocess_fields = {
         "model_field_name": "html.unescape",
