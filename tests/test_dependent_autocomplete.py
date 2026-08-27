@@ -1,14 +1,15 @@
 import json
+from http import HTTPStatus
 
+import pytest
 from django.contrib.admin.sites import site
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
 from django.test import Client, RequestFactory
 from django.urls import reverse
-
-import pytest
 from example.admin import AddressAdmin, CityAdmin, CountryAdmin, StateAdmin
 from example.models import Address, City, Country, Person, PersonLocation, State
+
 from unfold.admin import GenericTabularInline, ModelAdmin, TabularInline
 from unfold.sites import UnfoldAdminSite
 from unfold.views import DependentAutocompleteJsonView
@@ -111,7 +112,7 @@ def test_dependent_autocomplete_filters_by_configured_lookup(
         dependent_params("selected_city", california, term="San"),
     )
 
-    assert state_response.status_code == 200
+    assert state_response.status_code == HTTPStatus.OK
     assert result_texts(state_response) == ["California", "Texas"]
     assert result_texts(city_response) == ["Los Angeles", "San Francisco"]
     assert result_texts(search_response) == ["San Francisco"]
@@ -126,8 +127,73 @@ def test_empty_parent_returns_no_results(dependent_admin_client, geography):
         ),
     )
 
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert result_texts(response) == []
+
+
+@pytest.mark.django_db
+def test_unconfigured_field_on_dependent_url_is_forbidden(
+    dependent_admin_client, geography
+):
+    response = dependent_admin_client.get(
+        reverse("admin:example_address_dependent_autocomplete"),
+        dependent_params("backup_city", geography["states"]["california"]),
+    )
+
+    assert response.status_code == HTTPStatus.FORBIDDEN
+
+
+@pytest.mark.django_db
+def test_mismatched_source_model_on_dependent_url_is_forbidden(
+    dependent_admin_client, geography
+):
+    response = dependent_admin_client.get(
+        reverse("admin:example_address_dependent_autocomplete"),
+        {
+            "term": "",
+            "app_label": "example",
+            "model_name": "personlocation",
+            "field_name": "selected_city",
+            "dependent_parent": str(geography["states"]["california"].pk),
+        },
+    )
+
+    assert response.status_code == HTTPStatus.FORBIDDEN
+
+
+@pytest.mark.django_db
+def test_invalid_parent_pk_returns_no_results(dependent_admin_client, geography):
+    response = dependent_admin_client.get(
+        reverse("admin:example_address_dependent_autocomplete"),
+        dependent_params(
+            "selected_state",
+            geography["united_states"],
+            dependent_parent="not-a-pk",
+        ),
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert result_texts(response) == []
+
+
+@pytest.mark.django_db
+def test_dependent_autocomplete_preserves_search_distinct(
+    dependent_admin_client, geography, monkeypatch
+):
+    def get_search_results(self, request, queryset, search_term):
+        queryset, _use_distinct = ModelAdmin.get_search_results(
+            self, request, queryset, search_term
+        )
+        return queryset, True
+
+    monkeypatch.setattr(CityAdmin, "get_search_results", get_search_results)
+    response = dependent_admin_client.get(
+        reverse("admin:example_address_dependent_autocomplete"),
+        dependent_params("selected_city", geography["states"]["california"]),
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert result_texts(response) == ["Los Angeles", "San Francisco"]
 
 
 @pytest.mark.django_db
@@ -145,7 +211,7 @@ def test_normal_autocomplete_ignores_dependent_parent(
         },
     )
 
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert result_texts(response) == ["Los Angeles"]
 
 
@@ -162,7 +228,7 @@ def test_dependent_autocomplete_requires_permissions(geography):
         dependent_params("selected_state", geography["united_states"]),
     )
 
-    assert response.status_code == 403
+    assert response.status_code == HTTPStatus.FORBIDDEN
 
 
 @pytest.mark.django_db
@@ -182,7 +248,7 @@ def test_change_form_preserves_chained_dependent_values(
         reverse("admin:example_address_change", args=[address.pk])
     )
 
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     content = response.content.decode()
     assert (
         f'<option value="{states["california"].pk}" selected>California</option>'
@@ -266,7 +332,7 @@ def test_inline_dependent_autocomplete_without_registered_model(
         },
     )
 
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert result_texts(response) == ["Los Angeles", "San Francisco"]
 
 
@@ -336,7 +402,7 @@ def test_standalone_modeladmin_does_not_control_inline_config(geography):
     assert standalone.get_dependent_autocomplete_url_name() == (
         "example_personlocation_dependent_autocomplete"
     )
-    assert inline_response.status_code == 200
+    assert inline_response.status_code == HTTPStatus.OK
     assert [
         result["text"] for result in json.loads(inline_response.content)["results"]
     ] == ["Los Angeles", "San Francisco"]
