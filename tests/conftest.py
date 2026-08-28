@@ -4,10 +4,13 @@ from .factories import (
     CategoryFactory,
     InvoiceFactory,
     InvoiceItemFactory,
+    InvoiceItemPartFactory,
+    InvoiceItemPartNoteFactory,
     LabelFactory,
     ProfileFactory,
     ProjectFactory,
     TagFactory,
+    TagNoteFactory,
     TaskFactory,
     UserFactory,
 )
@@ -21,4 +24,7 @@ register(LabelFactory)
 register(CategoryFactory)
 register(InvoiceFactory)
 register(InvoiceItemFactory)
+register(InvoiceItemPartFactory)
+register(InvoiceItemPartNoteFactory)
+register(TagNoteFactory)
 register(ProfileFactory)
