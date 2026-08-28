@@ -25,7 +25,7 @@ window.addEventListener("load", () => {
 });
 
 function blurDjangoQLSearch() {
-	document.getElementById("searchbar")?.blur()
+	document.getElementById("searchbar")?.blur();
 }
 
 function getCurrentTab() {
@@ -544,44 +544,46 @@ const filterForm = () => {
  * Numeric range filter
  *************************************************************/
 function numericRangeFilter() {
-	document.querySelectorAll(".admin-numeric-filter-wrapper").forEach((wrapper) => {
-		const inputTo = wrapper.querySelectorAll("input[type=number]")[1];
-		const inputFrom = wrapper.querySelectorAll("input[type=number]")[0];
-		const rangeTo = wrapper.querySelectorAll("input[type=range]")[1];
+	document
+		.querySelectorAll(".admin-numeric-filter-wrapper")
+		.forEach((wrapper) => {
+			const inputTo = wrapper.querySelectorAll("input[type=number]")[1];
+			const inputFrom = wrapper.querySelectorAll("input[type=number]")[0];
+			const rangeTo = wrapper.querySelectorAll("input[type=range]")[1];
 
-		function recalculateActiveRange() {
-			const rangeDistance = inputTo.max - inputTo.min;
-			const fromPosition = inputFrom.value - inputTo.min;
-			const toPosition = inputTo.value - inputTo.min;
+			function recalculateActiveRange() {
+				const rangeDistance = inputTo.max - inputTo.min;
+				const fromPosition = inputFrom.value - inputTo.min;
+				const toPosition = inputTo.value - inputTo.min;
 
-			rangeTo.style.background = `linear-gradient(
+				rangeTo.style.background = `linear-gradient(
 				to right,
 				transparent 0%,
-				transparent ${(fromPosition)/(rangeDistance)*100}%,
-				var(--color-primary-500) ${(fromPosition)/(rangeDistance)*100}%,
-				var(--color-primary-500) ${(toPosition)/(rangeDistance)*100}%,
-				transparent ${(toPosition)/(rangeDistance)*100}%,
-				transparent 100%)`
+				transparent ${(fromPosition / rangeDistance) * 100}%,
+				var(--color-primary-500) ${(fromPosition / rangeDistance) * 100}%,
+				var(--color-primary-500) ${(toPosition / rangeDistance) * 100}%,
+				transparent ${(toPosition / rangeDistance) * 100}%,
+				transparent 100%)`;
+			}
 
-		}
+			recalculateActiveRange();
 
+			wrapper.querySelectorAll("input[type=range]").forEach((input, index) => {
+				input.addEventListener("input", (event) => {
+					wrapper.querySelectorAll("input[type=number]")[index].value =
+						event.target.value;
+					recalculateActiveRange();
+				});
+			});
 
-		recalculateActiveRange();
-
-		wrapper.querySelectorAll("input[type=range]").forEach((input, index) => {
-			input.addEventListener("input", (event) => {
-				wrapper.querySelectorAll("input[type=number]")[index].value = event.target.value;
-				recalculateActiveRange();
+			wrapper.querySelectorAll("input[type=number]").forEach((input, index) => {
+				input.addEventListener("input", (event) => {
+					wrapper.querySelectorAll("input[type=range]")[index].value =
+						event.target.value;
+					recalculateActiveRange();
+				});
 			});
 		});
-
-		wrapper.querySelectorAll("input[type=number]").forEach((input, index) => {
-			input.addEventListener("input", (event) => {
-				wrapper.querySelectorAll("input[type=range]")[index].value = event.target.value;
-				recalculateActiveRange();
-			});
-		});
-	});
 }
 
 /*************************************************************
@@ -727,6 +729,14 @@ const DEFAULT_CHART_OPTIONS = {
 					return false;
 				}
 
+				const customDataset = context.chart.data.datasets.find((dataset) =>
+					Object.hasOwn(dataset, "displayXAxis"),
+				);
+
+				if (customDataset) {
+					return customDataset.displayXAxis;
+				}
+
 				return true;
 			},
 			border: {
@@ -750,6 +760,14 @@ const DEFAULT_CHART_OPTIONS = {
 			display: (context) => {
 				if (["pie", "doughnut", "radar"].includes(context.chart.config.type)) {
 					return false;
+				}
+
+				const customDataset = context.chart.data.datasets.find((dataset) =>
+					Object.hasOwn(dataset, "displayYAxis"),
+				);
+
+				if (customDataset) {
+					return customDataset.displayYAxis;
 				}
 
 				return true;

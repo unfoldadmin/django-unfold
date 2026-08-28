@@ -40,6 +40,7 @@ class BarChartComponent(BaseComponent):
                         "borderColor": "var(--color-primary-400)",
                         "type": "line",  # Change the type here
                         # "displayYAxis": True,  # Display the Y-axis labels
+                        # "displayXAxis": True,  # Display the X-axis labels
                         # "maxTicksXLimit": 50,  # Limit the number of ticks on X-axis
                         # "suffixYAxis": "€",  # Add a suffix to the Y-axis values
                     }
