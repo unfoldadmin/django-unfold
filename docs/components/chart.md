@@ -14,6 +14,16 @@ Unfold provides built-in components for easily rendering bar and line charts. Si
 - By default, Y-axis labels are hidden. To display them, add the `displayYAxis` property to the dataset.
 - To show a suffix on Y-axis values, add the `suffixYAxis` property to the dataset.
 
+# Component params
+
+- `responsive` - make the chart responsive, default is `true`
+- `tooltip` - show the tooltip, default is `true`
+
+```html
+{% load unfold %}
+
+{% component "unfold/components/chart/bar.html" responsive="false" tooltip="false" %}{% endcomponent %}
+```
 ```python
 # admin.py
 
@@ -52,6 +62,32 @@ class BarChartComponent(BaseComponent):
             # })
         })
 
+        return context
+```
+
+## Use of component class
+
+```python
+# admin.py
+
+from unfold.components import BaseComponent
+
+
+@register_component
+class BarChartComponent(BaseComponent):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "data": json.dumps({
+                "labels": ["Mo", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                "datasets": [
+                    {
+                        "label": "Dataset 1",
+                        "data": [12, 19, 3, 5, 2, 3, 9],
+                    }
+                ]
+            })
+        })
         return context
 ```
 
