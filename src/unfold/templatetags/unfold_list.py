@@ -72,7 +72,7 @@ TABLE_ACTION_CELL_CLASSES = [
 ]
 
 
-def result_headers(cl):
+def result_headers(cl):  # noqa: PLR0912, PLR0915
     """
     Generate the list column headers.
     """
@@ -114,16 +114,27 @@ def result_headers(cl):
                 is_field_sortable = False
 
         if not is_field_sortable:
+            th_classes = [
+                format_html("column-{}", field_name),
+            ]
+
+            if hasattr(attr, "wrapper_class"):
+                th_classes.append(attr.wrapper_class)
+
             # Not sortable
             yield {
                 "text": text,
-                "class_attrib": format_html("column-{}", field_name),
+                "class_attrib": format_html("{}", " ".join(th_classes)),
                 "sortable": False,
             }
             continue
 
         # OK, it is sortable if we got this far
         th_classes = ["sortable", f"column-{field_name}"]
+
+        if hasattr(attr, "wrapper_class"):
+            th_classes.append(attr.wrapper_class)
+
         order_type = ""
         new_order_type = "asc"
         sort_priority = 0
