@@ -162,3 +162,19 @@ class UserAdmin(ModelAdmin):
             "content": "template content",
         }
 ```
+
+
+# Price formatting
+
+The price formatting is a special case of the display decorator that formats the value as a price. It is used to display the price of a product in a more readable format at the right side of the column.
+
+```python
+class ProductAdmin(ModelAdmin):
+    list_display = [
+        "display_price",
+    ]
+
+    @display(description=_("price"), formatting="price")
+    def display_price(self, obj):
+        return 123
+```

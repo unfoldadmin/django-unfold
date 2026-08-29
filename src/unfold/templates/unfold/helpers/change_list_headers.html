@@ -12,7 +12,7 @@
 
         {% for header in result_headers %}
             <th class="align-middle font-semibold py-2 text-left text-important whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}pl-3 w-px{% else %}px-3{% endif %}" scope="col">
-                <div class="flex items-center">
+                <div class="flex items-center {% if header.formatting == "price" %}justify-end{% endif %}">
                     <div class="text">
                         {% if header.sortable %}
                             <a href="{{ header.url_primary }}">
