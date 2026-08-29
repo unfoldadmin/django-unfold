@@ -21,7 +21,7 @@ from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 
-from unfold.checks import UnfoldModelAdminChecks
+from unfold.checks import UnfoldInlineModelAdminChecks, UnfoldModelAdminChecks
 from unfold.forms import (
     ActionForm,
     PaginationGenericInlineFormSet,
@@ -34,7 +34,7 @@ from unfold.mixins import (
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
-from unfold.views import ChangeList
+from unfold.views import ChangeList, DependentAutocompleteJsonView
 from unfold.widgets import UnfoldBooleanWidget
 
 checkbox = UnfoldBooleanWidget(
@@ -201,13 +201,62 @@ class ModelAdmin(
             for action in self._get_base_actions_row()
         ]
 
+        dependent_autocomplete_urls = []
+        seen_url_names: set[str] = set()
+        for source_admin in self._dependent_autocomplete_source_admins():
+            url_name = source_admin.get_dependent_autocomplete_url_name()
+            if url_name in seen_url_names:
+                continue
+            seen_url_names.add(url_name)
+            dependent_autocomplete_urls.append(
+                path(
+                    self._dependent_autocomplete_path(source_admin),
+                    wrap(self._bound_dependent_autocomplete_view(source_admin)),
+                    name=url_name,
+                )
+            )
+
         return (
-            custom_urls
+            dependent_autocomplete_urls
+            + custom_urls
             + action_row_urls
             + actions_list_urls
             + action_detail_urls
             + urls
         )
+
+    def _dependent_autocomplete_source_admins(self) -> list[InlineModelAdmin | Any]:
+        sources: list[InlineModelAdmin | Any] = []
+        if self.autocomplete_dependencies:
+            sources.append(self)
+        for inline_class in self.inlines:
+            inline = inline_class(self.model, self.admin_site)
+            if getattr(inline, "autocomplete_dependencies", None):
+                sources.append(inline)
+        return sources
+
+    def _dependent_autocomplete_path(self, source_admin: InlineModelAdmin | Any) -> str:
+        if source_admin is self:
+            return "dependent-autocomplete/"
+        return f"inline/{source_admin.__class__.__name__}/dependent-autocomplete/"
+
+    def _bound_dependent_autocomplete_view(self, source_admin: InlineModelAdmin | Any):
+        def view(request: HttpRequest) -> HttpResponse:
+            return self.dependent_autocomplete_view(request, source_admin=source_admin)
+
+        view.__name__ = "dependent_autocomplete_view"
+        view.__qualname__ = "dependent_autocomplete_view"
+        return view
+
+    def dependent_autocomplete_view(
+        self,
+        request: HttpRequest,
+        source_admin: InlineModelAdmin | Any | None = None,
+    ) -> HttpResponse:
+        return DependentAutocompleteJsonView.as_view(
+            admin_site=self.admin_site,
+            source_model_admin=source_admin or self,
+        )(request)
 
     def _path_from_custom_url(self, custom_url: tuple[str, str, View]) -> URLPattern:
         return path(
@@ -279,19 +328,23 @@ class BaseInlineMixin:
 
 class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):
     formset = PaginationInlineFormSet
+    checks_class = UnfoldInlineModelAdminChecks
 
 
 class StackedInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseStackedInline):
     formset = PaginationInlineFormSet
+    checks_class = UnfoldInlineModelAdminChecks
 
 
 class GenericStackedInline(
     BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericStackedInline
 ):
     formset = PaginationGenericInlineFormSet
+    checks_class = UnfoldInlineModelAdminChecks
 
 
 class GenericTabularInline(
     BaseInlineMixin, FormFieldModelAdminMixin, BaseGenericTabularInline
 ):
     formset = PaginationGenericInlineFormSet
+    checks_class = UnfoldInlineModelAdminChecks

@@ -19,6 +19,7 @@ from django.contrib.admin.widgets import (
     AdminTimeWidget,
     AdminURLFieldWidget,
     AdminUUIDInputWidget,
+    AutocompleteSelect,
     ForeignKeyRawIdWidget,
     RelatedFieldWidgetWrapper,
 )
@@ -35,6 +36,7 @@ from django.forms import (
     SelectMultiple,
 )
 from django.forms.widgets import Input
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from unfold.exceptions import UnfoldException
@@ -949,6 +951,60 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
 
 class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
     template_name = "unfold/widgets/related_widget_wrapper.html"
+
+
+class UnfoldAdminDependentAutocompleteSelect(AutocompleteSelect):
+    """Native admin autocomplete widget with one ForeignKey parent dependency."""
+
+    def __init__(
+        self,
+        *args: Any,
+        parent_field_name: str,
+        source_admin: Any,
+        **kwargs: Any,
+    ) -> None:
+        self.parent_field_name = parent_field_name
+        self.source_admin = source_admin
+        super().__init__(*args, **kwargs)
+
+    def get_url(self) -> str:
+        return reverse(
+            f"{self.admin_site.name}:{self.source_admin.get_dependent_autocomplete_url_name()}"
+        )
+
+    def build_attrs(
+        self, base_attrs: dict[str, Any], extra_attrs: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
+        attrs = super().build_attrs(base_attrs, extra_attrs=extra_attrs)
+        attrs["data-dependent-autocomplete-parent"] = self.parent_field_name
+        return attrs
+
+    @property
+    def media(self) -> forms.Media:
+        # Mirrors django.contrib.admin.widgets.AutocompleteMixin.media so the
+        # dependent script loads after native autocomplete initialization.
+        extra = "" if settings.DEBUG else ".min"
+        i18n_file = (
+            (f"admin/js/vendor/select2/i18n/{self.i18n_name}.js",)
+            if self.i18n_name
+            else ()
+        )
+        return forms.Media(
+            js=(
+                f"admin/js/vendor/jquery/jquery{extra}.js",
+                f"admin/js/vendor/select2/select2.full{extra}.js",
+                *i18n_file,
+                "admin/js/jquery.init.js",
+                "admin/js/autocomplete.js",
+                "unfold/js/dependent-autocomplete.js",
+            ),
+            css={
+                "screen": (
+                    f"admin/css/vendor/select2/select2{extra}.css",
+                    "admin/css/autocomplete.css",
+                ),
+            },
+        )
 
 
 try:

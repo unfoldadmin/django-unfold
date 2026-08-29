@@ -19,19 +19,25 @@ from waffle.models import Flag, Sample, Switch
 
 from example.models import (
     ActionUser,
+    Address,
     ApprovalChoices,
     Category,
+    City,
     ColorChoices,
+    Country,
     DialogActionUser,
     FilterUser,
     Invoice,
     InvoiceItem,
     Label,
+    Person,
+    PersonLocation,
     Post,
     PriorityChoices,
     Profile,
     Project,
     SectionUser,
+    State,
     StatusChoices,
     Tag,
     Task,
@@ -1138,3 +1144,62 @@ class TaskAdmin(ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(ModelAdmin):
     search_fields = ["name"]
+
+
+@admin.register(Country)
+class CountryAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(State)
+class StateAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+
+@admin.register(City)
+class CityAdmin(ModelAdmin):
+    search_fields = ["name"]
+
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(
+            request, queryset, search_term
+        )
+        if request.GET.get("custom_only"):
+            queryset = queryset.filter(name__startswith="San")
+        return queryset, use_distinct
+
+
+@admin.register(Address)
+class AddressAdmin(ModelAdmin):
+    autocomplete_fields = ["selected_state", "selected_city", "backup_city"]
+    autocomplete_dependencies = {
+        "selected_state": {
+            "depends_on": "selected_country",
+            "lookup": "country",
+        },
+        "selected_city": {
+            "depends_on": "selected_state",
+            "lookup": "state",
+        },
+    }
+
+
+class PersonLocationInline(TabularInline):
+    model = PersonLocation
+    extra = 1
+    autocomplete_fields = ["selected_state", "selected_city"]
+    autocomplete_dependencies = {
+        "selected_state": {
+            "depends_on": "selected_country",
+            "lookup": "country",
+        },
+        "selected_city": {
+            "depends_on": "selected_state",
+            "lookup": "state",
+        },
+    }
+
+
+@admin.register(Person)
+class PersonAdmin(ModelAdmin):
+    inlines = [PersonLocationInline]
