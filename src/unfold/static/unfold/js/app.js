@@ -899,11 +899,20 @@ const renderCharts = () => {
 		Chart.defaults.font.family = "Inter";
 		Chart.defaults.font.size = 12;
 
+		const chartConfig = {
+			...CHART_OPTIONS,
+			responsive: chart.dataset?.responsive !== "false",
+		};
+
+		if ("tooltip" in chart.dataset) {
+			chartConfig.plugins.tooltip = chart.dataset.tooltip !== "false";
+		}
+
 		charts.push(
 			new Chart(ctx, {
 				type: type || "bar",
 				data: parsedData,
-				options: options ? JSON.parse(options) : { ...CHART_OPTIONS },
+				options: options ? JSON.parse(options) : chartConfig,
 			}),
 		);
 	}
