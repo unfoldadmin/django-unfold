@@ -128,6 +128,13 @@ class Tag(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    parent = models.ForeignKey(
+        "self",
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="children",
+    )
 
     def __str__(self):
         return self.name
@@ -135,6 +142,11 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
+
+
+class CategoryTree(Category):
+    class Meta:
+        proxy = True
 
 
 class Label(models.Model):
@@ -180,6 +192,43 @@ class Invoice(models.Model):
 class InvoiceItem(models.Model):
     name = models.CharField(max_length=255)
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class InvoiceItemPart(models.Model):
+    name = models.CharField(max_length=255)
+    attachment = models.FileField(upload_to="parts/", blank=True)
+    item = models.ForeignKey(InvoiceItem, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class InvoiceItemPartNote(models.Model):
+    name = models.CharField(max_length=255)
+    part = models.ForeignKey(InvoiceItemPart, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class TagNote(models.Model):
+    name = models.CharField(max_length=255)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class TagUserNote(models.Model):
+    """Related to both sides of the User/Tag relation, so the relation to
+    traverse when nesting it can not be detected automatically."""
+
+    name = models.CharField(max_length=255)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

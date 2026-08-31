@@ -2,10 +2,13 @@ from example.models import (
     Category,
     Invoice,
     InvoiceItem,
+    InvoiceItemPart,
+    InvoiceItemPartNote,
     Label,
     Profile,
     Project,
     Tag,
+    TagNote,
     Task,
     User,
 )
@@ -61,3 +64,18 @@ class InvoiceItemFactory(DjangoModelFactory):
 class ProfileFactory(DjangoModelFactory):
     class Meta:
         model = Profile
+
+
+class InvoiceItemPartFactory(DjangoModelFactory):
+    class Meta:
+        model = InvoiceItemPart
+
+
+class InvoiceItemPartNoteFactory(DjangoModelFactory):
+    class Meta:
+        model = InvoiceItemPartNote
+
+
+class TagNoteFactory(DjangoModelFactory):
+    class Meta:
+        model = TagNote

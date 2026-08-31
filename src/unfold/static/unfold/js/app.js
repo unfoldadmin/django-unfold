@@ -993,8 +993,8 @@ function deleteInlineTemplateHandler(e) {
 					`${options.prefix}-${index - 1}`,
 				);
 
-				// Reindex nested formset
-				const nestedFormset = row.querySelector(":scope .form-nested");
+				// Reindex nested formset, at every level below this row
+				const nestedFormset = row.querySelector(":scope > .form-nested");
 				if (nestedFormset) {
 					nestedFormset.innerHTML = nestedFormset.innerHTML.replaceAll(
 						`${options.prefix}-${index}`,
@@ -1014,15 +1014,26 @@ function deleteInlineTemplateHandler(e) {
 		10,
 	);
 
-	// Apply delete event
+	// Reindexing replaces the markup of the nested formsets, so the handlers
+	// inside them have to be applied again
 	formset.querySelectorAll(".delete-template").forEach((el) => {
 		el.removeEventListener("click", deleteInlineTemplateHandler);
 		el.addEventListener("click", deleteInlineTemplateHandler);
 	});
 
-	// Show add button
+	formset.querySelectorAll(".add-row").forEach((el) => {
+		el.removeEventListener("click", addInlineTemplateHandler);
+		el.addEventListener("click", addInlineTemplateHandler);
+	});
+
+	// Show add button. Scoped to the footer of this formset, the nested
+	// formsets have their own and come first in document order.
 	if (parseInt(totalForms.value, 10) < parseInt(maxNumForms.value, 10)) {
-		formset.querySelector(".add-row").classList.remove("hidden");
+		const addRow = formset.querySelector(":scope > .form-actions .add-row");
+
+		if (addRow) {
+			addRow.classList.remove("hidden");
+		}
 	}
 
 	applyLastClass(formset);
@@ -1121,7 +1132,13 @@ document.addEventListener("formsetGroup:added", (e) => {
 	e.detail.row
 		.querySelectorAll(".nested-formset > .form-group:not(.empty-form)")
 		.forEach((formGroup) => {
-			formGroup.querySelector(".form-row").dispatchEvent(
+			const formRow = formGroup.querySelector(":scope > .form-row");
+
+			if (!formRow) {
+				return;
+			}
+
+			formRow.dispatchEvent(
 				new CustomEvent("formset:added", {
 					bubbles: true,
 					detail: { formsetName: e.detail.formsetName },
@@ -1156,9 +1173,12 @@ function applyLastClass(formset) {
 			row.classList.remove("last");
 		}
 
+		const nextRow = row.nextElementSibling;
+
 		if (
-			row.nextElementSibling.classList.contains("empty-form") ||
-			row.nextElementSibling.classList.contains("form-actions")
+			!nextRow ||
+			nextRow.classList.contains("empty-form") ||
+			nextRow.classList.contains("form-actions")
 		) {
 			row.classList.add("last");
 		}

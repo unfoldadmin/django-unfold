@@ -21,11 +21,14 @@ from example.models import (
     ActionUser,
     ApprovalChoices,
     Category,
+    CategoryTree,
     ColorChoices,
     DialogActionUser,
     FilterUser,
     Invoice,
     InvoiceItem,
+    InvoiceItemPart,
+    InvoiceItemPartNote,
     Label,
     Post,
     PriorityChoices,
@@ -34,6 +37,8 @@ from example.models import (
     SectionUser,
     StatusChoices,
     Tag,
+    TagNote,
+    TagUserNote,
     Task,
     User,
 )
@@ -109,27 +114,63 @@ class SampleAdmin(ModelAdmin, BaseSampleAdmin):
     pass
 
 
+class TagNoteInline(TabularInline):
+    model = TagNote
+    fields = ["name"]
+    extra = 0
+
+
+class TagUserNoteInline(TabularInline):
+    model = TagUserNote
+    fields = ["name"]
+    extra = 0
+    # Both `user` and `tag` of the intermediary model would fit, so the one to
+    # traverse has to be named.
+    nested_parent_field = "tag"
+
+
 class UserTagInline(StackedInline):
     model = User.tags.through
     collapsible = True
     per_page = 10
     tab = True
     fields = ["tag"]
+    inlines = [TagNoteInline, TagUserNoteInline]
 
     def get_queryset(self, request, *args, **kwargs):
         qs = super().get_queryset(request, *args, **kwargs)
         return qs.order_by("pk")
 
 
+class InvoiceItemPartNoteInline(TabularInline):
+    model = InvoiceItemPartNote
+    fields = ["name"]
+    extra = 0
+    classes = ["collapse"]
+
+
+class InvoiceItemPartInline(StackedInline):
+    model = InvoiceItemPart
+    inlines = [InvoiceItemPartNoteInline]
+    fields = ["name", "attachment"]
+    extra = 0
+    classes = ["collapse"]
+
+
 class InvoiceItemInline(TabularInline):
     model = InvoiceItem
     raw_id_fields = ["invoice"]
+    inlines = [InvoiceItemPartInline]
+    extra = 0
+    classes = ["collapse"]
 
 
 class UserInvoiceInline(TabularInline):
     model = Invoice
     inlines = [InvoiceItemInline]
     fields = ["name"]
+    extra = 0
+    classes = ["collapse"]
 
 
 class PostInline(StackedInline):
@@ -1105,6 +1146,25 @@ class TagAdmin(ModelAdmin):
 class CategoryAdmin(ModelAdmin):
     search_fields = ["name"]
     inlines = [ProjectNonrelatedInline]
+
+
+class CategorySubcategoryInline(TabularInline):
+    model = Category
+    fk_name = "parent"
+    fields = ["name"]
+    extra = 0
+
+
+# A category can contain categories which can contain categories, so the chain
+# of inlines refers to itself and needs an explicit depth.
+CategorySubcategoryInline.inlines = [CategorySubcategoryInline]
+
+
+@admin.register(CategoryTree)
+class CategoryTreeAdmin(ModelAdmin):
+    search_fields = ["name"]
+    inlines = [CategorySubcategoryInline]
+    nested_inlines_max_depth = 4
 
 
 @admin.register(Label)

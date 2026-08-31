@@ -83,9 +83,6 @@ class ModelAdmin(
     def media(self):
         media = super().media
 
-        if hasattr(self, "nested_formset_media"):
-            media += self.nested_formset_media
-
         if not hasattr(self, "request"):
             return media
 
@@ -263,6 +260,12 @@ class BaseInlineMixin:
     hide_ordering_field = False  # TODO: rename to show_ordering_field
     collapsible = False
     tab = False
+
+    # Name of the field on the parent inline's model this inline is attached to
+    # when it is not attached to that model directly. Detected automatically for
+    # intermediary models, the table behind a many-to-many relation being the
+    # common case, and only needed when more than one relation would fit.
+    nested_parent_field = None
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         if hasattr(self, "hide_title"):
