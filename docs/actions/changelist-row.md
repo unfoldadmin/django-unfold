@@ -42,3 +42,35 @@ class UserAdmin(ModelAdmin):
         # Write your own bussiness logic. Code below will always display an action.
         return True
 ```
+
+Row actions can also be displayed directly in the changelist row instead of inside
+the dropdown menu by setting `extra_options={"display_in_dropdown": False}`.
+Inline row actions support the same `variant` values as other action buttons.
+
+```python
+# admin.py
+
+from django.contrib.admin import register
+from django.contrib.auth.models import User
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.http import HttpRequest
+
+from unfold.admin import ModelAdmin
+from unfold.decorators import action
+from unfold.enums import ActionVariant
+
+
+@register(User)
+class UserAdmin(ModelAdmin):
+    actions_row = ["changelist_row_action"]
+
+    @action(
+        description=_("Changelist row action"),
+        variant=ActionVariant.DANGER,
+        extra_options={"display_in_dropdown": False},
+    )
+    def changelist_row_action(self, request: HttpRequest, object_id: int):
+        return redirect(reverse_lazy("admin:users_user_changelist"))
+```

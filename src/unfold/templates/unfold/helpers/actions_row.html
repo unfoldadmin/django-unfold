@@ -7,7 +7,7 @@
                 {% for action in actions %}
                     {% if not action.display_in_dropdown %}
                         {% url action.raw_path instance_pk as action_url %}
-                        {% component "unfold/components/button.html" with href=action_url size="xs" variant="default" icon=action.icon class="self-center lg:-my-2"%}
+                        {% component "unfold/components/button.html" with href=action_url size="xs" variant=action.variant.value icon=action.icon class="self-center lg:-my-2"%}
                             {{ action.title }}
                         {% endcomponent %}
                     {% endif %}
