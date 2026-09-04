@@ -234,14 +234,14 @@ class UnfoldAdminSite(AdminSite):
         start_time = time.time()
 
         CACHE_TIMEOUT = 5 * 60
+        MIN_SEARCH_LENGTH = 3
         PER_PAGE = 100
 
         search_term = request.GET.get("s")
-        app_list = super().get_app_list(request)
-
-        if search_term in EMPTY_VALUES:
+        if search_term in EMPTY_VALUES or len(search_term.strip()) < MIN_SEARCH_LENGTH:
             return HttpResponse()
 
+        app_list = super().get_app_list(request)
         search_term = search_term.lower()
 
         search_key_base = f"{request.user.pk}_{search_term}"

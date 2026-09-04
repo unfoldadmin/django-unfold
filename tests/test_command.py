@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 import pytest
+from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.test import override_settings
 from django.urls import reverse
@@ -32,6 +33,34 @@ def test_command_admin_accessible(admin_client):
 def test_command_search_empty(admin_client):
     response = admin_client.get(reverse("admin:search") + "?s=")
     assert response.status_code == HTTPStatus.OK
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("search_term", ["a", "ab", " ab "])
+def test_command_search_short_query_skips_search(admin_client, mocker, search_term):
+    search_apps = mocker.patch.object(admin.site, "_search_apps", return_value=[])
+
+    response = admin_client.get(reverse("admin:search"), {"s": search_term})
+
+    assert response.status_code == HTTPStatus.OK
+    assert response.content == b""
+    search_apps.assert_not_called()
+
+
+@pytest.mark.django_db
+def test_command_index_configures_search_request_lifecycle(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+
+    assert response.status_code == HTTPStatus.OK
+    content = response.content.decode()
+    assert 'minlength="3"' in content
+    assert 'x-on:input="handleSearchInput($event)"' in content
+    assert (
+        'hx-trigger="input[target.value.trim().length >= target.minLength] delay:500ms"'
+        in content
+    )
+    assert 'hx-sync="#search-input-command:replace"' in content
+    assert 'x-on:htmx:before-swap="handleSearchBeforeSwap($event)"' in content
 
 
 @pytest.mark.django_db

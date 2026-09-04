@@ -337,25 +337,54 @@ function searchCommand() {
 				this.handleOpen();
 			}
 		},
+		resetSearchResults() {
+			this.el.replaceChildren();
+			document.getElementById("command-results-note").replaceChildren();
+			this.hasResponse = false;
+			this.searchTerm = "";
+			this.items = document.querySelectorAll("#command-history li");
+			this.totalItems = this.items.length;
+			this.currentIndex = 0;
+		},
+		abortSearch() {
+			htmx.trigger(this.$refs.searchInputCommand, "htmx:abort");
+		},
+		getSubmittedSearchTerm(event) {
+			return (
+				new URL(
+					event.detail.xhr.responseURL,
+					window.location.origin,
+				).searchParams.get("s") || ""
+			);
+		},
+		handleSearchInput(_event) {
+			this.abortSearch();
+			this.resetSearchResults();
+		},
+		handleSearchBeforeSwap(event) {
+			const submittedSearchTerm =
+				this.getSubmittedSearchTerm(event);
+
+			if (submittedSearchTerm !== this.$refs.searchInputCommand.value) {
+				event.preventDefault();
+			}
+		},
 		handleClear() {
+			this.abortSearch();
+
 			if (this.$refs.searchInputCommand.value === "") {
 				this.openCommandResults = false;
-				this.el.innerHTML = "";
-				this.searchTerm = "";
-				this.items = undefined;
-				this.totalItems = 0;
-				this.currentIndex = 0;
+				this.resetSearchResults();
 			} else {
 				this.$refs.searchInputCommand.value = "";
+				this.resetSearchResults();
 			}
 		},
 		handleOutsideClick() {
+			this.abortSearch();
 			this.$refs.searchInputCommand.value = "";
-			this.searchTerm = "";
 			this.openCommandResults = false;
-			this.items = undefined;
-			this.totalItems = 0;
-			this.currentIndex = 0;
+			this.resetSearchResults();
 		},
 		handleContentLoaded(event) {
 			if (
