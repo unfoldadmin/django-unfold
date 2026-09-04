@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if request.user.is_staff %}
-    <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-data="searchCommand()" hx-sync="#search-input-command:replace" x-show="openCommandResults" x-transition x-transition:leave.duration.0ms x-cloak x-on:opencommand.window="handleOpen()" x-on:keydown.window="handleShortcut($event)" x-on:htmx:before-swap="handleSearchBeforeSwap($event)" x-trap.noautofocus.noscroll="openCommandResults">
+    <div class="flex flex-col fixed inset-0 p-4 lg:p-32 z-[1000]" x-data="searchCommand()" hx-sync="#search-input-command:replace" x-show="openCommandResults" x-transition x-transition:leave.duration.0ms x-cloak x-on:opencommand.window="handleOpen()" x-on:keydown.window="handleShortcut($event)" x-on:htmx:config-request="handleSearchConfigRequest($event)" x-on:htmx:before-swap="handleSearchBeforeSwap($event)" x-trap.noautofocus.noscroll="openCommandResults">
         <div class="bg-base-50 dark:bg-base-800 flex flex-col max-w-3xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-on:click.outside="handleOutsideClick()">
             <div class="flex flex-row items-center px-4 w-full">
                 <button type="submit" id="command-submit" class="group flex items-center focus:outline-hidden">
@@ -34,7 +34,7 @@
                     x-on:keydown.ctrl.k.prevent="handleOpen()"
                     x-on:keydown.enter.prevent="if (!$event.metaKey && !$event.ctrlKey) selectItem({% if command_show_history %}true{% else %}false{% endif %}, false)"
                     hx-get="{% url "admin:search" %}"
-                    hx-trigger="input[target.value.trim().length >= target.minLength] delay:500ms"
+                    hx-trigger="input changed delay:500ms"
                     hx-select="#command-results-list"
                     hx-select-oob="#command-results-note"
                     hx-target="#command-results">

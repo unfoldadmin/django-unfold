@@ -349,6 +349,21 @@ function searchCommand() {
 		abortSearch() {
 			htmx.trigger(this.$refs.searchInputCommand, "htmx:abort");
 		},
+		dispatchSearchInput() {
+			this.$refs.searchInputCommand.dispatchEvent(
+				new Event("input", { bubbles: true }),
+			);
+		},
+		handleSearchConfigRequest(event) {
+			const searchTerm = this.$refs.searchInputCommand.value.trim();
+
+			if (
+				searchTerm.length <
+				Number(this.$refs.searchInputCommand.minLength)
+			) {
+				event.preventDefault();
+			}
+		},
 		getSubmittedSearchTerm(event) {
 			return (
 				new URL(
@@ -377,12 +392,17 @@ function searchCommand() {
 				this.resetSearchResults();
 			} else {
 				this.$refs.searchInputCommand.value = "";
+				this.dispatchSearchInput();
 				this.resetSearchResults();
 			}
 		},
 		handleOutsideClick() {
 			this.abortSearch();
+			const hadSearchTerm = this.$refs.searchInputCommand.value !== "";
 			this.$refs.searchInputCommand.value = "";
+			if (hadSearchTerm) {
+				this.dispatchSearchInput();
+			}
 			this.openCommandResults = false;
 			this.resetSearchResults();
 		},

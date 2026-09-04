@@ -55,11 +55,9 @@ def test_command_index_configures_search_request_lifecycle(admin_client):
     content = response.content.decode()
     assert 'minlength="3"' in content
     assert 'x-on:input="handleSearchInput($event)"' in content
-    assert (
-        'hx-trigger="input[target.value.trim().length >= target.minLength] delay:500ms"'
-        in content
-    )
+    assert 'hx-trigger="input changed delay:500ms"' in content
     assert 'hx-sync="#search-input-command:replace"' in content
+    assert 'x-on:htmx:config-request="handleSearchConfigRequest($event)"' in content
     assert 'x-on:htmx:before-swap="handleSearchBeforeSwap($event)"' in content
 
 
