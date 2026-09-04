@@ -1,6 +1,99 @@
 # CHANGELOG
 
 
+## v0.105.0 (2026-09-04)
+
+### Bug Fixes
+
+- Action decorator typing ([#2239](https://github.com/unfoldadmin/django-unfold/pull/2239),
+  [`1da3c6e`](https://github.com/unfoldadmin/django-unfold/commit/1da3c6e5298e002c9947d8eb377bac8cac15c810))
+
+- Autocomplete dropdown search focus
+  ([#2220](https://github.com/unfoldadmin/django-unfold/pull/2220),
+  [`89f6fbd`](https://github.com/unfoldadmin/django-unfold/commit/89f6fbd242c000acc27dfafcfc52038c14b07dab))
+
+- Changelist th wrapper_class ([#2261](https://github.com/unfoldadmin/django-unfold/pull/2261),
+  [`58dcd89`](https://github.com/unfoldadmin/django-unfold/commit/58dcd8909fe26b60c97451744e6a18143f0aefcb))
+
+- Dashboard dark mode ([#2248](https://github.com/unfoldadmin/django-unfold/pull/2248),
+  [`dc52ff0`](https://github.com/unfoldadmin/django-unfold/commit/dc52ff01b9e1e87bbcc59ce2ae8fde2b5d34bf06))
+
+- Disable changeform line fields ([#2244](https://github.com/unfoldadmin/django-unfold/pull/2244),
+  [`73d090c`](https://github.com/unfoldadmin/django-unfold/commit/73d090cde161646e3f2ddcb65b250a3bb0f82dcd))
+
+- Disable djangoql autofocus ([#2233](https://github.com/unfoldadmin/django-unfold/pull/2233),
+  [`695aa78`](https://github.com/unfoldadmin/django-unfold/commit/695aa780a99429790307a6297e7c839866328fe0))
+
+- Disable modal autofocus ([#2228](https://github.com/unfoldadmin/django-unfold/pull/2228),
+  [`c7329b6`](https://github.com/unfoldadmin/django-unfold/commit/c7329b6052db0666ad700c2d51c2a72e8ef9afc5))
+
+- Disable select for row action icon
+  ([#2242](https://github.com/unfoldadmin/django-unfold/pull/2242),
+  [`e64f568`](https://github.com/unfoldadmin/django-unfold/commit/e64f568d0761b9e72c46b406a5f32481bdd8b56f))
+
+- Money widget typing ([#2240](https://github.com/unfoldadmin/django-unfold/pull/2240),
+  [`8f1422f`](https://github.com/unfoldadmin/django-unfold/commit/8f1422fe17d491ffe58107bbd7fff97fe005572a))
+
+- Prevent displaying empty messages div
+  ([#2246](https://github.com/unfoldadmin/django-unfold/pull/2246),
+  [`ab06331`](https://github.com/unfoldadmin/django-unfold/commit/ab063310f8eed9637c36960f3233cdea81028918))
+
+- Resolve order for active item in sidebar navigation
+  ([#2231](https://github.com/unfoldadmin/django-unfold/pull/2231),
+  [`e0bab54`](https://github.com/unfoldadmin/django-unfold/commit/e0bab543d9117d4680c1153a83de090563a294f8))
+
+### Documentation
+
+- Compiling tailwind ([#2251](https://github.com/unfoldadmin/django-unfold/pull/2251),
+  [`c381c2e`](https://github.com/unfoldadmin/django-unfold/commit/c381c2e3a3f7f1977bcd5f50401c0f4786366b73))
+
+- Stacked inlines formatting ([#2234](https://github.com/unfoldadmin/django-unfold/pull/2234),
+  [`da5db27`](https://github.com/unfoldadmin/django-unfold/commit/da5db27f40c2f90e0e3d06607097d1297d2e556f))
+
+### Features
+
+- Avatar badge ([#2263](https://github.com/unfoldadmin/django-unfold/pull/2263),
+  [`981c203`](https://github.com/unfoldadmin/django-unfold/commit/981c203a7d40e829fd9518a6243bb02c8c3acd71))
+
+- Chart settings ([#2262](https://github.com/unfoldadmin/django-unfold/pull/2262),
+  [`171ce5a`](https://github.com/unfoldadmin/django-unfold/commit/171ce5aff57e2c0056758c5c98a157c8c0889a00))
+
+- Chart x-axis display option ([#2257](https://github.com/unfoldadmin/django-unfold/pull/2257),
+  [`4dc6ddc`](https://github.com/unfoldadmin/django-unfold/commit/4dc6ddc2a0320966da0766c778c7b1e6431da200))
+
+- Dashboard apps hover ([#2254](https://github.com/unfoldadmin/django-unfold/pull/2254),
+  [`f6c8c6d`](https://github.com/unfoldadmin/django-unfold/commit/f6c8c6de1dce48cb4a71b3d53289a00aac093bf0))
+
+- Default dashboard scrolling history
+  ([#2249](https://github.com/unfoldadmin/django-unfold/pull/2249),
+  [`13ea6c0`](https://github.com/unfoldadmin/django-unfold/commit/13ea6c06c8483dcbe8ce5abbdb7adf565558316d))
+
+- Display decorator price formatter
+  ([#2264](https://github.com/unfoldadmin/django-unfold/pull/2264),
+  [`903e15b`](https://github.com/unfoldadmin/django-unfold/commit/903e15ba83bbc8fc3e3ae6360970275627ed575e))
+
+- Modal animations ([#2229](https://github.com/unfoldadmin/django-unfold/pull/2229),
+  [`a38fe2f`](https://github.com/unfoldadmin/django-unfold/commit/a38fe2f964fa5bd137989e182800876b76f2a0c9))
+
+- Redesign horizontal filters ([#2253](https://github.com/unfoldadmin/django-unfold/pull/2253),
+  [`9514fb0`](https://github.com/unfoldadmin/django-unfold/commit/9514fb0309f443a1073f09b08e09539aef03a79e))
+
+- Redesigned addlink ([#2243](https://github.com/unfoldadmin/django-unfold/pull/2243),
+  [`e83f67a`](https://github.com/unfoldadmin/django-unfold/commit/e83f67ae66393e341a4f0171cb61cf702f34069d))
+
+- Redesigned default dashboard ([#2247](https://github.com/unfoldadmin/django-unfold/pull/2247),
+  [`49b15c2`](https://github.com/unfoldadmin/django-unfold/commit/49b15c2fb2d6eb1c9ba02959c9bb7d9c445c1249))
+
+- Remove filters JS dependencies ([#2222](https://github.com/unfoldadmin/django-unfold/pull/2222),
+  [`3ee0da1`](https://github.com/unfoldadmin/django-unfold/commit/3ee0da161d7ed63d2b9ab77a88eb1e952304fd87))
+
+- Simplified wysiwyg design ([#2241](https://github.com/unfoldadmin/django-unfold/pull/2241),
+  [`c7c0b12`](https://github.com/unfoldadmin/django-unfold/commit/c7c0b1299d37af7383869ee834b0ccfdae77bd9e))
+
+- Subtle modal overlay animation ([#2252](https://github.com/unfoldadmin/django-unfold/pull/2252),
+  [`f59179f`](https://github.com/unfoldadmin/django-unfold/commit/f59179f581da7e28ed146daafc435e9c75c9620f))
+
+
 ## v0.104.1 (2026-08-12)
 
 ### Bug Fixes
