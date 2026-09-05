@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
+
 # Custom form where we override the location widget
 class ExampleModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -36,6 +37,7 @@ class ExampleModelForm(forms.ModelForm):
             # base_fields = ["city"],
             # zoom = 7
         )
+
 
 @admin.register(ExampleModelWithLocationField)
 class ExampleModelAdmin(ModelAdmin):

@@ -65,6 +65,7 @@ class CrontabScheduleAdmin(BaseCrontabScheduleAdmin, ModelAdmin):
 class SolarScheduleAdmin(ModelAdmin):
     pass
 
+
 @admin.register(ClockedSchedule)
 class ClockedScheduleAdmin(BaseClockedScheduleAdmin, ModelAdmin):
     pass

@@ -43,15 +43,13 @@ class SomeDatasetAdmin(ModelAdmin):
 
         # If there is a permission requirement, make sure that
         # everything is properly handled here
-        return super().get_queryset(request).filter(
-            related_field__pk=obj_id
-        )
+        return super().get_queryset(request).filter(related_field__pk=obj_id)
 
 
 class SomeDataset(BaseDataset):
     model = SomeModel
     model_admin = SomeDatasetAdmin
-    tab = True # Displays this dataset as tab
+    tab = True  # Displays this dataset as tab
 
 
 class UserAdmin(ModelAdmin):

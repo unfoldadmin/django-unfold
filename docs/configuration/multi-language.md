@@ -37,13 +37,10 @@ The `path("i18n/", include("django.conf.urls.i18n")),` is needed for the languag
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
 
-urlpatterns = (
-    [
-        path("i18n/", include("django.conf.urls.i18n")),
-    ]
-    + i18n_patterns(
-        path("admin/", admin.site.urls),
-    )
+urlpatterns = [
+    path("i18n/", include("django.conf.urls.i18n")),
+] + i18n_patterns(
+    path("admin/", admin.site.urls),
 )
 ```
 
@@ -79,18 +76,15 @@ UNFOLD = {
         # Hardcoded list of languages
         "navigation": [
             {
-                'bidi': False,
-                'code': 'de',
-                'name': 'German',
-                'name_local':
-                'Deutsch',
-                'name_translated': 'German'
+                "bidi": False,
+                "code": "de",
+                "name": "German",
+                "name_local": "Deutsch",
+                "name_translated": "German",
             },
         ],
-
         # Using a callback to generate list of languages
         # "navigation": "your_app.utils.languages_callback",
-
         # In case you want to have some custom form handling
         # "actions": reverse_lazy("custom_form_submit")
     }

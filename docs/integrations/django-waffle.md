@@ -22,6 +22,7 @@ from waffle.admin import SwitchAdmin as BaseSwitchAdmin
 from waffle.models import Flag, Sample, Switch
 
 from unfold.admin import ModelAdmin
+
 # This is custom admin class for Flag model
 from unfold.contrib.waffle.admin import FlagAdmin as BaseFlagAdmin
 

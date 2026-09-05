@@ -18,16 +18,18 @@ from unfold.components import register_component, BaseComponent
 class SomeComponent(BaseComponent):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            "some_variable": [
-                {
-                    "title": "Example A",
-                },
-                {
-                    "title": "Example B",
-                }
-            ]
-        })
+        context.update(
+            {
+                "some_variable": [
+                    {
+                        "title": "Example A",
+                    },
+                    {
+                        "title": "Example B",
+                    },
+                ]
+            }
+        )
         return context
 ```
 

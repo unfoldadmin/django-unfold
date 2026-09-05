@@ -34,33 +34,37 @@ from unfold.components import BaseComponent
 class BarChartComponent(BaseComponent):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            "height": 320,
-            "data": json.dumps({
-                "labels": ["Mo", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                "datasets": [
+        context.update(
+            {
+                "height": 320,
+                "data": json.dumps(
                     {
-                        "label": "Dataset 1",
-                        "data": [12, 19, 3, 5, 2, 3, 9],
-                        "backgroundColor": "var(--color-primary-700)",
-                    },
-                    {
-                        "label": "Dataset 2",
-                        "data": [3, 12, 5, 9, 2, 19, 3],
-                        "borderColor": "var(--color-primary-400)",
-                        "type": "line",  # Change the type here
-                        # "displayYAxis": True,  # Display the Y-axis labels
-                        # "displayXAxis": True,  # Display the X-axis labels
-                        # "maxTicksXLimit": 50,  # Limit the number of ticks on X-axis
-                        # "suffixYAxis": "€",  # Add a suffix to the Y-axis values
+                        "labels": ["Mo", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                        "datasets": [
+                            {
+                                "label": "Dataset 1",
+                                "data": [12, 19, 3, 5, 2, 3, 9],
+                                "backgroundColor": "var(--color-primary-700)",
+                            },
+                            {
+                                "label": "Dataset 2",
+                                "data": [3, 12, 5, 9, 2, 19, 3],
+                                "borderColor": "var(--color-primary-400)",
+                                "type": "line",  # Change the type here
+                                # "displayYAxis": True,  # Display the Y-axis labels
+                                # "displayXAxis": True,  # Display the X-axis labels
+                                # "maxTicksXLimit": 50,  # Limit the number of ticks on X-axis
+                                # "suffixYAxis": "€",  # Add a suffix to the Y-axis values
+                            },
+                        ],
                     }
-                ]
-            })
-            # Completely custom chart options
-            # "options": json.dumps({
-            #   "sample": "example",
-            # })
-        })
+                ),
+                # Completely custom chart options
+                # "options": json.dumps({
+                #   "sample": "example",
+                # })
+            }
+        )
 
         return context
 ```
@@ -77,17 +81,21 @@ from unfold.components import BaseComponent
 class BarChartComponent(BaseComponent):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            "data": json.dumps({
-                "labels": ["Mo", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                "datasets": [
+        context.update(
+            {
+                "data": json.dumps(
                     {
-                        "label": "Dataset 1",
-                        "data": [12, 19, 3, 5, 2, 3, 9],
+                        "labels": ["Mo", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                        "datasets": [
+                            {
+                                "label": "Dataset 1",
+                                "data": [12, 19, 3, 5, 2, 3, 9],
+                            }
+                        ],
                     }
-                ]
-            })
-        })
+                )
+            }
+        )
         return context
 ```
 

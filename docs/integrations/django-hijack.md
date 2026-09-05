@@ -14,7 +14,7 @@ This integration enhances the styling of notifications indicating the currently 
 # settings.py
 
 INSTALLED_APPS = [
-    "unfold.contrib.hijack", # Add this to load new templates
+    "unfold.contrib.hijack",  # Add this to load new templates
 ]
 ```
 

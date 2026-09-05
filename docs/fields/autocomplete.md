@@ -28,6 +28,7 @@ from unfold.fields import (
 
 from .models import MyModel
 
+
 # Custom ListView returning JSON with available select options
 class MyAutocompleteView(BaseAutocompleteView):
     model = MyModel
@@ -58,9 +59,10 @@ class MyModelAdmin(ModelAdmin):
         (
             "autocomplete-url-path",
             "custom_autocomplete_path_name",
-            MyAutocompleteView.as_view()
+            MyAutocompleteView.as_view(),
         ),
     )
+
 
 class MyForm(forms.Form):
     one_object = UnfoldAdminAutocompleteModelChoiceField(

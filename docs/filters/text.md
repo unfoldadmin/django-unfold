@@ -22,6 +22,7 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin import TextFilter, FieldTextFilter
 
+
 class CustomTextFilter(TextFilter):
     title = _("Custom filter")
     parameter_name = "query_param_in_uri"
@@ -37,8 +38,5 @@ class CustomTextFilter(TextFilter):
 @admin.register(User)
 class MyAdmin(ModelAdmin):
     list_filter_submit = True  # Submit button at the bottom of the filter
-    list_filter = [
-        ("model_charfield", FieldTextFilter),
-        CustomTextFilter
-    ]
+    list_filter = [("model_charfield", FieldTextFilter), CustomTextFilter]
 ```

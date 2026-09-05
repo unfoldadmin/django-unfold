@@ -25,7 +25,7 @@ class TaskInline(TabularInline):
 
 
 class SubTaskInline(TabularInline):
-    inlines = [AnotherInline] # This is not going to work
+    inlines = [AnotherInline]  # This is not going to work
 ```
 
 

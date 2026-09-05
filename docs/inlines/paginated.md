@@ -17,8 +17,16 @@ AJAX pagination is not currently supported for inlines. This means that when use
 If inline records fit on only one page, no pagination controls will be displayed to keep the interface clean and uncluttered. Django Unfold automatically detects when the total number of records is less than or equal to the specified `per_page` value and hides the pagination controls accordingly. This intelligent behavior prevents unnecessary UI elements from appearing when they serve no functional purpose.
 
 ```python
-from unfold.admin import StackedInline, TabularInline, GenericStackedInline, GenericTabularInline
-from unfold.contrib.inlines.admin import NonrelatedStackedInline, NonrelatedTabularInline
+from unfold.admin import (
+    StackedInline,
+    TabularInline,
+    GenericStackedInline,
+    GenericTabularInline,
+)
+from unfold.contrib.inlines.admin import (
+    NonrelatedStackedInline,
+    NonrelatedTabularInline,
+)
 
 
 ############################################
@@ -28,9 +36,11 @@ class SomeStackedInline(StackedInline):
     model = YourModel
     per_page = 10
 
+
 class SomeTabularInline(TabularInline):
     model = YourModel
     per_page = 10
+
 
 ############################################
 # Generic inlines
@@ -39,9 +49,11 @@ class SomeGenericStackedInline(GenericStackedInline):
     model = YourModel
     per_page = 10
 
+
 class SomeGenericTabularInline(GenericTabularInline):
     model = YourModel
     per_page = 10
+
 
 ############################################
 # Nonrelated inlines
@@ -49,6 +61,7 @@ class SomeGenericTabularInline(GenericTabularInline):
 class SomeNonrelatedStackedInline(NonrelatedStackedInline):
     model = YourModel
     per_page = 10
+
 
 class SomeNonrelatedTabularInline(NonrelatedTabularInline):
     model = YourModel

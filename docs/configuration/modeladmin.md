@@ -39,8 +39,8 @@ class CustomAdminClass(ModelAdmin):
     # Custom filter options
     list_filter_options = {
         "your_filter_field_path": {
-            "label": "Custom label", # Optional: custom label for the filter
-            "horizontal": True, # Optional: display filter in horizontal layout
+            "label": "Custom label",  # Optional: custom label for the filter
+            "horizontal": True,  # Optional: display filter in horizontal layout
         }
     }
 
@@ -68,7 +68,9 @@ class CustomAdminClass(ModelAdmin):
     change_form_outer_after_template = "some/template.html"
 
     # Display cancel button in submit line in changeform
-    change_form_show_cancel_button = True # show/hide cancel button in changeform, default: False
+    change_form_show_cancel_button = (
+        True  # show/hide cancel button in changeform, default: False
+    )
 
     formfield_overrides = {
         models.TextField: {
@@ -76,6 +78,6 @@ class CustomAdminClass(ModelAdmin):
         },
         ArrayField: {
             "widget": ArrayWidget,
-        }
+        },
     }
 ```

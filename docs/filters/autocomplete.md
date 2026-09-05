@@ -21,18 +21,19 @@ from django.contrib.auth.models import User
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin import (
     AutocompleteSelectFilter,
-    AutocompleteSelectMultipleFilter
+    AutocompleteSelectMultipleFilter,
 )
+
 
 @admin.register(User)
 class YourModelAdmin(ModelAdmin):
     list_filter = (
         # Autocomplete filter
         ["other_model_field", AutocompleteSelectFilter],
-
         # Autocomplete multiple filter
         ["other_multiple_model_field", AutocompleteSelectMultipleFilter],
     )
+
 
 class OtherModelAdmin(ModelAdmin):
     search_fields = ["name"]

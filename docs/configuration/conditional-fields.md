@@ -25,9 +25,15 @@ from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
     different_address = models.BooleanField(_("different address"), default=False)
-    country = models.CharField(_("city"), max_length=255, null=True, blank=True, default=None)
-    city = models.CharField(_("city"), max_length=255, null=True, blank=True, default=None)
-    address = models.CharField(_("address"), max_length=255, null=True, blank=True, default=None)
+    country = models.CharField(
+        _("city"), max_length=255, null=True, blank=True, default=None
+    )
+    city = models.CharField(
+        _("city"), max_length=255, null=True, blank=True, default=None
+    )
+    address = models.CharField(
+        _("address"), max_length=255, null=True, blank=True, default=None
+    )
 
     class Meta:
         db_table = "users"

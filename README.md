@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 ```python
 from unfold.admin import ModelAdmin
 
+
 @admin.register(MyModel)
 class MyModelAdmin(ModelAdmin):
     pass

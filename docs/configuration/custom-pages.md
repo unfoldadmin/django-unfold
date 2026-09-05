@@ -22,7 +22,7 @@ from .models import MyModel
 
 class MyClassBasedView(UnfoldModelAdminViewMixin, TemplateView):
     title = "Custom Title"  # required: custom page header title
-    permission_required = () # required: tuple of permissions
+    permission_required = ()  # required: tuple of permissions
     template_name = "some/template/path.html"
 
 
@@ -35,9 +35,7 @@ class CustomAdmin(ModelAdmin):
         )
 
         return super().get_urls() + [
-            path(
-                "custom-url-path", custom_view, name="custom_name"
-            ),
+            path("custom-url-path", custom_view, name="custom_name"),
         ]
 ```
 

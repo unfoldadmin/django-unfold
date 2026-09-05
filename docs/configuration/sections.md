@@ -18,6 +18,7 @@ from unfold.sections import TableSection, TemplateSection
 
 from .models import SomeModel
 
+
 # Table for related records
 class CustomTableSection(TableSection):
     verbose_name = _("Table title")  # Displays custom table title
@@ -28,6 +29,7 @@ class CustomTableSection(TableSection):
     # Custom field
     def custom_field(self, instance):
         return instance.pk
+
 
 # Simple template with custom content
 class CardSection(TemplateSection):
@@ -92,7 +94,5 @@ from .models import SomeModel
 
 @admin.register(SomeModel)
 class SomeAdmin(ModelAdmin):
-    list_sections = [
-         CustomTableSection, OtherCustomTable
-    ]
+    list_sections = [CustomTableSection, OtherCustomTable]
 ```

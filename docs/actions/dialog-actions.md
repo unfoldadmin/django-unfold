@@ -127,9 +127,7 @@ class SomeForm(BaseDialogForm):
 
     # If it is not a detail action, remove object_id parameter
     def get_before_template_context(self, request, object_id):
-        return {
-            "sample": "example1"
-        }
+        return {"sample": "example1"}
 
     def get_after_template_context(self, request, object_id):
         return {

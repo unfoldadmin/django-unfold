@@ -33,6 +33,7 @@ After creating the encoder, we can apply it to a field definition in the `models
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class CustomModel(models.Model):
     data = models.JSONField(_("data"), null=True, blank=True, encoder=PrettyJSONEncoder)
 ```

@@ -25,11 +25,9 @@ These filters are particularly useful when you have a reasonable number of choic
 ```python
 from unfold.contrib.filters.admin import ChoicesRadioFilter, ChoicesCheckboxFilter
 
+
 class SampleModelAdmin(ModelAdmin):
-    list_filter = [
-        ("status", ChoicesCheckboxFilter),
-        ("status", ChoicesRadioFilter)
-    ]
+    list_filter = [("status", ChoicesCheckboxFilter), ("status", ChoicesRadioFilter)]
 ```
 
 ## Radio filter for BooleanField
@@ -47,9 +45,7 @@ from unfold.contrib.filters.admin import BooleanRadioFilter
 
 
 class SampleModelAdmin(ModelAdmin):
-    list_filter = [
-        ("is_active", BooleanRadioFilter)
-    ]
+    list_filter = [("is_active", BooleanRadioFilter)]
 ```
 
 ## Checkbox related field filter
@@ -61,9 +57,7 @@ from unfold.contrib.filters.admin import RelatedCheckboxFilter
 
 
 class SampleModelAdmin(ModelAdmin):
-    list_filter = [
-        ("country", RelatedCheckboxFilter)
-    ]
+    list_filter = [("country", RelatedCheckboxFilter)]
 ```
 
 
@@ -78,9 +72,7 @@ from unfold.contrib.filters.admin import AllValuesCheckboxFilter
 
 
 class SampleModelAdmin(ModelAdmin):
-    list_filter = [
-        ("option", AllValuesCheckboxFilter)
-    ]
+    list_filter = [("option", AllValuesCheckboxFilter)]
 ```
 
 ## Custom checkbox or radio filter

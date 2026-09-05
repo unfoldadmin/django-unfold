@@ -32,9 +32,7 @@ from .models import MyModel
 
 @admin.register(MyModel)
 class MyModelAdmin(ModelAdmin):
-    list_filter = (
-        "category",
-    )
+    list_filter = ("category",)
     list_filter_options = {
         "category": {
             "label": _("Category"),

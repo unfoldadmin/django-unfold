@@ -27,7 +27,7 @@ class UserAdmin(ModelAdmin):
 
     @action(
         description=_("Changeform submitline action"),
-        permissions=["changeform_submitline_action"]
+        permissions=["changeform_submitline_action"],
     )
     def changeform_submitline_action(self, request: HttpRequest, obj: User):
         """
@@ -37,7 +37,9 @@ class UserAdmin(ModelAdmin):
         obj.is_active = True
         obj.save()
 
-    def has_changeform_submitline_action_permission(self, request: HttpRequest, object_id: Union[str, int]):
+    def has_changeform_submitline_action_permission(
+        self, request: HttpRequest, object_id: Union[str, int]
+    ):
         # Write your own bussiness logic. Code below will always display an action.
         return True
 ```
