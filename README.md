@@ -1,20 +1,33 @@
 [![screenshot](https://github.com/user-attachments/assets/8c2dc5c1-480b-49ad-bd2e-57369ca4e306)](https://unfoldadmin.com)
 
-## Unfold - Modern Django Admin
+<p align="center">
+    <h1 align="center">Unfold - Modern Django Admin</h1>
+</p>
 
-<div align="center">
+<p align="center">
     A modern Django admin theme for building dashboards, internal tools, and business applications
-</div>
+</p>
 
-<div align="center">
-    [Live demo](https://demo.unfoldadmin.com/) · [Documentation](https://unfoldadmin.com/docs/) · [[Discord](https://discord.gg/](https://discord.gg/9sQj9MEbNz)) · [PyPI](https://pypi.org/project/django-unfold/)
-</div>
+<p align="center">
+    <a href="https://demo.unfoldadmin.com/">Live demo</a> ·
+    <a href="https://unfoldadmin.com/docs/">Documentation</a> ·
+    <a href="https://discord.gg/9sQj9MEbNz">Discord</a> ·
+    <a href="https://pypi.org/project/django-unfold/">PyPI</a>
+</p>
 
-<div align="center">
-    [![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
-    [![Discord](https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da)](https://discord.gg/9sQj9MEbNz)
-    ![Monthly downloads](https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge)
-</div>
+<p align="center">
+    <a href="https://pypi.org/project/django-unfold/">
+        <img src="https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge" alt="PyPI - Version" />
+    </a>
+
+    <a href="https://discord.gg/9sQj9MEbNz">
+        <img src="https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da" alt="Discord" />
+    </a>
+
+    <a href="https://pypi.org/project/django-unfold/">
+        <img src="https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge" alt="Monthly downloads" />
+    </a>
+</p>
 
 ## Quickstart
 
