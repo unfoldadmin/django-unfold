@@ -11,7 +11,7 @@
 
 <p align="center">
     <a href="https://demo.unfoldadmin.com/">Live demo</a> ·
-    <a href="https://unfoldadmin.com/docs/">Docs</a> ·
+    <a href="https://unfoldadmin.com/docs/">Documentation</a> ·
     <a href="https://unfoldadmin.com/studio/">Studio</a> ·
     <a href="https://discord.gg/9sQj9MEbNz">Discord</a> ·
     <a href="https://pypi.org/project/django-unfold/">PyPI</a>
@@ -58,8 +58,6 @@ from unfold.admin import ModelAdmin
 class MyModelAdmin(ModelAdmin):
     pass
 ```
-
-*Unfold works alongside the default Django admin and requires no migration of existing models or workflows. Unfold is actively developed and continuously evolving as new use cases and edge cases are discovered.*
 
 ## Why Unfold?
 
@@ -124,7 +122,7 @@ Need help integrating, customizing, or scaling Django Admin with Unfold?
 - [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/)
 - [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/)
 - [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/)
--
+
 ## Credits
 
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
