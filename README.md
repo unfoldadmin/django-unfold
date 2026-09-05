@@ -72,9 +72,9 @@ class MyModelAdmin(ModelAdmin):
 
 * **Modern interface** - Responsive Tailwind CSS design with dark mode, customizable colors, layout options, and other visual settings.
 * **Dashboards and components** - Build custom dashboards and admin pages using reusable cards, charts, buttons, and other UI components.
-* **Advanced filtering** - Dropdown, autocomplete, text, numeric, date range, checkbox, radio, and facet filters for changelists.
-* **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions and styles.
-* **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation.
+* **Advanced filtering** - Dropdown, autocomplete, text, numeric, date range, checkbox, radio, and facet filters for more powerful changelists.
+* **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions, styles, and flexible placement options.
+* **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation and layout options.
 * **Enhanced forms and inlines** - Conditional fields, sortable and paginated inlines, WYSIWYG editing, ArrayField widgets, and django-crispy-forms support.
 * **Built on Django admin** - Extend `django.contrib.admin` incrementally while keeping existing Django admin concepts, permissions, and workflows.
 * **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
