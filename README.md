@@ -29,7 +29,8 @@
     </a>
 </p>
 
-[![screenshot](https://github.com/user-attachments/assets/8c2dc5c1-480b-49ad-bd2e-57369ca4e306)](https://unfoldadmin.com)
+<img width="2560" height="1936" alt="unfold-dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
+
 
 ## Quickstart
 
