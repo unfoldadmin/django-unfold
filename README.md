@@ -70,14 +70,14 @@ class MyModelAdmin(ModelAdmin):
 
 ## Features
 
-1. **Modern interface** - Responsive Tailwind CSS design with dark mode, customizable colors, layout options, and other visual settings for a polished admin experience.
-2. **Dashboards and components** - Build custom dashboards and admin pages using reusable cards, charts, buttons, and other UI components for internal applications.
-3. **Advanced filtering** - Dropdown, autocomplete, text, numeric, date range, checkbox, radio, and facet filters for more powerful and flexible changelists.
-4. **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions, styles, and flexible placement options across the admin.
-5. **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation and layout options for complex interfaces.
-6. **Enhanced forms and inlines** - Conditional fields, sortable and paginated inlines, WYSIWYG editing, ArrayField widgets, and django-crispy-forms support for richer admin forms.
-7. **Built on Django admin** - Extend `django.contrib.admin` incrementally while keeping existing Django admin concepts, permissions, workflows, and familiar development patterns.
-8. **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
+- **Modern interface** - Responsive Tailwind CSS design with dark mode, customizable colors, layout options, and other visual settings for a polished admin experience.
+- **Dashboards and components** - Build custom dashboards and admin pages using reusable cards, charts, buttons, and other UI components for internal applications.
+- **Advanced filtering** - Dropdown, autocomplete, text, numeric, date range, checkbox, radio, and facet filters for more powerful and flexible changelists.
+- **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions, styles, and flexible placement options across the admin.
+- **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation and layout options for complex interfaces.
+- **Enhanced forms and inlines** - Conditional fields, sortable and paginated inlines, WYSIWYG editing, ArrayField widgets, and django-crispy-forms support for richer admin forms.
+- **Built on Django admin** - Extend `django.contrib.admin` incrementally while keeping existing Django admin concepts, permissions, workflows, and familiar development patterns.
+- **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
 
 [Explore all features →](https://unfoldadmin.com/features/)
 
