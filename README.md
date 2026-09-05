@@ -1,6 +1,8 @@
 [![screenshot](https://github.com/user-attachments/assets/8c2dc5c1-480b-49ad-bd2e-57369ca4e306)](https://unfoldadmin.com)
 
 <p align="center">
+    <img width="512" height="512" alt="unfold-logo" src="https://github.com/user-attachments/assets/413d31d2-78d1-424e-adcf-40c1c086f0ba" style="max-width: 128px;"/>
+
     <h1 align="center">Unfold - Modern Django Admin</h1>
 </p>
 
