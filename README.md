@@ -2,17 +2,19 @@
 
 ## Unfold - Modern Django Admin
 
-[![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
-[![Discord](https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da)](https://discord.gg/9sQj9MEbNz)
-[![Build](https://img.shields.io/github/actions/workflow/status/unfoldadmin/django-unfold/release.yml?style=for-the-badge)](https://github.com/unfoldadmin/django-unfold/actions?query=workflow%3Arelease)
-![Monthly downloads](https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge)
+<div align="center">
+    A modern Django admin theme for building dashboards, internal tools, and business applications
+</div>
 
-Enhance Django Admin with a modern interface and powerful tools to build internal applications.
+<div align="center">
+    [Live demo](https://demo.unfoldadmin.com/) · [Documentation](https://unfoldadmin.com/docs/) · [[Discord](https://discord.gg/](https://discord.gg/9sQj9MEbNz)) · [PyPI](https://pypi.org/project/django-unfold/)
+</div>
 
-- **Documentation:** The full documentation is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
-- **Live demo:** The demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
-- **Demo repository:** A repository with a demo implementation is available at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula?utm_medium=github&utm_source=unfold).
-- **Discord:** Join our Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
+<div align="center">
+    [![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
+    [![Discord](https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da)](https://discord.gg/9sQj9MEbNz)
+    ![Monthly downloads](https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge)
+</div>
 
 ## Quickstart
 
@@ -26,8 +28,7 @@ pip install django-unfold
 
 ```python
 INSTALLED_APPS = [
-    "unfold",
-    # Rest of the apps
+    "unfold",  # First in the list
 ]
 ```
 
@@ -84,6 +85,16 @@ class MyModelAdmin(ModelAdmin):
 - **Configuration:** Allows basic options to be changed in `settings.py`.
 - **Dependencies:** Built entirely on `django.contrib.admin`.
 
+## Professional services
+
+Need help integrating, customizing, or scaling Django Admin with Unfold?
+
+- **Consulting**: Expert guidance on Django architecture, performance, feature development, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
+- **Support**: Assistance with integrating or customizing Unfold, including live 1:1 calls and implementation review. Fixed price, no ongoing commitment. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
+- **Studio**: Extend Unfold with advanced dashboards, visual customization, and additional admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+
+[![dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+
 ## Third-party package support
 
 - [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)
@@ -97,23 +108,13 @@ class MyModelAdmin(ModelAdmin):
 - [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/)
 - [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/)
 - [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/)
-
-## Professional services
-
-Need help integrating, customizing, or scaling Django Admin with Unfold?
-
-- **Consulting**: Expert guidance on Django architecture, performance, feature development, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
-- **Support**: Assistance with integrating or customizing Unfold, including live 1:1 calls and implementation review. Fixed price, no ongoing commitment. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
-- **Studio**: Extend Unfold with advanced dashboards, visual customization, and additional admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
-
-[![dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
-
+-
 ## Credits
 
-- **Tailwind**: [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
-- **Icons**: [Material Symbols](https://github.com/google/material-design-icons) - Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
-- **Font**: [Inter](https://github.com/rsms/inter) - Licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL).
-- **Charts**: [Chart.js](https://github.com/chartjs/Chart.js) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
-- **JavaScript Framework**: [Alpine.js](https://github.com/alpinejs/alpine) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
-- **AJAX calls**: [HTMX](https://htmx.org/) - Licensed under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause).
-- **WYSIWYG Editor**: [Trix](https://github.com/basecamp/trix) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Material Symbols](https://github.com/google/material-design-icons) - Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+- [Inter](https://github.com/rsms/inter) - Licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL).
+- [Chart.js](https://github.com/chartjs/Chart.js) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Alpine.js](https://github.com/alpinejs/alpine) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [HTMX](https://htmx.org/) - Licensed under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause).
+- [Trix](https://github.com/basecamp/trix) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
