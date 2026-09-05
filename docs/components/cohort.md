@@ -39,13 +39,12 @@ Here's an example of a component class that prepares data for the cohort compone
 
 from unfold.components import BaseComponent, register_component
 
+
 @register_component
 class MyCohortComponent(BaseComponent):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            "data": DATA
-        })
+        context.update({"data": DATA})
         return context
 ```
 
@@ -74,7 +73,7 @@ DATA = {
                     "value": "1",
                     "subtitle": "something",  # Optional
                 }
-            ]
+            ],
         },
         # Second row
         {
@@ -88,8 +87,8 @@ DATA = {
                 {
                     "value": "1",
                 }
-            ]
+            ],
         },
-    ]
+    ],
 }
 ```

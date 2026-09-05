@@ -17,7 +17,12 @@ To integrate django-import-export with Unfold's admin interface, follow these tw
 
 from unfold.admin import ModelAdmin
 from import_export.admin import ImportExportModelAdmin
-from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
+from unfold.contrib.import_export.forms import (
+    ExportForm,
+    ImportForm,
+    SelectableFieldsExportForm,
+)
+
 
 class ExampleAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
@@ -36,6 +41,7 @@ The custom implementation ensures that action forms maintain the same look and f
 
 from unfold.admin import ModelAdmin
 from unfold.contrib.import_export.admin import ExportActionModelAdmin
+
 
 # Not needed in django-import-export 4.x+
 class ExampleAdmin(ModelAdmin, ExportActionModelAdmin):

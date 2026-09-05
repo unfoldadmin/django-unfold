@@ -28,7 +28,7 @@ class SomeInline(StackedInline):
 
     def get_count_variant(self, request, obj):
         # Implement for custom variant
-        return "primary" # danger, success, info, warning
+        return "primary"  # danger, success, info, warning
 ```
 
 ## Custom inline title
@@ -61,6 +61,7 @@ You can hide the title row for both `StackedInline` and `TabularInline` by setti
 from django.contrib.auth.models import User
 from unfold.admin import TabularInline
 
+
 class MyInline(TabularInline):
     model = User
     show_title = True
@@ -87,6 +88,7 @@ from unfold.admin import StackedInline
 
 class User(models.Model):
     inlines = [SomeInline]
+
 
 class SomeInline(StackedInline):
     collapsible = True

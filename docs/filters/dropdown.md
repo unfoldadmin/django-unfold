@@ -24,7 +24,7 @@ from unfold.contrib.filters.admin import (
     RelatedDropdownFilter,
     MultipleRelatedDropdownFilter,
     DropdownFilter,
-    MultipleDropdownFilter
+    MultipleDropdownFilter,
 )
 
 
@@ -53,8 +53,9 @@ class MyAdmin(ModelAdmin):
         CustomDropdownFilter,
         ("modelfield_with_choices", ChoicesDropdownFilter),
         ("modelfield_with_choices_multiple", MultipleChoicesDropdownFilter),
-        ("modelfield_with_foreign_key", RelatedDropdownFilter)
-        ("modelfield_with_foreign_key_multiple", MultipleRelatedDropdownFilter)
+        ("modelfield_with_foreign_key", RelatedDropdownFilter)(
+            "modelfield_with_foreign_key_multiple", MultipleRelatedDropdownFilter
+        ),
     ]
 ```
 

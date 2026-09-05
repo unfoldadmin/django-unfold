@@ -21,6 +21,7 @@ class MyTabularInline(TabularInline):
     model = User
     tab = True
 
+
 class MyStackedInline(StackedInline):
     model = User
     tab = True

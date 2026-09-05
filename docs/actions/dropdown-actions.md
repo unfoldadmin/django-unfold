@@ -21,13 +21,18 @@ from unfold.admin import ModelAdmin
 
 @register(User)
 class UserAdmin(ModelAdmin):
-    actions_list = ["action1", "action2", {
-        "title": "Dropdown action",
-        "icon": "person",  # Optional, will display icon in the dropdown title
-        "items": [
-            "action3", "action4",
-        ]
-    }]
+    actions_list = [
+        "action1",
+        "action2",
+        {
+            "title": "Dropdown action",
+            "icon": "person",  # Optional, will display icon in the dropdown title
+            "items": [
+                "action3",
+                "action4",
+            ],
+        },
+    ]
 ```
 
 **Note:** If there are not actions to display in the dropdown, the action button will be not displayed at all.

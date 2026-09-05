@@ -52,14 +52,14 @@ UNFOLD = {
             "href": lambda request: static("favicon.svg"),
         },
     ],
-    "SHOW_HISTORY": True, # show/hide "History" button, default: True
-    "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
-    "SHOW_BACK_BUTTON": False, # show/hide "Back" button on changeform in header, default: False
-    "SHOW_UI_WARNINGS": False, # show/hide warnings in UI, default: False
-    "ENVIRONMENT": "sample_app.environment_callback", # environment name in header
-    "ENVIRONMENT_TITLE_PREFIX": "sample_app.environment_title_prefix_callback", # environment name prefix in title tag
+    "SHOW_HISTORY": True,  # show/hide "History" button, default: True
+    "SHOW_VIEW_ON_SITE": True,  # show/hide "View on site" button, default: True
+    "SHOW_BACK_BUTTON": False,  # show/hide "Back" button on changeform in header, default: False
+    "SHOW_UI_WARNINGS": False,  # show/hide warnings in UI, default: False
+    "ENVIRONMENT": "sample_app.environment_callback",  # environment name in header
+    "ENVIRONMENT_TITLE_PREFIX": "sample_app.environment_title_prefix_callback",  # environment name prefix in title tag
     "DASHBOARD_CALLBACK": "sample_app.dashboard_callback",
-    "THEME": "dark", # Force theme: "dark" or "light". Will disable theme switcher
+    "THEME": "dark",  # Force theme: "dark" or "light". Will disable theme switcher
     "LOGIN": {
         "image": lambda request: static("sample/login-bg.jpg"),
         "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
@@ -128,9 +128,9 @@ UNFOLD = {
                             "target": "_blank",
                         },
                         "badge": "sample_app.badge_callback",
-                        "badge_variant": "info", # info, success, warning, primary, danger
-                        "badge_style": "solid", # background fill style
-                        "badge_class": "ml-auto", # additional class for badge
+                        "badge_variant": "info",  # info, success, warning, primary, danger
+                        "badge_style": "solid",  # background fill style
+                        "badge_class": "ml-auto",  # additional class for badge
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
@@ -177,13 +177,13 @@ def environment_callback(request):
     Callback has to return a list of two values represeting text value and the color
     type of the label displayed in top right corner.
     """
-    return ["Production", "danger"] # info, danger, warning, success
+    return ["Production", "danger"]  # info, danger, warning, success
 
 
 def badge_callback(request):
     return 3
 
+
 def permission_callback(request):
     return request.user.has_perm("sample_app.change_model")
-
 ```

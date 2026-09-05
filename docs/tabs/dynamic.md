@@ -13,9 +13,7 @@ Unfold provides a way to dynamically generate tab navigation. It is possible to 
 ```python
 # settings.py
 
-UNFOLD = {
-    "TABS": "your_project.admin.tabs_callback"
-}
+UNFOLD = {"TABS": "your_project.admin.tabs_callback"}
 ```
 
 Below is an example of how to build own tabs navigation structure in tabs callback function. Based on the request object it is possible to write own logic for the tab navigation structure.
@@ -27,33 +25,31 @@ from django.http import HttpRequest
 
 
 def tabs_callback(request: HttpRequest) -> list[dict[str, Any]]:
-    return [
-        {
-            # Unique tab identifier to render tabs in custom templates
-            "page": "custom_page",
-
-            # Applies for the changeform view
-            "models": [
-                {
-                    "name": "app_label.model_name_in_lowercase",
-                    "detail": True
-                },
-            ],
-            "items": [
-                {
-                    "title": _("Your custom title"),
-                    "link": reverse_lazy("admin:app_label_model_name_changelist"),
-                    "active": True # Configure active tab
-                    # "active": lambda request: True
-                },
-                {
-                    "title": _("Inline tab"),
-                    "link": reverse_lazy("admin:app_label_model_name_changelist"),
-                    "inline": "corresponding-fragment-url"
-                },
-            ],
-        },
-    ],
+    return (
+        [
+            {
+                # Unique tab identifier to render tabs in custom templates
+                "page": "custom_page",
+                # Applies for the changeform view
+                "models": [
+                    {"name": "app_label.model_name_in_lowercase", "detail": True},
+                ],
+                "items": [
+                    {
+                        "title": _("Your custom title"),
+                        "link": reverse_lazy("admin:app_label_model_name_changelist"),
+                        "active": True,  # Configure active tab
+                        # "active": lambda request: True
+                    },
+                    {
+                        "title": _("Inline tab"),
+                        "link": reverse_lazy("admin:app_label_model_name_changelist"),
+                        "inline": "corresponding-fragment-url",
+                    },
+                ],
+            },
+        ],
+    )
 ```
 
 **Note:** For rendering tabs associated with inlines, you should use the `inline` parameter and set its value to the corresponding inline fragment URL. This ensures that the tab correctly links to and displays the inline content when clicked. The inline fragment URL typically corresponds to the slugified verbose name of the inline model.
@@ -70,7 +66,7 @@ from django.http import HttpRequest
 UNFOLD = {
     "TABS": [
         {
-            "page": "custom_page", # Unique tab identifier
+            "page": "custom_page",  # Unique tab identifier
             "items": [
                 {
                     "title": _("Your custom title"),

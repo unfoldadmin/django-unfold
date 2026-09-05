@@ -32,13 +32,16 @@ UNFOLD = {
                 },
                 {
                     "title": _("Another custom title"),
-                    "link": reverse_lazy("admin:app_label_another_model_name_changelist"),
+                    "link": reverse_lazy(
+                        "admin:app_label_another_model_name_changelist"
+                    ),
                     "permission": "sample_app.permission_callback",
                 },
             ],
         },
     ],
 }
+
 
 # Permission callback for tab item
 def permission_callback(request):

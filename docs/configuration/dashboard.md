@@ -52,10 +52,13 @@ When building a new dashboard, you'll often need to display data from your datab
 ```python
 # views.py
 
+
 def dashboard_callback(request, context):
-    context.update({
-        "custom_variable": "value",
-    })
+    context.update(
+        {
+            "custom_variable": "value",
+        }
+    )
 
     return context
 ```

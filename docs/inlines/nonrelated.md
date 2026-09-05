@@ -16,7 +16,10 @@ from unfold.admin import ModelAdmin
 from unfold.contrib.inlines.admin import NonrelatedTabularInline
 from .models import OtherModel
 
-class OtherNonrelatedInline(NonrelatedTabularInline):  # NonrelatedStackedInline is available as well
+
+class OtherNonrelatedInline(
+    NonrelatedTabularInline
+):  # NonrelatedStackedInline is available as well
     model = OtherModel
     fields = ["field1", "field2"]  # Ignore property to display all fields
 

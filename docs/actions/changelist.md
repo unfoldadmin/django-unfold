@@ -27,11 +27,13 @@ from unfold.decorators import action
 class UserAdmin(ModelAdmin):
     actions_list = ["changelist_action"]
 
-    @action(description=_("Changelist action"), url_path="changelist-action", permissions=["changelist_action"])
+    @action(
+        description=_("Changelist action"),
+        url_path="changelist-action",
+        permissions=["changelist_action"],
+    )
     def changelist_action(self, request: HttpRequest):
-        return redirect(
-          reverse_lazy("admin:users_user_changelist")
-        )
+        return redirect(reverse_lazy("admin:users_user_changelist"))
 
     def has_changelist_action_permission(self, request: HttpRequest):
         # Write your own bussiness logic. Code below will always display an action.

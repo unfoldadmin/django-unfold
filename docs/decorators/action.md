@@ -34,6 +34,7 @@ When defining an action, you can specify its visual style using the `variant` pa
 ```python
 # unfold/enums.py
 
+
 class ActionVariant(Enum):
     DEFAULT = "default"
     PRIMARY = "primary"

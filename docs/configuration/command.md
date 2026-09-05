@@ -36,11 +36,12 @@ Command results use infinite scrolling with a default page size of 100 results. 
 UNFOLD = {
     # ...
     "COMMAND": {
-        "search_models": ["example.sample"], # List or tuple
+        "search_models": ["example.sample"],  # List or tuple
         # "search_models": "example.utils.search_models_callback"
     },
     # ...
 }
+
 
 # utils.py
 def search_models_callback(request):

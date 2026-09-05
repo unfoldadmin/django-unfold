@@ -40,11 +40,7 @@ class UserAdmin(ModelAdmin):
         "show_status_with_custom_label",
     ]
 
-    @display(
-        description=_("Status"),
-        ordering="status",
-        label=True
-    )
+    @display(description=_("Status"), ordering="status", label=True)
     def show_status_default_color(self, obj):
         return obj.status
 
@@ -77,11 +73,11 @@ class UserAdmin(ModelAdmin):
             # Image instead of initials. Initials are ignored if image is available
             {
                 "path": "some/path/picture.jpg",
-                "squared": True, # Picture is displayed in square format, if empty circle
+                "squared": True,  # Picture is displayed in square format, if empty circle
                 "borderless": True,  # Picture will be displayed without border
-                "width": 64, # Removes default width. Use together with height
-                "height": 48, # Removes default height. Use together with width
-            }
+                "width": 64,  # Removes default width. Use together with height
+                "height": 48,  # Removes default height. Use together with width
+            },
         ]
 ```
 
@@ -128,13 +124,13 @@ class UserAdmin(ModelAdmin):
             "items": [
                 {
                     "title": "First title",
-                    "link": "#"  # Optional
+                    "link": "#",  # Optional
                 },
                 {
                     "title": "Second title",
-                    "link": "#"  # Optional
+                    "link": "#",  # Optional
                 },
-            ]
+            ],
         }
 ```
 

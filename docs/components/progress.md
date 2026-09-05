@@ -40,9 +40,8 @@ def multiple_progressbar_items():
                 "value": 20.0,
                 "progress-class": "use-another-color",
             },
-        ]
+        ],
     }
-
 ```
 
 ```html

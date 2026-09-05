@@ -70,6 +70,6 @@ DATA = [
     {
         "color": "bg-primary-400 dark:bg-primary-700",
         "tooltip": "Custom value 2",
-    }
+    },
 ]
 ```

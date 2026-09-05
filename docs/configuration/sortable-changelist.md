@@ -30,6 +30,7 @@ To enable sortable functionality on the changelist page:
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class MyModel(models.Model):
     weight = models.PositiveIntegerField(_("weight"), default=0, db_index=True)
 
@@ -43,6 +44,7 @@ class MyModel(models.Model):
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 from .models import MyModel
+
 
 @admin.register(MyModel)
 class SomeAdmin(ModelAdmin):

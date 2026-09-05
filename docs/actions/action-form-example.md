@@ -26,8 +26,12 @@ from unfold.widgets import UnfoldAdminTextInputWidget, UnfoldAdminSplitDateTimeW
 
 class SomeForm(forms.Form):
     # It is important to set up a widget from Unfold.
-    date_start = forms.SplitDateTimeField(label=_("Start"), widget=UnfoldAdminSplitDateTimeWidget)
-    date_end = forms.SplitDateTimeField(label=_("End"), widget=UnfoldAdminSplitDateTimeWidget)
+    date_start = forms.SplitDateTimeField(
+        label=_("Start"), widget=UnfoldAdminSplitDateTimeWidget
+    )
+    date_end = forms.SplitDateTimeField(
+        label=_("End"), widget=UnfoldAdminSplitDateTimeWidget
+    )
     note = forms.CharField(label=_("Note"), widget=UnfoldAdminTextInputWidget)
 
     # Loads date widget required JS files
@@ -47,7 +51,9 @@ class UserAdmin(ModelAdmin):
     actions_detail = ["change_detail_action"]
 
     @action(description=_("Change detail action"), url_path="change-detail-action")
-    def change_detail_action(self, request: HttpRequest, object_id: int) -> HttpResponse:
+    def change_detail_action(
+        self, request: HttpRequest, object_id: int
+    ) -> HttpResponse:
         # Check whether the object already exists; otherwise, return a 404 error.
         obj = get_object_or_404(User, pk=object_id)
         form = SomeForm(request.POST or None)
@@ -60,9 +66,7 @@ class UserAdmin(ModelAdmin):
 
             messages.success(request, _("Change detail action has been successful."))
 
-            return redirect(
-                reverse_lazy("admin:app_model_change", args=[object_id])
-            )
+            return redirect(reverse_lazy("admin:app_model_change", args=[object_id]))
 
         return render(
             request,

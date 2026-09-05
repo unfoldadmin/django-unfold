@@ -31,12 +31,10 @@ class UserAdmin(ModelAdmin):
         description=_("Changelist row action"),
         permissions=["changelist_row_action"],
         url_path="changelist-row-action",
-        attrs={"target": "_blank"}
+        attrs={"target": "_blank"},
     )
     def changelist_row_action(self, request: HttpRequest, object_id: int):
-        return redirect(
-          reverse_lazy("admin:users_user_changelist")
-        )
+        return redirect(reverse_lazy("admin:users_user_changelist"))
 
     def has_changelist_row_action_permission(self, request: HttpRequest):
         # Write your own bussiness logic. Code below will always display an action.

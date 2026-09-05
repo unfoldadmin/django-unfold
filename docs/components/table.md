@@ -24,7 +24,7 @@ def dashboard_callback(request):
             "rows": [
                 ["a", "b"],
                 ["c", "d"],
-            ]
+            ],
         }
     }
 ```
@@ -49,14 +49,14 @@ data = {
         ["a", "b"],
         # Row with nested table
         {
-            "cols": ["c", "d"], # Cols in row
+            "cols": ["c", "d"],  # Cols in row
             "table": {
-                "collapsible": True, # Collapsible nested table
+                "collapsible": True,  # Collapsible nested table
                 "headers": [
                     "col3",
                     {
                         "content": "col4",
-                        "class": "text-blue-500", # custom CSS class
+                        "class": "text-blue-500",  # custom CSS class
                     },
                 ],
                 "rows": [
@@ -64,16 +64,16 @@ data = {
                         "g",
                         {
                             "content": "h",
-                            "class": "text-red-500", # custom CSS class
+                            "class": "text-red-500",  # custom CSS class
                         },
                     ]
-                ]
+                ],
             },
             "attrs": {
                 "data-sample": "example",
             },
-        }
-    ]
+        },
+    ],
 }
 ```
 

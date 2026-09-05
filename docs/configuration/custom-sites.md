@@ -14,6 +14,7 @@ In order to create a custom admin site, Unfold provides the `unfold.sites.Unfold
 from django.contrib import admin
 from unfold.sites import UnfoldAdminSite
 
+
 class CustomAdminSite(UnfoldAdminSite):
     pass
 
@@ -56,7 +57,7 @@ If you want to override the default admin site by setting the `default_site` att
 # settings.py
 
 INSTALLED_APPS = [
-    "unfold.apps.BasicAppConfig", # App config not overriding `django.contrib.admin.site`
+    "unfold.apps.BasicAppConfig",  # App config not overriding `django.contrib.admin.site`
     # some other apps
     "django.contrib.admin",
     "your_app",
@@ -75,11 +76,15 @@ class MyAdminConfig(AdminConfig):
     def get_urls(self):
         urls = super().get_urls()
         urls += [
-            path("my-custom-view/", self.admin_view(self.my_custom_view), name="my_custom_view"),
+            path(
+                "my-custom-view/",
+                self.admin_view(self.my_custom_view),
+                name="my_custom_view",
+            ),
         ]
         return urls
 
-    def my_custom_view(self, request, extra_context = None):
+    def my_custom_view(self, request, extra_context=None):
         # Your custom business logic
         pass
 ```

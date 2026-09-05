@@ -38,17 +38,16 @@ class UserAdmin(ModelAdmin):
         description=_("Changeform action"),
         url_path="changeform-action",
         attrs={"target": "_blank"},
-        permissions=["changeform_action"]
+        permissions=["changeform_action"],
     )
     def changeform_action(self, request: HttpRequest, object_id: int):
         user = User.objects.get(pk=object_id)
         user.block()
 
-        return redirect(
-            reverse_lazy("admin:users_user_change", args=(object_id,))
-        )
+        return redirect(reverse_lazy("admin:users_user_change", args=(object_id,)))
 
-
-    def has_changeform_action_permission(self, request: HttpRequest, object_id: Union[str, int]):
+    def has_changeform_action_permission(
+        self, request: HttpRequest, object_id: Union[str, int]
+    ):
         pass
 ```

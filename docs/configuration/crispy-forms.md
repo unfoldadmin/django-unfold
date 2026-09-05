@@ -69,9 +69,7 @@ class CustomForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
-        self.helper.layout = Layout(
-            "field1", "field2"
-        )
+        self.helper.layout = Layout("field1", "field2")
 ```
 
 Once you've created your form with Crispy Forms, you'll need to integrate it with Django's view system. The recommended approach is to use Django's class-based `FormView` along with Unfold's admin mixins.
@@ -88,6 +86,7 @@ from django.views.generic import FormView
 from unfold.views import UnfoldModelAdminViewMixin
 
 from .forms import CustomForm
+
 
 class MyClassBasedView(UnfoldModelAdminViewMixin, FormView):
     title = "Custom Title"
@@ -172,10 +171,11 @@ class YourModelForm(forms.ModelForm):
 
 from .forms import YourModelFormHelper
 
+
 class CrispyFormsetView(UnfoldModelAdminViewMixin, FormView):
     title = _("Crispy form with formset")  # required: custom page header title
     success_url = reverse_lazy("admin:custom_path")
-    permission_required = ("app.your_permission", )# required: tuple of permissions
+    permission_required = ("app.your_permission",)  # required: tuple of permissions
     template_name = "app/formset_template.html"
 
     def get_form_class(self):
@@ -190,7 +190,7 @@ class CrispyFormsetView(UnfoldModelAdminViewMixin, FormView):
 
         context.update(
             {
-                "your_model_formset_helper":  YourModelFormHelper(),
+                "your_model_formset_helper": YourModelFormHelper(),
             }
         )
         return context

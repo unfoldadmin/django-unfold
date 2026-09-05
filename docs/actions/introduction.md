@@ -18,6 +18,7 @@ from django.http import HttpRequest
 from unfold.admin import ModelAdmin
 from unfold.decorators import action
 
+
 @admin.register(User)
 class UserAdmin(ModelAdmin):
     actions_list = ["custom_action"]
@@ -54,7 +55,7 @@ from unfold.decorators import action
 class UserAdmin(ModelAdmin):
     @action(
         description="Custom action",
-        permissions=["custom_action", "auth.view_user"]  # Using both permission types
+        permissions=["custom_action", "auth.view_user"],  # Using both permission types
     )
     def custom_action(self, request, queryset):
         pass
@@ -76,6 +77,7 @@ from django.http import HttpRequest
 
 from unfold.decorators import action
 
+
 @action(description="Custom action", icon="person")
 def custom_action(self, request: HttpRequest, queryset: QuerySet):
     pass
@@ -92,6 +94,7 @@ from django.db.models import QuerySet
 from django.http import HttpRequest
 
 from unfold.decorators import action
+
 # Import ActionVariant enum from Unfold to set action variant
 from unfold.enums import ActionVariant
 
@@ -102,6 +105,7 @@ from unfold.enums import ActionVariant
 #     INFO = "info"
 #     WARNING = "warning"
 #     DANGER = "danger"
+
 
 @action(description="Custom action", variant=ActionVariant.PRIMARY)
 def custom_action(self, request: HttpRequest, queryset: QuerySet):
