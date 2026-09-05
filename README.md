@@ -70,36 +70,17 @@ class MyModelAdmin(ModelAdmin):
 
 ## Features
 
-- **Visual interface**: Provides a modern user interface based on the Tailwind CSS framework.
-- **Sidebar navigation**: Simplifies the creation of sidebar menus with icons, collapsible sections, and more.
-- **Dark mode support**: Includes both light and dark mode themes.
-- **Flexible actions**: Provides multiple ways to define actions throughout the admin interface.
-- **Advanced filters**: Features custom dropdowns, autocomplete, numeric, datetime, and text field filters.
-- **Dashboard tools**: Includes helpers for building custom dashboard pages.
-- **UI components**: Offers reusable interface components such as cards, buttons, and charts.
-- **Crispy forms**: Custom template pack for django-crispy-forms to style forms with Unfold's design system.
-- **WYSIWYG editor**: Built-in support for WYSIWYG editing through Trix.
-- **Array widget:** Support for `django.contrib.postgres.fields.ArrayField`.
-- **Inline tabs:** Group inlines into tab navigation in the change form.
-- **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form.
-- **Model tabs:** Allow defining custom tab navigation for models.
-- **Fieldset tabs:** Merge multiple fieldsets into tabs in the change form.
-- **Sortable inlines:** Allow sorting inlines by dragging and dropping.
-- **Command palette**: Quickly search across models and custom data.
-- **Datasets**: Custom changelists `ModelAdmin` displayed on change form detail pages.
-- **Environment label:** Distinguish between environments by displaying a label.
-- **Nonrelated inlines:** Display nonrelated models as inlines in the change form.
-- **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance.
-- **Favicons:** Built-in support for configuring various site favicons.
-- **Theming:** Customize color schemes, backgrounds, border radius, and more.
-- **Font colors:** Adjust font colors for better readability.
-- **Changeform modes:** Display fields in compressed mode in the change form.
-- **Language switcher:** Allow changing language directly from the admin area.
-- **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load.
-- **Parallel admin:** Supports [running the default admin](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold) alongside Unfold.
-- **Third-party packages:** Provides default support for multiple popular applications.
-- **Configuration:** Allows basic options to be changed in `settings.py`.
-- **Dependencies:** Built entirely on `django.contrib.admin`.
+* **Modern interface** - Responsive Tailwind CSS design with dark mode, customizable colors, layout options, and other visual settings.
+* **Dashboards and components** - Build custom dashboards and admin pages using reusable cards, charts, buttons, and other UI components.
+* **Advanced filtering** - Dropdown, autocomplete, text, numeric, date range, checkbox, radio, and facet filters for changelists.
+* **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions and styles.
+* **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation.
+* **Enhanced forms and inlines** - Conditional fields, sortable and paginated inlines, WYSIWYG editing, ArrayField widgets, and django-crispy-forms support.
+* **Built on Django admin** - Extend `django.contrib.admin` incrementally while keeping existing Django admin concepts, permissions, and workflows.
+* **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
+
+[Explore all features →](https://unfoldadmin.com/features/)
+
 
 ## Professional services
 
