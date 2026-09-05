@@ -47,6 +47,7 @@ pip install django-unfold
 ```python
 INSTALLED_APPS = [
     "unfold",  # First in the list
+    # ...
 ]
 ```
 
@@ -71,7 +72,7 @@ class MyModelAdmin(ModelAdmin):
 ## Features
 
 - **Modern interface** - Responsive Tailwind CSS design with dark mode, customizable colors, layout options, and other visual settings for a polished admin experience.
-- **Dashboards and components** - Build custom dashboards and admin pages using reusable cards, charts, buttons, and other UI components for internal applications.
+- **Dashboards and components** - Build custom dashboards and admin pages using reusable cards, charts, buttons, and other UI components for data-rich interfaces.
 - **Advanced filtering** - Dropdown, autocomplete, text, numeric, date range, checkbox, radio, and facet filters for more powerful and flexible changelists.
 - **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions, styles, and flexible placement options across the admin.
 - **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation and layout options for complex interfaces.
