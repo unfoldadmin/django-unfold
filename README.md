@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://unfoldadmin.com/">
-        <img width="100" height="100" alt="Unfold" src="https://github.com/user-attachments/assets/32d2c3a3-8882-4ee7-9183-1059f7f006cc" />
+    <a href="https://unfoldadmin.com/?utm_source=github&utm_medium=readme">
+        <img width="100" alt="Unfold" src="https://github.com/user-attachments/assets/32d2c3a3-8882-4ee7-9183-1059f7f006cc" />
     </a>
     <h1 align="center">Unfold - Modern Django Admin</h1>
 </p>
@@ -10,9 +10,9 @@
 </p>
 
 <p align="center">
-    <a href="https://demo.unfoldadmin.com/">Live demo</a> ·
-    <a href="https://unfoldadmin.com/docs/">Documentation</a> ·
-    <a href="https://unfoldadmin.com/studio/">Studio</a> ·
+    <a href="https://demo.unfoldadmin.com/?utm_source=github&utm_medium=readme">Live demo</a> ·
+    <a href="https://unfoldadmin.com/docs/?utm_source=github&utm_medium=readme">Documentation</a> ·
+    <a href="https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme">Studio</a> ·
     <a href="https://discord.gg/9sQj9MEbNz">Discord</a> ·
     <a href="https://pypi.org/project/django-unfold/">PyPI</a>
 </p>
@@ -29,8 +29,8 @@
     </a>
 </p>
 
-<a href="https://demo.unfoldadmin.com">
-    <img width="2560" height="1936" alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
+<a href="https://demo.unfoldadmin.com?utm_source=github&utm_medium=readme">
+    <img alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
 </a>
 
 
@@ -42,7 +42,7 @@
 pip install django-unfold
 ```
 
-**Change INSTALLED_APPS in settings.py**
+**Add Unfold to INSTALLED_APPS**
 
 ```python
 INSTALLED_APPS = [
@@ -50,9 +50,10 @@ INSTALLED_APPS = [
 ]
 ```
 
-**Use Unfold ModelAdmin**
+**Use Unfold's ModelAdmin**
 
 ```python
+from django.contrib import admin
 from unfold.admin import ModelAdmin
 
 
@@ -63,10 +64,9 @@ class MyModelAdmin(ModelAdmin):
 
 ## Why Unfold?
 
-- Built on `django.contrib.admin`: Enhances the existing admin without replacing it.
-- Provides a modern interface and improved workflows.
-- Designed for real internal tools and backoffice apps.
-- Incremental adoption for existing projects.
+- **Django native** - Built on `django.contrib.admin`, preserving familiar models, permissions, and workflows.
+- **Incremental adoption** - Introduce Unfold gradually without rebuilding your existing admin.
+- **Built for real applications** - Designed for dashboards, internal tools, backoffice systems, and complex admin interfaces.
 
 ## Features
 
@@ -76,37 +76,31 @@ class MyModelAdmin(ModelAdmin):
 - **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions, styles, and flexible placement options across the admin.
 - **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation and layout options for complex interfaces.
 - **Enhanced forms and inlines** - Conditional fields, sortable and paginated inlines, WYSIWYG editing, ArrayField widgets, and django-crispy-forms support for richer admin forms.
-- **Built on Django admin** - Extend `django.contrib.admin` incrementally while keeping existing Django admin concepts, permissions, workflows, and familiar development patterns.
 - **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
 
-<div align="center">
-    <a href="https://unfoldadmin.com/features/">
-        Explore all features →
-    </a>
-</div>
+[Explore all features](https://unfoldadmin.com/features/?utm_source=github&utm_medium=readme)
 
+## Commercial options
 
-## Professional services
+- **Consulting**: Guidance on Django architecture, performance, features, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_source=github&utm_medium=readme)
+- **Support**: Help with setup or customization, live calls, and review. [Learn more](https://unfoldadmin.com/support/?utm_source=github&utm_medium=readme)
+- **Studio**: Extend Unfold with advanced dashboards, customization, and admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_source=github&utm_medium=readme)
 
-- **Consulting**: Guidance on Django architecture, performance, features, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
-- **Support**: Help with setup or customization, live calls, and review. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
-- **Studio**: Extend Unfold with advanced dashboards, customization, and admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
-
-[![dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+[![Unfold Studio dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_source=github&utm_medium=readme)
 
 ## Third-party package support
 
-- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)
-- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/)
-- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)
-- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/)
-- [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/)
-- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
-- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
-- [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)
-- [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/)
-- [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/)
-- [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/)
+- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/?utm_source=github&utm_medium=readme)
+- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/?utm_source=github&utm_medium=readme)
+- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/?utm_source=github&utm_medium=readme)
+- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/?utm_source=github&utm_medium=readme)
+- [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/?utm_source=github&utm_medium=readme)
+- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/?utm_source=github&utm_medium=readme)
+- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/?utm_source=github&utm_medium=readme)
+- [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/?utm_source=github&utm_medium=readme)
+- [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/?utm_source=github&utm_medium=readme)
+- [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/?utm_source=github&utm_medium=readme)
+- [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/?utm_source=github&utm_medium=readme)
 
 ## Credits
 
