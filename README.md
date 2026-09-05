@@ -66,7 +66,7 @@ class MyModelAdmin(ModelAdmin):
 
 - **Django native** - Built on `django.contrib.admin`, preserving familiar models, permissions, and workflows.
 - **Incremental adoption** - Introduce Unfold gradually without rebuilding your existing admin.
-- **Built for real applications** - Designed for dashboards, internal tools, backoffice systems, and complex admin interfaces.
+- **Built for real applications** - Designed for dashboards, internal tools, backoffice systems, and admin workflows.
 
 ## Features
 
