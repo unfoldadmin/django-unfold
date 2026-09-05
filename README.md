@@ -29,7 +29,9 @@
     </a>
 </p>
 
-<img width="2560" height="1936" alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
+<a href="https://demo.unfoldadmin.com">
+    <img width="2560" height="1936" alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
+</a>
 
 
 ## Quickstart
