@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://unfoldadmin.com/">
-        <img alt="unfold-logo" src="https://github.com/user-attachments/assets/413d31d2-78d1-424e-adcf-40c1c086f0ba" height="100" width="100" style="background-color: transparent;"/>
+        <img width="512" height="512" alt="unfold-logo" src="https://github.com/user-attachments/assets/32d2c3a3-8882-4ee7-9183-1059f7f006cc" />
     </a>
     <h1 align="center">Unfold - Modern Django Admin</h1>
 </p>
