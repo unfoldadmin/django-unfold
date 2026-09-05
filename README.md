@@ -1,18 +1,38 @@
-[![screenshot](https://github.com/user-attachments/assets/8c2dc5c1-480b-49ad-bd2e-57369ca4e306)](https://unfoldadmin.com)
+<p align="center">
+    <a href="https://unfoldadmin.com/?utm_source=github&utm_medium=readme">
+        <img width="100" alt="Unfold" src="https://github.com/user-attachments/assets/32d2c3a3-8882-4ee7-9183-1059f7f006cc" />
+    </a>
+    <h1 align="center">Unfold - Modern Django admin</h1>
+</p>
 
-## Unfold - Modern Django Admin
+<p align="center">
+    A modern Django admin theme for building dashboards, internal tools, and business applications
+</p>
 
-[![PyPI - Version](https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge)](https://pypi.org/project/django-unfold/)
-[![Discord](https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da)](https://discord.gg/9sQj9MEbNz)
-[![Build](https://img.shields.io/github/actions/workflow/status/unfoldadmin/django-unfold/release.yml?style=for-the-badge)](https://github.com/unfoldadmin/django-unfold/actions?query=workflow%3Arelease)
-![Monthly downloads](https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge)
+<p align="center">
+    <a href="https://demo.unfoldadmin.com/?utm_source=github&utm_medium=readme">Live demo</a> ·
+    <a href="https://unfoldadmin.com/docs/?utm_source=github&utm_medium=readme">Documentation</a> ·
+    <a href="https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme">Studio</a> ·
+    <a href="https://discord.gg/9sQj9MEbNz">Discord</a> ·
+    <a href="https://pypi.org/project/django-unfold/">PyPI</a>
+</p>
 
-Enhance Django Admin with a modern interface and powerful tools to build internal applications.
+<p align="center">
+    <a href="https://pypi.org/project/django-unfold/">
+        <img src="https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge" alt="PyPI - Version" />
+    </a>
+    <a href="https://discord.gg/9sQj9MEbNz">
+        <img src="https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da" alt="Discord" />
+    </a>
+    <a href="https://pypi.org/project/django-unfold/">
+        <img src="https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge" alt="Monthly downloads" />
+    </a>
+</p>
 
-- **Documentation:** The full documentation is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
-- **Live demo:** The demo site is available at [unfoldadmin.com](https://unfoldadmin.com?utm_medium=github&utm_source=unfold).
-- **Demo repository:** A repository with a demo implementation is available at [github.com/unfoldadmin/formula](https://github.com/unfoldadmin/formula?utm_medium=github&utm_source=unfold).
-- **Discord:** Join our Unfold community on [Discord](https://discord.gg/9sQj9MEbNz).
+<a href="https://demo.unfoldadmin.com/?utm_source=github&utm_medium=readme">
+    <img alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
+</a>
+
 
 ## Quickstart
 
@@ -22,18 +42,19 @@ Enhance Django Admin with a modern interface and powerful tools to build interna
 pip install django-unfold
 ```
 
-**Change INSTALLED_APPS in settings.py**
+**Add Unfold to INSTALLED_APPS**
 
 ```python
 INSTALLED_APPS = [
-    "unfold",
-    # Rest of the apps
+    "unfold",  # First in the list
+    # ...
 ]
 ```
 
-**Use Unfold ModelAdmin**
+**Use Unfold's ModelAdmin**
 
 ```python
+from django.contrib import admin
 from unfold.admin import ModelAdmin
 
 
@@ -42,78 +63,54 @@ class MyModelAdmin(ModelAdmin):
     pass
 ```
 
-*Unfold works alongside the default Django admin and requires no migration of existing models or workflows. Unfold is actively developed and continuously evolving as new use cases and edge cases are discovered.*
-
 ## Why Unfold?
 
-- Built on `django.contrib.admin`: Enhances the existing admin without replacing it.
-- Provides a modern interface and improved workflows.
-- Designed for real internal tools and backoffice apps.
-- Incremental adoption for existing projects.
+- **Django native** - Built on `django.contrib.admin`, preserving familiar models, permissions, and conventions.
+- **Incremental adoption** - Introduce Unfold gradually without rebuilding your existing admin.
+- **Built for real applications** - Designed for dashboards, internal tools, backoffice systems, and workflows.
 
 ## Features
 
-- **Visual interface**: Provides a modern user interface based on the Tailwind CSS framework.
-- **Sidebar navigation**: Simplifies the creation of sidebar menus with icons, collapsible sections, and more.
-- **Dark mode support**: Includes both light and dark mode themes.
-- **Flexible actions**: Provides multiple ways to define actions throughout the admin interface.
-- **Advanced filters**: Features custom dropdowns, autocomplete, numeric, datetime, and text field filters.
-- **Dashboard tools**: Includes helpers for building custom dashboard pages.
-- **UI components**: Offers reusable interface components such as cards, buttons, and charts.
-- **Crispy forms**: Custom template pack for django-crispy-forms to style forms with Unfold's design system.
-- **WYSIWYG editor**: Built-in support for WYSIWYG editing through Trix.
-- **Array widget:** Support for `django.contrib.postgres.fields.ArrayField`.
-- **Inline tabs:** Group inlines into tab navigation in the change form.
-- **Conditional fields:** Show or hide fields dynamically based on the values of other fields in the form.
-- **Model tabs:** Allow defining custom tab navigation for models.
-- **Fieldset tabs:** Merge multiple fieldsets into tabs in the change form.
-- **Sortable inlines:** Allow sorting inlines by dragging and dropping.
-- **Command palette**: Quickly search across models and custom data.
-- **Datasets**: Custom changelists `ModelAdmin` displayed on change form detail pages.
-- **Environment label:** Distinguish between environments by displaying a label.
-- **Nonrelated inlines:** Display nonrelated models as inlines in the change form.
-- **Paginated inlines:** Break down large record sets into pages within inlines for better admin performance.
-- **Favicons:** Built-in support for configuring various site favicons.
-- **Theming:** Customize color schemes, backgrounds, border radius, and more.
-- **Font colors:** Adjust font colors for better readability.
-- **Changeform modes:** Display fields in compressed mode in the change form.
-- **Language switcher:** Allow changing language directly from the admin area.
-- **Infinite paginator:** Efficiently handle large datasets with seamless pagination that reduces server load.
-- **Parallel admin:** Supports [running the default admin](https://unfoldadmin.com/blog/migrating-django-admin-unfold/?utm_medium=github&utm_source=unfold) alongside Unfold.
-- **Third-party packages:** Provides default support for multiple popular applications.
-- **Configuration:** Allows basic options to be changed in `settings.py`.
-- **Dependencies:** Built entirely on `django.contrib.admin`.
+- **Modern interface** - Responsive Tailwind CSS design with dark mode, customizable colors, layout options, and other visual settings for a polished admin experience.
+- **Dashboards and components** - Build custom dashboards and admin pages using reusable cards, charts, buttons, and other UI components for data-rich interfaces.
+- **Advanced filtering** - Dropdown, autocomplete, text, numeric, date range, checkbox, radio, and facet filters for more powerful and flexible changelists.
+- **Flexible actions** - Add global, row-level, detail, submit, and dropdown actions with custom permissions, styles, and flexible placement options across the admin.
+- **Navigation and tabs** - Customize the sidebar and organize models, fieldsets, and inlines using flexible tab navigation and layout options for complex interfaces.
+- **Enhanced forms and inlines** - Conditional fields, sortable and paginated inlines, WYSIWYG editing, ArrayField widgets, and django-crispy-forms support for richer admin forms.
+- **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
+
+[Explore all features](https://unfoldadmin.com/features/?utm_source=github&utm_medium=readme)
+
+If Unfold helps your project, consider giving the repository a star ⭐. It helps other Django developers discover it.
+
+## Commercial options
+
+- **Consulting** - Guidance on Django architecture, performance, features, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_source=github&utm_medium=readme)
+- **Support** - Help with setup or customization, live calls, and code review. [Learn more](https://unfoldadmin.com/support/?utm_source=github&utm_medium=readme)
+- **Studio** - Extend Unfold with advanced dashboards, customization, and admin tooling. [Learn more](https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme)
+
+[![Unfold Studio dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme)
 
 ## Third-party package support
 
-- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/)
-- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/)
-- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/)
-- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/)
-- [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/)
-- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/)
-- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/)
-- [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/)
-- [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/)
-- [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/)
-- [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/)
-
-## Professional services
-
-Need help integrating, customizing, or scaling Django Admin with Unfold?
-
-- **Consulting**: Expert guidance on Django architecture, performance, feature development, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
-- **Support**: Assistance with integrating or customizing Unfold, including live 1:1 calls and implementation review. Fixed price, no ongoing commitment. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
-- **Studio**: Extend Unfold with advanced dashboards, visual customization, and additional admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
-
-[![dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/?utm_source=github&utm_medium=readme)
+- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/?utm_source=github&utm_medium=readme)
+- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/?utm_source=github&utm_medium=readme)
+- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/?utm_source=github&utm_medium=readme)
+- [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/?utm_source=github&utm_medium=readme)
+- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/?utm_source=github&utm_medium=readme)
+- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/?utm_source=github&utm_medium=readme)
+- [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/?utm_source=github&utm_medium=readme)
+- [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/?utm_source=github&utm_medium=readme)
+- [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/?utm_source=github&utm_medium=readme)
+- [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/?utm_source=github&utm_medium=readme)
 
 ## Credits
 
-- **Tailwind**: [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
-- **Icons**: [Material Symbols](https://github.com/google/material-design-icons) - Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
-- **Font**: [Inter](https://github.com/rsms/inter) - Licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL).
-- **Charts**: [Chart.js](https://github.com/chartjs/Chart.js) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
-- **JavaScript Framework**: [Alpine.js](https://github.com/alpinejs/alpine) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
-- **AJAX calls**: [HTMX](https://htmx.org/) - Licensed under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause).
-- **WYSIWYG Editor**: [Trix](https://github.com/basecamp/trix) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Material Symbols](https://github.com/google/material-design-icons) - Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+- [Inter](https://github.com/rsms/inter) - Licensed under the [SIL Open Font License 1.1](https://scripts.sil.org/OFL).
+- [Chart.js](https://github.com/chartjs/Chart.js) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Alpine.js](https://github.com/alpinejs/alpine) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [HTMX](https://htmx.org/) - Licensed under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause).
+- [Trix](https://github.com/basecamp/trix) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
