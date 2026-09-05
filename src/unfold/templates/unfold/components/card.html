@@ -4,9 +4,25 @@
 
 {% if title %}
     <div class="border-b border-base-200 flex flex-row items-center {% if size == "md" %}mb-3 -mt-3 -mx-3 p-3{% else %} mb-6 -mt-6 -mx-6 py-4 px-6{% endif %} dark:border-base-800 {% if title_class %} {{ title_class }}{% endif %}">
-        <h2 class="font-semibold text-[15px] text-important">
-            {{ title }}
-        </h2>
+        <div class="flex flex-row items-center gap-3">
+            {% if title_icon %}
+                <div class="border border-primary-700 bg-primary-600 flex items-center h-[38px] justify-center -my-1 rounded-default text-white w-[38px] hover:bg-primary-600/80 dark:border-primary-500">
+                    <span class="material-symbols-outlined">{{ title_icon }}</span>
+                </div>
+            {% endif %}
+
+            <div class="flex flex-col">
+                <h2 class="font-semibold text-[15px] text-important">
+                    {{ title }}
+                </h2>
+
+                {% if description %}
+                    <p class="text-subtle">
+                        {{ description }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
 
         {% if action %}
             <div class="ml-auto">
