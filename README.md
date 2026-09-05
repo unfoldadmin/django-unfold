@@ -103,11 +103,9 @@ class MyModelAdmin(ModelAdmin):
 
 ## Professional services
 
-Need help integrating, customizing, or scaling Django Admin with Unfold?
-
-- **Consulting**: Expert guidance on Django architecture, performance, feature development, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
-- **Support**: Assistance with integrating or customizing Unfold, including live 1:1 calls and implementation review. Fixed price, no ongoing commitment. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
-- **Studio**: Extend Unfold with advanced dashboards, visual customization, and additional admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
+- **Consulting**: Guidance on Django architecture, performance, features, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_medium=github&utm_source=unfold)
+- **Support**: Help with setup or customization, live calls, and review. [Learn more](https://unfoldadmin.com/support/?utm_medium=github&utm_source=unfold)
+- **Studio**: Extend Unfold with advanced dashboards, customization, and admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
 
 [![dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_medium=github&utm_source=unfold)
 
