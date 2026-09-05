@@ -79,7 +79,11 @@ class MyModelAdmin(ModelAdmin):
 - **Built on Django admin** - Extend `django.contrib.admin` incrementally while keeping existing Django admin concepts, permissions, workflows, and familiar development patterns.
 - **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
 
-[Explore all features →](https://unfoldadmin.com/features/)
+<div align="center">
+    <a href="https://unfoldadmin.com/features/">
+        Explore all features →
+    </a>
+</div>
 
 
 ## Professional services
