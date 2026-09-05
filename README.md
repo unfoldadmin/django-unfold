@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://unfoldadmin.com/">
-        <img width="512" height="512" alt="unfold-logo" src="https://github.com/user-attachments/assets/32d2c3a3-8882-4ee7-9183-1059f7f006cc" />
+        <img width="100" height="100" alt="Unfold" src="https://github.com/user-attachments/assets/32d2c3a3-8882-4ee7-9183-1059f7f006cc" />
     </a>
     <h1 align="center">Unfold - Modern Django Admin</h1>
 </p>
@@ -29,7 +29,7 @@
     </a>
 </p>
 
-<img width="2560" height="1936" alt="unfold-dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
+<img width="2560" height="1936" alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
 
 
 ## Quickstart
