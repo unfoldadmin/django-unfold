@@ -10,7 +10,8 @@
 
 <p align="center">
     <a href="https://demo.unfoldadmin.com/">Live demo</a> ·
-    <a href="https://unfoldadmin.com/docs/">Documentation</a> ·
+    <a href="https://unfoldadmin.com/docs/">Docs</a> ·
+    <a href="https://unfoldadmin.com/studio/">Studio</a> ·
     <a href="https://discord.gg/9sQj9MEbNz">Discord</a> ·
     <a href="https://pypi.org/project/django-unfold/">PyPI</a>
 </p>
@@ -19,11 +20,9 @@
     <a href="https://pypi.org/project/django-unfold/">
         <img src="https://img.shields.io/pypi/v/django-unfold.svg?style=for-the-badge" alt="PyPI - Version" />
     </a>
-
     <a href="https://discord.gg/9sQj9MEbNz">
         <img src="https://img.shields.io/discord/1297493955231088650?style=for-the-badge&logo=discord&logoColor=%23ffffff&color=7289da" alt="Discord" />
     </a>
-
     <a href="https://pypi.org/project/django-unfold/">
         <img src="https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge" alt="Monthly downloads" />
     </a>
