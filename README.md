@@ -1,5 +1,3 @@
-[![screenshot](https://github.com/user-attachments/assets/8c2dc5c1-480b-49ad-bd2e-57369ca4e306)](https://unfoldadmin.com)
-
 <p align="center">
     <a href="https://unfoldadmin.com/">
         <img alt="unfold-logo" src="https://github.com/user-attachments/assets/413d31d2-78d1-424e-adcf-40c1c086f0ba" height="128" width="128"/>
@@ -30,6 +28,8 @@
         <img src="https://img.shields.io/pypi/dm/django-unfold?style=for-the-badge" alt="Monthly downloads" />
     </a>
 </p>
+
+[![screenshot](https://github.com/user-attachments/assets/8c2dc5c1-480b-49ad-bd2e-57369ca4e306)](https://unfoldadmin.com)
 
 ## Quickstart
 
