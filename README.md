@@ -2,7 +2,7 @@
     <a href="https://unfoldadmin.com/?utm_source=github&utm_medium=readme">
         <img width="100" alt="Unfold" src="https://github.com/user-attachments/assets/32d2c3a3-8882-4ee7-9183-1059f7f006cc" />
     </a>
-    <h1 align="center">Unfold - Modern Django Admin</h1>
+    <h1 align="center">Unfold - Modern Django admin</h1>
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@
     </a>
 </p>
 
-<a href="https://demo.unfoldadmin.com?utm_source=github&utm_medium=readme">
+<a href="https://demo.unfoldadmin.com/?utm_source=github&utm_medium=readme">
     <img alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
 </a>
 
@@ -80,13 +80,15 @@ class MyModelAdmin(ModelAdmin):
 
 [Explore all features](https://unfoldadmin.com/features/?utm_source=github&utm_medium=readme)
 
+If Unfold helps your project, consider giving the repository a star ⭐. It helps other Django developers discover it.
+
 ## Commercial options
 
-- **Consulting**: Guidance on Django architecture, performance, features, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_source=github&utm_medium=readme)
-- **Support**: Help with setup or customization, live calls, and review. [Learn more](https://unfoldadmin.com/support/?utm_source=github&utm_medium=readme)
-- **Studio**: Extend Unfold with advanced dashboards, customization, and admin tooling. [Learn more](https://unfoldadmin.com/studio?utm_source=github&utm_medium=readme)
+- **Consulting** - Guidance on Django architecture, performance, features, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_source=github&utm_medium=readme)
+- **Support** - Help with setup or customization, live calls, and code review. [Learn more](https://unfoldadmin.com/support/?utm_source=github&utm_medium=readme)
+- **Studio** - Extend Unfold with advanced dashboards, customization, and admin tooling. [Learn more](https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme)
 
-[![Unfold Studio dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio?utm_source=github&utm_medium=readme)
+[![Unfold Studio dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme)
 
 ## Third-party package support
 
