@@ -16,7 +16,7 @@
     {% endif %}
 
     {% if items or value %}
-        <div class="bg-base-100 flex flex-row overflow-hidden rounded-default dark:bg-base-800 {% if separated_items %}gap-1.5{% endif %}">
+        <div class="flex flex-row overflow-hidden rounded-default {% if separated_items %}gap-1.5{% else %}bg-base-100 dark:bg-base-800{% endif %}">
             {% if items %}
                 {% for item in items %}
                     <div class="h-1.5 bg-primary-600 z-10 dark:bg-primary-500 {% if separated_items %}rounded-default{% else %}last:rounded-r-default{% endif %} {{ item.progress_class }}" title="{% if item.title %}{{ item.title }}: {% endif %}{{ item.value }}%" style="width: {{ item.value }}%"></div>
