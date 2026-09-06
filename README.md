@@ -30,7 +30,7 @@
 </p>
 
 <a href="https://demo.unfoldadmin.com/?utm_source=github&utm_medium=readme">
-    <img alt="Unfold dashboard" src="https://github.com/user-attachments/assets/3529be8e-c318-46cd-b986-575419927ad6" />
+    <img alt="Unfold dashboard" src="https://github.com/user-attachments/assets/1c345d19-2f66-4957-8c50-c5b73a6a1f2b" />
 </a>
 
 
