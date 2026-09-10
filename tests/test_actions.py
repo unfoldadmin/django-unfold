@@ -81,6 +81,16 @@ def test_actions_list(client, admin_user):
 
 
 @pytest.mark.django_db
+def test_actions_list_restores_selected_action(admin_client):
+    response = admin_client.get(reverse_lazy("admin:example_actionuser_changelist"))
+    content = response.content.decode()
+
+    assert 'x-init="action = $el.value"' in content
+    assert 'x-on:pageshow.window="action = $el.value"' in content
+    assert '<button type="submit" x-show="action"' in content
+
+
+@pytest.mark.django_db
 def test_actions_list_with_dropdown(client, admin_user):
     client.force_login(admin_user)
     response = client.get(reverse_lazy("admin:example_actionuser_changelist"))
