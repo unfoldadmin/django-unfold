@@ -1,3 +1,5 @@
+from datetime import date, datetime, time
+
 UNFOLD_CONSTANCE_ADDITIONAL_FIELDS = {
     str: [
         "django.forms.CharField",
@@ -23,6 +25,24 @@ UNFOLD_CONSTANCE_ADDITIONAL_FIELDS = {
         {
             "widget": "unfold.widgets.UnfoldBooleanSwitchWidget",
             "required": False,
+        },
+    ],
+    date: [
+        "django.forms.DateField",
+        {
+            "widget": "unfold.widgets.UnfoldAdminDateWidget",
+        },
+    ],
+    datetime: [
+        "django.forms.DateTimeField",
+        {
+            "widget": "unfold.widgets.UnfoldAdminSplitDateTimeWidget",
+        },
+    ],
+    time: [
+        "django.forms.TimeField",
+        {
+            "widget": "unfold.widgets.UnfoldAdminTimeWidget",
         },
     ],
     "file_field": [
