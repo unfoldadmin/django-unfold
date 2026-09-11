@@ -3,19 +3,24 @@
 {% if show_back_button %}
     {% if object %}
         {% admin_object_app_url object "changelist" as changelist_url %}
+        {% url changelist_url as resolved_changelist_url %}
 
-        <a href="{% url changelist_url %}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
-            <span class="material-symbols-outlined">
-                arrow_back
-            </span>
-        </a>
+        {% if resolved_changelist_url %}
+            <a href="{{ resolved_changelist_url }}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
+                <span class="material-symbols-outlined">
+                    arrow_back
+                </span>
+            </a>
+        {% endif %}
     {% elif opts and adminform %}
         {% url opts|admin_urlname:'changelist' as changelist_url %}
 
-        <a href="{% add_preserved_filters changelist_url %}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
-            <span class="material-symbols-outlined">
-                arrow_back
-            </span>
-        </a>
+        {% if changelist_url %}
+            <a href="{% add_preserved_filters changelist_url %}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
+                <span class="material-symbols-outlined">
+                    arrow_back
+                </span>
+            </a>
+        {% endif %}
     {% endif %}
 {% endif %}
