@@ -645,7 +645,7 @@ fieldset details[open] > summary:after {
 
 .calendarnav-next,
 .calendarnav-previous {
-  @apply after:border after:border-base-200 after:flex after:h-7 after:items-center after:justify-center after:material-symbols-outlined after:rounded-full after:transition-all after:w-7 dark:after:bg-base-800 dark:after:border-base-700;
+  @apply after:border after:border-base-200 after:flex after:h-7 after:items-center after:justify-center after:material-symbols-outlined after:rounded-full after:w-7 dark:after:bg-base-800 dark:after:border-base-700 dark:after:text-white;
 }
 
 .calendarnav-previous:after {

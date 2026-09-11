@@ -618,6 +618,7 @@ function dateTimeShortcutsOverlay() {
 
 			if (display === "block" || hasOpenAttribute) {
 				overlay.style.display = "block";
+				mutationRecord.target.setAttribute("closedby", "any");
 			} else {
 				overlay.style.display = "none";
 			}
