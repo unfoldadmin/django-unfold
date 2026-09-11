@@ -20,6 +20,7 @@ from django.urls import URLPattern, path
 from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from unfold.checks import UnfoldModelAdminChecks
 from unfold.forms import (
@@ -113,6 +114,7 @@ class ModelAdmin(
 
         return super().changelist_view(request, extra_context)
 
+    @xframe_options_sameorigin
     def changeform_view(
         self,
         request: HttpRequest,
