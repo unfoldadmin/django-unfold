@@ -1,6 +1,30 @@
 # CHANGELOG
 
 
+## v0.106.0 (2026-09-13)
+
+### Bug Fixes
+
+- Calendarbox UX ([#2280](https://github.com/unfoldadmin/django-unfold/pull/2280),
+  [`2d62816`](https://github.com/unfoldadmin/django-unfold/commit/2d62816ae0ec749afebd66b7ab8192c43f0aea28))
+
+- Progress component background color
+  ([#2273](https://github.com/unfoldadmin/django-unfold/pull/2273),
+  [`70c88fb`](https://github.com/unfoldadmin/django-unfold/commit/70c88fb47eab87ed64871aa48a2c5aa6a39a7286))
+
+- Search focus fo select2 filters ([#2276](https://github.com/unfoldadmin/django-unfold/pull/2276),
+  [`c3c2381`](https://github.com/unfoldadmin/django-unfold/commit/c3c2381f95322548e80f5104b51acb1997eea309))
+
+### Features
+
+- Django constance datetime/date/time support
+  ([#2277](https://github.com/unfoldadmin/django-unfold/pull/2277),
+  [`4fba64c`](https://github.com/unfoldadmin/django-unfold/commit/4fba64cc9f172c0941de57a5569d9dbb7a4975f6))
+
+- New card options ([#2269](https://github.com/unfoldadmin/django-unfold/pull/2269),
+  [`267d3c0`](https://github.com/unfoldadmin/django-unfold/commit/267d3c04a389107203f5b68776637759859ae839))
+
+
 ## v0.105.0 (2026-09-04)
 
 ### Bug Fixes
