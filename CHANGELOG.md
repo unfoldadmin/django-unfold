@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.106.1 (2026-09-14)
+
+### Bug Fixes
+
+- Stacked nested inline delete overlay
+  ([`b7a05aa`](https://github.com/unfoldadmin/django-unfold/commit/b7a05aab7150b54058bff2cb92f45d9bc4c1eb75))
+
+
 ## v0.106.0 (2026-09-13)
 
 ### Bug Fixes
