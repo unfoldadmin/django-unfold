@@ -12,5 +12,5 @@
      x-transition
      x-trap.noautofocus.noscroll="openModal"
      x-on:keydown.escape.window="openModal = false">
-    <div id="modal-content" class="bg-white dark:bg-base-800 flex flex-col max-w-2xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-on:click.outside="openModal = false"></div>
+    <div id="modal-content" class="bg-white dark:bg-base-800 flex flex-col max-w-2xl min-h-0 mx-auto overflow-hidden rounded-default shadow-lg w-full" x-bind:class="modalContentClasses" x-on:click.outside="openModal = false"></div>
 </div>
