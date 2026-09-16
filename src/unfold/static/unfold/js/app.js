@@ -107,7 +107,8 @@ function openPopupInModal() {
 					data.modalContentClasses = "";
 				} else {
 					data.openModal = true;
-					data.modalContentClasses = "max-w-7xl";
+					data.modalContentClasses =
+						"max-w-7xl border border-transparent dark:border-base-800";
 
 					Alpine.nextTick(() => {
 						const height = iframeDoc.body.scrollHeight;
