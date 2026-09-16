@@ -54,6 +54,20 @@ function openPopupInModal() {
 		if (!link) {
 			return;
 		}
+
+		const inputId = window.name.replace(/^(lookup)_/, "");
+		const chosenId = link.dataset.popupOpener;
+		const input = window.parent.document.getElementById(inputId);
+		const data = Alpine.$data(window.parent.document.body);
+
+		data.openModal = false;
+		data.modalContentClasses = "";
+
+		if (input.classList.contains("vManyToManyRawIdAdminField") && input.value) {
+			input.value += `,${chosenId}`;
+		} else {
+			input.value = chosenId;
+		}
 	});
 
 	document.addEventListener(
