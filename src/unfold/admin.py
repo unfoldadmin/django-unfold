@@ -102,6 +102,7 @@ class ModelAdmin(
 
         return media
 
+    @xframe_options_sameorigin
     def changelist_view(
         self, request: HttpRequest, extra_context: dict[str, str] | None = None
     ) -> HttpResponse:

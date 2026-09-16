@@ -48,6 +48,14 @@ function getCurrentTab() {
  * Open popup in modal
  *************************************************************/
 function openPopupInModal() {
+	document.addEventListener("click", (event) => {
+		const link = event.target.closest("a[data-popup-opener]");
+
+		if (!link) {
+			return;
+		}
+	});
+
 	document.addEventListener(
 		"click",
 		(event) => {
