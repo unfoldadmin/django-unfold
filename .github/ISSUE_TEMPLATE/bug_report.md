@@ -5,7 +5,7 @@ about: "If you are sure you found a new issue, create bug report"
 
 <!-- Please provide all the information asked below. Without details it is hard to help you and your issue will be closed. -->
 
-**Did you used AI to write this issue?**
+**Did you use AI to write this issue?**
 
 For example: Yes or No
 
@@ -21,15 +21,15 @@ For example: 5.0
 
 For example: Firefox 128.0
 
-**Did you checked changelog/commit history, if the bug is not already fixed?**
+**Did you check the changelog/commit history, if the bug is not already fixed?**
 
 For example: Yes or No
 
-**Did you searched other issues, if the bug is not already fixed?**
+**Did you search existing issues to see if the bug is already fixed?**
 
 For example: Yes or No
 
-**Did you checked documentation?**
+**Did you check the documentation?**
 
 For example: Yes or No. Docs are here: https://unfoldadmin.com/docs/
 
@@ -39,8 +39,8 @@ For example: Link pointing to the demo site: https://demo.unfoldadmin.com
 
 **Repository with reproduced bug**
 
-Create minimal repository where it is possible to reproduce an error.
+Create a minimal repository where it is possible to reproduce an error.
 
 **Describe your issue**
 
-Describe the problem, provide as much information as possible with all details how to reproduce the bug. Screenshots are welcome.
+Describe the problem and provide as much information as possible with all details on how to reproduce the bug. Screenshots are welcome.

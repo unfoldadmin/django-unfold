@@ -1,6 +1,6 @@
 from collections.abc import Callable, Iterable
 from functools import wraps
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import PermissionDenied
@@ -8,6 +8,9 @@ from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+
+if TYPE_CHECKING:
+    from django_stubs_ext import StrOrPromise
 
 from unfold.dataclasses import Action, ActionDialog
 from unfold.enums import ActionVariant
@@ -18,14 +21,14 @@ def action(
     function: Callable | None = None,
     *,
     permissions: Iterable[str] | None = None,
-    description: str | None = None,
+    description: "StrOrPromise | None" = None,
     url_path: str | None = None,
     attrs: dict[str, Any] | None = None,
     icon: str | None = None,
     variant: ActionVariant | None = ActionVariant.DEFAULT,
     dialog: ActionDialog | None = None,
     extra_options: dict[str, Any] | None = None,
-) -> Action:
+) -> Callable:
     def decorator(func: Callable) -> Action:
         @wraps(func)
         def inner(
@@ -137,11 +140,13 @@ def display(
     boolean: bool | None = None,
     image: bool | None = None,
     ordering: str | Combinable | BaseExpression | None = None,
-    description: str | Any | None = None,
+    description: "StrOrPromise | None" = None,
     empty_value: str | None = None,
     dropdown: bool | None = None,
-    label: bool | str | dict[str, str] | None = None,
+    label: "bool | StrOrPromise | dict[str, str] | None" = None,
     header: bool | None = None,
+    wrapper_class: str | None = None,
+    formatting: str | None = None,
 ) -> Callable:
     def decorator(func: Callable[[Model], Any]) -> Callable:
         if boolean is not None and empty_value is not None:
@@ -165,6 +170,10 @@ def display(
             func.header = header
         if dropdown is not None:
             func.dropdown = dropdown
+        if wrapper_class is not None:
+            func.wrapper_class = wrapper_class
+        if formatting is not None:
+            func.formatting = formatting
 
         return func
 

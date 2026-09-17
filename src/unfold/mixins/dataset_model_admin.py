@@ -46,7 +46,7 @@ class DatasetModelAdminMixin(ModelAdmin):
 
         extra_context["datasets"] = rendered_datasets
 
-        if request.method == "POST" and "dataset" in request.POST:
+        if request.method == "POST" and "_dataset" in request.POST:
             selected = request.POST.getlist(helpers.ACTION_CHECKBOX_NAME)
 
             if not selected or helpers.ACTION_CHECKBOX_NAME not in request.POST:
@@ -60,7 +60,7 @@ class DatasetModelAdminMixin(ModelAdmin):
 
             dataset = None
             for item in rendered_datasets:
-                if item.id == request.POST["dataset"]:
+                if item.id == request.POST["_dataset"]:
                     dataset = item
 
             if not dataset:

@@ -20,7 +20,7 @@
 @source inline("{md:,lg:,}border-{0,2} {md:,lg:,}border-{t,r,b,l} {md:,lg:,}border-{t,r,b,l}-{0,2}");
 @source inline("{!,}{hover:,dark:,}{bg,border}-primary-{50,{100..900..100},950}");
 @source inline("{hover:,dark:,}border-base-{50,{100..900..100},950} {hover:,dark:,}border-transparent");
-@source inline("{hover:,dark:,}bg-{base,red,green,blue,orange}-{50,{100..900..100},950} bg-clip-text");
+@source inline("{hover:,dark:,}{!,}bg-{base,red,green,blue,orange}-{50,{100..900..100},950} bg-clip-text");
 @source inline("{md:,lg:,}{min-h,h,min-w,w}-{1..10} {md:,lg:,}h-{1..10} {md:,lg:,}w-{fit,1/2,1/3,2/3,1/4,2/4,3/4,1/5,2/5,3/5,4/5,1/6,2/6,3/6,4/6,5/6,1/7,2/7,3/7,4/7,5/7,6/7,1..10,96}");
 @source inline("{md:,lg:,xl:,}gap-{0.5,{1..16}}");
 @source inline("{md:,lg:,xl:,}grid-cols-{1..16}");
@@ -84,6 +84,22 @@
 
   @variant dark {
     background-image: repeating-linear-gradient(45deg, var(--color-base-800) 0px, var(--color-base-800) 1px, transparent 2px, transparent 10px);
+  }
+}
+
+@utility bg-striped-dark {
+  background-image: repeating-linear-gradient(45deg, var(--color-base-800) 0px, var(--color-base-800) 1px, transparent 2px, transparent 10px);
+}
+
+@utility scrollbar-default {
+  @apply scrollbar-thin scrollbar-thumb-base-900/40 dark:scrollbar-thumb-base-400/40 scrollbar-track-transparent;
+}
+
+@utility scrollbar-default-hover {
+  @apply scrollbar-thin scrollbar-thumb-transparent;
+
+  @variant hover {
+    @apply scrollbar-thumb-base-900/40 dark:scrollbar-thumb-base-400/40 scrollbar-track-transparent
   }
 }
 
@@ -207,6 +223,15 @@
   }
 }
 
+@utility range-input {
+  @apply appearance-none absolute h-1 pointer-events-none rounded-default w-full z-0;
+
+  &::-webkit-slider-thumb,
+  &::-moz-range-thumb {
+    @apply appearance-none border bg-white cursor-pointer h-3.5 w-3.5 rounded-full border-base-200 pointer-events-auto shadow-xs z-50;
+  }
+}
+
 @utility scrollable-top {
   @apply after:absolute after:content-[''] after:bg-linear-to-t after:from-base-100 after:h-4 after:left-0 after:right-0 after:-top-px after:-translate-y-full dark:after:bg-none;
 }
@@ -237,6 +262,13 @@
 
 .empty-form {
   @apply hidden;
+}
+
+/*******************************************************
+ Dialog
+ *******************************************************/
+dialog::backdrop {
+  @apply bg-transparent;
 }
 
 /*******************************************************
@@ -272,19 +304,23 @@ table tr.selected th {
   @apply absolute flex flex-row-reverse items-center right-px text-[0px] top-px;
 }
 
-.datetimeshortcuts a {
-  @apply flex items-center h-9 text-[0px] text-base-400 transition hover:text-base-700;
+.datetimeshortcuts a,
+.datetimeshortcuts button {
+  @apply cursor-pointer flex items-center h-9 text-[0px] text-base-400 transition hover:text-base-700;
 }
 
-.datetimeshortcuts a:first-child {
+.datetimeshortcuts a:first-child,
+.datetimeshortcuts button:first-child {
   @apply hidden;
 }
 
-.datetimeshortcuts a:first-child:after {
+.datetimeshortcuts a:first-child:after,
+.datetimeshortcuts button:first-child:after {
   @apply content-['update'] flex h-9 items-center justify-center leading-none material-symbols-outlined px-3 py-2 text-center hover:text-base-700 dark:border-base-700 dark:hover:text-base-700;
 }
 
-.datetimeshortcuts a:first-child:after {
+.datetimeshortcuts a:first-child:after,
+.datetimeshortcuts button:first-child:after {
   @apply flex;
 }
 
@@ -622,7 +658,7 @@ fieldset details[open] > summary:after {
 
 .calendarnav-next,
 .calendarnav-previous {
-  @apply after:border after:border-base-200 after:flex after:h-7 after:items-center after:justify-center after:material-symbols-outlined after:rounded-full after:transition-all after:w-7 dark:after:bg-base-800 dark:after:border-base-700;
+  @apply after:border after:border-base-200 after:flex after:h-7 after:items-center after:justify-center after:material-symbols-outlined after:rounded-full after:w-7 dark:after:bg-base-800 dark:after:border-base-700 dark:after:text-white;
 }
 
 .calendarnav-previous:after {
@@ -674,33 +710,6 @@ fieldset details[open] > summary:after {
 }
 
 /*******************************************************
- Filters
- *******************************************************/
-#changelist-filter .admin-numeric-filter-slider .noUi-handle {
-  @apply bg-white border border-base-200 cursor-pointer h-4 -right-4 rounded-full shadow-xs w-4 dark:bg-base-200 dark:border-base-200;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-handle-upper {
-  @apply right-0;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-handle:after {
-  content: none;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-handle:before {
-  content: none;
-}
-
-#changelist-filter .admin-numeric-filter-slider.noUi-target {
-  @apply bg-base-200 border-0 h-1 shadow-none dark:bg-base-600;
-}
-
-#changelist-filter .admin-numeric-filter-slider .noUi-connect {
-  @apply bg-primary-600 border-0 h-1;
-}
-
-/*******************************************************
  Trix
  *******************************************************/
 trix-toolbar[id^="trix-toolbar-"] {
@@ -712,44 +721,10 @@ trix-toolbar[id^="trix-toolbar-"] {
 }
 
 /*******************************************************
- django-modeltranslation
- *******************************************************/
-.ui-tabs {
-  @apply flex flex-col;
-}
-
-.ui-tabs.ui-widget .ui-tabs-nav {
-  @apply bg-base-100 border-0 flex gap-2 m-0 ml-3 mb-0 mt-3 mr-auto p-1 rounded-default text-sm dark:bg-white/[.04] after:hidden;
-}
-
-.ui-tabs.ui-widget .ui-tabs-nav li {
-  @apply border-0 top-0;
-}
-
-.ui-tabs.ui-widget .ui-tabs-nav li a {
-  @apply bg-transparent border-0 flex flex-row font-medium items-center m-0 px-2.5 py-1 rounded-default text-base-400 text-sm hover:bg-base-700/[.04] hover:text-base-700 dark:hover:bg-white/[.04] dark:hover:text-white;
-}
-
-.ui-tabs.ui-widget .ui-tabs-nav li.ui-tabs-active a {
-  @apply flex flex-row font-medium items-center px-2.5 py-1 rounded-default  bg-white shadow-xs text-base-700 hover:bg-white dark:bg-base-900 dark:hover:bg-base-900 dark:text-white;
-}
-
-/*******************************************************
- Simplebar
- *******************************************************/
-.simplebar-track .simplebar-scrollbar {
-  @apply before:bg-base-900/80 dark:before:bg-base-400/80;
-}
-
-.simplebar-horizontal-scrollbar-top .simplebar-track.simplebar-horizontal {
-  @apply top-9
-}
-
-/*******************************************************
  DjangoQL
  *******************************************************/
 textarea#searchbar {
-  @apply font-medium placeholder-base-400 leading-[35px] max-h-[35px] min-h-[35px] whitespace-nowrap !w-full focus:outline-none;
+  @apply font-medium placeholder-base-400 leading-[36px] max-h-[36px] min-h-[36px] whitespace-nowrap !w-full focus:outline-none;
 }
 
 div.djangoql-completion {

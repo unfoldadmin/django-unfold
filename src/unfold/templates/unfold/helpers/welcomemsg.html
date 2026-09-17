@@ -3,11 +3,7 @@
 <div class="flex flex-row grow font-semibold items-center min-w-0 mr-3">
     {% if is_nav_sidebar_enabled and not is_popup %}
         <span class="cursor-pointer flex flex-row items-center">
-            <span class="material-symbols-outlined hidden! xl:block!" x-on:click="sidebarDesktopOpen = !sidebarDesktopOpen; localStorage.setItem('sidebarDesktopOpen', sidebarDesktopOpen ? '1' : '0');">
-                dock_to_right
-            </span>
-
-            <span class="material-symbols-outlined block! xl:hidden!" x-on:click="sidebarMobileOpen = !sidebarMobileOpen">
+            <span class="material-symbols-outlined" x-on:click="sidebarToggle()">
                 dock_to_right
             </span>
         </span>
@@ -15,13 +11,15 @@
         <span class="block bg-base-200 h-5 mx-3 w-px dark:bg-base-700"></span>
     {% endif %}
 
-    {% include "unfold/helpers/header_back_button.html" %}
+    {% if not is_popup %}
+        {% include "unfold/helpers/header_back_button.html" %}
+    {% endif %}
 
     <h1 class="overflow-hidden leading-5 text-important flex items-center whitespace-nowrap xl:text-base">
         {% header_title %}
 
         {% if cl and cl.full_result_count != cl.result_count and cl.paginator|class_name != "InfinitePaginator" %}
-            <span class="font-medium ml-2 text-subtle">
+            <span class="font-medium ml-2 text-subtle text-xs">
                 {% blocktranslate count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktranslate %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktranslate with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktranslate %}{% else %}{% translate "Show all" %}{% endif %}</a>)
             </span>
         {% endif %}

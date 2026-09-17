@@ -1,10 +1,12 @@
-<kbd class="bg-base-50 border border-base-200 font-sans h-[18px] text-xs text-subtle rounded-xs px-1 whitespace-nowrap dark:bg-white/[.04] dark:border-base-700">
+<kbd class="bg-base-50 border border-base-200 flex flex-row items-center font-sans h-[20px] min-w-[20px] justify-center text-xs text-subtle rounded-xs px-1 uppercase whitespace-nowrap dark:bg-white/[.04] dark:border-base-700">
     {% if icon %}
-        <span class="material-symbols-outlined block leading-[16px] text-[14px]">
+        <span class="material-symbols-outlined block leading-[18px] text-[14px]">
             {{ icon }}
         </span>
-    {% else %}
-        <span class="block font-medium leading-[16px]">
+    {% endif %}
+
+    {% if shortcut %}
+        <span class="block font-medium leading-[18px]">
             {{ shortcut }}
         </span>
     {% endif %}

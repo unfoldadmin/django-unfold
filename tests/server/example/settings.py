@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "unfold.contrib.hijack",
     "unfold.contrib.location_field",
     "unfold.contrib.constance",
+    "unfold.contrib.waffle",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "example",
     "constance",
+    "waffle",
     "import_export",
     "location_field",
     "crispy_forms",
@@ -205,5 +207,8 @@ CONSTANCE_CONFIG_FIELDSETS = OrderedDict(
 )
 
 UNFOLD = {
+    "SITE_VIEWS": [
+        ("extra-url", "extra_url_name", "example.views.SiteExtraUrlView"),
+    ],
     "TABS": "example.utils.tabs_callback",
 }

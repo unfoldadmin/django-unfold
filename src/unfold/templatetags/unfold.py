@@ -206,6 +206,11 @@ def is_list(value: Any) -> bool:
 
 
 @register.filter
+def is_dict(value: Any) -> bool:
+    return isinstance(value, dict)
+
+
+@register.filter
 def index(indexable: Mapping[int, Any], i: int) -> Any:
     try:
         return indexable[i]
@@ -371,7 +376,7 @@ def fieldset_rows_classes(context: RequestContext) -> str:
         "aligned",
     ]
 
-    if not context.get("stacked"):
+    if not context.get("stacked") and not context.get("fieldset_tab"):
         classes.extend(
             [
                 "border",
@@ -395,7 +400,10 @@ def fieldset_row_classes(context: RequestContext) -> str:
     ]
 
     formset = context.get("inline_admin_formset", None)
-    line = context.get("line") or []
+    line = context.get("line")
+
+    if not line:
+        return " ".join(set(classes))
 
     # Hide the field in case of ordering field for sorting
     for field in line:
@@ -406,14 +414,6 @@ def fieldset_row_classes(context: RequestContext) -> str:
             and getattr(formset.opts, "hide_ordering_field", False)
         ):
             classes.append("hidden")
-
-    if len(line.fields) > 1:
-        classes.extend(
-            [
-                "grid",
-                f"lg:grid-cols-{len(line.fields)}",
-            ]
-        )
 
     if not line.has_visible_field:
         classes.append("hidden")
@@ -432,35 +432,23 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "group/line",
         "px-3",
         "py-2.5",
+        "border-b",
+        "border-base-200",
+        "border-dashed",
+        "min-h-[59px]",
+        "group-[.last]/row:border-b-0",
+        "lg:flex-row",
+        "lg:items-center",
+        "dark:border-base-800",
     ]
+
     field = context.get("field")
-    adminform = context.get("adminform")
 
     if hasattr(field.field, "name") and field.field.name:
         classes.append(f"field-{field.field.name}")
 
     if hasattr(field, "errors") and field.errors():
         classes.append("errors")
-
-    if (
-        adminform
-        and hasattr(adminform.model_admin, "compressed_fields")
-        and adminform.model_admin.compressed_fields
-    ):
-        classes.extend(
-            [
-                "border-b",
-                "border-base-200",
-                "border-dashed",
-                "min-h-[59px]",
-                "group-[.last]/row:border-b-0",
-                "lg:border-l",
-                "lg:flex-row",
-                "lg:items-center",
-                "dark:border-base-800",
-                "lg:first:border-l-0",
-            ]
-        )
 
     return " ".join(set(classes))
 
@@ -485,36 +473,42 @@ def action_item_classes(context: RequestContext, action: dict) -> str:
             "bg-primary-600",
             "text-white",
             "dark:border-primary-500",
+            "hover:bg-primary-600/80",
         ],
         ActionVariant.DANGER: [
             "border-red-700",
             "bg-red-600",
             "text-white",
             "dark:border-red-500",
+            "hover:bg-red-600/80",
         ],
         ActionVariant.SUCCESS: [
             "border-green-700",
             "bg-green-600",
             "text-white",
             "dark:border-green-500",
+            "hover:bg-green-600/80",
         ],
         ActionVariant.INFO: [
             "border-blue-700",
             "bg-blue-600",
             "text-white",
             "dark:border-blue-500",
+            "hover:bg-blue-600/80",
         ],
         ActionVariant.WARNING: [
             "border-orange-700",
             "bg-orange-600",
             "text-white",
             "dark:border-orange-500",
+            "hover:bg-orange-600/80",
         ],
         ActionVariant.DEFAULT: [
             "border-base-200",
             "hover:text-primary-600",
             "dark:hover:text-primary-500",
             "dark:border-base-700",
+            "hover:bg-base-500/8",
         ],
     }
 
@@ -885,3 +879,8 @@ def unicoded_slugify(value: str) -> str:
 @register.filter
 def format_traceback(traceback: str) -> str:
     return prettify_traceback(traceback) or ""
+
+
+@register.filter
+def model_verbose_name(model: type[Model]) -> str:
+    return str(model._meta.verbose_name)

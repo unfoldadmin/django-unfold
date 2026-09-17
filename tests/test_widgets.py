@@ -131,6 +131,32 @@ def test_widgets_custom_css_class(widget_class):
     assert CUSTOM_CSS_CLASS in rendered
 
 
+@pytest.mark.parametrize(
+    "widget_class",
+    [
+        UnfoldBooleanWidget,
+        UnfoldBooleanSwitchWidget,
+    ],
+)
+def test_widgets_boolean_check_test(widget_class):
+    always_unchecked = widget_class(check_test=lambda value: False)
+    assert (
+        "checked"
+        not in always_unchecked.get_context("test_field", True, {})["widget"]["attrs"]
+    )
+
+    always_checked = widget_class(check_test=lambda value: True)
+    assert always_checked.get_context("test_field", False, {})["widget"]["attrs"][
+        "checked"
+    ]
+
+    default = widget_class()
+    assert default.get_context("test_field", True, {})["widget"]["attrs"]["checked"]
+    assert (
+        "checked" not in default.get_context("test_field", False, {})["widget"]["attrs"]
+    )
+
+
 def test_widgets_prefix_suffix():
     widget = UnfoldAdminTextInputWidget(
         attrs={

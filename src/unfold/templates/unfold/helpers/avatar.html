@@ -1,4 +1,4 @@
-{% with avatar_url=user.avatar_url %}
+{% with avatar_url=user.avatar_url badge_count=user.avatar_badge_count badge_variant=user.avatar_badge_variant badge_url=user.avatar_badge_url %}
     <div class="bg-base-200 bg-cover bg-no-repeat bg-center font-semibold flex items-center justify-center relative select-none text-important dark:bg-base-700 after:absolute after:inset-0 after:inset-ring after:inset-ring-base-800/10 dark:after:inset-ring-base-200/10
                 {% if size == "md" %}
                     h-[34px] min-w-[34px] w-[34px]
@@ -13,6 +13,28 @@
          {% if avatar_url %}style="background-image: url('{{ avatar_url }}');"{% endif %}>
         {% if not avatar_url %}
             {{ user.get_full_name.0|default:user.get_username.0|upper }}
+        {% endif %}
+
+        {% if badge_count or badge_variant %}
+            <{% if badge_url %}a{% else %}div{% endif %} href="{{ badge_url }}" class="absolute border-2 border-base-100 block top-0 right-0 rounded-full text-[10px] font-semibold text-white w-[20px] h-[20px] flex items-center text-shadow translate-x-1/3 -translate-y-1/3 justify-center dark:border-base-800 z-100
+            {% if badge_variant == "primary" %}
+                bg-primary-600
+            {% elif badge_variant == "danger" %}
+                bg-red-600
+            {% elif badge_variant == "success" %}
+                bg-green-600
+            {% elif badge_variant == "info" %}
+                bg-blue-600
+            {% elif badge_variant == "warning" %}
+                bg-orange-600
+            {% else %}
+                bg-base-600
+            {% endif %}
+            ">
+            {% if badge_count %}
+                {{ badge_count }}
+            {% endif %}
+            </{% if badge_url %}a{% else %}div{% endif %}>
         {% endif %}
     </div>
 {% endwith %}

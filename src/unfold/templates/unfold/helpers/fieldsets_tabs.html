@@ -25,7 +25,7 @@
                 {% for fieldset in tabs %}
                     <div class="tab-wrapper{% if fieldset.name %} fieldset-{{ fieldset.name|unicoded_slugify }}{% endif %}"
                          x-show="activeFieldsetTab == '{{ fieldset.name|unicoded_slugify }}'">
-                        {% include 'admin/includes/fieldset.html' with stacked=1 %}
+                        {% include 'admin/includes/fieldset.html' with fieldset_tab=1 %}
                     </div>
                 {% endfor %}
             </div>

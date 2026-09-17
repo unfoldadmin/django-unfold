@@ -1,6 +1,8 @@
 import copy
 from typing import Any
 
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import (
@@ -15,10 +17,12 @@ from django.forms.fields import TypedChoiceField
 from django.forms.models import ModelChoiceField, ModelMultipleChoiceField
 from django.forms.widgets import SelectMultiple
 from django.http import HttpRequest
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from unfold import widgets
 from unfold.overrides import FORMFIELD_OVERRIDES
+from unfold.utils import get_setting_value
 
 
 class FormFieldModelAdminMixin(BaseModelAdmin):
@@ -71,7 +75,10 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
                 kwargs["empty_label"] = _("Select value")
 
         formfield = super().formfield_for_foreignkey(db_field, request, **kwargs)
-        self._check_autocomplete_field(db_field, formfield, request)
+
+        if self._show_ui_warnings(request):
+            self._check_autocomplete_field(db_field, formfield, request)
+
         return formfield
 
     def formfield_for_manytomany(
@@ -89,7 +96,9 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
         if isinstance(formfield.widget, SelectMultiple):
             formfield.widget.attrs["class"] = " ".join(widgets.SELECT_CLASSES)
 
-        self._check_autocomplete_field(db_field, formfield, request)
+        if self._show_ui_warnings(request):
+            self._check_autocomplete_field(db_field, formfield, request)
+
         return formfield
 
     def formfield_for_nullboolean_field(
@@ -120,6 +129,28 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
 
         return formfield
 
+    def _show_ui_warnings(self, request: HttpRequest) -> bool:
+        return (
+            request.method == "GET"
+            and settings.DEBUG
+            and get_setting_value("SHOW_UI_WARNINGS", request) is True
+        )
+
+    def _display_autocomplete_fields_warnings(self, request: HttpRequest) -> None:
+        for missing_field in sorted(self._autocomplete_fields_missing):
+            messages.warning(
+                request,
+                format_html(
+                    _(
+                        'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
+                    ),  # ty:ignore[invalid-argument-type]
+                    field_name=missing_field,
+                ),
+            )
+
+            if missing_field in self._autocomplete_fields_missing:
+                self._autocomplete_fields_missing.remove(missing_field)
+
     def _check_autocomplete_field(  # noqa: PLR0911
         self,
         db_field: Field,
@@ -148,6 +179,7 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
         if db_field.name in self.autocomplete_fields_excluded_from_warnings:
             return
 
-        self._autocomplete_fields_missing.append(
-            f"{self.__class__.__name__}.{db_field.name}"
-        )
+        field_name = f"{self.__class__.__name__}.{db_field.name}"
+
+        if field_name not in self._autocomplete_fields_missing:
+            self._autocomplete_fields_missing.append(field_name)

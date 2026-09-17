@@ -2,6 +2,7 @@ import json
 from collections.abc import Callable
 from typing import Any
 
+from django import forms
 from django.conf import settings
 from django.contrib.admin.options import VERTICAL
 from django.contrib.admin.sites import AdminSite
@@ -831,14 +832,16 @@ class UnfoldBooleanSwitchWidget(CheckboxInput):
     def __init__(
         self, attrs: dict[str, Any] | None = None, check_test: Callable | None = None
     ) -> None:
+        attrs = attrs or {}
+
         super().__init__(
-            attrs={
+            {
                 **(attrs or {}),
                 "class": " ".join(
                     [*SWITCH_CLASSES, attrs.get("class", "") if attrs else ""]
                 ),
             },
-            check_test=None,
+            check_test,
         )
 
 
@@ -1012,7 +1015,7 @@ try:
 
 except ImportError:
 
-    class UnfoldAdminMoneyWidget:
+    class UnfoldAdminMoneyWidget(forms.Widget):
         def __init__(self, *args: Any, **kwargs: Any) -> None:
             raise UnfoldException("django-money not installed")
 

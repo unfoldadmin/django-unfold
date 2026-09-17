@@ -1,9 +1,15 @@
-<div id="site-name">
+<div id="site-name" class="flex items-center">
     {% if site_dropdown %}
         {{ site_header|default:_('Django administration') }}
     {% else %}
         <a href="{% url 'admin:index' %}">
             {{ site_header|default:_('Django administration') }}
         </a>
+    {% endif %}
+
+    {% if site_version %}
+        <span class="font-normal ml-1.5 text-xs text-subtle">
+            {{ site_version }}
+        </span>
     {% endif %}
 </div>

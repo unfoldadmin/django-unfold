@@ -1,9 +1,8 @@
+import warnings
 from functools import update_wrapper
 from typing import Any, TypedDict
 
 from django import forms
-from django.conf import settings
-from django.contrib import messages
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
@@ -18,10 +17,10 @@ from django.contrib.contenttypes.admin import (
 from django.db.models import BLANK_CHOICE_DASH, Model
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
-from django.utils.html import format_html
 from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from unfold.checks import UnfoldModelAdminChecks
 from unfold.forms import (
@@ -36,7 +35,6 @@ from unfold.mixins import (
     NestedInlinesModelAdminMixin,
 )
 from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
-from unfold.utils import get_setting_value
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
@@ -66,7 +64,6 @@ class ModelAdmin(
     add_fieldsets = ()
     ordering_field = None
     hide_ordering_field = False
-    list_horizontal_scrollbar_top = False
     list_filter_submit = False
     list_filter_sheet = True
     list_filter_options: dict[str, ListFilterOptionsItem] = {}
@@ -78,7 +75,6 @@ class ModelAdmin(
     change_form_after_template = None
     change_form_outer_before_template = None
     change_form_outer_after_template = None
-    compressed_fields = True
     show_add_link = True
     readonly_preprocess_fields = {}
     warn_unsaved_form = False
@@ -106,6 +102,7 @@ class ModelAdmin(
 
         return media
 
+    @xframe_options_sameorigin
     def changelist_view(
         self, request: HttpRequest, extra_context: dict[str, str] | None = None
     ) -> HttpResponse:
@@ -118,6 +115,7 @@ class ModelAdmin(
 
         return super().changelist_view(request, extra_context)
 
+    @xframe_options_sameorigin
     def changeform_view(
         self,
         request: HttpRequest,
@@ -132,22 +130,8 @@ class ModelAdmin(
 
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
-        if (
-            request.method == "GET"
-            and settings.DEBUG
-            and get_setting_value("SHOW_UI_WARNINGS", request) is True
-        ):
-            for missing_field in sorted(set(self._autocomplete_fields_missing)):
-                self.message_user(
-                    request,
-                    format_html(
-                        _(
-                            'Field <strong class="font-semibold">{field_name}</strong> is not an autocomplete field. Please add it to the `autocomplete_fields` list.'
-                        ),  # ty:ignore[invalid-argument-type]
-                        field_name=missing_field,
-                    ),
-                    messages.WARNING,
-                )
+        if self._show_ui_warnings(request):
+            self._display_autocomplete_fields_warnings(request)
 
         return response
 
@@ -277,11 +261,23 @@ class BaseInlineMixin:
     readonly_preprocess_fields = {}
     ordering_field = None
     per_page = None
-    hide_ordering_field = False
-    collapsible = False
     show_count = False
-    hide_title = False
+    show_title = True
+    hide_ordering_field = False  # TODO: rename to show_ordering_field
+    collapsible = False
     tab = False
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        if hasattr(self, "hide_title"):
+            warnings.warn(
+                "'hide_title' is deprecated, please use 'show_title' instead.",
+                FutureWarning,
+                stacklevel=2,
+            )
+
+            self.show_title = not self.hide_title
+
+        super().__init__(*args, **kwargs)
 
 
 class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):

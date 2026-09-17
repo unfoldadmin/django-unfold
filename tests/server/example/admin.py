@@ -13,6 +13,9 @@ from django.utils.translation import gettext_lazy as _
 from hijack.contrib.admin import HijackUserAdminMixin
 from import_export.admin import ImportExportModelAdmin
 from import_export.resources import ModelResource
+from waffle.admin import SampleAdmin as BaseSampleAdmin
+from waffle.admin import SwitchAdmin as BaseSwitchAdmin
+from waffle.models import Flag, Sample, Switch
 
 from example.models import (
     ActionUser,
@@ -34,7 +37,7 @@ from example.models import (
     Task,
     User,
 )
-from example.views import CrispyFormView
+from example.views import CrispyFormView, ModelExtraUrlView
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import (
     AllValuesCheckboxFilter,
@@ -67,6 +70,7 @@ from unfold.contrib.import_export.forms import (
     SelectableFieldsExportForm,
 )
 from unfold.contrib.inlines.admin import NonrelatedTabularInline
+from unfold.contrib.waffle.admin import FlagAdmin as BaseFlagAdmin
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
 from unfold.forms import (
@@ -85,6 +89,24 @@ from unfold.widgets import (
 )
 
 admin.site.unregister(Group)
+admin.site.unregister(Flag)
+admin.site.unregister(Switch)
+admin.site.unregister(Sample)
+
+
+@admin.register(Flag)
+class FlagAdmin(BaseFlagAdmin):
+    pass
+
+
+@admin.register(Switch)
+class SwitchAdmin(ModelAdmin, BaseSwitchAdmin):
+    pass
+
+
+@admin.register(Sample)
+class SampleAdmin(ModelAdmin, BaseSampleAdmin):
+    pass
 
 
 class UserTagInline(StackedInline):
@@ -92,7 +114,7 @@ class UserTagInline(StackedInline):
     collapsible = True
     per_page = 10
     tab = True
-    readonly_fields = ["user"]
+    fields = ["tag"]
 
     def get_queryset(self, request, *args, **kwargs):
         qs = super().get_queryset(request, *args, **kwargs)
@@ -107,7 +129,7 @@ class InvoiceItemInline(TabularInline):
 class UserInvoiceInline(TabularInline):
     model = Invoice
     inlines = [InvoiceItemInline]
-    # tab = True
+    fields = ["name"]
 
 
 class PostInline(StackedInline):
@@ -278,7 +300,7 @@ class UserAdmin(
     def get_hijack_user(self, obj):
         return obj
 
-    @display(description="Custom readonly field")
+    @display(description="Custom readonly field", wrapper_class="bg-red-500")
     def custom_readonly_field(self, obj):
         return "Custom readonly field"
 
@@ -1097,6 +1119,15 @@ class ProjectAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
     search_fields = ["name"]
+
+    def get_custom_urls(self):
+        return [
+            (
+                "extra-url",
+                "custom_url_name",
+                ModelExtraUrlView.as_view(model_admin=self),
+            ),
+        ]
 
 
 @admin.register(Task)

@@ -36,9 +36,7 @@ def test_command_search_empty(admin_client):
 
 @pytest.mark.django_db
 def test_command_search_non_existing_record(admin_client):
-    response = admin_client.get(
-        reverse("admin:search") + "?s=non-existing-record&extended=1"
-    )
+    response = admin_client.get(reverse("admin:search") + "?s=non-existing-record")
     assert response.status_code == HTTPStatus.OK
     assert "Nothing matched your search" in response.content.decode()
 
@@ -54,9 +52,9 @@ def test_command_search_non_existing_record(admin_client):
     }
 )
 @pytest.mark.django_db
-def test_command_search_extended_models(admin_client, tag_factory):
+def test_command_search_models(admin_client, tag_factory):
     tag_factory(name="test-tag")
-    response = admin_client.get(reverse("admin:search") + "?s=test-tag&extended=1")
+    response = admin_client.get(reverse("admin:search") + "?s=test-tag")
 
     assert response.status_code == HTTPStatus.OK
     assert "test-tag" in response.content.decode()
@@ -73,12 +71,10 @@ def test_command_search_extended_models(admin_client, tag_factory):
     }
 )
 @pytest.mark.django_db
-def test_command_search_extended_model_without_permission(
-    client, staff_user, tag_factory
-):
+def test_command_search_model_without_permission(client, staff_user, tag_factory):
     client.force_login(staff_user)
     tag_factory(name="sample-test-tag")
-    response = client.get(reverse("admin:search") + "?s=sample-test-tag&extended=1")
+    response = client.get(reverse("admin:search") + "?s=sample-test-tag")
     assert response.status_code == HTTPStatus.OK
     assert "sample-test-tag" not in response.content.decode()
 
@@ -94,9 +90,7 @@ def test_command_search_extended_model_without_permission(
     }
 )
 @pytest.mark.django_db
-def test_command_search_extended_model_with_permission(
-    admin_client, staff_user, tag_factory
-):
+def test_command_search_model_with_permission(admin_client, staff_user, tag_factory):
     # Add view tags permission to staff user
     view_tag_permission = Permission.objects.get(codename="view_tag")
     staff_user.user_permissions.add(view_tag_permission)
@@ -104,7 +98,7 @@ def test_command_search_extended_model_with_permission(
     admin_client.force_login(staff_user)
     tag_factory(name="sample-test-tag-with-permission")
     response = admin_client.get(
-        reverse("admin:search") + "?s=sample-test-tag-with-permission&extended=1"
+        reverse("admin:search") + "?s=sample-test-tag-with-permission"
     )
     assert response.status_code == HTTPStatus.OK
     assert "sample-test-tag-with-permission" in response.content.decode()
@@ -127,9 +121,7 @@ def test_command_allowed_models(admin_client, admin_user, tag_factory):
             },
         }
     ):
-        response = admin_client.get(
-            reverse("admin:search") + "?s=another-test-tag&extended=1"
-        )
+        response = admin_client.get(reverse("admin:search") + "?s=another-test-tag")
         assert "another-test-tag" not in response.content.decode()
 
     with override_settings(
@@ -142,9 +134,7 @@ def test_command_allowed_models(admin_client, admin_user, tag_factory):
             },
         }
     ):
-        response = admin_client.get(
-            reverse("admin:search") + "?s=another-test-tag&extended=1"
-        )
+        response = admin_client.get(reverse("admin:search") + "?s=another-test-tag")
         assert "another-test-tag" in response.content.decode()
 
     with override_settings(
@@ -157,9 +147,7 @@ def test_command_allowed_models(admin_client, admin_user, tag_factory):
             },
         }
     ):
-        response = admin_client.get(
-            reverse("admin:search") + "?s=another-test-tag&extended=1"
-        )
+        response = admin_client.get(reverse("admin:search") + "?s=another-test-tag")
         assert "another-test-tag" not in response.content.decode()
 
     with override_settings(
@@ -172,7 +160,5 @@ def test_command_allowed_models(admin_client, admin_user, tag_factory):
             },
         }
     ):
-        response = admin_client.get(
-            reverse("admin:search") + "?s=another-test-tag&extended=1"
-        )
+        response = admin_client.get(reverse("admin:search") + "?s=another-test-tag")
         assert "another-test-tag" in response.content.decode()
