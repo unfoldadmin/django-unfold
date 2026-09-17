@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.107.0 (2026-09-17)
+
+### Features
+
+- Related modals ([#2284](https://github.com/unfoldadmin/django-unfold/pull/2284),
+  [`39ce96a`](https://github.com/unfoldadmin/django-unfold/commit/39ce96a40d684c0c1295d9f25017b4d635d09bc8))
+
+
 ## v0.106.1 (2026-09-14)
 
 ### Bug Fixes
