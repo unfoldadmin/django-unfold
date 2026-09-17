@@ -140,7 +140,13 @@ function initJSONSchemaEditor() {
 			),
 		});
 
-		instance.setValue(JSON.parse(el.value));
+		const parsedValue = JSON.parse(el.value);
+		if (
+			parsedValue &&
+			(typeof parsedValue !== "object" || Object.keys(parsedValue).length > 0)
+		) {
+			instance.setValue(parsedValue);
+		}
 
 		instance.on("change", () => {
 			el.value = JSON.stringify(instance.getValue());
