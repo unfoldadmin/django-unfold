@@ -1133,8 +1133,12 @@ div.jsoneditor-tree,
 }
 
 /* Fieldset */
+.jsonschema-container > div >.jedi-editor-fieldset {
+  @apply max-w-4xl;
+}
+
 .jedi-editor-fieldset {
-  @apply border border-base-200 flex flex-col max-w-2xl overflow-hidden p-3 rounded-default shadow-xs dark:border-base-700;
+  @apply border border-base-200 flex flex-col overflow-hidden p-3 rounded-default shadow-xs dark:border-base-700;
 }
 
 /* Legend */
@@ -1151,14 +1155,73 @@ div.jsoneditor-tree,
   @apply bg-red-100 leading-[18px] mb-3 px-3 py-2.5 rounded-default text-red-700 dark:bg-red-500/20 dark:text-red-400;
 }
 
-.jedi-label {
-  @apply capitalize;
-}
-
 .jedi-editor-card-body .group .jedi-error-message {
   @apply mt-2 text-red-600 text-xs dark:text-red-500;
 }
 
 .jedi-actions-slot, .jedi-description, .jedi-messages-slot {
   @apply empty:!hidden;
+}
+
+/* Buttons */
+.jedi-btn-group {
+  @apply block flex flex-row gap-2;
+}
+
+.jedi-btn {
+  @apply font-medium flex items-center rounded-default justify-center whitespace-nowrap cursor-pointer px-2 py-0.5 border border-base-200 bg-white shadow-xs text-important dark:border-base-700 dark:bg-transparent hover:bg-base-100/80 dark:hover:bg-base-800/80 self-center lg:-my-2
+}
+.jedi-label {
+  @apply capitalize;
+}
+
+.jedi-properties-group {
+  @apply flex flex-col gap-2;
+}
+
+/* Array */
+.jedi-array-item {
+  @apply flex-row-reverse flex gap-2;
+}
+
+.jedi-array-item .jedi-actions-slot {
+  @apply flex items-end;
+}
+
+.jedi-array-item .jedi-array-actions-slot {
+  @apply flex h-[38px];
+}
+
+.jedi-array-item-body {
+  @apply grow;
+}
+
+.jedi-btn.jedi-array-add {
+  @apply bg-primary-600 text-white border-transparent shadow-none hover:bg-primary-600/80;
+}
+
+.jedi-btn.jedi-array-delete,
+.jedi-btn.jedi-array-move-up,
+.jedi-btn.jedi-array-move-down {
+  @apply h-[38px] w-[38px];
+}
+
+.jedi-btn.jedi-array-delete span,
+.jedi-btn.jedi-array-move-up span,
+.jedi-btn.jedi-array-move-down span {
+  @apply hidden;
+}
+
+.jedi-btn.jedi-array-delete:after,
+.jedi-btn.jedi-array-move-up:after,
+.jedi-btn.jedi-array-move-down:after {
+  @apply material-symbols-outlined content-['close'] text-[16px] text-icon;
+}
+
+.jedi-btn.jedi-array-move-up:after {
+  @apply content-['arrow\_upward'];
+}
+
+.jedi-btn.jedi-array-move-down:after {
+  @apply content-['arrow\_downward'];
 }

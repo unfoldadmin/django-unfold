@@ -138,6 +138,7 @@ function initJSONSchemaEditor() {
 			schema: JSON.parse(
 				document.getElementById(container.dataset.schemaId).textContent,
 			),
+			enablePropertiesToggle: true,
 		});
 
 		const parsedValue = JSON.parse(el.value);
