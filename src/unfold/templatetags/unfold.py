@@ -29,7 +29,12 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
 from unfold.enums import ActionVariant
+from unfold.exceptions import UnfoldException
 from unfold.sections import BaseSection
+from unfold.templatetags.unfold_list import (
+    unfold_horizontal_filters,
+    unfold_vertical_filters,
+)
 from unfold.utils import prettify_traceback
 from unfold.widgets import (
     UnfoldAdminMoneyWidget,
@@ -336,24 +341,42 @@ def add_css_class(field: BoundField, classes: list | tuple) -> BoundField:
     takes_context=True,
     name="preserve_filters",
 )
-def preserve_changelist_filters(context: RequestContext) -> dict[str, dict[str, str]]:
+def preserve_changelist_filters(
+    context: RequestContext, mode: str = "vertical"
+) -> dict[str, Any]:
     """
-    Generate hidden input fields to preserve filters for POST forms.
+    Generate hidden input fields to preserve filters.
     """
     request: HttpRequest | None = context.get("request")
     changelist: ChangeList | None = context.get("cl")
 
+    if mode not in ["horizontal", "vertical"]:
+        raise UnfoldException(f"Invalid mode '{mode}' for preserve_filters tag")
+
     if not request or not changelist:
-        return {"params": {}}
+        return {
+            "params": {},
+        }
 
-    used_params: set[str] = {
-        param for spec in changelist.filter_specs for param in spec.used_parameters
-    }
-    preserved_params: dict[str, str] = {
-        param: value for param, value in request.GET.items() if param not in used_params
-    }
+    used_params = set()
+    preserved_params = {}
 
-    return {"params": preserved_params}
+    if mode == "horizontal":
+        specs = unfold_horizontal_filters(changelist)
+    else:
+        specs = unfold_vertical_filters(changelist)
+
+    for spec in specs:
+        for param in spec.used_parameters:
+            used_params.add(param)
+
+    for param, value in request.GET.items():
+        if param not in used_params:
+            preserved_params[param] = value
+
+    return {
+        "params": preserved_params,
+    }
 
 
 @register.simple_tag(takes_context=True)
