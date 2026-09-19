@@ -21,7 +21,7 @@ from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import NoReverseMatch, reverse
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
@@ -616,6 +616,13 @@ def querystring_params(
     return result.urlencode()
 
 
+def _safe_reverse(viewname: str, args: list | None = None) -> str | None:
+    try:
+        return reverse(viewname, args=args)
+    except NoReverseMatch:
+        return None
+
+
 @register.simple_tag(takes_context=True)
 def header_title(context: RequestContext) -> str:
     parts = []
@@ -629,7 +636,7 @@ def header_title(context: RequestContext) -> str:
     if opts:
         parts.append(
             {
-                "link": reverse_lazy(f"{current_app}:app_list", args=[opts.app_label]),
+                "link": _safe_reverse(f"{current_app}:app_list", args=[opts.app_label]),
                 "title": opts.app_config.verbose_name,
             }
         )
@@ -637,7 +644,7 @@ def header_title(context: RequestContext) -> str:
         if (original := context.get("original")) and not isinstance(original, str):
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": _safe_reverse(
                         f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_changelist"
                     ),
                     "title": original._meta.verbose_name_plural,
@@ -646,7 +653,7 @@ def header_title(context: RequestContext) -> str:
 
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": _safe_reverse(
                         f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_change",
                         args=[original.pk],
                     ),
@@ -656,7 +663,7 @@ def header_title(context: RequestContext) -> str:
         elif object := context.get("object"):
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": _safe_reverse(
                         f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist"
                     ),
                     "title": object._meta.verbose_name_plural,
@@ -665,7 +672,7 @@ def header_title(context: RequestContext) -> str:
 
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": _safe_reverse(
                         f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
                         args=[object.pk],
                     ),
@@ -675,7 +682,7 @@ def header_title(context: RequestContext) -> str:
         else:
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": _safe_reverse(
                         f"{current_app}:{opts.app_label}_{opts.model_name}_changelist"
                     ),
                     "title": opts.verbose_name_plural,
@@ -684,7 +691,7 @@ def header_title(context: RequestContext) -> str:
     elif object := context.get("object"):
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": _safe_reverse(
                     f"{current_app}:app_list", args=[object._meta.app_label]
                 ),
                 "title": object._meta.app_label,
@@ -693,7 +700,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": _safe_reverse(
                     f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist",
                 ),
                 "title": object._meta.verbose_name_plural,
@@ -702,7 +709,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": _safe_reverse(
                     f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
                     args=[object.pk],
                 ),
@@ -712,7 +719,7 @@ def header_title(context: RequestContext) -> str:
     elif (model_admin := context.get("model_admin")) and hasattr(model_admin, "model"):
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": _safe_reverse(
                     f"{current_app}:app_list", args=[model_admin.model._meta.app_label]
                 ),
                 "title": model_admin.model._meta.app_config.verbose_name,
@@ -721,7 +728,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": _safe_reverse(
                     f"{current_app}:{model_admin.model._meta.app_label}_{model_admin.model._meta.model_name}_changelist",
                 ),
                 "title": model_admin.model._meta.verbose_name_plural,
