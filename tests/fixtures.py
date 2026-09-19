@@ -21,6 +21,16 @@ def admin_user():
 
 
 @pytest.fixture
+def regular_user():
+    return User.objects.create_user(
+        username="regular@example.com",
+        email="regular@example.com",
+        password="password",
+        date_joined=now(),
+    )
+
+
+@pytest.fixture
 def staff_user():
     view_user_permission = Permission.objects.get(codename="view_user")
     change_user_permission = Permission.objects.get(codename="change_user")
