@@ -126,7 +126,7 @@ def test_changeform_view_regular_user(client, regular_user, project_factory):
 
 
 @pytest.mark.django_db
-def test_changeform_staff_user(settings, client, staff_user, project_factory):
+def test_changeform_view_staff_user(settings, client, staff_user, project_factory):
     project = project_factory()
     client.force_login(staff_user)
     response = client.get(reverse("admin:example_project_change", args=[project.id]))
