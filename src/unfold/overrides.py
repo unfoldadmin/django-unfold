@@ -5,6 +5,8 @@ from django import forms
 from django.db import models
 
 from unfold import widgets
+from unfold.models import JSONSchemaField
+from unfold.widgets import UnfoldAdminJSONSchemaWidget
 
 FORMFIELD_OVERRIDES: dict[Any, Any] = {
     models.DateTimeField: {
@@ -27,8 +29,9 @@ FORMFIELD_OVERRIDES: dict[Any, Any] = {
     models.FloatField: {"widget": widgets.UnfoldAdminDecimalFieldWidget},
     models.FileField: {"widget": widgets.UnfoldAdminFileFieldWidget},
     models.ImageField: {"widget": widgets.UnfoldAdminImageFieldWidget},
-    models.JSONField: {"widget": widgets.UnfoldAdminTextareaWidget},
     models.DurationField: {"widget": widgets.UnfoldAdminTextInputWidget},
+    models.JSONField: {"widget": widgets.UnfoldAdminTextareaWidget},
+    JSONSchemaField: {"widget": UnfoldAdminJSONSchemaWidget},
 }
 
 ######################################################################

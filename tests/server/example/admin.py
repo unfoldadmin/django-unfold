@@ -253,6 +253,7 @@ class UserAdmin(
                     "custom_readonly_field",
                     "another_readonly_field",
                     "html_readonly_field",
+                    "data",
                 )
             },
         ),

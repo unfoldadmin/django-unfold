@@ -4,7 +4,9 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from example.admin import UserAdmin
+from example.models import User
 
 from unfold.fields import (
     UnfoldAdminAutocompleteModelChoiceField,
@@ -334,3 +336,38 @@ def test_unfold_admin_multiple_autocomplete_field(user_factory):
     )
 
     assert form.fields["username"].widget.attrs["data-ajax--url"] == "/admin/"
+
+
+@pytest.mark.django_db
+def test_unfold_json_schema_field():
+    user = User.objects.create(
+        username="jsonschematest",
+        password="password",
+        data={
+            "name": "John",
+            "age": 25,
+        },
+    )
+    user.full_clean()
+
+    user.data = None
+    user.full_clean()
+
+    user.data = {
+        "name": "Jane",
+        "age": 25,
+        "extra": "not allowed",
+    }
+
+    with pytest.raises(ValidationError):
+        user.full_clean()
+
+    user.data = {
+        "name": "Jane",
+        "age": "not_a_number",
+    }
+
+    with pytest.raises(ValidationError) as e:
+        user.full_clean()
+
+    assert "age" in str(e.value)
