@@ -5,11 +5,11 @@
         {% capture as badge_result silent %}{{ item.badge_callback }}{% endcapture %}
 
         {% if badge_result and badge_result != "None" %}
-            {% include "unfold/helpers/badge.html" with value=badge_result style=item.badge_style variant=item.badge_variant %}
+            {% include "unfold/helpers/badge.html" with value=badge_result style=item.badge_style variant=item.badge_variant class=item.badge_class %}
         {% endif %}
     {% else %}
         {% if item.badge %}
-            {% include "unfold/helpers/badge.html" with value=item.badge style=item.badge_style variant=item.badge_variant %}
+            {% include "unfold/helpers/badge.html" with value=item.badge style=item.badge_style variant=item.badge_variant class=item.badge_class %}
         {% endif %}
     {% endif %}
 {% endif %}

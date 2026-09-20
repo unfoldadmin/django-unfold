@@ -16,6 +16,7 @@ jobs:
   tests:
     name: Python ${{ matrix.python-version }} / Django ${{ matrix.django-version }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
@@ -27,6 +28,7 @@ jobs:
           - "52"
           - "60"
           - "61"
+          - "main"
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -37,6 +39,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install uv
-        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          enable-cache: true
       - name: Run tox
         run: uv run -- tox run -e python$(echo ${{ matrix.python-version }} | tr -d .)-django${{ matrix.django-version }}

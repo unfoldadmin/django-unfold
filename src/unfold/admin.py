@@ -1,3 +1,4 @@
+import warnings
 from functools import update_wrapper
 from typing import Any, TypedDict
 
@@ -19,6 +20,7 @@ from django.urls import URLPattern, path
 from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views import View
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 
 from unfold.checks import UnfoldModelAdminChecks
 from unfold.forms import (
@@ -100,6 +102,7 @@ class ModelAdmin(
 
         return media
 
+    @xframe_options_sameorigin
     def changelist_view(
         self, request: HttpRequest, extra_context: dict[str, str] | None = None
     ) -> HttpResponse:
@@ -112,6 +115,7 @@ class ModelAdmin(
 
         return super().changelist_view(request, extra_context)
 
+    @xframe_options_sameorigin
     def changeform_view(
         self,
         request: HttpRequest,
@@ -257,11 +261,23 @@ class BaseInlineMixin:
     readonly_preprocess_fields = {}
     ordering_field = None
     per_page = None
-    hide_ordering_field = False
-    collapsible = False
     show_count = False
-    hide_title = False
+    show_title = True
+    hide_ordering_field = False  # TODO: rename to show_ordering_field
+    collapsible = False
     tab = False
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        if hasattr(self, "hide_title"):
+            warnings.warn(
+                "'hide_title' is deprecated, please use 'show_title' instead.",
+                FutureWarning,
+                stacklevel=2,
+            )
+
+            self.show_title = not self.hide_title
+
+        super().__init__(*args, **kwargs)
 
 
 class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):

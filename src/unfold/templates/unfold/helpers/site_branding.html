@@ -8,6 +8,8 @@
     {% endif %}
 
     {% if site_version %}
-        {% include "unfold/helpers/badge.html" with value=site_version variant="default" style="solid" %}
+        <span class="font-normal ml-1.5 text-xs text-subtle">
+            {{ site_version }}
+        </span>
     {% endif %}
 </div>

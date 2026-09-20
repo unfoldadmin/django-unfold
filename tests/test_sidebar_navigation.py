@@ -405,3 +405,63 @@ def test_navigation_badge_none_not_rendered(admin_client):
     response = admin_client.get(reverse("admin:index"))
     assert response.status_code == HTTPStatus.OK
     assert "sidebar-badge" not in response.content.decode()
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Icon Template Title",
+                                "link": "/menu-link-icon-template",
+                                "icon_template": "icons/custom_icon.svg",
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_icon_template_path_rendered(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+    assert response.status_code == HTTPStatus.OK
+    content = response.content.decode()
+    assert "custom icon content" in content
+    assert "Icon Template Title" in content
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Attrs Link",
+                                "link": "/attrs-link",
+                                "link_attrs": {
+                                    "data-test": "42",
+                                    "aria-label": "Custom Label",
+                                },
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_link_attrs_rendered(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+    assert response.status_code == HTTPStatus.OK
+    content = response.content.decode()
+    assert 'data-test="42"' in content
+    assert 'aria-label="Custom Label"' in content
+    assert "Attrs Link" in content

@@ -253,7 +253,7 @@ def resolve_setting_value(value: str | Callable | None, *args: Any) -> Any:
         try:
             callback = import_string(value)
             return callback(*args)
-        except ImportError:
+        except (ImportError, ValueError):
             pass
 
         return value

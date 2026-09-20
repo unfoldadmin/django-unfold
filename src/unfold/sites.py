@@ -331,7 +331,7 @@ class UnfoldAdminSite(AdminSite):
                 try:
                     callback = import_string(group["badge"])
                     group["badge_callback"] = lazy(callback)(request)
-                except ImportError:
+                except (ImportError, ValueError):
                     pass
 
             results.append(group)
@@ -351,14 +351,13 @@ class UnfoldAdminSite(AdminSite):
 
             if "active" in item:
                 item["active"] = self._get_value(item["active"], request)
+            elif tabs and self._get_is_tab_active(request, tabs, link):
+                # Checks if any tab item is active and then marks the sidebar link as active
+                item["active"] = True
             else:
                 item["active"] = self._get_is_active(
                     request, item.get("link_callback") or link
                 )
-
-            # Checks if any tab item is active and then marks the sidebar link as active
-            if tabs and self._get_is_tab_active(request, tabs, link):
-                item["active"] = True
 
             # Link callback
             if isinstance(link, Callable):
@@ -374,7 +373,7 @@ class UnfoldAdminSite(AdminSite):
                 try:
                     callback = import_string(item["badge"])
                     item["badge_callback"] = lazy(callback)(request)
-                except ImportError:
+                except (ImportError, ValueError):
                     pass
 
             # Process nested items
@@ -441,7 +440,7 @@ class UnfoldAdminSite(AdminSite):
         if isinstance(callback, str):
             try:
                 callback = import_string(callback)
-            except ImportError:
+            except (ImportError, ValueError):
                 pass
 
         if isinstance(callback, str) or isinstance(callback, Callable):
@@ -590,7 +589,7 @@ class UnfoldAdminSite(AdminSite):
             try:
                 callback = import_string(value)
                 return callback(*args)
-            except ImportError:
+            except (ImportError, ValueError):
                 pass
 
             return value

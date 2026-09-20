@@ -11,7 +11,10 @@
 				return;
 			}
 
-			$(element).select2();
+			const filterForm = $(element).closest('#filter-form');
+			$(element).select2({
+				...(filterForm.length ? { dropdownParent: filterForm } : {}),
+			});
 		});
 
 		return this;
@@ -19,8 +22,11 @@
 
 	$.fn.djangoFilterSelect2 = function () {
 		$.each(this, (_index, element) => {
+			const formParent = this.closest('#filter-form');
+
 			$(element).select2({
 				closeOnSelect: !element.multiple,
+				...(formParent.length ? { dropdownParent: formParent } : {}),
 				ajax: {
 					data: (params) => {
 						return {
