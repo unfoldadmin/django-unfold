@@ -22,10 +22,12 @@ window.addEventListener("load", () => {
 	scrollSidebarNav();
 
 	crispyFormset();
+
+	openPopupInModal();
 });
 
 function blurDjangoQLSearch() {
-	document.getElementById("searchbar")?.blur()
+	document.getElementById("searchbar")?.blur();
 }
 
 function getCurrentTab() {
@@ -40,6 +42,83 @@ function getCurrentTab() {
 	}
 
 	return fragment;
+}
+
+/*************************************************************
+ * Open popup in modal
+ *************************************************************/
+function openPopupInModal() {
+	document.addEventListener("click", (event) => {
+		const link = event.target.closest("a[data-popup-opener]");
+
+		if (!link) {
+			return;
+		}
+
+		const inputId = window.name.replace(/^(lookup)_/, "");
+		const chosenId = link.dataset.popupOpener;
+		const input = window.parent.document.getElementById(inputId);
+		const data = Alpine.$data(window.parent.document.body);
+
+		data.openModal = false;
+		data.modalContentClasses = "";
+
+		if (input.classList.contains("vManyToManyRawIdAdminField") && input.value) {
+			input.value += `,${chosenId}`;
+		} else {
+			input.value = chosenId;
+		}
+	});
+
+	document.addEventListener(
+		"click",
+		(event) => {
+			const link = event.target.closest(
+				"a.related-widget-wrapper-link, a.related-lookup",
+			);
+
+			if (!link) {
+				return;
+			}
+
+			event.preventDefault();
+			event.stopImmediatePropagation();
+
+			const url = new URL(link.href);
+			url.searchParams.set("_popup", "1");
+
+			const iframe = document.createElement("iframe");
+
+			iframe.name = link.id;
+			iframe.src = url;
+			iframe.classList.add("related-modal-frame");
+
+			const modalContent = document.getElementById("modal-content");
+			modalContent.innerHTML = "";
+			modalContent.appendChild(iframe);
+			const data = Alpine.$data(document.body);
+
+			iframe.addEventListener("load", () => {
+				const iframeDoc =
+					iframe.contentDocument || iframe.contentWindow.document;
+
+				if (iframeDoc.getElementById("django-admin-popup-response-constants")) {
+					data.openModal = false;
+					data.modalContentClasses = "";
+				} else {
+					data.openModal = true;
+					data.modalContentClasses =
+						"max-w-7xl border border-transparent dark:border-base-800";
+
+					Alpine.nextTick(() => {
+						const height = iframeDoc.body.scrollHeight;
+						iframe.style.height = `${height}px`;
+					});
+				}
+			});
+		},
+		{ capture: true },
+	);
 }
 
 /*************************************************************
@@ -81,6 +160,7 @@ function theme(defaultTheme = "auto") {
 		shortcutsOpen: false,
 		openCommandResults: false,
 		openModal: false,
+		modalContentClasses: "",
 		filterOpen: false,
 		filterModalOpen: false,
 		openAllApplications: false,
@@ -544,44 +624,46 @@ const filterForm = () => {
  * Numeric range filter
  *************************************************************/
 function numericRangeFilter() {
-	document.querySelectorAll(".admin-numeric-filter-wrapper").forEach((wrapper) => {
-		const inputTo = wrapper.querySelectorAll("input[type=number]")[1];
-		const inputFrom = wrapper.querySelectorAll("input[type=number]")[0];
-		const rangeTo = wrapper.querySelectorAll("input[type=range]")[1];
+	document
+		.querySelectorAll(".admin-numeric-filter-wrapper")
+		.forEach((wrapper) => {
+			const inputTo = wrapper.querySelectorAll("input[type=number]")[1];
+			const inputFrom = wrapper.querySelectorAll("input[type=number]")[0];
+			const rangeTo = wrapper.querySelectorAll("input[type=range]")[1];
 
-		function recalculateActiveRange() {
-			const rangeDistance = inputTo.max - inputTo.min;
-			const fromPosition = inputFrom.value - inputTo.min;
-			const toPosition = inputTo.value - inputTo.min;
+			function recalculateActiveRange() {
+				const rangeDistance = inputTo.max - inputTo.min;
+				const fromPosition = inputFrom.value - inputTo.min;
+				const toPosition = inputTo.value - inputTo.min;
 
-			rangeTo.style.background = `linear-gradient(
+				rangeTo.style.background = `linear-gradient(
 				to right,
 				transparent 0%,
-				transparent ${(fromPosition)/(rangeDistance)*100}%,
-				var(--color-primary-500) ${(fromPosition)/(rangeDistance)*100}%,
-				var(--color-primary-500) ${(toPosition)/(rangeDistance)*100}%,
-				transparent ${(toPosition)/(rangeDistance)*100}%,
-				transparent 100%)`
+				transparent ${(fromPosition / rangeDistance) * 100}%,
+				var(--color-primary-500) ${(fromPosition / rangeDistance) * 100}%,
+				var(--color-primary-500) ${(toPosition / rangeDistance) * 100}%,
+				transparent ${(toPosition / rangeDistance) * 100}%,
+				transparent 100%)`;
+			}
 
-		}
+			recalculateActiveRange();
 
+			wrapper.querySelectorAll("input[type=range]").forEach((input, index) => {
+				input.addEventListener("input", (event) => {
+					wrapper.querySelectorAll("input[type=number]")[index].value =
+						event.target.value;
+					recalculateActiveRange();
+				});
+			});
 
-		recalculateActiveRange();
-
-		wrapper.querySelectorAll("input[type=range]").forEach((input, index) => {
-			input.addEventListener("input", (event) => {
-				wrapper.querySelectorAll("input[type=number]")[index].value = event.target.value;
-				recalculateActiveRange();
+			wrapper.querySelectorAll("input[type=number]").forEach((input, index) => {
+				input.addEventListener("input", (event) => {
+					wrapper.querySelectorAll("input[type=range]")[index].value =
+						event.target.value;
+					recalculateActiveRange();
+				});
 			});
 		});
-
-		wrapper.querySelectorAll("input[type=number]").forEach((input, index) => {
-			input.addEventListener("input", (event) => {
-				wrapper.querySelectorAll("input[type=range]")[index].value = event.target.value;
-				recalculateActiveRange();
-			});
-		});
-	});
 }
 
 /*************************************************************
@@ -616,6 +698,7 @@ function dateTimeShortcutsOverlay() {
 
 			if (display === "block" || hasOpenAttribute) {
 				overlay.style.display = "block";
+				mutationRecord.target.setAttribute("closedby", "any");
 			} else {
 				overlay.style.display = "none";
 			}
@@ -727,6 +810,14 @@ const DEFAULT_CHART_OPTIONS = {
 					return false;
 				}
 
+				const customDataset = context.chart.data.datasets.find((dataset) =>
+					Object.hasOwn(dataset, "displayXAxis"),
+				);
+
+				if (customDataset) {
+					return customDataset.displayXAxis;
+				}
+
 				return true;
 			},
 			border: {
@@ -750,6 +841,14 @@ const DEFAULT_CHART_OPTIONS = {
 			display: (context) => {
 				if (["pie", "doughnut", "radar"].includes(context.chart.config.type)) {
 					return false;
+				}
+
+				const customDataset = context.chart.data.datasets.find((dataset) =>
+					Object.hasOwn(dataset, "displayYAxis"),
+				);
+
+				if (customDataset) {
+					return customDataset.displayYAxis;
 				}
 
 				return true;
@@ -881,11 +980,20 @@ const renderCharts = () => {
 		Chart.defaults.font.family = "Inter";
 		Chart.defaults.font.size = 12;
 
+		const chartConfig = {
+			...CHART_OPTIONS,
+			responsive: chart.dataset?.responsive !== "false",
+		};
+
+		if ("tooltip" in chart.dataset) {
+			chartConfig.plugins.tooltip = chart.dataset.tooltip !== "false";
+		}
+
 		charts.push(
 			new Chart(ctx, {
 				type: type || "bar",
 				data: parsedData,
-				options: options ? JSON.parse(options) : { ...CHART_OPTIONS },
+				options: options ? JSON.parse(options) : chartConfig,
 			}),
 		);
 	}

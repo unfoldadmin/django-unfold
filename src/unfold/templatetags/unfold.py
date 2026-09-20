@@ -29,7 +29,12 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
 from unfold.enums import ActionVariant
+from unfold.exceptions import UnfoldException
 from unfold.sections import BaseSection
+from unfold.templatetags.unfold_list import (
+    unfold_horizontal_filters,
+    unfold_vertical_filters,
+)
 from unfold.utils import prettify_traceback
 from unfold.widgets import (
     UnfoldAdminMoneyWidget,
@@ -336,24 +341,42 @@ def add_css_class(field: BoundField, classes: list | tuple) -> BoundField:
     takes_context=True,
     name="preserve_filters",
 )
-def preserve_changelist_filters(context: RequestContext) -> dict[str, dict[str, str]]:
+def preserve_changelist_filters(
+    context: RequestContext, mode: str = "vertical"
+) -> dict[str, Any]:
     """
-    Generate hidden input fields to preserve filters for POST forms.
+    Generate hidden input fields to preserve filters.
     """
     request: HttpRequest | None = context.get("request")
     changelist: ChangeList | None = context.get("cl")
 
+    if mode not in ["horizontal", "vertical"]:
+        raise UnfoldException(f"Invalid mode '{mode}' for preserve_filters tag")
+
     if not request or not changelist:
-        return {"params": {}}
+        return {
+            "params": {},
+        }
 
-    used_params: set[str] = {
-        param for spec in changelist.filter_specs for param in spec.used_parameters
-    }
-    preserved_params: dict[str, str] = {
-        param: value for param, value in request.GET.items() if param not in used_params
-    }
+    used_params = set()
+    preserved_params = {}
 
-    return {"params": preserved_params}
+    if mode == "horizontal":
+        specs = unfold_horizontal_filters(changelist)
+    else:
+        specs = unfold_vertical_filters(changelist)
+
+    for spec in specs:
+        for param in spec.used_parameters:
+            used_params.add(param)
+
+    for param, value in request.GET.items():
+        if param not in used_params:
+            preserved_params[param] = value
+
+    return {
+        "params": preserved_params,
+    }
 
 
 @register.simple_tag(takes_context=True)
@@ -415,14 +438,6 @@ def fieldset_row_classes(context: RequestContext) -> str:
         ):
             classes.append("hidden")
 
-    if len(line.fields) > 1:
-        classes.extend(
-            [
-                "grid",
-                f"lg:grid-cols-{len(line.fields)}",
-            ]
-        )
-
     if not line.has_visible_field:
         classes.append("hidden")
 
@@ -445,11 +460,9 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "border-dashed",
         "min-h-[59px]",
         "group-[.last]/row:border-b-0",
-        "lg:border-l",
         "lg:flex-row",
         "lg:items-center",
         "dark:border-base-800",
-        "lg:first:border-l-0",
     ]
 
     field = context.get("field")
@@ -483,36 +496,42 @@ def action_item_classes(context: RequestContext, action: dict) -> str:
             "bg-primary-600",
             "text-white",
             "dark:border-primary-500",
+            "hover:bg-primary-600/80",
         ],
         ActionVariant.DANGER: [
             "border-red-700",
             "bg-red-600",
             "text-white",
             "dark:border-red-500",
+            "hover:bg-red-600/80",
         ],
         ActionVariant.SUCCESS: [
             "border-green-700",
             "bg-green-600",
             "text-white",
             "dark:border-green-500",
+            "hover:bg-green-600/80",
         ],
         ActionVariant.INFO: [
             "border-blue-700",
             "bg-blue-600",
             "text-white",
             "dark:border-blue-500",
+            "hover:bg-blue-600/80",
         ],
         ActionVariant.WARNING: [
             "border-orange-700",
             "bg-orange-600",
             "text-white",
             "dark:border-orange-500",
+            "hover:bg-orange-600/80",
         ],
         ActionVariant.DEFAULT: [
             "border-base-200",
             "hover:text-primary-600",
             "dark:hover:text-primary-500",
             "dark:border-base-700",
+            "hover:bg-base-500/8",
         ],
     }
 

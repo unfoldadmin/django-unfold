@@ -11,7 +11,10 @@
 				return;
 			}
 
-			$(element).select2();
+			const filterForm = $(element).closest('#filter-form');
+			$(element).select2({
+				...(filterForm.length ? { dropdownParent: filterForm } : {}),
+			});
 		});
 
 		return this;
