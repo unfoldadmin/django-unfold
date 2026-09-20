@@ -72,7 +72,9 @@ class ActionForm(forms.Form):
                     ]
                 ),
                 "aria-label": _("Select action to run"),
+                "x-init": "action = $el.value",
                 "x-model": "action",
+                "x-on:pageshow.window": "action = $el.value",
             }
         ),
     )

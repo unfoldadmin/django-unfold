@@ -22,6 +22,8 @@ window.addEventListener("load", () => {
 	scrollSidebarNav();
 
 	crispyFormset();
+
+	openPopupInModal();
 });
 
 function blurDjangoQLSearch() {
@@ -40,6 +42,83 @@ function getCurrentTab() {
 	}
 
 	return fragment;
+}
+
+/*************************************************************
+ * Open popup in modal
+ *************************************************************/
+function openPopupInModal() {
+	document.addEventListener("click", (event) => {
+		const link = event.target.closest("a[data-popup-opener]");
+
+		if (!link) {
+			return;
+		}
+
+		const inputId = window.name.replace(/^(lookup)_/, "");
+		const chosenId = link.dataset.popupOpener;
+		const input = window.parent.document.getElementById(inputId);
+		const data = Alpine.$data(window.parent.document.body);
+
+		data.openModal = false;
+		data.modalContentClasses = "";
+
+		if (input.classList.contains("vManyToManyRawIdAdminField") && input.value) {
+			input.value += `,${chosenId}`;
+		} else {
+			input.value = chosenId;
+		}
+	});
+
+	document.addEventListener(
+		"click",
+		(event) => {
+			const link = event.target.closest(
+				"a.related-widget-wrapper-link, a.related-lookup",
+			);
+
+			if (!link) {
+				return;
+			}
+
+			event.preventDefault();
+			event.stopImmediatePropagation();
+
+			const url = new URL(link.href);
+			url.searchParams.set("_popup", "1");
+
+			const iframe = document.createElement("iframe");
+
+			iframe.name = link.id;
+			iframe.src = url;
+			iframe.classList.add("related-modal-frame");
+
+			const modalContent = document.getElementById("modal-content");
+			modalContent.innerHTML = "";
+			modalContent.appendChild(iframe);
+			const data = Alpine.$data(document.body);
+
+			iframe.addEventListener("load", () => {
+				const iframeDoc =
+					iframe.contentDocument || iframe.contentWindow.document;
+
+				if (iframeDoc.getElementById("django-admin-popup-response-constants")) {
+					data.openModal = false;
+					data.modalContentClasses = "";
+				} else {
+					data.openModal = true;
+					data.modalContentClasses =
+						"max-w-7xl border border-transparent dark:border-base-800";
+
+					Alpine.nextTick(() => {
+						const height = iframeDoc.body.scrollHeight;
+						iframe.style.height = `${height}px`;
+					});
+				}
+			});
+		},
+		{ capture: true },
+	);
 }
 
 /*************************************************************
@@ -81,6 +160,7 @@ function theme(defaultTheme = "auto") {
 		shortcutsOpen: false,
 		openCommandResults: false,
 		openModal: false,
+		modalContentClasses: "",
 		filterOpen: false,
 		filterModalOpen: false,
 		openAllApplications: false,
