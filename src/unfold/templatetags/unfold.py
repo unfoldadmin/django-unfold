@@ -21,12 +21,11 @@ from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
-from django.urls import NoReverseMatch, reverse_lazy
+from django.urls import NoReverseMatch, reverse
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from django_stubs_ext import StrOrPromise
 
 from unfold.components import ComponentRegistry
 from unfold.enums import ActionVariant
@@ -627,9 +626,9 @@ def header_title(context: RequestContext) -> str:
         else "admin"
     )
 
-    def safe_reverse(viewname: str, args: list | None = None) -> StrOrPromise:
+    def safe_reverse(viewname: str, args: list | None = None) -> str:
         try:
-            return reverse_lazy(viewname, args=args)
+            return reverse(viewname, args=args)
         except NoReverseMatch:
             pass
 
