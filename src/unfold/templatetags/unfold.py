@@ -16,12 +16,12 @@ from django.contrib.auth.models import AbstractUser
 from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import BoundField, CheckboxSelectMultiple
+from django.forms import BoundField, CheckboxSelectMultiple, MultiWidget
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import NoReverseMatch, reverse
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
@@ -29,7 +29,12 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
 from unfold.enums import ActionVariant
+from unfold.exceptions import UnfoldException
 from unfold.sections import BaseSection
+from unfold.templatetags.unfold_list import (
+    unfold_horizontal_filters,
+    unfold_vertical_filters,
+)
 from unfold.utils import prettify_traceback
 from unfold.widgets import (
     UnfoldAdminMoneyWidget,
@@ -336,24 +341,42 @@ def add_css_class(field: BoundField, classes: list | tuple) -> BoundField:
     takes_context=True,
     name="preserve_filters",
 )
-def preserve_changelist_filters(context: RequestContext) -> dict[str, dict[str, str]]:
+def preserve_changelist_filters(
+    context: RequestContext, mode: str = "vertical"
+) -> dict[str, Any]:
     """
-    Generate hidden input fields to preserve filters for POST forms.
+    Generate hidden input fields to preserve filters.
     """
     request: HttpRequest | None = context.get("request")
     changelist: ChangeList | None = context.get("cl")
 
+    if mode not in ["horizontal", "vertical"]:
+        raise UnfoldException(f"Invalid mode '{mode}' for preserve_filters tag")
+
     if not request or not changelist:
-        return {"params": {}}
+        return {
+            "params": {},
+        }
 
-    used_params: set[str] = {
-        param for spec in changelist.filter_specs for param in spec.used_parameters
-    }
-    preserved_params: dict[str, str] = {
-        param: value for param, value in request.GET.items() if param not in used_params
-    }
+    used_params = set()
+    preserved_params = {}
 
-    return {"params": preserved_params}
+    if mode == "horizontal":
+        specs = unfold_horizontal_filters(changelist)
+    else:
+        specs = unfold_vertical_filters(changelist)
+
+    for spec in specs:
+        for param in spec.used_parameters:
+            used_params.add(param)
+
+    for param, value in request.GET.items():
+        if param not in used_params:
+            preserved_params[param] = value
+
+    return {
+        "params": preserved_params,
+    }
 
 
 @register.simple_tag(takes_context=True)
@@ -541,9 +564,11 @@ def changeform_data(adminform: AdminForm) -> str:
                 if isinstance(field.field, dict):
                     continue
 
-                if isinstance(
-                    field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-                ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
+                if (
+                    isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget)
+                    or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget)
+                    or isinstance(field.field.field.widget, MultiWidget)
+                ):
                     for index, _widget in enumerate(field.field.field.widget.widgets):
                         fields[
                             f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
@@ -571,9 +596,11 @@ def changeform_condition(field: AdminField) -> AdminField:
         field.field.field.widget.attrs["x-init"] = mark_safe(
             f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
         )
-    elif isinstance(
-        field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-    ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
+    elif (
+        isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget)
+        or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget)
+        or isinstance(field.field.field.widget, MultiWidget)
+    ):
         for index, widget in enumerate(field.field.field.widget.widgets):
             field_name = (
                 f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
@@ -626,10 +653,18 @@ def header_title(context: RequestContext) -> str:
         else "admin"
     )
 
+    def safe_reverse(viewname: str, args: list | None = None) -> str:
+        try:
+            return reverse(viewname, args=args)
+        except NoReverseMatch:
+            pass
+
+        return ""
+
     if opts:
         parts.append(
             {
-                "link": reverse_lazy(f"{current_app}:app_list", args=[opts.app_label]),
+                "link": safe_reverse(f"{current_app}:app_list", args=[opts.app_label]),
                 "title": opts.app_config.verbose_name,
             }
         )
@@ -637,7 +672,7 @@ def header_title(context: RequestContext) -> str:
         if (original := context.get("original")) and not isinstance(original, str):
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_changelist"
                     ),
                     "title": original._meta.verbose_name_plural,
@@ -646,7 +681,7 @@ def header_title(context: RequestContext) -> str:
 
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_change",
                         args=[original.pk],
                     ),
@@ -656,7 +691,7 @@ def header_title(context: RequestContext) -> str:
         elif object := context.get("object"):
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist"
                     ),
                     "title": object._meta.verbose_name_plural,
@@ -665,7 +700,7 @@ def header_title(context: RequestContext) -> str:
 
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
                         args=[object.pk],
                     ),
@@ -675,7 +710,7 @@ def header_title(context: RequestContext) -> str:
         else:
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{opts.app_label}_{opts.model_name}_changelist"
                     ),
                     "title": opts.verbose_name_plural,
@@ -684,7 +719,7 @@ def header_title(context: RequestContext) -> str:
     elif object := context.get("object"):
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:app_list", args=[object._meta.app_label]
                 ),
                 "title": object._meta.app_label,
@@ -693,7 +728,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist",
                 ),
                 "title": object._meta.verbose_name_plural,
@@ -702,7 +737,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
                     args=[object.pk],
                 ),
@@ -712,7 +747,7 @@ def header_title(context: RequestContext) -> str:
     elif (model_admin := context.get("model_admin")) and hasattr(model_admin, "model"):
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:app_list", args=[model_admin.model._meta.app_label]
                 ),
                 "title": model_admin.model._meta.app_config.verbose_name,
@@ -721,7 +756,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:{model_admin.model._meta.app_label}_{model_admin.model._meta.model_name}_changelist",
                 ),
                 "title": model_admin.model._meta.verbose_name_plural,

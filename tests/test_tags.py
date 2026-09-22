@@ -18,6 +18,7 @@ from example.models import User
 
 from unfold.components import BaseComponent, register_component
 from unfold.enums import ActionVariant
+from unfold.exceptions import UnfoldException
 from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 from unfold.sites import UnfoldAdminSite
 from unfold.views import ChangeList
@@ -490,7 +491,23 @@ def test_tags_add_css_class():
 
 
 @pytest.mark.django_db
-def test_tags_preserve_changelist_filters(rf, user_factory):
+def test_tags_preserve_changelist_filters_wrong_mode(rf, user_factory):
+    with pytest.raises(
+        UnfoldException, match="Invalid mode 'wrong' for preserve_filters tag"
+    ):
+        Template("{% load unfold %} {% preserve_filters 'wrong' %}").render(
+            RequestContext(
+                rf.get("/"),
+                {
+                    "cl": None,
+                },
+            )
+        )
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("mode", ["horizontal", "vertical"])
+def test_tags_preserve_changelist_filters(rf, user_factory, mode):
     user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
     request = rf.get("/")
     request.user = user
@@ -503,7 +520,8 @@ def test_tags_preserve_changelist_filters(rf, user_factory):
         else changelist_view.context
     )
 
-    response = Template("{% load unfold %} {% preserve_filters %}").render(
+    template = f"{{% load unfold %}} {{% preserve_filters '{mode}' %}}"
+    response = Template(template).render(
         RequestContext(
             rf.get("/?is_staff__exact=1"),
             {
@@ -514,7 +532,7 @@ def test_tags_preserve_changelist_filters(rf, user_factory):
 
     assert '<input type="hidden" name="is_staff__exact" value="1">' in response
 
-    response = Template("{% load unfold %} {% preserve_filters %}").render(
+    response = Template(template).render(
         RequestContext(
             rf.get("/?is_staff__exact=1"),
             {
@@ -850,6 +868,30 @@ def test_tags_querystring_params(rf):
     ).render(RequestContext(rf.get("/?example2=value2&example1=value3"), {}))
 
     assert "example1=value1" in response
+
+
+@pytest.mark.django_db
+def test_tags_header_title_can_not_reverse(
+    rf, user_factory, invoice_factory, invoice_item_factory
+):
+    user = user_factory(username="sample@example.com")
+    request = rf.get("/")
+    request.user = user
+
+    invoice = invoice_factory(user=user)
+    invoice_item = invoice_item_factory(invoice=invoice)
+
+    response = Template("{% load unfold %} {% header_title %}").render(
+        RequestContext(
+            request,
+            {
+                "object": invoice_item,
+            },
+        )
+    )
+
+    assert response.count("<a href=") == 1
+    assert "Invoice items" in response
 
 
 @pytest.mark.django_db

@@ -3,7 +3,7 @@ from collections.abc import Generator
 from typing import Any
 
 from django import VERSION as DJANGO_VERSION
-from django.contrib.admin import SimpleListFilter
+from django.contrib.admin import ListFilter, SimpleListFilter
 from django.contrib.admin.options import IS_FACETS_VAR, IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
@@ -480,7 +480,7 @@ def unfold_admin_list_filter(
 
 
 @register.filter
-def unfold_horizontal_filters(cl: ChangeList) -> list[SimpleListFilter]:
+def unfold_horizontal_filters(cl: ChangeList) -> list[ListFilter]:
     specs = []
 
     for spec in cl.filter_specs:
@@ -499,7 +499,7 @@ def unfold_horizontal_filters(cl: ChangeList) -> list[SimpleListFilter]:
 
 
 @register.filter
-def unfold_vertical_filters(cl: ChangeList) -> list[SimpleListFilter]:
+def unfold_vertical_filters(cl: ChangeList) -> list[ListFilter]:
     specs = []
 
     for spec in cl.filter_specs:
