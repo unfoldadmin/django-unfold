@@ -5,7 +5,7 @@ from django import forms
 from django.db import models
 
 from unfold import widgets
-from unfold.models import JSONSchemaField
+from unfold.models.fields import JSONSchemaField
 from unfold.widgets import UnfoldAdminJSONSchemaWidget
 
 FORMFIELD_OVERRIDES: dict[Any, Any] = {

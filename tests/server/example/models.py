@@ -4,7 +4,7 @@ from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from location_field.models.plain import PlainLocationField
 
-from unfold.models import JSONSchemaField
+from unfold.models.fields import JSONSchemaField
 
 
 class StatusChoices(models.TextChoices):
