@@ -14,7 +14,10 @@ from unfold.fields import (
     UnfoldAdminMultipleAutocompleteModelChoiceField,
     UnfoldAdminReadonlyField,
 )
+from unfold.models.fields import JSONSchemaField
 from unfold.sites import UnfoldAdminSite
+
+NOT_CALLABLE = "NOT_CALLABLE"
 
 
 class ExampleForm(forms.ModelForm):
@@ -371,3 +374,23 @@ def test_unfold_json_schema_field():
         user.full_clean()
 
     assert "age" in str(e.value)
+
+
+def test_unfold_json_schema_field_import_from_dotted_path():
+    with pytest.raises(ImportError) as e:
+        JSONSchemaField(schema="example.schemas.UserSchema")
+
+    assert (
+        "Could not import callable schema from dotted path 'example.schemas.UserSchema': No module named 'example.schemas'"
+        in str(e.value)
+    )
+
+
+def test_unfold_json_schema_field_import_from_dotted_path_is_not_callable():
+    with pytest.raises(ImportError) as e:
+        JSONSchemaField(schema="tests.test_fields.NOT_CALLABLE")
+
+    assert (
+        "The imported schema object from 'tests.test_fields.NOT_CALLABLE' must be callable."
+        in str(e.value)
+    )
