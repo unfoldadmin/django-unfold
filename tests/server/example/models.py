@@ -1,7 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from location_field.models.plain import PlainLocationField
+
+from unfold.models.fields import JSONSchemaField
 
 
 class StatusChoices(models.TextChoices):
@@ -35,7 +38,25 @@ class User(AbstractUser):
     location = PlainLocationField(based_fields=["city"], zoom=7, blank=True, null=True)
     file = models.FileField(upload_to="files/", null=True, blank=True)
     image = models.ImageField(upload_to="images/", null=True, blank=True)
-    data = models.JSONField(null=True, blank=True)
+    data = JSONSchemaField(
+        schema={
+            "type": "object",
+            "title": gettext("Data"),
+            "additionalProperties": False,
+            "properties": {
+                "name": {
+                    "title": gettext("Name"),
+                    "type": "string",
+                },
+                "age": {
+                    "title": gettext("Age"),
+                    "type": "number",
+                },
+            },
+        },
+        null=True,
+        blank=True,
+    )
     numeric_single = models.FloatField(_("Numeric Single"), null=True, blank=True)
     numeric_range = models.FloatField(_("Numeric Range"), null=True, blank=True)
     numeric_slider = models.FloatField(_("Numeric Slider"), null=True, blank=True)

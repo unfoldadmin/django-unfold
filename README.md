@@ -114,3 +114,4 @@ If Unfold helps your project, consider giving the repository a star ⭐. It help
 - [Alpine.js](https://github.com/alpinejs/alpine) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 - [HTMX](https://htmx.org/) - Licensed under the [BSD 2-Clause License](https://opensource.org/licenses/BSD-2-Clause).
 - [Trix](https://github.com/basecamp/trix) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+- [Jedison](https://github.com/germanbisurgi/jedison) - Licensed under the [MIT License](https://opensource.org/licenses/MIT).
