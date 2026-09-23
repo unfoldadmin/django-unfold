@@ -3,11 +3,11 @@
 {% load admin_urls i18n guardian_tags  %}
 
 {% block content %}
-    {% include "unfold/guardian/user_form.html" %}
+    <div class="flex flex-col gap-6">
+        {% include "unfold/guardian/user_form.html" %}
 
-    <hr class="border-base-200 my-12 dark:border-base-800"/>
-
-    {% include "unfold/guardian/group_form.html" %}
+        {% include "unfold/guardian/group_form.html" %}
+    </div>
 {% endblock %}
 
 {% block footer %}{% endblock%}

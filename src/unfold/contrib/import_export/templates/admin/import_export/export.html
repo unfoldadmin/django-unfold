@@ -27,38 +27,44 @@
             {% include "admin/import_export/resource_fields_list.html" with import_or_export="export" %}
         {% endif %}
 
-        {{ form.non_field_errors }}
+        {% if form.non_field_errors %}
+            {% include "unfold/helpers/messages/error.html" with errors=form.non_field_errors %}
+        {% endif %}
 
-        <fieldset class="border border-base-200 mb-4 rounded-default p-3 shadow-xs dark:border-base-800">
-            {% for field in form.visible_fields %}
-                {% if field.field.initial_field %}
-                    <p class="block font-semibold mb-2 text-important">
-                        {% trans "This exporter will export the following fields" %}
-                    </p>
+        <fieldset class="border border-base-200 mb-8 rounded-default p-3 shadow-xs dark:border-base-800">
+            {% capture as export_fields silent %}{% spaceless %}
+                {% for field in form.visible_fields %}
+                    {% if field.field.is_selectable_field %}
+                        <div class="selectable-field-export-row !p-0 *:mb-0" resource-index="{{ field.field.resource_index }}">
+                            {% if field.field.widget.attrs.readonly %}
+                                {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
+                                {{ field.as_hidden }}
+                            {% else %}
+                                {% include "unfold/helpers/field.html" with field=field %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endspaceless %}{% endcapture %}
+
+            {% if export_fields|length > 0 %}
+                <p class="block font-semibold mb-2 text-important">
+                    {% trans "This exporter will export the following fields" %}
+                </p>
+            {% endif %}
+
+            <div class="flex flex-col gap-3 mb-3">
+                {% if export_fields|length > 0 %}
+                    <div class="flex flex-col gap-2">
+                        {{ export_fields }}
+                    </div>
                 {% endif %}
-            {% endfor %}
-
-            <div class="flex flex-col gap-4">
-                <div class="flex flex-col gap-2">
-                    {% for field in form.visible_fields %}
-                        {% if field.field.is_selectable_field %}
-                            <div class="selectable-field-export-row !p-0 *:mb-0" resource-index="{{ field.field.resource_index }}">
-                                {% if field.field.widget.attrs.readonly %}
-                                    {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
-                                    {{ field.as_hidden }}
-                                {% else %}
-                                    {% include "unfold/helpers/field.html" with field=field %}
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
 
                 {% for field in form.visible_fields %}
                     {% if not field.field.is_selectable_field %}
                         <div class="*:mb-0">
                             {% if field.field.widget.attrs.readonly %}
-                                {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value %}
+                                {% include "unfold/helpers/field_readonly.html" with title=field.label value=field.field.value outline=1%}
                                 {{ field.as_hidden }}
                             {% else %}
                                 {% include "unfold/helpers/field.html" with field=field %}
@@ -71,10 +77,12 @@
             {% for field in form.hidden_fields %}
                 {{ field }}
             {% endfor %}
-        </fieldset>
 
-        {% component "unfold/components/button.html" with submit=1 %}
-            {% translate "Submit" %}
-        {% endcomponent %}
+            <div class="border-t border-base-200 flex justify-end -mx-3 pt-3 px-3 dark:border-base-800">
+                {% component "unfold/components/button.html" with submit=1 %}
+                    {% trans "Submit" %}
+                {% endcomponent %}
+            </div>
+        </fieldset>
     </form>
 {% endblock %}

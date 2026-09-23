@@ -1,7 +1,10 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from location_field.models.plain import PlainLocationField
+
+from unfold.models.fields import JSONSchemaField
 
 
 class StatusChoices(models.TextChoices):
@@ -35,7 +38,25 @@ class User(AbstractUser):
     location = PlainLocationField(based_fields=["city"], zoom=7, blank=True, null=True)
     file = models.FileField(upload_to="files/", null=True, blank=True)
     image = models.ImageField(upload_to="images/", null=True, blank=True)
-    data = models.JSONField(null=True, blank=True)
+    data = JSONSchemaField(
+        schema={
+            "type": "object",
+            "title": gettext("Data"),
+            "additionalProperties": False,
+            "properties": {
+                "name": {
+                    "title": gettext("Name"),
+                    "type": "string",
+                },
+                "age": {
+                    "title": gettext("Age"),
+                    "type": "number",
+                },
+            },
+        },
+        null=True,
+        blank=True,
+    )
     numeric_single = models.FloatField(_("Numeric Single"), null=True, blank=True)
     numeric_range = models.FloatField(_("Numeric Range"), null=True, blank=True)
     numeric_slider = models.FloatField(_("Numeric Slider"), null=True, blank=True)
@@ -60,7 +81,7 @@ class User(AbstractUser):
     status = models.CharField(
         _("Status"),
         max_length=20,
-        choices=StatusChoices.choices,
+        choices=StatusChoices,
         default=StatusChoices.ACTIVE,
         blank=True,
         null=True,
@@ -68,7 +89,7 @@ class User(AbstractUser):
     approval = models.CharField(
         _("Approval"),
         max_length=20,
-        choices=ApprovalChoices.choices,
+        choices=ApprovalChoices,
         default=ApprovalChoices.NEW,
         blank=True,
         null=True,
@@ -76,7 +97,7 @@ class User(AbstractUser):
     priority = models.CharField(
         _("Priority"),
         max_length=20,
-        choices=PriorityChoices.choices,
+        choices=PriorityChoices,
         default=PriorityChoices.MEDIUM,
         blank=True,
         null=True,
@@ -84,7 +105,7 @@ class User(AbstractUser):
     color = models.CharField(
         _("Color"),
         max_length=20,
-        choices=ColorChoices.choices,
+        choices=ColorChoices,
         default=ColorChoices.BLUE,
         blank=True,
         null=True,
@@ -105,6 +126,11 @@ class SectionUser(User):
 
 
 class ActionUser(User):
+    class Meta:
+        proxy = True
+
+
+class DialogActionUser(User):
     class Meta:
         proxy = True
 

@@ -1,6 +1,8 @@
 from typing import Any
 
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+from django.db.models import Model
 from django.http import HttpRequest
 from django.template.loader import render_to_string
 
@@ -11,6 +13,9 @@ class BaseDataset:
     tab = False
     title = None
 
+    model = Model
+    model_admin = ModelAdmin
+
     def __init__(
         self, request: HttpRequest, extra_context: dict[str, Any] | None
     ) -> None:
@@ -20,7 +25,7 @@ class BaseDataset:
         self.model_admin_instance = self.model_admin(
             model=self.model, admin_site=admin.site
         )
-        self.model_admin_instance.extra_context = self.extra_context
+        self.model_admin_instance.extra_context = self.extra_context  # type: ignore
 
     @property
     def contents(self) -> str:
@@ -53,7 +58,8 @@ class BaseDataset:
             self.request, list_display
         )
         list_per_page = self.model_admin_instance.list_per_page
-        sortable_by = self.model_admin_instance.get_sortable_by(self.request)
+        # Sorting is disabled for datasets
+        # sortable_by = self.model_admin_instance.get_sortable_by(self.request)
         search_fields = self.model_admin_instance.get_search_fields(self.request)
 
         if self.model_admin_instance.get_actions(self.request):
@@ -72,7 +78,7 @@ class BaseDataset:
             list_per_page=list_per_page,
             list_max_show_all=False,
             list_editable=[],
-            sortable_by=sortable_by,
+            sortable_by=[],
             search_help_text=[],
         )
         cl.formset = None
@@ -85,8 +91,8 @@ class BaseDataset:
 
     @property
     def model_name(self) -> str:
-        return self.model._meta.model_name
+        return str(self.model._meta.model_name)
 
     @property
     def model_verbose_name(self) -> str:
-        return self.model._meta.verbose_name_plural
+        return str(self.model._meta.verbose_name_plural)

@@ -1,11 +1,14 @@
 import copy
+from typing import Any
 
 from django import forms
 from django.db import models
 
 from unfold import widgets
+from unfold.models.fields import JSONSchemaField
+from unfold.widgets import UnfoldAdminJSONSchemaWidget
 
-FORMFIELD_OVERRIDES = {
+FORMFIELD_OVERRIDES: dict[Any, Any] = {
     models.DateTimeField: {
         "form_class": forms.SplitDateTimeField,
         "widget": widgets.UnfoldAdminSplitDateTimeWidget,
@@ -26,8 +29,9 @@ FORMFIELD_OVERRIDES = {
     models.FloatField: {"widget": widgets.UnfoldAdminDecimalFieldWidget},
     models.FileField: {"widget": widgets.UnfoldAdminFileFieldWidget},
     models.ImageField: {"widget": widgets.UnfoldAdminImageFieldWidget},
-    models.JSONField: {"widget": widgets.UnfoldAdminTextareaWidget},
     models.DurationField: {"widget": widgets.UnfoldAdminTextInputWidget},
+    models.JSONField: {"widget": widgets.UnfoldAdminTextareaWidget},
+    JSONSchemaField: {"widget": UnfoldAdminJSONSchemaWidget},
 }
 
 ######################################################################
@@ -44,7 +48,7 @@ try:
             IntegerRangeField: {"widget": widgets.UnfoldAdminIntegerRangeWidget},
         }
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 
 ######################################################################
@@ -58,7 +62,7 @@ try:
             MoneyField: {"widget": widgets.UnfoldAdminMoneyWidget},
         }
     )
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 
 ######################################################################

@@ -1,0 +1,17 @@
+{% load i18n l10n hijack unfold %}
+
+{% if request.user|can_hijack:another_user %}
+    {% capture as extra_attrs silent %}
+        data-hijack-user="{{ another_user.pk|unlocalize }}" data-hijack-next="{{ next }}" data-hijack-url="{% url 'hijack:acquire' %}"
+    {% endcapture %}
+
+    {% component "unfold/components/button.html" with type="button" size="xs" variant="default" extra_attrs=extra_attrs %}
+        {% if is_user_admin %}
+            {% translate 'impersonate'|capfirst context 'verb' %}
+        {% else %}
+            {% blocktranslate trimmed %}
+                impersonate {{ username }}
+            {% endblocktranslate %}
+        {% endif %}
+    {% endcomponent %}
+{% endif %}

@@ -2,7 +2,6 @@ import json
 from collections.abc import Iterable, Mapping
 from typing import Any
 
-from django import VERSION as DJANGO_VERSION
 from django import template
 from django.contrib.admin.helpers import (
     AdminField,
@@ -17,12 +16,12 @@ from django.contrib.auth.models import AbstractUser
 from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
-from django.forms import BoundField, CheckboxSelectMultiple
+from django.forms import BoundField, CheckboxSelectMultiple, MultiWidget
 from django.http import HttpRequest, QueryDict
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import NoReverseMatch, reverse
 from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
@@ -30,7 +29,13 @@ from django.utils.translation import gettext_lazy as _
 
 from unfold.components import ComponentRegistry
 from unfold.enums import ActionVariant
+from unfold.exceptions import UnfoldException
 from unfold.sections import BaseSection
+from unfold.templatetags.unfold_list import (
+    unfold_horizontal_filters,
+    unfold_vertical_filters,
+)
+from unfold.utils import prettify_traceback
 from unfold.widgets import (
     UnfoldAdminMoneyWidget,
     UnfoldAdminSelect2Widget,
@@ -191,6 +196,11 @@ def has_active_item(items: list[dict]) -> bool:
 
 
 @register.filter
+def has_row_action_in_dropdown(actions: list[dict]) -> bool:
+    return any(action.get("display_in_dropdown", True) for action in actions)
+
+
+@register.filter
 def class_name(value: Any) -> str:
     return value.__class__.__name__
 
@@ -198,6 +208,11 @@ def class_name(value: Any) -> str:
 @register.filter
 def is_list(value: Any) -> bool:
     return isinstance(value, list)
+
+
+@register.filter
+def is_dict(value: Any) -> bool:
+    return isinstance(value, dict)
 
 
 @register.filter
@@ -219,23 +234,6 @@ def tabs(adminform: AdminForm) -> list[Fieldset]:
     return result
 
 
-def _flatten_context(context: Context) -> dict[str, Any]:
-    """
-    Return the template context as a single flat dict.
-    On Django < 5, context.flatten() can raise ValueError for contexts
-    created with context.new() (Django #35417). Use a safe implementation.
-    """
-    if DJANGO_VERSION >= (5, 0):
-        return context.flatten()
-    # TODO: remove once Django 4.2 is not supported
-    # Django 4.2: build flat dict by resolving keys, avoid context.flatten()
-    keys = set()
-    for d in context.dicts:
-        if hasattr(d, "keys"):
-            keys.update(d.keys())
-    return {k: context[k] for k in keys}
-
-
 class RenderComponentNode(template.Node):
     def __init__(
         self,
@@ -243,8 +241,8 @@ class RenderComponentNode(template.Node):
         nodelist: NodeList,
         extra_context: dict | None = None,
         include_context: bool = False,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ):
         self.template_name = template_name
         self.nodelist = nodelist
@@ -264,7 +262,7 @@ class RenderComponentNode(template.Node):
             ).get_context_data(**values)
 
         context_copy = context.new()
-        context_copy.update(_flatten_context(context))
+        context_copy.update(context.flatten())
         context_copy.update(values)
         children = self.nodelist.render(context_copy)
 
@@ -276,7 +274,7 @@ class RenderComponentNode(template.Node):
             )
 
         if self.include_context:
-            values.update(_flatten_context(context))
+            values.update(context.flatten())
 
         return render_to_string(self.template_name, request=request, context=values)
 
@@ -343,24 +341,42 @@ def add_css_class(field: BoundField, classes: list | tuple) -> BoundField:
     takes_context=True,
     name="preserve_filters",
 )
-def preserve_changelist_filters(context: RequestContext) -> dict[str, dict[str, str]]:
+def preserve_changelist_filters(
+    context: RequestContext, mode: str = "vertical"
+) -> dict[str, Any]:
     """
-    Generate hidden input fields to preserve filters for POST forms.
+    Generate hidden input fields to preserve filters.
     """
     request: HttpRequest | None = context.get("request")
     changelist: ChangeList | None = context.get("cl")
 
+    if mode not in ["horizontal", "vertical"]:
+        raise UnfoldException(f"Invalid mode '{mode}' for preserve_filters tag")
+
     if not request or not changelist:
-        return {"params": {}}
+        return {
+            "params": {},
+        }
 
-    used_params: set[str] = {
-        param for spec in changelist.filter_specs for param in spec.used_parameters
-    }
-    preserved_params: dict[str, str] = {
-        param: value for param, value in request.GET.items() if param not in used_params
-    }
+    used_params = set()
+    preserved_params = {}
 
-    return {"params": preserved_params}
+    if mode == "horizontal":
+        specs = unfold_horizontal_filters(changelist)
+    else:
+        specs = unfold_vertical_filters(changelist)
+
+    for spec in specs:
+        for param in spec.used_parameters:
+            used_params.add(param)
+
+    for param, value in request.GET.items():
+        if param not in used_params:
+            preserved_params[param] = value
+
+    return {
+        "params": preserved_params,
+    }
 
 
 @register.simple_tag(takes_context=True)
@@ -383,11 +399,12 @@ def fieldset_rows_classes(context: RequestContext) -> str:
         "aligned",
     ]
 
-    if not context.get("stacked"):
+    if not context.get("stacked") and not context.get("fieldset_tab"):
         classes.extend(
             [
                 "border",
                 "border-base-200",
+                "overflow-hidden",
                 "rounded-default",
                 "shadow-xs",
                 "dark:border-base-800",
@@ -406,7 +423,10 @@ def fieldset_row_classes(context: RequestContext) -> str:
     ]
 
     formset = context.get("inline_admin_formset", None)
-    line = context.get("line") or []
+    line = context.get("line")
+
+    if not line:
+        return " ".join(set(classes))
 
     # Hide the field in case of ordering field for sorting
     for field in line:
@@ -417,14 +437,6 @@ def fieldset_row_classes(context: RequestContext) -> str:
             and getattr(formset.opts, "hide_ordering_field", False)
         ):
             classes.append("hidden")
-
-    if len(line.fields) > 1:
-        classes.extend(
-            [
-                "grid",
-                f"lg:grid-cols-{len(line.fields)}",
-            ]
-        )
 
     if not line.has_visible_field:
         classes.append("hidden")
@@ -443,35 +455,23 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "group/line",
         "px-3",
         "py-2.5",
+        "border-b",
+        "border-base-200",
+        "border-dashed",
+        "min-h-[59px]",
+        "group-[.last]/row:border-b-0",
+        "lg:flex-row",
+        "lg:items-center",
+        "dark:border-base-800",
     ]
+
     field = context.get("field")
-    adminform = context.get("adminform")
 
     if hasattr(field.field, "name") and field.field.name:
         classes.append(f"field-{field.field.name}")
 
     if hasattr(field, "errors") and field.errors():
         classes.append("errors")
-
-    if (
-        adminform
-        and hasattr(adminform.model_admin, "compressed_fields")
-        and adminform.model_admin.compressed_fields
-    ):
-        classes.extend(
-            [
-                "border-b",
-                "border-base-200",
-                "border-dashed",
-                "min-h-[59px]",
-                "group-[.last]/row:border-b-0",
-                "lg:border-l",
-                "lg:flex-row",
-                "lg:items-center",
-                "dark:border-base-800",
-                "lg:first:border-l-0",
-            ]
-        )
 
     return " ".join(set(classes))
 
@@ -496,36 +496,42 @@ def action_item_classes(context: RequestContext, action: dict) -> str:
             "bg-primary-600",
             "text-white",
             "dark:border-primary-500",
+            "hover:bg-primary-600/80",
         ],
         ActionVariant.DANGER: [
             "border-red-700",
             "bg-red-600",
             "text-white",
             "dark:border-red-500",
+            "hover:bg-red-600/80",
         ],
         ActionVariant.SUCCESS: [
             "border-green-700",
             "bg-green-600",
             "text-white",
             "dark:border-green-500",
+            "hover:bg-green-600/80",
         ],
         ActionVariant.INFO: [
             "border-blue-700",
             "bg-blue-600",
             "text-white",
             "dark:border-blue-500",
+            "hover:bg-blue-600/80",
         ],
         ActionVariant.WARNING: [
             "border-orange-700",
             "bg-orange-600",
             "text-white",
             "dark:border-orange-500",
+            "hover:bg-orange-600/80",
         ],
         ActionVariant.DEFAULT: [
             "border-base-200",
             "hover:text-primary-600",
             "dark:hover:text-primary-500",
             "dark:border-base-700",
+            "hover:bg-base-500/8",
         ],
     }
 
@@ -552,12 +558,17 @@ def changeform_data(adminform: AdminForm) -> str:
     for fieldset in adminform:
         for line in fieldset:
             for field in line:
+                if isinstance(field, AdminReadonlyField):
+                    continue
+
                 if isinstance(field.field, dict):
                     continue
 
-                if isinstance(
-                    field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-                ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
+                if (
+                    isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget)
+                    or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget)
+                    or isinstance(field.field.field.widget, MultiWidget)
+                ):
                     for index, _widget in enumerate(field.field.field.widget.widgets):
                         fields[
                             f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
@@ -571,9 +582,7 @@ def changeform_data(adminform: AdminForm) -> str:
 
 
 @register.filter
-def changeform_condition(
-    field: AdminField | AdminReadonlyField,
-) -> AdminField | AdminReadonlyField:
+def changeform_condition(field: AdminField) -> AdminField:
     if isinstance(field.field, dict):
         return field
 
@@ -587,9 +596,11 @@ def changeform_condition(
         field.field.field.widget.attrs["x-init"] = mark_safe(
             f"const $ = django.jQuery; $(function () {{ const select = $('#{field.field.auto_id}'); select.on('change', (ev) => {{ {field.field.name} = select.val(); }}); }});"
         )
-    elif isinstance(
-        field.field.field.widget, UnfoldAdminSplitDateTimeWidget
-    ) or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget):
+    elif (
+        isinstance(field.field.field.widget, UnfoldAdminSplitDateTimeWidget)
+        or isinstance(field.field.field.widget, UnfoldAdminMoneyWidget)
+        or isinstance(field.field.field.widget, MultiWidget)
+    ):
         for index, widget in enumerate(field.field.field.widget.widgets):
             field_name = (
                 f"{field.field.name}{field.field.field.widget.widgets_names[index]}"
@@ -632,38 +643,6 @@ def querystring_params(
     return result.urlencode()
 
 
-@register.simple_tag(name="unfold_querystring", takes_context=True)
-def unfold_querystring(context, *args, **kwargs):
-    """
-    Duplicated querystring template tag from Django core to allow
-    it using in Django 4.x.
-    TODO: Once 4.x is not supported, remove it.
-    """
-    if not args:
-        args = [context.request.GET]
-    params = QueryDict(mutable=True)
-    for d in [*args, kwargs]:
-        if not isinstance(d, Mapping):
-            raise TemplateSyntaxError(
-                "querystring requires mappings for positional arguments (got "
-                f"{d!r} instead)."
-            )
-        for key, value in d.items():
-            if not isinstance(key, str):
-                raise TemplateSyntaxError(
-                    f"querystring requires strings for mapping keys (got {key!r} "
-                    "instead)."
-                )
-            if value is None:
-                params.pop(key, None)
-            elif isinstance(value, Iterable) and not isinstance(value, str):
-                params.setlist(key, value)
-            else:
-                params[key] = value
-    query_string = params.urlencode() if params else ""
-    return f"?{query_string}"
-
-
 @register.simple_tag(takes_context=True)
 def header_title(context: RequestContext) -> str:
     parts = []
@@ -674,10 +653,18 @@ def header_title(context: RequestContext) -> str:
         else "admin"
     )
 
+    def safe_reverse(viewname: str, args: list | None = None) -> str:
+        try:
+            return reverse(viewname, args=args)
+        except NoReverseMatch:
+            pass
+
+        return ""
+
     if opts:
         parts.append(
             {
-                "link": reverse_lazy(f"{current_app}:app_list", args=[opts.app_label]),
+                "link": safe_reverse(f"{current_app}:app_list", args=[opts.app_label]),
                 "title": opts.app_config.verbose_name,
             }
         )
@@ -685,7 +672,7 @@ def header_title(context: RequestContext) -> str:
         if (original := context.get("original")) and not isinstance(original, str):
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_changelist"
                     ),
                     "title": original._meta.verbose_name_plural,
@@ -694,7 +681,7 @@ def header_title(context: RequestContext) -> str:
 
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{original._meta.app_label}_{original._meta.model_name}_change",
                         args=[original.pk],
                     ),
@@ -704,7 +691,7 @@ def header_title(context: RequestContext) -> str:
         elif object := context.get("object"):
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist"
                     ),
                     "title": object._meta.verbose_name_plural,
@@ -713,7 +700,7 @@ def header_title(context: RequestContext) -> str:
 
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
                         args=[object.pk],
                     ),
@@ -723,7 +710,7 @@ def header_title(context: RequestContext) -> str:
         else:
             parts.append(
                 {
-                    "link": reverse_lazy(
+                    "link": safe_reverse(
                         f"{current_app}:{opts.app_label}_{opts.model_name}_changelist"
                     ),
                     "title": opts.verbose_name_plural,
@@ -732,7 +719,7 @@ def header_title(context: RequestContext) -> str:
     elif object := context.get("object"):
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:app_list", args=[object._meta.app_label]
                 ),
                 "title": object._meta.app_label,
@@ -741,7 +728,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_changelist",
                 ),
                 "title": object._meta.verbose_name_plural,
@@ -750,7 +737,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_change",
                     args=[object.pk],
                 ),
@@ -760,7 +747,7 @@ def header_title(context: RequestContext) -> str:
     elif (model_admin := context.get("model_admin")) and hasattr(model_admin, "model"):
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:app_list", args=[model_admin.model._meta.app_label]
                 ),
                 "title": model_admin.model._meta.app_config.verbose_name,
@@ -769,7 +756,7 @@ def header_title(context: RequestContext) -> str:
 
         parts.append(
             {
-                "link": reverse_lazy(
+                "link": safe_reverse(
                     f"{current_app}:{model_admin.model._meta.app_label}_{model_admin.model._meta.model_name}_changelist",
                 ),
                 "title": model_admin.model._meta.verbose_name_plural,
@@ -922,3 +909,13 @@ def tabs_primary_active(inlines: list[InlineAdminFormSet]) -> str:
 @register.filter
 def unicoded_slugify(value: str) -> str:
     return slugify(value, allow_unicode=True)
+
+
+@register.filter
+def format_traceback(traceback: str) -> str:
+    return prettify_traceback(traceback) or ""
+
+
+@register.filter
+def model_verbose_name(model: type[Model]) -> str:
+    return str(model._meta.verbose_name)

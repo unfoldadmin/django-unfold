@@ -1,22 +1,32 @@
 {% load unfold %}
 
-<fieldset class="module relative {% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
+<fieldset class="module relative {% if stacked == 1 %}border-l border-base-200 ml-3 dark:before:bg-striped-dark dark:border-base-800  before:content-[''] before:block before:h-full before:bg-striped before:absolute before:-left-3 before:top-0 before:w-3{% endif %} {% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
     {% if fieldset.is_collapsible %}<details><summary>{% endif %}
 
-    {% if fieldset.name and "tab" not in fieldset.classes %}
-        {% if stacked == 1 %}
-            <h2 class="border-b border-base-200 border-t border-dashed font-semibold text-font-important-light px-3 py-4.5 dark:text-font-important-dark dark:border-base-800 {% if fieldset.is_collapsible %}cursor-pointer{% endif %}">
-                {{ fieldset.name }}
-            </h2>
-        {% else %}
-            {% include "unfold/helpers/inline_heading.html" with title=fieldset.name clickable=fieldset.is_collapsible %}
+    {% if stacked == 1 %}
+        {% if fieldset.name or fieldset.description %}
+            <div class="bg-base-50 border-b border-base-200 flex flex-row gap-3 px-3 py-2 dark:border-base-800 dark:bg-white/[.02] {% if forloop.counter0 > 0 %}border-t{% endif %}">
+                {% if fieldset.name %}
+                    <h2 class="font-semibold text-important {% if fieldset.is_collapsible %}cursor-pointer{% endif %}">
+                        {{ fieldset.name }}
+                    </h2>
+                {% endif %}
+
+                {% if fieldset.description %}
+                    <div class="leading-relaxed max-w-4xl text-subtle">
+                        {{ fieldset.description|safe }}
+                    </div>
+                {% endif %}
+            </div>
         {% endif %}
+    {% elif fieldset.name and "tab" not in fieldset.classes %}
+        {% include "unfold/helpers/inline_heading.html" with title=fieldset.name clickable=fieldset.is_collapsible %}
     {% endif %}
 
     {% if fieldset.is_collapsible %}</summary>{% endif %}
 
-    {% if fieldset.description %}
-        <div class="leading-relaxed mb-4 max-w-4xl text-sm">
+    {% if stacked != 1 and fieldset.description %}
+        <div class="leading-relaxed max-w-4xl text-subtle {% if fieldset_tab %}mt-3 px-3{% else %}mb-4{% endif %}">
             {{ fieldset.description|safe }}
         </div>
     {% endif %}

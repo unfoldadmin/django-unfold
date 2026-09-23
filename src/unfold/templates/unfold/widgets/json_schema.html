@@ -1,0 +1,4 @@
+<textarea name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+
+{{ schema|json_script:schema_id }}
+<div class="jsonschema-container" data-target-id="{{ widget.attrs.id }}" data-schema-id="jsonschema-{{ widget.attrs.id }}"></div>

@@ -2,7 +2,9 @@ import datetime
 from collections.abc import Generator
 from typing import Any
 
-from django.contrib.admin.options import IS_POPUP_VAR
+from django import VERSION as DJANGO_VERSION
+from django.contrib.admin import ListFilter, SimpleListFilter
+from django.contrib.admin.options import IS_FACETS_VAR, IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
     _coerce_field_name,  # ty:ignore[unresolved-import]
@@ -19,7 +21,7 @@ from django.db.models import Model
 from django.forms import ModelForm
 from django.template import Library
 from django.template.base import Parser, Token
-from django.template.loader import render_to_string
+from django.template.loader import get_template, render_to_string
 from django.urls import NoReverseMatch
 from django.utils.html import format_html
 from django.utils.safestring import SafeText, mark_safe
@@ -35,22 +37,14 @@ from unfold.utils import (
 from unfold.views import DatasetChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
-try:
-    from django.contrib.admin.options import IS_FACETS_VAR
-except ImportError:
-    # TODO: remove once django 4.x is not supported
-    IS_FACETS_VAR: str | None = None
-
 register = Library()
 
 LINK_CLASSES = [
-    "text-font-important-light",
-    "dark:text-font-important-dark",
+    "text-important",
 ]
 
-ROW_CLASSES = [
+TABLE_CELL_CLASSES = [
     "align-middle",
-    "flex",
     "border-t",
     "border-base-200",
     "font-normal",
@@ -62,45 +56,23 @@ ROW_CLASSES = [
     "py-1.5",
     "h-[45px]",
     "text-left",
-    "before:flex",
-    "before:capitalize",
-    "before:content-[attr(data-label)]",
-    "before:items-center",
-    "before:font-semibold",
-    "before:text-font-important-light",
-    "before:mr-auto",
-    "first:border-t-0",
-    "lg:before:hidden",
-    "lg:first:border-t",
-    "lg:table-cell",
+    "first:border-t",
     "dark:border-base-800",
-    "dark:before:text-font-important-dark",
 ]
 
-CHECKBOX_CLASSES = [
+TABLE_ACTION_CELL_CLASSES = [
     "action-checkbox",
     "align-middle",
-    "flex",
-    "items-center",
-    "px-3",
+    "pl-3",
     "py-2",
     "text-left",
-    "before:block",
-    "before:capitalize",
-    "before:content-[attr(data-label)]",
-    "before:font-semibold",
-    "before:mr-auto",
-    "before:text-font-important-light",
-    "lg:before:hidden",
-    "lg:border-t",
-    "lg:border-base-200",
-    "lg:table-cell",
-    "dark:lg:border-base-800",
-    "dark:before:text-font-important-dark",
+    "border-t",
+    "border-base-200",
+    "dark:border-base-800",
 ]
 
 
-def result_headers(cl):
+def result_headers(cl):  # noqa: PLR0912, PLR0915
     """
     Generate the list column headers.
     """
@@ -131,6 +103,7 @@ def result_headers(cl):
                     ).render("action-toggle", False),
                     "class_attrib": mark_safe("action-checkbox-column"),
                     "sortable": False,
+                    "formatting": getattr(attr, "formatting", None),
                 }
                 continue
 
@@ -142,16 +115,28 @@ def result_headers(cl):
                 is_field_sortable = False
 
         if not is_field_sortable:
+            th_classes = [
+                format_html("column-{}", field_name),
+            ]
+
+            if hasattr(attr, "wrapper_class"):
+                th_classes.append(attr.wrapper_class)
+
             # Not sortable
             yield {
                 "text": text,
-                "class_attrib": format_html("column-{}", field_name),
+                "class_attrib": format_html("{}", " ".join(th_classes)),
                 "sortable": False,
+                "formatting": getattr(attr, "formatting", None),
             }
             continue
 
         # OK, it is sortable if we got this far
         th_classes = ["sortable", f"column-{field_name}"]
+
+        if hasattr(attr, "wrapper_class"):
+            th_classes.append(attr.wrapper_class)
+
         order_type = ""
         new_order_type = "asc"
         sort_priority = 0
@@ -201,6 +186,7 @@ def result_headers(cl):
             "url_primary": cl.get_query_string({ORDER_VAR: ".".join(o_list_primary)}),
             "url_remove": cl.get_query_string({ORDER_VAR: ".".join(o_list_remove)}),
             "url_toggle": cl.get_query_string({ORDER_VAR: ".".join(o_list_toggle)}),
+            "formatting": getattr(attr, "formatting", None),
             "class_attrib": format_html("{}", " ".join(th_classes))
             if th_classes
             else "",
@@ -219,7 +205,6 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
     first = True
     pk = cl.lookup_opts.pk.attname
-    headers = list(result_headers(cl))
 
     for field_index, field_name in enumerate(cl.list_display):
         empty_value_display = cl.model_admin.get_empty_value_display()
@@ -228,7 +213,7 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
         row_classes = [
             f"field-{_coerce_field_name(field_name, field_index)}",
-            *ROW_CLASSES,
+            *TABLE_CELL_CLASSES,
         ]
 
         try:
@@ -241,11 +226,15 @@ def items_for_result(  # noqa: PLR0915, PLR0912
             )
             if f is None or f.auto_created:
                 if field_name == "action_checkbox":
-                    row_classes = CHECKBOX_CLASSES
+                    row_classes = TABLE_ACTION_CELL_CLASSES
                 boolean = getattr(attr, "boolean", False)
+                formatting = getattr(attr, "formatting", None)
                 label = getattr(attr, "label", False)
                 header = getattr(attr, "header", False)
                 dropdown = getattr(attr, "dropdown", False)
+
+                if formatting == "price":
+                    row_classes.append("text-right")
 
                 if label:
                     result_repr = display_for_label(value, empty_value_display, label)
@@ -308,10 +297,9 @@ def items_for_result(  # noqa: PLR0915, PLR0912
                 )
             row_class = mark_safe(f' class="{" ".join(row_classes)}"')
             yield format_html(
-                '<{}{} data-label="{}">{}</{}>',
+                "<{}{}>{}</{}>",
                 table_tag,
                 row_class,
-                headers[field_index]["text"],
                 link_or_text,
                 table_tag,
             )
@@ -344,16 +332,14 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
             if field_index != 0:
                 yield format_html(
-                    '<td{} data-label="{}">{}</td>',
+                    "<td{}>{}</td>",
                     row_class,
-                    headers[field_index]["text"],
                     result_repr,
                 )
             else:
                 yield format_html(
-                    '<td{} data-label="{}">{}</td>',
+                    "<td{}>{}</td>",
                     row_class,
-                    _("Select record"),
                     result_repr,
                 )
 
@@ -406,6 +392,14 @@ def result_list(context: dict[str, Any], cl: ChangeList) -> dict[str, Any]:
 
 @register.tag(name="unfold_result_list")
 def result_list_tag(parser: Parser, token: Token) -> InclusionAdminNode:
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_result_list",
+            parser,
+            token,
+            func=result_list,
+            template_name="change_list_results.html",
+        )
     return InclusionAdminNode(
         parser,
         token,
@@ -457,8 +451,84 @@ def unfold_search_form(cl):
     }
 
 
+@register.simple_tag
+def unfold_admin_list_filter(
+    cl: ChangeList, spec: SimpleListFilter, horizontal_layout: bool = False
+) -> str:
+    tpl = get_template(spec.template)
+
+    if hasattr(spec, "field_path"):
+        field_path = spec.field_path
+    elif hasattr(spec, "parameter_name"):
+        field_path = spec.parameter_name
+
+    options = {}
+
+    if field_path:
+        options = getattr(cl.model_admin, "list_filter_options", {}).get(field_path, {})
+
+    return tpl.render(
+        {
+            "title": spec.title,
+            "choices": list(spec.choices(cl)),
+            "spec": spec,
+            "label": options.get("label"),
+            "has_label": "label" in options,
+            "horizontal": options.get("horizontal") and horizontal_layout,
+        }
+    )
+
+
+@register.filter
+def unfold_horizontal_filters(cl: ChangeList) -> list[ListFilter]:
+    specs = []
+
+    for spec in cl.filter_specs:
+        if hasattr(spec, "field_path"):
+            field_path = spec.field_path
+        elif hasattr(spec, "parameter_name"):
+            field_path = spec.parameter_name
+
+        if options := getattr(cl.model_admin, "list_filter_options", {}).get(
+            field_path
+        ):
+            if options.get("horizontal"):
+                specs.append(spec)
+
+    return specs
+
+
+@register.filter
+def unfold_vertical_filters(cl: ChangeList) -> list[ListFilter]:
+    specs = []
+
+    for spec in cl.filter_specs:
+        if hasattr(spec, "field_path"):
+            field_path = spec.field_path
+        elif hasattr(spec, "parameter_name"):
+            field_path = spec.parameter_name
+
+        options = getattr(cl.model_admin, "list_filter_options", {})
+
+        if (field_path in options and not options[field_path].get("horizontal")) or (
+            field_path not in options
+        ):
+            specs.append(spec)
+
+    return specs
+
+
 @register.tag(name="unfold_search_form")
 def unfold_search_form_tag(parser, token):
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_search_form",
+            parser,
+            token,
+            func=unfold_search_form,
+            template_name="search_form.html",
+            takes_context=False,
+        )
     return InclusionAdminNode(
         parser,
         token,
@@ -470,6 +540,14 @@ def unfold_search_form_tag(parser, token):
 
 @register.tag(name="unfold_admin_actions")
 def unfold_admin_actions_tag(parser, token):
+    if DJANGO_VERSION >= (6, 1):
+        return InclusionAdminNode(
+            "unfold_admin_actions",
+            parser,
+            token,
+            func=admin_actions,
+            template_name="dataset_actions.html",
+        )
     return InclusionAdminNode(
         parser,
         token,

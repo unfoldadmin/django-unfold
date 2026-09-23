@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Any
 
+from django import forms
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import lookup_field, quote
 from django.core.exceptions import ObjectDoesNotExist
@@ -17,12 +18,12 @@ from django.forms import ModelChoiceField, ModelMultipleChoiceField, Widget
 from django.forms.utils import flatatt
 from django.template.defaultfilters import linebreaksbr
 from django.urls import NoReverseMatch, reverse, reverse_lazy
+from django.utils.functional import cached_property
 from django.utils.html import conditional_escape, format_html
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeString, SafeText, mark_safe
 from django.utils.text import capfirst
 
-from unfold.settings import get_config
 from unfold.utils import display_for_field, prettify_json
 from unfold.widgets import (
     CHECKBOX_LABEL_CLASSES,
@@ -37,11 +38,6 @@ if TYPE_CHECKING:
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     model_admin: "ModelAdmin"
-
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
-
-        self.resolved_field = self._resolve_field()
 
     def label_tag(self) -> SafeText:
         attrs = {
@@ -92,6 +88,18 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         f, attr, value = self.resolved_field
         return isinstance(f, ImageField | FileField)
 
+    @property
+    def wrapper_class(self) -> str:
+        if isinstance(self.resolved_field, bool) or not self.resolved_field:
+            return ""
+
+        f, attr, value = self.resolved_field
+
+        if hasattr(attr, "wrapper_class"):
+            return str(attr.wrapper_class)
+
+        return ""
+
     def contents(self) -> SafeString:
         contents = self._get_contents()
         contents = self._preprocess_field(contents)
@@ -112,16 +120,17 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def _get_contents(self) -> SafeString:  # noqa: PLR0912
         from unfold.utils import _boolean_icon
 
-        field, obj, model_admin = (
+        field, _obj, _model_admin = (
             self.field["field"],
             self.form.instance,
             self.model_admin,
         )
-        try:
-            f, attr, value = lookup_field(field, obj, model_admin)
-        except (AttributeError, ValueError, ObjectDoesNotExist):
+
+        if isinstance(self.resolved_field, bool):
             result_repr = self.empty_value_display
         else:
+            f, attr, value = self.resolved_field
+
             if isinstance(field, str) and field in self.form.fields:
                 widget = self.form[field].field.widget
                 # This isn't elegant but suffices for contrib.auth's
@@ -176,7 +185,8 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
         return contents
 
-    def _resolve_field(self) -> bool | tuple[Field | None, str | None, Any]:
+    @cached_property
+    def resolved_field(self) -> bool | tuple[Field | None, str | None, Any]:
         field, obj, model_admin = (
             self.field["field"],
             self.form.instance,
@@ -194,15 +204,6 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 class UnfoldAdminField(helpers.AdminField):
     def label_tag(self) -> SafeText:
         classes = []
-
-        # TODO load config from current AdminSite (override Fieldline.__iter__ method)
-        flags = get_config()["EXTENSIONS"]["modeltranslation"]["flags"]
-
-        for lang, flag in flags.items():
-            if f"[{lang}]" in self.field.label:
-                self.field.label = self.field.label.replace(f"[{lang}]", flag)
-                break
-
         contents = conditional_escape(self.field.label)
 
         classes.append(
@@ -241,3 +242,14 @@ class UnfoldAdminMultipleAutocompleteModelChoiceField(
     AutocompleteFieldMixin, ModelMultipleChoiceField
 ):
     widget = UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget
+
+
+class UnfoldAdminJSONSchemaField(forms.JSONField):
+    def __init__(self, schema: dict[str, Any], *args: Any, **kwargs: Any) -> None:
+        self.schema = schema
+        super().__init__(*args, **kwargs)
+
+    def widget_attrs(self, widget: Widget) -> dict[str, Any]:
+        attrs = super().widget_attrs(widget)
+        attrs.update({"schema": self.schema})
+        return attrs

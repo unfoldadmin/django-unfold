@@ -1,5 +1,5 @@
-<div class="flex group mb-6 flex-col last:mb-4">
-    <label class="block font-semibold mb-2 text-important">
+<div class="{% if row == "1" %}flex flex-col border-b border-base-200 border-dashed lg:items-center lg:flex-row px-3 py-2.5 min-h-[59px] last:border-b-0{% else %}flex group mb-6 flex-col last:mb-4{% endif %}">
+    <label class="block font-semibold text-important {% if row == "1" %}lg:min-w-56 lg:w-56 lg:h-[38px] lg:flex lg:items-center lg:self-start lg:leading-[38px] mb-2 lg:m-0 lg:*:m-0{% else %}mb-2{% endif %}">
         {{ title }}
     </label>
 

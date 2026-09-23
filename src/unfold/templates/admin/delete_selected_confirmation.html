@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n l10n admin_urls static %}
+{% load i18n l10n admin_urls static unfold %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -59,8 +59,8 @@
             <form method="post" class="border-t border-base-200 px-4 py-3 dark:border-base-800">
                 {% csrf_token %}
 
-                {% if request.POST.dataset %}
-                    <input type="hidden" name="dataset" value="{{ request.POST.dataset }}">
+                {% if "_dataset" in request.POST %}
+                    <input type="hidden" name="_dataset" value="{{ request.POST|index:"_dataset" }}">
                 {% endif %}
 
                 {% for obj in queryset %}

@@ -17,6 +17,7 @@ def global_callback_correct_return_type(request):
     }
 
 
+@override_settings(UNFOLD=CONFIG_DEFAULTS)
 def test_settings_default_config():
     assert get_config() == CONFIG_DEFAULTS
 

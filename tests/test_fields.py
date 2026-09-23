@@ -1,10 +1,12 @@
+import django
 import pytest
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.contenttypes.models import ContentType
-from django.test import override_settings
+from django.core.exceptions import ValidationError
 from example.admin import UserAdmin
+from example.models import User
 
 from unfold.fields import (
     UnfoldAdminAutocompleteModelChoiceField,
@@ -12,8 +14,10 @@ from unfold.fields import (
     UnfoldAdminMultipleAutocompleteModelChoiceField,
     UnfoldAdminReadonlyField,
 )
-from unfold.settings import CONFIG_DEFAULTS
+from unfold.models.fields import JSONSchemaField
 from unfold.sites import UnfoldAdminSite
+
+NOT_CALLABLE = "NOT_CALLABLE"
 
 
 class ExampleForm(forms.ModelForm):
@@ -123,7 +127,11 @@ def test_unfold_admin_readonly_field_html(user_factory):
 
 
 @pytest.mark.django_db
-def test_unfold_admin_readonly_field_password(user_factory):
+@pytest.mark.skipif(
+    django.VERSION[:2] != (5, 2),
+    reason="Only runs on Django 5.2",
+)
+def test_unfold_admin_readonly_field_password_older(user_factory):
     user = user_factory(username="sample2@example.com")
     readonly_field = UnfoldAdminReadonlyField(
         form=ExampleForm(instance=user),
@@ -132,6 +140,22 @@ def test_unfold_admin_readonly_field_password(user_factory):
         model_admin=UserAdmin(get_user_model(), UnfoldAdminSite()),
     )
     assert "No password set." in readonly_field.contents()
+
+
+@pytest.mark.django_db
+@pytest.mark.skipif(
+    django.VERSION[:2] <= (5, 2),
+    reason="Requires Django > 5.2",
+)
+def test_unfold_admin_readonly_field_password(user_factory):
+    user = user_factory(username="sample2@example.com")
+    readonly_field = UnfoldAdminReadonlyField(
+        form=ExampleForm(instance=user),
+        field="password",
+        is_first=True,
+        model_admin=UserAdmin(get_user_model(), UnfoldAdminSite()),
+    )
+    assert "-" in readonly_field.contents()
 
 
 @pytest.mark.django_db
@@ -291,31 +315,6 @@ def test_unfold_admin_field():
     )
 
 
-@override_settings(
-    UNFOLD={
-        **CONFIG_DEFAULTS,
-        **{
-            "EXTENSIONS": {
-                "modeltranslation": {
-                    "flags": {
-                        "en": "🇬🇧",
-                    },
-                },
-            },
-        },
-    }
-)
-@pytest.mark.django_db
-def test_unfold_admin_field_flag(user_factory):
-    user = user_factory(username="sample@example.com")
-    form = ExampleForm(instance=user)
-    form.fields["username"].label = "Username [en]"
-
-    admin_field = UnfoldAdminField(form=form, field="username", is_first=True)
-
-    assert "Username 🇬🇧" in str(admin_field.label_tag())
-
-
 @pytest.mark.django_db
 def test_unfold_admin_autocomplete_field(user_factory):
     user = user_factory(username="sample@example.com")
@@ -340,3 +339,58 @@ def test_unfold_admin_multiple_autocomplete_field(user_factory):
     )
 
     assert form.fields["username"].widget.attrs["data-ajax--url"] == "/admin/"
+
+
+@pytest.mark.django_db
+def test_unfold_json_schema_field():
+    user = User.objects.create(
+        username="jsonschematest",
+        password="password",
+        data={
+            "name": "John",
+            "age": 25,
+        },
+    )
+    user.full_clean()
+
+    user.data = None
+    user.full_clean()
+
+    user.data = {
+        "name": "Jane",
+        "age": 25,
+        "extra": "not allowed",
+    }
+
+    with pytest.raises(ValidationError):
+        user.full_clean()
+
+    user.data = {
+        "name": "Jane",
+        "age": "not_a_number",
+    }
+
+    with pytest.raises(ValidationError) as e:
+        user.full_clean()
+
+    assert "age" in str(e.value)
+
+
+def test_unfold_json_schema_field_import_from_dotted_path():
+    with pytest.raises(ImportError) as e:
+        JSONSchemaField(schema="example.schemas.UserSchema")
+
+    assert (
+        "Could not import callable schema from dotted path 'example.schemas.UserSchema': No module named 'example.schemas'"
+        in str(e.value)
+    )
+
+
+def test_unfold_json_schema_field_import_from_dotted_path_is_not_callable():
+    with pytest.raises(ImportError) as e:
+        JSONSchemaField(schema="tests.test_fields.NOT_CALLABLE")
+
+    assert (
+        "The imported schema object from 'tests.test_fields.NOT_CALLABLE' must be callable."
+        in str(e.value)
+    )

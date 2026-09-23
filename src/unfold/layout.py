@@ -1,13 +1,18 @@
+from typing import Any
+
 from crispy_forms.layout import BaseInput, LayoutObject
 from crispy_forms.utils import TEMPLATE_PACK
+from django.forms import Form
+from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.utils.functional import SimpleLazyObject
 
 from unfold.widgets import BUTTON_CLASSES
 
 
 class ButtonClassesMixin:
-    def __init__(self, *args, css_class=None, **kwargs):
-        classes = BUTTON_CLASSES
+    def __init__(self, *args: Any, css_class: str | None = None, **kwargs: Any) -> None:
+        classes = BUTTON_CLASSES.copy()
 
         if css_class:
             classes.append(css_class)
@@ -28,11 +33,17 @@ class Button(ButtonClassesMixin, BaseInput):
 class FieldsetSubheader(LayoutObject):
     template = "unfold_crispy/layout/fieldset_subheader.html"
 
-    def __init__(self, title=None, *args, **kwargs):
+    def __init__(self, title: str | None = None, *args: Any, **kwargs: Any) -> None:
         self.title = title
         super().__init__(*args, **kwargs)
 
-    def render(self, form, context, template_pack=TEMPLATE_PACK, **kwargs):
+    def render(
+        self,
+        form: Form,
+        context: RequestContext,
+        template_pack: SimpleLazyObject = TEMPLATE_PACK,
+        **kwargs: Any,
+    ) -> str:
         return render_to_string(
             self.template,
             {
@@ -44,11 +55,17 @@ class FieldsetSubheader(LayoutObject):
 class Hr(LayoutObject):
     template = "unfold_crispy/layout/hr.html"
 
-    def __init__(self, title=None, *args, **kwargs):
+    def __init__(self, title: str | None = None, *args: Any, **kwargs: Any) -> None:
         self.title = title
         super().__init__(*args, **kwargs)
 
-    def render(self, form, context, template_pack=TEMPLATE_PACK, **kwargs):
+    def render(
+        self,
+        form: Form,
+        context: RequestContext,
+        template_pack: SimpleLazyObject = TEMPLATE_PACK,
+        **kwargs: Any,
+    ) -> str:
         return render_to_string(
             self.template,
             {

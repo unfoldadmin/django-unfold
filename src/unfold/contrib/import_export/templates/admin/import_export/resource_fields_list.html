@@ -9,18 +9,24 @@
         {% endif %}
 
         {% if fields_list|length <= 1 %}
-            <code class="font-medium">
+            <code>
                 {{ fields_list.0.1|join:", " }}
             </code>
         {% else %}
-            <dl>
+            <div class="flex flex-col gap-1 mt-2">
                 {% for resource, fields in fields_list %}
-                    <dt>{{ resource }}</dt>
-                    <dd><code>{{ fields|join:", " }}</code></dd>
+                    <div>
+                        <span class="font-semibold">{{ resource }}</span>:
+                        <code>
+                            {{ fields|join:", " }}
+                        </code>
+                    </div>
                 {% endfor %}
-            </dl>
+            </div>
         {% endif %}
     {% endcapture %}
 
-    {% include "unfold/helpers/messages/info.html" with message=fields_help %}
+    {% if fields_list|length > 0 %}
+        {% include "unfold/helpers/messages/info.html" with message=fields_help %}
+    {% endif %}
 {% endblock %}

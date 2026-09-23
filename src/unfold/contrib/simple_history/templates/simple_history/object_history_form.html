@@ -1,6 +1,6 @@
 {% extends "admin/change_form.html" %}
 
-{% load i18n %}
+{% load i18n unfold %}
 
 {% block submit_buttons_top %}
     {% include "simple_history/submit_line.html" %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block form_top %}
-    <p class="px-3 py-3 rounded-default text-sm last:mb-8 bg-blue-50 mb-8 text-blue-500 dark:bg-blue-500/20">
+    {% capture as message silent %}
         {% if not revert_disabled %}
             {% blocktrans %}Press the 'Revert' button below to revert to this version of the object.{% endblocktrans %}
         {% endif %}
@@ -19,5 +19,7 @@
         {% if change_history %}
             {% blocktrans %}Press the 'Change History' button below to edit the history.{% endblocktrans %}
         {% endif %}
-    </p>
+    {% endcapture %}
+
+    {% include "unfold/helpers/messages/info.html" with message=message %}
 {% endblock %}

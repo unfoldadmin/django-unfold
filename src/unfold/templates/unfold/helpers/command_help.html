@@ -1,0 +1,36 @@
+{% load i18n %}
+
+<div class="border-base-200 flex flex-row gap-3 h-[52px] min-h-[52px] items-center px-4 py-2.5 text-subtle text-xs dark:border-base-700" x-bind:class="{'border-t': items !== undefined && items.length > 0}">
+    <div class="flex flex-row gap-2 items-center">
+        <div>
+            {% trans "Navigate" %}
+        </div>
+
+        <div class="flex flex-row gap-1 items-center">
+            {% include "unfold/helpers/shortcut.html" with icon="arrow_downward_alt" %}
+            {% include "unfold/helpers/shortcut.html" with icon="arrow_upward_alt" %}
+        </div>
+    </div>
+
+    <div class="flex flex-row gap-2 items-center">
+        <div>
+            {% trans "Select" %}
+        </div>
+
+        <div class="flex flex-row gap-1 items-center">
+            {% include "unfold/helpers/shortcut.html" with icon="keyboard_return" %}
+        </div>
+    </div>
+
+    <div class="flex flex-row gap-2 items-center">
+        <div>
+            {% trans "Clear" %}
+        </div>
+
+        <div class="flex flex-row gap-1 items-center">
+            {% include "unfold/helpers/shortcut.html" with shortcut="esc" %}
+        </div>
+    </div>
+
+    <div id="command-results-note" class="ml-auto"></div>
+</div>

@@ -7,17 +7,22 @@ from unfold.widgets import (
     CHECKBOX_CLASSES,
     FILE_CLASSES,
     INPUT_CLASSES,
+    LABEL_CLASSES,
     PROSE_CLASSES,
     RADIO_CLASSES,
+    SELECT_CLASSES,
     SWITCH_CLASSES,
+    TEXTAREA_CLASSES,
 )
 
 CONFIG_DEFAULTS = {
     "SITE_TITLE": None,
     "SITE_HEADER": None,
     "SITE_SUBHEADER": None,
+    "SITE_VERSION": None,
     "SITE_DROPDOWN": None,
     "SITE_URL": "/",
+    "SITE_VIEWS": [],
     "SITE_ICON": None,
     "SITE_SYMBOL": None,
     "SITE_LOGO": None,
@@ -25,12 +30,16 @@ CONFIG_DEFAULTS = {
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
     "SHOW_LANGUAGES": False,
-    "LANGUAGE_FLAGS": {},
     "SHOW_BACK_BUTTON": False,
+    "SHOW_UI_WARNINGS": False,
+    "LANGUAGE_FLAGS": {},
     "FORMS": {
         "classes": {
+            "label": " ".join(LABEL_CLASSES),
             "prose": " ".join(PROSE_CLASSES),
             "text_input": " ".join(INPUT_CLASSES),
+            "textarea": " ".join(TEXTAREA_CLASSES),
+            "select": " ".join(SELECT_CLASSES),
             "checkbox": " ".join(CHECKBOX_CLASSES),
             "button": " ".join(BUTTON_CLASSES),
             "radio": " ".join(RADIO_CLASSES),
@@ -94,7 +103,6 @@ CONFIG_DEFAULTS = {
     },
     "SIDEBAR": {
         "show_search": False,
-        "command_search": False,
         "show_all_applications": False,
         "navigation": [],
     },
@@ -104,11 +112,10 @@ CONFIG_DEFAULTS = {
         "redirect_after": None,
         "form": None,
     },
-    "EXTENSIONS": {"modeltranslation": {"flags": {}}},
 }
 
 
-def get_config(settings_name=None):
+def get_config(settings_name: str | None = None) -> dict[str, Any]:
     if settings_name is None:
         settings_name = "UNFOLD"
 
