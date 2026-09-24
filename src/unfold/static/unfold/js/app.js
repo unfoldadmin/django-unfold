@@ -221,8 +221,7 @@ function theme(defaultTheme = "auto") {
 			["x-bind:class"]() {
 				if (
 					this.adminTheme === "dark" ||
-					(this.adminTheme === "auto" &&
-						window.matchMedia("(prefers-color-scheme: dark)").matches || window.parent.matchMedia("(prefers-color-scheme: dark)").matches)
+					(this.adminTheme === "auto" && window.parent.matchMedia("(prefers-color-scheme: dark)").matches)
 				) {
 					return "dark";
 				}
