@@ -16,7 +16,7 @@
         {% endif %}
 
         {% if badge_count or badge_variant %}
-            <{% if badge_url %}a{% else %}div{% endif %} href="{{ badge_url }}" class="absolute border-2 border-base-100 block top-0 right-0 rounded-full text-[10px] font-semibold text-white w-[20px] h-[20px] flex items-center text-shadow translate-x-1/3 -translate-y-1/3 justify-center dark:border-base-800 z-100
+            <{% if badge_url %}a{% else %}div{% endif %} href="{{ badge_url }}" class="absolute border-2 border-base-100 block top-0 end-0 rounded-full text-[10px] font-semibold text-white w-[20px] h-[20px] flex items-center text-shadow translate-x-1/3 -translate-y-1/3 justify-center dark:border-base-800 rtl:-translate-x-1/3 z-100
             {% if badge_variant == "primary" %}
                 bg-primary-600
             {% elif badge_variant == "danger" %}
