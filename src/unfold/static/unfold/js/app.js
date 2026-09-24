@@ -3,6 +3,8 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("load", () => {
+	initJSONSchemaEditor();
+
 	fileInputUpdatePath();
 
 	dateTimeShortcutsOverlay();
@@ -122,6 +124,38 @@ function openPopupInModal() {
 }
 
 /*************************************************************
+ * JSON Schema Editor
+ *************************************************************/
+function initJSONSchemaEditor() {
+	document.querySelectorAll(".jsonschema-container").forEach((container) => {
+		const el = document.getElementById(container.dataset.targetId);
+
+		const instance = new Jedison.Create({
+			container: container,
+			theme: new ThemeUnfold(
+				JSON.parse(document.getElementById("formClasses").textContent),
+			),
+			schema: JSON.parse(
+				document.getElementById(container.dataset.schemaId).textContent,
+			),
+			enablePropertiesToggle: true,
+		});
+
+		const parsedValue = JSON.parse(el.value);
+		if (
+			parsedValue &&
+			(typeof parsedValue !== "object" || Object.keys(parsedValue).length > 0)
+		) {
+			instance.setValue(parsedValue);
+		}
+
+		instance.on("change", () => {
+			el.value = JSON.stringify(instance.getValue());
+		});
+	});
+}
+
+/*************************************************************
  * Switch theme
  *************************************************************/
 function isFilterModalOpen() {
@@ -188,7 +222,7 @@ function theme(defaultTheme = "auto") {
 				if (
 					this.adminTheme === "dark" ||
 					(this.adminTheme === "auto" &&
-						window.matchMedia("(prefers-color-scheme: dark)").matches)
+						window.matchMedia("(prefers-color-scheme: dark)").matches || window.parent.matchMedia("(prefers-color-scheme: dark)").matches)
 				) {
 					return "dark";
 				}

@@ -4,7 +4,9 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from example.admin import UserAdmin
+from example.models import User
 
 from unfold.fields import (
     UnfoldAdminAutocompleteModelChoiceField,
@@ -12,7 +14,10 @@ from unfold.fields import (
     UnfoldAdminMultipleAutocompleteModelChoiceField,
     UnfoldAdminReadonlyField,
 )
+from unfold.models.fields import JSONSchemaField
 from unfold.sites import UnfoldAdminSite
+
+NOT_CALLABLE = "NOT_CALLABLE"
 
 
 class ExampleForm(forms.ModelForm):
@@ -334,3 +339,58 @@ def test_unfold_admin_multiple_autocomplete_field(user_factory):
     )
 
     assert form.fields["username"].widget.attrs["data-ajax--url"] == "/admin/"
+
+
+@pytest.mark.django_db
+def test_unfold_json_schema_field():
+    user = User.objects.create(
+        username="jsonschematest",
+        password="password",
+        data={
+            "name": "John",
+            "age": 25,
+        },
+    )
+    user.full_clean()
+
+    user.data = None
+    user.full_clean()
+
+    user.data = {
+        "name": "Jane",
+        "age": 25,
+        "extra": "not allowed",
+    }
+
+    with pytest.raises(ValidationError):
+        user.full_clean()
+
+    user.data = {
+        "name": "Jane",
+        "age": "not_a_number",
+    }
+
+    with pytest.raises(ValidationError) as e:
+        user.full_clean()
+
+    assert "age" in str(e.value)
+
+
+def test_unfold_json_schema_field_import_from_dotted_path():
+    with pytest.raises(ImportError) as e:
+        JSONSchemaField(schema="example.schemas.UserSchema")
+
+    assert (
+        "Could not import callable schema from dotted path 'example.schemas.UserSchema': No module named 'example.schemas'"
+        in str(e.value)
+    )
+
+
+def test_unfold_json_schema_field_import_from_dotted_path_is_not_callable():
+    with pytest.raises(ImportError) as e:
+        JSONSchemaField(schema="tests.test_fields.NOT_CALLABLE")
+
+    assert (
+        "The imported schema object from 'tests.test_fields.NOT_CALLABLE' must be callable."
+        in str(e.value)
+    )
