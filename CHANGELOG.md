@@ -1,6 +1,44 @@
 # CHANGELOG
 
 
+## v0.108.0 (2026-09-24)
+
+### Bug Fixes
+
+- Avoid self reference in skeleton block
+  ([#1973](https://github.com/unfoldadmin/django-unfold/pull/1973),
+  [`fc37106`](https://github.com/unfoldadmin/django-unfold/commit/fc37106d87008f83b2ca712ed47e76116a20458a))
+
+- Calendarbox zindex ([#2299](https://github.com/unfoldadmin/django-unfold/pull/2299),
+  [`f253318`](https://github.com/unfoldadmin/django-unfold/commit/f253318d8f03b9e4e7babf74a33c16aefc7fb493))
+
+- Header title no reverse match handling
+  ([#2283](https://github.com/unfoldadmin/django-unfold/pull/2283),
+  [`91b375a`](https://github.com/unfoldadmin/django-unfold/commit/91b375a89ed3c3b651ebd17693c8052f4ee7ebf5))
+
+- MultiWidget support in conditional fields
+  ([#2197](https://github.com/unfoldadmin/django-unfold/pull/2197),
+  [`ae4bca1`](https://github.com/unfoldadmin/django-unfold/commit/ae4bca1ab45a3ce605052952903fe1bb80883eb6))
+
+- Preserve horizontal filters ([#2294](https://github.com/unfoldadmin/django-unfold/pull/2294),
+  [`0d1212c`](https://github.com/unfoldadmin/django-unfold/commit/0d1212c6a9838d92d89abba11bd05fc2da79e6f0))
+
+- Related modal popup auto theme ([#2296](https://github.com/unfoldadmin/django-unfold/pull/2296),
+  [`6723cea`](https://github.com/unfoldadmin/django-unfold/commit/6723cea639ff4dfe93a83e4d33be3423782620b2))
+
+- Restore changelist action state after navigation
+  ([#2236](https://github.com/unfoldadmin/django-unfold/pull/2236),
+  [`7c8daac`](https://github.com/unfoldadmin/django-unfold/commit/7c8daac67059369aa896981c7e1e5668e4a702fc))
+
+- Sidebar border in rtl ([#2295](https://github.com/unfoldadmin/django-unfold/pull/2295),
+  [`7dcd483`](https://github.com/unfoldadmin/django-unfold/commit/7dcd48363b7d658544b7ef90203d22daac7c3dbe))
+
+### Features
+
+- Json schema field ([#2048](https://github.com/unfoldadmin/django-unfold/pull/2048),
+  [`7e5ce0f`](https://github.com/unfoldadmin/django-unfold/commit/7e5ce0f2fbdfb19f1f38ff9790d9f0cab57128b5))
+
+
 ## v0.107.0 (2026-09-17)
 
 ### Features
