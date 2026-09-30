@@ -2,10 +2,10 @@
 
 <a href="{% url "admin:index" %}">
     {% if site_logo.light and site_logo.dark %}
-        <img src="{{ site_logo.dark }}" alt="{% trans 'Home' %}" class="h-8 hidden mr-4 dark:block"/>
+        <img src="{{ site_logo.dark }}" alt="{% trans 'Home' %}" class="h-8 hidden me-4 dark:block"/>
 
-        <img src="{{ site_logo.light }}" alt="{% trans 'Home' %}" class="block h-8 mr-4 dark:hidden" />
+        <img src="{{ site_logo.light }}" alt="{% trans 'Home' %}" class="block h-8 me-4 dark:hidden" />
     {% else %}
-        <img src="{{ site_logo }}" class="h-8 mr-4" alt="{% trans 'Home' %}" />
+        <img src="{{ site_logo }}" class="h-8 me-4" alt="{% trans 'Home' %}" />
     {% endif %}
 </a>
