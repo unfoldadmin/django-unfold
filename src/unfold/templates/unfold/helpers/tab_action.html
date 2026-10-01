@@ -18,7 +18,7 @@
                 {{ action.icon }}
             </span>
         {% elif icon %}
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined {% if icon == "open_in_new" %}rtl:-scale-x-100{% endif %}">
                 {{ icon }}
             </span>
         {% endif %}
