@@ -1,9 +1,9 @@
 {% load unfold i18n admin_urls unfold %}
 
-<div class="flex flex-row grow font-semibold items-center min-w-0 mr-3">
+<div class="flex flex-row grow font-semibold items-center min-w-0 me-3">
     {% if is_nav_sidebar_enabled and not is_popup %}
         <span class="cursor-pointer flex flex-row items-center">
-            <span class="material-symbols-outlined" x-on:click="sidebarToggle()">
+            <span class="material-symbols-outlined rtl:-scale-x-100" x-on:click="sidebarToggle()">
                 dock_to_right
             </span>
         </span>
@@ -19,7 +19,7 @@
         {% header_title %}
 
         {% if cl and cl.full_result_count != cl.result_count and cl.paginator|class_name != "InfinitePaginator" %}
-            <span class="font-medium ml-2 text-subtle text-xs">
+            <span class="font-medium ms-2 text-subtle text-xs">
                 {% blocktranslate count counter=cl.result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktranslate %} (<a href="?{% if cl.is_popup %}_popup=1{% endif %}">{% if cl.show_full_result_count %}{% blocktranslate with full_result_count=cl.full_result_count %}{{ full_result_count }} total{% endblocktranslate %}{% else %}{% translate "Show all" %}{% endif %}</a>)
             </span>
         {% endif %}
