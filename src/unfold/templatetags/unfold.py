@@ -485,9 +485,9 @@ def action_item_classes(context: RequestContext, action: dict) -> str:
         "max-lg:-mt-px",
         "max-lg:first:rounded-t-default",
         "max-lg:last:rounded-b-default",
-        "min-lg:-ml-px",
-        "min-lg:first:rounded-l-default",
-        "min-lg:last:rounded-r-default",
+        "min-lg:-ms-px",
+        "min-lg:first:rounded-s-default",
+        "min-lg:last:rounded-e-default",
     ]
 
     variant_classes = {
