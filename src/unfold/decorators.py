@@ -1,10 +1,9 @@
 from collections.abc import Callable, Iterable
 from functools import wraps
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, overload
 
 from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -134,8 +133,9 @@ def action(
     return decorator(function)
 
 
-def display(
-    function: Callable[[Model], Any] | None = None,
+@overload
+def display[F: Callable[..., Any]](
+    function: F,
     *,
     boolean: bool | None = None,
     image: bool | None = None,
@@ -147,8 +147,41 @@ def display(
     header: bool | None = None,
     wrapper_class: str | None = None,
     formatting: str | None = None,
-) -> Callable:
-    def decorator(func: Callable[[Model], Any]) -> Callable:
+) -> F: ...
+
+
+@overload
+def display[F: Callable[..., Any]](
+    function: None = None,
+    *,
+    boolean: bool | None = None,
+    image: bool | None = None,
+    ordering: str | Combinable | BaseExpression | None = None,
+    description: "StrOrPromise | None" = None,
+    empty_value: str | None = None,
+    dropdown: bool | None = None,
+    label: "bool | StrOrPromise | dict[str, str] | None" = None,
+    header: bool | None = None,
+    wrapper_class: str | None = None,
+    formatting: str | None = None,
+) -> Callable[[F], F]: ...
+
+
+def display(
+    function: Callable[..., Any] | None = None,
+    *,
+    boolean: bool | None = None,
+    image: bool | None = None,
+    ordering: str | Combinable | BaseExpression | None = None,
+    description: "StrOrPromise | None" = None,
+    empty_value: str | None = None,
+    dropdown: bool | None = None,
+    label: "bool | StrOrPromise | dict[str, str] | None" = None,
+    header: bool | None = None,
+    wrapper_class: str | None = None,
+    formatting: str | None = None,
+) -> Callable[..., Any]:
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         if boolean is not None and empty_value is not None:
             raise ValueError(
                 "The boolean and empty_value arguments to the @display "
