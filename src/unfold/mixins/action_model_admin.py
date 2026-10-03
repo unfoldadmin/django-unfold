@@ -75,7 +75,7 @@ class ActionModelAdminMixin(ModelAdmin):
         object_id: str | None = None,
         form_url: str = "",
         extra_context: dict[str, Any] | None = None,
-    ) -> Any:
+    ) -> HttpResponse:
         """
         Changeform contains `actions_submit_line` and `actions_detail` custom actions.
         """
