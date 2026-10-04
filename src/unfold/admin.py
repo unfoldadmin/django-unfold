@@ -104,7 +104,7 @@ class ModelAdmin(
 
     @xframe_options_sameorigin
     def changelist_view(
-        self, request: HttpRequest, extra_context: dict[str, str] | None = None
+        self, request: HttpRequest, extra_context: dict[str, Any] | None = None
     ) -> HttpResponse:
         self.request = request
 
@@ -122,7 +122,7 @@ class ModelAdmin(
         object_id: str | None = None,
         form_url: str = "",
         extra_context: dict[str, Any] | None = None,
-    ) -> Any:
+    ) -> HttpResponse:
         from unfold.forms import AdminForm, Fieldline
 
         helpers.AdminForm = AdminForm  # ty:ignore
