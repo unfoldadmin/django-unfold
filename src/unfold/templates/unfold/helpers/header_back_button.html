@@ -6,8 +6,8 @@
         {% url changelist_url as resolved_changelist_url %}
 
         {% if resolved_changelist_url %}
-            <a href="{{ resolved_changelist_url }}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
-                <span class="material-symbols-outlined">
+            <a href="{{ resolved_changelist_url }}" class="block h-[18px] me-3" title="{% trans "Go back" %}">
+                <span class="material-symbols-outlined rtl:-scale-x-100">
                     arrow_back
                 </span>
             </a>
@@ -16,8 +16,8 @@
         {% url opts|admin_urlname:'changelist' as changelist_url %}
 
         {% if changelist_url %}
-            <a href="{% add_preserved_filters changelist_url %}" class="block h-[18px] mr-3" title="{% trans "Go back" %}">
-                <span class="material-symbols-outlined">
+            <a href="{% add_preserved_filters changelist_url %}" class="block h-[18px] me-3" title="{% trans "Go back" %}">
+                <span class="material-symbols-outlined rtl:-scale-x-100">
                     arrow_back
                 </span>
             </a>
