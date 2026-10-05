@@ -390,6 +390,7 @@ function sortRecords(e) {
 	e.from.querySelectorAll(`.form-group.original`).forEach((row, index) => {
 		input = row.querySelector(`input[name$=-${e.from.dataset.orderingField}]`);
 		input.value = index;
+		input.dispatchEvent(new Event("input", { bubbles: true }));
 	});
 
 	e.from
@@ -398,6 +399,7 @@ function sortRecords(e) {
 		)
 		.forEach((input, index) => {
 			input.value = index;
+			input.dispatchEvent(new Event("input", { bubbles: true }));
 		});
 }
 
