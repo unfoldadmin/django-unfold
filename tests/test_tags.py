@@ -349,6 +349,87 @@ def test_tags_has_active_item():
 
 
 @pytest.mark.django_db
+def test_tags_has_nested_file_field():
+    class NestedFormSet:
+        def __init__(self, multipart: bool, forms: list | None = None):
+            self.multipart = multipart
+            self.forms = forms or []
+            self.empty_form = type("EmptyForm", (), {"nested_formsets": []})()
+
+        def is_multipart(self) -> bool:
+            return self.multipart
+
+    class NestedAdminFormSet:
+        def __init__(self, formset: NestedFormSet):
+            self.formset = formset
+
+    class ParentForm:
+        def __init__(self, nested_formsets: list):
+            self.nested_formsets = nested_formsets
+
+    class ParentFormSet:
+        def __init__(self, forms: list, empty_form: ParentForm | None = None):
+            self.forms = forms
+            self.empty_form = empty_form or ParentForm([])
+
+    class InlineAdminFormSet:
+        def __init__(self, formset: ParentFormSet):
+            self.formset = formset
+
+    template = Template(
+        "{% load unfold %}{% if inline_admin_formsets|has_nested_file_field %}multipart{% else %}plain{% endif %}"
+    )
+
+    with_file = InlineAdminFormSet(
+        ParentFormSet([ParentForm([NestedAdminFormSet(NestedFormSet(True))])])
+    )
+    without_file = InlineAdminFormSet(
+        ParentFormSet([ParentForm([NestedAdminFormSet(NestedFormSet(False))])])
+    )
+    empty_form_file = InlineAdminFormSet(
+        ParentFormSet(
+            [ParentForm([])],
+            empty_form=ParentForm([NestedAdminFormSet(NestedFormSet(True))]),
+        )
+    )
+    deeper_file = InlineAdminFormSet(
+        ParentFormSet(
+            [
+                ParentForm(
+                    [
+                        NestedAdminFormSet(
+                            NestedFormSet(
+                                False,
+                                forms=[
+                                    ParentForm(
+                                        [NestedAdminFormSet(NestedFormSet(True))]
+                                    )
+                                ],
+                            )
+                        )
+                    ]
+                )
+            ]
+        )
+    )
+
+    assert "multipart" in template.render(
+        Context({"inline_admin_formsets": [with_file]})
+    )
+    assert "plain" in template.render(
+        Context({"inline_admin_formsets": [without_file]})
+    )
+    assert "multipart" in template.render(
+        Context({"inline_admin_formsets": [empty_form_file]})
+    )
+    assert "multipart" in template.render(
+        Context({"inline_admin_formsets": [deeper_file]})
+    )
+    assert "plain" in template.render(Context({"inline_admin_formsets": []}))
+    assert "plain" in template.render(Context({"inline_admin_formsets": None}))
+
+
+@pytest.mark.django_db
 def test_tags_index():
     response = Template('{% load unfold %}{{ value|index:"sample" }}').render(
         Context(
