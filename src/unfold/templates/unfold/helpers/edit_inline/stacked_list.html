@@ -15,6 +15,12 @@
                     <div class="form-row border-b border-base-200 dark:border-base-800 {% if not nested_inline %}group-[.last]/parent:border-b-0{% else %}group-[.last]/nested:border-b-0{% endif %} {% if not inline_admin_formset.opts.show_title %}{% if not inline_admin_formset.formset.can_delete or not inline_admin_formset.has_delete_permission  %}pt-3{% endif %}{% endif %}">
                         {% include "unfold/helpers/edit_inline/stacked_title.html" %}
 
+                        {% if inline_admin_form.form.non_field_errors %}
+                            <div class="group inline-stacked">
+                                {% include "unfold/helpers/messages/error.html" with errors=inline_admin_form.form.non_field_errors %}
+                            </div>
+                        {% endif %}
+
                         {% for fieldset in inline_admin_form %}
                             {% if inline_admin_formset.opts.collapsible %}
                                 <div x-show="openRow">
