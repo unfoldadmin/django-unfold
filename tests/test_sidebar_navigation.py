@@ -465,3 +465,101 @@ def test_navigation_link_attrs_rendered(admin_client):
     assert 'data-test="42"' in content
     assert 'aria-label="Custom Label"' in content
     assert "Attrs Link" in content
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Parent Title",
+                                "link": "/parent-link",
+                                "items": [
+                                    {
+                                        "title": "Subitem Title 1",
+                                        "link": "/subitem-link-1",
+                                    },
+                                    {
+                                        "title": "Subitem Title 2",
+                                        "link": "/subitem-link-2",
+                                        "permission": lambda request: False,
+                                    },
+                                    {
+                                        "title": "Subitem Title 3",
+                                        "link": "/subitem-link-3",
+                                        "active": lambda request: True,
+                                    },
+                                ],
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_items_with_subnavigation():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    sidebar = admin_site.get_sidebar_list(request)
+
+    parent = sidebar[0]["items"][0]
+    assert parent["title"] == "Parent Title"
+    assert len(parent["items"]) == 3  # noqa: PLR2004
+
+    assert parent["items"][0]["title"] == "Subitem Title 1"
+    assert parent["items"][0]["has_permission"] is True
+    assert parent["items"][0]["active"] is False
+
+    assert parent["items"][1]["title"] == "Subitem Title 2"
+    assert parent["items"][1]["has_permission"] is False
+
+    assert parent["items"][2]["title"] == "Subitem Title 3"
+    assert parent["items"][2]["has_permission"] is True
+    assert parent["items"][2]["active"] is True
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "SIDEBAR": {
+                "navigation": [
+                    {
+                        "items": [
+                            {
+                                "title": "Parent Title",
+                                "link": "/parent-link",
+                                "items": [
+                                    {
+                                        "title": "Visible Subitem",
+                                        "link": "/visible-subitem",
+                                    },
+                                    {
+                                        "title": "Hidden Subitem",
+                                        "link": "/hidden-subitem",
+                                        "permission": lambda request: False,
+                                    },
+                                ],
+                            },
+                        ]
+                    }
+                ]
+            },
+        },
+    }
+)
+def test_navigation_subnavigation_rendered(admin_client):
+    response = admin_client.get(reverse("admin:index"))
+    assert response.status_code == HTTPStatus.OK
+    content = response.content.decode()
+
+    assert "Parent Title" in content
+    assert "Visible Subitem" in content
+    assert "Hidden Subitem" not in content
+    assert "x-data=\"{'subnavigationOpen':" in content
+    assert "subnavigationOpen = !subnavigationOpen" in content
