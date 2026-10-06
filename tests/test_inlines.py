@@ -2,7 +2,9 @@ from http import HTTPStatus
 
 import pytest
 from django.contrib.auth.models import Permission
+from django.core.exceptions import ValidationError
 from django.urls import reverse
+from example.admin import UserTagInline
 from example.models import Invoice, InvoiceItem
 
 from .factories import TagFactory
@@ -577,3 +579,32 @@ def test_nested_inline_without_parent(client, admin_user):
     assert (
         "You can not create nested object without parent" in response.content.decode()
     )
+
+
+@pytest.mark.django_db
+def test_stacked_inline_non_field_errors(client, admin_user, monkeypatch):
+    class NonFieldErrorForm(UserTagInline.form):
+        def clean(self):
+            raise ValidationError("Stacked inline non-field error")
+
+    monkeypatch.setattr(UserTagInline, "form", NonFieldErrorForm)
+    client.force_login(admin_user)
+    tag = TagFactory(name="Tag 1")
+
+    data = {
+        **USER_DATA,
+        "_continue": "1",
+        "invoice_set-TOTAL_FORMS": "0",
+        "invoice_set-INITIAL_FORMS": "0",
+        "User_tags-TOTAL_FORMS": "1",
+        "User_tags-0-tag": tag.pk,
+    }
+
+    response = client.post(
+        reverse("admin:example_user_change", args=(admin_user.pk,)),
+        data=data,
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert "Please correct the errors below." in response.content.decode()
+    assert "Stacked inline non-field error" in response.content.decode()
