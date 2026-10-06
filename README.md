@@ -39,7 +39,7 @@
 **Install the package**
 
 ```sh
-pip install django-unfold
+uv add django-unfold
 ```
 
 **Add Unfold to INSTALLED_APPS**
@@ -80,16 +80,6 @@ class MyModelAdmin(ModelAdmin):
 - **Third-party integrations** - Built-in support for popular Django packages including django-import-export, django-guardian, django-simple-history, django-constance, and more.
 
 [Explore all features](https://unfoldadmin.com/features/?utm_source=github&utm_medium=readme)
-
-If Unfold helps your project, consider giving the repository a star ⭐. It helps other Django developers discover it.
-
-## Commercial options
-
-- **Consulting** - Guidance on Django architecture, performance, features, and Unfold integration. [Learn more](https://unfoldadmin.com/consulting/?utm_source=github&utm_medium=readme)
-- **Support** - Help with setup or customization, live calls, and code review. [Learn more](https://unfoldadmin.com/support/?utm_source=github&utm_medium=readme)
-- **Studio** - Extend Unfold with advanced dashboards, customization, and admin tooling. [Learn more](https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme)
-
-[![Unfold Studio dashboards](https://github.com/user-attachments/assets/7c3124ab-2f59-4254-9222-8a57970f51a6)](https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme)
 
 ## Third-party package support
 
