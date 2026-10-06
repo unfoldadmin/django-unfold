@@ -3,7 +3,7 @@
 <tbody {% if fieldset.collapse %} x-data="{ rowsOpen: false }" {% endif %}>
     {% if fieldset.title %}
         <tr {% if fieldset.collapse %} x-on:click="rowsOpen = !rowsOpen" {% endif %} class="{% if fieldset.collapse %}cursor-pointer{% endif %}">
-            <th class="bg-base-50 border-t border-base-200 font-semibold px-3 py-2 text-left text-font-important-light dark:text-font-important-dark dark:border-base-800 dark:bg-white/[.04] {% if forloop.first %}border-t-0{% endif %}" colspan="100%">
+            <th class="bg-base-50 border-t border-base-200 font-semibold px-3 py-2 text-left text-font-important-light dark:text-font-important-dark dark:border-base-800 dark:bg-white/[.04] {% if forloop.first %}border-t-0{% endif %}" colspan="100">
                 {{ fieldset.title }}
 
                 {% if fieldset.collapse %}

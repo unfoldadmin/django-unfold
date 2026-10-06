@@ -169,6 +169,8 @@ function isFilterModalOpen() {
 }
 
 function theme(defaultTheme = "auto") {
+	const themeLocked = defaultTheme !== "auto";
+
 	return {
 		sidebarWidth: localStorage.getItem("sidebarWidth") || 288,
 		sidebarOpen() {
@@ -198,7 +200,9 @@ function theme(defaultTheme = "auto") {
 		filterOpen: false,
 		filterModalOpen: false,
 		openAllApplications: false,
-		adminTheme: Alpine.$persist(defaultTheme).as("adminTheme"),
+		adminTheme: themeLocked
+			? defaultTheme
+			: Alpine.$persist(defaultTheme).as("adminTheme"),
 		init() {
 			this.$watch("filterOpen", (value) => {
 				if (isFilterModalOpen()) {
@@ -207,6 +211,10 @@ function theme(defaultTheme = "auto") {
 			});
 		},
 		switchTheme(theme) {
+			if (themeLocked) {
+				return;
+			}
+
 			this.adminTheme = theme;
 		},
 		themeBindings: {
@@ -276,6 +284,10 @@ function theme(defaultTheme = "auto") {
 				}
 
 				if ((event.metaKey || event.ctrlKey) && event.key === "e") {
+					if (themeLocked) {
+						return;
+					}
+
 					event.preventDefault();
 
 					if (this.adminTheme === "light") {
@@ -390,6 +402,7 @@ function sortRecords(e) {
 	e.from.querySelectorAll(`.form-group.original`).forEach((row, index) => {
 		input = row.querySelector(`input[name$=-${e.from.dataset.orderingField}]`);
 		input.value = index;
+		input.dispatchEvent(new Event("input", { bubbles: true }));
 	});
 
 	e.from
@@ -398,6 +411,7 @@ function sortRecords(e) {
 		)
 		.forEach((input, index) => {
 			input.value = index;
+			input.dispatchEvent(new Event("input", { bubbles: true }));
 		});
 }
 

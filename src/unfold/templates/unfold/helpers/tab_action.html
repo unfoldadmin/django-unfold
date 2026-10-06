@@ -49,7 +49,7 @@
 
     {% if not link and action.items|length > 0 %}
         <template x-teleport="body">
-            <nav x-anchor.bottom-end.offset.4="$refs.actionDropdown{{ action.method_name }}" class="absolute bg-white border border-base-200 flex flex-col -mr-px py-1 right-0 rounded-default shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-transition x-show="actionDropdownOpen" x-on:click.outside="actionDropdownOpen = false">
+            <nav x-anchor.bottom-end.offset.4="$refs.actionDropdown{{ action.method_name }}" class="absolute bg-white border border-base-200 flex flex-col -mr-px py-1 end-0 rounded-default shadow-lg top-10 w-52 z-50 dark:bg-base-800 dark:border-base-700" x-transition x-show="actionDropdownOpen" x-on:click.outside="actionDropdownOpen = false">
                 {% for item in action.items %}
                     <a href="{{ item.path }}"
                        {% if item.dialog %}
@@ -58,7 +58,7 @@
                            hx-select="#dialog"
                            x-on:htmx:after-on-load="openModal = true"
                        {% endif %}
-                       class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded-default text-left hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200
+                       class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded-default text-start hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200
                               {% if item.variant.value == "danger" %}
                                   text-red-700 dark:text-red-400 hover:text-red-700 dark:hover:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20
                               {% elif item.variant.value == "warning" %}

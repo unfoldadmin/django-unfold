@@ -61,6 +61,28 @@ def _count_errors_in_general(
     return count
 
 
+def _has_file_field_in_nested_formsets(formset: Any) -> bool:
+    forms = list(getattr(formset, "forms", []) or [])
+    empty_form = getattr(formset, "empty_form", None)
+
+    if empty_form is not None:
+        forms.append(empty_form)
+
+    for form in forms:
+        for nested in getattr(form, "nested_formsets", None) or []:
+            nested_formset = getattr(nested, "formset", None)
+
+            if nested_formset is None:
+                continue
+
+            if nested_formset.is_multipart() or _has_file_field_in_nested_formsets(
+                nested_formset
+            ):
+                return True
+
+    return False
+
+
 def _count_errors_in_inline(inline: InlineAdminFormSet) -> int:
     count = 0
 
@@ -800,6 +822,19 @@ def admin_object_app_url(context: RequestContext, object: Model, arg: str) -> st
     )
 
     return f"{current_app}:{object._meta.app_label}_{object._meta.model_name}_{arg}"
+
+
+@register.filter
+def has_nested_file_field(
+    inline_admin_formsets: list[InlineAdminFormSet] | None,
+) -> bool:
+    if not inline_admin_formsets:
+        return False
+
+    return any(
+        _has_file_field_in_nested_formsets(inline.formset)
+        for inline in inline_admin_formsets
+    )
 
 
 @register.filter

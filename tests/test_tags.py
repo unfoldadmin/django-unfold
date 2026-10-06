@@ -349,6 +349,61 @@ def test_tags_has_active_item():
 
 
 @pytest.mark.django_db
+def test_tags_has_nested_file_field():
+    class TextForm(forms.Form):
+        name = forms.CharField()
+
+    class FileForm(forms.Form):
+        upload = forms.FileField()
+
+    class EmptyParentForm(forms.Form):
+        name = forms.CharField()
+
+    class AdminFormSet:
+        def __init__(self, formset):
+            self.formset = formset
+
+    def inline(form):
+        return AdminFormSet(forms.formset_factory(form, extra=0)())
+
+    def parent_formset():
+        return forms.formset_factory(TextForm, extra=1)()
+
+    template = Template(
+        "{% load unfold %}{% if inline_admin_formsets|has_nested_file_field %}multipart{% else %}plain{% endif %}"
+    )
+
+    with_file = parent_formset()
+    with_file.forms[0].nested_formsets = [inline(FileForm)]
+
+    without_file = parent_formset()
+    without_file.forms[0].nested_formsets = [inline(TextForm)]
+
+    empty_form_file = forms.formset_factory(EmptyParentForm, extra=0)()
+    empty_form_file.form.nested_formsets = [inline(FileForm)]
+
+    deeper_file = parent_formset()
+    child = parent_formset()
+    child.forms[0].nested_formsets = [inline(FileForm)]
+    deeper_file.forms[0].nested_formsets = [AdminFormSet(child)]
+
+    assert "multipart" in template.render(
+        Context({"inline_admin_formsets": [AdminFormSet(with_file)]})
+    )
+    assert "plain" in template.render(
+        Context({"inline_admin_formsets": [AdminFormSet(without_file)]})
+    )
+    assert "multipart" in template.render(
+        Context({"inline_admin_formsets": [AdminFormSet(empty_form_file)]})
+    )
+    assert "multipart" in template.render(
+        Context({"inline_admin_formsets": [AdminFormSet(deeper_file)]})
+    )
+    assert "plain" in template.render(Context({"inline_admin_formsets": []}))
+    assert "plain" in template.render(Context({"inline_admin_formsets": None}))
+
+
+@pytest.mark.django_db
 def test_tags_index():
     response = Template('{% load unfold %}{{ value|index:"sample" }}').render(
         Context(
