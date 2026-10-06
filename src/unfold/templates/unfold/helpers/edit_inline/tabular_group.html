@@ -35,7 +35,7 @@
 
     {% if inline_admin_form.original %}
         <tr class="hidden form-delete">
-            <td colspan="100%">
+            <td colspan="100">
                 {% include "unfold/helpers/edit_inline/inline_delete_undo.html" %}
             </td>
         </tr>
@@ -43,7 +43,7 @@
 
     {% if inline_admin_form.form.nested_formsets %}
         <tr class="form-nested">
-            <td class="bg-striped border-b border-base-200 relative dark:border-base-800 group-[.last]/parent:border-b-0" colspan="100%">
+            <td class="bg-striped border-b border-base-200 relative dark:border-base-800 group-[.last]/parent:border-b-0" colspan="100">
                 <div class="flex flex-col p-3 gap-3 shadow-inner">
                     {% for nested_formset in inline_admin_form.form.nested_formsets %}
                         {% if nested_formset.inline_type == "tabular" %}

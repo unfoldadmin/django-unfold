@@ -35,7 +35,7 @@
                 {% for form in formset %}
                     {% if form_show_errors and form.non_field_errors and not form.is_extra %}
                         <tr>
-                            <td colspan="100%" class="border-t border-base-200 px-3 pt-3 dark:border-base-800">
+                            <td colspan="100" class="border-t border-base-200 px-3 pt-3 dark:border-base-800">
                                 {% include "unfold_crispy/errors.html" %}
                             </td>
                         </tr>
@@ -62,7 +62,7 @@
                     </tr>
 
                     <tr id="{{ formset_id }}-add-row-wrapper">
-                        <td colspan="100%" class="border-t border-base-200 p-3 dark:border-base-800">
+                        <td colspan="100" class="border-t border-base-200 p-3 dark:border-base-800">
                             <button type="button" id="{{ formset_id }}-add-row-button" data-formset-id="{{ formset_id }}" class="crispy-formset-add cursor-pointer flex items-center font-medium -ml-1.5 -my-1.5 select-none text-primary-600 dark:text-primary-500">
                                 <span class="flex items-center justify-center h-[38px] w-[38px]">
                                     <span class="material-symbols-outlined bg-primary-600 flex items-center justify-center rounded-full text-base text-white h-[18px] w-[18px]">add</span>

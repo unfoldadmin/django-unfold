@@ -30,7 +30,7 @@
                 <tbody>
                     {% if row.non_field_specific_errors or row.field_specific_errors %}
                         <tr>
-                            <td colspan="100%" class="border-t border-base-200 p-3 dark:border-base-800">
+                            <td colspan="100" class="border-t border-base-200 p-3 dark:border-base-800">
                                 <div class="flex flex-col gap-2 *:mb-0">
                                     {% for field_name, error_list in row.field_specific_errors.items %}
                                         {% capture as error_message silent %}
