@@ -4,6 +4,8 @@
     <form method="post" novalidate hx-post="{{ request.build_absolute_uri }}" hx-target="#dialog-form" hx-select="#dialog-form" hx-swap="outerHTML" hx-indicator="#dialog-preloader">
         {% csrf_token %}
 
+        {{ form.media }}
+
         {% if dialog.title or dialog.description %}
             <div class="border-b border-base-200 flex flex-col gap-2 px-4 py-3 dark:border-base-700">
                 {% if dialog.title %}
