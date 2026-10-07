@@ -1,0 +1,44 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n admin_urls %}
+
+{% block content %}
+    {% if deleted %}
+        {% trans "Choose a date from the list below to recover a deleted version of an object." as message %}
+        {% include "unfold/helpers/messages/info.html" with message=message %}
+
+        <div class="border border-base-200 mb-3 overflow-auto scrollbar-default w-full rounded-default shadow-xs dark:border-base-800">
+            <table id="change-history" class="border-spacing-none border-separate w-full">
+                <thead class="text-important whitespace-nowrap">
+                    <tr class="*:font-semibold *:px-3 *:py-2 *:text-left">
+                        <th scope="col">
+                            {% trans 'Date/time' %}
+                        </th>
+
+                        <th scope="col">
+                            {{ opts.verbose_name|capfirst }}
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for deletion in deleted %}
+                        <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} *:border-t *:border-base-200 *:font-normal *:px-3 *:py-2 *:text-left *:dark:border-base-800">
+                            <td>
+                                <a href="{% url opts|admin_urlname:'recover' deletion.pk|unlocalize %}" class="text-important">
+                                    {{ deletion.revision.date_created }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {{ deletion.object_repr }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        {% trans "There are no deleted objects to recover" as message %}
+        {% include "unfold/helpers/messages/warning.html" with message=message %}
+    {% endif %}
+{% endblock %}

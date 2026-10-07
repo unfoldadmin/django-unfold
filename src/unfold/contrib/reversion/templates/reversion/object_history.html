@@ -1,0 +1,57 @@
+{% extends "admin/object_history.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% if action_list %}
+        {% trans "Choose a date from the list below to revert to a previous version of this object." as message %}
+        {% include "unfold/helpers/messages/info.html" with message=message %}
+
+        <div class="border border-base-200 mb-3 overflow-auto scrollbar-default w-full rounded-default shadow-xs dark:border-base-800">
+            <table id="change-history" class="table table-striped table-bordered">
+                <thead>
+                    <tr class="*:font-semibold *:px-3 *:py-2 *:text-left">
+                        <th>
+                            {% trans 'Date/time' %}
+                        </th>
+
+                        <th>
+                            {% trans 'User' %}
+                        </th>
+
+                        <th>
+                            {% trans 'Action' %}
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for action in action_list %}
+                        <tr class="{% cycle '' 'bg-base-50 dark:bg-white/[.02]' %} *:border-t *:border-base-200 *:font-normal *:px-3 *:py-2 *:text-left *:dark:border-base-800">
+                            <td>
+                                <a href="{{ action.url }}" class="text-important">
+                                    {{ action.revision.date_created|date:"DATETIME_FORMAT" }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {% if action.revision.user %}
+                                    {{ action.revision.user.get_username }}
+                                    {% if action.revision.user.get_full_name %} ({{ action.revision.user.get_full_name }}){% endif %}
+                                {% else %}
+                                    &mdash;
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ action.revision.get_comment|linebreaksbr|default:"" }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        {% trans "This object doesn't have a change history. It probably wasn't added via this admin site." as message %}
+        {% include "unfold/helpers/messages/warning.html" with message=message %}
+    {% endif %}
+{% endblock %}

@@ -39,13 +39,13 @@ INSTALLED_APPS = [
     "unfold.contrib.location_field",
     "unfold.contrib.constance",
     "unfold.contrib.waffle",
+    "unfold.contrib.reversion",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "example",
     "constance",
     "waffle",
     "import_export",
@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "crispy_forms",
     "hijack",
     "hijack.contrib.admin",
+    "reversion",
+    "example",
 ]
 
 MIDDLEWARE = [
