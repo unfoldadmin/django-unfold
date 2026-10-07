@@ -15,7 +15,7 @@
                 <tbody class="relative {% cycle '' 'bg-base-50 dark:bg-white/[.02]' %}" x-data="{rowOpen: false}" {% if cl.model_admin.ordering_field %}x-sort:item{% endif %}>
                     {% if result.form and result.form.non_field_errors %}
                         <tr>
-                            <td class="text-left" colspan="{{ result|length }}">
+                            <td class="text-start" colspan="{{ result|length }}">
                                 {{ result.form.non_field_errors }}
                             </td>
                         </tr>
@@ -23,8 +23,8 @@
 
                     <tr class="data-row relative">
                         {% if cl.model_admin.ordering_field %}
-                            <td class="align-middle border-t border-base-200 font-normal px-2.5 py-2 relative text-left lg:pl-3 lg:pr-0 w-px dark:border-base-800" x-sort:handle>
-                                <div class="cursor-move {% cycle ' hover:bg-base-50 dark:hover:bg-base-800' 'hover:bg-base-100 dark:hover:bg-base-800' %} flex h-[36px] w-[36px] items-center justify-center -ml-1.5 -my-1 rounded-default select-none transition-colors">
+                            <td class="align-middle border-t border-base-200 font-normal px-2.5 py-2 relative text-start lg:ps-3 lg:pe-0 w-px dark:border-base-800" x-sort:handle>
+                                <div class="cursor-move {% cycle ' hover:bg-base-50 dark:hover:bg-base-800' 'hover:bg-base-100 dark:hover:bg-base-800' %} flex h-[36px] w-[36px] items-center justify-center -ms-1.5 -my-1 rounded-default select-none transition-colors">
                                     <span class="material-symbols-outlined align-middle cursor-move">drag_indicator</span>
                                 </div>
                             </td>

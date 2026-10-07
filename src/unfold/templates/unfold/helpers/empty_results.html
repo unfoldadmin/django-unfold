@@ -22,14 +22,14 @@
         <div class="flex flex-col gap-4 justify-center w-full lg:flex-row">
             {% if has_add_permission %}
                 <a href="{% add_preserved_filters add_url is_popup to_field %}" class="bg-primary-600 flex flex-row font-medium gap-2 items-center h-[38px] justify-center px-3 py-2 rounded-default text-white w-full lg:w-auto">
-                    <span class="material-symbols-outlined text-white -ml-0.5">add</span> {{ title }}
+                    <span class="material-symbols-outlined text-white -ml-0.5 rtl:ml-0 rtl:-mr-0.5">add</span> {{ title }}
                 </a>
             {% endif %}
 
 
             {% if cl.has_filters or cl.query %}
                 <a href="?" class="border border-base-200 flex flex-row font-medium gap-2 group/button h-[38px] items-center justify-center px-3 py-2 rounded-default w-full hover:text-primary-600 lg:w-auto dark:border-base-700 dark:hover:bg-base-900 dark:hover:text-primary-500">
-                    <span class="material-symbols-outlined -ml-0.5">filter_list_off</span> {% trans "Reset filters" %}
+                    <span class="material-symbols-outlined -ml-0.5 rtl:ml-0 rtl:-mr-0.5">filter_list_off</span> {% trans "Reset filters" %}
                 </a>
             {% endif %}
         </div>
