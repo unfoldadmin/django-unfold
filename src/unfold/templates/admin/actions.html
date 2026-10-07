@@ -39,7 +39,7 @@
                             </span>
 
                             {% if not cl.model_admin.list_disable_select_all %}
-                                <div class="mt-3 sm:ml-auto sm:mt-0">
+                                <div class="mt-3 sm:ms-auto sm:mt-0">
                                     <span class="question hidden">
                                         <a href="#" class="bg-white/20 block border border-transparent font-medium px-3 py-1 rounded-default text-white transition-colors hover:bg-white/30" title="{% translate "Click here to select the objects across all pages" %}">
                                             {% blocktranslate with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktranslate %}
