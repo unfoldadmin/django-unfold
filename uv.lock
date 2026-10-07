@@ -513,6 +513,21 @@ wheels = [
 ]
 
 [[package]]
+name = "django-reversion"
+version = "6.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django", version = "5.2.17", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.8", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260916095907", source = { git = "https://github.com/django/django?rev=main#8cbdd4a814397f81adf0129288f32b615bd1f94f" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/88/93/0240c12e07f882e11bc4028b6d5570ff6305ac6237843853b9238895be3a/django_reversion-6.3.0.tar.gz", hash = "sha256:0aa54eb334694f522fd234743978c614d45aa785edc70a6177267cdaaf06f967", size = 79028, upload-time = "2026-06-12T19:55:46.603Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/98/ec/2e79165dee4c0d3a52024e5b471b571452191cfe30524e1d7f20eeea7003/django_reversion-6.3.0-py3-none-any.whl", hash = "sha256:6abf59fc70e0d5efd68e03d478c20b994ca72d4ec89e8fed99533e6b87acc8d1", size = 89660, upload-time = "2026-06-12T19:55:45.381Z" },
+]
+
+[[package]]
 name = "django-simple-history"
 version = "3.13.0"
 source = { registry = "https://pypi.org/simple" }
@@ -581,6 +596,7 @@ dev = [
     { name = "django-import-export" },
     { name = "django-location-field" },
     { name = "django-money" },
+    { name = "django-reversion" },
     { name = "django-simple-history" },
     { name = "django-stubs" },
     { name = "django-waffle" },
@@ -622,6 +638,7 @@ dev = [
     { name = "django-import-export", specifier = "~=4.4.1" },
     { name = "django-location-field", specifier = "~=2.7.3" },
     { name = "django-money", specifier = "~=3.6.1" },
+    { name = "django-reversion", specifier = ">=6.3.0" },
     { name = "django-simple-history", specifier = "~=3.13.0" },
     { name = "django-stubs", specifier = "~=6.1.1" },
     { name = "django-waffle", specifier = "~=5.0.0" },
