@@ -31,9 +31,9 @@
                         {% endif %}
 
                         {% if cl.model_admin.list_sections|length > 0 %}
-                            <td class="align-middle border-t border-base-200 cursor-pointer font-normal px-2.5 py-2 relative text-left lg:pl-3 lg:pr-0 w-px dark:border-base-800" x-on:click="rowOpen = !rowOpen">
-                                <div class="absolute bg-primary-600 bottom-0 left-0 -top-px w-0.5" x-show="rowOpen"></div>
-                                <span class="material-symbols-outlined select-none block! h-[18px] w-[18px] -rotate-90 transition-all" x-bind:class="rowOpen && 'rotate-0'">
+                            <td class="align-middle border-t border-base-200 cursor-pointer font-normal px-2.5 py-2 relative text-start lg:ps-3 lg:pe-0 w-px dark:border-base-800" x-on:click="rowOpen = !rowOpen">
+                                <div class="absolute bg-primary-600 bottom-0 start-0 -top-px w-0.5" x-show="rowOpen"></div>
+                                <span class="material-symbols-outlined select-none block! h-[18px] w-[18px] -rotate-90 transition-all rtl:rotate-90" x-bind:class="{'rotate-0': rowOpen, 'rtl:rotate-90': !rowOpen}">
                                     expand_more
                                 </span>
                             </td>
@@ -49,7 +49,7 @@
                     {% if cl.model_admin.list_sections|length > 0 %}
                         <tr class="mb-3 relative z-30" x-show="rowOpen">
                             <td colspan="100" class="bg-base-200/10 border-t border-base-200 relative p-3 shadow-inner dark:border-base-800">
-                                <div class="absolute bg-primary-600 -bottom-px left-0 -top-px w-0.5"></div>
+                                <div class="absolute bg-primary-600 -bottom-px start-0 -top-px w-0.5"></div>
 
                                 <div class="grid gap-3 {{ cl.model_admin.list_sections_classes }}">
                                     {% for section in cl.model_admin.list_sections %}
