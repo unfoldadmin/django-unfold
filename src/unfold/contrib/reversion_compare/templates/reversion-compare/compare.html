@@ -1,0 +1,42 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n unfold %}
+
+{% block content %}
+    {% capture as links silent %}
+        {% include "reversion-compare/compare_links_partial.html" %}
+    {% endcapture %}
+
+    {% capture as title silent %}
+        {% blocktrans with date1=version1.revision.date_created|date:_("DATETIME_FORMAT") date2=version2.revision.date_created|date:_("DATETIME_FORMAT") %}
+            Compare <strong class="font-semibold underline">{{ date1 }}</strong> with <strong class="font-semibold underline">{{ date2 }}</strong>
+        {% endblocktrans %}
+    {% endcapture %}
+
+    {% capture as footer silent %}
+        <div class="flex flex-row gap-1 justify-between w-full">
+            {% component "unfold/components/button.html" with href=history_url variant="default" %}
+                {% trans "Go back to history list" %}
+            {% endcomponent %}
+
+            {% component "unfold/components/button.html" with href=save_url %}
+                {% trans "Revert to this version" %}
+            {% endcomponent %}
+        </div>
+    {% endcapture %}
+
+    {% if has_unfollowed_fields %}
+        {% capture as description silent %}
+            {% blocktrans %}
+                Fields/entries marked with <sup class="follow">*</sup> are not under reversion control.
+                It may be that not all marked information are correct.
+            {% endblocktrans %}
+        {% endcapture %}
+
+        {% include "unfold/helpers/messages/info.html" with message=description %}
+    {% endif %}
+
+    {% component "unfold/components/card.html" with title=title footer=footer size="md" action=links %}
+        {% include "reversion-compare/compare_partial.html"  %}
+    {% endcomponent %}
+{% endblock %}

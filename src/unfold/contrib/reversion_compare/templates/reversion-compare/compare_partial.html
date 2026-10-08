@@ -1,0 +1,39 @@
+{% load i18n %}
+
+<div class="revision-compare">
+    <div class="flex flex-col gap-3">
+        {% for field_diff in compare_data %}
+            <div>
+                <h3 class="capitalize {{ form_classes.label }}">
+                    {% firstof field_diff.field.verbose_name field_diff.field.related_name %}
+
+                    {% if field_diff.is_related and not field_diff.follow %}
+                        <sup class="follow text-red-600 dark:text-red-500">*</sup>
+                    {% endif %}
+                </h3>
+
+                {% if field_diff.field.help_text %}
+                    <p class="help">{{ field_diff.field.help_text }}</p>
+                {% endif %}
+
+                <div class="bg-base-50 p-3 rounded-default">
+                    {{ field_diff.diff }}
+                </div>
+            </div>
+        {% empty %}
+            <div class="bg-base-50 p-3 rounded-default">
+                <p><strong>{% trans "There are no differences." %}</strong></p>
+            </div>
+        {% endfor %}
+
+        <div>
+            <h4 class="capitalize {{ form_classes.label }}">
+                {% trans "Edit comment:" %}
+            </h4>
+
+            <div class="bg-base-50 p-3 rounded-default">
+                {{ version2.revision.comment|default:_("(no comment exists)") }}
+            </div>
+        </div>
+    </div>
+</div>
