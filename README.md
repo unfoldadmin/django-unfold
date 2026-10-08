@@ -83,17 +83,19 @@ class MyModelAdmin(ModelAdmin):
 
 ## Third-party package support
 
-- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/?utm_source=github&utm_medium=readme)
-- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/?utm_source=github&utm_medium=readme)
-- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/?utm_source=github&utm_medium=readme)
-- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/?utm_source=github&utm_medium=readme)
 - [django-celery-beat](https://github.com/celery/django-celery-beat) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-celery-beat/?utm_source=github&utm_medium=readme)
-- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/?utm_source=github&utm_medium=readme)
-- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/?utm_source=github&utm_medium=readme)
-- [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/?utm_source=github&utm_medium=readme)
-- [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/?utm_source=github&utm_medium=readme)
+- [django-constance](https://github.com/jazzband/django-constance) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-constance/?utm_source=github&utm_medium=readme)
+- [django-guardian](https://github.com/django-guardian/django-guardian) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-guardian/?utm_source=github&utm_medium=readme)
 - [django-hijack](https://github.com/django-hijack/django-hijack) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-hijack/?utm_source=github&utm_medium=readme)
+- [django-import-export](https://github.com/django-import-export/django-import-export) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-import-export/?utm_source=github&utm_medium=readme)
+- [django-json-widget](https://github.com/jmrivas86/django-json-widget) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-json-widget/?utm_source=github&utm_medium=readme)
+- [django-location-field](https://github.com/caioariede/django-location-field) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-location-field/?utm_source=github&utm_medium=readme)
+- [django-money](https://github.com/django-money/django-money) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-money/?utm_source=github&utm_medium=readme)
+- [django-reversion](https://github.com/etianen/django-reversion) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-reversion/?utm_source=github&utm_medium=readme)
+- [django-reversion-compare](https://codeberg.org/jedie/django-reversion-compare) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-reversion-compare/?utm_source=github&utm_medium=readme)
+- [django-simple-history](https://github.com/jazzband/django-simple-history) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-simple-history/?utm_source=github&utm_medium=readme)
 - [django-waffle](https://github.com/django-waffle/django-waffle) - [Integration guide](https://unfoldadmin.com/docs/integrations/django-waffle/?utm_source=github&utm_medium=readme)
+- [djangoql](https://github.com/ivelum/djangoql) - [Integration guide](https://unfoldadmin.com/docs/integrations/djangoql/?utm_source=github&utm_medium=readme)
 
 ## Credits
 
