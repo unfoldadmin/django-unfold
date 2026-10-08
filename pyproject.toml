@@ -42,6 +42,8 @@ dev = [
     "django-import-export~=4.4.1",
     "django-location-field~=2.7.3",
     "django-money~=3.6.1",
+    "django-reversion~=6.3.0",
+    "django-reversion-compare~=0.21.1",
     "django-simple-history~=3.13.0",
     "django-stubs~=6.1.1",
     "django-waffle~=5.0.0",
@@ -57,8 +59,6 @@ dev = [
     "psycopg[binary]~=3.3.4",
     "pre-commit~=4.6.2",
     "jsonschema~=4.26.0",
-    "django-reversion~=6.3.0",
-    "django-reversion-compare~=0.21.1",
 ]
 django52 = ["django>=5.2,<6"]
 django60 = ["django>=6.0,<6.1"]

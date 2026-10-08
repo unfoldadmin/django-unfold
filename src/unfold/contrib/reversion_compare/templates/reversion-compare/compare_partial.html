@@ -16,12 +16,12 @@
                     <p class="help">{{ field_diff.field.help_text }}</p>
                 {% endif %}
 
-                <div class="bg-base-50 p-3 rounded-default">
+                <div class="bg-base-50 p-3 rounded-default dark:bg-white/[.04]">
                     {{ field_diff.diff }}
                 </div>
             </div>
         {% empty %}
-            <div class="bg-base-50 p-3 rounded-default">
+            <div class="bg-base-50 p-3 rounded-default dark:bg-white/[.04]">
                 <p><strong>{% trans "There are no differences." %}</strong></p>
             </div>
         {% endfor %}
@@ -31,7 +31,7 @@
                 {% trans "Edit comment:" %}
             </h4>
 
-            <div class="bg-base-50 p-3 rounded-default">
+            <div class="bg-base-50 p-3 rounded-default dark:bg-white/[.04]">
                 {{ version2.revision.comment|default:_("(no comment exists)") }}
             </div>
         </div>
