@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "unfold.contrib.constance",
     "unfold.contrib.waffle",
     "unfold.contrib.reversion",
+    "unfold.contrib.reversion_compare",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     "hijack",
     "hijack.contrib.admin",
     "reversion",
+    "reversion_compare",
     "example",
 ]
 

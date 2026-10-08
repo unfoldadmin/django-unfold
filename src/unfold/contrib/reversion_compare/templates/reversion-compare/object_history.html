@@ -1,0 +1,11 @@
+{% extends "admin/object_history.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% if action_list %}
+        {% include "reversion-compare/action_list_partial.html" with action="../history/compare/" %}
+    {% else %}
+        {% trans "This object doesn't have a change history. It probably wasn't added via this admin site." as message %}
+        {% include "unfold/helpers/messages/warning.html" with message=message %}
+    {% endif %}
+{% endblock %}

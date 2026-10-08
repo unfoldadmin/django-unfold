@@ -528,6 +528,24 @@ wheels = [
 ]
 
 [[package]]
+name = "django-reversion-compare"
+version = "0.21.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "diff-match-patch" },
+    { name = "django", version = "5.2.17", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.0.8", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django60' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.1.1", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django61' or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra != 'group-13-django-unfold-djangomain')" },
+    { name = "django", version = "6.2.dev20260916095907", source = { git = "https://github.com/django/django?rev=main#8cbdd4a814397f81adf0129288f32b615bd1f94f" }, marker = "(extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django60') or (extra == 'group-13-django-unfold-django52' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra != 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain') or (extra != 'group-13-django-unfold-django52' and extra != 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain')" },
+    { name = "django-reversion" },
+    { name = "rich" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ca/27/dcb86582bad9ee20740990cf69fb4225b7d999a6eb3c36233de509f2fef6/django_reversion_compare-0.21.1.tar.gz", hash = "sha256:73974dd2122ff53ccb79c77095567c3b25138c64934aef0856aa8505b966f7a8", size = 109517, upload-time = "2026-10-06T11:11:37.763Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/c7/99ac6e33202662e57cd6437413c59df92f024f78caf0842319f5456931bc/django_reversion_compare-0.21.1-py3-none-any.whl", hash = "sha256:de8a75f9df7ab7e0ded5ab27c1f23681961fd773a7f10ca8a8237b521bc69a32", size = 126713, upload-time = "2026-10-06T11:11:35.888Z" },
+]
+
+[[package]]
 name = "django-simple-history"
 version = "3.13.0"
 source = { registry = "https://pypi.org/simple" }
@@ -597,6 +615,7 @@ dev = [
     { name = "django-location-field" },
     { name = "django-money" },
     { name = "django-reversion" },
+    { name = "django-reversion-compare" },
     { name = "django-simple-history" },
     { name = "django-stubs" },
     { name = "django-waffle" },
@@ -638,7 +657,8 @@ dev = [
     { name = "django-import-export", specifier = "~=4.4.1" },
     { name = "django-location-field", specifier = "~=2.7.3" },
     { name = "django-money", specifier = "~=3.6.1" },
-    { name = "django-reversion", specifier = ">=6.3.0" },
+    { name = "django-reversion", specifier = "~=6.3.0" },
+    { name = "django-reversion-compare", specifier = "~=0.21.1" },
     { name = "django-simple-history", specifier = "~=3.13.0" },
     { name = "django-stubs", specifier = "~=6.1.1" },
     { name = "django-waffle", specifier = "~=5.0.0" },

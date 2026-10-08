@@ -757,12 +757,14 @@ div.djangoql-completion .syntax-help {
 }
 
 /*******************************************************
- Django Import Export
+ Django Import Export &  Django Revision Compare
  *******************************************************/
+.revision-compare ins,
 .import-preview-table ins {
   @apply !bg-green-100 !no-underline text-green-700 dark:!bg-green-500/20 dark:!text-green-400;
 }
 
+.revision-compare del,
 .import-preview-table del {
   @apply !bg-red-100 !no-underline text-red-700 dark:!bg-red-500/20 dark:!text-red-400;
 }

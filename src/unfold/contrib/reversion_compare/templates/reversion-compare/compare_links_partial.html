@@ -1,0 +1,17 @@
+{% load i18n unfold %}
+
+{% if prev_url or next_url %}
+    <div class="flex flex-row gap-2">
+        {% if prev_url %}
+            {% component "unfold/components/button.html" with href=prev_url variant="default" class="capitalize" size="xs" %}
+                {% trans "previous" %}
+            {% endcomponent %}
+        {% endif %}
+
+        {% if next_url %}
+            {% component "unfold/components/button.html" with href=next_url variant="default" class="capitalize" size="xs" %}
+                {% trans "next" %}
+            {% endcomponent %}
+        {% endif %}
+    </div>
+{% endif %}

@@ -58,6 +58,7 @@ dev = [
     "pre-commit~=4.6.2",
     "jsonschema~=4.26.0",
     "django-reversion~=6.3.0",
+    "django-reversion-compare~=0.21.1",
 ]
 django52 = ["django>=5.2,<6"]
 django60 = ["django>=6.0,<6.1"]
