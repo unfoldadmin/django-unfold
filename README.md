@@ -12,7 +12,6 @@
 <p align="center">
     <a href="https://demo.unfoldadmin.com/?utm_source=github&utm_medium=readme">Live demo</a> ·
     <a href="https://unfoldadmin.com/docs/?utm_source=github&utm_medium=readme">Documentation</a> ·
-    <a href="https://unfoldadmin.com/studio/?utm_source=github&utm_medium=readme">Studio</a> ·
     <a href="https://discord.gg/9sQj9MEbNz">Discord</a> ·
     <a href="https://pypi.org/project/django-unfold/">PyPI</a>
 </p>
