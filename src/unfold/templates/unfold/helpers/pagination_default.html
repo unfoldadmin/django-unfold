@@ -2,7 +2,7 @@
 
 {% if pagination_required %}
     {% for i in page_range %}
-        <div class="{% if forloop.last %}pr-2{% else %}pr-4{% endif %}">
+        <div class="{% if forloop.last %}pe-2{% else %}pe-4{% endif %}">
             {% paginator_number cl i %}
         </div>
     {% endfor %}

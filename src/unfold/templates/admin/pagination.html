@@ -8,13 +8,13 @@
     {% endif %}
 
     {% if show_all_url %}
-        <a href="{{ show_all_url }}" class="showall ml-4 text-primary-600 dark:text-primary-500">
+        <a href="{{ show_all_url }}" class="showall ms-4 text-primary-600 dark:text-primary-500">
             {% translate 'Show all' %}
         </a>
     {% endif %}
 
     {% if cl.formset and cl.result_count %}
-        <div class="ml-auto">
+        <div class="ms-auto">
             {% component "unfold/components/button.html" with submit=1 name="_save" form="changelist-form" class="w-full" %}
                 {% translate 'Save' %}
             {% endcomponent %}

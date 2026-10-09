@@ -11,7 +11,7 @@
         {% endif %}
 
         {% for header in result_headers %}
-            <th class="align-middle font-semibold py-2 text-left text-important whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}pl-3 w-px{% else %}px-3{% endif %}" scope="col">
+            <th class="align-middle font-semibold py-2 text-start text-important whitespace-nowrap {{ header.class_attrib }} {% if "action-toggle" in header.text and forloop.counter == 1 %}ps-3 w-px{% else %}px-3{% endif %}" scope="col">
                 <div class="flex items-center {% if header.formatting == "price" %}justify-end{% endif %}">
                     <div class="text">
                         {% if header.sortable %}
@@ -33,7 +33,7 @@
 
                     {% if header.sortable %}
                         {% if header.sort_priority > 0 %}
-                            <div class="sortoptions flex items-center ml-2">
+                            <div class="sortoptions flex items-center ms-2">
                                 <a href="{{ header.url_toggle }}" class="flex items-center leading-none text-base-400 hover:text-base-500 dark:text-base-500 dark:hover:text-base-400 toggle {% if header.ascending %}ascending{% else %}descending{% endif %}" title="{% translate "Toggle sorting" %}">
                                     {% if header.ascending %}
                                         <span class="block material-symbols-outlined">arrow_circle_down</span>
@@ -42,13 +42,13 @@
                                     {% endif %}
                                 </a>
 
-                                <a class="sortremove flex items-center leading-none ml-1 text-base-400 dark:text-base-500 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
+                                <a class="sortremove flex items-center leading-none ms-1 text-base-400 dark:text-base-500 transition-all hover:text-red-700 dark:hover:text-red-500" href="{{ header.url_remove }}" title="{% translate "Remove from sorting" %}">
                                     <span class="block material-symbols-outlined">cancel</span>
                                 </a>
                             </div>
 
                             {% if num_sorted_fields > 1 %}
-                                <span class="sortpriority font-medium ml-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
+                                <span class="sortpriority font-medium ms-2 text-xs" title="{% blocktranslate with priority_number=header.sort_priority %}Sorting priority: {{ priority_number }}{% endblocktranslate %}">
                                     {{ header.sort_priority }}
                                 </span>
                             {% endif %}

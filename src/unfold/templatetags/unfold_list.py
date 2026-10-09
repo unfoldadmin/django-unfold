@@ -55,7 +55,7 @@ TABLE_CELL_CLASSES = [
     "px-3",
     "py-1.5",
     "h-[45px]",
-    "text-left",
+    "text-start",
     "first:border-t",
     "dark:border-base-800",
 ]
@@ -63,9 +63,9 @@ TABLE_CELL_CLASSES = [
 TABLE_ACTION_CELL_CLASSES = [
     "action-checkbox",
     "align-middle",
-    "pl-3",
+    "ps-3",
     "py-2",
-    "text-left",
+    "text-start",
     "border-t",
     "border-base-200",
     "dark:border-base-800",
@@ -234,7 +234,7 @@ def items_for_result(  # noqa: PLR0915, PLR0912
                 dropdown = getattr(attr, "dropdown", False)
 
                 if formatting == "price":
-                    row_classes.append("text-right")
+                    row_classes.append("!text-end")
 
                 if label:
                     result_repr = display_for_label(value, empty_value_display, label)

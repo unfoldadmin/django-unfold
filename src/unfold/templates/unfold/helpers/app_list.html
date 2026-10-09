@@ -43,17 +43,17 @@
                                         {% include "unfold/helpers/app_list_badge.html" with item=item %}
 
                                         {% if item.items|is_list and item.items|length > 0 %}
-                                            <span class="material-symbols-outlined ml-auto select-none transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500" x-bind:class="{'rotate-90': subnavigationOpen}">
+                                            <span class="material-symbols-outlined ml-auto select-none transition-all group-hover:text-primary-600 dark:group-hover:text-primary-500 rtl:ml-0 rtl:mr-auto rtl:-scale-x-100" x-bind:class="{'rotate-90 rtl:-rotate-90': subnavigationOpen}">
                                                 chevron_right
                                             </span>
                                         {% endif %}
                                     </a>
 
                                     {% if item.items|is_list %}
-                                        <ul class="border-l-2 border-base-200 flex flex-col gap-0.5 ml-2 my-2 dark:border-base-800" x-show="subnavigationOpen">
+                                        <ul class="border-s-2 border-base-200 flex flex-col gap-0.5 ms-2 my-2 dark:border-base-800" x-show="subnavigationOpen">
                                             {% for subitem in item.items %}
                                                 {% if subitem.has_permission %}
-                                                    <li class="ml-5">
+                                                    <li class="ms-5">
                                                         <a href="{% if subitem.link_callback %}{{ subitem.link_callback }}{% else %}{{ subitem.link }}{% endif %}" class="block rounded-default -mx-3 px-3 py-1.5 hover:text-primary-600 dark:hover:text-primary-500 {% if subitem.active %}bg-base-100 font-medium text-primary-600 dark:bg-white/[.06] dark:text-primary-500{% endif %}">
                                                             {{ subitem.title }}
                                                         </a>
