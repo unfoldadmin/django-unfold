@@ -507,7 +507,8 @@ function searchCommand() {
 			}
 
 			if (event.target.id === "command-results") {
-				this.currentIndex = 0;
+				// Highlight the first result so Enter opens it
+				this.currentIndex = this.totalItems > 0 ? 1 : 0;
 
 				if (this.items) {
 					this.totalItems = this.items.length;
@@ -548,7 +549,12 @@ function searchCommand() {
 			}
 		},
 		selectItem(addHistory, openInNewTab = false) {
-			const link = this.items[this.currentIndex - 1].querySelector("a");
+			const link = this.items?.[this.currentIndex - 1]?.querySelector("a");
+
+			if (!link) {
+				return;
+			}
+
 			const data = {
 				title: link.dataset.title,
 				description: link.dataset.description,
