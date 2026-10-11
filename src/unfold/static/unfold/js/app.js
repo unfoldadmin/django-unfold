@@ -548,6 +548,10 @@ function searchCommand() {
 			}
 		},
 		selectItem(addHistory, openInNewTab = false) {
+			if (this.currentIndex === 0) {
+				return;
+			}
+
 			const link = this.items[this.currentIndex - 1].querySelector("a");
 			const data = {
 				title: link.dataset.title,
