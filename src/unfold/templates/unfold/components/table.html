@@ -11,7 +11,7 @@
         <div {% if height %}style="max-height: {{ height }}px;"{% endif %} class="overflow-x-auto scrollbar-default">
             <table class="border-spacing-none border-separate w-full {% if table_class %}{{ table_class }}{% endif %}">
                 {% if table.headers %}
-                    <thead class="text-important {% if height %}sticky top-0 z-100{% endif %}">
+                    <thead class="text-important {% if height %}sticky top-0 z-50{% endif %}">
                         <tr class="bg-base-50 dark:bg-base-900">
                             {% for header in table.headers %}
                                 <th class="align-middle border-b border-base-200 font-semibold py-2 text-left whitespace-nowrap px-3 dark:border-base-800 dark:bg-white/[.02] {% if card_included == 1 %}{% if card_size == "md" %}first:pl-3 last:pr-3{% else %}first:pl-6 last:pr-6{% endif %}{% endif %} {% if header|is_dict and header.class %}{{ header.class }}{% endif %}">
