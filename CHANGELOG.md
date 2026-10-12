@@ -1,6 +1,81 @@
 # CHANGELOG
 
 
+## v0.109.0 (2026-10-12)
+
+### Bug Fixes
+
+- Action dropdown and site version in rtl
+  ([#2316](https://github.com/unfoldadmin/django-unfold/pull/2316),
+  [`71baf3f`](https://github.com/unfoldadmin/django-unfold/commit/71baf3f430f61b443adcad17d58aeb3a6fe25e4d))
+
+- Changelist and sidebar subnavigation in rtl
+  ([#2328](https://github.com/unfoldadmin/django-unfold/pull/2328),
+  [`f48e2b6`](https://github.com/unfoldadmin/django-unfold/commit/f48e2b62d855c4b2af84ac00c4c07093e12b81fe))
+
+- Confirm empty selection in command
+  ([#2337](https://github.com/unfoldadmin/django-unfold/pull/2337),
+  [`16e3b08`](https://github.com/unfoldadmin/django-unfold/commit/16e3b08c22c946998a6cdad2136abd1bac0bdefd))
+
+- Dialog load media ([#2323](https://github.com/unfoldadmin/django-unfold/pull/2323),
+  [`305be4e`](https://github.com/unfoldadmin/django-unfold/commit/305be4e87730c11c2dcf7e27e0166668550ab25c))
+
+- Display decorator responsive alignment
+  ([#2322](https://github.com/unfoldadmin/django-unfold/pull/2322),
+  [`ff16e8c`](https://github.com/unfoldadmin/django-unfold/commit/ff16e8ca9bbad01b0ee4043e62576f65000a2f67))
+
+- Empty results button icon spacing
+  ([#2325](https://github.com/unfoldadmin/django-unfold/pull/2325),
+  [`38ea3ad`](https://github.com/unfoldadmin/django-unfold/commit/38ea3ad5d3d6a5c85bfdb2db9af5d2780e79788a))
+
+- Fieldset tabs mobile ([#2339](https://github.com/unfoldadmin/django-unfold/pull/2339),
+  [`13708cc`](https://github.com/unfoldadmin/django-unfold/commit/13708cc52d6deaca2639b7d7dabed3a9b6edd9eb))
+
+- Header actions in rtl ([#2306](https://github.com/unfoldadmin/django-unfold/pull/2306),
+  [`32487d4`](https://github.com/unfoldadmin/django-unfold/commit/32487d43230b1ba751e0c9b0a29d327f421824e6))
+
+- Header title in rtl ([#2305](https://github.com/unfoldadmin/django-unfold/pull/2305),
+  [`94ee110`](https://github.com/unfoldadmin/django-unfold/commit/94ee11026de44fcc7d19656e67eca05c37a07a51))
+
+- Horizontal filter mobile ([#2338](https://github.com/unfoldadmin/django-unfold/pull/2338),
+  [`3e32a23`](https://github.com/unfoldadmin/django-unfold/commit/3e32a233ec0705c8c7774166340c5a11e4972dab))
+
+- Keep configured theme ([#2318](https://github.com/unfoldadmin/django-unfold/pull/2318),
+  [`1616b30`](https://github.com/unfoldadmin/django-unfold/commit/1616b30f582ea6162244670070357c1587a475c7))
+
+- Match Django's annotations for changelist_view and changeform_view
+  ([#2310](https://github.com/unfoldadmin/django-unfold/pull/2310),
+  [`27bd20b`](https://github.com/unfoldadmin/django-unfold/commit/27bd20b00878cffb1b7e9f19cf4baa1a4b5a5004))
+
+- Nested file fields ([#2319](https://github.com/unfoldadmin/django-unfold/pull/2319),
+  [`4057876`](https://github.com/unfoldadmin/django-unfold/commit/40578761910e86bdb13c9e331cdea0f9cc761f1a))
+
+- RTL sidebar improvements ([#2300](https://github.com/unfoldadmin/django-unfold/pull/2300),
+  [`deac483`](https://github.com/unfoldadmin/django-unfold/commit/deac483d7b57a581cca54f68c29f6a362fce2fd6))
+
+- Show non-field errors in stacked inlines
+  ([#2313](https://github.com/unfoldadmin/django-unfold/pull/2313),
+  [`64a9595`](https://github.com/unfoldadmin/django-unfold/commit/64a95958cef0aae68f49fb56b4f2afe1865bc3c8))
+
+- Sticky table header mobile ([#2340](https://github.com/unfoldadmin/django-unfold/pull/2340),
+  [`6483dfd`](https://github.com/unfoldadmin/django-unfold/commit/6483dfdef2e5dca1b21ed8ae061b5e50128637cb))
+
+- Warn unsaved form after sorting inline
+  ([#2317](https://github.com/unfoldadmin/django-unfold/pull/2317),
+  [`8a82d6a`](https://github.com/unfoldadmin/django-unfold/commit/8a82d6a9d488f0cc9d3da203b641af8f46f04a71))
+
+### Features
+
+- Django-reversion ([#2327](https://github.com/unfoldadmin/django-unfold/pull/2327),
+  [`c40901a`](https://github.com/unfoldadmin/django-unfold/commit/c40901ad396b6abf9753474aa1b1624969245b32))
+
+- Django-reversion-compare ([#2329](https://github.com/unfoldadmin/django-unfold/pull/2329),
+  [`5e5a0b4`](https://github.com/unfoldadmin/django-unfold/commit/5e5a0b4e50baea1c2e9fb618302974db750124ec))
+
+- Sidebar nav subnavigation ([#2314](https://github.com/unfoldadmin/django-unfold/pull/2314),
+  [`ed88186`](https://github.com/unfoldadmin/django-unfold/commit/ed88186013ca5f57c1fb11bd156ed7e566504a98))
+
+
 ## v0.108.0 (2026-09-24)
 
 ### Bug Fixes
