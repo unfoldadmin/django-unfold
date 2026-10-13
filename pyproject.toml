@@ -57,7 +57,7 @@ dev = [
     "python-semantic-release~=10.6.1",
     "tox~=4.58.0",
     "six~=1.17.0",
-    "psycopg[binary]~=3.3.4",
+    "psycopg[binary]~=3.3.6",
     "pre-commit~=4.6.2",
     "jsonschema~=4.26.0",
 ]
