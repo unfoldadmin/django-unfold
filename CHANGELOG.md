@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.110.0 (2026-10-13)
+
+### Features
+
+- Python 3.15 ([#2341](https://github.com/unfoldadmin/django-unfold/pull/2341),
+  [`c2874a4`](https://github.com/unfoldadmin/django-unfold/commit/c2874a4bacb158593bc835579c1b50ad90e937f1))
+
+
 ## v0.109.0 (2026-10-12)
 
 ### Bug Fixes
