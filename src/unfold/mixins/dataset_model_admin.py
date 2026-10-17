@@ -100,14 +100,11 @@ class DatasetModelAdminMixin(ModelAdmin):
                 f"The field {to_field} cannot be referenced."
             )
 
-        if request.method == "POST" and "_saveasnew" in request.POST:
-            object_id = None
+        obj = None
 
         if _add := object_id is None:
             if not self.has_add_permission(request):
                 raise PermissionDenied
-
-            obj = None
         else:
             obj = self.get_object(request, unquote(object_id), to_field)
 
