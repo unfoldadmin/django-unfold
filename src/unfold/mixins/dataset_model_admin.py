@@ -2,8 +2,12 @@ from typing import Any
 
 from django.contrib import messages
 from django.contrib.admin import ModelAdmin, helpers
+from django.contrib.admin.exceptions import DisallowedModelAdminToField
+from django.contrib.admin.options import TO_FIELD_VAR
+from django.contrib.admin.utils import unquote
 from django.contrib.admin.views import main
 from django.contrib.admin.views.main import IGNORED_PARAMS
+from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 
@@ -47,6 +51,8 @@ class DatasetModelAdminMixin(ModelAdmin):
         extra_context["datasets"] = rendered_datasets
 
         if request.method == "POST" and "_dataset" in request.POST:
+            self._check_dataset_action_permissions(request, object_id)
+
             selected = request.POST.getlist(helpers.ACTION_CHECKBOX_NAME)
 
             if not selected or helpers.ACTION_CHECKBOX_NAME not in request.POST:
@@ -83,3 +89,27 @@ class DatasetModelAdminMixin(ModelAdmin):
         self, request: HttpRequest
     ) -> list[type[BaseDataset]] | tuple[type[BaseDataset], ...]:
         return self.change_form_datasets
+
+    def _check_dataset_action_permissions(
+        self, request: HttpRequest, object_id: str | None
+    ) -> None:
+        to_field = request.POST.get(TO_FIELD_VAR, request.GET.get(TO_FIELD_VAR))
+
+        if to_field and not self.to_field_allowed(request, to_field):
+            raise DisallowedModelAdminToField(
+                f"The field {to_field} cannot be referenced."
+            )
+
+        if request.method == "POST" and "_saveasnew" in request.POST:
+            object_id = None
+
+        if _add := object_id is None:
+            if not self.has_add_permission(request):
+                raise PermissionDenied
+
+            obj = None
+        else:
+            obj = self.get_object(request, unquote(object_id), to_field)
+
+        if not self.has_view_or_change_permission(request, obj):
+            raise PermissionDenied
