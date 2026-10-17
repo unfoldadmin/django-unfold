@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from django.test.utils import override_settings
+from waffle.models import Flag
 
 from unfold.settings import CONFIG_DEFAULTS
 
@@ -26,4 +27,10 @@ def test_dashboard(admin_client):
 
 def test_password_change(admin_client):
     response = admin_client.get("/admin/password_change/")
+    assert response.status_code == HTTPStatus.OK
+
+
+def test_waffle_flag_admin(admin_client):
+    flag = Flag.objects.create(name="test_flag", note="Test flag")
+    response = admin_client.get(f"/admin/waffle/flag/{flag.id}/change/")
     assert response.status_code == HTTPStatus.OK
