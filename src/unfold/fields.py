@@ -133,6 +133,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
             if isinstance(field, str) and field in self.form.fields:
                 widget = self.form[field].field.widget
+
                 # This isn't elegant but suffices for contrib.auth's
                 # ReadOnlyPasswordHashWidget.
                 if getattr(widget, "read_only", False):

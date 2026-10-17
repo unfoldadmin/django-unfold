@@ -52,6 +52,26 @@ def test_unfold_admin_readonly_field(user_factory):
 
 
 @pytest.mark.django_db
+def test_unfold_admin_readonly_field_special(user_factory):
+    user = user_factory(username="sample@example.com")
+
+    form = ExampleForm(instance=user)
+    form.fields["username"].widget.read_only = True
+
+    readonly_field = UnfoldAdminReadonlyField(
+        form=form,
+        field="username",
+        is_first=True,
+        model_admin=UserAdmin(get_user_model(), UnfoldAdminSite()),
+    )
+
+    assert (
+        readonly_field.contents()
+        == '<input type="text" name="username" value="sample@example.com" maxlength="150">'
+    )
+
+
+@pytest.mark.django_db
 def test_unfold_admin_readonly_preprocess_field_string(user_factory):
     user = user_factory(username="sample@example.com")
     readonly_field = UnfoldAdminReadonlyField(
@@ -99,6 +119,7 @@ def test_unfold_admin_readonly_resolved_field(monkeypatch, user_factory):
     assert not readonly_field.is_json
     assert not readonly_field.is_image
     assert not readonly_field.is_file
+    assert not readonly_field.wrapper_class
     assert "-" == readonly_field.contents()
 
 
