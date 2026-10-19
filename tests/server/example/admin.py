@@ -1139,3 +1139,9 @@ class TaskAdmin(ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(ModelAdmin):
     search_fields = ["name"]
+
+
+@admin.register(Post)
+class PostAdmin(ModelAdmin):
+    list_display = ("title",)
+    ordering_field = "weight"
