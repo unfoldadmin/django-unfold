@@ -596,7 +596,7 @@ wheels = [
 
 [[package]]
 name = "django-unfold"
-version = "0.108.0"
+version = "0.110.0"
 source = { editable = "." }
 dependencies = [
     { name = "django", version = "5.2.17", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-13-django-unfold-django52' or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-django61') or (extra == 'group-13-django-unfold-django60' and extra == 'group-13-django-unfold-djangomain') or (extra == 'group-13-django-unfold-django61' and extra == 'group-13-django-unfold-djangomain')" },
