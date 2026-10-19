@@ -6,6 +6,8 @@ import location_field.models.plain
 from django.conf import settings
 from django.db import migrations, models
 
+import unfold.models.fields
+
 
 class Migration(migrations.Migration):
     initial = True
@@ -190,7 +192,7 @@ class Migration(migrations.Migration):
                     "image",
                     models.ImageField(blank=True, null=True, upload_to="images/"),
                 ),
-                ("data", models.JSONField(blank=True, null=True)),
+                ("data", unfold.models.fields.JSONSchemaField(blank=True, null=True)),
                 (
                     "numeric_single",
                     models.FloatField(
@@ -360,6 +362,19 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name="DialogActionUser",
+            fields=[],
+            options={
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
+            },
+            bases=("example.user",),
+            managers=[
+                ("objects", django.contrib.auth.models.UserManager()),
+            ],
+        ),
+        migrations.CreateModel(
             name="FilterUser",
             fields=[],
             options={
@@ -456,6 +471,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
+            options={
+                "ordering": ["weight", "pk"],
+            },
         ),
         migrations.CreateModel(
             name="Task",
