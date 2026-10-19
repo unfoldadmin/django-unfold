@@ -1,5 +1,5 @@
 from functools import update_wrapper
-from typing import Any, TypedDict
+from typing import TYPE_CHECKING, Any, TypedDict
 
 from django import forms
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
@@ -37,6 +37,9 @@ from unfold.overrides import FORMFIELD_OVERRIDES_INLINE
 from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
+if TYPE_CHECKING:
+    from django_stubs_ext import StrOrPromise
+
 checkbox = UnfoldBooleanWidget(
     {
         "class": "action-select",
@@ -47,7 +50,7 @@ checkbox = UnfoldBooleanWidget(
 
 
 class ListFilterOptionsItem(TypedDict):
-    label: str | None
+    label: "StrOrPromise | None"
     horizontal: bool | None
 
 
