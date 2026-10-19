@@ -24,4 +24,4 @@ jobs:
         with:
           enable-cache: true
       - name: Migrations
-        run: cd tests/server && uv run -- python manage.py makemigrations --check --skip-checks
+        run: cd tests/server && uv run -- python manage.py makemigrations --check
