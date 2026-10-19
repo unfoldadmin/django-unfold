@@ -6,8 +6,7 @@ on:
       - main
   pull_request:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   migrations:
