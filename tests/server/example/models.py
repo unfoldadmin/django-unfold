@@ -189,6 +189,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ["weight", "pk"]
+
 
 class Invoice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

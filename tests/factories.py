@@ -3,13 +3,14 @@ from example.models import (
     Invoice,
     InvoiceItem,
     Label,
+    Post,
     Profile,
     Project,
     Tag,
     Task,
     User,
 )
-from factory import LazyAttribute
+from factory import LazyAttribute, SubFactory
 from factory.django import DjangoModelFactory
 from faker import Faker
 
@@ -61,3 +62,10 @@ class InvoiceItemFactory(DjangoModelFactory):
 class ProfileFactory(DjangoModelFactory):
     class Meta:
         model = Profile
+
+
+class PostFactory(DjangoModelFactory):
+    class Meta:
+        model = Post
+
+    user = SubFactory(UserFactory)
