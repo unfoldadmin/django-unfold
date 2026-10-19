@@ -5,6 +5,7 @@ from django.contrib.admin.options import BaseModelAdmin
 from django.contrib.auth.models import Permission
 from django.core import checks
 from django.core.checks import CheckMessage
+from django.db import OperationalError
 
 from unfold.dataclasses import UnfoldAction
 
@@ -37,15 +38,26 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
                 if "." in permission:
                     app_label, codename = permission.split(".")
 
-                    if not Permission.objects.filter(
-                        content_type__app_label=app_label,
-                        codename=codename,
-                    ).exists():
+                    try:
+                        existing_permission = Permission.objects.filter(
+                            content_type__app_label=app_label,
+                            codename=codename,
+                        ).exists()
+
+                        if not existing_permission:
+                            errors.append(
+                                checks.Error(
+                                    f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",  # type: ignore
+                                    obj=obj.__class__,
+                                    id="admin.E129",
+                                )
+                            )
+                    except OperationalError:
                         errors.append(
-                            checks.Error(
-                                f"@action decorator on {action.method.original_function_name}() in class {obj.__class__.__name__} specifies permission {permission} which does not exists.",  # type: ignore
+                            checks.Warning(
+                                f"Could not check for @action decorator permission {permission} on {action.method.original_function_name}() in class {obj.__class__.__name__} existence because the database is not ready yet.",  # type: ignore
                                 obj=obj.__class__,
-                                id="admin.E129",
+                                id="admin.W129",
                             )
                         )
 
