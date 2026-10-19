@@ -1,4 +1,3 @@
-import warnings
 from functools import update_wrapper
 from typing import Any, TypedDict
 
@@ -61,7 +60,6 @@ class ModelAdmin(
 ):
     action_form = ActionForm
     custom_urls = ()
-    add_fieldsets = ()
     ordering_field = None
     hide_ordering_field = False
     list_filter_submit = False
@@ -145,13 +143,6 @@ class ModelAdmin(
                 list_display.append(self.ordering_field)
 
         return list_display
-
-    def get_fieldsets(
-        self, request: HttpRequest, obj: Model | None = None
-    ) -> list | tuple:
-        if not obj and self.add_fieldsets:
-            return self.add_fieldsets
-        return super().get_fieldsets(request, obj)
 
     def get_custom_urls(self) -> tuple[tuple[str, str, View], ...]:
         """
@@ -266,18 +257,6 @@ class BaseInlineMixin:
     hide_ordering_field = False  # TODO: rename to show_ordering_field
     collapsible = False
     tab = False
-
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        if hasattr(self, "hide_title"):
-            warnings.warn(
-                "'hide_title' is deprecated, please use 'show_title' instead.",
-                FutureWarning,
-                stacklevel=2,
-            )
-
-            self.show_title = not self.hide_title
-
-        super().__init__(*args, **kwargs)
 
 
 class TabularInline(BaseInlineMixin, FormFieldModelAdminMixin, BaseTabularInline):
