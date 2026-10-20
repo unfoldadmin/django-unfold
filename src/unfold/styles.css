@@ -360,7 +360,11 @@ table tr.selected th {
  Selector
  *******************************************************/
 .selector {
-  @apply flex flex-col grow items-center max-w-5xl md:flex-row;
+  @apply flex flex-col grow items-center md:flex-row;
+}
+
+tr:has(.selector) > td.field-tabular {
+  @apply align-top;
 }
 
 .selector .selector-available-title label,
@@ -377,7 +381,11 @@ table tr.selected th {
 }
 
 .selector option {
-  @apply px-3 text-base-500 text-sm truncate dark:text-base-300;
+  @apply px-3 text-base-500 text-sm whitespace-normal wrap-anywhere dark:text-base-300;
+}
+
+.selector option:nth-child(even):not(:checked) {
+  @apply bg-base-100 dark:bg-base-800;
 }
 
 .selector .list-footer-display {
@@ -386,7 +394,7 @@ table tr.selected th {
 
 .selector-chosen,
 .selector-available {
-  @apply border border-base-200 flex flex-col grow rounded-default self-stretch shadow-xs md:w-72 lg:w-96 dark:border-base-700;
+  @apply border border-base-200 flex flex-col grow rounded-default self-stretch shadow-xs md:basis-0 md:min-w-[240px] dark:border-base-700;
 }
 
 .selector-chosen h2,
