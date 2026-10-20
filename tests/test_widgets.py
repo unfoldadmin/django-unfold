@@ -30,6 +30,7 @@ from unfold.widgets import (
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminPasswordWidget,
     UnfoldAdminRadioSelectWidget,
+    UnfoldAdminRelatedFieldWrapperWidget,
     UnfoldAdminSelect2MultipleWidget,
     UnfoldAdminSelect2Widget,
     UnfoldAdminSelectMultipleWidget,
@@ -354,3 +355,31 @@ def test_widgets_array_decompress():
         "test value1",
         "test value2",
     ]
+
+
+def test_widgets_related_field_wrapper_open_related_link():
+    widget = UnfoldAdminRelatedFieldWrapperWidget(
+        UnfoldAdminSelectWidget(),
+        Post._meta.get_field("user").remote_field,
+        UnfoldAdminSite(),
+        can_add_related=False,
+        can_view_related=True,
+    )
+    rendered = widget.render("user", None)
+
+    assert 'id="open_id_user"' in rendered
+    assert 'data-href-template="/admin/example/user/__fk__/change/"' in rendered
+    assert 'target="_blank"' in rendered
+    assert 'aria-disabled="true"' in rendered
+
+
+def test_widgets_related_field_wrapper_without_open_related_link():
+    widget = UnfoldAdminRelatedFieldWrapperWidget(
+        UnfoldAdminSelectWidget(),
+        Post._meta.get_field("user").remote_field,
+        UnfoldAdminSite(),
+        can_add_related=True,
+    )
+    rendered = widget.render("user", None)
+
+    assert 'id="open_id_user"' not in rendered
