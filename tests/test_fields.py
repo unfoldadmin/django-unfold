@@ -397,6 +397,96 @@ def test_unfold_json_schema_field():
     assert "age" in str(e.value)
 
 
+def json_schema_field_schema():
+    return {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+            },
+            "age": {
+                "type": "number",
+            },
+        },
+    }
+
+
+def test_unfold_json_schema_field_successfully_validates_data():
+    field = JSONSchemaField(schema="tests.test_fields.json_schema_field_schema")
+
+    try:
+        field.validate(
+            {
+                "name": "John",
+                "age": 25,
+            },
+            None,
+        )
+    except ValidationError as e:
+        pytest.fail(f"ValidationError raised: {e}")
+
+
+def test_unfold_json_schema_field_invalid_data():
+    field = JSONSchemaField(
+        schema={
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                },
+                "age": {
+                    "type": "number",
+                },
+            },
+        }
+    )
+
+    with pytest.raises(ValidationError) as e:
+        field.validate(
+            {
+                "name": "John",
+                "age": "this_is_string",
+            },
+            None,
+        )
+
+    assert "[\"age: 'this_is_string' is not of type 'number'\"]" in str(e.value)
+
+
+def test_unfold_json_schema_package_not_installed(monkeypatch):
+    import builtins
+
+    field = JSONSchemaField(
+        schema={
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                },
+            },
+        }
+    )
+
+    real_import = builtins.__import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "jsonschema":
+            raise ImportError("No module named 'jsonschema'")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", fake_import)
+
+    try:
+        field.validate(
+            {
+                "name": "John",
+            },
+            None,
+        )
+    except ImportError:
+        pytest.fail("ImportError raised when jsonschema is not installed.")
+
+
 def test_unfold_json_schema_field_import_from_dotted_path():
     with pytest.raises(ImportError) as e:
         JSONSchemaField(schema="example.schemas.UserSchema")
