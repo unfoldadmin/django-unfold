@@ -1152,6 +1152,10 @@ div.jsoneditor-tree,
   @apply font-semibold text-important;
 }
 
+.jedi-legend-warning {
+  @apply ms-2 text-red-600 dark:text-red-500;
+}
+
 /* Messages */
 .jedi-editor-card-body > .jedi-messages-slot .jedi-error-message {
   @apply bg-red-100 leading-[18px] mb-3 px-3 py-2.5 rounded-default text-red-700 dark:bg-red-500/20 dark:text-red-400;
