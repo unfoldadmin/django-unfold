@@ -1,5 +1,6 @@
 from typing import Any
 
+from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Model
@@ -9,6 +10,8 @@ from unfold.fields import UnfoldAdminJSONSchemaField
 
 
 class JSONSchemaField(models.JSONField):
+    schema = {}
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         schema = kwargs.pop("schema", {})
 
@@ -31,7 +34,7 @@ class JSONSchemaField(models.JSONField):
 
         super().__init__(*args, **kwargs)
 
-    def formfield(self, **kwargs: Any) -> UnfoldAdminJSONSchemaField:
+    def formfield(self, **kwargs: Any) -> forms.Field | None:
         defaults = {
             "form_class": UnfoldAdminJSONSchemaField,
             "schema": self.schema,
@@ -41,9 +44,6 @@ class JSONSchemaField(models.JSONField):
 
     def validate(self, value: Any, model_instance: Model | None) -> None:
         super().validate(value, model_instance)
-
-        if not self.schema:
-            return
 
         try:
             import jsonschema
