@@ -1,8 +1,10 @@
 from datetime import timedelta
+from html.parser import HTMLParser
 from http import HTTPStatus
 
 import pytest
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 from example.models import (
@@ -18,6 +20,7 @@ from example.models import (
 )
 
 from unfold.contrib.filters.admin import (
+    BooleanRadioFilter,
     RangeDateFilter,
     RangeDateTimeFilter,
     RangeNumericFilter,
@@ -548,27 +551,133 @@ def test_filters_choices_checkbox(admin_client, user_factory, facet):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("facet", [True, False])
-def test_filters_choices_boolean_radio(admin_client, user_factory, facet):
+@pytest.mark.parametrize(
+    "value, expected, not_expected",
+    [
+        (None, ["sample1@example.com", "sample2@example.com"], []),
+        ("", ["sample1@example.com", "sample2@example.com"], []),
+        ("1", ["sample1@example.com"], ["sample2@example.com"]),
+        ("0", ["sample2@example.com"], ["sample1@example.com"]),
+    ],
+)
+def test_filters_choices_boolean_radio(
+    admin_client, user_factory, facet, value, expected, not_expected
+):
     user_factory.create(username="sample1@example.com", is_active=True)
     user_factory.create(username="sample2@example.com", is_active=False)
+    user_factory.create(username="staff@example.com", is_active=True, is_staff=True)
     response = admin_client.get(
         reverse_lazy("admin:example_filteruser_changelist"),
         data={
-            "is_active__exact": 1,
+            **({"is_active__exact": value} if value is not None else {}),
+            "is_staff__exact": "0",
             **({"_facets": "True"} if facet else {}),
         },
     )
     assert response.status_code == HTTPStatus.OK
 
-    assert (
-        response.context_data["cl"]
-        .queryset.filter(username="sample1@example.com")
-        .exists()
-    )
+    for username in expected:
+        assert response.context_data["cl"].queryset.filter(username=username).exists()
+    for username in not_expected:
+        assert (
+            not response.context_data["cl"].queryset.filter(username=username).exists()
+        )
     assert (
         not response.context_data["cl"]
-        .queryset.filter(username="sample2@example.com")
+        .queryset.filter(username="staff@example.com")
         .exists()
+    )
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("value, expected", [("1", {"active"}), ("0", {"inactive"})])
+def test_filters_boolean_radio_submit_after_all(
+    admin_client, user_factory, value, expected
+):
+    user_factory(username="active", is_active=True)
+    user_factory(username="inactive", is_active=False)
+    url = reverse_lazy("admin:example_filteruser_changelist")
+    response = admin_client.get(url, {"is_active__exact": "", "is_staff__exact": "0"})
+    assert response.status_code == HTTPStatus.OK
+    submitted = []
+
+    class FilterFormParser(HTMLParser):
+        in_filter_form = False
+
+        def handle_starttag(self, tag, attrs):
+            attrs = dict(attrs)
+            if tag == "form":
+                self.in_filter_form = attrs.get("id") == "filter-form"
+            if (
+                self.in_filter_form
+                and tag == "input"
+                and attrs.get("name") == "is_active__exact"
+            ):
+                if attrs.get("type") == "hidden" or attrs.get("value") == value:
+                    submitted.append(attrs.get("value", ""))
+
+        def handle_endtag(self, tag):
+            if tag == "form":
+                self.in_filter_form = False
+
+    FilterFormParser().feed(response.content.decode())
+    response = admin_client.get(
+        url, {"is_active__exact": submitted, "is_staff__exact": "0"}
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    assert (
+        set(response.context_data["cl"].queryset.values_list("username", flat=True))
+        == expected
+    )
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "params, expected",
+    [
+        ({}, {"active", "inactive", "unknown"}),
+        ({"nullable_active__exact": ""}, {"active", "inactive", "unknown"}),
+        ({"nullable_active__exact": "1"}, {"active"}),
+        ({"nullable_active__exact": "0"}, {"inactive"}),
+        ({"nullable_active__isnull": "True"}, {"unknown"}),
+        ({"nullable_active__isnull": "False"}, {"active", "inactive"}),
+        (
+            {"nullable_active__exact": "", "nullable_active__isnull": "True"},
+            {"unknown"},
+        ),
+    ],
+)
+def test_filters_boolean_radio_nullable(
+    admin_request, user_model_admin, user_factory, params, expected
+):
+    user_factory(username="active", is_active=True)
+    user_factory(username="inactive", is_active=False)
+    user_factory(username="unknown")
+    field = models.BooleanField("Nullable active", null=True)
+    queryset = (
+        get_user_model()
+        .objects.filter(username__in=["active", "inactive", "unknown"])
+        .annotate(
+            nullable_active=models.Case(
+                models.When(username="unknown", then=models.Value(None)),
+                default="is_active",
+                output_field=field,
+            )
+        )
+    )
+    spec = BooleanRadioFilter(
+        field,
+        admin_request,
+        {key: [value] for key, value in params.items()},
+        get_user_model(),
+        user_model_admin,
+        "nullable_active",
+    )
+
+    assert (
+        set(spec.queryset(admin_request, queryset).values_list("username", flat=True))
+        == expected
     )
 
 
