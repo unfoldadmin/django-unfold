@@ -1,7 +1,10 @@
 from collections.abc import Iterator
 
 from django.contrib import admin
+from django.contrib.admin.utils import build_q_object_from_lookup_parameters
 from django.contrib.admin.views.main import ChangeList
+from django.db.models import QuerySet
+from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 
 from unfold.contrib.filters.admin.mixins import (
@@ -68,6 +71,15 @@ class BooleanRadioFilter(ValueMixin, admin.BooleanFieldListFilter):
     template = "unfold/filters/filters_field.html"
     form_class = HorizontalRadioForm
     all_option = ["", _("All")]
+
+    def queryset(self, request: HttpRequest, queryset: QuerySet) -> QuerySet | None:
+        if self.value() == "":
+            # Keep the consumed parameter so preserve_filters does not duplicate it.
+            parameters = self.used_parameters.copy()
+            parameters.pop(self.lookup_kwarg, None)
+            return queryset.filter(build_q_object_from_lookup_parameters(parameters))
+
+        return super().queryset(request, queryset)
 
     def choices(self, changelist: ChangeList) -> Iterator:
         add_facets = getattr(changelist, "add_facets", False)
