@@ -1,6 +1,37 @@
 # CHANGELOG
 
 
+## v0.110.1 (2026-11-01)
+
+### Bug Fixes
+
+- Action check permission if table does not exists
+  ([#2354](https://github.com/unfoldadmin/django-unfold/pull/2354),
+  [`4649cfb`](https://github.com/unfoldadmin/django-unfold/commit/4649cfb20f5917c9d5b566a43f6e86dfbd086335))
+
+- Boolean filter in rtl ([#2357](https://github.com/unfoldadmin/django-unfold/pull/2357),
+  [`5691c1e`](https://github.com/unfoldadmin/django-unfold/commit/5691c1e0391911e379efc6f3dd6c309696224b5e))
+
+- Check dataset action permissions ([#2346](https://github.com/unfoldadmin/django-unfold/pull/2346),
+  [`4651975`](https://github.com/unfoldadmin/django-unfold/commit/4651975fc39ead3dcc03f1f29264a648a9213a8b))
+
+- Filter button in rtl ([#2342](https://github.com/unfoldadmin/django-unfold/pull/2342),
+  [`fe046b8`](https://github.com/unfoldadmin/django-unfold/commit/fe046b88f91d7def3f9433b55b079d7077639b93))
+
+- Filter options types ([#2356](https://github.com/unfoldadmin/django-unfold/pull/2356),
+  [`dbcce71`](https://github.com/unfoldadmin/django-unfold/commit/dbcce715b7318713b498736153a9f4b12cd044b3))
+
+- Filter panel in rtl ([#2349](https://github.com/unfoldadmin/django-unfold/pull/2349),
+  [`2a2acfb`](https://github.com/unfoldadmin/django-unfold/commit/2a2acfbc05aab76393c57bfd987b483502c69fd7))
+
+- Jsonschema warning icon color ([#2360](https://github.com/unfoldadmin/django-unfold/pull/2360),
+  [`ea20614`](https://github.com/unfoldadmin/django-unfold/commit/ea206143f7e46e912cb828d1680686eef62b4a75))
+
+- Tabular nums for price formatting decorator
+  ([#2355](https://github.com/unfoldadmin/django-unfold/pull/2355),
+  [`b8cfd28`](https://github.com/unfoldadmin/django-unfold/commit/b8cfd28e2954364838e5a91c39974f930d5ffbb4))
+
+
 ## v0.110.0 (2026-10-13)
 
 ### Features
