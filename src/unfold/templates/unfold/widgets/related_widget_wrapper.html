@@ -51,6 +51,18 @@
                             </template>
                         </div>
                     {% endif %}
+
+                    {% if can_view_related or can_change_related %}
+                        <a class="open-related cursor-pointer flex items-center h-[38px] justify-center ml-1 opacity-50 pointer-events-none rounded-default select-none shrink-0 text-base-400 text-sm w-[38px] hover:text-base-700 dark:text-base-500 dark:hover:text-base-200 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600"
+                           id="open_id_{{ name }}"
+                           data-href-template="{{ change_related_template_url }}"
+                           target="_blank"
+                           rel="noopener"
+                           aria-disabled="true"
+                           title="{% blocktranslate %}Open selected {{ model }} in a new tab{% endblocktranslate %}">
+                            <span class="material-symbols-outlined">open_in_new</span>
+                        </a>
+                    {% endif %}
                 {% endif %}
             {% endspaceless %}
         {% endblock %}
