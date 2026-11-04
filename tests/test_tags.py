@@ -457,6 +457,25 @@ def test_tags_do_component():
     assert "Sample button title" in response
 
 
+@pytest.mark.parametrize(
+    "variant, css_class",
+    [
+        (ActionVariant.DEFAULT, "bg-white"),
+        (ActionVariant.PRIMARY, "bg-primary-600"),
+        (ActionVariant.SUCCESS, "bg-green-600"),
+        (ActionVariant.INFO, "bg-blue-600"),
+        (ActionVariant.WARNING, "bg-orange-600"),
+        (ActionVariant.DANGER, "bg-red-600"),
+    ],
+)
+def test_tags_do_component_button_variant(variant, css_class):
+    response = Template(
+        '{% load unfold %} {% component "unfold/components/button.html" with variant=variant %}{% endcomponent %}'
+    ).render(Context({"variant": variant.value}))
+
+    assert css_class in response
+
+
 @pytest.mark.django_db
 def test_tags_do_component_class():
     @register_component
