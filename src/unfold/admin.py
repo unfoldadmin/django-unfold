@@ -13,7 +13,7 @@ from django.contrib.contenttypes.admin import (
 from django.contrib.contenttypes.admin import (
     GenericTabularInline as BaseGenericTabularInline,
 )
-from django.db.models import BLANK_CHOICE_DASH, Model
+from django.db.models import Model
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
 from django.utils.safestring import SafeString, mark_safe
@@ -38,6 +38,7 @@ from unfold.views import ChangeList
 from unfold.widgets import UnfoldBooleanWidget
 
 if TYPE_CHECKING:
+    from django.contrib.admin import ActionLocation
     from django_stubs_ext import StrOrPromise
 
 checkbox = UnfoldBooleanWidget(
@@ -217,10 +218,19 @@ class ModelAdmin(
     def get_action_choices(
         self,
         request: HttpRequest,
-        default_choices: list[tuple[str, str]] = BLANK_CHOICE_DASH,
+        default_choices: list[tuple[str, str]] | None = None,
+        action_location: "ActionLocation | None" = None,
     ) -> list[tuple[str, str]]:
-        default_choices = [("", _("Select action"))]
-        return super().get_action_choices(request, default_choices)
+        if default_choices is None:
+            default_choices = [("", _("Select action"))]
+
+        # Django < 6.1 has no action_location parameter and never passes it
+        if action_location is None:
+            return super().get_action_choices(request, default_choices)
+
+        return super().get_action_choices(
+            request, default_choices, action_location=action_location
+        )
 
     @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
     def action_checkbox(self, obj: Model) -> SafeString:

@@ -1,6 +1,9 @@
+import warnings
 from http import HTTPStatus
 
+import django
 import pytest
+from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 
@@ -841,3 +844,83 @@ def test_submit_line_multiple_different_permissions(client, admin_user):
         "Submit line action with multiple different permissions successfully executed"
         not in response.content.decode()
     )
+
+
+######################################################################
+# Action choices
+######################################################################
+def changelist_only_action(modeladmin, request, queryset):
+    pass
+
+
+class ActionChoicesModelAdmin(ModelAdmin):
+    actions = [changelist_only_action]
+
+
+@pytest.mark.django_db
+def test_action_choices(admin_request):
+    model_admin = ActionChoicesModelAdmin(model=User, admin_site=UnfoldAdminSite())
+    choices = model_admin.get_action_choices(admin_request)
+
+    assert choices[0] == ("", "Select action")
+    assert [name for name, _ in choices] == [
+        "",
+        "delete_selected",
+        "changelist_only_action",
+    ]
+
+
+@pytest.mark.django_db
+def test_action_choices_custom_default_choices(admin_request):
+    model_admin = ActionChoicesModelAdmin(model=User, admin_site=UnfoldAdminSite())
+    choices = model_admin.get_action_choices(
+        admin_request, default_choices=[("", "Custom placeholder")]
+    )
+
+    assert choices[0] == ("", "Custom placeholder")
+
+
+@pytest.mark.django_db
+@pytest.mark.skipif(
+    django.VERSION[:2] < (6, 1),
+    reason="Requires Django >= 6.1",
+)
+def test_action_choices_action_location(admin_request):
+    from django.contrib.admin import ActionLocation
+
+    @admin.action(location=ActionLocation.CHANGE_FORM)
+    def changeform_only_action(modeladmin, request, queryset):
+        pass
+
+    class SampleModelAdmin(ModelAdmin):
+        actions = [changelist_only_action, changeform_only_action]
+
+    model_admin = SampleModelAdmin(model=User, admin_site=UnfoldAdminSite())
+    changelist_choices = model_admin.get_action_choices(
+        admin_request, action_location=ActionLocation.CHANGE_LIST
+    )
+    changeform_choices = model_admin.get_action_choices(
+        admin_request, action_location=ActionLocation.CHANGE_FORM
+    )
+
+    assert [name for name, _ in changelist_choices] == [
+        "",
+        "delete_selected",
+        "changelist_only_action",
+    ]
+    assert changeform_choices[0] == ("", "Select action")
+    assert [name for name, _ in changeform_choices] == ["", "changeform_only_action"]
+
+
+@pytest.mark.django_db
+@pytest.mark.skipif(
+    django.VERSION[:2] < (6, 1),
+    reason="Requires Django >= 6.1",
+)
+def test_action_choices_no_deprecation_warning(admin_client):
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        response = admin_client.get(reverse_lazy("admin:example_actionuser_changelist"))
+
+    assert response.status_code == HTTPStatus.OK
+    assert not [w for w in caught if "get_action_choices()" in str(w.message)]
