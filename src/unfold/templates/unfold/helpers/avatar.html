@@ -11,8 +11,11 @@
                 {% endif %}
                 {% if circle %}rounded-full after:rounded-full{% else %}rounded-default after:rounded-default{% endif %}"
          {% if avatar_url %}style="background-image: url('{{ avatar_url }}');"{% endif %}>
+        
         {% if not avatar_url %}
-            {{ user.get_full_name.0|default:user.get_username.0|upper }}
+            {% with full_name=user.get_full_name|stringformat:"s" username=user.get_username|stringformat:"s" %}
+                {{ full_name|default:username|first|upper }}
+            {% endwith %}
         {% endif %}
 
         {% if badge_count or badge_variant %}
