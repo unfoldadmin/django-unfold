@@ -237,6 +237,12 @@ def test_filters_multiple_related_dropdown_choices(
             [],
         ],
         [
+            now().date(),
+            now().date(),
+            ["sample1@example.com"],
+            [],
+        ],
+        [
             now().date() + timedelta(days=1),
             now().date() + timedelta(days=2),
             [],
