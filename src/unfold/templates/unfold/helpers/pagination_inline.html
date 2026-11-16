@@ -7,7 +7,7 @@
         <input type="hidden" name="{{ pagination_key }}" value="{{ page_obj.number }}" />
 
         {% if page_obj.paginator.count and page_obj.paginator.num_pages > 1 %}
-            <div class="inline-pagination flex items-center gap-2 ml-auto">
+            <div class="inline-pagination flex items-center gap-2 ms-auto">
                 {% for i in elided_page_range %}
                     {% if i == page_obj.paginator.ELLIPSIS %}
                         <span>{{ page_obj.paginator.ELLIPSIS }}</span>
