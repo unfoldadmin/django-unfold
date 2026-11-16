@@ -592,6 +592,10 @@ fieldset details > summary:after {
   content: "expand_more";
 }
 
+[dir="rtl"] fieldset details > summary:after {
+  @apply left-3 right-auto;
+}
+
 fieldset details[open] > summary {
   @apply mb-4;
 }
