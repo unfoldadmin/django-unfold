@@ -19,6 +19,12 @@ class="font-medium inline-flex group items-center gap-1 relative rounded-default
     bg-base-100 border border-transparent text-important dark:bg-base-800 {% if not attrs.disabled %}hover:bg-base-100/80 dark:hover:bg-base-800/80{% endif %}
 {% elif variant == "danger" %}
     border border-red-600 bg-red-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-red-600/80{% endif %}
+{% elif variant == "success" %}
+    border bg-green-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-green-600/80{% endif %}
+{% elif variant == "info" %}
+    border bg-blue-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-blue-600/80{% endif %}
+{% elif variant == "warning" %}
+    border bg-orange-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-orange-600/80{% endif %}
 {% else %}
     border border-base-200 bg-primary-600 border-transparent text-white {% if not attrs.disabled %}hover:bg-primary-600/80{% endif %}
 {% endif %}

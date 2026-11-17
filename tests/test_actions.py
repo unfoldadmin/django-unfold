@@ -1,3 +1,4 @@
+import re
 from http import HTTPStatus
 
 import pytest
@@ -653,6 +654,22 @@ def test_submit_line(client, admin_user):
 
     assert response.status_code == HTTPStatus.OK
     assert "Submit line action successfully executed" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_submit_line_variant(client, admin_user):
+    client.force_login(admin_user)
+    response = client.get(
+        reverse_lazy("admin:example_actionuser_change", args=(admin_user.pk,))
+    )
+    assert response.status_code == HTTPStatus.OK
+
+    button = re.search(
+        r'<button[^>]*name="example_actionuser_submit_line_action_variant"[^>]*>',
+        response.content.decode(),
+    )
+    assert button is not None
+    assert "bg-green-600" in button.group(0)
 
 
 @pytest.mark.django_db

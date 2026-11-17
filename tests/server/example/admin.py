@@ -73,6 +73,7 @@ from unfold.contrib.inlines.admin import NonrelatedTabularInline
 from unfold.contrib.waffle.admin import FlagAdmin as BaseFlagAdmin
 from unfold.datasets import BaseDataset
 from unfold.decorators import action, display
+from unfold.enums import ActionVariant
 from unfold.forms import (
     AdminPasswordChangeForm,
     BaseDialogForm,
@@ -744,6 +745,7 @@ class ActionsUserAdmin(BaseUserAdmin, ModelAdmin):
         "submit_line_action_permission_true",
         "submit_line_action_permission_false",
         "submit_line_action_multiple_different_permissions",
+        "submit_line_action_variant",
     ]
 
     ######################################################################
@@ -1017,6 +1019,10 @@ class ActionsUserAdmin(BaseUserAdmin, ModelAdmin):
     @action(description="Submit line action")
     def submit_line_action(self, request, obj):
         messages.success(request, "Submit line action successfully executed")
+
+    @action(description="Submit line action variant", variant=ActionVariant.SUCCESS)
+    def submit_line_action_variant(self, request, obj):
+        pass
 
     @action(
         description="Submit line action with mixed permissions true",

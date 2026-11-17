@@ -12,7 +12,7 @@
                 {% endif %}
 
                 {% for action in actions_submit_line %}
-                    {% component "unfold/components/button.html" with submit=1 form=opts.model_name|add:"_form" name=action.attrs.name|default:action.action_name variant="default" class="w-full lg:w-auto" attrs=action.attrs %}
+                    {% component "unfold/components/button.html" with submit=1 form=opts.model_name|add:"_form" name=action.attrs.name|default:action.action_name variant=action.variant.value|default:"default" class="w-full lg:w-auto" attrs=action.attrs %}
                         {% if action.icon %}
                             <span class="material-symbols-outlined">
                                 {{ action.icon }}
