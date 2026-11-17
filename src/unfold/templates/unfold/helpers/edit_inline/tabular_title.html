@@ -7,7 +7,7 @@
                 {% if inline_admin_form.original or inline_admin_form.show_url %}
                     <p class="group/title flex font-medium items-center px-3 text-xs py-2 lg:pb-0 lg:pt-2">
                         {% if inline_admin_form.original %}
-                            <span class="{% if inline_admin_form.form.nested_formsets and inline_admin_formset.opts.ordering_field %}ml-[12px]{% endif %}">
+                            <span class="{% if inline_admin_form.form.nested_formsets and inline_admin_formset.opts.ordering_field %}ms-[12px]{% endif %}">
                                 {% with inline_title=inline_admin_form.original.get_inline_title %}
                                     {% if inline_title %}
                                         {{ inline_title }}
