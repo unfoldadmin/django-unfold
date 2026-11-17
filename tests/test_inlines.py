@@ -4,7 +4,7 @@ import pytest
 from django.contrib.auth.models import Permission
 from django.core.exceptions import ValidationError
 from django.urls import reverse
-from example.admin import UserTagInline
+from example.admin import UserInvoiceInline, UserTagInline
 from example.models import Invoice, InvoiceItem
 
 from .factories import TagFactory
@@ -55,6 +55,32 @@ def test_inline_pagination_one_relationship(client, admin_user):
     response = client.get(reverse("admin:example_user_change", args=(admin_user.pk,)))
     assert response.status_code == HTTPStatus.OK
     assert "user-tag" not in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_inline_tab_id_mixed_case_prefix(client, admin_user):
+    # M2M through model inlines get a mixed-case prefix ("User_tags"), while
+    # the tab link uses the slugified prefix ("#user_tags").
+    client.force_login(admin_user)
+    response = client.get(reverse("admin:example_user_change", args=(admin_user.pk,)))
+    content = response.content.decode()
+
+    assert response.status_code == HTTPStatus.OK
+    assert 'href="#user_tags"' in content
+    assert 'data-tab-id="user_tags"' in content
+    assert 'id="User_tags-group"' in content
+
+
+@pytest.mark.django_db
+def test_inline_tab_id_tabular(client, admin_user, monkeypatch):
+    monkeypatch.setattr(UserInvoiceInline, "tab", True, raising=False)
+    client.force_login(admin_user)
+    response = client.get(reverse("admin:example_user_change", args=(admin_user.pk,)))
+    content = response.content.decode()
+
+    assert response.status_code == HTTPStatus.OK
+    assert 'data-tab-id="invoice_set"' in content
+    assert 'id="invoice_set-group"' in content
 
 
 @pytest.mark.django_db
