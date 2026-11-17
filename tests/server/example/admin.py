@@ -715,6 +715,7 @@ class ActionsUserAdmin(BaseUserAdmin, ModelAdmin):
     ]
     actions_row = [
         "changelist_row_action",
+        "changelist_row_action_variant",
         "changelist_row_action_mixed_permissions_true",
         "changelist_row_action_mixed_permissions_false",
         "changelist_row_action_mixed_permissions_perm_not_granted",
@@ -841,6 +842,14 @@ class ActionsUserAdmin(BaseUserAdmin, ModelAdmin):
     def changelist_row_action(self, request, object_id):
         messages.success(request, "Changelist row action successfully executed")
         return redirect(reverse_lazy("admin:example_user_changelist"))
+
+    @action(
+        description="Changelist row action variant",
+        variant=ActionVariant.SUCCESS,
+        extra_options={"display_in_dropdown": False},
+    )
+    def changelist_row_action_variant(self, request, object_id):
+        pass
 
     @action(
         description="Changelist row action with mixed permissions true",

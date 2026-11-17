@@ -274,6 +274,20 @@ def test_actions_row(client, admin_user):
 
 
 @pytest.mark.django_db
+def test_actions_row_variant(client, admin_user):
+    client.force_login(admin_user)
+    response = client.get(reverse_lazy("admin:example_actionuser_changelist"))
+    assert response.status_code == HTTPStatus.OK
+
+    button = re.search(
+        r'<a href="[^"]*/changelist_row_action_variant/"[^>]*>',
+        response.content.decode(),
+    )
+    assert button is not None
+    assert "bg-green-600" in button.group(0)
+
+
+@pytest.mark.django_db
 def test_actions_row_mixed_permissions_true(client, staff_user):
     client.force_login(staff_user)
     response = client.get(reverse_lazy("admin:example_actionuser_changelist"))
