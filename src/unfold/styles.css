@@ -245,7 +245,7 @@
 }
 
 .errorlist {
-  @apply *:before:align-bottom *:before:content-['warning'] *:before:material-symbols-outlined *:before:mr-1;
+  @apply *:before:align-bottom *:before:content-['warning'] *:before:material-symbols-outlined *:before:mr-1 rtl:*:before:mr-0 rtl:*:before:ml-1;
 }
 
 [x-cloak] {
