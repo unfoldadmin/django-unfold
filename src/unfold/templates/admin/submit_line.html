@@ -45,7 +45,7 @@
                     {% endcomponent %}
                 {% endif %}
 
-                <div class="flex flex-col gap-3 mr-auto w-full lg:flex-row lg:w-auto">
+                <div class="flex flex-col gap-3 me-auto w-full lg:flex-row lg:w-auto">
                     {% if show_close or adminform.model_admin.change_form_show_cancel_button %}
                         {% url opts|admin_urlname:'changelist' as changelist_url %}
                         {% add_preserved_filters changelist_url as link %}

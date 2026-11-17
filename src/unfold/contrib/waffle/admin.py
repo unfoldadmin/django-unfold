@@ -21,7 +21,7 @@ class FlagAdmin(BaseFlagAdmin, ModelAdmin):
 
     def formfield_for_dbfield(
         self, db_field: Field, request: HttpRequest, **kwargs: Any
-    ) -> FormField | None:
+    ) -> FormField | None:  # ty: ignore[invalid-method-override]
         # Skip the implementation of the method in the waffle
         return super(ModelAdmin, self).formfield_for_dbfield(
             db_field, request, **kwargs

@@ -20,7 +20,7 @@
     {% endfor %}
 
     {% if horizontal %}
-        <nav class="border border-base-200 flex flex-col font-medium shadow-xs gap-1 p-1 rounded-default text-important w-full dark:border-base-700 md:w-auto lg:flex-row *:flex *:flex-row *:gap-1 *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[4px] *:rounded-default *:hover:bg-base-50 *:dark:hover:bg-white/[.06] [&>.active]:bg-base-100 [&>.active]:dark:bg-base-700 [&>.active]:hover:bg-base-100 [&>.active]:dark:hover:bg-base-700">
+        <nav class="border border-base-200 flex flex-col font-medium shadow-xs gap-0.5 p-1 rounded-default text-important w-full dark:border-base-700 md:w-auto lg:flex-row *:flex *:flex-row *:gap-1 *:font-medium *:whitespace-nowrap *:items-center *:px-2.5 *:py-[4px] *:rounded-default *:hover:bg-base-50 *:dark:hover:bg-white/[.06] [&>.active]:bg-base-100 [&>.active]:dark:bg-base-700 [&>.active]:hover:bg-base-100 [&>.active]:dark:hover:bg-base-700">
             {% if has_label %}
                 {% if label %}
                     <span class="font-semibold text-important hover:!bg-transparent">
@@ -43,7 +43,7 @@
         {% if spec|class_name == "BooleanFieldListFilter" or spec.horizontal %}
             <ul class="border border-base-200 flex min-w-20 rounded-default shadow-xs text-default dark:border-base-700 w-full dark:bg-base-900">
                 {% for choice in choices %}
-                    <li class="basis-1/3 border-r border-base-200 grow truncate last:border-r-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
+                    <li class="basis-1/3 border-e border-base-200 grow truncate last:border-e-0 dark:border-base-700 {% if choice.selected %}font-semibold text-primary-600 dark:text-primary-500 {% else %}hover:text-base-700 dark:hover:text-base-200{% endif %}">
                         <a href="{{ choice.query_string|iriencode }}" title="{{ choice.display }}" class="block py-2 text-center hover:text-primary-600 dark:hover:text-primary-500">
                             {{ choice.display }}
                         </a>

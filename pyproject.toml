@@ -1,6 +1,6 @@
 [project]
 name = "django-unfold"
-version = "0.110.0"
+version = "0.110.1"
 description = "Modern Django Admin"
 authors = []
 requires-python = ">=3.12,<4.0"
@@ -27,6 +27,14 @@ classifiers = [
 ]
 dependencies = ["django>=5.2"]
 
+[project.optional-dependencies]
+pygments = [
+  "pygments",
+]
+jsonschema = [
+  "jsonschema",
+]
+
 [project.urls]
 Homepage = "https://unfoldadmin.com"
 Documentation = "https://unfoldadmin.com/docs/"
@@ -48,7 +56,7 @@ dev = [
     "django-simple-history~=3.13.0",
     "django-stubs~=6.1.1",
     "django-waffle~=5.0.0",
-    "pillow~=12.3.0",
+    "pillow>=12.3,<13.1",
     "pytest~=9.1.1",
     "pytest-cov~=7.1.0",
     "pytest-django~=4.12.0",

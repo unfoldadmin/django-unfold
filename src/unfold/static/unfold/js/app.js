@@ -681,6 +681,8 @@ function numericRangeFilter() {
 			const inputTo = wrapper.querySelectorAll("input[type=number]")[1];
 			const inputFrom = wrapper.querySelectorAll("input[type=number]")[0];
 			const rangeTo = wrapper.querySelectorAll("input[type=range]")[1];
+			const gradientDirection =
+				getComputedStyle(rangeTo).direction === "rtl" ? "left" : "right";
 
 			function recalculateActiveRange() {
 				const rangeDistance = inputTo.max - inputTo.min;
@@ -688,7 +690,7 @@ function numericRangeFilter() {
 				const toPosition = inputTo.value - inputTo.min;
 
 				rangeTo.style.background = `linear-gradient(
-				to right,
+				to ${gradientDirection},
 				transparent 0%,
 				transparent ${(fromPosition / rangeDistance) * 100}%,
 				var(--color-primary-500) ${(fromPosition / rangeDistance) * 100}%,

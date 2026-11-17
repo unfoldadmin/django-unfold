@@ -245,7 +245,7 @@
 }
 
 .errorlist {
-  @apply *:before:align-bottom *:before:content-['warning'] *:before:material-symbols-outlined *:before:mr-1;
+  @apply *:before:align-bottom *:before:content-['warning'] *:before:material-symbols-outlined *:before:mr-1 rtl:*:before:mr-0 rtl:*:before:ml-1;
 }
 
 [x-cloak] {
@@ -590,6 +590,10 @@ fieldset details > summary {
 fieldset details > summary:after {
   @apply material-symbols-outlined absolute cursor-pointer right-3 top-2.5;
   content: "expand_more";
+}
+
+[dir="rtl"] fieldset details > summary:after {
+  @apply left-3 right-auto;
 }
 
 fieldset details[open] > summary {
@@ -1150,6 +1154,10 @@ div.jsoneditor-tree,
 
 .jedi-editor-legend label {
   @apply font-semibold text-important;
+}
+
+.jedi-legend-warning {
+  @apply ms-2 text-red-600 dark:text-red-500;
 }
 
 /* Messages */

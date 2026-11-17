@@ -5,6 +5,7 @@ from .factories import (
     InvoiceFactory,
     InvoiceItemFactory,
     LabelFactory,
+    PostFactory,
     ProfileFactory,
     ProjectFactory,
     TagFactory,
@@ -22,3 +23,4 @@ register(CategoryFactory)
 register(InvoiceFactory)
 register(InvoiceItemFactory)
 register(ProfileFactory)
+register(PostFactory)

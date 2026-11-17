@@ -235,6 +235,7 @@ def items_for_result(  # noqa: PLR0915, PLR0912
 
                 if formatting == "price":
                     row_classes.append("!text-end")
+                    row_classes.append("tabular-nums")
 
                 if label:
                     result_repr = display_for_label(value, empty_value_display, label)

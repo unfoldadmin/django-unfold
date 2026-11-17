@@ -52,6 +52,26 @@ def test_unfold_admin_readonly_field(user_factory):
 
 
 @pytest.mark.django_db
+def test_unfold_admin_readonly_field_special(user_factory):
+    user = user_factory(username="sample@example.com")
+
+    form = ExampleForm(instance=user)
+    form.fields["username"].widget.read_only = True
+
+    readonly_field = UnfoldAdminReadonlyField(
+        form=form,
+        field="username",
+        is_first=True,
+        model_admin=UserAdmin(get_user_model(), UnfoldAdminSite()),
+    )
+
+    assert (
+        readonly_field.contents()
+        == '<input type="text" name="username" value="sample@example.com" maxlength="150">'
+    )
+
+
+@pytest.mark.django_db
 def test_unfold_admin_readonly_preprocess_field_string(user_factory):
     user = user_factory(username="sample@example.com")
     readonly_field = UnfoldAdminReadonlyField(
@@ -99,6 +119,7 @@ def test_unfold_admin_readonly_resolved_field(monkeypatch, user_factory):
     assert not readonly_field.is_json
     assert not readonly_field.is_image
     assert not readonly_field.is_file
+    assert not readonly_field.wrapper_class
     assert "-" == readonly_field.contents()
 
 
@@ -374,6 +395,96 @@ def test_unfold_json_schema_field():
         user.full_clean()
 
     assert "age" in str(e.value)
+
+
+def json_schema_field_schema():
+    return {
+        "type": "object",
+        "properties": {
+            "name": {
+                "type": "string",
+            },
+            "age": {
+                "type": "number",
+            },
+        },
+    }
+
+
+def test_unfold_json_schema_field_successfully_validates_data():
+    field = JSONSchemaField(schema="tests.test_fields.json_schema_field_schema")
+
+    try:
+        field.validate(
+            {
+                "name": "John",
+                "age": 25,
+            },
+            None,
+        )
+    except ValidationError as e:
+        pytest.fail(f"ValidationError raised: {e}")
+
+
+def test_unfold_json_schema_field_invalid_data():
+    field = JSONSchemaField(
+        schema={
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                },
+                "age": {
+                    "type": "number",
+                },
+            },
+        }
+    )
+
+    with pytest.raises(ValidationError) as e:
+        field.validate(
+            {
+                "name": "John",
+                "age": "this_is_string",
+            },
+            None,
+        )
+
+    assert "[\"age: 'this_is_string' is not of type 'number'\"]" in str(e.value)
+
+
+def test_unfold_json_schema_package_not_installed(monkeypatch):
+    import builtins
+
+    field = JSONSchemaField(
+        schema={
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                },
+            },
+        }
+    )
+
+    real_import = builtins.__import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "jsonschema":
+            raise ImportError("No module named 'jsonschema'")
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", fake_import)
+
+    try:
+        field.validate(
+            {
+                "name": "John",
+            },
+            None,
+        )
+    except ImportError:
+        pytest.fail("ImportError raised when jsonschema is not installed.")
 
 
 def test_unfold_json_schema_field_import_from_dotted_path():

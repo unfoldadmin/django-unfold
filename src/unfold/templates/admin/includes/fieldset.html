@@ -1,6 +1,6 @@
 {% load unfold %}
 
-<fieldset class="module relative {% if stacked == 1 %}border-l border-base-200 ml-3 dark:before:bg-striped-dark dark:border-base-800  before:content-[''] before:block before:h-full before:bg-striped before:absolute before:-left-3 before:top-0 before:w-3{% endif %} {% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
+<fieldset class="module relative {% if stacked == 1 %}border-s border-base-200 ms-3 dark:before:bg-striped-dark dark:border-base-800  before:content-[''] before:block before:h-full before:bg-striped before:absolute before:-start-3 before:top-0 before:w-3{% endif %} {% if fieldset.classes %} {{ fieldset.classes }}{% endif %}" {% if stacked != 1 %}x-show="activeTab == 'general'"{% endif %}>
     {% if fieldset.is_collapsible %}<details><summary>{% endif %}
 
     {% if stacked == 1 %}
