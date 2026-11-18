@@ -58,6 +58,15 @@ def test_inline_pagination_one_relationship(client, admin_user):
 
 
 @pytest.mark.django_db
+def test_tabular_inline_heading_visible_on_small_screens(client, admin_user):
+    client.force_login(admin_user)
+
+    response = client.get(reverse("admin:example_user_change", args=(admin_user.pk,)))
+    assert response.status_code == HTTPStatus.OK
+    assert '<thead class="hidden' not in response.content.decode()
+
+
+@pytest.mark.django_db
 def test_inline_collapsible(client, admin_user):
     tag = TagFactory(name="Tag 1")
     admin_user.tags.add(tag)
