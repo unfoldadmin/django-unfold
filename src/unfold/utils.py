@@ -24,6 +24,8 @@ except ImportError:
     MoneyField: type[MoneyField] | None = None
     Money: type[Money] | None = None
 
+HEX_SHORTHAND_LENGTH = 3
+
 
 def _boolean_icon(field_val: Any) -> str:
     return render_to_string("unfold/helpers/boolean.html", {"value": field_val})
@@ -210,6 +212,9 @@ def parse_datetime_str(value: str) -> datetime.datetime | None:
 
 def hex_to_rgb(hex_color: str) -> list[int]:
     hex_color = hex_color.lstrip("#")
+
+    if len(hex_color) == HEX_SHORTHAND_LENGTH:
+        hex_color = "".join(char * 2 for char in hex_color)
 
     r = int(hex_color[0:2], 16)
     g = int(hex_color[2:4], 16)

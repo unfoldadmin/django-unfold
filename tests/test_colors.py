@@ -56,6 +56,31 @@ def test_colors_hex_to_rgb():
         **{
             "COLORS": {
                 "primary": {
+                    50: "#fff",
+                    500: "#0AF",
+                    950: "#123",
+                }
+            },
+        },
+    }
+)
+def test_colors_short_hex_to_rgb():
+    admin_site = UnfoldAdminSite()
+    request = RequestFactory().get("/rand")
+    request.user = AnonymousUser()
+    context = admin_site.each_context(request)
+
+    assert context["colors"]["primary"][50] == "rgb(255, 255, 255)"
+    assert context["colors"]["primary"][500] == "rgb(0, 170, 255)"
+    assert context["colors"]["primary"][950] == "rgb(17, 34, 51)"
+
+
+@override_settings(
+    UNFOLD={
+        **CONFIG_DEFAULTS,
+        **{
+            "COLORS": {
+                "primary": {
                     50: "240 249 255",
                     100: "224 242 254",
                     200: "186 230 253",
