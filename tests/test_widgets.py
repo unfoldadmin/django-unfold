@@ -30,6 +30,7 @@ from unfold.widgets import (
     UnfoldAdminNullBooleanSelectWidget,
     UnfoldAdminPasswordWidget,
     UnfoldAdminRadioSelectWidget,
+    UnfoldAdminRelatedFieldWrapperWidget,
     UnfoldAdminSelect2MultipleWidget,
     UnfoldAdminSelect2Widget,
     UnfoldAdminSelectMultipleWidget,
@@ -354,3 +355,19 @@ def test_widgets_array_decompress():
         "test value1",
         "test value2",
     ]
+
+
+def test_widgets_related_field_wrapper_links_without_popup_param():
+    widget = UnfoldAdminRelatedFieldWrapperWidget(
+        UnfoldAdminSelectWidget(),
+        Post._meta.get_field("user").remote_field,
+        UnfoldAdminSite(),
+        can_add_related=True,
+        can_change_related=True,
+        can_view_related=True,
+    )
+    rendered = widget.render("user", None)
+
+    assert 'id="add_id_user"' in rendered
+    assert 'id="change_id_user"' in rendered
+    assert "_popup=1" not in rendered
