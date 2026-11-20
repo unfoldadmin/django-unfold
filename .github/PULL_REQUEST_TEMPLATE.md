@@ -2,6 +2,10 @@
 Before creating a pull request, make sure all questions below are properly answered.
 -->
 
+## Original issue
+
+<!-- Create an issue first, with everything needed to reproduce the problem. Without a detailed explanation, the pull request will be closed. -->
+
 ## Summary
 
 <!-- Describe the changes in detail. Provide screenshots or videos if possible. -->
