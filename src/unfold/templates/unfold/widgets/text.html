@@ -1,28 +1,28 @@
+{% if widget.prefix or widget.suffix %}
+    <div class="flex gap-2 items-center max-w-2xl w-full">
+        {% if widget.prefix %}
+            <span class="max-w-1/4 shrink-0 wrap-anywhere">{{ widget.prefix }}</span>
+        {% endif %}
+{% endif %}
 
-<div class="max-w-2xl relative w-full">
-    {% if widget.prefix %}
-        <span class="absolute left-3 top-0 bottom-0 flex items-center justify-center">
-            {{ widget.prefix }}
-        </span>
-    {% endif %}
-
+<div class="max-w-2xl relative w-full{% if widget.prefix or widget.suffix %} min-w-0{% endif %}">
     {% if widget.prefix_icon %}
-        <span class="material-symbols-outlined absolute left-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500">
+        <span class="material-symbols-outlined absolute left-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500 rtl:left-auto rtl:right-3">
             {{ widget.prefix_icon }}
         </span>
     {% endif %}
 
     {% include "django/forms/widgets/input.html" %}
 
-    {% if widget.suffix %}
-        <span class="absolute right-3 top-0 bottom-0 flex items-center justify-center">
-            {{ widget.suffix }}
-        </span>
-    {% endif %}
-
     {% if widget.suffix_icon %}
-        <span class="material-symbols-outlined absolute right-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500">
+        <span class="material-symbols-outlined absolute right-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500 rtl:right-auto rtl:left-3">
             {{ widget.suffix_icon }}
         </span>
     {% endif %}
 </div>
+{% if widget.prefix or widget.suffix %}
+    {% if widget.suffix %}
+        <span class="max-w-1/4 shrink-0 wrap-anywhere">{{ widget.suffix }}</span>
+    {% endif %}
+    </div>
+{% endif %}
