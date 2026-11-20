@@ -2,11 +2,13 @@ from functools import update_wrapper
 from typing import TYPE_CHECKING, Any, TypedDict
 
 from django import forms
+from django.contrib import messages
 from django.contrib.admin import ModelAdmin as BaseModelAdmin
 from django.contrib.admin import StackedInline as BaseStackedInline
 from django.contrib.admin import TabularInline as BaseTabularInline
 from django.contrib.admin import display, helpers
 from django.contrib.admin.options import InlineModelAdmin
+from django.contrib.admin.views.main import ERROR_FLAG
 from django.contrib.contenttypes.admin import (
     GenericStackedInline as BaseGenericStackedInline,
 )
@@ -108,6 +110,9 @@ class ModelAdmin(
         self, request: HttpRequest, extra_context: dict[str, Any] | None = None
     ) -> HttpResponse:
         self.request = request
+
+        if request.GET.get(ERROR_FLAG) == "1":
+            messages.warning(request, _("Invalid filter has been entered."))
 
         if self.ordering_field and self.ordering_field not in self.list_editable:
             list_editable = list(getattr(self, "list_editable", []))
