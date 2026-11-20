@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<thead class="hidden relative lg:table-header-group">
+<thead>
     <tr>
         {% for field in inline_admin_formset.fields %}
             {% if not field.widget.is_hidden %}
