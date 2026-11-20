@@ -4,7 +4,7 @@ from typing import Any
 
 from django import forms
 from django.conf import settings
-from django.contrib.admin.options import VERTICAL
+from django.contrib.admin.options import IS_POPUP_VAR, VERTICAL
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import (
     AdminBigIntegerFieldWidget,
@@ -953,6 +953,14 @@ class UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget(
 
 class UnfoldAdminRelatedFieldWrapperWidget(RelatedFieldWidgetWrapper):
     template_name = "unfold/widgets/related_widget_wrapper.html"
+
+    def get_context(
+        self, name: str, value: Any, attrs: dict[str, Any] | None
+    ) -> dict[str, Any]:
+        context = super().get_context(name, value, attrs)
+        # Links must open a regular page in a new tab, app.js adds _popup for modals
+        context["url_params"] = context["url_params"].replace(f"&{IS_POPUP_VAR}=1", "")
+        return context
 
 
 class UnfoldAdminJSONSchemaWidget(UnfoldAdminTextareaWidget):

@@ -83,6 +83,12 @@ function openPopupInModal() {
 				return;
 			}
 
+			// Modifier click: let the browser open the link in a new tab
+			if (event.metaKey || event.ctrlKey || event.shiftKey) {
+				event.stopImmediatePropagation();
+				return;
+			}
+
 			event.preventDefault();
 			event.stopImmediatePropagation();
 
