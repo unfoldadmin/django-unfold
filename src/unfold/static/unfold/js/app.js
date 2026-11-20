@@ -657,18 +657,24 @@ const warnWithoutSaving = () => {
 /*************************************************************
  * Filter form
  *************************************************************/
-const filterForm = () => {
-	const filterForm = document.getElementById("filter-form");
+function filterForm() {
+	function removeEmptyFilterFields(formId) {
+		const filterForm = document.getElementById(formId);
 
-	if (!filterForm) {
-		return;
+		if (!filterForm) {
+			return;
+		}
+
+		filterForm.addEventListener("formdata", (event) => {
+			Array.from(event.formData.entries()).forEach(([key, value]) => {
+				if (value === "") event.formData.delete(key);
+			});
+		});
 	}
 
-	filterForm.addEventListener("formdata", (event) => {
-		Array.from(event.formData.entries()).forEach(([key, value]) => {
-			if (value === "") event.formData.delete(key);
-		});
-	});
+	removeEmptyFilterFields("filter-form");
+
+	removeEmptyFilterFields("vertical-filter-form");
 };
 
 /*************************************************************
