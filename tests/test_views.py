@@ -99,6 +99,18 @@ def test_changelist_view_super_user(admin_client, staff_user):
 
 
 @pytest.mark.django_db
+def test_changelist_view_invalid_filter_warning(admin_client):
+    response = admin_client.get(
+        reverse("admin:example_project_changelist"),
+        {"e": "1"},
+    )
+
+    assert response.status_code == HTTPStatus.OK
+    content = response.content.decode()
+    assert "Invalid filter has been entered." in content
+
+
+@pytest.mark.django_db
 def test_changeform_view_anonymous_user(client, project_factory):
     project = project_factory()
     response = client.get(
