@@ -3,19 +3,19 @@
 <div class="flex flex-row">
     <div class="{{ widget.file_wrapper_class }}">
         {% if widget.is_initial and not widget.required %}
-            <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-r-base-700">
+            <div class="bg-base-50 border-e border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-e-base-700">
                 <label for="{{ widget.checkbox_id }}" class="flex items-center">
                     <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
-                    <span class="ml-2">
+                    <span class="ms-2">
                         {{ widget.clear_checkbox_label }}
                     </span>
                 </label>
             </div>
         {% endif %}
 
-        <label for="{{ widget.attrs.id }}" class="flex grow relative">
-            <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="grow font-medium min-w-0 px-3 py-2 text-ellipsis">
+        <label for="{{ widget.attrs.id }}" class="flex grow min-w-0 relative">
+            <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="grow font-medium w-0 min-w-0 px-3 py-2 text-ellipsis">
 
             <span class="absolute opacity-0 inset-0 z-10 cursor-pointer *:cursor-pointer *:h-[36px] *:w-full">
                 <input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %} />
@@ -24,7 +24,7 @@
 
         <div class="flex flex-none items-center leading-none relative self-stretch">
             {% if widget.is_initial %}
-                <a href="{{ widget.value.url }}" class="border-r border-base-200 cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
+                <a href="{{ widget.value.url }}" class="border-e border-base-200 cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
                     <span class="material-symbols-outlined">download</span>
                 </a>
             {% endif %}
@@ -36,7 +36,7 @@
     </div>
 
     {% if widget.attrs.accept == 'image/*' and widget.is_initial %}
-        <div class="h-[38px] ml-3 relative w-[38px]">
+        <div class="h-[38px] ms-3 relative w-[38px]">
             <div class="absolute border flex font-medium h-full items-center left-0 rounded-default justify-center shadow-xs text-base-400 top-0 w-full z-10 dark:bg-base-900 dark:border-base-700 dark:text-base-500">
                 ?
             </div>

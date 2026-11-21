@@ -10,19 +10,19 @@
 
 <div class="{{ widget.file_wrapper_class }}">
     {% if widget.is_initial and not widget.required %}
-        <div class="bg-base-50 border-r border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-base-700 dark:text-font-default-dark">
+        <div class="bg-base-50 border-e border-base-200 flex flex-none items-center self-stretch px-3 dark:bg-white/[.02] dark:border-base-700 dark:text-font-default-dark">
             <label for="{{ widget.checkbox_id }}" class="flex items-center">
                 <input type="checkbox"{% if widget.class %} class="{{ widget.class }}"{% endif %} name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
 
-                <span class="ml-2">
+                <span class="ms-2">
                     {{ widget.clear_checkbox_label }}
                 </span>
             </label>
         </div>
     {% endif %}
 
-    <label for="{{ widget.attrs.id }}" class="flex grow relative">
-        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="grow font-medium min-w-0 px-3 py-2 text-ellipsis">
+    <label for="{{ widget.attrs.id }}" class="flex grow min-w-0 relative">
+        <input type="text" aria-label="{% trans 'Choose file to upload' %}" value="{% if widget.value %}{{ widget.value.url }}{% else %}{% trans 'Choose file to upload' %}{% endif %}" disabled class="grow font-medium w-0 min-w-0 px-3 py-2 text-ellipsis">
         <span class="absolute cursor-pointer left-0 bottom-0 top-0 right-0"></span>
     </label>
 
@@ -32,7 +32,7 @@
         </div>
 
         {% if widget.is_initial %}
-            <a href="{{ widget.value.url }}" class="border-r border-base-200 cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
+            <a href="{{ widget.value.url }}" class="border-e border-base-200 cursor-pointer text-base-400 px-3 hover:text-base-700 dark:border-base-700 dark:text-base-500 dark:hover:text-base-200" target="_blank">
                 <span class="block material-symbols-outlined">download</span>
             </a>
         {% endif %}
