@@ -440,6 +440,11 @@ tr:has(.selector) > td.field-tabular {
   content: "arrow_back";
 }
 
+[dir="rtl"] .selector-add:after,
+[dir="rtl"] .selector-remove:after {
+  @apply -scale-x-100 max-md:-rotate-90;
+}
+
 .related-widget-wrapper {
   @apply flex-nowrap!;
 }
