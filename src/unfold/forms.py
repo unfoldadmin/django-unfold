@@ -61,7 +61,7 @@ class ActionForm(forms.Form):
                         "group-[.changelist-actions]:grow",
                         "group-[.changelist-actions]:px-2",
                         "group-[.changelist-actions]:py-1",
-                        "group-[.changelist-actions]:pr-8",
+                        "group-[.changelist-actions]:pe-8",
                         "group-[.changelist-actions]:rounded-default",
                         "group-[.changelist-actions]:!text-current",
                         "group-[.changelist-actions]:truncate",
