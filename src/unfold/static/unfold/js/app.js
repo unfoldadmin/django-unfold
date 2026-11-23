@@ -485,14 +485,12 @@ function searchCommand() {
 			this.currentIndex = 0;
 		},
 		handleContentLoaded(event) {
-			if (
-				event.target.id !== "command-results" &&
-				event.target.id !== "command-results-list"
-			) {
+
+			if (event.target.id !== "search-input-command") {
 				return;
 			}
 
-			this.hasResponse = event.detail.xhr.response.length > 0;
+			this.hasResponse = event.detail.ctx.text.length > 0;
 
 			const commandResultsList = document.getElementById(
 				"command-results-list",
@@ -1320,7 +1318,7 @@ function updateStackedCounter(rowsParent) {
 /*************************************************************
  * Reinitialize inlines after pagination AJAX request
  *************************************************************/
-document.addEventListener("htmx:afterSettle", (e) => {
+document.addEventListener("htmx:after:swap", (e) => {
 	e.target.querySelectorAll(".form-row").forEach((formRow) => {
 		formRow.dispatchEvent(
 			new CustomEvent("formset:added", {

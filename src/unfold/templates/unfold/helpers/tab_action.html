@@ -11,7 +11,7 @@
            hx-get="{{ link }}"
            hx-target="#modal-content"
            hx-select="#dialog"
-           x-on:htmx:after-on-load="openModal = true"
+           x-on:htmx:after:request="openModal = true"
        {% endif %}>
         {% if action.icon %}
             <span class="material-symbols-outlined">
@@ -56,7 +56,7 @@
                            hx-get="{{ item.path }}"
                            hx-target="#modal-content"
                            hx-select="#dialog"
-                           x-on:htmx:after-on-load="openModal = true"
+                           x-on:htmx:after:request="openModal = true"
                        {% endif %}
                        class="flex items-center font-normal gap-2 max-h-[30px] mx-1 px-3 py-2 rounded-default text-start hover:bg-base-100 hover:text-base-700 dark:hover:bg-base-700 dark:hover:text-base-200
                               {% if item.variant.value == "danger" %}
