@@ -15,7 +15,7 @@ from django.contrib.contenttypes.admin import (
 from django.contrib.contenttypes.admin import (
     GenericTabularInline as BaseGenericTabularInline,
 )
-from django.db.models import BLANK_CHOICE_DASH, Model
+from django.db.models import Model
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
 from django.utils.safestring import SafeString, mark_safe
@@ -218,14 +218,6 @@ class ModelAdmin(
             {"model_admin": self},
             name=custom_url[1],
         )
-
-    def get_action_choices(
-        self,
-        request: HttpRequest,
-        default_choices: list[tuple[str, str]] = BLANK_CHOICE_DASH,
-    ) -> list[tuple[str, str]]:
-        default_choices = [("", _("Select action"))]
-        return super().get_action_choices(request, default_choices)
 
     @display(description=mark_safe(checkbox.render("action_toggle_all", 1)))
     def action_checkbox(self, obj: Model) -> SafeString:
