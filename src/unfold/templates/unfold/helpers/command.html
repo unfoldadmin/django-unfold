@@ -32,7 +32,7 @@
                     x-on:keydown.ctrl.k.prevent="handleOpen()"
                     x-on:keydown.enter.prevent="if (!$event.metaKey && !$event.ctrlKey) selectItem({% if command_show_history %}true{% else %}false{% endif %}, false)"
                     hx-get="{% url "admin:search" %}"
-                    hx-trigger="keyup changed delay:500ms"
+                    hx-trigger="input changed delay:500ms"
                     hx-select="#command-results-list"
                     hx-select-oob="#command-results-note"
                     hx-target="#command-results">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="bg-white border border-b-0 border-base-200 flex flex-col grow -mx-px min-h-0 rounded-default dark:border-base-700 dark:bg-white/[.04]">
-                <div class="grow h-full overflow-y-auto scrollbar-default" x-on:htmx:after-swap="handleContentLoaded($event)">
+                <div class="grow h-full overflow-y-auto scrollbar-default" x-on:htmx:after:swap.document="handleContentLoaded($event)">
                     <div id="command-results"></div>
 
                     {% if command_show_history %}
