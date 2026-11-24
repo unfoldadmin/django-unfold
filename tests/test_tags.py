@@ -661,20 +661,6 @@ def test_tags_fieldset_rows_classes(rf, user_factory):
 
 
 @pytest.mark.django_db
-def test_tags_fieldset_row_classes(rf, user_factory):
-    user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
-    request = rf.get("/")
-    request.user = user
-
-    user_admin = UserAdmin(User, UnfoldAdminSite())
-    changeform_view = user_admin.changeform_view(
-        request=request, object_id=str(user.pk)
-    )
-
-    assert "form-row" in changeform_view.render().content.decode()
-
-
-@pytest.mark.django_db
 def test_tags_fieldset_line_classes(rf, user_factory):
     user = user_factory(username="sample@example.com", is_superuser=True, is_staff=True)
     request = rf.get("/")

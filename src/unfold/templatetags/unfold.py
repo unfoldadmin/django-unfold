@@ -437,36 +437,6 @@ def fieldset_rows_classes(context: RequestContext) -> str:
 
 
 @register.simple_tag(takes_context=True)
-def fieldset_row_classes(context: RequestContext) -> str:
-    classes = [
-        "form-row",
-        "field-row",
-        "group/row",
-    ]
-
-    formset = context.get("inline_admin_formset", None)
-    line = context.get("line")
-
-    if not line:
-        return " ".join(set(classes))
-
-    # Hide the field in case of ordering field for sorting
-    for field in line:
-        if (
-            formset
-            and hasattr(field.field, "name")
-            and field.field.name == getattr(formset.opts, "ordering_field", None)
-            and getattr(formset.opts, "hide_ordering_field", False)
-        ):
-            classes.append("hidden")
-
-    if not line.has_visible_field:
-        classes.append("hidden")
-
-    return " ".join(set(classes))
-
-
-@register.simple_tag(takes_context=True)
 def fieldset_line_classes(context: RequestContext) -> str:
     classes = [
         "field-line",
@@ -485,6 +455,7 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "lg:flex-row",
         "lg:items-center",
         "dark:border-base-800",
+        "last:border-b-0",
     ]
 
     field = context.get("field")
