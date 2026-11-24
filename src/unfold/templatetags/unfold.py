@@ -439,6 +439,7 @@ def fieldset_rows_classes(context: RequestContext) -> str:
 @register.simple_tag(takes_context=True)
 def fieldset_line_classes(context: RequestContext) -> str:
     classes = [
+        "form-row",
         "field-line",
         "flex",
         "flex-col",
