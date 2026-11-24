@@ -17,7 +17,7 @@ from django.core.paginator import Paginator
 from django.db.models import Model
 from django.db.models.options import Options
 from django.forms import BoundField, CheckboxSelectMultiple, MultiWidget
-from django.http import HttpRequest, QueryDict
+from django.http import HttpRequest
 from django.template import Context, Library, Node, RequestContext, TemplateSyntaxError
 from django.template.base import NodeList, Parser, Token, token_kwargs
 from django.template.loader import render_to_string
@@ -220,6 +220,11 @@ def has_active_item(items: list[dict]) -> bool:
 @register.filter
 def has_row_action_in_dropdown(actions: list[dict]) -> bool:
     return any(action.get("display_in_dropdown", True) for action in actions)
+
+
+@register.simple_tag
+def make_dict(key: str, value: Any) -> dict[str, Any]:
+    return {key: value}
 
 
 @register.filter
@@ -644,25 +649,6 @@ def infinite_paginator_url(cl, i):
 def elided_page_range(paginator: Paginator, number: int) -> Iterable[int | str] | None:
     if paginator and number:
         return paginator.get_elided_page_range(number=number)
-
-
-@register.simple_tag(takes_context=True)
-def querystring_params(
-    context: RequestContext, query_key: str, query_value: str
-) -> str:
-    request = context.get("request")
-    result = QueryDict(mutable=True)
-
-    for key, values in request.GET.lists():
-        if key == query_key:
-            continue
-
-        for value in values:
-            result[key] = value
-
-    result[query_key] = query_value
-
-    return result.urlencode()
 
 
 @register.simple_tag(takes_context=True)

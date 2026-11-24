@@ -14,8 +14,10 @@
                     {% elif i == page_obj.number %}
                         <span class="font-medium text-primary-600">{{ i }}</span>
                     {% else %}
+                        {% make_dict pagination_key i as pagination_params %}
+
                         <a class="cursor-pointer"
-                           hx-get="?{% querystring_params pagination_key i %}{% if has_tab %}#{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}"
+                           hx-get="{% querystring pagination_params %}{% if has_tab %}#{{ inline_admin_formset.formset.prefix|slugify }}{% endif %}"
                            hx-push-url="true"
                            hx-swap="outerHTML"
                            hx-select="#{{ inline_admin_formset.formset.prefix }}-data"

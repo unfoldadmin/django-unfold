@@ -228,6 +228,19 @@ def test_tags_render_section(user_factory, rf, tag_factory):
 
 
 @pytest.mark.django_db
+def test_tags_make_dict():
+    response = Template(
+        "{% load unfold %}"
+        "{% make_dict key value as result %}"
+        "{% if result|is_dict %}is_dict{% endif %}"
+        "{{ result.status }}"
+    ).render(Context({"key": "status", "value": "active"}))
+
+    assert "is_dict" in response
+    assert "active" in response
+
+
+@pytest.mark.django_db
 def test_tags_class_name():
     response = Template("{% load unfold %}{{ value|class_name }}").render(
         Context({"value": "example"})
@@ -933,15 +946,6 @@ def test_tags_elided_page_range(rf):
         )
     )
     assert "12345678910" in response
-
-
-@pytest.mark.django_db
-def test_tags_querystring_params(rf):
-    response = Template(
-        "{% load unfold %} {% querystring_params 'example1' 'value1' %}"
-    ).render(RequestContext(rf.get("/?example2=value2&example1=value3"), {}))
-
-    assert "example1=value1" in response
 
 
 @pytest.mark.django_db
