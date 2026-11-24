@@ -53,7 +53,7 @@ dev = [
     "django-reversion~=6.3.0",
     "django-reversion-compare~=0.21.1",
     "django-simple-history~=3.13.0",
-    "django-stubs~=6.1.1",
+    "django-stubs~=6.1.2",
     "django-waffle~=5.0.0",
     "pillow>=12.3,<13.1",
     "pytest~=9.1.1",
@@ -161,11 +161,10 @@ sort = "-miss"
 source = ["src/unfold"]
 
 [tool.ty.src]
-include = ["src/unfold"] # TODO: include tests
-
-[tool.ty.rules]
-possibly-missing-attribute = "ignore" # TODO: remove once all errors are fixed
-too-many-positional-arguments = "ignore"
+include = [
+    "src/unfold/contrib/constance",
+    "src/unfold/contrib/filters",
+]
 
 [tool.tox]
 legacy_tox_ini = """

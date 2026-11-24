@@ -38,3 +38,7 @@ repos:
     rev: v1.32.0
     hooks:
       - id: zizmor
+  - repo: https://github.com/astral-sh/ty-pre-commit
+    rev: v0.0.109
+    hooks:
+      - id: ty

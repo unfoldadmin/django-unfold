@@ -78,7 +78,6 @@ class ChoicesMixin(ChoicesFieldListFilter):
 
 
 class RangeNumericMixin(ListFilter):
-    request = None
     template = "unfold/filters/filters_numeric_range.html"
     parameter_name: str | None = None
 

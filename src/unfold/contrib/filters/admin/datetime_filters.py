@@ -14,7 +14,6 @@ from unfold.utils import parse_date_str, parse_datetime_str
 
 
 class RangeDateFilter(admin.FieldListFilter):
-    request = None
     parameter_name = None
     form_class = RangeDateForm
     template = "unfold/filters/filters_date_range.html"
@@ -23,7 +22,7 @@ class RangeDateFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
@@ -79,6 +78,9 @@ class RangeDateFilter(admin.FieldListFilter):
         ]
 
     def choices(self, changelist: ChangeList) -> Iterator:
+        if self.parameter_name is None:
+            raise ValueError("Parameter name is required")
+
         yield {
             "request": self.request,
             "parameter_name": self.parameter_name,
@@ -97,7 +99,6 @@ class RangeDateFilter(admin.FieldListFilter):
 
 
 class RangeDateTimeFilter(admin.FieldListFilter):
-    request = None
     parameter_name = None
     template = "unfold/filters/filters_datetime_range.html"
     form_class = RangeDateTimeForm
@@ -106,7 +107,7 @@ class RangeDateTimeFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
@@ -182,6 +183,9 @@ class RangeDateTimeFilter(admin.FieldListFilter):
             return None
 
     def choices(self, changelist: ChangeList) -> Iterator:
+        if self.parameter_name is None:
+            raise ValueError("Parameter name is required")
+
         yield {
             "request": self.request,
             "parameter_name": self.parameter_name,
