@@ -195,7 +195,7 @@ def result_headers(cl):  # noqa: PLR0912, PLR0915
 
 def items_for_result(  # noqa: PLR0915, PLR0912
     cl: ChangeList, result: Model, form
-) -> Generator[SafeText, None, None]:
+) -> Generator[SafeText]:
     def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
             return False

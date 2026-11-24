@@ -164,7 +164,7 @@ class AdminOwnPasswordChangeForm(BaseAdminOwnPasswordChangeForm):
 
 
 class AdminForm(BaseAdminForm):
-    def __iter__(self) -> Generator["Fieldset", None, None]:
+    def __iter__(self) -> Generator["Fieldset"]:
         for name, options in self.fieldsets:
             yield Fieldset(
                 self.form,
@@ -176,7 +176,7 @@ class AdminForm(BaseAdminForm):
 
 
 class Fieldset(BaseFieldset):
-    def __iter__(self) -> Generator["Fieldline", None, None]:
+    def __iter__(self) -> Generator["Fieldline"]:
         for field in self.fields:
             yield Fieldline(
                 self.form, field, self.readonly_fields, model_admin=self.model_admin
@@ -186,7 +186,7 @@ class Fieldset(BaseFieldset):
 class Fieldline(BaseFieldline):
     def __iter__(
         self,
-    ) -> Generator[Union["UnfoldAdminReadonlyField", "UnfoldAdminField"], None, None]:
+    ) -> Generator[Union["UnfoldAdminReadonlyField", "UnfoldAdminField"]]:
         for i, field in enumerate(self.fields):
             if field in self.readonly_fields:
                 yield UnfoldAdminReadonlyField(

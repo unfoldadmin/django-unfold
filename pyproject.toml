@@ -100,7 +100,7 @@ build-backend = "hatchling.build"
 [tool.ruff]
 fix = true
 line-length = 88
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = [
@@ -173,7 +173,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        python{312,313,314,315}-django{52,60,61,main}
+        python{313,314,315}-django{52,60,61,main}
     [testenv]
     allowlist_externals = uv
     skip_install = true
