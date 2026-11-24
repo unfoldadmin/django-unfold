@@ -21,7 +21,6 @@ from unfold.contrib.filters.forms import SingleNumericForm, SliderNumericForm
 
 
 class SingleNumericFilter(admin.FieldListFilter):
-    request = None
     parameter_name = None
     template = "unfold/filters/filters_numeric_single.html"
 
@@ -29,7 +28,7 @@ class SingleNumericFilter(admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
@@ -84,7 +83,7 @@ class RangeNumericListFilter(RangeNumericMixin, admin.SimpleListFilter):
     def __init__(
         self,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
     ) -> None:
@@ -104,7 +103,7 @@ class RangeNumericFilter(RangeNumericMixin, admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
@@ -127,14 +126,13 @@ class SliderNumericFilter(RangeNumericFilter):
     STEP = None
 
     template = "unfold/filters/filters_numeric_slider.html"
-    field = None
     form_class = SliderNumericForm
 
     def __init__(
         self,
         field: Field,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,

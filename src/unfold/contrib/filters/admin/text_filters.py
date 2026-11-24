@@ -22,6 +22,9 @@ class TextFilter(admin.SimpleListFilter):
         return ()
 
     def choices(self, changelist: ChangeList) -> Iterator:
+        if self.parameter_name is None:
+            raise ValueError("Parameter name is required")
+
         yield {
             "form": self.form_class(
                 name=self.parameter_name,
@@ -39,7 +42,7 @@ class FieldTextFilter(ValueMixin, admin.FieldListFilter):
         self,
         field: Field,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,

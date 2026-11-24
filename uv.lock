@@ -653,7 +653,7 @@ dev = [
     { name = "django-reversion", specifier = "~=6.3.0" },
     { name = "django-reversion-compare", specifier = "~=0.21.1" },
     { name = "django-simple-history", specifier = "~=3.13.0" },
-    { name = "django-stubs", specifier = "~=6.1.1" },
+    { name = "django-stubs", specifier = "~=6.1.2" },
     { name = "django-waffle", specifier = "~=5.0.0" },
     { name = "jsonschema", specifier = "~=4.26.0" },
     { name = "pillow", specifier = ">=12.3,<13.1" },

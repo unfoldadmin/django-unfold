@@ -27,12 +27,15 @@ class DropdownFilter(admin.SimpleListFilter):
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
         choices = [self.all_option] if self.all_option else []
 
+        if self.parameter_name is None:
+            raise ValueError("Parameter name is required")
+
         for i, choice in enumerate(self.lookup_choices):
             if add_facets and facet_counts:
                 count = facet_counts[f"{i}__c"]
-                choices.append((choice[0], f"{choice[1]} ({count})"))
+                choices.append([choice[0], f"{choice[1]} ({count})"])
             else:
-                choices.append(choice)
+                choices.append(list(choice))
 
         yield {
             "form": self.form_class(
@@ -40,14 +43,14 @@ class DropdownFilter(admin.SimpleListFilter):
                 name=self.parameter_name,
                 choices=choices,
                 data={self.parameter_name: self.value()},
-                multiple=self.multiple if hasattr(self, "multiple") else False,
+                multiple=getattr(self, "multiple", False),
             ),
         }
 
 
 class MultipleDropdownFilter(DropdownFilter):
     multiple = True
-    used_parameters: dict[str, list[str]]
+    used_parameters: dict[str, list[str]]  # ty: ignore[incompatible-attribute-override]
 
     def __init__(
         self,
@@ -84,9 +87,9 @@ class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFil
         for i, choice in enumerate(self.field.flatchoices):
             if add_facets and facet_counts:
                 count = facet_counts[f"{i}__c"]
-                choices.append((choice[0], f"{choice[1]} ({count})"))
+                choices.append([choice[0], f"{choice[1]} ({count})"])
             else:
-                choices.append(choice)
+                choices.append(list(choice))
 
         yield {
             "form": self.form_class(
@@ -94,12 +97,12 @@ class ChoicesDropdownFilter(ValueMixin, DropdownMixin, admin.ChoicesFieldListFil
                 name=self.lookup_kwarg,
                 choices=choices,
                 data={self.lookup_kwarg: self.value()},
-                multiple=self.multiple if hasattr(self, "multiple") else False,
+                multiple=getattr(self, "multiple", False),
             ),
         }
 
 
-class MultipleChoicesDropdownFilter(MultiValueMixin, ChoicesDropdownFilter):
+class MultipleChoicesDropdownFilter(MultiValueMixin, ChoicesDropdownFilter):  # ty: ignore[incompatible-method-override]
     multiple = True
 
 
@@ -108,7 +111,7 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
         self,
         field: Field,
         request: HttpRequest,
-        params: dict[str, str],
+        params: dict[str, list[str]],
         model: type[Model],
         model_admin: ModelAdmin,
         field_path: str,
@@ -143,10 +146,10 @@ class RelatedDropdownFilter(ValueMixin, DropdownMixin, admin.RelatedFieldListFil
                 name=self.lookup_kwarg,
                 choices=choices,
                 data={self.lookup_kwarg: self.value()},
-                multiple=self.multiple if hasattr(self, "multiple") else False,
+                multiple=getattr(self, "multiple", False),
             ),
         }
 
 
-class MultipleRelatedDropdownFilter(MultiValueMixin, RelatedDropdownFilter):
+class MultipleRelatedDropdownFilter(MultiValueMixin, RelatedDropdownFilter):  # ty: ignore[incompatible-method-override]
     multiple = True

@@ -22,16 +22,19 @@ class RadioFilter(admin.SimpleListFilter):
         facet_counts = self.get_facet_queryset(changelist) if add_facets else None
         choices = []
 
+        if self.parameter_name is None:
+            raise ValueError("Parameter name is required")
+
         if self.all_option:
             choices = [self.all_option]
 
-        if add_facets:
+        if add_facets and facet_counts:
             for i, (lookup, title) in enumerate(self.lookup_choices):
                 choices.append(
-                    (lookup, f"{title} ({facet_counts.get(f'{i}__c', '-')})")
+                    [lookup, f"{title} ({facet_counts.get(f'{i}__c', '-')})"]
                 )
         else:
-            choices.extend(self.lookup_choices)
+            choices = self.lookup_choices
 
         yield {
             "form": self.form_class(
@@ -47,14 +50,14 @@ class CheckboxFilter(RadioFilter):
     form_class = CheckboxForm
     all_option = None
 
-    def value(self) -> list[str] | None:  # ty:ignore[invalid-method-override]
+    def value(self) -> list[str] | None:  # ty:ignore[incompatible-method-override]]
         if self.parameter_name:
             return self.request.GET.getlist(self.parameter_name)
 
 
 class ChoicesRadioFilter(ValueMixin, ChoicesMixin, admin.ChoicesFieldListFilter):
     form_class = RadioForm
-    all_option = ["", _("All")]
+    all_option = ["", _("All")]  # ty: ignore[invalid-assignment]
 
 
 class ChoicesCheckboxFilter(

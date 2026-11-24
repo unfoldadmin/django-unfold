@@ -1,3 +1,5 @@
+from typing import Any
+
 from django import forms
 from django.conf import settings
 from django.contrib.admin.options import HORIZONTAL, ModelAdmin
@@ -23,7 +25,7 @@ from unfold.widgets import (
 
 
 class SearchForm(forms.Form):
-    def __init__(self, name: str, label: str, *args, **kwargs) -> None:
+    def __init__(self, name: str, label: str, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
         self.fields[name] = forms.CharField(
@@ -34,9 +36,6 @@ class SearchForm(forms.Form):
 
 
 class AutocompleteDropdownForm(forms.Form):
-    field = forms.ModelChoiceField
-    widget = AutocompleteSelect
-
     def __init__(
         self,
         request: HttpRequest,
@@ -46,14 +45,20 @@ class AutocompleteDropdownForm(forms.Form):
         field: ModelField,
         model_admin: ModelAdmin,
         multiple: bool = False,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
 
         if multiple:
             self.field = ModelMultipleChoiceField
             self.widget = AutocompleteSelectMultiple
+        else:
+            self.field = forms.ModelChoiceField
+            self.widget = AutocompleteSelect
+
+        if field.remote_field is None:
+            raise ValueError("Remote field is required for autocomplete dropdown")
 
         self.fields[name] = self.field(
             label=label,
@@ -91,8 +96,8 @@ class CheckboxForm(forms.Form):
         name: str,
         label: str,
         choices: tuple | list,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
 
@@ -115,22 +120,14 @@ class HorizontalRadioForm(RadioForm):
 
 
 class DropdownForm(forms.Form):
-    widget = UnfoldAdminSelectWidget(
-        attrs={
-            "data-theme": "admin-autocomplete",
-            "class": "unfold-admin-autocomplete admin-autocomplete",
-        }
-    )
-    field = ChoiceField
-
     def __init__(
         self,
         name: str,
         label: str,
-        choices: tuple,
+        choices: tuple | list,
         multiple: bool = False,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
 
@@ -142,6 +139,14 @@ class DropdownForm(forms.Form):
                 }
             )
             self.field = MultipleChoiceField
+        else:
+            self.widget = UnfoldAdminSelectWidget(
+                attrs={
+                    "data-theme": "admin-autocomplete",
+                    "class": "unfold-admin-autocomplete admin-autocomplete",
+                }
+            )
+            self.field = ChoiceField
 
         self.fields[name] = self.field(
             label=label,
@@ -167,7 +172,7 @@ class DropdownForm(forms.Form):
 
 
 class SingleNumericForm(forms.Form):
-    def __init__(self, name: str, *args, **kwargs) -> None:
+    def __init__(self, name: str, *args: Any, **kwargs: Any) -> None:
         self.name = name
         super().__init__(*args, **kwargs)
 
@@ -186,8 +191,8 @@ class RangeNumericForm(forms.Form):
         name: str,
         min: float | None = None,
         max: float | None = None,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         self.name = name
         super().__init__(*args, **kwargs)
@@ -234,7 +239,7 @@ class RangeDateForm(forms.Form):
             "admin/js/admin/DateTimeShortcuts.js",
         ]
 
-    def __init__(self, name: str, *args, **kwargs) -> None:
+    def __init__(self, name: str, *args: Any, **kwargs: Any) -> None:
         self.name = name
         super().__init__(*args, **kwargs)
 
@@ -267,7 +272,7 @@ class RangeDateTimeForm(forms.Form):
             "admin/js/admin/DateTimeShortcuts.js",
         ]
 
-    def __init__(self, name: str, *args, **kwargs) -> None:
+    def __init__(self, name: str, *args: Any, **kwargs: Any) -> None:
         self.name = name
         super().__init__(*args, **kwargs)
 
