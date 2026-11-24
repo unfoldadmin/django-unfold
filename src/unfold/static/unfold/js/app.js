@@ -202,7 +202,7 @@ function theme(defaultTheme = "auto") {
 		openAllApplications: false,
 		adminTheme: themeLocked
 			? defaultTheme
-			: Alpine.$persist(defaultTheme).as("adminTheme"),
+			: localStorage.getItem("adminTheme") || defaultTheme,
 		init() {
 			this.$watch("filterOpen", (value) => {
 				if (isFilterModalOpen()) {
@@ -216,6 +216,7 @@ function theme(defaultTheme = "auto") {
 			}
 
 			this.adminTheme = theme;
+			localStorage.setItem("adminTheme", theme);
 		},
 		themeBindings: {
 			["x-resize.window"]() {
@@ -290,11 +291,7 @@ function theme(defaultTheme = "auto") {
 
 					event.preventDefault();
 
-					if (this.adminTheme === "light") {
-						this.adminTheme = "dark";
-					} else {
-						this.adminTheme = "light";
-					}
+					this.switchTheme(this.adminTheme === "light" ? "dark" : "light");
 				}
 			},
 		},
