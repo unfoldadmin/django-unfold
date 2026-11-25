@@ -20,10 +20,10 @@ class ImportExportWidgetsMixin(Form):
 
         if not isinstance(self.fields["resource"].widget, HiddenInput):
             self.fields["resource"].widget = UnfoldAdminSelectWidget(
-                choices=self.fields["resource"].choices  # ty:ignore[unresolved-attribute]
+                choices=self.fields["resource"].choices  # ty:ignore[missing-attribute]
             )
 
-        format_choices = self.fields["format"].choices  # ty:ignore[unresolved-attribute]
+        format_choices = self.fields["format"].choices  # ty:ignore[missing-attribute]
 
         # Provide better label for default choice
         if len(format_choices) > 1 and format_choices[0][1] == "---":

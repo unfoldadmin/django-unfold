@@ -162,8 +162,7 @@ source = ["src/unfold"]
 
 [tool.ty.src]
 include = [
-    "src/unfold/contrib/constance",
-    "src/unfold/contrib/filters",
+    "src/unfold/contrib",
 ]
 
 [tool.tox]

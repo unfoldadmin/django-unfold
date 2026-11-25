@@ -69,7 +69,7 @@ class ArrayWidget(MultiWidget):
 
     def value_from_datadict(
         self, data: QueryDict, files: MultiValueDict, name: str
-    ) -> list:  # ty:ignore[invalid-method-override]
+    ) -> list:  # ty:ignore[incompatible-method-override]
         values = []
 
         for item in data.getlist(name):
@@ -80,7 +80,7 @@ class ArrayWidget(MultiWidget):
 
     def value_omitted_from_data(
         self, data: QueryDict, files: MultiValueDict, name: str
-    ) -> bool:  # ty:ignore[invalid-method-override]
+    ) -> bool:  # ty:ignore[incompatible-method-override]
         return data.getlist(name) not in [[""], *EMPTY_VALUES]
 
     def decompress(self, value: Any) -> list:
