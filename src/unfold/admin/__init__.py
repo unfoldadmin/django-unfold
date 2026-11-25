@@ -1,4 +1,4 @@
-from unfold.admin.base import (
+from .base import (
     GenericStackedInline,
     GenericTabularInline,
     ModelAdmin,
