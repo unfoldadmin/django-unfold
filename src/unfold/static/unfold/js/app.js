@@ -39,7 +39,10 @@ function getCurrentTab() {
 		return null;
 	}
 
-	if (!document.getElementById(`${fragment}-group`)) {
+	if (
+		!document.getElementById(`${fragment}-group`) &&
+		!document.querySelector(`[data-tab-id="${CSS.escape(fragment)}"]`)
+	) {
 		return null;
 	}
 
