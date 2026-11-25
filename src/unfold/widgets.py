@@ -302,7 +302,7 @@ class UnfoldPrefixSuffixMixin(Input):
 
         if "prefix_icon" in self.attrs:
             widget["prefix_icon"] = self.attrs["prefix_icon"]
-            self.attrs["class"] = " ".join([self.attrs["class"], "pl-9"])
+            self.attrs["class"] = " ".join([self.attrs["class"], "ps-9"])
             del self.attrs["prefix_icon"]
 
         if "suffix" in self.attrs:
@@ -311,7 +311,7 @@ class UnfoldPrefixSuffixMixin(Input):
 
         if "suffix_icon" in self.attrs:
             widget["suffix_icon"] = self.attrs["suffix_icon"]
-            self.attrs["class"] = " ".join([self.attrs["class"], "pr-9"])
+            self.attrs["class"] = " ".join([self.attrs["class"], "pe-9"])
             del self.attrs["suffix_icon"]
 
         widget.update(

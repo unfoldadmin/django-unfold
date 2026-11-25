@@ -1,13 +1,13 @@
 
-<div class="max-w-2xl relative w-full">
+<div class="max-w-2xl relative w-full{% if widget.prefix or widget.suffix %} grid grid-cols-[fit-content(25%)_minmax(0,1fr)_fit-content(25%)] items-center *:row-start-1 [&>input]:col-start-2 [&>input]:min-w-0 [&>.material-symbols-outlined]:col-start-2 [&>.material-symbols-outlined]:col-end-3{% endif %}">
     {% if widget.prefix %}
-        <span class="absolute left-3 top-0 bottom-0 flex items-center justify-center">
+        <span class="col-start-1 me-2 wrap-anywhere">
             {{ widget.prefix }}
         </span>
     {% endif %}
 
     {% if widget.prefix_icon %}
-        <span class="material-symbols-outlined absolute left-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500">
+        <span class="material-symbols-outlined absolute left-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500 rtl:left-auto rtl:right-3">
             {{ widget.prefix_icon }}
         </span>
     {% endif %}
@@ -15,13 +15,13 @@
     {% include "django/forms/widgets/input.html" %}
 
     {% if widget.suffix %}
-        <span class="absolute right-3 top-0 bottom-0 flex items-center justify-center">
+        <span class="col-start-3 ms-2 wrap-anywhere">
             {{ widget.suffix }}
         </span>
     {% endif %}
 
     {% if widget.suffix_icon %}
-        <span class="material-symbols-outlined absolute right-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500">
+        <span class="material-symbols-outlined absolute right-3 top-0 bottom-0 flex items-center justify-center text-base-400 dark:text-base-500 rtl:right-auto rtl:left-3">
             {{ widget.suffix_icon }}
         </span>
     {% endif %}
