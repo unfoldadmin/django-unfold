@@ -10,9 +10,11 @@
             {% endblock %}
         {% endif %}
 
-        <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 {% element_classes 'main' %}">
+        <div id="main" class="bg-white flex flex-col grow min-w-0 dark:bg-base-900 {% element_classes 'main' %} {% if is_popup %}pt-4{% endif %}">
             {% block header %}
-                {% include "unfold/helpers/header.html" %}
+                {% if not is_popup %}
+                    {% include "unfold/helpers/header.html" %}
+                {% endif %}
             {% endblock %}
 
             {% block messages %}
