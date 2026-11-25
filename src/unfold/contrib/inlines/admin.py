@@ -11,6 +11,7 @@ from django.forms.models import ALL_FIELDS, modelform_defines_fields
 from django.http import HttpRequest
 from django.utils.text import get_text_list
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation.trans_null import gettext_lazy
 
 from unfold.admin import StackedInline, TabularInline
 from unfold.contrib.inlines.checks import NonrelatedModelAdminChecks
@@ -20,12 +21,12 @@ from unfold.contrib.inlines.forms import (
 )
 
 
-class NonrelatedInlineMixin(InlineModelAdmin):
+class NonrelatedInlineMixin[ParentT: Model, InstanceT: Model](InlineModelAdmin):
     checks_class = NonrelatedModelAdminChecks
-    formset = NonrelatedInlineModelFormSet
+    formset: Any = NonrelatedInlineModelFormSet  # TODO: fix this Any type
 
     def get_formset(
-        self, request: HttpRequest, obj: Model | None = None, **kwargs: Any
+        self, request: HttpRequest, obj: ParentT | None = None, **kwargs: Any
     ):
         defaults = self._get_formset_defaults(request, obj, **kwargs)
 
@@ -37,10 +38,10 @@ class NonrelatedInlineMixin(InlineModelAdmin):
             self.model, save_new_instance=self.save_new_instance, **defaults
         )
 
-    def get_form_queryset(self, obj: Model) -> QuerySet:
+    def get_form_queryset(self, obj: ParentT) -> QuerySet:
         raise NotImplementedError("get_form_queryset must be implemented")
 
-    def save_new_instance(self, parent: Model, instance: Model) -> None:
+    def save_new_instance(self, parent: ParentT, instance: InstanceT) -> None:
         raise NotImplementedError("save_new_instance must be implemented")
 
     def _get_formset_defaults(
@@ -76,12 +77,12 @@ class NonrelatedInlineMixin(InlineModelAdmin):
             **kwargs,
         }
 
-        base_model_form = defaults["form"]
+        base_model_form: Any = defaults["form"]
         can_change = self.has_change_permission(request, obj) if request else True
         can_add = self.has_add_permission(request, obj) if request else True
 
         class DeleteProtectedModelForm(base_model_form):
-            def hand_clean_DELETE(self):
+            def hand_clean_DELETE(self) -> None:
                 """
                 We don't validate the 'DELETE' field itself because on
                 templates it's not rendered using the field information, but
@@ -108,7 +109,7 @@ class NonrelatedInlineMixin(InlineModelAdmin):
                         params = {
                             "class_name": self._meta.model._meta.verbose_name,
                             "instance": self.instance,
-                            "related_objects": get_text_list(objs, _("and")),
+                            "related_objects": get_text_list(objs, gettext_lazy("and")),
                         }
                         msg = _(
                             "Deleting %(class_name)s %(instance)s would require "
@@ -119,12 +120,12 @@ class NonrelatedInlineMixin(InlineModelAdmin):
                             msg, code="deleting_protected", params=params
                         )
 
-            def is_valid(self):
+            def is_valid(self) -> bool:
                 result = super().is_valid()
                 self.hand_clean_DELETE()
                 return result
 
-            def has_changed(self):
+            def has_changed(self) -> bool:
                 # Protect against unauthorized edits.
                 if not can_change and not self.instance._state.adding:
                     return False
@@ -143,8 +144,8 @@ class NonrelatedInlineMixin(InlineModelAdmin):
 
 
 class NonrelatedStackedInline(NonrelatedInlineMixin, StackedInline):
-    formset = NonrelatedInlineModelFormSet
+    pass
 
 
 class NonrelatedTabularInline(NonrelatedInlineMixin, TabularInline):
-    formset = NonrelatedInlineModelFormSet
+    pass
