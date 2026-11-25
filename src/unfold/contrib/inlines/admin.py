@@ -23,7 +23,7 @@ from unfold.contrib.inlines.forms import (
 
 class NonrelatedInlineMixin[ParentT: Model, InstanceT: Model](InlineModelAdmin):
     checks_class = NonrelatedModelAdminChecks
-    formset = NonrelatedInlineModelFormSet
+    formset: Any = NonrelatedInlineModelFormSet  # TODO: fix this Any type
 
     def get_formset(
         self, request: HttpRequest, obj: ParentT | None = None, **kwargs: Any
@@ -77,7 +77,7 @@ class NonrelatedInlineMixin[ParentT: Model, InstanceT: Model](InlineModelAdmin):
             **kwargs,
         }
 
-        base_model_form = defaults["form"]
+        base_model_form: Any = defaults["form"]
         can_change = self.has_change_permission(request, obj) if request else True
         can_add = self.has_add_permission(request, obj) if request else True
 
