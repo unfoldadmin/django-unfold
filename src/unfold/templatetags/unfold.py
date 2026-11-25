@@ -165,9 +165,15 @@ def tab_list(context: RequestContext, page: str, opts: Options | None = None) ->
         for inline in context.get("inline_admin_formsets") or []:
             inline.error_count = _count_errors_in_inline(inline)
 
+    tabs_list_length = 0
+
+    tabs_list = data.get("tabs_list", [])
+    if isinstance(tabs_list, list):
+        tabs_list_length = len(tabs_list)
+
     # If the changeform is rendered and there are no custom tab navigation
     # specified, check for inlines to put into tabs
-    if page == "changeform" and len(data.get("tabs_list") or []) == 0:
+    if page == "changeform" and tabs_list_length == 0:
         for inline in context.get("inline_admin_formsets") or []:
             if opts and getattr(inline.opts, "tab", False):
                 inlines_list.append(inline)
@@ -284,7 +290,7 @@ class RenderComponentNode(template.Node):
             ).get_context_data(**values)
 
         context_copy = context.new()
-        context_copy.update(context.flatten())
+        context_copy.update(context.flatten())  # ty: ignore[invalid-argument-type]
         context_copy.update(values)
         children = self.nodelist.render(context_copy)
 
@@ -340,9 +346,21 @@ def do_component(parser: Parser, token: Token) -> RenderComponentNode:
     template_name = bits[1][1:-1]
 
     extra_context = options.get("with", {})
+
+    if not isinstance(extra_context, dict):
+        extra_context = {}
+
+    if not isinstance(include_context, bool):
+        include_context = False
+
     parser.next_token()
 
-    return RenderComponentNode(template_name, nodelist, extra_context, include_context)
+    return RenderComponentNode(
+        template_name=template_name,
+        nodelist=nodelist,
+        extra_context=extra_context,
+        include_context=include_context,
+    )
 
 
 @register.filter
@@ -459,7 +477,10 @@ def fieldset_line_classes(context: RequestContext) -> str:
         "last:border-b-0",
     ]
 
-    field = context.get("field")
+    field: AdminField | None = context.get("field")
+
+    if not field:
+        return ""
 
     if hasattr(field.field, "name") and field.field.name:
         classes.append(f"field-{field.field.name}")
@@ -608,7 +629,7 @@ def changeform_condition(field: AdminField) -> AdminField:
 
 
 @register.simple_tag
-def infinite_paginator_url(cl, i):
+def infinite_paginator_url(cl: ChangeList, i: int) -> str:
     return cl.get_query_string({PAGE_VAR: i})
 
 
@@ -622,8 +643,11 @@ def elided_page_range(paginator: Paginator, number: int) -> Iterable[int | str] 
 def querystring_params(
     context: RequestContext, query_key: str, query_value: str
 ) -> str:
-    request = context.get("request")
+    request: HttpRequest | None = context.get("request")
     result = QueryDict(mutable=True)
+
+    if not request:
+        return ""
 
     for key, values in request.GET.lists():
         if key == query_key:
@@ -879,7 +903,8 @@ def tabs_active(fieldsets: list[Fieldset]) -> str:
         for field_line in fieldset:
             for field in field_line:
                 if (
-                    not field.is_readonly
+                    isinstance(field, AdminField)
+                    and not field.is_readonly
                     and field.errors()
                     and hasattr(fieldset, "name")
                 ):
@@ -894,7 +919,11 @@ def tabs_errors_count(fieldset: Fieldset) -> int:
 
     for field_line in fieldset:
         for field in field_line:
-            if not field.is_readonly and field.errors():
+            if (
+                isinstance(field, AdminField)
+                and not field.is_readonly
+                and field.errors()
+            ):
                 count += 1
 
     return count

@@ -1,5 +1,5 @@
 import datetime
-from collections.abc import Generator
+from collections.abc import Callable, Generator
 from typing import Any
 
 from django import VERSION as DJANGO_VERSION
@@ -7,7 +7,7 @@ from django.contrib.admin import ListFilter, SimpleListFilter
 from django.contrib.admin.options import IS_FACETS_VAR, IS_POPUP_VAR
 from django.contrib.admin.templatetags.admin_list import (
     ResultList,
-    _coerce_field_name,  # ty:ignore[unresolved-import]
+    _coerce_field_name,  # ty:ignore[missing-module-member]
     admin_actions,
     result_hidden_fields,
 )
@@ -120,7 +120,7 @@ def result_headers(cl):  # noqa: PLR0912, PLR0915
             ]
 
             if hasattr(attr, "wrapper_class"):
-                th_classes.append(attr.wrapper_class)
+                th_classes.append(str(attr.wrapper_class))
 
             # Not sortable
             yield {
@@ -135,7 +135,7 @@ def result_headers(cl):  # noqa: PLR0912, PLR0915
         th_classes = ["sortable", f"column-{field_name}"]
 
         if hasattr(attr, "wrapper_class"):
-            th_classes.append(attr.wrapper_class)
+            th_classes.append(str(attr.wrapper_class))
 
         order_type = ""
         new_order_type = "asc"
@@ -196,7 +196,7 @@ def result_headers(cl):  # noqa: PLR0912, PLR0915
 def items_for_result(  # noqa: PLR0915, PLR0912
     cl: ChangeList, result: Model, form
 ) -> Generator[SafeText]:
-    def link_in_col(is_first: bool, field_name: str, cl: ChangeList) -> bool:
+    def link_in_col(is_first: bool, field_name: Callable | str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
             return False
         if is_first and not cl.list_display_links:
@@ -401,12 +401,14 @@ def result_list_tag(parser: Parser, token: Token) -> InclusionAdminNode:
             func=result_list,
             template_name="change_list_results.html",
         )
+
+    # Older versions of Django used this without name argument
     return InclusionAdminNode(
-        parser,
-        token,
+        parser,  # ty: ignore[invalid-argument-type]
+        token,  # ty: ignore[invalid-argument-type]
         func=result_list,
         template_name="change_list_results.html",
-    )
+    )  # ty: ignore[missing-argument]
 
 
 @register.simple_tag
@@ -530,13 +532,15 @@ def unfold_search_form_tag(parser, token):
             template_name="search_form.html",
             takes_context=False,
         )
+
+    # Older versions of Django used this without name argument
     return InclusionAdminNode(
         parser,
         token,
         func=unfold_search_form,
         template_name="search_form.html",
         takes_context=False,
-    )
+    )  # ty: ignore[missing-argument]
 
 
 @register.tag(name="unfold_admin_actions")
@@ -549,9 +553,11 @@ def unfold_admin_actions_tag(parser, token):
             func=admin_actions,
             template_name="dataset_actions.html",
         )
+
+    # Older versions of Django used this without name argument
     return InclusionAdminNode(
         parser,
         token,
         func=admin_actions,
         template_name="dataset_actions.html",
-    )
+    )  # ty: ignore[missing-argument]

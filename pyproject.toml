@@ -163,6 +163,7 @@ source = ["src/unfold"]
 [tool.ty.src]
 include = [
     "src/unfold/contrib",
+    "src/unfold/templatetags",
 ]
 
 [tool.tox]

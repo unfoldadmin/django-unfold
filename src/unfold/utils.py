@@ -44,7 +44,7 @@ def display_for_header(value: Iterable, empty_value_display: str) -> SafeText:
 
 
 def display_for_dropdown(
-    result: Model, field_name: str, value: Iterable, empty_value_display: str
+    result: Model, field_name: Callable | str, value: Iterable, empty_value_display: str
 ) -> SafeText:
     return render_to_string(
         "unfold/helpers/display_dropdown.html",
