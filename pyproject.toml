@@ -162,6 +162,7 @@ source = ["src/unfold"]
 
 [tool.ty.src]
 include = [
+    # "src/unfold/admin",
     "src/unfold/contrib",
     "src/unfold/templatetags",
 ]
