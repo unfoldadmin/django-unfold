@@ -1,6 +1,103 @@
 # CHANGELOG
 
 
+## v0.111.0 (2026-11-25)
+
+### Bug Fixes
+
+- Align delete confirmation and login msgids with django translations
+  ([#2425](https://github.com/unfoldadmin/django-unfold/pull/2425),
+  [`6f1367c`](https://github.com/unfoldadmin/django-unfold/commit/6f1367c6ec39556c023318ab4cae17501761f887))
+
+- Checkbox field in rtl ([#2393](https://github.com/unfoldadmin/django-unfold/pull/2393),
+  [`cd646e9`](https://github.com/unfoldadmin/django-unfold/commit/cd646e95c4405d970bda6075e37c7758c27263cb))
+
+- Collapsible icons in rtl ([#2395](https://github.com/unfoldadmin/django-unfold/pull/2395),
+  [`5488552`](https://github.com/unfoldadmin/django-unfold/commit/54885523f5d4f18550478cb547ef723efaa805f6))
+
+- Date and time widgets in rtl ([#2420](https://github.com/unfoldadmin/django-unfold/pull/2420),
+  [`9d44b0a`](https://github.com/unfoldadmin/django-unfold/commit/9d44b0a4e4e45d6306adf2783edcb3c80634d7e9))
+
+- Field error icon in rtl ([#2394](https://github.com/unfoldadmin/django-unfold/pull/2394),
+  [`003289b`](https://github.com/unfoldadmin/django-unfold/commit/003289b51f27e8914fa29e5011ad3d8b93522adf))
+
+- Fieldset tabs in rtl ([#2392](https://github.com/unfoldadmin/django-unfold/pull/2392),
+  [`21787b9`](https://github.com/unfoldadmin/django-unfold/commit/21787b9d90816fb5194ee24d2f425d5fa1c03ebb))
+
+- File widget in rtl ([#2419](https://github.com/unfoldadmin/django-unfold/pull/2419),
+  [`6bc7084`](https://github.com/unfoldadmin/django-unfold/commit/6bc7084943387725b33d75b159f5c4f72ff21851))
+
+- Hide header in popup ([#2434](https://github.com/unfoldadmin/django-unfold/pull/2434),
+  [`c52be34`](https://github.com/unfoldadmin/django-unfold/commit/c52be34f125262772d0a256464f7620273c0be88))
+
+- Horizontal filter spacing ([#2390](https://github.com/unfoldadmin/django-unfold/pull/2390),
+  [`af51096`](https://github.com/unfoldadmin/django-unfold/commit/af51096ecd7c788791f62712ed7b7417601505c8))
+
+- Inline footer in rtl ([#2398](https://github.com/unfoldadmin/django-unfold/pull/2398),
+  [`5b30029`](https://github.com/unfoldadmin/django-unfold/commit/5b30029310091ee18810dcbad35002ba0c99790a))
+
+- Numeric slider filter in rtl ([#2362](https://github.com/unfoldadmin/django-unfold/pull/2362),
+  [`a1beee8`](https://github.com/unfoldadmin/django-unfold/commit/a1beee827439268583aaf02c688184432bf3507c))
+
+- Range date filter same day ([#2391](https://github.com/unfoldadmin/django-unfold/pull/2391),
+  [`34f98bd`](https://github.com/unfoldadmin/django-unfold/commit/34f98bd8d8753ca41b48671020cec86df23f935d))
+
+- Raw id widget in rtl ([#2415](https://github.com/unfoldadmin/django-unfold/pull/2415),
+  [`1cbe814`](https://github.com/unfoldadmin/django-unfold/commit/1cbe814da74a2b4b6e179d27a6dda7e1b6dd94a2))
+
+- Related widget buttons in rtl ([#2414](https://github.com/unfoldadmin/django-unfold/pull/2414),
+  [`4f88b68`](https://github.com/unfoldadmin/django-unfold/commit/4f88b6875a3cbae8fdb5dd0b85720c76c4316764))
+
+- Select widget arrow in rtl ([#2416](https://github.com/unfoldadmin/django-unfold/pull/2416),
+  [`a2b6230`](https://github.com/unfoldadmin/django-unfold/commit/a2b6230ebfe254e0b7a6f5300336236693816973))
+
+- Selector arrows in rtl ([#2421](https://github.com/unfoldadmin/django-unfold/pull/2421),
+  [`ea5ab90`](https://github.com/unfoldadmin/django-unfold/commit/ea5ab90f0d7f85a31b5ef826f9a4907e859bbe3b))
+
+- Stacked inline in rtl ([#2397](https://github.com/unfoldadmin/django-unfold/pull/2397),
+  [`55832ea`](https://github.com/unfoldadmin/django-unfold/commit/55832eacc2fff3ae10c1c7d0cb82ac75ba3615e3))
+
+- Submit row in rtl ([#2399](https://github.com/unfoldadmin/django-unfold/pull/2399),
+  [`1e982d8`](https://github.com/unfoldadmin/django-unfold/commit/1e982d88f0fd0b243f8eb0033a2afda9a5aea545))
+
+- Switch widget in rtl ([#2418](https://github.com/unfoldadmin/django-unfold/pull/2418),
+  [`766799a`](https://github.com/unfoldadmin/django-unfold/commit/766799a87542ccfd584a10e2b89a7016058b6702))
+
+- Tabular inline in rtl ([#2396](https://github.com/unfoldadmin/django-unfold/pull/2396),
+  [`74a59ba`](https://github.com/unfoldadmin/django-unfold/commit/74a59baa468aa1e6cb830c8a27c38d931f759c65))
+
+- Use typographic apostrophe in user add form message
+  ([#2385](https://github.com/unfoldadmin/django-unfold/pull/2385),
+  [`1d9afb8`](https://github.com/unfoldadmin/django-unfold/commit/1d9afb82d1177413452da96d5d2e58b91bb63da0))
+
+- Vertical filter form empty values
+  ([#2410](https://github.com/unfoldadmin/django-unfold/pull/2410),
+  [`d3bdee6`](https://github.com/unfoldadmin/django-unfold/commit/d3bdee64b5daeb7efce5eeb6a0cc1b4429c222b4))
+
+- Wrap long names and zebra rows in filtered select multiple
+  ([#2359](https://github.com/unfoldadmin/django-unfold/pull/2359),
+  [`16c9bbb`](https://github.com/unfoldadmin/django-unfold/commit/16c9bbb6d8059edb6d22ef3672ddc9fc93db3ba2))
+
+### Features
+
+- Display warning when invalid filter entered
+  ([#2409](https://github.com/unfoldadmin/django-unfold/pull/2409),
+  [`e130a94`](https://github.com/unfoldadmin/django-unfold/commit/e130a9465ad32316f0fa5f9994f1b2d50f0c4be6))
+
+- Dropped python 3.12 ([#2427](https://github.com/unfoldadmin/django-unfold/pull/2427),
+  [`fa4e28c`](https://github.com/unfoldadmin/django-unfold/commit/fa4e28c26377ef5241376fb7951e0b1534f8c05c))
+
+- Htmx4 ([#2426](https://github.com/unfoldadmin/django-unfold/pull/2426),
+  [`5d353e4`](https://github.com/unfoldadmin/django-unfold/commit/5d353e442d38c7d1ea7bd500660f9da8d2c62173))
+
+- Support variant in action row ([#2402](https://github.com/unfoldadmin/django-unfold/pull/2402),
+  [`4c78501`](https://github.com/unfoldadmin/django-unfold/commit/4c785018a17493c2be75ee236dd54ecda98ed451))
+
+- Support variant in submit line actions
+  ([#2343](https://github.com/unfoldadmin/django-unfold/pull/2343),
+  [`9ba7de4`](https://github.com/unfoldadmin/django-unfold/commit/9ba7de475ebe4b7afb517776e4f6ba5a0eee4363))
+
+
 ## v0.110.1 (2026-11-01)
 
 ### Bug Fixes
