@@ -8,7 +8,6 @@ from urllib.parse import parse_qs, urlparse
 from django.contrib.admin import AdminSite
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, URLResolver, path, reverse, reverse_lazy
@@ -112,7 +111,7 @@ class UnfoldAdminSite(AdminSite):
                 context.update(global_context)
 
         if hasattr(self, "extra_context") and callable(self.extra_context):
-            return self.extra_context(context, request)
+            return self.extra_context(context, request)  # ty: ignore[invalid-explicit-return]
 
         return context
 
@@ -193,7 +192,7 @@ class UnfoldAdminSite(AdminSite):
                     ]:
                         continue
 
-                admin_instance = self._registry.get(model["model"])
+                admin_instance = self._registry[model["model"]]
                 search_fields = admin_instance.get_search_fields(request)
 
                 if not search_fields:
@@ -239,7 +238,7 @@ class UnfoldAdminSite(AdminSite):
         search_term = request.GET.get("s")
         app_list = super().get_app_list(request)
 
-        if search_term in EMPTY_VALUES:
+        if not search_term:
             return HttpResponse()
 
         search_term = search_term.lower()
@@ -314,7 +313,7 @@ class UnfoldAdminSite(AdminSite):
         if self.password_change_template is not None:
             defaults["template_name"] = self.password_change_template
         request.current_app = self.name
-        return PasswordChangeView.as_view(**defaults)(request)
+        return PasswordChangeView.as_view(**defaults)(request)  # ty: ignore[invalid-explicit-return]
 
     def get_sidebar_list(self, request: HttpRequest) -> list[dict[str, Any]]:
         navigation = self._get_value(
@@ -445,7 +444,7 @@ class UnfoldAdminSite(AdminSite):
 
         if isinstance(callback, str) or isinstance(callback, Callable):
             # We are not able to use here "is" because type is lazy loaded function
-            if lazy(callback)(request) == True:  # noqa: E712
+            if lazy(callback)(request) == True:  # noqa: E712  # ty: ignore[invalid-argument-type]
                 return True
 
         return False
@@ -603,7 +602,7 @@ class UnfoldAdminSite(AdminSite):
         extra_urls: list[URLResolver | URLPattern] = []
 
         if hasattr(self, "extra_urls") and callable(self.extra_urls):
-            extra_urls = self.extra_urls()
+            extra_urls = self.extra_urls()  # ty: ignore[invalid-assignment]
 
         site_views = self._get_config("SITE_VIEWS")
 

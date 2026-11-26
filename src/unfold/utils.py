@@ -21,8 +21,8 @@ try:
     from djmoney.models.fields import MoneyField
     from djmoney.money import Money
 except ImportError:
-    MoneyField: type[MoneyField] | None = None
-    Money: type[Money] | None = None
+    MoneyField = None
+    Money = None
 
 
 def _boolean_icon(field_val: Any) -> str:
@@ -97,7 +97,7 @@ def display_for_value(  # noqa: PLR0911
     elif isinstance(value, bool):
         return str(value)
     elif isinstance(value, datetime.datetime):
-        return formats.localize(timezone.template_localtime(value))
+        return formats.localize(timezone.template_localtime(value))  # ty: ignore[missing-attribute]
     elif isinstance(value, datetime.date | datetime.time):
         return formats.localize(value)
     elif Money is not None and isinstance(value, Money):
@@ -124,7 +124,7 @@ def display_for_field(value: Any, field: Any, empty_value_display: str) -> str: 
     elif value is None or value == "":
         return empty_value_display
     elif isinstance(field, models.DateTimeField):
-        return formats.localize(timezone.template_localtime(value))
+        return formats.localize(timezone.template_localtime(value))  # ty: ignore[missing-attribute]
     elif isinstance(field, models.DateField | models.TimeField):
         return formats.localize(value)
     elif MoneyField is not None and isinstance(field, MoneyField):

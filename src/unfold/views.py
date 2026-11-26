@@ -36,7 +36,7 @@ class DatasetChangeList(ChangeList):
 
         if not _search_form.is_valid():
             for error in _search_form.errors.values():
-                messages.error(request, ", ".join(error))
+                messages.error(request, ", ".join(str(message) for message in error))
 
         self.dataset_search_query = _search_form.cleaned_data.get(self.search_var) or ""
 
