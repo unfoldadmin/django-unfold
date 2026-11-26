@@ -117,6 +117,7 @@ lint.ignore = [
 
 [tool.ty]
 src.include = [
+  "src/unfold/admin",
   "src/unfold/checks.py",
   "src/unfold/contrib",
   "src/unfold/dataclasses.py",

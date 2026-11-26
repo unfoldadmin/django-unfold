@@ -67,7 +67,7 @@ def action(
                 permission_checks = []
 
                 for permission_rule in permission_rules:
-                    if isinstance(permission_rule, str):
+                    if isinstance(permission_rule, str) and "." in permission_rule:
                         permission_checks.append(
                             request.user.has_perm(permission_rule)  # ty: ignore[missing-union-attribute]
                         )
