@@ -192,7 +192,11 @@ class UnfoldAdminSite(AdminSite):
                     ]:
                         continue
 
-                admin_instance = self._registry[model["model"]]
+                admin_instance = self._registry.get(model["model"])
+
+                if admin_instance is None:
+                    continue
+
                 search_fields = admin_instance.get_search_fields(request)
 
                 if not search_fields:
