@@ -188,7 +188,7 @@ class ActionModelAdminMixin(ModelAdmin):
             if isinstance(action, dict) and "items" in action:
                 results.extend(action["items"])
             else:
-                results.append(action)
+                results.append(action)  # ty: ignore[invalid-argument-type]
 
         return results
 
@@ -349,7 +349,7 @@ class ActionModelAdminMixin(ModelAdmin):
             permission_checks = []
 
             for permission_rule in permission_rules:
-                if isinstance(permission_rule, str) and "." in permission_rule:
+                if isinstance(permission_rule, str):
                     permission_checks.append(request.user.has_perm(permission_rule))  # type: ignore
                 elif object_id:
                     permission_checks.append(permission_rule(request, object_id))

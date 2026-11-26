@@ -73,10 +73,10 @@ def action(
                         )
                     elif has_detail_action or has_submit_line_action:
                         permission_checks.append(
-                            permission_rule(request, kwargs.get("object_id"))
+                            permission_rule(request, kwargs.get("object_id"))  # ty: ignore[not-callable]
                         )
                     else:
-                        permission_checks.append(permission_rule(request))
+                        permission_checks.append(permission_rule(request))  # ty: ignore[not-callable]
 
                 if not all(permission_checks):
                     raise PermissionDenied
