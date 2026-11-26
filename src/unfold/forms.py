@@ -208,7 +208,7 @@ class PaginationFormSetMixin:
         provided_queryset: QuerySet | None = None,
         *args: Any,
         **kwargs: Any,
-    ):
+    ) -> None:
         self.request = request
         self.per_page = per_page
         self.count = count

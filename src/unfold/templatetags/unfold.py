@@ -271,7 +271,7 @@ class RenderComponentNode(template.Node):
         include_context: bool = False,
         *args: Any,
         **kwargs: Any,
-    ):
+    ) -> None:
         self.template_name = template_name
         self.nodelist = nodelist
         self.extra_context = extra_context or {}

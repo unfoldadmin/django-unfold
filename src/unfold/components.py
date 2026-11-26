@@ -40,8 +40,8 @@ def register_component(cls: type) -> type:
 
 
 class BaseComponent:
-    def __init__(self, request: HttpRequest):
+    def __init__(self, request: HttpRequest) -> None:
         self.request = request
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         return kwargs

@@ -11,7 +11,7 @@ from unfold.dataclasses import UnfoldAction
 
 
 class UnfoldModelAdminChecks(ModelAdminChecks):
-    def check(self, admin_obj: BaseModelAdmin, **kwargs) -> list[CheckMessage]:
+    def check(self, admin_obj: BaseModelAdmin, **kwargs: Any) -> list[CheckMessage]:
         return [
             *super().check(admin_obj, **kwargs),
             *self._check_unfold_action_permission_methods(admin_obj),

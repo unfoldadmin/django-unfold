@@ -12,6 +12,7 @@ from django.db.models import (
     ImageField,
     JSONField,
     ManyToManyRel,
+    Model,
     OneToOneField,
 )
 from django.forms import ModelChoiceField, ModelMultipleChoiceField, Widget
@@ -100,7 +101,9 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         contents = self._preprocess_field(contents)
         return contents
 
-    def get_admin_url(self, remote_field, remote_obj):
+    def get_admin_url(
+        self, remote_field: ForeignObjectRel | OneToOneField, remote_obj: Model
+    ) -> str:
         url_name = f"admin:{remote_field.model._meta.app_label}_{remote_field.model._meta.model_name}_change"
         try:
             url = reverse(

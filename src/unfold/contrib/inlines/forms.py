@@ -27,7 +27,7 @@ class NonrelatedInlineModelFormSet(PaginationFormSetMixin, BaseModelFormSet):
 
         return f"{cls.model._meta.app_label}-{cls.model._meta.model_name}"
 
-    def save_new(self, form: ModelForm, commit: bool = True):
+    def save_new(self, form: ModelForm, commit: bool = True) -> Model:
         obj = super().save_new(form, commit=False)
 
         if self.instance is None:

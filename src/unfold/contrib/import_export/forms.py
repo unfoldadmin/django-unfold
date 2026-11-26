@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.forms import Form, HiddenInput
 from django.forms.fields import BooleanField
 from django.utils.translation import gettext_lazy as _
@@ -15,7 +17,7 @@ from unfold.widgets import (
 
 
 class ImportExportWidgetsMixin(Form):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
         if not isinstance(self.fields["resource"].widget, HiddenInput):
@@ -39,7 +41,7 @@ class ImportExportWidgetsMixin(Form):
 
 
 class ImportForm(ImportExportWidgetsMixin, BaseImportForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
         self.fields["import_file"].widget = UnfoldAdminFileFieldWidget(
@@ -54,7 +56,7 @@ class ExportForm(ImportExportWidgetsMixin, BaseExportForm):
 class SelectableFieldsExportForm(
     ImportExportWidgetsMixin, BaseSelectableFieldsExportForm
 ):
-    def __init__(self, formats, resources, **kwargs):
+    def __init__(self, formats: Any, resources: Any, **kwargs: Any) -> None:
         super().__init__(formats, resources, **kwargs)
 
         for _key, field in self.fields.items():

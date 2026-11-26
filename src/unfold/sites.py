@@ -449,7 +449,7 @@ class UnfoldAdminSite(AdminSite):
 
         return False
 
-    def _replace_values(self, target: dict, source: dict, request: HttpRequest):
+    def _replace_values(self, target: dict, source: dict, request: HttpRequest) -> dict:
         for key, value in source.items():
             if value is not None and callable(value):
                 target[key] = value(request)

@@ -16,6 +16,7 @@ from django.contrib.contenttypes.admin import (
     GenericTabularInline as BaseGenericTabularInline,
 )
 from django.db.models import Model
+from django.forms import Media
 from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern, path
 from django.utils.safestring import SafeString, mark_safe
@@ -84,7 +85,7 @@ class ModelAdmin(
     checks_class = UnfoldModelAdminChecks
 
     @property
-    def media(self):
+    def media(self) -> Media:
         media = super().media
 
         if hasattr(self, "nested_formset_media"):
