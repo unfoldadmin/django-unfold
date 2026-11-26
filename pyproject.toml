@@ -67,6 +67,7 @@ dev = [
     "psycopg[binary]~=3.3.6",
     "pre-commit~=4.6.2",
     "jsonschema~=4.26.0",
+    "ty~=0.0.111",
 ]
 django52 = ["django>=5.2,<6"]
 django60 = ["django>=6.0,<6.1"]
@@ -163,7 +164,13 @@ source = ["src/unfold"]
 [tool.ty.src]
 include = [
     "src/unfold/contrib",
+    "src/unfold/models",
     "src/unfold/templatetags",
+    "src/unfold/checks.py",
+    "src/unfold/dataclasses.py",
+    "src/unfold/fields.py",
+    "src/unfold/forms.py",
+    "src/unfold/decorators.py",
 ]
 
 [tool.tox]

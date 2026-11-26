@@ -2,7 +2,6 @@ from collections.abc import Callable, Iterable
 from functools import wraps
 from typing import TYPE_CHECKING, Any
 
-from django.contrib.admin.options import BaseModelAdmin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Model
 from django.db.models.expressions import BaseExpression, Combinable
@@ -12,7 +11,9 @@ from django.shortcuts import render
 if TYPE_CHECKING:
     from django_stubs_ext import StrOrPromise
 
-from unfold.dataclasses import Action, ActionDialog
+
+from unfold.admin import ModelAdmin
+from unfold.dataclasses import ActionDialog
 from unfold.enums import ActionVariant
 from unfold.forms import BaseDialogForm
 
@@ -29,10 +30,12 @@ def action(
     dialog: ActionDialog | None = None,
     extra_options: dict[str, Any] | None = None,
 ) -> Callable:
-    def decorator(func: Callable) -> Action:
+    def decorator(func: Callable) -> Callable[..., HttpResponse | None]:
+        function_name: str = func.__name__  # ty: ignore[missing-attribute]
+
         @wraps(func)
         def inner(
-            model_admin: BaseModelAdmin,
+            model_admin: ModelAdmin,
             request: HttpRequest,
             *args: Any,
             **kwargs: Any,
@@ -51,11 +54,11 @@ def action(
                             getattr(model_admin, f"has_{permission}_permission")
                         )
 
-                has_detail_action = func.__name__ in model_admin._extract_action_names(
+                has_detail_action = function_name in model_admin._extract_action_names(
                     model_admin.actions_detail
                 )
                 has_submit_line_action = (
-                    func.__name__
+                    function_name
                     in model_admin._extract_action_names(
                         model_admin.actions_submit_line
                     )
@@ -64,8 +67,10 @@ def action(
                 permission_checks = []
 
                 for permission_rule in permission_rules:
-                    if isinstance(permission_rule, str) and "." in permission_rule:
-                        permission_checks.append(request.user.has_perm(permission_rule))
+                    if isinstance(permission_rule, str):
+                        permission_checks.append(
+                            request.user.has_perm(permission_rule)  # ty: ignore[missing-union-attribute]
+                        )
                     elif has_detail_action or has_submit_line_action:
                         permission_checks.append(
                             permission_rule(request, kwargs.get("object_id"))
@@ -100,32 +105,32 @@ def action(
             return func(model_admin, request, *args, **kwargs)
 
         if permissions is not None:
-            inner.allowed_permissions = permissions
+            inner.allowed_permissions = permissions  # ty: ignore[missing-attribute]
 
         if description is not None:
-            inner.short_description = description
+            inner.short_description = description  # ty: ignore[missing-attribute]
 
         if url_path is not None:
-            inner.url_path = url_path
+            inner.url_path = url_path  # ty: ignore[missing-attribute]
 
         if icon is not None:
-            inner.icon = icon
+            inner.icon = icon  # ty: ignore[missing-attribute]
 
         if dialog is not None:
-            inner.dialog = dialog
+            inner.dialog = dialog  # ty: ignore[missing-attribute]
 
         if variant is not None:
-            inner.variant = variant
+            inner.variant = variant  # ty: ignore[missing-attribute]
         else:
-            inner.variant = ActionVariant.DEFAULT
+            inner.variant = ActionVariant.DEFAULT  # ty: ignore[missing-attribute]
 
         if extra_options is None:
-            inner.extra_options = {}
+            inner.extra_options = {}  # ty: ignore[missing-attribute]
         else:
-            inner.extra_options = extra_options
+            inner.extra_options = extra_options  # ty: ignore[missing-attribute]
 
-        inner.attrs = attrs or {}
-        inner.original_function_name = func.__name__
+        inner.attrs = attrs or {}  # ty: ignore[missing-attribute]
+        inner.original_function_name = function_name  # ty: ignore[missing-attribute]
         return inner
 
     if function is None:
@@ -155,25 +160,25 @@ def display(
                 "decorator are mutually exclusive."
             )
         if boolean is not None:
-            func.boolean = boolean
+            func.boolean = boolean  # ty: ignore[missing-attribute]
         if image is not None:
-            func.image = image
+            func.image = image  # ty: ignore[missing-attribute]
         if ordering is not None:
-            func.admin_order_field = ordering
+            func.admin_order_field = ordering  # ty: ignore[missing-attribute]
         if description is not None:
-            func.short_description = description
+            func.short_description = description  # ty: ignore[missing-attribute]
         if empty_value is not None:
-            func.empty_value_display = empty_value
+            func.empty_value_display = empty_value  # ty: ignore[missing-attribute]
         if label is not None:
-            func.label = label
+            func.label = label  # ty: ignore[missing-attribute]
         if header is not None:
-            func.header = header
+            func.header = header  # ty: ignore[missing-attribute]
         if dropdown is not None:
-            func.dropdown = dropdown
+            func.dropdown = dropdown  # ty: ignore[missing-attribute]
         if wrapper_class is not None:
-            func.wrapper_class = wrapper_class
+            func.wrapper_class = wrapper_class  # ty: ignore[missing-attribute]
         if formatting is not None:
-            func.formatting = formatting
+            func.formatting = formatting  # ty: ignore[missing-attribute]
 
         return func
 

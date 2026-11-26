@@ -17,7 +17,7 @@ class UnfoldModelAdminChecks(ModelAdminChecks):
             *self._check_unfold_action_permission_methods(admin_obj),
         ]
 
-    def _check_unfold_action_permission_methods(self, obj: Any) -> list[checks.Error]:
+    def _check_unfold_action_permission_methods(self, obj: Any) -> list[CheckMessage]:
         """
         Actions with an allowed_permission attribute require the ModelAdmin to
         implement a has_<perm>_permission() method for each permission.
