@@ -1,177 +1,144 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [ "hatchling" ]
+
 [project]
 name = "django-unfold"
 version = "0.111.0"
 description = "Modern Django Admin"
+readme = "README.md"
+keywords = [
+  "admin",
+  "django",
+  "tailwind",
+  "theme",
+]
+license = "MIT"
 authors = []
 requires-python = ">=3.13,<4.0"
-readme = "README.md"
-license = "MIT"
-keywords = [
-    "django",
-    "admin",
-    "tailwind",
-    "theme",
-]
 classifiers = [
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
-    "Programming Language :: Python :: 3.15",
-    "Framework :: Django :: 5.2",
-    "Framework :: Django :: 6.0",
-    "Framework :: Django :: 6.1",
-    "Operating System :: OS Independent",
-    "Environment :: Web Environment",
-    "Intended Audience :: Developers",
+  "Environment :: Web Environment",
+  "Framework :: Django :: 5.2",
+  "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
 ]
-dependencies = ["django>=5.2"]
-
-[project.optional-dependencies]
-pygments = [
-  "pygments",
-]
-jsonschema = [
+dependencies = [ "django>=5.2" ]
+optional-dependencies.jsonschema = [
   "jsonschema",
 ]
-
-[project.urls]
-Homepage = "https://unfoldadmin.com"
-Documentation = "https://unfoldadmin.com/docs/"
-Repository = "https://github.com/unfoldadmin/django-unfold"
-Issues = "https://github.com/unfoldadmin/django-unfold/issues"
-Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md"
+optional-dependencies.pygments = [
+  "pygments",
+]
+urls.Changelog = "https://github.com/unfoldadmin/django-unfold/blob/main/CHANGELOG.md"
+urls.Documentation = "https://unfoldadmin.com/docs/"
+urls.Homepage = "https://unfoldadmin.com"
+urls.Issues = "https://github.com/unfoldadmin/django-unfold/issues"
+urls.Repository = "https://github.com/unfoldadmin/django-unfold"
 
 [dependency-groups]
 dev = [
-    "django-constance~=4.3.5",
-    "django-crispy-forms~=2.6.0",
-    "django-guardian~=3.3.3",
-    "django-hijack~=3.7.8",
-    "django-import-export~=4.4.1",
-    "django-location-field~=2.7.3",
-    "django-money~=3.6.1",
-    "django-reversion~=6.3.0",
-    "django-reversion-compare~=0.21.1",
-    "django-simple-history~=3.13.0",
-    "django-stubs~=6.1.2",
-    "django-waffle~=5.0.0",
-    "pillow>=12.3,<13.1",
-    "pytest~=9.1.1",
-    "pytest-cov~=7.1.0",
-    "pytest-django~=4.12.0",
-    "pytest-factoryboy~=2.8.1",
-    "pytest-mock~=3.15.1",
-    "python-semantic-release~=10.6.1",
-    "tox~=4.58.0",
-    "six~=1.17.0",
-    "psycopg[binary]~=3.3.6",
-    "pre-commit~=4.6.2",
-    "jsonschema~=4.26.0",
-    "ty~=0.0.111",
+  "django-constance~=4.3.5",
+  "django-crispy-forms~=2.6.0",
+  "django-guardian~=3.3.3",
+  "django-hijack~=3.7.8",
+  "django-import-export~=4.4.1",
+  "django-location-field~=2.7.3",
+  "django-money~=3.6.1",
+  "django-reversion~=6.3.0",
+  "django-reversion-compare~=0.21.1",
+  "django-simple-history~=3.13.0",
+  "django-stubs~=6.1.2",
+  "django-waffle~=5.0.0",
+  "jsonschema~=4.26.0",
+  "pillow>=12.3,<13.1",
+  "pre-commit~=4.6.2",
+  "psycopg[binary]~=3.3.6",
+  "pytest~=9.1.1",
+  "pytest-cov~=7.1.0",
+  "pytest-django~=4.12.0",
+  "pytest-factoryboy~=2.8.1",
+  "pytest-mock~=3.15.1",
+  "python-semantic-release~=10.6.1",
+  "six~=1.17.0",
+  "tox~=4.58.0",
+  "ty~=0.0.111",
 ]
-django52 = ["django>=5.2,<6"]
-django60 = ["django>=6.0,<6.1"]
-django61 = ["django>=6.1,<6.2"]
-djangomain = ["django @ git+https://github.com/django/django@main",]
+django52 = [ "django>=5.2,<6" ]
+django60 = [ "django>=6,<6.1" ]
+django61 = [ "django>=6.1,<6.2" ]
+djangomain = [
+  "django @ git+https://github.com/django/django@main",
+]
+
+[tool.hatch]
+build.targets.wheel.include = [ "src/unfold" ]
+build.targets.wheel.sources."src/unfold" = "unfold"
 
 [tool.uv]
 conflicts = [
-    [
-        { group = "django52" },
-        { group = "django60" },
-        { group = "django61" },
-        { group = "djangomain" },
-    ],
+  [
+    { group = "django52" },
+    { group = "django60" },
+    { group = "django61" },
+    { group = "djangomain" },
+  ],
 ]
-
-[tool.hatch.build.targets.sdist]
-include = ["src/unfold"]
-
-[tool.hatch.build.targets.wheel]
-include = ["src/unfold"]
-
-[tool.hatch.build.targets.wheel.sources]
-"src/unfold" = "unfold"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
 
 [tool.ruff]
-fix = true
-line-length = 88
 target-version = "py313"
-
-[tool.ruff.lint]
-select = [
-    "E",    # pycodestyle errors
-    "W",    # pycodestyle warnings
-    "F",    # pyflakes
-    "I",    # isort
-    "C",    # flake8-comprehensions
-    "B",    # flake8-bugbear
-    "UP",   # pyupgrade
-    "PL",   # pylint
-    "T20",  # disallow pprint and print
+line-length = 88
+fix = true
+lint.select = [
+  "B",   # flake8-bugbear
+  "C",   # flake8-comprehensions
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort
+  "PL",  # pylint
+  "T20", # disallow pprint and print
+  "UP",  # pyupgrade
+  "W",   # pycodestyle warnings
 ]
-ignore = [
-    "E501",    # line too long, handled by black
-    "B905",    # zip() without strict=True
-    "C901",    # too complex
-    "PLC0415", # `import` should be at the top-level of a file
-    "PLR0913", # Too many arguments in function definition
-    "PLR0917", # Too many positional arguments
-]
-
-[tool.semantic_release]
-tag_format = "{version}"
-major_on_zero = false
-allow_zero_version = true
-version_toml = ["pyproject.toml:project.version"]
-
-[tool.semantic_release.changelog]
-mode = "init"
-exclude_commit_patterns = [
-    "chore: version bump",
-    '''chore(?:\(deps\))?: .+''',
-    '''chore(?:\(deps-dev\))?: .+'''
+lint.ignore = [
+  "B905",    # zip() without strict=True
+  "C901",    # too complex
+  "E501",    # line too long, handled by black
+  "PLC0415", # `import` should be at the top-level of a file
+  "PLR0913", # Too many arguments in function definition
+  "PLR0917", # Too many positional arguments
 ]
 
-[tool.semantic_release.publish]
-upload_to_vcs_release = false
-
-[tool.pytest.ini_options]
-addopts = [
-    "--strict-config",
-    "--strict-markers",
-    "--cov=unfold",
-    "--reuse-db",
-    "--no-migrations",
-    "--ds=example.settings",
+[tool.ty]
+src.include = [
+  "src/unfold/contrib",
+  "src/unfold/templatetags",
 ]
-pythonpath = "tests/server"
-django_find_project = false
 
-[tool.coverage.report]
-show_missing = true
-skip_covered = true
-fail_under = 95.5
-sort = "-miss"
-
-[tool.coverage.paths]
-source = ["src/unfold"]
-
-[tool.ty.src]
-include = [
-    "src/unfold/contrib",
-    "src/unfold/models",
-    "src/unfold/templatetags",
-    "src/unfold/checks.py",
-    "src/unfold/dataclasses.py",
-    "src/unfold/fields.py",
-    "src/unfold/forms.py",
-    "src/unfold/decorators.py",
+[tool.pytest]
+ini_options.pythonpath = "tests/server"
+ini_options.addopts = [
+  "--strict-config",
+  "--strict-markers",
+  "--cov=unfold",
+  "--reuse-db",
+  "--no-migrations",
+  "--ds=example.settings",
 ]
+ini_options.django_find_project = false
+
+[tool.coverage]
+paths.source = [ "src/unfold" ]
+report.fail_under = 95.5
+report.skip_covered = true
+report.show_missing = true
+report.sort = "-miss"
 
 [tool.tox]
 legacy_tox_ini = """
@@ -190,3 +157,16 @@ legacy_tox_ini = """
         django61: uv run --group django61 -- pytest .
         djangomain: uv run --group djangomain --upgrade-package django -- pytest .
 """
+
+[tool.semantic_release]
+tag_format = "{version}"
+major_on_zero = false
+allow_zero_version = true
+version_toml = [ "pyproject.toml:project.version" ]
+publish.upload_to_vcs_release = false
+changelog.exclude_commit_patterns = [
+  "chore: version bump",
+  '''chore(?:\(deps\))?: .+''',
+  '''chore(?:\(deps-dev\))?: .+'''
+]
+changelog.mode = "init"

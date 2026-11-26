@@ -38,6 +38,10 @@ repos:
     rev: v1.32.0
     hooks:
       - id: zizmor
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: v2.31.2
+    hooks:
+      - id: pyproject-fmt
   - repo: https://github.com/astral-sh/ty-pre-commit
     rev: v0.0.111
     hooks:

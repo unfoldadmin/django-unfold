@@ -640,7 +640,7 @@ requires-dist = [
     { name = "jsonschema", marker = "extra == 'jsonschema'" },
     { name = "pygments", marker = "extra == 'pygments'" },
 ]
-provides-extras = ["pygments", "jsonschema"]
+provides-extras = ["jsonschema", "pygments"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -671,7 +671,7 @@ dev = [
     { name = "ty", specifier = "~=0.0.111" },
 ]
 django52 = [{ name = "django", specifier = ">=5.2,<6" }]
-django60 = [{ name = "django", specifier = ">=6.0,<6.1" }]
+django60 = [{ name = "django", specifier = ">=6,<6.1" }]
 django61 = [{ name = "django", specifier = ">=6.1,<6.2" }]
 djangomain = [{ name = "django", git = "https://github.com/django/django?rev=main" }]
 
