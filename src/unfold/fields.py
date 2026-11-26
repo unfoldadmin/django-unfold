@@ -60,6 +60,9 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_json(self) -> bool:
+        if not self.resolved_field:
+            return False
+
         if isinstance(self.resolved_field, bool):
             return False
 
@@ -69,6 +72,9 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_image(self) -> bool:
+        if not self.resolved_field:
+            return False
+
         if isinstance(self.resolved_field, bool):
             return False
 
@@ -78,6 +84,9 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_file(self) -> bool:
+        if not self.resolved_field:
+            return False
+
         if isinstance(self.resolved_field, bool):
             return False
 
@@ -86,6 +95,9 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def wrapper_class(self) -> str:
+        if not self.resolved_field:
+            return ""
+
         if isinstance(self.resolved_field, bool):
             return ""
 

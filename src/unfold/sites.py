@@ -8,6 +8,7 @@ from urllib.parse import parse_qs, urlparse
 from django.contrib.admin import AdminSite
 from django.core.cache import cache
 from django.core.paginator import Paginator
+from django.core.validators import EMPTY_VALUES
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, URLResolver, path, reverse, reverse_lazy
@@ -194,7 +195,7 @@ class UnfoldAdminSite(AdminSite):
 
                 admin_instance = self._registry.get(model["model"])
 
-                if admin_instance is None:
+                if admin_instance is None or admin_instance in EMPTY_VALUES:
                     continue
 
                 search_fields = admin_instance.get_search_fields(request)
