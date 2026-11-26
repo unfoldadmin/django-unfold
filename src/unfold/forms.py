@@ -16,7 +16,12 @@ from django.contrib.admin.views.main import ChangeListSearchForm
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
-from django.contrib.auth.forms import AdminUserCreationForm as BaseUserCreationForm
+
+try:
+    from django.contrib.auth.forms import AdminUserCreationForm as BaseUserCreationForm
+except ImportError:
+    from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+
 from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.contrib.auth.models import User
@@ -99,7 +104,7 @@ class AuthenticationForm(AdminAuthenticationForm):
         self.fields["password"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
 
 
-class UserCreationForm(BaseUserCreationForm):
+class UserCreationForm(BaseUserCreationForm):  # ty: ignore[unsupported-base]
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
