@@ -79,6 +79,7 @@ djangomain = [
 
 [tool.hatch]
 build.targets.wheel.include = [ "src/unfold" ]
+build.targets.sdist.include = [ "src/unfold" ]
 build.targets.wheel.sources."src/unfold" = "unfold"
 
 [tool.uv]
