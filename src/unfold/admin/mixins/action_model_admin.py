@@ -349,12 +349,12 @@ class ActionModelAdminMixin(ModelAdmin):
             permission_checks = []
 
             for permission_rule in permission_rules:
-                if isinstance(permission_rule, str):
+                if isinstance(permission_rule, str) and "." in permission_rule:
                     permission_checks.append(request.user.has_perm(permission_rule))  # type: ignore
                 elif object_id:
-                    permission_checks.append(permission_rule(request, object_id))
+                    permission_checks.append(permission_rule(request, object_id))  # ty: ignore[not-callable]
                 else:
-                    permission_checks.append(permission_rule(request))
+                    permission_checks.append(permission_rule(request))  # ty: ignore[not-callable]
 
             if all(permission_checks):
                 filtered_actions.append(action)
