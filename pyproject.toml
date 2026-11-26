@@ -117,19 +117,7 @@ lint.ignore = [
 
 [tool.ty]
 src.include = [
-  "src/unfold/admin",
-  "src/unfold/checks.py",
-  "src/unfold/contrib",
-  "src/unfold/dataclasses.py",
-  "src/unfold/decorators.py",
-  "src/unfold/fields.py",
-  "src/unfold/forms.py",
-  "src/unfold/models",
-  "src/unfold/sites.py",
-  "src/unfold/templatetags",
-  "src/unfold/utils.py",
-  "src/unfold/views.py",
-  "src/unfold/widgets.py",
+  "src/unfold",
 ]
 
 [tool.pytest]

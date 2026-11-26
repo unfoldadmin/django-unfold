@@ -1,4 +1,4 @@
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from django.contrib.admin import options
 from django.contrib.admin.helpers import InlineAdminFormSet
@@ -7,6 +7,11 @@ from django.db.models import Model
 from django.forms import BaseInlineFormSet, Media, ModelForm
 from django.http import HttpRequest, HttpResponse
 from django.utils.translation import gettext_lazy as _
+
+if TYPE_CHECKING:
+    from django.contrib.admin import ModelAdmin as _Base
+else:
+    _Base = object
 
 
 def nested_all_valid(formsets: list[BaseInlineFormSet]) -> bool:
@@ -17,7 +22,7 @@ def nested_all_valid(formsets: list[BaseInlineFormSet]) -> bool:
             if not hasattr(form, "nested_formsets"):
                 continue
 
-            for nested_formset in form.nested_formsets:
+            for nested_formset in form.nested_formsets:  # ty: ignore[not-iterable]
                 if not nested_formset.formset.is_valid():
                     return False
 
@@ -35,7 +40,7 @@ def nested_all_valid(formsets: list[BaseInlineFormSet]) -> bool:
     return validation_result
 
 
-class NestedInlinesModelAdminMixin:
+class NestedInlinesModelAdminMixin(_Base):
     # Build custom media for all nested formsets and process it
     # later in media property in ModelAdmin
     nested_formset_media = Media()
@@ -43,7 +48,9 @@ class NestedInlinesModelAdminMixin:
     def _create_formsets(
         self, request: HttpRequest, obj: Model | None = None, change: bool = False
     ) -> tuple[list[BaseInlineFormSet], list[InlineModelAdmin]]:
-        formsets, inline_instances = super()._create_formsets(request, obj, change)
+        formsets, inline_instances = super()._create_formsets(  # ty: ignore[missing-attribute]
+            request, obj, change
+        )
 
         self._build_nested_formsets(request, obj, formsets, inline_instances, change)
 
@@ -58,7 +65,7 @@ class NestedInlinesModelAdminMixin:
     ) -> HttpResponse:
         # Monkey patch all_valid to do nested formsets validation. Applied because
         # we don't want to completely override `BaseModelAdmin._changeform_view()`
-        options.all_valid = nested_all_valid
+        options.all_valid = nested_all_valid  # ty: ignore[missing-attribute]
         return super().changeform_view(request, object_id, form_url, extra_context)
 
     def save_formset(
@@ -78,13 +85,13 @@ class NestedInlinesModelAdminMixin:
             if form in formset.deleted_forms:
                 continue
 
-            for nested_formset in form.nested_formsets:
+            for nested_formset in form.nested_formsets:  # ty: ignore[not-iterable]
                 self.save_formset(request, form, nested_formset.formset, change)
 
     def _build_nested_formsets(
         self,
         request: HttpRequest,
-        obj: Model,
+        obj: Model | None,
         formsets: list[BaseInlineFormSet],
         inline_instances: list[InlineModelAdmin],
         change: bool,
@@ -99,7 +106,7 @@ class NestedInlinesModelAdminMixin:
                 if not hasattr(inline, "inlines"):
                     continue
 
-                for inline_class in inline.inlines:
+                for inline_class in inline.inlines:  # ty: ignore[not-iterable]
                     inline_formset = self._get_nested_formset(
                         request, obj, form, inline, inline_class, change
                     )
@@ -107,14 +114,14 @@ class NestedInlinesModelAdminMixin:
                     if not inline_formset:
                         continue
 
-                    inline_formset.inline_type = "stacked"
+                    inline_formset.inline_type = "stacked"  # ty: ignore[invalid-assignment]
                     if issubclass(inline_class, TabularInline):
-                        inline_formset.inline_type = "tabular"
+                        inline_formset.inline_type = "tabular"  # ty: ignore[invalid-assignment]
 
                     nested_formsets.append(inline_formset)
                     self.nested_formset_media += inline_formset.media
 
-                form.nested_formsets = nested_formsets
+                form.nested_formsets = nested_formsets  # ty: ignore[missing-attribute]
 
             # Add nested forms to template form in formsets
             if (
@@ -122,9 +129,9 @@ class NestedInlinesModelAdminMixin:
                 and hasattr(inline, "inlines")
                 and inline.has_add_permission(request, obj)
             ):
-                formset.form.nested_formsets = []
+                formset.form.nested_formsets = []  # ty: ignore[missing-attribute]
 
-                for inline_class in inline.inlines:
+                for inline_class in inline.inlines:  # ty: ignore[not-iterable]
                     inline_formset = self._get_nested_formset(
                         request, obj, formset.empty_form, inline, inline_class, change
                     )
@@ -132,17 +139,17 @@ class NestedInlinesModelAdminMixin:
                     if not inline_formset:
                         continue
 
-                    inline_formset.inline_type = "stacked"
+                    inline_formset.inline_type = "stacked"  # ty: ignore[invalid-assignment]
                     if issubclass(inline_class, TabularInline):
-                        inline_formset.inline_type = "tabular"
+                        inline_formset.inline_type = "tabular"  # ty: ignore[invalid-assignment]
 
-                    formset.form.nested_formsets.append(inline_formset)
+                    formset.form.nested_formsets.append(inline_formset)  # ty: ignore[missing-attribute]
                     self.nested_formset_media += inline_formset.media
 
     def _get_nested_formset(
         self,
         request: HttpRequest,
-        obj: Model,
+        obj: Model | None,
         form: ModelForm,
         parent_inline: InlineModelAdmin,
         inline_class: type[InlineModelAdmin],
@@ -176,13 +183,13 @@ class NestedInlinesModelAdminMixin:
             for index, form in enumerate(inline_formset.initial_forms):  # noqa: PLR1704
                 if self._user_deleted_form(prefix, request, inline, obj, index):
                     continue
-                form._errors = {}
-                form.cleaned_data = form.initial
+                form._errors = {}  # ty: ignore[missing-attribute]
+                form.cleaned_data = form.initial  # ty: ignore[invalid-assignment]
 
         return InlineAdminFormSet(
             inline=inline,
             formset=inline_formset,
-            model_admin=self.opts,
+            model_admin=self.opts,  # ty: ignore[invalid-argument-type]
             fieldsets=list(inline.get_fieldsets(request, obj)),
             prepopulated_fields=dict(inline.get_prepopulated_fields(request, obj)),
             readonly_fields=list(inline.get_readonly_fields(request, obj)),
@@ -209,7 +216,7 @@ class NestedInlinesModelAdminMixin:
         prefix: str,
         request: HttpRequest,
         inline: InlineModelAdmin,
-        obj: Model,
+        obj: Model | None,
         index: int,
     ) -> bool:
         return (
@@ -222,7 +229,7 @@ class NestedInlinesModelAdminMixin:
         request: HttpRequest,
         inline: InlineModelAdmin,
         inline_formset: BaseInlineFormSet,
-        obj: Model,
+        obj: Model | None,
     ) -> dict[str, bool]:
         can_edit_parent = (
             self.has_change_permission(request, obj)
