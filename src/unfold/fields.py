@@ -104,14 +104,15 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
     def get_admin_url(
         self, remote_field: ForeignObjectRel | OneToOneField, remote_obj: Model
     ) -> str:
+        if not self.model_admin:
+            return ""
+
         url_name = f"admin:{remote_field.model._meta.app_label}_{remote_field.model._meta.model_name}_change"
         try:
             url = reverse(
                 url_name,
                 args=[quote(remote_obj.pk)],
-                current_app=self.model_admin.admin_site.name
-                if self.model_admin
-                else None,
+                current_app=self.model_admin.admin_site.name,
             )
             return format_html('<a href="{}" class="text-link">{}</a>', url, remote_obj)
         except NoReverseMatch:
