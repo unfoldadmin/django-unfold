@@ -99,9 +99,9 @@ class ModelAdmin(
                 and hasattr(filter[1], "form_class")
                 and hasattr(filter[1].form_class, "Media")
             ):
-                media += forms.Media(filter[1].form_class.Media)
+                media += forms.Media(filter[1].form_class.Media)  # ty: ignore[invalid-argument-type]
             elif hasattr(filter, "form_class") and hasattr(filter.form_class, "Media"):
-                media += forms.Media(filter.form_class.Media)
+                media += forms.Media(filter.form_class.Media)  # ty: ignore[invalid-argument-type]
 
         return media
 
@@ -117,7 +117,7 @@ class ModelAdmin(
         if self.ordering_field and self.ordering_field not in self.list_editable:
             list_editable = list(getattr(self, "list_editable", []))
             list_editable.append(self.ordering_field)
-            self.list_editable = list_editable
+            self.list_editable = list_editable  # ty: ignore[invalid-attribute-access]
 
         return super().changelist_view(request, extra_context)
 
@@ -131,8 +131,8 @@ class ModelAdmin(
     ) -> HttpResponse:
         from unfold.forms import AdminForm, Fieldline
 
-        helpers.AdminForm = AdminForm  # ty:ignore
-        helpers.Fieldline = Fieldline  # ty:ignore
+        helpers.AdminForm = AdminForm  # ty: ignore[invalid-assignment]
+        helpers.Fieldline = Fieldline  # ty: ignore[invalid-assignment]
 
         response = super().changeform_view(request, object_id, form_url, extra_context)
 
@@ -168,7 +168,7 @@ class ModelAdmin(
             def wrapper(*args, **kwargs):
                 return self.admin_site.admin_view(view)(*args, **kwargs)
 
-            wrapper.model_admin = self
+            wrapper.model_admin = self  # ty: ignore[missing-attribute]
             return update_wrapper(wrapper, view)
 
         custom_urls = [
@@ -214,7 +214,7 @@ class ModelAdmin(
     def _path_from_custom_url(self, custom_url: tuple[str, str, View]) -> URLPattern:
         return path(
             custom_url[0],
-            self.admin_site.admin_view(custom_url[2]),
+            self.admin_site.admin_view(custom_url[2]),  # ty: ignore[invalid-argument-type]
             {"model_admin": self},
             name=custom_url[1],
         )
