@@ -117,7 +117,7 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         self, remote_field: ForeignObjectRel | OneToOneField, remote_obj: Model
     ) -> str:
         if not self.model_admin:
-            return ""
+            return str(remote_obj)
 
         url_name = f"admin:{remote_field.model._meta.app_label}_{remote_field.model._meta.model_name}_change"
         try:
