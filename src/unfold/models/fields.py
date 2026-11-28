@@ -35,7 +35,7 @@ class JSONSchemaField(models.JSONField):
         super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs: Any) -> forms.Field | None:
-        defaults = {
+        defaults: dict[str, Any] = {
             "form_class": UnfoldAdminJSONSchemaField,
             "schema": self.schema,
         }

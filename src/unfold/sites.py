@@ -112,7 +112,7 @@ class UnfoldAdminSite(AdminSite):
                 context.update(global_context)
 
         if hasattr(self, "extra_context") and callable(self.extra_context):
-            return self.extra_context(context, request)
+            return self.extra_context(context, request)  # ty: ignore[invalid-explicit-return]
 
         return context
 
@@ -194,6 +194,10 @@ class UnfoldAdminSite(AdminSite):
                         continue
 
                 admin_instance = self._registry.get(model["model"])
+
+                if admin_instance is None or admin_instance in EMPTY_VALUES:
+                    continue
+
                 search_fields = admin_instance.get_search_fields(request)
 
                 if not search_fields:
@@ -239,7 +243,7 @@ class UnfoldAdminSite(AdminSite):
         search_term = request.GET.get("s")
         app_list = super().get_app_list(request)
 
-        if search_term in EMPTY_VALUES:
+        if not search_term or search_term in EMPTY_VALUES:
             return HttpResponse()
 
         search_term = search_term.lower()
@@ -314,7 +318,7 @@ class UnfoldAdminSite(AdminSite):
         if self.password_change_template is not None:
             defaults["template_name"] = self.password_change_template
         request.current_app = self.name
-        return PasswordChangeView.as_view(**defaults)(request)
+        return PasswordChangeView.as_view(**defaults)(request)  # ty: ignore[invalid-explicit-return]
 
     def get_sidebar_list(self, request: HttpRequest) -> list[dict[str, Any]]:
         navigation = self._get_value(
@@ -445,12 +449,12 @@ class UnfoldAdminSite(AdminSite):
 
         if isinstance(callback, str) or isinstance(callback, Callable):
             # We are not able to use here "is" because type is lazy loaded function
-            if lazy(callback)(request) == True:  # noqa: E712
+            if lazy(callback)(request) == True:  # noqa: E712  # ty: ignore[invalid-argument-type]
                 return True
 
         return False
 
-    def _replace_values(self, target: dict, source: dict, request: HttpRequest):
+    def _replace_values(self, target: dict, source: dict, request: HttpRequest) -> dict:
         for key, value in source.items():
             if value is not None and callable(value):
                 target[key] = value(request)
@@ -603,7 +607,7 @@ class UnfoldAdminSite(AdminSite):
         extra_urls: list[URLResolver | URLPattern] = []
 
         if hasattr(self, "extra_urls") and callable(self.extra_urls):
-            extra_urls = self.extra_urls()
+            extra_urls = self.extra_urls()  # ty: ignore[invalid-assignment]
 
         site_views = self._get_config("SITE_VIEWS")
 

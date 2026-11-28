@@ -47,7 +47,7 @@ class UnfoldAction:
 class SearchResult:
     title: str
     description: str
-    link: str
+    link: "StrOrPromise"
     icon: str | None
 
 

@@ -9,10 +9,21 @@ from django.contrib.admin.forms import (
 from django.contrib.admin.forms import (
     AdminPasswordChangeForm as BaseAdminOwnPasswordChangeForm,
 )
+from django.contrib.admin.helpers import AdminForm as BaseAdminForm
+from django.contrib.admin.helpers import Fieldline as BaseFieldline
+from django.contrib.admin.helpers import Fieldset as BaseFieldset
 from django.contrib.admin.views.main import ChangeListSearchForm
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm as BaseAdminPasswordChangeForm,
 )
+
+try:
+    from django.contrib.auth.forms import AdminUserCreationForm as BaseUserCreationForm
+except ImportError:
+    from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
+
+from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
+from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.forms import BaseGenericInlineFormSet
 from django.core.paginator import Page, Paginator
@@ -20,21 +31,10 @@ from django.db.models import QuerySet
 from django.forms import BaseInlineFormSet
 from django.http import HttpRequest
 from django.template.loader import render_to_string
-
-from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
-
-try:
-    from django.contrib.auth.forms import AdminUserCreationForm as BaseUserCreationForm
-except ImportError:
-    from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
-from django.contrib.admin.helpers import AdminForm as BaseAdminForm
-from django.contrib.admin.helpers import Fieldline as BaseFieldline
-from django.contrib.admin.helpers import Fieldset as BaseFieldset
-from django.contrib.auth.forms import ReadOnlyPasswordHashWidget
-from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+from unfold.fields import UnfoldAdminField, UnfoldAdminReadonlyField
 from unfold.widgets import (
     BASE_INPUT_CLASSES,
     INPUT_CLASSES,
@@ -104,7 +104,7 @@ class AuthenticationForm(AdminAuthenticationForm):
         self.fields["password"].widget.attrs["class"] = " ".join(BASE_INPUT_CLASSES)
 
 
-class UserCreationForm(BaseUserCreationForm):
+class UserCreationForm(BaseUserCreationForm):  # ty: ignore[unsupported-base]
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
@@ -115,7 +115,9 @@ class UserCreationForm(BaseUserCreationForm):
             attrs={"autocomplete": "new-password"}
         )
 
-        if "usable_password" in self.fields:
+        if "usable_password" in self.fields and isinstance(
+            self.fields["usable_password"], forms.ChoiceField
+        ):
             self.fields["usable_password"].widget = UnfoldAdminRadioSelectWidget(
                 choices=self.fields["usable_password"].choices,
             )
@@ -171,13 +173,13 @@ class AdminForm(BaseAdminForm):
                 name,
                 readonly_fields=self.readonly_fields,
                 model_admin=self.model_admin,
-                **options,
+                **options,  # ty: ignore[invalid-argument-type]
             )
 
 
 class Fieldset(BaseFieldset):
     def __iter__(self) -> Generator["Fieldline"]:
-        for field in self.fields:
+        for field in self.fields:  # ty: ignore[missing-attribute]
             yield Fieldline(
                 self.form, field, self.readonly_fields, model_admin=self.model_admin
             )
@@ -200,6 +202,7 @@ class PaginationFormSetMixin:
     queryset: QuerySet | None = None
     request: HttpRequest | None = None
     per_page: int | None = None
+    prefix: str | None = None
 
     def __init__(
         self,
@@ -210,7 +213,7 @@ class PaginationFormSetMixin:
         provided_queryset: QuerySet | None = None,
         *args: Any,
         **kwargs: Any,
-    ):
+    ) -> None:
         self.request = request
         self.per_page = per_page
         self.count = count
@@ -223,7 +226,7 @@ class PaginationFormSetMixin:
             self.queryset = self.provided_queryset
 
         if self.per_page:
-            self.paginator = Paginator(self.queryset, self.per_page)
+            self.paginator = Paginator(self.queryset, self.per_page)  # ty: ignore[invalid-argument-type]
             self.page = self.get_page(self.paginator, self.get_page_num())
             self._queryset = self.page.object_list
 
@@ -231,6 +234,9 @@ class PaginationFormSetMixin:
         return f"{self.prefix}-page"
 
     def get_page_num(self) -> int:
+        if self.request is None:
+            return 1
+
         page = self.request.GET.get(self.get_pagination_key())
         if page and page.isnumeric() and page > "0":
             return int(page)

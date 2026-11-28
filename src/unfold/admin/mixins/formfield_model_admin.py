@@ -36,9 +36,9 @@ class FormFieldModelAdminMixin(BaseModelAdmin):
         for k, v in self.formfield_overrides.items():
             overrides.setdefault(k, {}).update(v)
 
-        self.formfield_overrides = overrides
+        self.formfield_overrides = overrides  # ty: ignore[invalid-attribute-access]
 
-        super().__init__(model, admin_site)
+        super().__init__(model, admin_site)  # ty: ignore[too-many-positional-arguments]
 
     def formfield_for_choice_field(
         self, db_field: Field, request: HttpRequest, **kwargs: Any

@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from copy import deepcopy
 from typing import Any
 
@@ -181,13 +182,13 @@ class ActionModelAdminMixin(ModelAdmin):
         """
         Gets the list of only actions names from the actions structure provided in ModelAdmin
         """
-        results = []
+        results: list[str] = []
 
         for action in actions or []:
             if isinstance(action, dict) and "items" in action:
                 results.extend(action["items"])
             else:
-                results.append(action)
+                results.append(action)  # ty: ignore[invalid-argument-type]
 
         return results
 
@@ -335,7 +336,7 @@ class ActionModelAdminMixin(ModelAdmin):
                 filtered_actions.append(action)
                 continue
 
-            permission_rules = []
+            permission_rules: list[str | Callable[..., bool]] = []
 
             for permission in action.method.allowed_permissions:
                 if "." in permission:
@@ -351,9 +352,9 @@ class ActionModelAdminMixin(ModelAdmin):
                 if isinstance(permission_rule, str) and "." in permission_rule:
                     permission_checks.append(request.user.has_perm(permission_rule))  # type: ignore
                 elif object_id:
-                    permission_checks.append(permission_rule(request, object_id))
+                    permission_checks.append(permission_rule(request, object_id))  # ty: ignore[not-callable]
                 else:
-                    permission_checks.append(permission_rule(request))
+                    permission_checks.append(permission_rule(request))  # ty: ignore[not-callable]
 
             if all(permission_checks):
                 filtered_actions.append(action)

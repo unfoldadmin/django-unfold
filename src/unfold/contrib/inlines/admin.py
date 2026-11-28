@@ -46,7 +46,7 @@ class NonrelatedInlineMixin[ParentT: Model, InstanceT: Model](InlineModelAdmin):
 
     def _get_formset_defaults(
         self, request: HttpRequest, obj: Model | None = None, **kwargs: Any
-    ):
+    ) -> dict:
         """Return a BaseInlineFormSet class for use in admin add/change views."""
         if "fields" in kwargs:
             fields = kwargs.pop("fields")

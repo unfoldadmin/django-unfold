@@ -72,7 +72,7 @@ TABLE_ACTION_CELL_CLASSES = [
 ]
 
 
-def result_headers(cl):  # noqa: PLR0912, PLR0915
+def result_headers(cl: ChangeList) -> Generator[dict[str, Any]]:  # noqa: PLR0912, PLR0915
     """
     Generate the list column headers.
     """
@@ -147,7 +147,7 @@ def result_headers(cl):  # noqa: PLR0912, PLR0915
         # Is it currently being sorted on?
         is_sorted = i in ordering_field_columns
         if is_sorted:
-            order_type = ordering_field_columns.get(i).lower()
+            order_type = ordering_field_columns.get(i).lower()  # ty: ignore[missing-union-attribute]
             sort_priority = list(ordering_field_columns).index(i) + 1
             th_classes.append(f"sorted {order_type}ending")
             new_order_type = {"asc": "desc", "desc": "asc"}[order_type]
@@ -194,7 +194,7 @@ def result_headers(cl):  # noqa: PLR0912, PLR0915
 
 
 def items_for_result(  # noqa: PLR0915, PLR0912
-    cl: ChangeList, result: Model, form
+    cl: ChangeList, result: Model, form: ModelForm | None
 ) -> Generator[SafeText]:
     def link_in_col(is_first: bool, field_name: Callable | str, cl: ChangeList) -> bool:
         if cl.list_display_links is None:
@@ -316,7 +316,7 @@ def items_for_result(  # noqa: PLR0915, PLR0912
                     and form[cl.model._meta.pk.name].is_hidden
                 )
             ):
-                bf = form[field_name]
+                bf = form[field_name]  # ty: ignore[invalid-argument-type]
                 result_repr = mark_safe(
                     str(bf)
                     + render_to_string(
@@ -360,7 +360,7 @@ class UnfoldResultList(ResultList):
         super().__init__(form, *items)
 
 
-def results(cl: ChangeList):
+def results(cl: ChangeList) -> Generator[UnfoldResultList]:
     if hasattr(cl, "formset") and cl.formset:
         for res, form in zip(cl.result_list, cl.formset.forms):
             yield UnfoldResultList(res, form, items_for_result(cl, res, form))
@@ -442,7 +442,7 @@ def paginator_number(cl: ChangeList, i: str | int) -> str | SafeText:
         )
 
 
-def unfold_search_form(cl):
+def unfold_search_form(cl: ChangeList) -> dict[str, Any]:
     model_name = cl.model_admin.model._meta.model_name
 
     return {
@@ -522,7 +522,7 @@ def unfold_vertical_filters(cl: ChangeList) -> list[ListFilter]:
 
 
 @register.tag(name="unfold_search_form")
-def unfold_search_form_tag(parser, token):
+def unfold_search_form_tag(parser: Parser, token: Token) -> InclusionAdminNode:
     if DJANGO_VERSION >= (6, 1):
         return InclusionAdminNode(
             "unfold_search_form",
@@ -535,8 +535,8 @@ def unfold_search_form_tag(parser, token):
 
     # Older versions of Django used this without name argument
     return InclusionAdminNode(
-        parser,
-        token,
+        parser,  # ty: ignore[invalid-argument-type]
+        token,  # ty: ignore[invalid-argument-type]
         func=unfold_search_form,
         template_name="search_form.html",
         takes_context=False,
@@ -544,7 +544,7 @@ def unfold_search_form_tag(parser, token):
 
 
 @register.tag(name="unfold_admin_actions")
-def unfold_admin_actions_tag(parser, token):
+def unfold_admin_actions_tag(parser: Parser, token: Token) -> InclusionAdminNode:
     if DJANGO_VERSION >= (6, 1):
         return InclusionAdminNode(
             "unfold_admin_actions",
@@ -556,8 +556,8 @@ def unfold_admin_actions_tag(parser, token):
 
     # Older versions of Django used this without name argument
     return InclusionAdminNode(
-        parser,
-        token,
+        parser,  # ty: ignore[invalid-argument-type]
+        token,  # ty: ignore[invalid-argument-type]
         func=admin_actions,
         template_name="dataset_actions.html",
     )  # ty: ignore[missing-argument]

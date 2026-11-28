@@ -9,7 +9,7 @@ class DefaultAppConfig(AppConfig):
     name = "unfold"
     default = True
 
-    def ready(self):
+    def ready(self) -> None:
         site = UnfoldAdminSite()
 
         admin.site = site

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from django import forms
 from django.contrib.admin import helpers
@@ -12,6 +12,7 @@ from django.db.models import (
     ImageField,
     JSONField,
     ManyToManyRel,
+    Model,
     OneToOneField,
 )
 from django.forms import ModelChoiceField, ModelMultipleChoiceField, Widget
@@ -32,13 +33,8 @@ from unfold.widgets import (
     UnfoldAdminMultipleAutocompleteModelChoiceFieldWidget,
 )
 
-if TYPE_CHECKING:
-    from unfold.admin import ModelAdmin
-
 
 class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
-    model_admin: "ModelAdmin"
-
     def label_tag(self) -> SafeText:
         attrs = {
             "class": " ".join(LABEL_CLASSES + ["mb-2"]),
@@ -64,7 +60,10 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_json(self) -> bool:
-        if isinstance(self.resolved_field, bool) or not self.resolved_field:
+        if not self.resolved_field:
+            return False
+
+        if isinstance(self.resolved_field, bool):
             return False
 
         f, attr, value = self.resolved_field
@@ -73,7 +72,10 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_image(self) -> bool:
-        if isinstance(self.resolved_field, bool) or not self.resolved_field:
+        if not self.resolved_field:
+            return False
+
+        if isinstance(self.resolved_field, bool):
             return False
 
         f, attr, value = self.resolved_field
@@ -82,7 +84,10 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def is_file(self) -> bool:
-        if isinstance(self.resolved_field, bool) or not self.resolved_field:
+        if not self.resolved_field:
+            return False
+
+        if isinstance(self.resolved_field, bool):
             return False
 
         f, attr, value = self.resolved_field
@@ -90,7 +95,10 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
 
     @property
     def wrapper_class(self) -> str:
-        if isinstance(self.resolved_field, bool) or not self.resolved_field:
+        if not self.resolved_field:
+            return ""
+
+        if isinstance(self.resolved_field, bool):
             return ""
 
         f, attr, value = self.resolved_field
@@ -105,7 +113,12 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         contents = self._preprocess_field(contents)
         return contents
 
-    def get_admin_url(self, remote_field, remote_obj):
+    def get_admin_url(
+        self, remote_field: ForeignObjectRel | OneToOneField, remote_obj: Model
+    ) -> str:
+        if not self.model_admin:
+            return str(remote_obj)
+
         url_name = f"admin:{remote_field.model._meta.app_label}_{remote_field.model._meta.model_name}_change"
         try:
             url = reverse(
@@ -173,16 +186,15 @@ class UnfoldAdminReadonlyField(helpers.AdminReadonlyField):
         return conditional_escape(result_repr)
 
     def _preprocess_field(self, contents: SafeString) -> SafeString:
-        if (
-            hasattr(self.model_admin, "readonly_preprocess_fields")
-            and self.field["field"]
-            in self.model_admin.readonly_preprocess_fields.keys()
-        ):
-            func = self.model_admin.readonly_preprocess_fields[self.field["field"]]
-            if isinstance(func, str):
-                contents = import_string(func)(contents)
-            elif callable(func):
-                contents = func(contents)
+        readonly_preprocess_fields: dict[str, Any] = getattr(
+            self.model_admin, "readonly_preprocess_fields", {}
+        )
+        func = readonly_preprocess_fields.get(self.field["field"])
+
+        if isinstance(func, str):
+            contents = import_string(func)(contents)
+        elif callable(func):
+            contents = func(contents)
 
         return contents
 
@@ -214,7 +226,7 @@ class UnfoldAdminField(helpers.AdminField):
         if self.field.field.required:
             classes.append("required")
 
-        attrs = {"class": " ".join(classes)} if classes else {}
+        attrs: dict[str, str | bool] = {"class": " ".join(classes)} if classes else {}
         required = mark_safe('<span class="text-red-600 dark:text-red-500">*</span>')
 
         return self.field.label_tag(

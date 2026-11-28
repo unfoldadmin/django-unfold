@@ -469,7 +469,7 @@ class UnfoldAdminDateWidget(AdminDateWidget):
         }
         super().__init__(attrs=attrs, format=format)
 
-    class Media:
+    class Media:  # ty: ignore[incompatible-attribute-override]
         js = [
             "admin/js/core.js",
             "admin/js/calendar.js",
@@ -516,7 +516,7 @@ class UnfoldAdminTimeWidget(AdminTimeWidget):
         }
         super().__init__(attrs=attrs, format=format)
 
-    class Media:
+    class Media:  # ty: ignore[incompatible-attribute-override]
         js = [
             "admin/js/core.js",
             "admin/js/calendar.js",
@@ -887,7 +887,7 @@ class UnfoldAdminPasswordToggleWidget(UnfoldAdminPasswordWidget):
     template_name = "unfold/widgets/password_toggle.html"
 
 
-class AutocompleteWidgetMixin:
+class AutocompleteWidgetMixin(Select):
     is_required: bool
 
     def __init__(
