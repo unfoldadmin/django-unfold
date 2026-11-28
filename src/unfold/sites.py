@@ -243,7 +243,7 @@ class UnfoldAdminSite(AdminSite):
         search_term = request.GET.get("s")
         app_list = super().get_app_list(request)
 
-        if not search_term:
+        if not search_term or search_term in EMPTY_VALUES:
             return HttpResponse()
 
         search_term = search_term.lower()
